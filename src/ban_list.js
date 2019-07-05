@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
 
-//import 'typeface-roboto'
+import 'typeface-roboto'
 
 import BreadCrumb from './breadcrumb.js'
 
 import BanListSection from './ban_list_section.js'
-
-
-import PropTypes from 'prop-types'
 
 class BanList extends Component
 {

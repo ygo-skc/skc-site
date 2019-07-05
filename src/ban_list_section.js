@@ -44,8 +44,15 @@ class BanListSection extends Component
 
 	constructor(props) {
 		super(props)
+
+		let section
+		if (this.props.sectionName === 'Forbidden')	section = 'banedText'
+		else if (this.props.sectionName === 'Limited') section = 'limitedText'
+		else	section = 'semiLimitedText'
+
 		this.state = {
-			cardsDetail: []
+			cardsDetail: [],
+			section: section
 		}
 
 	}
@@ -53,14 +60,37 @@ class BanListSection extends Component
 	componentDidUpdate(oldProps)
 	{
 		if (! equal(this.props.cards, oldProps.cards)){
-
-			let details = []
+			let cardDetails = {}
 
 			this.props.cards.forEach((card, ind) => {
-				details.push(<CardDetail key={ind} cardName={card.cardName} cardInfo={card.cardInfo} cardEffect={card.cardEffect} />)
+				if (cardDetails[card.cardColor.toLowerCase()] === undefined)
+				{
+					cardDetails[card.cardColor.toLowerCase()] = []
+				}
+				cardDetails[card.cardColor.toLowerCase()].push(<CardDetail key={ind} cardName={card.cardName} monsterType={card.monsterType} cardColor={card.cardColor} cardEffect={card.cardEffect} />)
 			})
 
-			this.setState({ cardsDetail: details })
+			console.log(cardDetails)
+
+			let grid = []
+			for (let key in cardDetails)
+			{
+				grid.push(
+					<Grid container spacing={2} >
+						{cardDetails[key]}
+					</Grid>
+				)
+			}
+			/*
+			cardDetails.forEach((item) =>
+			{
+				grid.push(<Grid container spacing={2} >
+					{item}
+				</Grid>)
+			})
+			*/
+
+			this.setState({ cardsDetail: cardDetails, grid: grid })
 		}
 	}
 
@@ -70,11 +100,10 @@ class BanListSection extends Component
 
 		return(
 			<div>
-				<Typography variant='h6' className={classes.banedText} >{this.props.sectionName}</Typography>
+				<Typography variant='h6' className={classes[this.state.section]} >{this.props.sectionName}</Typography>
 				<Box className={classes.banCardsRow} >
-					<Grid container spacing={2} >
-						{this.state.cardsDetail}
-					</Grid>
+					{this.state.grid}
+
 				</Box>
 			</div>
 		)
