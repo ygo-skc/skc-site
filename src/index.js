@@ -5,6 +5,9 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 import BreadCrumb from './breadcrumb.js'
 import BanList from './ban_list.js'
 
+import Typography from '@material-ui/core/Typography'
+import Link from '@material-ui/core/Link'
+
 class Home extends Component
 {
 	constructor(props)
@@ -22,7 +25,9 @@ class Home extends Component
 		return (
 			<div>
 				<BreadCrumb crumbs={['Home']} />
-				<p>home</p>
+				<Typography variant='subtitle1'>
+					Check out the <Link href={'/ban_list'} >Ban List</Link>
+				</Typography>
 			</div>
 		)
 	}
