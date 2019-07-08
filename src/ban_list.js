@@ -12,7 +12,9 @@ class BanList extends Component
 	{
 		super(props)
 		this.state = {
-			cards: []
+			forbidden: [],
+			limited: [],
+			semiLimited: [],
 		}
 
 		let url = "http://localhost:8080/ban_list"
@@ -21,8 +23,11 @@ class BanList extends Component
 		.then((data) => data.json())
 		.then((results) =>
 		{
-			this.setState({cards: results.cards})
-
+			this.setState({
+				forbidden: results.bannedCards.forbidden,
+				limited: results.bannedCards.limited,
+				semiLimited: results.bannedCards.semiLimited,
+			})
 		})
 
 	}
@@ -32,9 +37,9 @@ class BanList extends Component
 			return (
 				<div>
 					<BreadCrumb crumbs={['Home', 'Ban List']} />
-					<BanListSection sectionName={'Forbidden'} cards={this.state.cards} />
-					<BanListSection sectionName={'Limited'} cards={this.state.cards} />
-					<BanListSection sectionName={'Semi-Limited'} cards={this.state.cards} />
+					<BanListSection sectionName={'Forbidden'} sectionExplanation={"Below cards cannot be used in Main Deck or Side Deck if playing in the Advanced format."} cards={this.state.forbidden} />
+					<BanListSection sectionName={'Limited'} sectionExplanation={"Below cards can only appear once in a  Main Deck or Side Deck."} cards={this.state.limited} />
+					<BanListSection sectionName={'Semi-Limited'} sectionExplanation={"Below cards can only appear twice in a  Main Deck or Side Deck."} cards={this.state.semiLimited} />
 				</div>
 			)
 		}
