@@ -11,26 +11,30 @@ import PropTypes from 'prop-types'
 
 import equal from 'fast-deep-equal'
 
+import Divider from '@material-ui/core/Divider'
+import Help from '@material-ui/icons/Help';
+import Tooltip from '@material-ui/core/Tooltip'
+
 const styles = {
 	banedText: {
 		color: 'white',
-		marginTop: '15',
-		marginBottom: '10',
-		padding: '10',
+		marginTop: '20',
+		marginBottom: '15',
+		padding: '20',
 		background: 'linear-gradient(45deg, #ff1744 30%, #f50057 90%)',
 	},
 	limitedText: {
 		color: 'white',
-		marginTop: '15',
-		marginBottom: '10',
-		padding: '10',
+		marginTop: '20',
+		marginBottom: '15',
+		padding: '20',
 		background: 'linear-gradient(45deg, #f57c00 30%, #ff1744 90%)',
 	},
 	semiLimitedText: {
 		color: 'white',
-		marginTop: '15',
-		marginBottom: '10',
-		padding: '10',
+		marginTop: '20',
+		marginBottom: '15',
+		padding: '20',
 		background: 'linear-gradient(45deg, #ffab00 30%, #f57c00 90%)',
 	},
 	banCardsRow: {
@@ -72,23 +76,20 @@ class BanListSection extends Component
 
 			console.log(cardDetails)
 
+
 			let grid = []
 			for (let key in cardDetails)
 			{
 				grid.push(
+					<div>
+					<Typography >{key}</Typography>
 					<Grid container spacing={2} >
 						{cardDetails[key]}
 					</Grid>
+					<br />
+					</div>
 				)
 			}
-			/*
-			cardDetails.forEach((item) =>
-			{
-				grid.push(<Grid container spacing={2} >
-					{item}
-				</Grid>)
-			})
-			*/
 
 			this.setState({ cardsDetail: cardDetails, grid: grid })
 		}
@@ -100,10 +101,18 @@ class BanListSection extends Component
 
 		return(
 			<div>
-				<Typography variant='h6' className={classes[this.state.section]} >{this.props.sectionName}</Typography>
+				<Grid container className={classes[this.state.section]} >
+					<Grid item>
+						<Typography variant='subtitle1' >{this.props.sectionName}</Typography>
+					</Grid>
+					<Grid item>
+						<Tooltip title={this.props.sectionExplanation} placement="top-start">
+							<Help />
+						</Tooltip>
+					</Grid>
+				</Grid>
 				<Box className={classes.banCardsRow} >
 					{this.state.grid}
-
 				</Box>
 			</div>
 		)
