@@ -14,15 +14,20 @@ import PropTypes from 'prop-types'
 import { blue, teal, pink, orange, deepPurple, grey } from '@material-ui/core/colors'
 import Box from '@material-ui/core/Box'
 
+import Tooltip from '@material-ui/core/Tooltip'
+
 const styles = {
+	monsterType: {
+		fontWeight: 'bold'
+	},
 	effect: {
 		background: `linear-gradient(45deg, ${orange[600]} 30%, ${orange[800]} 90%)`,
 		color: 'f5f5f5',
 	},
 	effectSummary: {
-		background: orange[400],
+		background: orange[500],
 		padding: '10',
-		color: 'black',
+		color: 'f5f5f5',
 		lineHeight: '3'
 	},
 	fusion: {
@@ -89,7 +94,15 @@ const styles = {
 		color: 'black'
 	},
 	cardTop: {
-		marginBottom: '15'
+		marginBottom: '5'
+	},
+	cardText: {
+		'display': '-webkit-box',
+		'-webkit-line-clamp': '4',
+			'-webkit-box-orient': 'vertical',
+			'overflow': 'hidden'
+	},
+	cardTextTooltip: {
 	}
 }
 
@@ -108,11 +121,13 @@ class CardDetail extends Component
 				<Card>
 					<CardContent className={classes[this.props.cardColor.toLowerCase()]}>
 						<Box className={classes.cardTop}>
-							<Typography variant='subtitle2' >{this.props.cardName}</Typography>
+							<Typography variant='subtitle1' noWrap={true} >{this.props.cardName}</Typography>
 						</Box>
 						<Box className={classes[`${this.props.cardColor.toLowerCase()}Summary`]} >
-							<Typography variant='body1'>{this.props.monsterType}</Typography>
-								<Typography variant='body2' noWrap={true} component='p' >{this.props.cardEffect}</Typography>
+							<Typography variant='body2' className={classes.monsterType} noWrap={true} >{this.props.monsterType}</Typography>
+							<Tooltip title={this.props.cardEffect} aria-label="Add" className={classes.cardTextTooltip} >
+								<Typography variant='body2' className={classes.cardText} >{this.props.cardEffect}</Typography>
+							</Tooltip>
 						</Box>
 					</CardContent>
 				</Card>
