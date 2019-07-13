@@ -11,7 +11,6 @@ import PropTypes from 'prop-types'
 
 import equal from 'fast-deep-equal'
 
-import Divider from '@material-ui/core/Divider'
 import Help from '@material-ui/icons/Help';
 import Tooltip from '@material-ui/core/Tooltip'
 
@@ -64,7 +63,7 @@ class BanListSection extends Component
 	componentDidUpdate(oldProps)
 	{
 		if (! equal(this.props.cards, oldProps.cards)){
-			let cardDetails = {}
+			let cardDetails = new Map()
 
 			this.props.cards.forEach((card, ind) => {
 				if (cardDetails[card.cardColor.toLowerCase()] === undefined)
@@ -74,21 +73,21 @@ class BanListSection extends Component
 				cardDetails[card.cardColor.toLowerCase()].push(<CardDetail key={ind} cardName={card.cardName} monsterType={card.monsterType} cardColor={card.cardColor} cardEffect={card.cardEffect} />)
 			})
 
-			console.log(cardDetails)
-
-
 			let grid = []
-			for (let key in cardDetails)
+			let cardOrder = ['normal', 'effect', 'ritual', 'fusion', 'synchro', 'xyz', 'pendulum', 'link', 'spell', 'trap']
+			for (let cardType of cardOrder)
 			{
-				grid.push(
-					<div>
-					<Typography >{key}</Typography>
-					<Grid container spacing={2} >
-						{cardDetails[key]}
-					</Grid>
-					<br />
-					</div>
-				)
+				if (cardType in cardDetails)
+				{
+					grid.push(
+						<div key={cardType} >
+						<Grid container spacing={2} >
+							{cardDetails[cardType]}
+						</Grid>
+						<br />
+						</div>
+					)
+				}
 			}
 
 			this.setState({ cardsDetail: cardDetails, grid: grid })
