@@ -17,7 +17,7 @@ class BanList extends Component
 			semiLimited: [],
 		}
 
-		let url = "http://localhost:8080/ban_list"
+		let url = "http://localhost:9999/ban_list"
 
 		fetch(url)
 		.then((data) => data.json())
