@@ -11,7 +11,7 @@ import { withStyles } from '@material-ui/styles'
 
 import PropTypes from 'prop-types'
 
-import { blue, teal, pink, orange, deepPurple, grey } from '@material-ui/core/colors'
+import { blue, teal, pink, orange, deepPurple, grey, yellow } from '@material-ui/core/colors'
 import Box from '@material-ui/core/Box'
 
 import Tooltip from '@material-ui/core/Tooltip'
@@ -19,6 +19,16 @@ import Tooltip from '@material-ui/core/Tooltip'
 const styles = {
 	monsterType: {
 		fontWeight: 'bold'
+	},
+	normal: {
+		background: `linear-gradient(45deg, ${yellow[600]} 30%, ${yellow[800]} 90%)`,
+		color: 'black',
+	},
+	normalSummary: {
+		background: yellow[500],
+		padding: '10',
+		color: 'black',
+		lineHeight: '3'
 	},
 	effect: {
 		background: `linear-gradient(45deg, ${orange[600]} 30%, ${orange[800]} 90%)`,
@@ -29,6 +39,15 @@ const styles = {
 		padding: '10',
 		color: 'f5f5f5',
 		lineHeight: '3'
+	},
+	ritual: {
+		background: `linear-gradient(45deg, ${blue[500]} 30%, ${blue[700]} 90%)`,
+		color: 'f5f5f5',
+	},
+	ritualSummary: {
+		background: blue[100],
+		padding: '10',
+		color: 'black'
 	},
 	fusion: {
 		background: `linear-gradient(180deg, ${deepPurple[300]} 30%, ${deepPurple[400]} 90%)`,
@@ -67,11 +86,11 @@ const styles = {
 		color: 'black'
 	},
 	link: {
-		background: `linear-gradient(45deg, ${blue[500]} 30%, ${blue[700]} 90%)`,
+		background: `linear-gradient(45deg, ${blue[700]} 30%, ${blue[800]} 90%)`,
 		color: 'f5f5f5',
 	},
 	linkSummary: {
-		background: blue[100],
+		background: grey[100],
 		padding: '10',
 		color: 'black'
 	},
@@ -98,24 +117,26 @@ const styles = {
 	},
 	cardText: {
 		'display': '-webkit-box',
-		'-webkit-line-clamp': '4',
+		'-webkit-line-clamp': '3',
 			'-webkit-box-orient': 'vertical',
 			'overflow': 'hidden'
 	},
-	cardTextTooltip: {
+	tooltip: {
+		'tooltip': {
+			fontSize: '2000'
+		}
 	}
 }
 
+
+
+
 class CardDetail extends Component
 {
-	constructor()
-	{
-		super()
-	}
-
 	render()
 	{
 		const { classes } = this.props
+
 		return (
 			<Grid item xs={2} >
 				<Card>
@@ -125,7 +146,7 @@ class CardDetail extends Component
 						</Box>
 						<Box className={classes[`${this.props.cardColor.toLowerCase()}Summary`]} >
 							<Typography variant='body2' className={classes.monsterType} noWrap={true} >{this.props.monsterType}</Typography>
-							<Tooltip title={this.props.cardEffect} aria-label="Add" className={classes.cardTextTooltip} >
+							<Tooltip title={this.props.cardEffect} aria-label="Add" className={classes.tooltip} >
 								<Typography variant='body2' className={classes.cardText} >{this.props.cardEffect}</Typography>
 							</Tooltip>
 						</Box>
