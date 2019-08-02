@@ -62,7 +62,7 @@ class BanListSection extends Component
 
 	componentDidUpdate(oldProps)
 	{
-		if (! equal(this.props.cards, oldProps.cards)){
+		if (oldProps.cards.length !== this.props.cards.length){
 			let cardDetails = new Map()
 
 			this.props.cards.forEach((card, ind) => {
@@ -70,18 +70,18 @@ class BanListSection extends Component
 				{
 					cardDetails[card.cardColor.toLowerCase()] = []
 				}
-				cardDetails[card.cardColor.toLowerCase()].push(<CardDetail key={ind} cardName={card.cardName} monsterType={card.monsterType} cardColor={card.cardColor} cardEffect={card.cardEffect} />)
+				cardDetails[card.cardColor.toLowerCase()].push(<CardDetail key={ind} cardName={card.cardName} monsterType={card.monsterType} cardColor={card.cardColor} cardEffect={card.cardEffect} numberOfCards={this.props.numberOfCards} />)
 			})
 
 			let grid = []
-			let cardOrder = ['normal', 'effect', 'ritual', 'fusion', 'synchro', 'xyz', 'pendulum', 'link', 'spell', 'trap']
+			let cardOrder = ['normal', 'effect', 'ritual', 'fusion', 'synchro', 'xyz', 'pendulum-normal', 'pendulum-effect', 'link', 'spell', 'trap']
 			for (let cardType of cardOrder)
 			{
 				if (cardType in cardDetails)
 				{
 					grid.push(
 						<div key={cardType} >
-						<Grid container spacing={2} >
+						<Grid container spacing={1} >
 							{cardDetails[cardType]}
 						</Grid>
 						<br />
