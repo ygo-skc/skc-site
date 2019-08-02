@@ -76,11 +76,20 @@ const styles = {
 		padding: '10',
 		color: 'white'
 	},
-	pendulum: {
+	'pendulum-normal': {
+		background: `linear-gradient(180deg, ${yellow[600]} 30%, ${teal['A700']} 90%)`,
+		color: 'black',
+	},
+	'pendulum-normalSummary': {
+		background: blue[100],
+		padding: '10',
+		color: 'black'
+	},
+	'pendulum-effect': {
 		background: `linear-gradient(180deg, ${orange[600]} 30%, ${teal['A700']} 90%)`,
 		color: 'f5f5f5',
 	},
-	pendulumSummary: {
+	'pendulum-effectSummary': {
 		background: blue[100],
 		padding: '10',
 		color: 'black'
@@ -138,7 +147,7 @@ class CardDetail extends Component
 		const { classes } = this.props
 
 		return (
-			<Grid item xs={2} >
+			<Grid item xs={this.props.numberOfCards} >
 				<Card>
 					<CardContent className={classes[this.props.cardColor.toLowerCase()]}>
 						<Box className={classes.cardTop}>
