@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 import BreadCrumb from './breadcrumb.js'
 import BanList from './ban_list.js'
+import ServerError from './Error_Pages/server_err.js'
 
 import Typography from '@material-ui/core/Typography'
 import Link from '@material-ui/core/Link'
@@ -37,6 +38,7 @@ render(
 	<Router >
 		<Route path='/' exact component={Home} />
 		<Route path='/ban_list' component={BanList} />
+		<Route path='/server_err' component={ServerError} />
 	</Router>,
 	document.getElementById('root')
 )
