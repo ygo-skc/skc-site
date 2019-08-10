@@ -70,7 +70,7 @@ class BanListSection extends Component
 				{
 					cardDetails[card.cardColor.toLowerCase()] = []
 				}
-				cardDetails[card.cardColor.toLowerCase()].push(<CardDetail key={ind} cardName={card.cardName} monsterType={card.monsterType} cardColor={card.cardColor} cardEffect={card.cardEffect} numberOfCards={this.props.numberOfCards} />)
+				cardDetails[card.cardColor.toLowerCase()].push(<CardDetail key={ind} cardName={card.cardName} monsterType={card.monsterType} cardColor={card.cardColor} cardEffect={card.cardEffect} />)
 			})
 
 			let grid = []

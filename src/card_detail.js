@@ -147,7 +147,12 @@ class CardDetail extends Component
 		const { classes } = this.props
 
 		return (
-			<Grid item xs={this.props.numberOfCards} >
+			<Grid item
+			xs={12}
+			sm={6}
+			md={3}
+			lg={2}
+			xl={2} >
 				<Card>
 					<CardContent className={classes[this.props.cardColor.toLowerCase()]}>
 						<Box className={classes.cardTop}>
