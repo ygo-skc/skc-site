@@ -1,10 +1,21 @@
 import React, { Component } from 'react'
 
 import 'typeface-roboto'
+import { Typography } from '@material-ui/core';
 
+import Grid from '@material-ui/core/Grid'
+
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
+/*
+	Custom Components
+*/
+import BanListSection from './ban_list_section'
 import BreadCrumb from './breadcrumb.js'
-
-import BanListSection from './ban_list_section.js'
+import handleFetchErrRedirect from './Helper/fetch_handler'
 
 class BanList extends Component
 {
@@ -12,10 +23,14 @@ class BanList extends Component
 	{
 		super(props)
 		this.state = {
+			banListsStartDates: [],
+			banListGrid: [],
+			selectedBanList: '',
+			months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+
 			forbidden: [],
 			limited: [],
 			semiLimited: [],
-			numberOfCards: 2
 		}
 
 		/*
@@ -41,7 +56,7 @@ class BanList extends Component
 		const banListsUrl = "http://localhost:9999/ban_list/startDates"
 
 		fetch(banListsUrl)
-		.then((data) => data.json())
+			.then((data) => data.json())
 			.then((resultJson) => {
 				this.setState({
 					banListsStartDates: resultJson.banListStartDates,
@@ -69,19 +84,19 @@ class BanList extends Component
 
 
 	fetchBanList(banListUrl)
-		{
+	{
 		fetch(banListUrl)
 			.then((data) => {
 				if (data.ok) return data.json()
 				else throw new Error(data.statusText)
 			})
 			.then((results) => {
-			this.setState({
-				forbidden: results.bannedCards.forbidden,
-				limited: results.bannedCards.limited,
-				semiLimited: results.bannedCards.semiLimited,
+				this.setState({
+					forbidden: results.bannedCards.forbidden,
+					limited: results.bannedCards.limited,
+					semiLimited: results.bannedCards.semiLimited,
+				})
 			})
-		})
 			.catch((err) => {
 				handleFetchErrRedirect(this, 'test', '/server_err')
 			})
@@ -92,9 +107,25 @@ class BanList extends Component
 			return (
 				<div>
 					<BreadCrumb crumbs={['Home', 'Ban List']} />
-					<BanListSection sectionName={'Forbidden'} sectionExplanation={"Below cards cannot be used in Main Deck or Side Deck if playing in the Advanced format."} cards={this.state.forbidden} numberOfCards={this.state.numberOfCards} />
-					<BanListSection sectionName={'Limited'} sectionExplanation={"Below cards can only appear once in a  Main Deck or Side Deck."} cards={this.state.limited} numberOfCards={this.state.numberOfCards} />
-					<BanListSection sectionName={'Semi-Limited'} sectionExplanation={"Below cards can only appear twice in a  Main Deck or Side Deck."} cards={this.state.semiLimited} numberOfCards={this.state.numberOfCards} />
+
+					<ExpansionPanel>
+						<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+							<Typography style={{flexBasis: '33.33%', flexShrink: 0 }} variant='h6' >Ban Lists:</Typography>
+							<Typography variant='subtitle1' >
+								Currently viewing ban list effective {this.getDateString(new Date(this.state.selectedBanList))}
+							</Typography>
+						</ExpansionPanelSummary>
+
+						<ExpansionPanelDetails>
+							<Grid container >
+								{this.state.banListGrid}
+							</Grid>
+						</ExpansionPanelDetails>
+					</ExpansionPanel>
+
+					<BanListSection sectionName={'Forbidden'} sectionExplanation={"Below cards cannot be used in Main Deck or Side Deck if playing in the Advanced format."} cards={this.state.forbidden} />
+					<BanListSection sectionName={'Limited'} sectionExplanation={"Below cards can only appear once in a  Main Deck or Side Deck."} cards={this.state.limited}/>
+					<BanListSection sectionName={'Semi-Limited'} sectionExplanation={"Below cards can only appear twice in a  Main Deck or Side Deck."} cards={this.state.semiLimited} />
 				</div>
 			)
 		}
