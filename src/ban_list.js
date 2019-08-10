@@ -18,33 +18,73 @@ class BanList extends Component
 			numberOfCards: 2
 		}
 
-		let url = "http://localhost:9999/ban_list"
+		/*
+			Binding methods to class conext
+		*/
+		this.getDateString = this.getDateString.bind(this)
+		this.fetchBanList = this.fetchBanList.bind(this)
+		this.fetchBanListStartDates = this.fetchBanListStartDates.bind(this)
+		this.test = this.test.bind(this)
 
-		fetch(url)
+		this.fetchBanListStartDates()
+
+	}
+
+	getDateString(date)
+	{
+		return `${this.state.months[date.getMonth()]} ${date.getDate() + 1}, ${date.getFullYear()}`
+	}
+
+
+	fetchBanListStartDates()
+	{
+		const banListsUrl = "http://localhost:9999/ban_list/startDates"
+
+		fetch(banListsUrl)
 		.then((data) => data.json())
-		.then((results) =>
+			.then((resultJson) => {
+				this.setState({
+					banListsStartDates: resultJson.banListStartDates,
+					selectedBanList: resultJson.banListStartDates[0]
+				}, () => this.fetchBanList(`http://localhost:9999/ban_list/${this.state.selectedBanList}`))
+
+				let banListGrid = []
+				this.state.banListsStartDates.forEach((item, ind) => {
+					banListGrid.push(<Grid item xs={6} sm={3} md={2} lg={1} xl={1} >
+						<Typography onClick={this.test()} >{this.getDateString(new Date(item))}</Typography>
+					</Grid>
+					)
+				})
+
+				this.setState({
+					banListGrid: banListGrid
+				})
+			})
+	}
+
+	test()
+	{
+		console.log('i work')
+	}
+
+
+	fetchBanList(banListUrl)
 		{
+		fetch(banListUrl)
+			.then((data) => {
+				if (data.ok) return data.json()
+				else throw new Error(data.statusText)
+			})
+			.then((results) => {
 			this.setState({
 				forbidden: results.bannedCards.forbidden,
 				limited: results.bannedCards.limited,
 				semiLimited: results.bannedCards.semiLimited,
 			})
 		})
-
-		let context = this
-
-		window.onresize = function ()
-		{
-			/*
-			let windowWidth = window.innerWidth
-			let numberOfCards
-			if (windowWidth > 1500)	numberOfCards = 1
-			else	numberOfCards = 2
-
-			if (numberOfCards !== context.state.numberOfCards)	context.setState({ numberOfCards: numberOfCards })
-			*/
-		}
-
+			.catch((err) => {
+				handleFetchErrRedirect(this, 'test', '/server_err')
+			})
 	}
 
 		render()
