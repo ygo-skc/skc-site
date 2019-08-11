@@ -36,12 +36,12 @@ class BanList extends Component
 		}
 
 		/*
-			Binding methods to class conext
+			Binding methods to class context
 		*/
 		this.getDateString = this.getDateString.bind(this)
 		this.fetchBanList = this.fetchBanList.bind(this)
 		this.fetchBanListStartDates = this.fetchBanListStartDates.bind(this)
-		this.test = this.test.bind(this)
+		this.changeBanList = this.changeBanList.bind(this)
 
 		this.fetchBanListStartDates()
 
@@ -63,13 +63,15 @@ class BanList extends Component
 				this.setState({
 					banListsStartDates: resultJson.banListStartDates,
 					selectedBanList: resultJson.banListStartDates[0]
-				}, () => this.fetchBanList())
+				}, this.fetchBanList)
 
 				let banListGrid = []
 				this.state.banListsStartDates.forEach((item, ind) => {
 					banListGrid.push(<Grid key={ind} item xs={6} sm={3} md={2} lg={1} xl={1} >
-						<Button size='small' id={ind} onClick={this.test} >{this.getDateString(new Date(item))}</Button>
-					</Grid>
+							<Button size='small' id={ind} onClick={this.changeBanList} >
+								{this.getDateString(new Date(item))}
+							</Button>
+						</Grid>
 					)
 				})
 
@@ -79,8 +81,18 @@ class BanList extends Component
 			})
 	}
 
-	test(button)
+	changeBanList(button)
 	{
+		const selectedBanList = this.state.banListsStartDates[button.currentTarget.id]
+
+		if (selectedBanList !== this.state.selectedBanList)
+		{
+			this.setState({
+				selectedBanList: selectedBanList
+			}, this.fetchBanList)
+		}
+
+
 	}
 
 
