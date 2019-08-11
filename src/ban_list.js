@@ -10,6 +10,8 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
+import Button from '@material-ui/core/Button'
+
 /*
 	Custom Components
 */
@@ -61,12 +63,12 @@ class BanList extends Component
 				this.setState({
 					banListsStartDates: resultJson.banListStartDates,
 					selectedBanList: resultJson.banListStartDates[0]
-				}, () => this.fetchBanList(`http://localhost:9999/ban_list/${this.state.selectedBanList}`))
+				}, () => this.fetchBanList())
 
 				let banListGrid = []
 				this.state.banListsStartDates.forEach((item, ind) => {
-					banListGrid.push(<Grid item xs={6} sm={3} md={2} lg={1} xl={1} >
-						<Typography onClick={this.test()} >{this.getDateString(new Date(item))}</Typography>
+					banListGrid.push(<Grid key={ind} item xs={6} sm={3} md={2} lg={1} xl={1} >
+						<Button size='small' id={ind} onClick={this.test} >{this.getDateString(new Date(item))}</Button>
 					</Grid>
 					)
 				})
@@ -77,13 +79,12 @@ class BanList extends Component
 			})
 	}
 
-	test()
+	test(button)
 	{
-		console.log('i work')
 	}
 
 
-	fetchBanList(banListUrl)
+	fetchBanList(banListUrl = `http://localhost:9999/ban_list/${this.state.selectedBanList}`)
 	{
 		fetch(banListUrl)
 			.then((data) => {
@@ -108,9 +109,9 @@ class BanList extends Component
 				<div>
 					<BreadCrumb crumbs={['Home', 'Ban List']} />
 
-					<ExpansionPanel>
+					<ExpansionPanel elevation={0} >
 						<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-							<Typography style={{flexBasis: '33.33%', flexShrink: 0 }} variant='h6' >Ban Lists:</Typography>
+							<Typography style={{flexBasis: '20%', flexShrink: 0 }} variant='h6' >Ban Lists:</Typography>
 							<Typography variant='subtitle1' >
 								Currently viewing ban list effective {this.getDateString(new Date(this.state.selectedBanList))}
 							</Typography>
