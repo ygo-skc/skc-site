@@ -9,11 +9,6 @@ import { withStyles } from '@material-ui/styles'
 
 import PropTypes from 'prop-types'
 
-import equal from 'fast-deep-equal'
-
-import Help from '@material-ui/icons/Help';
-import Tooltip from '@material-ui/core/Tooltip'
-
 const styles = {
 	banedText: {
 		color: 'white',
@@ -100,16 +95,8 @@ class BanListSection extends Component
 
 		return(
 			<div>
-				<Grid container className={classes[this.state.section]} >
-					<Grid item>
-						<Typography variant='subtitle1' >{this.props.sectionName}</Typography>
-					</Grid>
-					<Grid item>
-						<Tooltip title={this.props.sectionExplanation} placement="top-start">
-							<Help />
-						</Tooltip>
-					</Grid>
-				</Grid>
+				<Typography variant='h6' style={{marginBottom: 15}} >{this.props.sectionExplanation}</Typography>
+
 				<Box className={classes.banCardsRow} >
 					{this.state.grid}
 				</Box>
