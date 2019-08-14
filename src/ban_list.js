@@ -18,6 +18,7 @@ import Button from '@material-ui/core/Button'
 import BanListSection from './ban_list_section'
 import BreadCrumb from './breadcrumb.js'
 import handleFetchErrRedirect from './Helper/fetch_handler'
+import TabbedView from './tabbed_view'
 
 class BanList extends Component
 {
@@ -33,6 +34,8 @@ class BanList extends Component
 			forbidden: [],
 			limited: [],
 			semiLimited: [],
+
+			banListContent: []
 		}
 
 		/*
@@ -115,6 +118,7 @@ class BanList extends Component
 			})
 	}
 
+
 		render()
 		{
 			return (
@@ -136,9 +140,16 @@ class BanList extends Component
 						</ExpansionPanelDetails>
 					</ExpansionPanel>
 
-					<BanListSection sectionName={'Forbidden'} sectionExplanation={"Below cards cannot be used in Main Deck or Side Deck if playing in the Advanced format."} cards={this.state.forbidden} />
-					<BanListSection sectionName={'Limited'} sectionExplanation={"Below cards can only appear once in a  Main Deck or Side Deck."} cards={this.state.limited}/>
-					<BanListSection sectionName={'Semi-Limited'} sectionExplanation={"Below cards can only appear twice in a  Main Deck or Side Deck."} cards={this.state.semiLimited} />
+
+					<TabbedView
+					content={
+						[
+							<BanListSection sectionName={'Forbidden'} sectionExplanation={"Forbidded cards cannot be used in a duel in the Advanced Format."} cards={this.state.forbidden} />,
+							<BanListSection sectionName={'Limited'} sectionExplanation={"Below cards can only appear once in a  Main Deck or Side Deck."} cards={this.state.limited} />,
+							<BanListSection sectionName={'Semi-Limited'} sectionExplanation={"Below cards can only appear twice in a  Main Deck or Side Deck."} cards={this.state.semiLimited} />
+							]
+					}
+					/>
 				</div>
 			)
 		}
