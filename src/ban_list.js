@@ -5,20 +5,19 @@ import { Typography } from '@material-ui/core';
 
 import Grid from '@material-ui/core/Grid'
 
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import { ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import Button from '@material-ui/core/Button'
+
 
 /*
 	Custom Components
 */
 import BanListSection from './ban_list_section'
 import BreadCrumb from './breadcrumb.js'
-import handleFetchErrRedirect from './Helper/fetch_handler'
 import TabbedView from './tabbed_view'
+import { handleFetch } from './Helper/fetch_handler'
 
 class BanList extends Component
 {
@@ -59,29 +58,28 @@ class BanList extends Component
 	fetchBanListStartDates()
 	{
 		const banListsUrl = "http://localhost:9999/ban_list/startDates"
+		handleFetch(banListsUrl, this.props.history, (resultJson) => {
+			this.setState({
+				banListsStartDates: resultJson.banListStartDates,
+				selectedBanList: resultJson.banListStartDates[0]
+			}, this.fetchBanList)
 
-		fetch(banListsUrl)
-			.then((data) => data.json())
-			.then((resultJson) => {
-				this.setState({
-					banListsStartDates: resultJson.banListStartDates,
-					selectedBanList: resultJson.banListStartDates[0]
-				}, this.fetchBanList)
-
-				let banListGrid = []
-				this.state.banListsStartDates.forEach((item, ind) => {
-					banListGrid.push(<Grid key={ind} item xs={6} sm={3} md={2} lg={1} xl={1} >
-							<Button size='small' id={ind} onClick={this.changeBanList} >
-								{this.getDateString(new Date(item))}
-							</Button>
-						</Grid>
-					)
-				})
-
-				this.setState({
-					banListGrid: banListGrid
-				})
+			let banListGrid =[]
+			this.state.banListsStartDates.forEach((item, ind) => {
+				banListGrid.push(<Grid key={ind} item xs={6} sm={3} md={2} lg={1} xl={1} >
+					<Button size='small' id={ind} onClick={this.changeBanList} >
+						{this.getDateString(new Date(item))}
+					</Button>
+				</Grid>
+				)
 			})
+
+			this.setState({
+				banListGrid: banListGrid
+			})
+		})
+
+
 	}
 
 	changeBanList(button)
@@ -101,21 +99,13 @@ class BanList extends Component
 
 	fetchBanList(banListUrl = `http://localhost:9999/ban_list/${this.state.selectedBanList}`)
 	{
-		fetch(banListUrl)
-			.then((data) => {
-				if (data.ok) return data.json()
-				else throw new Error(data.statusText)
+		handleFetch(banListUrl, this.props.history, (resultJson) => {
+			this.setState({
+				forbidden: resultJson.bannedCards.forbidden,
+				limited: resultJson.bannedCards.limited,
+				semiLimited: resultJson.bannedCards.semiLimited,
 			})
-			.then((results) => {
-				this.setState({
-					forbidden: results.bannedCards.forbidden,
-					limited: results.bannedCards.limited,
-					semiLimited: results.bannedCards.semiLimited,
-				})
-			})
-			.catch((err) => {
-				handleFetchErrRedirect(this, 'test', '/server_err')
-			})
+		})
 	}
 
 
