@@ -1,16 +1,20 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import Home from './home'
 import BanList from './ban_list'
 import ServerError from './Error_Pages/server_err'
+import NotFound from './not_found'
 
 render(
 	<Router >
-		<Route path='/' exact component={Home} />
-		<Route path='/ban_list' component={BanList} />
-		<Route path='/server_err' component={ServerError} />
+		<Switch>
+			<Route path='/' exact component={Home} />
+			<Route path='/ban_list' exact component={BanList} />
+			<Route path='/server_err' exact component={ServerError} />
+			<Route component={NotFound} />
+		</Switch>
 	</Router>,
 	document.getElementById('root')
 )
