@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid'
 import { withStyles } from '@material-ui/styles'
 
 import PropTypes from 'prop-types'
+import loading from './img/loading.gif'
 
 const styles = {
 	banedText: {
@@ -65,7 +66,7 @@ class BanListSection extends Component
 				{
 					cardDetails[card.cardColor.toLowerCase()] = []
 				}
-				cardDetails[card.cardColor.toLowerCase()].push(<CardDetail key={ind} cardName={card.cardName} monsterType={card.monsterType} cardColor={card.cardColor} cardEffect={card.cardEffect} />)
+				cardDetails[card.cardColor.toLowerCase()].push(<CardDetail key={ind} cardName={card.cardName} monsterType={card.monsterType} cardColor={card.cardColor} cardEffect={card.cardEffect} cardClicked={this.props.cardClicked} />)
 			})
 
 			let grid = []
@@ -76,7 +77,7 @@ class BanListSection extends Component
 				{
 					grid.push(
 						<div key={cardType} >
-						<Grid container spacing={1} >
+						<Grid container spacing={1}  >
 							{cardDetails[cardType]}
 						</Grid>
 						<br />
@@ -94,13 +95,16 @@ class BanListSection extends Component
 		const { classes } = this.props
 
 		return(
-			<div>
+			(this.props.fetchingBanList ?
+			(<div><img style={{height: 150, width: 150} }src={loading} /></div>) :
+			(<Box >
 				<Typography variant='h6' style={{marginBottom: 15}} >{this.props.sectionExplanation}</Typography>
 
 				<Box className={classes.banCardsRow} >
 					{this.state.grid}
 				</Box>
-			</div>
+			</Box>)
+			)
 		)
 	}
 }

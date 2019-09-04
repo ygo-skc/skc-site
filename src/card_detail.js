@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 
-import 'typeface-roboto'
-
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 
@@ -153,16 +151,14 @@ class CardDetail extends Component
 			md={3}
 			lg={2}
 			xl={2} >
-				<Card>
+				<Card onClick={() => this.props.cardClicked(this.props.cardName)} >
 					<CardContent className={classes[this.props.cardColor.toLowerCase()]}>
 						<Box className={classes.cardTop}>
 							<Typography variant='subtitle1' noWrap={true} >{this.props.cardName}</Typography>
 						</Box>
 						<Box className={classes[`${this.props.cardColor.toLowerCase()}Summary`]} >
 							<Typography variant='body2' className={classes.monsterType} noWrap={true} >{this.props.monsterType}</Typography>
-							<Tooltip title={this.props.cardEffect} aria-label="Add" className={classes.tooltip} >
-								<Typography variant='body2' className={classes.cardText} >{this.props.cardEffect}</Typography>
-							</Tooltip>
+							<Typography variant='body2' className={classes.cardText} >{this.props.cardEffect}</Typography>
 						</Box>
 					</CardContent>
 				</Card>

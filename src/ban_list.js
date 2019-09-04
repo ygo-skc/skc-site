@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 
-import 'typeface-roboto'
-import { Typography } from '@material-ui/core';
+import { Typography, Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
 
 import Grid from '@material-ui/core/Grid'
 
@@ -9,6 +8,9 @@ import { ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary } from '@m
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import Button from '@material-ui/core/Button'
+
+import DialogContentText from '@material-ui/core/DialogContentText';
+
 
 
 /*
@@ -34,7 +36,12 @@ class BanList extends Component
 			limited: [],
 			semiLimited: [],
 
-			banListContent: []
+			banListContent: [],
+
+			fetchingBanList: false,
+
+			showingCardDetail: false,
+			chosenCard: ''
 		}
 
 		/*
@@ -44,6 +51,8 @@ class BanList extends Component
 		this.fetchBanList = this.fetchBanList.bind(this)
 		this.fetchBanListStartDates = this.fetchBanListStartDates.bind(this)
 		this.changeBanList = this.changeBanList.bind(this)
+		this.closeCardDetail = this.closeCardDetail.bind(this)
+		this.cardClicked = this.cardClicked.bind(this)
 
 		this.fetchBanListStartDates()
 
@@ -57,7 +66,7 @@ class BanList extends Component
 
 	fetchBanListStartDates()
 	{
-		const banListsUrl = "http://localhost:9999/ban_list/startDates"
+		const banListsUrl = "http://localhost:9999/ban_lists/v1/"
 		handleFetch(banListsUrl, this.props.history, (resultJson) => {
 			this.setState({
 				banListsStartDates: resultJson.banListStartDates,
@@ -92,20 +101,34 @@ class BanList extends Component
 				selectedBanList: selectedBanList
 			}, this.fetchBanList)
 		}
-
-
 	}
 
 
-	fetchBanList(banListUrl = `http://localhost:9999/ban_list/${this.state.selectedBanList}`)
+	fetchBanList(banListUrl = `http://localhost:9999/banned_cards/v1/${this.state.selectedBanList}`)
 	{
+		this.setState({ fetchingBanList: true })
 		handleFetch(banListUrl, this.props.history, (resultJson) => {
 			this.setState({
 				forbidden: resultJson.bannedCards.forbidden,
 				limited: resultJson.bannedCards.limited,
 				semiLimited: resultJson.bannedCards.semiLimited,
 			})
+
+			setTimeout(() => this.setState({ fetchingBanList: false }), 1000)
 		})
+	}
+
+	cardClicked(cardName)
+	{
+		this.setState({
+			showingCardDetail: true,
+			chosenCard: cardName
+		})
+	}
+
+	closeCardDetail()
+	{
+		this.setState({showingCardDetail: false})
 	}
 
 
@@ -130,13 +153,24 @@ class BanList extends Component
 						</ExpansionPanelDetails>
 					</ExpansionPanel>
 
+					<Button onClick={() => { this.setState({ showingCardDetail: true }) }}>Click me</Button>
+
+					<Dialog open={this.state.showingCardDetail} keepMounted onClose={this.closeCardDetail} >
+						<DialogTitle>{this.state.chosenCard}</DialogTitle>
+						<DialogContent>
+							<DialogContentText id="alert-dialog-slide-description">
+								Let Google help apps determine location. This means sending anonymous location data to
+								Google, even when no apps are running.
+							</DialogContentText>
+						</DialogContent>
+					</Dialog>
 
 					<TabbedView
 					content={
 						[
-							<BanListSection sectionName={'Forbidden'} sectionExplanation={"Forbidded cards cannot be used in a duel in the Advanced Format."} cards={this.state.forbidden} />,
-							<BanListSection sectionName={'Limited'} sectionExplanation={"Below cards can only appear once in a  Main Deck or Side Deck."} cards={this.state.limited} />,
-							<BanListSection sectionName={'Semi-Limited'} sectionExplanation={"Below cards can only appear twice in a  Main Deck or Side Deck."} cards={this.state.semiLimited} />
+							<BanListSection sectionName={'Forbidden'} sectionExplanation={"Forbidded cards cannot be used in a duel in the Advanced Format."} cards={this.state.forbidden} fetchingBanList={this.state.fetchingBanList} cardClicked={this.cardClicked} />,
+							<BanListSection sectionName={'Limited'} sectionExplanation={"Below cards can only appear once in a  Main Deck or Side Deck."} cards={this.state.limited} fetchingBanList={this.state.fetchingBanList} cardClicked={this.cardClicked} />,
+							<BanListSection sectionName={'Semi-Limited'} sectionExplanation={"Below cards can only appear twice in a  Main Deck or Side Deck."} cards={this.state.semiLimited} fetchingBanList={this.state.fetchingBanList} cardClicked={this.cardClicked} />
 							]
 					}
 					/>
