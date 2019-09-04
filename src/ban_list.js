@@ -118,11 +118,14 @@ class BanList extends Component
 		})
 	}
 
-	cardClicked(cardName)
+	cardClicked(cardID)
 	{
-		this.setState({
-			showingCardDetail: true,
-			chosenCard: cardName
+		handleFetch(`http://localhost:9999/card/v1/${cardID}`, this.props.history, (resultJson) => {
+			console.log(resultJson)
+			this.setState({
+				showingCardDetail: true,
+				chosenCard: resultJson
+			})
 		})
 	}
 
@@ -153,14 +156,11 @@ class BanList extends Component
 						</ExpansionPanelDetails>
 					</ExpansionPanel>
 
-					<Button onClick={() => { this.setState({ showingCardDetail: true }) }}>Click me</Button>
-
 					<Dialog open={this.state.showingCardDetail} keepMounted onClose={this.closeCardDetail} >
-						<DialogTitle>{this.state.chosenCard}</DialogTitle>
+						<DialogTitle>{this.state.chosenCard.cardName}</DialogTitle>
 						<DialogContent>
 							<DialogContentText id="alert-dialog-slide-description">
-								Let Google help apps determine location. This means sending anonymous location data to
-								Google, even when no apps are running.
+								{this.state.chosenCard.cardEffect}
 							</DialogContentText>
 						</DialogContent>
 					</Dialog>

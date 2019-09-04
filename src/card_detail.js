@@ -151,7 +151,7 @@ class CardDetail extends Component
 			md={3}
 			lg={2}
 			xl={2} >
-				<Card onClick={() => this.props.cardClicked(this.props.cardName)} >
+				<Card onClick={() => this.props.cardClicked(this.props.cardID)} >
 					<CardContent className={classes[this.props.cardColor.toLowerCase()]}>
 						<Box className={classes.cardTop}>
 							<Typography variant='subtitle1' noWrap={true} >{this.props.cardName}</Typography>
