@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { Typography, Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
+import { Typography, Dialog, DialogTitle, DialogContent, Box, Divider } from '@material-ui/core';
 
 import Grid from '@material-ui/core/Grid'
 
@@ -11,6 +11,10 @@ import Button from '@material-ui/core/Button'
 
 import DialogContentText from '@material-ui/core/DialogContentText';
 
+import cardStyles from './card_detail_styles'
+
+import { withStyles } from '@material-ui/core/styles'
+import PropTypes from 'prop-types'
 
 
 /*
@@ -137,6 +141,11 @@ class BanList extends Component
 
 		render()
 		{
+			const { classes } = this.props
+			const cardColor = (this.state.chosenCard === '') ? '' : this.state.chosenCard.cardColor.toLowerCase()
+			const cardColorStyle = classes[cardColor]
+			const cardColorSummaryStyle = classes[`${cardColor}Summary`]
+
 			return (
 				<div>
 					<BreadCrumb crumbs={['Home', 'Ban List']} />
@@ -157,12 +166,31 @@ class BanList extends Component
 					</ExpansionPanel>
 
 					<Dialog open={this.state.showingCardDetail} keepMounted onClose={this.closeCardDetail} >
-						<DialogTitle>{this.state.chosenCard.cardName}</DialogTitle>
-						<DialogContent>
-							<DialogContentText id="alert-dialog-slide-description">
-								{this.state.chosenCard.cardEffect}
-							</DialogContentText>
-						</DialogContent>
+						<Box className={cardColorStyle} >
+							<DialogTitle>
+								{this.state.chosenCard.cardName}
+							</DialogTitle>
+							<DialogContent>
+								<DialogContentText id="alert-dialog-slide-description">
+									<Typography className={cardColorSummaryStyle} >
+										{this.state.chosenCard.monsterType}
+									</Typography>
+									<Typography className={cardColorSummaryStyle} >
+										{this.state.chosenCard.cardEffect}
+									</Typography>
+									<Divider />
+									{
+										(cardColor === 'spell' || cardColor === 'trap') ? (undefined) :
+										<Typography className={cardColorSummaryStyle} style={{ 'textAlign': 'right', 'color': '#fff' }}>
+											{this.state.chosenCard.monsterAtk} / {this.state.chosenCard.monsterDef}
+										</Typography>
+									}
+									<Typography style={{'textAlign': 'right', 'color': '#fff'}}>
+										{this.state.chosenCard.cardID}
+									</Typography>
+								</DialogContentText>
+							</DialogContent>
+						</Box>
 					</Dialog>
 
 					<TabbedView
@@ -180,4 +208,8 @@ class BanList extends Component
 }
 
 
-export default BanList
+BanList.propTypes = {
+	classes: PropTypes.object.isRequired
+}
+
+export default withStyles(cardStyles)(BanList)
