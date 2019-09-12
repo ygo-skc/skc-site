@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid'
 import { withStyles } from '@material-ui/styles'
 
 import PropTypes from 'prop-types'
-import loading from './img/loading.gif'
+import loading from './Img/loading.gif'
 
 const styles = {
 	banedText: {
