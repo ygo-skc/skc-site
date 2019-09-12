@@ -1,8 +1,15 @@
 import { blue, teal, pink, orange, deepPurple, grey, yellow } from '@material-ui/core/colors'
 
 const cardStyles = {
+	baseText: {
+		paddingBottom: '5px',
+		'white-space': 'pre-wrap'
+	},
 	monsterType: {
 		fontWeight: 'bold'
+	},
+	alignRight: {
+		'textAlign': 'right'
 	},
 	normal: {
 		background: `linear-gradient(45deg, ${yellow[600]} 30%, ${yellow[800]} 90%)`,

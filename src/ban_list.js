@@ -172,19 +172,20 @@ class BanList extends Component
 							</DialogTitle>
 							<DialogContent>
 								<DialogContentText id="alert-dialog-slide-description">
-									<Typography className={cardColorSummaryStyle} >
-										{this.state.chosenCard.monsterType}
-									</Typography>
-									<Typography className={cardColorSummaryStyle} >
-										{this.state.chosenCard.cardEffect}
-									</Typography>
-									<Divider />
-									{
-										(cardColor === 'spell' || cardColor === 'trap') ? (undefined) :
-										<Typography className={cardColorSummaryStyle} style={{ 'textAlign': 'right', 'color': '#fff' }}>
-											{this.state.chosenCard.monsterAtk} / {this.state.chosenCard.monsterDef}
+									<Box className={cardColorSummaryStyle} style={{ 'marginBottom': '5px' }} >
+										<Typography className={[classes.monsterType, classes.baseText]} >
+											{this.state.chosenCard.monsterType}
 										</Typography>
-									}
+										<Typography className={classes.baseText} >
+											{this.state.chosenCard.cardEffect}
+										</Typography>
+										{
+											(cardColor === 'spell' || cardColor === 'trap') ? (undefined) :
+												<Typography className={classes.alignRight} >
+													{this.state.chosenCard.monsterAtk} / {this.state.chosenCard.monsterDef}
+												</Typography>
+										}
+									</Box>
 									<Typography style={{'textAlign': 'right', 'color': '#fff'}}>
 										{this.state.chosenCard.cardID}
 									</Typography>

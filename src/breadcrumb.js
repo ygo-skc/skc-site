@@ -14,10 +14,8 @@ import { Typography, makeStyles } from '@material-ui/core';
 const styles = makeStyles(theme => ({
 	root: {
 		display: 'flex',
+		padding: '15px'
 	},
-	breadcrumb: {
-		padding: theme.spacing(1, 2)
-	}
 }))
 
 export default function BreadCrumb(props)
