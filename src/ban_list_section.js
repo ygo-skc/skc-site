@@ -96,7 +96,7 @@ class BanListSection extends Component
 
 		return(
 			(this.props.fetchingBanList ?
-			(<div><img style={{height: 150, width: 150} }src={loading} /></div>) :
+			(<div style={{textAlign: 'center'}}><img style={{height: 150, width: 150} }src={loading} /></div>) :
 			(<Box >
 				<Typography variant='h6' style={{marginBottom: 15}} >{this.props.sectionExplanation}</Typography>
 
