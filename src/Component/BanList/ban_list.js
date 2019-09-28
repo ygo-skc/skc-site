@@ -11,19 +11,21 @@ import Button from '@material-ui/core/Button'
 
 import DialogContentText from '@material-ui/core/DialogContentText';
 
-import cardStyles from './card_detail_styles'
+import cardStyles from '../Card/card_detail_styles'
 
 import { withStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
+
+import NAME_maps_ENDPOINT from '../../Helper/ygo_api.js'
 
 
 /*
 	Custom Components
 */
 import BanListSection from './ban_list_section'
-import BreadCrumb from './breadcrumb.js'
+import BreadCrumb from '../breadcrumb.js'
 import TabbedView from './tabbed_view'
-import { handleFetch } from './Helper/fetch_handler'
+import { handleFetch } from '../../Helper/fetch_handler'
 
 class BanList extends Component
 {
@@ -70,8 +72,7 @@ class BanList extends Component
 
 	fetchBanListStartDates()
 	{
-		const banListsUrl = "http://localhost:9999/ban_lists/v1/"
-		handleFetch(banListsUrl, this.props.history, (resultJson) => {
+		handleFetch(NAME_maps_ENDPOINT['banListsUrl'], this.props.history, (resultJson) => {
 			this.setState({
 				banListsStartDates: resultJson.banListStartDates,
 				selectedBanList: resultJson.banListStartDates[0]
@@ -91,8 +92,6 @@ class BanList extends Component
 				banListGrid: banListGrid
 			})
 		})
-
-
 	}
 
 	changeBanList(button)
@@ -108,8 +107,9 @@ class BanList extends Component
 	}
 
 
-	fetchBanList(banListUrl = `http://localhost:9999/banned_cards/v1/${this.state.selectedBanList}`)
+	fetchBanList(banListUrl = `${NAME_maps_ENDPOINT['banListInstanceUrl']}${this.state.selectedBanList}`)
 	{
+		console.log(banListUrl)
 		this.setState({ fetchingBanList: true })
 		handleFetch(banListUrl, this.props.history, (resultJson) => {
 			this.setState({
@@ -124,7 +124,7 @@ class BanList extends Component
 
 	cardClicked(cardID)
 	{
-		handleFetch(`http://localhost:9999/card/v1/${cardID}`, this.props.history, (resultJson) => {
+		handleFetch(`${NAME_maps_ENDPOINT['cardInstanceUrl']}${cardID}`, this.props.history, (resultJson) => {
 			console.log(resultJson)
 			this.setState({
 				showingCardDetail: true,

@@ -2,10 +2,10 @@ import React from 'react'
 import { render } from 'react-dom'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
-import Home from './home'
-import BanList from './ban_list'
-import ServerError from './Error_Pages/server_err'
-import NotFound from './not_found'
+import Home from './Component/home'
+import BanList from './Component/BanList/ban_list'
+import ServerError from './Component/Exceptions/server_err'
+import NotFound from './Component/Exceptions/not_found'
 
 render(
 	<Router >

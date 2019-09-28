@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import CardDetail from './card_detail.js'
+import CardDetail from '../Card/card_detail.js'
 
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid'
 import { withStyles } from '@material-ui/styles'
 
 import PropTypes from 'prop-types'
-import loading from './Img/loading.gif'
+import loading from '../../Img/loading.gif'
 
 const styles = {
 	banedText: {
