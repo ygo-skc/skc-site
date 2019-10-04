@@ -38,6 +38,7 @@ function BanList(props)
 	const [semiLimited, setSemiLimited] = useState([])
 
 	const [fetchingBanList, setFetchingBanList] = useState(false)
+	const [initLoad, setInitLoad] = useState(true)
 
 	const [showingCardDetail, setShowingCardDetail] = useState(false)
 	const [chosenCardID, setChosenCardID] = useState('')
@@ -67,13 +68,15 @@ function BanList(props)
 	useEffect(() => {
 		if (selectedBanList !== '')
 		{
+			setInitLoad(false)
 			setFetchingBanList(true)
+
 			handleFetch(`${NAME_maps_ENDPOINT['banListInstanceUrl']}${selectedBanList}`, props.history, (resultJson) => {
 				setForbidden(resultJson.bannedCards.forbidden)
 				setLimited(resultJson.bannedCards.limited)
 				setSemiLimited(resultJson.bannedCards.semiLimited)
 
-				setTimeout(() => setFetchingBanList(false), 1000)
+				setTimeout(() => setFetchingBanList(false), 250)
 			})
 		}
 	}, [selectedBanList])
@@ -96,7 +99,7 @@ function BanList(props)
 
 
 	return (
-		<div>
+		<div style={(initLoad) ? { 'display': 'none' }: {'display': 'block'}} >
 			<BreadCrumb crumbs={['Home', 'Ban List']} />
 
 			<ExpansionPanel elevation={0} >
