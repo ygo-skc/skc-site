@@ -59,7 +59,11 @@ function BanListSection(props)
 			if (cardDetails[card.cardColor.toLowerCase()] === undefined) {
 				cardDetails[card.cardColor.toLowerCase()] = []
 			}
-			cardDetails[card.cardColor.toLowerCase()].push(<CardDetail key={ind} cardID={card.cardID} cardName={card.cardName} monsterType={card.monsterType} cardColor={card.cardColor} cardEffect={card.cardEffect} cardClicked={props.cardClicked} />)
+			cardDetails[card.cardColor.toLowerCase()].push(
+				<Grid item xs={12} sm={6} md={3} lg={2} xl={2} >
+					<CardDetail key={ind} cardID={card.cardID} cardName={card.cardName} monsterType={card.monsterType} cardColor={card.cardColor} cardEffect={card.cardEffect} cardClicked={props.cardClicked} />
+				</Grid>
+			)
 		})
 
 		let grid = []
@@ -84,8 +88,8 @@ function BanListSection(props)
 
 	return (
 		(props.fetchingBanList ?
-			(<div style={{ textAlign: 'center' }}><img style={{ height: 150, width: 150 }} src={loading} alt='Loading gif' /></div>) :
-			(<Box >
+			(<div style={{ textAlign: 'center' }}><img style={{ height: 150, width: 150 }} src={loading} alt='Loading gif' /></div>)
+			: (<Box >
 				<Typography variant='h6' style={{ marginBottom: 15 }} >{props.sectionExplanation}</Typography>
 
 				<Box className={classes.banCardsRow} >

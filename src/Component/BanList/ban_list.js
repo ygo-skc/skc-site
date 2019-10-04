@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import { Typography, Dialog, DialogTitle, DialogContent, Box } from '@material-ui/core';
+import { Typography, Dialog } from '@material-ui/core';
 
 import Grid from '@material-ui/core/Grid'
 
@@ -9,12 +9,12 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import Button from '@material-ui/core/Button'
 
-import DialogContentText from '@material-ui/core/DialogContentText';
-
 import cardStyles from '../Card/card_detail_styles'
 
 import { withStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
+
+import CardDetail from '../Card/card_detail'
 
 import NAME_maps_ENDPOINT from '../../Helper/ygo_api.js'
 
@@ -91,10 +91,6 @@ function BanList(props)
 		}
 	}, [chosenCardID])
 
-	const { classes } = props
-	const cardColor = (chosenCard === '') ? '' : chosenCard.cardColor.toLowerCase()
-	const cardColorStyle = classes[cardColor]
-	const cardColorSummaryStyle = classes[`${cardColor}Summary`]
 	const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
 
@@ -118,32 +114,10 @@ function BanList(props)
 			</ExpansionPanel>
 
 			<Dialog open={showingCardDetail} keepMounted onClose={() => setShowingCardDetail(false)} >
-				<Box className={cardColorStyle} >
-					<DialogTitle>
-						{chosenCard.cardName}
-					</DialogTitle>
-					<DialogContent>
-						<DialogContentText id="alert-dialog-slide-description">
-							<Box className={cardColorSummaryStyle} style={{ 'marginBottom': '5px' }} >
-								<Typography className={[classes.monsterType, classes.baseText]} >
-									{chosenCard.monsterType}
-								</Typography>
-								<Typography className={classes.baseText} >
-									{chosenCard.cardEffect}
-								</Typography>
-								{
-									(cardColor === 'spell' || cardColor === 'trap') ? (undefined) :
-										<Typography className={classes.alignRight} >
-											{chosenCard.monsterAtk} / {chosenCard.monsterDef}
-										</Typography>
-								}
-							</Box>
-							<Typography style={{ 'textAlign': 'right', 'color': '#fff' }}>
-								{chosenCard.cardID}
-							</Typography>
-						</DialogContentText>
-					</DialogContent>
-				</Box>
+				{
+					(!showingCardDetail) ? undefined :
+						<CardDetail key={999} fullDetails cardID={chosenCard.cardID} cardName={chosenCard.cardName} monsterType={chosenCard.monsterType} cardColor={chosenCard.cardColor} cardEffect={chosenCard.cardEffect} cardClicked={props.cardClicked} monsterAtk={chosenCard.monsterAtk} monsterDef={chosenCard.monsterDef} />
+				}
 			</Dialog>
 
 			<TabbedView
@@ -151,7 +125,7 @@ function BanList(props)
 					[
 						<BanListSection sectionName={'Forbidden'} sectionExplanation={"Forbidden cards cannot be used in a duel in the Advanced Format."} cards={forbidden} fetchingBanList={fetchingBanList} cardClicked={(cardID) => setChosenCardID(cardID)} />,
 						<BanListSection sectionName={'Limited'} sectionExplanation={"Below cards can only appear once in a  Main Deck or Side Deck."} cards={limited} fetchingBanList={fetchingBanList} cardClicked={(cardID) => setChosenCardID(cardID)} />,
-						<BanListSection sectionName={'Semi-Limited'} sectionExplanation={"Below cards can only appear twice in a  Main Deck or Side Deck."} cards={semiLimited} fetchingBanList={fetchingBanList} cardClicked={(cardID) => setChosenCardID(cardID)}/>
+						<BanListSection sectionName={'Semi-Limited'} sectionExplanation={"Below cards can only appear twice in a  Main Deck or Side Deck."} cards={semiLimited} fetchingBanList={fetchingBanList} cardClicked={(cardID) => setChosenCardID(cardID)} />
 					]
 				}
 			/>
