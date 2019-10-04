@@ -10,18 +10,14 @@ function TabbedView(props)
 	const [currentTab, setCurrentTab] = useState(0)
 
 		return (
-		<div>
-		<AppBar position='static' >
-			<Tabs value={currentTab} onChange={(event, newValue) => { setCurrentTab(newValue)}} variant='fullWidth' >
-				<Tab label='Forbidden' {...allyProps(0)} />
-				<Tab label='Limited' {...allyProps(1)} />
-				<Tab label='Semi-Limited' {...allyProps(2)} />
-			</Tabs>
-		</AppBar>
-			<SwipeableViews
-				index={currentTab}
-				onChangeIndex={(newValue) => { setCurrentTab(newValue)}}
-			>
+			<div>
+				<AppBar position='sticky' >
+					<Tabs value={currentTab} onChange={(event, newValue) => { setCurrentTab(newValue)}} variant='fullWidth' >
+						<Tab label='Forbidden' {...allyProps(0)} />
+						<Tab label='Limited' {...allyProps(1)} />
+						<Tab label='Semi-Limited' {...allyProps(2)} />
+					</Tabs>
+				</AppBar>
 				<TabPanel value={ currentTab } index={0}>
 						{props.content[0]}
 				</TabPanel>
@@ -31,7 +27,6 @@ function TabbedView(props)
 					<TabPanel value={ currentTab } index={2}>
 						{props.content[2]}
 				</TabPanel>
-			</SwipeableViews>
 			</div>
 		)
 }
