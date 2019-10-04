@@ -58,7 +58,10 @@ class BanListSection extends Component
 
 	componentDidUpdate(oldProps)
 	{
+		console.log(this.props.cards)
+		console.log(oldProps)
 		if (oldProps.cards.length !== this.props.cards.length){
+			console.log(this.props.cards)
 			let cardDetails = new Map()
 
 			this.props.cards.forEach((card, ind) => {

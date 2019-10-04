@@ -36,10 +36,9 @@ class TabbedView extends Component
 		</AppBar>
 			<SwipeableViews
 				index={this.state.currentTab}
-				onChangeIndex={(newValue) => { console.log(this.state.currentTab, newValue); this.setState({ currentTab: newValue }) }}
+				onChangeIndex={(newValue) => { this.setState({ currentTab: newValue }) }}
 			>
 				<TabPanel value={ this.state.currentTab } index={0}>
-					{console.log(this.props.content)}
 						{this.props.content[0]}
 				</TabPanel>
 					<TabPanel value={ this.state.currentTab } index={1}>
