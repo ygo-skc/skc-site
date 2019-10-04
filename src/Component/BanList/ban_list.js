@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { Typography, Dialog, DialogTitle, DialogContent, Box, Divider } from '@material-ui/core';
 
@@ -27,186 +27,136 @@ import BreadCrumb from '../breadcrumb.js'
 import TabbedView from './tabbed_view'
 import { handleFetch } from '../../Helper/fetch_handler'
 
-class BanList extends Component
+function BanList(props)
 {
-	constructor(props)
-	{
-		super(props)
-		this.state = {
-			banListsStartDates: [],
-			banListGrid: [],
-			selectedBanList: '',
-			months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+	const [banListsStartDates, setBanListsStartDates] = useState([])
+	const [banListGrid, setBanListGrid] = useState([])
+	const [selectedBanList, setSelectedBanList] = useState('')
 
-			forbidden: [],
-			limited: [],
-			semiLimited: [],
+	const [forbidden, setForbidden] = useState([])
+	const [limited, setLimited] = useState([])
+	const [semiLimited, setSemiLimited] = useState([])
 
-			banListContent: [],
+	const [fetchingBanList, setFetchingBanList] = useState(false)
 
-			fetchingBanList: false,
+	const [showingCardDetail, setShowingCardDetail] = useState(false)
+	const [chosenCardID, setChosenCardID] = useState('')
+	const [chosenCard, setChosenCard] = useState('')
 
-			showingCardDetail: false,
-			chosenCard: ''
-		}
-
-		/*
-			Binding methods to class context
-		*/
-		this.getDateString = this.getDateString.bind(this)
-		this.fetchBanList = this.fetchBanList.bind(this)
-		this.fetchBanListStartDates = this.fetchBanListStartDates.bind(this)
-		this.changeBanList = this.changeBanList.bind(this)
-		this.closeCardDetail = this.closeCardDetail.bind(this)
-		this.cardClicked = this.cardClicked.bind(this)
-
-		this.fetchBanListStartDates()
-
-	}
-
-	getDateString(date)
-	{
-		return `${this.state.months[date.getMonth()]} ${date.getDate() + 1}, ${date.getFullYear()}`
-	}
-
-
-	fetchBanListStartDates()
-	{
-		handleFetch(NAME_maps_ENDPOINT['banListsUrl'], this.props.history, (resultJson) => {
-			this.setState({
-				banListsStartDates: resultJson.banListStartDates,
-				selectedBanList: resultJson.banListStartDates[0]
-			}, this.fetchBanList)
-
-			let banListGrid =[]
-			this.state.banListsStartDates.forEach((item, ind) => {
-				banListGrid.push(<Grid key={ind} item xs={6} sm={3} md={2} lg={1} xl={1} >
-					<Button size='small' id={ind} onClick={this.changeBanList} >
-						{this.getDateString(new Date(item))}
-					</Button>
-				</Grid>
-				)
-			})
-
-			this.setState({
-				banListGrid: banListGrid
-			})
+	useEffect(() => {
+		handleFetch(NAME_maps_ENDPOINT['banListsUrl'], props.history, (resultJson) => {
+			setBanListsStartDates(resultJson.banListStartDates)
+			setSelectedBanList(resultJson.banListStartDates[0])
 		})
-	}
+	}, [])
 
-	changeBanList(button)
-	{
-		const selectedBanList = this.state.banListsStartDates[button.currentTarget.id]
-
-		if (selectedBanList !== this.state.selectedBanList)
-		{
-			this.setState({
-				selectedBanList: selectedBanList
-			}, this.fetchBanList)
-		}
-	}
-
-
-	fetchBanList(banListUrl = `${NAME_maps_ENDPOINT['banListInstanceUrl']}${this.state.selectedBanList}`)
-	{
-		console.log(banListUrl)
-		this.setState({ fetchingBanList: true })
-		handleFetch(banListUrl, this.props.history, (resultJson) => {
-			this.setState({
-				forbidden: resultJson.bannedCards.forbidden,
-				limited: resultJson.bannedCards.limited,
-				semiLimited: resultJson.bannedCards.semiLimited,
-			})
-
-			setTimeout(() => this.setState({ fetchingBanList: false }), 1000)
-		})
-	}
-
-	cardClicked(cardID)
-	{
-		handleFetch(`${NAME_maps_ENDPOINT['cardInstanceUrl']}${cardID}`, this.props.history, (resultJson) => {
-			console.log(resultJson)
-			this.setState({
-				showingCardDetail: true,
-				chosenCard: resultJson
-			})
-		})
-	}
-
-	closeCardDetail()
-	{
-		this.setState({showingCardDetail: false})
-	}
-
-
-		render()
-		{
-			const { classes } = this.props
-			const cardColor = (this.state.chosenCard === '') ? '' : this.state.chosenCard.cardColor.toLowerCase()
-			const cardColorStyle = classes[cardColor]
-			const cardColorSummaryStyle = classes[`${cardColor}Summary`]
-
-			return (
-				<div>
-					<BreadCrumb crumbs={['Home', 'Ban List']} />
-
-					<ExpansionPanel elevation={0} >
-						<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-							<Typography style={{flexBasis: '20%', flexShrink: 0 }} variant='h6' >Ban Lists:</Typography>
-							<Typography variant='subtitle1' >
-								Currently viewing ban list effective {this.getDateString(new Date(this.state.selectedBanList))}
-							</Typography>
-						</ExpansionPanelSummary>
-
-						<ExpansionPanelDetails>
-							<Grid container >
-								{this.state.banListGrid}
-							</Grid>
-						</ExpansionPanelDetails>
-					</ExpansionPanel>
-
-					<Dialog open={this.state.showingCardDetail} keepMounted onClose={this.closeCardDetail} >
-						<Box className={cardColorStyle} >
-							<DialogTitle>
-								{this.state.chosenCard.cardName}
-							</DialogTitle>
-							<DialogContent>
-								<DialogContentText id="alert-dialog-slide-description">
-									<Box className={cardColorSummaryStyle} style={{ 'marginBottom': '5px' }} >
-										<Typography className={[classes.monsterType, classes.baseText]} >
-											{this.state.chosenCard.monsterType}
-										</Typography>
-										<Typography className={classes.baseText} >
-											{this.state.chosenCard.cardEffect}
-										</Typography>
-										{
-											(cardColor === 'spell' || cardColor === 'trap') ? (undefined) :
-												<Typography className={classes.alignRight} >
-													{this.state.chosenCard.monsterAtk} / {this.state.chosenCard.monsterDef}
-												</Typography>
-										}
-									</Box>
-									<Typography style={{'textAlign': 'right', 'color': '#fff'}}>
-										{this.state.chosenCard.cardID}
-									</Typography>
-								</DialogContentText>
-							</DialogContent>
-						</Box>
-					</Dialog>
-
-					<TabbedView
-					content={
-						[
-							<BanListSection sectionName={'Forbidden'} sectionExplanation={"Forbidded cards cannot be used in a duel in the Advanced Format."} cards={this.state.forbidden} fetchingBanList={this.state.fetchingBanList} cardClicked={this.cardClicked} />,
-							<BanListSection sectionName={'Limited'} sectionExplanation={"Below cards can only appear once in a  Main Deck or Side Deck."} cards={this.state.limited} fetchingBanList={this.state.fetchingBanList} cardClicked={this.cardClicked} />,
-							<BanListSection sectionName={'Semi-Limited'} sectionExplanation={"Below cards can only appear twice in a  Main Deck or Side Deck."} cards={this.state.semiLimited} fetchingBanList={this.state.fetchingBanList} cardClicked={this.cardClicked} />
-							]
-					}
-					/>
-				</div>
+	useEffect(() => {
+		let banListGrid1 = []
+		banListsStartDates.forEach((item, ind) => {
+			banListGrid1.push(<Grid key={ind} item xs={6} sm={3} md={2} lg={1} xl={1} >
+				<Button size='small' id={ind} onClick={(button) => setSelectedBanList(banListsStartDates[button.currentTarget.id])} >
+					{getDateString(months, new Date(item))}
+				</Button>
+			</Grid>
 			)
+		})
+
+		setBanListGrid(banListGrid1)
+	}, [banListsStartDates])
+
+	useEffect(() => {
+		if (selectedBanList !== '')
+		{
+			setFetchingBanList(true)
+			handleFetch(`${NAME_maps_ENDPOINT['banListInstanceUrl']}${selectedBanList}`, props.history, (resultJson) => {
+				setForbidden(resultJson.bannedCards.forbidden)
+				setLimited(resultJson.bannedCards.limited)
+				setSemiLimited(resultJson.bannedCards.semiLimited)
+
+				setTimeout(() => setFetchingBanList(false), 1000)
+			})
 		}
+	}, [selectedBanList])
+
+	useEffect(() => {
+		if (chosenCardID !== '')
+		{
+			handleFetch(`${NAME_maps_ENDPOINT['cardInstanceUrl']}${chosenCardID}`, props.history, (resultJson) => {
+				setChosenCard(resultJson)
+				setShowingCardDetail(true)
+			})
+		}
+	}, [chosenCardID])
+
+	const { classes } = props
+	const cardColor = (chosenCard === '') ? '' : chosenCard.cardColor.toLowerCase()
+	const cardColorStyle = classes[cardColor]
+	const cardColorSummaryStyle = classes[`${cardColor}Summary`]
+	const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+
+	return (
+		<div>
+			<BreadCrumb crumbs={['Home', 'Ban List']} />
+
+			<ExpansionPanel elevation={0} >
+				<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+					<Typography style={{ flexBasis: '20%', flexShrink: 0 }} variant='h6' >Ban Lists:</Typography>
+					<Typography variant='subtitle1' >
+						Currently viewing ban list effective {getDateString(months, new Date(selectedBanList))}
+					</Typography>
+				</ExpansionPanelSummary>
+
+				<ExpansionPanelDetails>
+					<Grid container >
+						{banListGrid}
+					</Grid>
+				</ExpansionPanelDetails>
+			</ExpansionPanel>
+
+			<Dialog open={showingCardDetail} keepMounted onClose={() => setShowingCardDetail(false)} >
+				<Box className={cardColorStyle} >
+					<DialogTitle>
+						{chosenCard.cardName}
+					</DialogTitle>
+					<DialogContent>
+						<DialogContentText id="alert-dialog-slide-description">
+							<Box className={cardColorSummaryStyle} style={{ 'marginBottom': '5px' }} >
+								<Typography className={[classes.monsterType, classes.baseText]} >
+									{chosenCard.monsterType}
+								</Typography>
+								<Typography className={classes.baseText} >
+									{chosenCard.cardEffect}
+								</Typography>
+								{
+									(cardColor === 'spell' || cardColor === 'trap') ? (undefined) :
+										<Typography className={classes.alignRight} >
+											{chosenCard.monsterAtk} / {chosenCard.monsterDef}
+										</Typography>
+								}
+							</Box>
+							<Typography style={{ 'textAlign': 'right', 'color': '#fff' }}>
+								{chosenCard.cardID}
+							</Typography>
+						</DialogContentText>
+					</DialogContent>
+				</Box>
+			</Dialog>
+
+			<TabbedView
+				content={
+					[
+						<BanListSection sectionName={'Forbidden'} sectionExplanation={"Forbidden cards cannot be used in a duel in the Advanced Format."} cards={forbidden} fetchingBanList={fetchingBanList} cardClicked={(cardID) => setChosenCardID(cardID)} />,
+						<BanListSection sectionName={'Limited'} sectionExplanation={"Below cards can only appear once in a  Main Deck or Side Deck."} cards={limited} fetchingBanList={fetchingBanList} cardClicked={(cardID) => setChosenCardID(cardID)} />,
+						<BanListSection sectionName={'Semi-Limited'} sectionExplanation={"Below cards can only appear twice in a  Main Deck or Side Deck."} cards={semiLimited} fetchingBanList={fetchingBanList} cardClicked={(cardID) => setChosenCardID(cardID)}/>
+					]
+				}
+			/>
+		</div>
+	)
 }
+
+let getDateString = (months, date) => `${months[date.getMonth()]} ${date.getDate() + 1}, ${date.getFullYear()}`
 
 
 BanList.propTypes = {

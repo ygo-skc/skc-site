@@ -1,18 +1,13 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-class ServerError extends Component
+function ServerError()
 {
-	render()
-	{
-		return(
-			<div>
-				<p>Server error</p>
-				<p>Return <a href='/'>Home</a></p>
-			</div>
-
-		)
-	}
+	return(
+		<div>
+			<p>Server error</p>
+			<p>Return <a href='/'>Home</a></p>
+		</div>
+	)
 }
-
 
 export default ServerError

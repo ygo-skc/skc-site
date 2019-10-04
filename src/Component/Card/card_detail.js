@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
@@ -13,33 +13,30 @@ import Box from '@material-ui/core/Box'
 
 import cardStyles from './card_detail_styles'
 
-class CardDetail extends Component
+function CardDetail(props)
 {
-	render()
-	{
-		const { classes } = this.props
+	const { classes } = props
 
-		return (
-			<Grid item
-			xs={12}
-			sm={6}
-			md={3}
-			lg={2}
-			xl={2} >
-				<Card onClick={() => this.props.cardClicked(this.props.cardID)} >
-					<CardContent className={classes[this.props.cardColor.toLowerCase()]}>
-						<Box className={classes.cardTop}>
-							<Typography variant='subtitle1' noWrap={true} >{this.props.cardName}</Typography>
-						</Box>
-						<Box className={classes[`${this.props.cardColor.toLowerCase()}Summary`]} >
-							<Typography variant='body2' className={classes.monsterType} noWrap={true} >{this.props.monsterType}</Typography>
-							<Typography variant='body2' className={classes.cardText} >{this.props.cardEffect}</Typography>
-						</Box>
-					</CardContent>
-				</Card>
-			</Grid>
-		)
-	}
+	return (
+		<Grid item
+		xs={12}
+		sm={6}
+		md={3}
+		lg={2}
+		xl={2} >
+			<Card onClick={() => props.cardClicked(props.cardID)} >
+				<CardContent className={classes[props.cardColor.toLowerCase()]}>
+					<Box className={classes.cardTop}>
+						<Typography variant='subtitle1' noWrap={true} >{props.cardName}</Typography>
+					</Box>
+					<Box className={classes[`${props.cardColor.toLowerCase()}Summary`]} >
+						<Typography variant='body2' className={classes.monsterType} noWrap={true} >{props.monsterType}</Typography>
+						<Typography variant='body2' className={classes.cardText} >{props.cardEffect}</Typography>
+					</Box>
+				</CardContent>
+			</Card>
+		</Grid>
+	)
 }
 
 CardDetail.propTypes = {
