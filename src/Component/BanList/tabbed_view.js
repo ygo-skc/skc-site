@@ -1,55 +1,46 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import { AppBar, Tabs, Tab } from '@material-ui/core'
 
 import SwipeableViews from 'react-swipeable-views';
 
 import TabPanel from './tab_panel'
 
-class TabbedView extends Component
+function TabbedView(props)
 {
-	constructor(props) {
-		super(props)
-		this.state = {
-			currentTab: 0,
-		}
+	const [currentTab, setCurrentTab] = useState(0)
 
-		this.allyProps = this.allyProps.bind(this)
-	}
-
-	allyProps(index) {
-		return {
-			id: `full-width-tab-${index}`,
-			'aria-controls': `full-width-tabpanel-${index}`,
-		};
-	}
-
-	render()
-	{
 		return (
 		<div>
 		<AppBar position='static' >
-			<Tabs value={this.state.currentTab} onChange={(event, newValue) => { this.setState({ currentTab: newValue }) }} variant='fullWidth' >
-				<Tab label='Forbidden' {...this.allyProps(0)} />
-				<Tab label='Limited' {...this.allyProps(1)} />
-				<Tab label='Semi-Limited' {...this.allyProps(2)} />
+			<Tabs value={currentTab} onChange={(event, newValue) => { setCurrentTab(newValue)}} variant='fullWidth' >
+				<Tab label='Forbidden' {...allyProps(0)} />
+				<Tab label='Limited' {...allyProps(1)} />
+				<Tab label='Semi-Limited' {...allyProps(2)} />
 			</Tabs>
 		</AppBar>
 			<SwipeableViews
-				index={this.state.currentTab}
-				onChangeIndex={(newValue) => { this.setState({ currentTab: newValue }) }}
+				index={currentTab}
+				onChangeIndex={(newValue) => { setCurrentTab(newValue)}}
 			>
-				<TabPanel value={ this.state.currentTab } index={0}>
-						{this.props.content[0]}
+				<TabPanel value={ currentTab } index={0}>
+						{props.content[0]}
 				</TabPanel>
-					<TabPanel value={ this.state.currentTab } index={1}>
-						{this.props.content[1]}
+					<TabPanel value={ currentTab } index={1}>
+						{props.content[1]}
 				</TabPanel>
-					<TabPanel value={ this.state.currentTab } index={2}>
-						{this.props.content[2]}
+					<TabPanel value={ currentTab } index={2}>
+						{props.content[2]}
 				</TabPanel>
 			</SwipeableViews>
 			</div>
 		)
+}
+
+function allyProps(index)
+{
+	return {
+		id: `full-width-tab-${index}`,
+		'aria-controls': `full-width-tabpanel-${index}`,
 	}
 }
 

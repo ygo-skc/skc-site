@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import { Typography, Dialog, DialogTitle, DialogContent, Box, Divider } from '@material-ui/core';
+import { Typography, Dialog, DialogTitle, DialogContent, Box } from '@material-ui/core';
 
 import Grid from '@material-ui/core/Grid'
 

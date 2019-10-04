@@ -1,12 +1,10 @@
 
-import React, { useState } from 'react'
+import React from 'react'
 
 import { Typography, Link, Paper } from '@material-ui/core'
 
 function Home()
 {
-	const [breadCrumbs, setBreadCrumbs] = useState(['Home'])
-
 	return (
 		<div style={{ height: '100%', 'WebkitAlignItems': 'center', 'WebkitBoxAlign': 'center', 'justifyContent': 'center', display: 'flex' }} >
 			<Paper style={{ padding: 40, marginLeft: 30, marginRight: 30, marginBottom: 450, width: '100%' }} >

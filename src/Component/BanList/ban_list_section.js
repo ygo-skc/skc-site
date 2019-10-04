@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import CardDetail from '../Card/card_detail.js'
 
@@ -38,78 +38,62 @@ const styles = {
 	}
 }
 
-class BanListSection extends Component
+function BanListSection(props)
 {
+	const [grid, setGrid] = useState([])
+	const [section, setSection] = useState('')
 
-	constructor(props) {
-		super(props)
-
+	useEffect(() => {
 		let section
-		if (this.props.sectionName === 'Forbidden')	section = 'banedText'
-		else if (this.props.sectionName === 'Limited') section = 'limitedText'
-		else	section = 'semiLimitedText'
+		if (props.sectionName === 'Forbidden') section = 'banedText'
+		else if (props.sectionName === 'Limited') section = 'limitedText'
+		else section = 'semiLimitedText'
 
-		this.state = {
-			cardsDetail: [],
-			section: section
-		}
+		setSection(section)
+	}, [])
 
-	}
+	useEffect(() => {
+		let cardDetails = new Map()
 
-	componentDidUpdate(oldProps)
-	{
-		console.log(this.props.cards)
-		console.log(oldProps)
-		if (oldProps.cards.length !== this.props.cards.length){
-			console.log(this.props.cards)
-			let cardDetails = new Map()
+		props.cards.forEach((card, ind) => {
+			if (cardDetails[card.cardColor.toLowerCase()] === undefined) {
+				cardDetails[card.cardColor.toLowerCase()] = []
+			}
+			cardDetails[card.cardColor.toLowerCase()].push(<CardDetail key={ind} cardID={card.cardID} cardName={card.cardName} monsterType={card.monsterType} cardColor={card.cardColor} cardEffect={card.cardEffect} cardClicked={props.cardClicked} />)
+		})
 
-			this.props.cards.forEach((card, ind) => {
-				if (cardDetails[card.cardColor.toLowerCase()] === undefined)
-				{
-					cardDetails[card.cardColor.toLowerCase()] = []
-				}
-				cardDetails[card.cardColor.toLowerCase()].push(<CardDetail key={ind} cardID={card.cardID} cardName={card.cardName} monsterType={card.monsterType} cardColor={card.cardColor} cardEffect={card.cardEffect} cardClicked={this.props.cardClicked} />)
-			})
-
-			let grid = []
-			let cardOrder = ['normal', 'effect', 'ritual', 'fusion', 'synchro', 'xyz', 'pendulum-normal', 'pendulum-effect', 'link', 'spell', 'trap']
-			for (let cardType of cardOrder)
-			{
-				if (cardType in cardDetails)
-				{
-					grid.push(
-						<div key={cardType} >
+		let grid = []
+		let cardOrder = ['normal', 'effect', 'ritual', 'fusion', 'synchro', 'xyz', 'pendulum-normal', 'pendulum-effect', 'link', 'spell', 'trap']
+		for (let cardType of cardOrder) {
+			if (cardType in cardDetails) {
+				grid.push(
+					<div key={cardType} >
 						<Grid container spacing={1}  >
 							{cardDetails[cardType]}
 						</Grid>
 						<br />
-						</div>
-					)
-				}
+					</div>
+				)
 			}
-
-			this.setState({ cardsDetail: cardDetails, grid: grid })
 		}
-	}
 
-	render()
-	{
-		const { classes } = this.props
+		setGrid(grid)
+	}, [props.cards])
 
-		return(
-			(this.props.fetchingBanList ?
-			(<div style={{textAlign: 'center'}}><img style={{height: 150, width: 150} }src={loading} /></div>) :
+	const { classes } = props
+
+	return (
+		(props.fetchingBanList ?
+			(<div style={{ textAlign: 'center' }}><img style={{ height: 150, width: 150 }} src={loading} alt='Loading gif' /></div>) :
 			(<Box >
-				<Typography variant='h6' style={{marginBottom: 15}} >{this.props.sectionExplanation}</Typography>
+				<Typography variant='h6' style={{ marginBottom: 15 }} >{props.sectionExplanation}</Typography>
 
 				<Box className={classes.banCardsRow} >
-					{this.state.grid}
+					{grid}
 				</Box>
 			</Box>)
-			)
 		)
-	}
+	)
 }
 
 BanListSection.propTypes = {
