@@ -10,44 +10,80 @@ import PropTypes from 'prop-types'
 
 import Box from '@material-ui/core/Box'
 
+import styled from 'styled-components';
+
 import cardStyles from './card_detail_styles'
 
 function CardDetail(props)
 {
-	const { classes } = props
-	const cardBackgroundClassName = (props.cardColor) ? classes[props.cardColor.toLowerCase()] : undefined
-	const cardDescriptionBackgroundClassName = (props.cardColor) ? classes[`${props.cardColor.toLowerCase()}Summary`] : undefined
+	const cardColor = props.cardColor.toLowerCase()
+	const cardColorSummary = `${props.cardColor.toLowerCase()}Summary`
 	const cardClickedCallBack = (props.cardClicked) ? function () {props.cardClicked(props.cardID)} : undefined
 
+
+	const YGOCard = styled(Card)`
+		border-radius: 10px !important;
+	`
+	const CardContentComponent = styled(CardContent)`
+		padding: 12px !important;
+		background: ${cardStyles[cardColor].background};
+		color: ${cardStyles[cardColor].color};
+	`
+	const CardDescriptionComponent = styled(Box)`
+		padding: 10;
+		background: ${cardStyles[cardColorSummary].background};
+		color: ${cardStyles[cardColorSummary].color};
+	`
+	const CardNameComponent = styled(Typography)`
+		margin-bottom: 5px;
+	`
+	const MonsterTypeComponent = styled(Typography)`
+		font-weight: bold;
+	`
+	const CardEffectComponent = (props.fullDetails) ?
+		styled(Typography)`
+			padding-bottom: 5px;
+			white-space: pre-wrap;
+		`
+		: styled(Typography)`
+			white-space: pre-wrap;
+			display: -webkit-box;
+			-webkit-line-clamp: 3;
+			-webkit-box-orient: vertical;
+			overflow: hidden;
+		`
+	const MonsterAtkDefComponent = styled(Typography)`
+		text-align: right;
+	`
+	const CardIDComponent = styled(Typography)`
+		text-align: right;
+		color: #fff;
+	`
+
 	return (
-		<Card onClick={cardClickedCallBack} >
-			<CardContent className={cardBackgroundClassName}>
-				<Box className={classes.cardTop}>
-					<Typography variant='subtitle1' noWrap={true} >{props.cardName}</Typography>
-				</Box>
-				<Box className={cardDescriptionBackgroundClassName} >
-					<Typography variant='body2' className={classes.monsterType} noWrap={true} >{props.monsterType}</Typography>
-					<Typography variant='body2' className={(props.fullDetails) ? classes.baseText : classes.cardText} >{props.cardEffect}</Typography>
+		<YGOCard onClick={cardClickedCallBack} >
+			<CardContentComponent >
+				<CardNameComponent variant='subtitle1' noWrap={true} >{props.cardName}</CardNameComponent>
+				<CardDescriptionComponent >
+					<MonsterTypeComponent variant='body2' noWrap={true} >{props.monsterType}</MonsterTypeComponent>
+					<CardEffectComponent variant='body2'>{props.cardEffect}</CardEffectComponent>
 					{
 						(props.cardColor === 'spell' || props.cardColor === 'trap' || !props.fullDetails ) ? undefined :
-							<Typography className={classes.alignRight} >
+							<MonsterAtkDefComponent>
 								{props.monsterAtk} / {props.monsterDef}
-							</Typography>
+							</MonsterAtkDefComponent>
 					}
-				</Box>
+				</CardDescriptionComponent>
 				{
 					(props.fullDetails) ?
-						<Typography style={{ 'textAlign': 'right', 'color': '#fff' }}>
+						<CardIDComponent >
 							{props.cardID}
-						</Typography>
+						</CardIDComponent>
 						: undefined
 				}
-			</CardContent>
-		</Card>
+			</CardContentComponent>
+		</YGOCard>
 	)
 }
 
-CardDetail.propTypes = {
-	classes: PropTypes.object.isRequired
-}
-export default withStyles(cardStyles)(CardDetail)
+export default CardDetail
