@@ -16,6 +16,8 @@ import PropTypes from 'prop-types'
 
 import CardDetail from '../Card/card_detail'
 
+import styled from 'styled-components'
+
 import NAME_maps_ENDPOINT from '../../Helper/ygo_api.js'
 
 
@@ -43,6 +45,19 @@ function BanList(props)
 	const [showingCardDetail, setShowingCardDetail] = useState(false)
 	const [chosenCardID, setChosenCardID] = useState('')
 	const [chosenCard, setChosenCard] = useState('')
+
+	const CardDialog = styled(Dialog)`
+		.MuiDialog-paper
+		{
+			background-color: transparent;
+		}
+
+		.MuiDialog-paperWidthSm
+		{
+			max-width: 480px;
+			min-width: 480px;
+		}
+	`
 
 	useEffect(() => {
 		handleFetch(NAME_maps_ENDPOINT['banListsUrl'], props.history, (resultJson) => {
@@ -113,12 +128,12 @@ function BanList(props)
 				</ExpansionPanelDetails>
 			</ExpansionPanel>
 
-			<Dialog open={showingCardDetail} keepMounted onClose={() => setShowingCardDetail(false)} >
+			<CardDialog open={showingCardDetail} keepMounted onClose={() => setShowingCardDetail(false)} >
 				{
 					(!showingCardDetail) ? undefined :
 						<CardDetail key={999} fullDetails cardID={chosenCard.cardID} cardName={chosenCard.cardName} monsterType={chosenCard.monsterType} cardColor={chosenCard.cardColor} cardEffect={chosenCard.cardEffect} cardClicked={props.cardClicked} monsterAtk={chosenCard.monsterAtk} monsterDef={chosenCard.monsterDef} />
 				}
-			</Dialog>
+			</CardDialog>
 
 			<TabbedView
 				content={

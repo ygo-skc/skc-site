@@ -29,8 +29,3 @@ body
 .MuiExpansionPanel-root:before {
 	height: 0px !important;
 }
-
-
-.MuiDialog-paperWidthSm {
-	max-width: 480px !important;
-}
