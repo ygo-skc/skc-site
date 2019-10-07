@@ -32,10 +32,6 @@ const styles = {
 		padding: '20',
 		background: 'linear-gradient(45deg, #ffab00 30%, #f57c00 90%)',
 	},
-	banCardsRow: {
-		marginLeft: '10',
-		marginRight: '10'
-	}
 }
 
 function BanListSection(props)

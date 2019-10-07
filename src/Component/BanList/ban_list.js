@@ -9,11 +9,6 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import Button from '@material-ui/core/Button'
 
-import cardStyles from '../Card/card_detail_styles'
-
-import { withStyles } from '@material-ui/core/styles'
-import PropTypes from 'prop-types'
-
 import CardDetail from '../Card/card_detail'
 
 import styled from 'styled-components'
@@ -150,9 +145,4 @@ function BanList(props)
 
 let getDateString = (months, date) => `${months[date.getMonth()]} ${date.getDate() + 1}, ${date.getFullYear()}`
 
-
-BanList.propTypes = {
-	classes: PropTypes.object.isRequired
-}
-
-export default withStyles(cardStyles)(BanList)
+export default BanList

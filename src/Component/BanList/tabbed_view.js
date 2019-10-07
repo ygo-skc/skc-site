@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import { AppBar, Tabs, Tab } from '@material-ui/core'
 
-import SwipeableViews from 'react-swipeable-views';
-
 import TabPanel from './tab_panel'
 
 function TabbedView(props)
@@ -19,13 +17,13 @@ function TabbedView(props)
 					</Tabs>
 				</AppBar>
 				<TabPanel value={ currentTab } index={0}>
-						{props.content[0]}
+					{props.content[0]}
 				</TabPanel>
-					<TabPanel value={ currentTab } index={1}>
-						{props.content[1]}
+				<TabPanel value={ currentTab } index={1}>
+					{props.content[1]}
 				</TabPanel>
-					<TabPanel value={ currentTab } index={2}>
-						{props.content[2]}
+				<TabPanel value={ currentTab } index={2}>
+					{props.content[2]}
 				</TabPanel>
 			</div>
 		)
