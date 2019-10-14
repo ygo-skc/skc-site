@@ -4,9 +4,6 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 
 import Typography from '@material-ui/core/Typography'
-import { withStyles } from '@material-ui/styles'
-
-import PropTypes from 'prop-types'
 
 import Box from '@material-ui/core/Box'
 
@@ -76,7 +73,7 @@ function CardDetail(props)
 				</CardDescriptionComponent>
 				{
 					(props.fullDetails) ?
-						<CardIDComponent >
+						<CardIDComponent variant='body2' >
 							{props.cardID}
 						</CardIDComponent>
 						: undefined

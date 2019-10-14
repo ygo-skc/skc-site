@@ -15,6 +15,8 @@ import styled from 'styled-components'
 
 import NAME_maps_ENDPOINT from '../../Helper/ygo_api.js'
 
+import loading from '../../Img/loading.gif'
+
 
 /*
 	Custom Components
@@ -49,8 +51,8 @@ function BanList(props)
 
 		.MuiDialog-paperWidthSm
 		{
-			max-width: 480px;
-			min-width: 480px;
+			max-width: 350px;
+			min-width: 350px;
 		}
 	`
 
@@ -86,7 +88,7 @@ function BanList(props)
 				setLimited(resultJson.bannedCards.limited)
 				setSemiLimited(resultJson.bannedCards.semiLimited)
 
-				setTimeout(() => setFetchingBanList(false), 250)
+				setTimeout(() => setFetchingBanList(false), 300)
 			})
 		}
 	}, [selectedBanList])
@@ -100,6 +102,10 @@ function BanList(props)
 			})
 		}
 	}, [chosenCardID])
+
+	useEffect(() => {
+		if (showingCardDetail === false) setChosenCardID('')
+	}, [showingCardDetail])
 
 	const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
@@ -125,8 +131,9 @@ function BanList(props)
 
 			<CardDialog open={showingCardDetail} keepMounted onClose={() => setShowingCardDetail(false)} >
 				{
-					(!showingCardDetail) ? undefined :
+					(showingCardDetail) ?
 						<CardDetail key={999} fullDetails cardID={chosenCard.cardID} cardName={chosenCard.cardName} monsterType={chosenCard.monsterType} cardColor={chosenCard.cardColor} cardEffect={chosenCard.cardEffect} cardClicked={props.cardClicked} monsterAtk={chosenCard.monsterAtk} monsterDef={chosenCard.monsterDef} />
+						: undefined
 				}
 			</CardDialog>
 
