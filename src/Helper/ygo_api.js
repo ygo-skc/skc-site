@@ -1,4 +1,5 @@
-const host = 'http://localhost:9999'
+//const host = 'http://localhost:9999'
+const host = 'https://ygoapi.cfapps.io'
 
 const NAME_maps_ENDPOINT = {
 	'banListsUrl':					`${host}/api/v1/ban_list_dates/`,
