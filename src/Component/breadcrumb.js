@@ -9,51 +9,61 @@ import HomeIcon from '@material-ui/icons/Home';
 import Block from '@material-ui/icons/Block';
 
 import NAME_maps_ROUTE from '../Helper/site_map.js'
-import { Typography, makeStyles } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 
-const styles = makeStyles(theme => ({
-	root: {
-		display: 'flex',
-		padding: '15px'
-	},
-}))
+import styled from 'styled-components'
 
 export default function BreadCrumb(props)
 {
-	const classes = styles();
+	const Navigation = styled(Paper)`
+		display: flex;
+		padding-right: 10px;
+		padding-left: 10px;
+		padding-top: 15px;
+		padding-bottom: 15px;
+	`
+
+	const LinkBreadCrumb = styled(Link)`
+		display: flex;
+	`
+
+	const NonLinkBreadCrumb = styled(LinkBreadCrumb)`
+		.MuiLink-underlineHover:hover {
+			text-decoration: underline;
+		}
+	`
 
 	const BREADCRUMB_maps_ICON = new Map()
-	BREADCRUMB_maps_ICON['Home'] = <HomeIcon style={{ width: 20, height: 20, marginRight: 5 }} />
-	BREADCRUMB_maps_ICON['Ban List'] = <Block style={{ width: 20, height: 20, marginRight: 5  }} />
+	const iconStyle = { width: 20, height: 20, marginRight: 5 }
+	BREADCRUMB_maps_ICON['Home'] = <HomeIcon style={iconStyle} />
+	BREADCRUMB_maps_ICON['Ban List'] = <Block style={iconStyle} />
 
 	let Crumbs = []
 	props.crumbs.forEach((item, ind) =>
 	{
 		if ((ind === props.crumbs.length - 1)) {
 			Crumbs.push(
-				<Typography key={ind} >
+				<NonLinkBreadCrumb color='inherit' key={ind} style={{ display: 'flex' }} >
 					{BREADCRUMB_maps_ICON[item]}
 					{item}
-				</Typography>
+				</NonLinkBreadCrumb>
 			)
 		}
 		else{
 			Crumbs.push(
-				<Link color='inherit' href={NAME_maps_ROUTE[item]} key={ind} >
+				<LinkBreadCrumb color='inherit' href={NAME_maps_ROUTE[item]} key={ind} >
 					{BREADCRUMB_maps_ICON[item]}
 					{item}
-				</Link>
+				</LinkBreadCrumb>
 			)
 		}
 	})
 
 	return(
-		<div className={classes.root}>
-			<Paper className={classes.breadcrumb} elevation={0} >
-				<Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label='breadcrumb'>
-					{Crumbs}
-				</Breadcrumbs>
-			</Paper>
-		</div>
+		<Navigation elevation={0} >
+			<Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label='breadcrumb'>
+				{Crumbs}
+			</Breadcrumbs>
+		</Navigation>
 	)
 }

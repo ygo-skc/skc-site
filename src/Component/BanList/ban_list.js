@@ -140,9 +140,9 @@ function BanList(props)
 			<TabbedView
 				content={
 					[
-						<BanListSection sectionName={'Forbidden'} sectionExplanation={"Forbidden cards cannot be used in a duel in the Advanced Format."} cards={forbidden} fetchingBanList={fetchingBanList} cardClicked={(cardID) => setChosenCardID(cardID)} />,
-						<BanListSection sectionName={'Limited'} sectionExplanation={"Below cards can only appear once in a  Main Deck or Side Deck."} cards={limited} fetchingBanList={fetchingBanList} cardClicked={(cardID) => setChosenCardID(cardID)} />,
-						<BanListSection sectionName={'Semi-Limited'} sectionExplanation={"Below cards can only appear twice in a  Main Deck or Side Deck."} cards={semiLimited} fetchingBanList={fetchingBanList} cardClicked={(cardID) => setChosenCardID(cardID)} />
+						<BanListSection sectionName={'Forbidden'} sectionExplanation={"Forbidden cards cannot be used in Deck/Side Deck in the Advanced Format"} cards={forbidden} fetchingBanList={fetchingBanList} cardClicked={(cardID) => setChosenCardID(cardID)} />,
+						<BanListSection sectionName={'Limited'} sectionExplanation={"Limited cards can be included in Deck/Side deck - max 1"} cards={limited} fetchingBanList={fetchingBanList} cardClicked={(cardID) => setChosenCardID(cardID)} />,
+						<BanListSection sectionName={'Semi-Limited'} sectionExplanation={"Semi-Limited cards can be included in Deck/Side deck - max 2"} cards={semiLimited} fetchingBanList={fetchingBanList} cardClicked={(cardID) => setChosenCardID(cardID)} />
 					]
 				}
 			/>

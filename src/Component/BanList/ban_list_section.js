@@ -84,7 +84,7 @@ function BanListSection(props)
 
 	return (
 		(props.fetchingBanList ?
-			(<div style={{ textAlign: 'center' }}><img style={{ height: 150, width: 150 }} src={loading} alt='Loading gif' /></div>)
+			(<div style={{ textAlign: 'center' }}><img style={{ height: 150, width: 150, color: '#333' }} src={loading} alt='Loading gif' /></div>)
 			: (<Box >
 				<Typography variant='h6' style={{ marginBottom: 15 }} >{props.sectionExplanation}</Typography>
 

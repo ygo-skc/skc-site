@@ -35,7 +35,7 @@ function CardDetail(props)
 		margin-bottom: 5px;
 	`
 	const MonsterTypeComponent = styled(Typography)`
-		font-weight: bold;
+		font-weight: 550 !important;
 	`
 	const CardEffectComponent = (props.fullDetails) ?
 		styled(Typography)`
@@ -53,8 +53,8 @@ function CardDetail(props)
 		text-align: right;
 	`
 	const CardIDComponent = styled(Typography)`
-		text-align: right;
 		color: #fff;
+		margin-top: 3px !important;
 	`
 
 	return (
