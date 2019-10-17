@@ -33,9 +33,9 @@ function CardDetail(props)
 	`
 	const CardNameComponent = styled(Typography)`
 		margin-bottom: 5px;
+		font-weight: 550 !important;
 	`
 	const MonsterTypeComponent = styled(Typography)`
-		font-weight: 550 !important;
 	`
 	const CardEffectComponent = (props.fullDetails) ?
 		styled(Typography)`
@@ -60,9 +60,9 @@ function CardDetail(props)
 	return (
 		<YGOCard onClick={cardClickedCallBack} >
 			<CardContentComponent >
-				<CardNameComponent variant='subtitle1' noWrap={true} >{props.cardName}</CardNameComponent>
+				<CardNameComponent variant='subtitle1' noWrap={true} >{props.cardName.toUpperCase()}</CardNameComponent>
 				<CardDescriptionComponent >
-					<MonsterTypeComponent variant='body2' noWrap={true} >{props.monsterType}</MonsterTypeComponent>
+					<MonsterTypeComponent variant='subtitle1' noWrap={true} >{props.monsterType}</MonsterTypeComponent>
 					<CardEffectComponent variant='body2'>{props.cardEffect}</CardEffectComponent>
 					{
 						(props.cardColor === 'spell' || props.cardColor === 'trap' || !props.fullDetails ) ? undefined :
