@@ -3,7 +3,7 @@ import { render } from 'react-dom'
 
 import { AppBar, Typography, Toolbar, Button, Link } from '@material-ui/core'
 
-import Routes from './helper/Routes'
+import Routes, { NAME_maps_ROUTE } from './Routes'
 
 render(
 	<div>
@@ -12,7 +12,7 @@ render(
 				<Typography variant="h6">
 					Yugioh Website
 				</Typography>
-				<Link color="inherit" href="/Banlist" >
+				<Link color="inherit" href={NAME_maps_ROUTE.BanList} >
 					<Button color="inherit" >
 						Ban List
 					</Button>

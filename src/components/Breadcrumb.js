@@ -8,7 +8,7 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import HomeIcon from '@material-ui/icons/Home';
 import Block from '@material-ui/icons/Block';
 
-import NAME_maps_ROUTE from '../helper/SiteMap'
+import { NAME_maps_ROUTE } from '../Routes'
 
 import styled from 'styled-components'
 

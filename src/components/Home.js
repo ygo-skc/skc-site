@@ -3,6 +3,8 @@ import React from 'react'
 
 import { Typography, Link, Paper } from '@material-ui/core'
 
+import { NAME_maps_ROUTE } from '../Routes'
+
 export default function Home()
 {
 	return (
@@ -12,7 +14,7 @@ export default function Home()
 					Yugioh Website
 					</Typography>
 				<Typography variant='h6' style={{ marginTop: 20 }} >
-					Check out the latest <Link href={'/BanList'} >Ban List</Link> - last updated July.
+					Check out the latest <Link href={NAME_maps_ROUTE.BanList} >Ban List</Link> - last updated July.
 					</Typography>
 			</Paper>
 		</div>
