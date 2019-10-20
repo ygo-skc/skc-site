@@ -2,13 +2,10 @@ import React, { useState, useEffect } from 'react'
 
 import CardDetail from '../Card/card_detail.js'
 
-import Typography from '@material-ui/core/Typography'
-import Box from '@material-ui/core/Box'
-import Grid from '@material-ui/core/Grid'
+import { Typography, Box, Grid, CircularProgress } from '@material-ui/core'
 import { withStyles } from '@material-ui/styles'
 
 import PropTypes from 'prop-types'
-import loading from '../../Img/loading.gif'
 
 const styles = {
 	banedText: {
@@ -34,7 +31,7 @@ const styles = {
 	},
 }
 
-function BanListSection(props)
+export default function BanListSection(props)
 {
 	const [grid, setGrid] = useState([])
 	const [section, setSection] = useState('')
@@ -80,24 +77,18 @@ function BanListSection(props)
 		setGrid(grid)
 	}, [props.cards])
 
-	const { classes } = props
-
 	return (
 		(props.fetchingBanList ?
-			(<div style={{ textAlign: 'center' }}><img style={{ height: 150, width: 150, color: '#333' }} src={loading} alt='Loading gif' /></div>)
+			(<div style={{ textAlign: 'center' }}>
+					<CircularProgress />
+				</div>)
 			: (<Box >
 				<Typography variant='h6' style={{ marginBottom: 15 }} >{props.sectionExplanation}</Typography>
 
-				<Box className={classes.banCardsRow} >
+				<Box>
 					{grid}
 				</Box>
 			</Box>)
 		)
 	)
 }
-
-BanListSection.propTypes = {
-	classes: PropTypes.object.isRequired
-}
-
-export default withStyles(styles)(BanListSection)

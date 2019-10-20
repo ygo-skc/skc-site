@@ -4,7 +4,7 @@ import { Typography, Dialog } from '@material-ui/core';
 
 import Grid from '@material-ui/core/Grid'
 
-import { ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary } from '@material-ui/core';
+import { ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, CircularProgress } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import Button from '@material-ui/core/Button'
@@ -14,8 +14,6 @@ import CardDetail from '../Card/card_detail'
 import styled from 'styled-components'
 
 import NAME_maps_ENDPOINT from '../../Helper/ygo_api.js'
-
-import loading from '../../Img/loading.gif'
 
 
 /*
@@ -133,7 +131,7 @@ function BanList(props)
 				{
 					(showingCardDetail) ?
 						<CardDetail key={999} fullDetails cardID={chosenCard.cardID} cardName={chosenCard.cardName} monsterType={chosenCard.monsterType} cardColor={chosenCard.cardColor} cardEffect={chosenCard.cardEffect} cardClicked={props.cardClicked} monsterAtk={chosenCard.monsterAtk} monsterDef={chosenCard.monsterDef} />
-						: undefined
+						: <CircularProgress />
 				}
 			</CardDialog>
 
