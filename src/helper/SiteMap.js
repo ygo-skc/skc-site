@@ -1,7 +1,7 @@
 let NAME_maps_ROUTE =
 {
 	'Home': '/',
-	'Ban List': '/ban_list',
+	'Ban List': '/BanList',
 	'Sever Error': '/server_err'
 }
 

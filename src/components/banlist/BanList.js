@@ -9,20 +9,20 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import Button from '@material-ui/core/Button'
 
-import CardDetail from '../Card/card_detail'
+import CardDetail from '../card/CardDetail'
 
 import styled from 'styled-components'
 
-import NAME_maps_ENDPOINT from '../../Helper/ygo_api.js'
+import NAME_maps_ENDPOINT from '../../helper/YgoApi.js'
 
 
 /*
 	Custom Components
 */
-import BanListSection from './ban_list_section'
-import BreadCrumb from '../breadcrumb.js'
-import TabbedView from './tabbed_view'
-import { handleFetch } from '../../Helper/fetch_handler'
+import BanListSection from './BanListSection'
+import BreadCrumb from '../Breadcrumb.js'
+import TabbedView from './TabbedView'
+import { handleFetch } from '../../helper/FetchHandler'
 
 function BanList(props)
 {
@@ -59,6 +59,7 @@ function BanList(props)
 			setBanListsStartDates(resultJson.banListStartDates)
 			setSelectedBanList(resultJson.banListStartDates[0])
 		})
+		// eslint-disable-next-line
 	}, [])
 
 	useEffect(() => {
@@ -73,6 +74,7 @@ function BanList(props)
 		})
 
 		setBanListGrid(banListGrid1)
+		// eslint-disable-next-line
 	}, [banListsStartDates])
 
 	useEffect(() => {
@@ -89,6 +91,7 @@ function BanList(props)
 				setTimeout(() => setFetchingBanList(false), 300)
 			})
 		}
+		// eslint-disable-next-line
 	}, [selectedBanList])
 
 	useEffect(() => {
@@ -99,6 +102,7 @@ function BanList(props)
 				setShowingCardDetail(true)
 			})
 		}
+		// eslint-disable-next-line
 	}, [chosenCardID])
 
 	useEffect(() => {

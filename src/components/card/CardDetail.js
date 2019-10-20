@@ -1,15 +1,9 @@
 import React from 'react'
 
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-
-import Typography from '@material-ui/core/Typography'
-
-import Box from '@material-ui/core/Box'
-
+import { Typography, Box, Card, CardContent} from '@material-ui/core'
 import styled from 'styled-components';
 
-import cardStyles from './card_detail_styles'
+import cardStyles from './CardDetailStyle'
 
 function CardDetail(props)
 {
@@ -17,9 +11,12 @@ function CardDetail(props)
 	const cardColorSummary = `${props.cardColor.toLowerCase()}Summary`
 	const cardClickedCallBack = (props.cardClicked) ? function () {props.cardClicked(props.cardID)} : undefined
 
+	let curser = 'pointer'
+	if (cardClickedCallBack === undefined)	curser = ''
+
 
 	const YGOCard = styled(Card)`
-		border-radius: 10px !important;
+	cursor: ${curser};
 	`
 	const CardContentComponent = styled(CardContent)`
 		padding: 12px !important;
@@ -33,13 +30,15 @@ function CardDetail(props)
 	`
 	const CardNameComponent = styled(Typography)`
 		margin-bottom: 5px;
-		font-weight: 550 !important;
+		&& {
+			font-weight: 500;
+		}
+		text-transform: uppercase;
 	`
 	const MonsterTypeComponent = styled(Typography)`
 	`
 	const CardEffectComponent = (props.fullDetails) ?
 		styled(Typography)`
-			padding-bottom: 5px;
 			white-space: pre-wrap;
 		`
 		: styled(Typography)`
@@ -60,7 +59,7 @@ function CardDetail(props)
 	return (
 		<YGOCard onClick={cardClickedCallBack} >
 			<CardContentComponent >
-				<CardNameComponent variant='subtitle1' noWrap={true} >{props.cardName.toUpperCase()}</CardNameComponent>
+				<CardNameComponent variant='subtitle1' noWrap={true} >{props.cardName}</CardNameComponent>
 				<CardDescriptionComponent >
 					<MonsterTypeComponent variant='subtitle1' noWrap={true} >{props.monsterType}</MonsterTypeComponent>
 					<CardEffectComponent variant='body2'>{props.cardEffect}</CardEffectComponent>

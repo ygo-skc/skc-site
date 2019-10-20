@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { AppBar, Tabs, Tab } from '@material-ui/core'
 
-import TabPanel from './tab_panel'
+import TabPanel from './TabPanel'
 
 function TabbedView(props)
 {

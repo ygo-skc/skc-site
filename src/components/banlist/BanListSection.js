@@ -1,49 +1,12 @@
 import React, { useState, useEffect } from 'react'
 
-import CardDetail from '../Card/card_detail.js'
+import CardDetail from '../card/CardDetail.js'
 
 import { Typography, Box, Grid, CircularProgress } from '@material-ui/core'
-import { withStyles } from '@material-ui/styles'
-
-import PropTypes from 'prop-types'
-
-const styles = {
-	banedText: {
-		color: 'white',
-		marginTop: '20',
-		marginBottom: '15',
-		padding: '20',
-		background: 'linear-gradient(45deg, #ff1744 30%, #f50057 90%)',
-	},
-	limitedText: {
-		color: 'white',
-		marginTop: '20',
-		marginBottom: '15',
-		padding: '20',
-		background: 'linear-gradient(45deg, #f57c00 30%, #ff1744 90%)',
-	},
-	semiLimitedText: {
-		color: 'white',
-		marginTop: '20',
-		marginBottom: '15',
-		padding: '20',
-		background: 'linear-gradient(45deg, #ffab00 30%, #f57c00 90%)',
-	},
-}
 
 export default function BanListSection(props)
 {
 	const [grid, setGrid] = useState([])
-	const [section, setSection] = useState('')
-
-	useEffect(() => {
-		let section
-		if (props.sectionName === 'Forbidden') section = 'banedText'
-		else if (props.sectionName === 'Limited') section = 'limitedText'
-		else section = 'semiLimitedText'
-
-		setSection(section)
-	}, [])
 
 	useEffect(() => {
 		let cardDetails = new Map()
@@ -75,6 +38,7 @@ export default function BanListSection(props)
 		}
 
 		setGrid(grid)
+		// eslint-disable-next-line
 	}, [props.cards])
 
 	return (

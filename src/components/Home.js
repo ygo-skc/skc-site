@@ -12,7 +12,7 @@ function Home()
 					Yugioh Website
 					</Typography>
 				<Typography variant='h6' style={{ marginTop: 20 }} >
-					Check out the latest <Link href={'/ban_list'} >Ban List</Link> - last updated July.
+					Check out the latest <Link href={'/BanList'} >Ban List</Link> - last updated July.
 					</Typography>
 			</Paper>
 		</div>

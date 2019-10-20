@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import CardDetail from '../Card/card_detail'
-import BreadCrumb from '../breadcrumb.js'
+import CardDetail from '../card/CardDetail'
+import BreadCrumb from '../Breadcrumb.js'
 
 function NotFound(props)
 {
