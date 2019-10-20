@@ -64,7 +64,8 @@ function CardDetail(props)
 					<MonsterTypeComponent variant='subtitle1' noWrap={true} >{props.monsterType}</MonsterTypeComponent>
 					<CardEffectComponent variant='body2'>{props.cardEffect}</CardEffectComponent>
 					{
-						(props.cardColor === 'spell' || props.cardColor === 'trap' || !props.fullDetails ) ? undefined :
+						(props.cardColor === 'spell' || props.cardColor === 'trap' || !props.fullDetails || props.cardColor === 'err' ) ?
+							undefined :
 							<MonsterAtkDefComponent>
 								{props.monsterAtk} / {props.monsterDef}
 							</MonsterAtkDefComponent>
