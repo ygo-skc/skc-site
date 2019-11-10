@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import CardDetail from '../card/CardDetail.js'
 
-import { Typography, Box, Grid, CircularProgress } from '@material-ui/core'
+import { Typography, Box, Grid, CircularProgress, Badge } from '@material-ui/core'
 
 export default function BanListSection(props)
 {
@@ -47,7 +47,7 @@ export default function BanListSection(props)
 					<CircularProgress />
 				</div>)
 			: (<Box >
-				<Typography variant='h6' style={{ marginBottom: 15 }} >{props.sectionExplanation}</Typography>
+				<Typography variant='h6' style={{ marginTop: '10px', marginBottom: '30px' }} >{props.sectionExplanation}</Typography>
 
 				<Box>
 					{grid}

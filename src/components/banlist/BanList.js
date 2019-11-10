@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import { Typography, Dialog } from '@material-ui/core';
+import { Typography, Dialog, Paper } from '@material-ui/core';
 
 import Grid from '@material-ui/core/Grid'
 
@@ -88,7 +88,7 @@ function BanList(props)
 				setLimited(resultJson.bannedCards.limited)
 				setSemiLimited(resultJson.bannedCards.semiLimited)
 
-				setTimeout(() => setFetchingBanList(false), 300)
+				setFetchingBanList(false)
 			})
 		}
 		// eslint-disable-next-line
@@ -114,22 +114,9 @@ function BanList(props)
 
 	return (
 		<div style={(initLoad) ? { 'display': 'none' }: {'display': 'block'}} >
+			<br />
 			<BreadCrumb crumbs={['Home', 'Ban List']} />
-
-			<ExpansionPanel elevation={0} >
-				<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-					<Typography style={{ flexBasis: '20%', flexShrink: 0 }} variant='h6' >Ban Lists:</Typography>
-					<Typography variant='subtitle1' >
-						Currently viewing ban list effective {getDateString(months, new Date(selectedBanList))}
-					</Typography>
-				</ExpansionPanelSummary>
-
-				<ExpansionPanelDetails>
-					<Grid container >
-						{banListGrid}
-					</Grid>
-				</ExpansionPanelDetails>
-			</ExpansionPanel>
+			<br />
 
 			<CardDialog open={showingCardDetail} keepMounted onClose={() => setShowingCardDetail(false)} >
 				{
@@ -139,15 +126,31 @@ function BanList(props)
 				}
 			</CardDialog>
 
-			<TabbedView
-				content={
-					[
-						<BanListSection sectionName={'Forbidden'} sectionExplanation={"Forbidden cards cannot be used in Deck/Side Deck in the Advanced Format"} cards={forbidden} fetchingBanList={fetchingBanList} cardClicked={(cardID) => setChosenCardID(cardID)} />,
-						<BanListSection sectionName={'Limited'} sectionExplanation={"Limited cards can be included in Deck/Side deck - max 1"} cards={limited} fetchingBanList={fetchingBanList} cardClicked={(cardID) => setChosenCardID(cardID)} />,
-						<BanListSection sectionName={'Semi-Limited'} sectionExplanation={"Semi-Limited cards can be included in Deck/Side deck - max 2"} cards={semiLimited} fetchingBanList={fetchingBanList} cardClicked={(cardID) => setChosenCardID(cardID)} />
-					]
-				}
-			/>
+			<Paper>
+				<ExpansionPanel elevation={0} style={{ marginTop: '10px', paddingTop: '15px', paddingBottom: '15px'  }}>
+					<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+						<Typography style={{ flexBasis: '20%', flexShrink: 0 }} variant='h6' >Ban Lists:</Typography>
+						<Typography variant='subtitle1' >
+							Currently viewing ban list effective {getDateString(months, new Date(selectedBanList))}
+						</Typography>
+					</ExpansionPanelSummary>
+
+					<ExpansionPanelDetails>
+						<Grid container >
+							{banListGrid}
+						</Grid>
+					</ExpansionPanelDetails>
+				</ExpansionPanel>
+				<TabbedView
+					content={
+						[
+							<BanListSection sectionName={'Forbidden'} sectionExplanation={"Forbidden cards cannot be used in Deck/Side Deck in the Advanced Format"} cards={forbidden} fetchingBanList={fetchingBanList} cardClicked={(cardID) => setChosenCardID(cardID)} />,
+							<BanListSection sectionName={'Limited'} sectionExplanation={"Limited cards can be included in Deck/Side deck - max 1"} cards={limited} fetchingBanList={fetchingBanList} cardClicked={(cardID) => setChosenCardID(cardID)} />,
+							<BanListSection sectionName={'Semi-Limited'} sectionExplanation={"Semi-Limited cards can be included in Deck/Side deck - max 2"} cards={semiLimited} fetchingBanList={fetchingBanList} cardClicked={(cardID) => setChosenCardID(cardID)} />
+						]
+					}
+				/>
+			</Paper>
 		</div>
 	)
 }

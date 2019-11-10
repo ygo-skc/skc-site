@@ -59,7 +59,7 @@ export default function BreadCrumb(props)
 	})
 
 	return(
-		<Navigation elevation={0} >
+		<Navigation >
 			<Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label='breadcrumb'>
 				{Crumbs}
 			</Breadcrumbs>
