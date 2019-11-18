@@ -43,7 +43,7 @@ export default function BanListSection(props)
 	return (
 		(props.fetchingBanList ?
 			(<div style={{ textAlign: 'center' }}>
-					<CircularProgress />
+					<CircularProgress size={50} variant='indeterminate' thickness={3.6} disableShrink={true} />
 				</div>)
 			: (<Box >
 				<Typography variant='h6' style={{ marginTop: '10px', marginBottom: '30px' }} >{props.sectionExplanation}</Typography>
