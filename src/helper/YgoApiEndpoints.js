@@ -2,7 +2,7 @@
 const host = 'https://ygoapi.cfapps.io'
 
 const NAME_maps_ENDPOINT = {
-	'banListsUrl':					`${host}/api/v1/ban_list_dates/`,
+	'banListsUrl':				`${host}/api/v1/ban_list_dates/`,
 	'banListInstanceUrl':		`${host}/api/v1/banned_cards/`,
 	'cardInstanceUrl':			`${host}/api/v1/card/`,
 }

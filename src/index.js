@@ -12,8 +12,8 @@ render(
 				<Typography variant="h6">
 					Yugioh Website
 				</Typography>
-				<Link color="inherit" href={NAME_maps_ROUTE.BanList} >
-					<Button color="inherit" >
+				<Link style={{marginLeft: '20px'}} underline="none" color="inherit" href={NAME_maps_ROUTE.BanList} >
+					<Button style={{'text-transform': 'None'}} color="inherit" >
 						Ban List
 					</Button>
 				</Link>

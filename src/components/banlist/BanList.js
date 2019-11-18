@@ -13,7 +13,7 @@ import CardDetail from '../card/CardDetail'
 
 import styled from 'styled-components'
 
-import NAME_maps_ENDPOINT from '../../helper/YgoApi.js'
+import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
 
 
 /*
@@ -66,7 +66,7 @@ function BanList(props)
 		let banListGrid1 = []
 		banListsStartDates.forEach((item, ind) => {
 			banListGrid1.push(<Grid key={ind} item xs={6} sm={3} md={2} lg={1} xl={1} >
-				<Button size='small' id={ind} onClick={(button) => setSelectedBanList(banListsStartDates[button.currentTarget.id])} >
+				<Button style={{'text-transform': 'none'}} size='small' id={ind} onClick={(button) => setSelectedBanList(banListsStartDates[button.currentTarget.id])} >
 					{getDateString(months, new Date(item))}
 				</Button>
 			</Grid>
@@ -127,12 +127,9 @@ function BanList(props)
 			</CardDialog>
 
 			<Paper>
-				<ExpansionPanel elevation={0} style={{ marginTop: '10px', paddingTop: '15px', paddingBottom: '15px'  }}>
+				<ExpansionPanel elevation={0} style={{ marginTop: '10px', paddingTop: '5px' }}>
 					<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-						<Typography style={{ flexBasis: '20%', flexShrink: 0 }} variant='h6' >Ban Lists:</Typography>
-						<Typography variant='subtitle1' >
-							Currently viewing ban list effective {getDateString(months, new Date(selectedBanList))}
-						</Typography>
+						<Typography style={{ fontFamily: 'Ubuntu, sans-serif !important' }} variant='h6' >{getDateString(months, new Date(selectedBanList))}</Typography>
 					</ExpansionPanelSummary>
 
 					<ExpansionPanelDetails>

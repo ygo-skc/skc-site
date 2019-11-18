@@ -42,7 +42,7 @@ export default function BreadCrumb(props)
 	{
 		if ((ind === props.crumbs.length - 1)) {
 			Crumbs.push(
-				<NonLinkBreadCrumb color='inherit' key={ind} style={{ display: 'flex' }} >
+				<NonLinkBreadCrumb color='inherit' key={ind} style={{ display: 'flex' }} underline='none' >
 					{BREADCRUMB_maps_ICON[item]}
 					{item}
 				</NonLinkBreadCrumb>

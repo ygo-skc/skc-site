@@ -10,7 +10,7 @@ export default function Home()
 	return (
 		<div style={{ height: '100%', width: '100%', marginTop: '30px', alignContent: 'center' }} >
 			<Paper style={{ padding: 40, width: '75%', margin: 'auto'}} >
-				<Typography variant='h5'>
+				<Typography variant='h4' >
 					Welcome
 					</Typography>
 				<Typography variant='h6' style={{ marginTop: 20 }} >

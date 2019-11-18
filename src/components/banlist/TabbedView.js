@@ -11,9 +11,9 @@ function TabbedView(props)
 			<div>
 				<AppBar position='sticky' >
 					<Tabs value={currentTab} onChange={(event, newValue) => { setCurrentTab(newValue)}} variant='fullWidth' >
-						<Tab label='Forbidden' {...allyProps(0)} />
-						<Tab label='Limited' {...allyProps(1)} />
-						<Tab label='Semi-Limited' {...allyProps(2)} />
+						<Tab style={{'text-transform': 'none'}} label='Forbidden' {...allyProps(0)} />
+						<Tab style={{ 'text-transform': 'none' }} label='Limited' {...allyProps(1)} />
+						<Tab style={{ 'text-transform': 'none' }} label='Semi-Limited' {...allyProps(2)} />
 					</Tabs>
 				</AppBar>
 				<TabPanel value={ currentTab } index={0}>
