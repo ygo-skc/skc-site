@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import CardDetail from '../card/CardDetail.js'
 
-import { Typography, Box, Grid, CircularProgress, Badge } from '@material-ui/core'
+import { Typography, Box, Grid, CircularProgress, Divider } from '@material-ui/core'
 
 export default function BanListSection(props)
 {
@@ -22,18 +22,26 @@ export default function BanListSection(props)
 			)
 		})
 
-		let grid = []
 		let cardOrder = ['normal', 'effect', 'ritual', 'fusion', 'synchro', 'xyz', 'pendulum-normal', 'pendulum-effect', 'link', 'spell', 'trap']
-		for (let cardType of cardOrder) {
+		let textColor = { 'normal': 'rgba(226, 142, 6, 0.76)', 'effect': 'rgba(216, 76, 0, 0.88)', 'ritual': 'rgba(25, 118, 210, 0.66)'
+			, 'fusion': 'rgba(97, 59, 162, 0.88)', 'synchro': 'rgba(139, 139, 139, 0.91)', 'xyz': 'rgba(33, 33, 33, 0.71)', 'link': 'rgba(21, 101, 192, 0.8)'
+			, 'spell': 'rgba(0, 146, 126, 0.85)', 'trap': 'rgba(173, 20, 87, 0.78)' }
+
+		let grid = cardOrder.map(( cardType, ind ) => {
 			if (cardType in cardDetails) {
-				grid.push(
-					<div key={cardType} style={{marginBottom: '60px'}} >
-						<Grid container spacing={1}  >
-							{cardDetails[cardType]}
-						</Grid>
-					</div>
-				)
+				return	<div key={cardType} >
+							<Typography variant='subtitle1' style={{ fontWeight: 'bold', textTransform: 'uppercase', color: textColor[cardType] }} >
+								{cardType}
+							</Typography>
+							<Grid container spacing={1} style={{marginBottom: '20px'}} >
+								{cardDetails[cardType]}
+							</Grid>
+							<Divider style={{marginBottom: '20px'}} variant='middle' />
+						</div>
 			}
+		})
+		for (let cardType of cardOrder) {
+
 		}
 
 		setGrid(grid)
