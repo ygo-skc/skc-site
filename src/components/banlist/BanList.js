@@ -66,7 +66,7 @@ function BanList(props)
 		let banListGrid1 = []
 		banListsStartDates.forEach((item, ind) => {
 			banListGrid1.push(<Grid key={ind} item xs={6} sm={3} md={2} lg={1} xl={1} >
-				<Button style={{'text-transform': 'none'}} size='small' id={ind} onClick={(button) => setSelectedBanList(banListsStartDates[button.currentTarget.id])} >
+				<Button style={{'textTransform': 'none'}} size='small' id={ind} onClick={(button) => setSelectedBanList(banListsStartDates[button.currentTarget.id])} >
 					{getDateString(months, new Date(item))}
 				</Button>
 			</Grid>

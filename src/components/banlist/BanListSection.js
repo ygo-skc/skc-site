@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 
-import CardDetail from '../card/CardDetail.js'
-
 import { Typography, Box, Grid, CircularProgress, Divider } from '@material-ui/core'
+
+import CardDetail from '../card/CardDetail.js'
 
 export default function BanListSection(props)
 {
@@ -27,7 +27,7 @@ export default function BanListSection(props)
 			, 'fusion': 'rgba(97, 59, 162, 0.88)', 'synchro': 'rgba(139, 139, 139, 0.91)', 'xyz': 'rgba(33, 33, 33, 0.71)', 'link': 'rgba(21, 101, 192, 0.8)'
 			, 'spell': 'rgba(0, 146, 126, 0.85)', 'trap': 'rgba(173, 20, 87, 0.78)' }
 
-		let grid = cardOrder.map(( cardType, ind ) => {
+		let grid = cardOrder.map(( cardType ) => {
 			if (cardType in cardDetails) {
 				return	<div key={cardType} >
 							<Typography variant='subtitle1' style={{ fontWeight: 'bold', textTransform: 'uppercase', color: textColor[cardType] }} >
@@ -39,10 +39,8 @@ export default function BanListSection(props)
 							<Divider style={{marginBottom: '20px'}} variant='middle' />
 						</div>
 			}
+			return null
 		})
-		for (let cardType of cardOrder) {
-
-		}
 
 		setGrid(grid)
 		// eslint-disable-next-line

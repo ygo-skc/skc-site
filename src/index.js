@@ -1,25 +1,12 @@
 import React from 'react'
 import { render } from 'react-dom'
 
-import { AppBar, Typography, Toolbar, Button, Link } from '@material-ui/core'
-
-import Routes, { NAME_maps_ROUTE } from './Routes'
+import NavigationBar from './components/NavigationBar'
+import Routes from './Routes'
 
 render(
 	<div>
-		<AppBar position="static">
-			<Toolbar>
-				<Typography variant="h6">
-					Yugioh Website
-				</Typography>
-				<Link style={{marginLeft: '20px'}} underline="none" color="inherit" href={NAME_maps_ROUTE.BanList} >
-					<Button style={{'text-transform': 'None'}} color="inherit" >
-						Ban List
-					</Button>
-				</Link>
-			</Toolbar>
-		</AppBar>
-
+		<NavigationBar />
 		<Routes />
 	</div>,
 	document.getElementById('root')
