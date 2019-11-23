@@ -11,7 +11,7 @@ const cardStyles = {
 		color: 'black',
 	},
 	effect: {
-		background: `linear-gradient(45deg, ${orange[600]} 10%, ${orange[900]} 90%)`,
+		background: `linear-gradient(187deg, #e65100 25.63%, #fb8c00 86%)`,
 		color: '#f5f5f5',
 	},
 	effectSummary: {
@@ -29,7 +29,7 @@ const cardStyles = {
 		color: 'black'
 	},
 	fusion: {
-		background: `linear-gradient(180deg, ${deepPurple[300]} 30%, ${deepPurple[400]} 90%)`,
+		background: `linear-gradient(183deg, #7e57c2 61.34%, #9575cd 86%)`,
 		color: '#f5f5f5',
 	},
 	fusionSummary: {

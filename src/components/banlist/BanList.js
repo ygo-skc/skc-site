@@ -65,7 +65,7 @@ function BanList(props)
 	useEffect(() => {
 		let banListGrid1 = []
 		banListsStartDates.forEach((item, ind) => {
-			banListGrid1.push(<Grid key={ind} item xs={6} sm={3} md={2} lg={1} xl={1} >
+			banListGrid1.push(<Grid key={ind} item xs={4} sm={2} md={2} lg={1} xl={1} >
 				<Button style={{'textTransform': 'none'}} size='small' id={ind} onClick={(button) => setSelectedBanList(banListsStartDates[button.currentTarget.id])} >
 					{getDateString(months, new Date(item))}
 				</Button>

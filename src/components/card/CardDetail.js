@@ -59,10 +59,10 @@ function CardDetail(props)
 	return (
 		<YGOCard onClick={cardClickedCallBack} >
 			<CardContentComponent >
-				<CardNameComponent variant='subtitle1' noWrap={true} >{props.cardName}</CardNameComponent>
+				<CardNameComponent variant='subtitle1' style={{marginBottom: '3px'}} noWrap={true} >{props.cardName}</CardNameComponent>
 				<CardDescriptionComponent >
-					<MonsterTypeComponent variant='subtitle1' noWrap={true} >{props.monsterType}</MonsterTypeComponent>
-					<CardEffectComponent variant='body2'>{props.cardEffect}</CardEffectComponent>
+					<MonsterTypeComponent variant='subtitle2' noWrap={true} >{props.monsterType}</MonsterTypeComponent>
+					<CardEffectComponent variant='body1'>{props.cardEffect}</CardEffectComponent>
 					{
 						(props.cardColor === 'Spell' || props.cardColor === 'Trap' || props.cardColor === 'err' ) ?
 							undefined :

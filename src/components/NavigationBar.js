@@ -10,9 +10,7 @@ export default function NavigationBar(props)
 {
 	const NavigationButton = styled(Button)`
 		&& {
-			background: #241776;
 			text-transform: none;
-			color: white;
 
 			:hover {
 				background: #7E3390;
@@ -22,12 +20,14 @@ export default function NavigationBar(props)
 	return (
 		<AppBar position="static">
 			<Toolbar>
-				<Typography variant="h6">
-					Yugioh Website
-				</Typography>
-				<Link style={{marginLeft: '20px'}} underline="none" color="inherit" href={NAME_maps_ROUTE.BanList} >
-					<NavigationButton>
-						Ban List
+				<Link underline="none" color="inherit" href={NAME_maps_ROUTE.Home} >
+					<NavigationButton color='inherit' >
+						Yugioh Site
+					</NavigationButton>
+				</Link>
+				<Link style={{marginLeft: '30px'}} underline="none" color="inherit" href={NAME_maps_ROUTE.BanList} >
+					<NavigationButton color='inherit' >
+						Ban Lists
 					</NavigationButton>
 				</Link>
 			</Toolbar>

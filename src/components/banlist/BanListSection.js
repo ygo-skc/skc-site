@@ -36,7 +36,7 @@ export default function BanListSection(props)
 
 
 			cardDetailsMap.get(cardColor).push(
-				<Grid key={ind} item xs={12} sm={6} md={3} lg={2} xl={2} >
+				<Grid key={ind} item xs={12} sm={4} md={3} lg={2} xl={2} >
 					<CardDetail key={ind} cardID={card.cardID} cardName={card.cardName} monsterType={card.monsterType} cardColor={card.cardColor}
 						cardEffect={card.cardEffect} cardClicked={props.cardClicked} fullDetails={false} />
 				</Grid>
@@ -47,13 +47,12 @@ export default function BanListSection(props)
 		let cardTypeContentGrid = cardDisplayOrder.map(( cardType ) => {
 			if (cardDetailsMap.has(cardType)) {
 				return	<div key={cardType} >
-							<Typography variant='subtitle1' style={{ fontWeight: 'bold', textTransform: 'uppercase', color: cardSectionTextColors[cardType] }} >
+							<Typography variant='h5' style={{ marginBottom: '10px', textTransform: 'uppercase', color: cardSectionTextColors[cardType] }} >
 								{cardType}
 							</Typography>
-							<Grid container spacing={1} style={{marginBottom: '20px'}} >
+							<Grid container spacing={1} style={{marginBottom: '40px'}} >
 								{cardDetailsMap.get(cardType)}
 							</Grid>
-							<Divider style={{marginBottom: '20px'}} variant='middle' />
 						</div>
 			}
 			return null
