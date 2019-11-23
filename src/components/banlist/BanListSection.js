@@ -1,16 +1,24 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
-import { Typography, Box, Grid, CircularProgress, Divider } from '@material-ui/core'
+import { Typography, Box, Grid, LinearProgress } from '@material-ui/core'
 
 import CardDetail from '../card/CardDetail.js'
 
 
 
 const cardDisplayOrder = ['normal', 'effect', 'ritual', 'fusion', 'synchro', 'xyz', 'pendulum-normal', 'pendulum-effect', 'link', 'spell', 'trap']
-const cardSectionTextColors = { 'normal': 'rgba(226, 142, 6, 0.76)', 'effect': 'rgba(216, 76, 0, 0.88)', 'ritual': 'rgba(25, 118, 210, 0.66)'
-	, 'fusion': 'rgba(97, 59, 162, 0.88)', 'synchro': 'rgba(139, 139, 139, 0.91)', 'xyz': 'rgba(33, 33, 33, 0.71)', 'link': 'rgba(21, 101, 192, 0.8)'
-	, 'spell': 'rgba(0, 146, 126, 0.85)', 'trap': 'rgba(173, 20, 87, 0.78)' }
+const cardSectionTextColors = {
+	'normal': 'rgba(249, 160, 16, 1)'
+	, 'effect': 'rgba(248, 87, 0, 1)'
+	, 'ritual': 'rgba(25, 118, 210, 0.66)'
+	, 'fusion': 'rgba(131, 93, 196, 1)'
+	, 'synchro': 'rgba(139, 139, 139, 0.91)'
+	, 'xyz': 'rgba(33, 33, 33, 0.71)'
+	, 'link': 'rgba(21, 101, 192, 0.8)'
+	, 'spell': 'rgba(0, 146, 126, 0.85)'
+	, 'trap': 'rgba(173, 20, 87, 0.78)'
+}
 
 const CenteredContent = styled(Box)`
 	text-align: center;
@@ -24,21 +32,22 @@ export default function BanListSection(props)
 	const SectionInfoText = styled(Typography)`
 		&& {
 			@media (min-width: 0px){
-				margin-bottom: 8px;
-			}
-			@media (min-width: 400px){
-				margin-bottom: 10px;
-			}
-			@media (min-width: 600px){
 				margin-bottom: 15px;
 			}
-			@media (min-width: 800px){
+			@media (min-width: 400px){
+				margin-bottom: 20px;
+			}
+			@media (min-width: 600px){
 				margin-bottom: 25px;
+			}
+			@media (min-width: 800px){
+				margin-bottom: 50px;
 			}
 			padding: 16px;
 			background: ${props.sectionExplanationBackground};
 			border-radius: 8px;
 			display: -webkit-inline-flex;
+			color: white;
 		}
 	`
 
@@ -79,16 +88,23 @@ export default function BanListSection(props)
 
 
 	return (
-		(props.fetchingBanList ?
-			(	<CenteredContent>
-					<CircularProgress size={50} variant='indeterminate' thickness={3.6} disableShrink={true} />
-				</CenteredContent>)
-			: (	<Box>
-					<SectionInfoText variant='h6' >
-						{props.sectionExplanation}
-					</SectionInfoText>
-					{cardTypeContentGrid}
-				</Box>)
-		)
+		<div>
+			<CenteredContent>
+				<SectionInfoText variant='subtitle1' >
+					{props.sectionExplanation}
+				</SectionInfoText>
+			</CenteredContent>
+
+			{
+				(props.fetchingBanList ?
+					(	<CenteredContent>
+							<LinearProgress />
+						</CenteredContent>)
+					: (	<div>
+							{cardTypeContentGrid}
+						</div>)
+				)
+			}
+		</div>
 	)
 }

@@ -20,6 +20,8 @@ export default function BreadCrumb(props)
 		padding-left: 10px;
 		padding-top: 15px;
 		padding-bottom: 15px;
+		margin-top: 20px;
+		margin-bottom: 25px
 	`
 
 	const LinkBreadCrumb = styled(Link)`
@@ -60,7 +62,7 @@ export default function BreadCrumb(props)
 
 	return(
 		<Navigation >
-			<Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label='breadcrumb'>
+			<Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label='breadcrumb' >
 				{Crumbs}
 			</Breadcrumbs>
 		</Navigation>

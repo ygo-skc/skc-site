@@ -61,7 +61,7 @@ function CardDetail(props)
 			<CardContentComponent >
 				<CardNameComponent variant='subtitle1' style={{marginBottom: '3px'}} noWrap={true} >{props.cardName}</CardNameComponent>
 				<CardDescriptionComponent >
-					<MonsterTypeComponent variant='subtitle2' noWrap={true} >{props.monsterType}</MonsterTypeComponent>
+					<MonsterTypeComponent variant='body2' noWrap={true} style={{fontWeight: 600}} >{props.monsterType}</MonsterTypeComponent>
 					<CardEffectComponent variant='body1'>{props.cardEffect}</CardEffectComponent>
 					{
 						(props.cardColor === 'Spell' || props.cardColor === 'Trap' || props.cardColor === 'err' ) ?

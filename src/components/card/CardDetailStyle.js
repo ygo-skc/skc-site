@@ -2,16 +2,16 @@ import { blue, teal, pink, orange, deepPurple, grey, yellow, red, lightBlue } fr
 
 const cardStyles = {
 	normal: {
-		background: `linear-gradient(45deg, ${yellow[700]} 30%, ${yellow[800]} 90%)`,
+		background: `linear-gradient(185deg, #f9a825, #fbc02d)`,
 		color: 'black',
 	},
 	normalSummary: {
-		background: yellow[400],
+		background: '#ffeb90',
 		padding: '10',
 		color: 'black',
 	},
 	effect: {
-		background: `linear-gradient(187deg, #e65100 25.63%, #fb8c00 86%)`,
+		background: `linear-gradient(185deg, #e65100 25%, #fb8c00 85%)`,
 		color: '#f5f5f5',
 	},
 	effectSummary: {
@@ -20,7 +20,7 @@ const cardStyles = {
 		color: 'black',
 	},
 	ritual: {
-		background: `linear-gradient(45deg, ${blue[500]} 30%, ${blue[700]} 90%)`,
+		background: `linear-gradient(185deg, #56b1fa 25%, #4e9fee 85%)`,
 		color: '#f5f5f5',
 	},
 	ritualSummary: {
@@ -29,7 +29,7 @@ const cardStyles = {
 		color: 'black'
 	},
 	fusion: {
-		background: `linear-gradient(183deg, #7e57c2 61.34%, #9575cd 86%)`,
+		background: `linear-gradient(185deg, #7e57c2 25%, #9575cd 85%)`,
 		color: '#f5f5f5',
 	},
 	fusionSummary: {
@@ -65,13 +65,13 @@ const cardStyles = {
 		color: 'black'
 	},
 	'pendulum-effect': {
-		background: `linear-gradient(180deg, ${orange[700]} 50%, ${teal['A700']} 65%)`,
+		background: `linear-gradient(#ff9121 49.58%, #00cdb1 56.3%)`,
 		color: '#f5f5f5',
 	},
 	'pendulum-effectSummary': {
-		background: 'rgba(224, 242, 241, 0.26)',
+		background: 'rgba(56, 133, 129, 0.41)',
 		padding: '10',
-		color: 'black'
+		color: 'rgb(243, 243, 243)'
 	},
 	link: {
 		background: `linear-gradient(45deg, ${blue[700]} 30%, ${blue[800]} 90%)`,
@@ -92,7 +92,7 @@ const cardStyles = {
 		color: 'black'
 	},
 	trap: {
-		background: `linear-gradient(45deg, ${pink[600]} 30%, ${pink[800]} 90%)`,
+		background: `linear-gradient(185deg, #ad1457 25%, #d81b60 85%)`,
 		color: '#f5f5f5',
 	},
 	trapSummary: {

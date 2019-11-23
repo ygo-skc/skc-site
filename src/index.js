@@ -35,6 +35,19 @@ const theme = createMuiTheme({
 			fontWeight: 500,
 			lineHeight: '1.35rem',
 			'@media screen and (min-width:0px)': {
+				fontSize: '.95rem'
+			},
+			'@media screen and (min-width:400px)': {
+				fontSize: '1rem'
+			},
+			'@media screen and (min-width:900px)': {
+				fontSize: '.1.15rem'
+			}
+		},
+		subtitle1: {
+			fontWeight: 600,
+			lineHeight: '1.35rem',
+			'@media screen and (min-width:0px)': {
 				fontSize: '.85rem'
 			},
 			'@media screen and (min-width:400px)': {
@@ -44,30 +57,17 @@ const theme = createMuiTheme({
 				fontSize: '.95rem'
 			}
 		},
-		subtitle1: {
-			fontWeight: 600,
+		subtitle2: {
+			fontWeight: 500,
 			lineHeight: '1.35rem',
 			'@media screen and (min-width:0px)': {
-				fontSize: '.78rem'
-			},
-			'@media screen and (min-width:400px)': {
-				fontSize: '.8rem'
-			},
-			'@media screen and (min-width:900px)': {
 				fontSize: '.85rem'
-			}
-		},
-		subtitle2: {
-			fontWeight: 600,
-			lineHeight: '1.2rem',
-			'@media screen and (min-width:0px)': {
-				fontSize: '.70rem'
 			},
 			'@media screen and (min-width:400px)': {
-				fontSize: '.75rem'
+				fontSize: '.9rem'
 			},
 			'@media screen and (min-width:900px)': {
-				fontSize: '.8rem'
+				fontSize: '.95rem'
 			}
 		},
 		body1: {
@@ -81,6 +81,19 @@ const theme = createMuiTheme({
 			},
 			'@media screen and (min-width:900px)': {
 				fontSize: '.83rem'
+			}
+		},
+		body2: {
+			fontWeight: 400,
+			lineHeight: '1.15rem',
+			'@media screen and (min-width:0px)': {
+				fontSize: '.74rem'
+			},
+			'@media screen and (min-width:400px)': {
+				fontSize: '.78rem'
+			},
+			'@media screen and (min-width:900px)': {
+				fontSize: '.8rem'
 			}
 		},
 	}
