@@ -141,9 +141,9 @@ function BanList(props)
 				<TabbedView
 					content={
 						[
-							<BanListSection sectionName={'Forbidden'} sectionExplanation={"Forbidden cards cannot be used in Deck/Side Deck in the Advanced Format"} cards={forbidden} fetchingBanList={fetchingBanList} cardClicked={(cardID) => setChosenCardID(cardID)} />,
-							<BanListSection sectionName={'Limited'} sectionExplanation={"Limited cards can be included in Deck/Side deck - max 1"} cards={limited} fetchingBanList={fetchingBanList} cardClicked={(cardID) => setChosenCardID(cardID)} />,
-							<BanListSection sectionName={'Semi-Limited'} sectionExplanation={"Semi-Limited cards can be included in Deck/Side deck - max 2"} cards={semiLimited} fetchingBanList={fetchingBanList} cardClicked={(cardID) => setChosenCardID(cardID)} />
+							<BanListSection sectionName={'Forbidden'} sectionExplanation={"Forbidden cards cannot be used in Deck/Side Deck in the Advanced Format"} sectionExplanationBackground='#ffcdd2' cards={forbidden} fetchingBanList={fetchingBanList} cardClicked={(cardID) => setChosenCardID(cardID)} />,
+							<BanListSection sectionName={'Limited'} sectionExplanation="Limited cards can be included in Deck/Side deck - max 1" sectionExplanationBackground='#ffcc80' cards={limited} fetchingBanList={fetchingBanList} cardClicked={(cardID) => setChosenCardID(cardID)} />,
+							<BanListSection sectionName={'Semi-Limited'} sectionExplanation="Semi-Limited cards can be included in Deck/Side deck - max 2" sectionExplanationBackground='#fff176' cards={semiLimited} fetchingBanList={fetchingBanList} cardClicked={(cardID) => setChosenCardID(cardID)} />
 						]
 					}
 				/>

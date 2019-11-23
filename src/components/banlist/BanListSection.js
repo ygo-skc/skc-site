@@ -16,16 +16,31 @@ const CenteredContent = styled(Box)`
 	text-align: center;
 `
 
-const SectionInfoText = styled(Typography)`
-	&& {
-		margin-top: 10px;
-		margin-bottom: 30px;
-	}
-`
 
 export default function BanListSection(props)
 {
 	const [cardTypeContentGrid, setCardTypeContentGrid] = useState([])
+
+	const SectionInfoText = styled(Typography)`
+		&& {
+			@media (min-width: 0px){
+				margin-bottom: 8px;
+			}
+			@media (min-width: 400px){
+				margin-bottom: 10px;
+			}
+			@media (min-width: 600px){
+				margin-bottom: 15px;
+			}
+			@media (min-width: 800px){
+				margin-bottom: 25px;
+			}
+			padding: 16px;
+			background: ${props.sectionExplanationBackground};
+			border-radius: 8px;
+			display: -webkit-inline-flex;
+		}
+	`
 
 	useEffect(() => {
 		const cardDetailsMap = new Map()
@@ -50,7 +65,7 @@ export default function BanListSection(props)
 							<Typography variant='h5' style={{ marginBottom: '10px', textTransform: 'uppercase', color: cardSectionTextColors[cardType] }} >
 								{cardType}
 							</Typography>
-							<Grid container spacing={1} style={{marginBottom: '40px'}} >
+							<Grid container spacing={1} style={{marginBottom: '30px'}} >
 								{cardDetailsMap.get(cardType)}
 							</Grid>
 						</div>
@@ -72,9 +87,7 @@ export default function BanListSection(props)
 					<SectionInfoText variant='h6' >
 						{props.sectionExplanation}
 					</SectionInfoText>
-					<Box>
-						{cardTypeContentGrid}
-					</Box>
+					{cardTypeContentGrid}
 				</Box>)
 		)
 	)

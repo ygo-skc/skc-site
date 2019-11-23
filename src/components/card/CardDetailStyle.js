@@ -15,7 +15,7 @@ const cardStyles = {
 		color: '#f5f5f5',
 	},
 	effectSummary: {
-		background: orange['300'],
+		background: '#ffbf62',
 		padding: '10',
 		color: 'black',
 	},
@@ -69,7 +69,7 @@ const cardStyles = {
 		color: '#f5f5f5',
 	},
 	'pendulum-effectSummary': {
-		background: teal[50],
+		background: 'rgba(224, 242, 241, 0.26)',
 		padding: '10',
 		color: 'black'
 	},
