@@ -4,9 +4,10 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs'
 import Link from '@material-ui/core/Link'
 import Paper from '@material-ui/core/Paper'
 
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import HomeIcon from '@material-ui/icons/Home';
-import Block from '@material-ui/icons/Block';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext'
+import HomeIcon from '@material-ui/icons/Home'
+import Block from '@material-ui/icons/Block'
+import ErrorIcon from '@material-ui/icons/Error'
 
 import { NAME_maps_ROUTE } from '../Routes'
 
@@ -35,9 +36,10 @@ export default function BreadCrumb(props)
 	`
 
 	const BREADCRUMB_maps_ICON = new Map()
-	const iconStyle = { width: 20, height: 20, marginRight: 5 }
+	const iconStyle = { width: 20, height: 20, marginRight: 5, color: '#FEB300' }
 	BREADCRUMB_maps_ICON['Home'] = <HomeIcon style={iconStyle} />
 	BREADCRUMB_maps_ICON['Ban List'] = <Block style={iconStyle} />
+	BREADCRUMB_maps_ICON['404 - Err'] = <ErrorIcon style={iconStyle} />
 
 	let Crumbs = []
 	props.crumbs.forEach((item, ind) =>
