@@ -5,7 +5,53 @@ import styled from 'styled-components';
 
 import cardStyles from './CardDetailStyle'
 
-function CardDetail(props)
+
+const CardNameComponent = styled(Typography)`
+	&& {
+		font-weight: 500;
+		text-transform: uppercase;
+		marginBottom: '3px'
+
+		@media screen and (min-width: 0px)
+		{
+			margin-bottom: 6px;
+		}
+
+		@media screen and (min-width: 500px)
+		{
+			margin-bottom: 10px;
+		}
+	}
+`
+
+const MonsterTypeComponent = styled(Typography)`
+	&&
+	{
+		font-weight: 600;
+
+		@media screen and (min-width: 0px)
+		{
+			margin-bottom: 3px;
+		}
+
+		@media screen and (min-width: 500px)
+		{
+			margin-bottom: 4px;
+		}
+	}
+`
+
+const MonsterAtkDefComponent = styled(Typography)`
+	text-align: right;
+`
+
+const CardIDComponent = styled(Typography)`
+	color: #fff;
+	margin-top: 3px !important;
+`
+
+
+export default function CardDetail(props)
 {
 	const cardColor = props.cardColor.toLowerCase()
 	const cardColorSummary = `${props.cardColor.toLowerCase()}Summary`
@@ -16,8 +62,9 @@ function CardDetail(props)
 
 
 	const YGOCard = styled(Card)`
-	cursor: ${curser};
+		cursor: ${curser};
 	`
+
 	const CardContentComponent = styled(CardContent)`
 		padding: 12px !important;
 		background: ${cardStyles[cardColor].background};
@@ -28,15 +75,7 @@ function CardDetail(props)
 		background: ${cardStyles[cardColorSummary].background};
 		color: ${cardStyles[cardColorSummary].color};
 	`
-	const CardNameComponent = styled(Typography)`
-		margin-bottom: 5px;
-		&& {
-			font-weight: 500;
-		}
-		text-transform: uppercase;
-	`
-	const MonsterTypeComponent = styled(Typography)`
-	`
+
 	const CardEffectComponent = (props.fullDetails) ?
 		styled(Typography)`
 			white-space: pre-wrap;
@@ -48,21 +87,21 @@ function CardDetail(props)
 			-webkit-box-orient: vertical;
 			overflow: hidden;
 		`
-	const MonsterAtkDefComponent = styled(Typography)`
-		text-align: right;
-	`
-	const CardIDComponent = styled(Typography)`
-		color: #fff;
-		margin-top: 3px !important;
-	`
+
 
 	return (
 		<YGOCard onClick={cardClickedCallBack} >
 			<CardContentComponent >
-				<CardNameComponent variant='subtitle1' style={{marginBottom: '3px'}} noWrap={true} >{props.cardName}</CardNameComponent>
+				<CardNameComponent variant='subtitle1'noWrap={true} >{props.cardName}</CardNameComponent>
 				<CardDescriptionComponent >
-					<MonsterTypeComponent variant='body2' noWrap={true} style={{fontWeight: 600}} >{props.monsterType}</MonsterTypeComponent>
+					{
+						(props.cardColor === 'Spell' || props.cardColor === 'Trap') ?
+							undefined :
+							<MonsterTypeComponent variant='body2' noWrap={true} >[ {props.monsterType} ]</MonsterTypeComponent>
+					}
+
 					<CardEffectComponent variant='body1'>{props.cardEffect}</CardEffectComponent>
+
 					{
 						(props.cardColor === 'Spell' || props.cardColor === 'Trap' || props.cardColor === 'err' ) ?
 							undefined :
@@ -84,5 +123,3 @@ function CardDetail(props)
 		</YGOCard>
 	)
 }
-
-export default CardDetail

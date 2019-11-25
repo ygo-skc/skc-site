@@ -34,20 +34,20 @@ export default function BanListSection(props)
 	const SectionInfoText = styled(Typography)`
 		&& {
 			@media (min-width: 0px){
-				margin-bottom: 15px;
+				margin-bottom: 30px;
 			}
 			@media (min-width: 400px){
-				margin-bottom: 20px;
+				margin-bottom: 40px;
 			}
 			@media (min-width: 600px){
-				margin-bottom: 25px;
-			}
-			@media (min-width: 800px){
 				margin-bottom: 50px;
 			}
-			padding: 16px;
+			@media (min-width: 800px){
+				margin-bottom: 55px;
+			}
+			padding: 14px;
 			background: ${props.sectionExplanationBackground};
-			border-radius: 8px;
+			border-radius: 12px;
 			display: -webkit-inline-flex;
 			color: white;
 		}
@@ -92,7 +92,7 @@ export default function BanListSection(props)
 	return (
 		<div>
 			<CenteredContent>
-				<SectionInfoText variant='subtitle1' >
+				<SectionInfoText variant='subtitle2' >
 					{props.sectionExplanation}
 				</SectionInfoText>
 			</CenteredContent>

@@ -3,6 +3,7 @@ import React from 'react'
 import BreadCrumb from '../Breadcrumb'
 import GenericErr from './GenericErr'
 
+
 function ServerError()
 {
 	return(

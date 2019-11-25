@@ -18,6 +18,20 @@ const theme = createMuiTheme({
 		}
 	},
 	typography: {
+		h4: {
+			fontWeight: 500,
+			color: '#707070',
+			lineHeight: '1.45rem',
+			'@media screen and (min-width:0px)': {
+				fontSize: '1.4rem'
+			},
+			'@media screen and (min-width:400px)': {
+				fontSize: '1.5rem'
+			},
+			'@media screen and (min-width:900px)': {
+				fontSize: '1.75rem'
+			}
+		},
 		h5: {
 			fontWeight: 600,
 			lineHeight: '1.45rem',
@@ -87,13 +101,13 @@ const theme = createMuiTheme({
 			fontWeight: 400,
 			lineHeight: '1.15rem',
 			'@media screen and (min-width:0px)': {
-				fontSize: '.74rem'
+				fontSize: '.68rem'
 			},
 			'@media screen and (min-width:400px)': {
-				fontSize: '.78rem'
+				fontSize: '.7rem'
 			},
 			'@media screen and (min-width:900px)': {
-				fontSize: '.8rem'
+				fontSize: '.75rem'
 			}
 		},
 	}

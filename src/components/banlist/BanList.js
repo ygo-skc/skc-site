@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import { Typography, Dialog, Paper, Fab } from '@material-ui/core'
-import { FilterList } from '@material-ui/icons'
+import { Typography, Dialog, Paper } from '@material-ui/core'
 
 import Grid from '@material-ui/core/Grid'
 

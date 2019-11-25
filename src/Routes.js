@@ -7,7 +7,7 @@ import ServerError from './components/exception/server_err'
 import NotFound from './components/exception/not_found'
 
 
-let NAME_maps_ROUTE =
+const NAME_maps_ROUTE =
 {
 	'Home': '/',
 	'BanList': '/ban_list',

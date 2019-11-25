@@ -3,7 +3,8 @@ import React from 'react'
 import BreadCrumb from '../Breadcrumb.js'
 import GenericErr from './GenericErr'
 
-function NotFound(props)
+
+function NotFound()
 {
 	return (
 		<div>

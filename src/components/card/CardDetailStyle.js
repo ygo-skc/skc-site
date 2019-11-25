@@ -1,4 +1,4 @@
-import { blue, teal, pink, orange, deepPurple, grey, yellow, red, lightBlue } from '@material-ui/core/colors'
+import { blue, teal, pink, deepPurple, grey, red, lightBlue } from '@material-ui/core/colors'
 
 const cardStyles = {
 	normal: {
@@ -56,16 +56,16 @@ const cardStyles = {
 		color: 'black'
 	},
 	'pendulum-normal': {
-		background: `linear-gradient(180deg, ${yellow[600]} 30%, ${teal['A700']} 90%)`,
+		background: `linear-gradient(#f9c414 50%, #00cdb1 55%)`,
 		color: 'black',
 	},
 	'pendulum-normalSummary': {
-		background: blue[100],
+		background: 'rgba(56, 133, 129, 0.41)',
 		padding: '10',
-		color: 'black'
+		color: 'rgb(243, 243, 243)'
 	},
 	'pendulum-effect': {
-		background: `linear-gradient(#ff9121 49.58%, #00cdb1 56.3%)`,
+		background: `linear-gradient(#ff8000 50%, #00cdb1 55%)`,
 		color: '#f5f5f5',
 	},
 	'pendulum-effectSummary': {
