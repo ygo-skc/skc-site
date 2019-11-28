@@ -52,7 +52,7 @@ export default function Home()
 				<Typography variant='h4' >
 					News
 				</Typography>
-				<Typography variant='h6' style={{ marginTop: '20px', marginLeft: '8px' }} >
+				<Typography variant='h6'>
 					<Link href={NAME_maps_ROUTE.BanList} >Ban List</Link> has been updated.
 				</Typography>
 			</MainContentCard>

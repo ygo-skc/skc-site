@@ -30,8 +30,9 @@ const theme = createMuiTheme({
 		},
 		h4: {
 			fontWeight: 500,
-			color: '#707070',
-			lineHeight: '1.5rem',
+			color: '#5f5f5f',
+			lineHeight: '2.5rem',
+			marginBottom: '1rem',
 			'@media screen and (min-width:0px)': {
 				fontSize: '1.6rem'
 			},
