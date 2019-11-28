@@ -12,13 +12,15 @@ import { NAME_maps_ROUTE } from '../Routes'
 import styled from 'styled-components'
 
 const BreadCrumbsContent = styled(Paper)`
-	display: flex;
-	padding-right: 10px;
-	padding-left: 10px;
-	padding-top: 15px;
-	padding-bottom: 15px;
-	margin-top: 20px;
-	margin-bottom: 25px
+	&&
+	{
+		display: flex;
+		padding: .9rem;
+		margin-top: .5rem;
+		margin-bottom: 1rem;
+		border-radius: .5rem;
+	}
+
 `
 
 const BreadCrumbItem = styled(Link)`
