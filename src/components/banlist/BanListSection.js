@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
-import { Typography, Box, Grid, CircularProgress, Fab } from '@material-ui/core'
-
-import { FilterList } from '@material-ui/icons'
+import { Typography, Box, Grid, CircularProgress } from '@material-ui/core'
 
 import CardDetail from '../card/CardDetail.js'
 
@@ -94,11 +92,7 @@ export default function BanListSection(props)
 							<CircularProgress size={50} variant='indeterminate' thickness={3.6} disableShrink={true} />
 					</CenteredContent>)
 					: (	<div>
-							<Fab style={{position: 'fixed', bottom: '10px', right: '10px'} }>
-								<FilterList color='primary' />
-							</Fab>
 							{cardTypeContentGrid}
-
 						</div>)
 				)
 			}
