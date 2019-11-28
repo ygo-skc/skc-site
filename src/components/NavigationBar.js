@@ -22,14 +22,19 @@ export default function NavigationBar(props)
 	return (
 		<AppBar position='static'>
 			<Toolbar>
-				<Link underline='none' color='inherit' href={NAME_maps_ROUTE.Home} >
+				<Link style={{marginRight: '30px'}} underline='none' color='inherit' href={NAME_maps_ROUTE.Home} >
 					<NavigationButton color='inherit' >
 						Yugioh Site
 					</NavigationButton>
 				</Link>
-				<Link style={{marginLeft: '30px'}} underline='none' color='inherit' href={NAME_maps_ROUTE.BanList} >
+				<Link underline='none' color='inherit' href={NAME_maps_ROUTE.BanList} >
 					<NavigationButton color='inherit' >
 						Ban Lists
+					</NavigationButton>
+				</Link>
+				<Link underline='none' color='inherit' href={NAME_maps_ROUTE.About} >
+					<NavigationButton color='inherit' >
+						About
 					</NavigationButton>
 				</Link>
 			</Toolbar>

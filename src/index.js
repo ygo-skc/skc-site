@@ -18,96 +18,86 @@ const theme = createMuiTheme({
 		}
 	},
 	typography: {
+		button: {
+			fontWeight: 500,
+			lineHeight: '1.1rem',
+			'@media screen and (min-width:0px)': {
+				fontSize: '.867rem'
+			},
+			'@media screen and (min-width:600px)': {
+				fontSize: '.877rem',
+			}
+		},
 		h4: {
 			fontWeight: 500,
 			color: '#707070',
-			lineHeight: '1.45rem',
+			lineHeight: '1.5rem',
 			'@media screen and (min-width:0px)': {
-				fontSize: '1.4rem'
+				fontSize: '1.6rem'
 			},
-			'@media screen and (min-width:400px)': {
-				fontSize: '1.5rem'
-			},
-			'@media screen and (min-width:900px)': {
-				fontSize: '1.75rem'
+			'@media screen and (min-width:600px)': {
+				fontSize: '1.7rem'
 			}
 		},
 		h5: {
 			fontWeight: 600,
-			lineHeight: '1.45rem',
+			lineHeight: '1.2rem',
 			'@media screen and (min-width:0px)': {
-				fontSize: '.85rem'
+				fontSize: '1.05rem'
 			},
-			'@media screen and (min-width:400px)': {
-				fontSize: '.9rem'
-			},
-			'@media screen and (min-width:900px)': {
-				fontSize: '.95rem'
+			'@media screen and (min-width:600px)': {
+				fontSize: '1.07rem'
 			}
 		},
 		h6: {
 			fontWeight: 500,
-			lineHeight: '1.35rem',
+			lineHeight: '1.2rem',
+			color: '#000',
 			'@media screen and (min-width:0px)': {
-				fontSize: '.95rem'
+				fontSize: '1.065rem'
 			},
-			'@media screen and (min-width:400px)': {
-				fontSize: '1rem'
-			},
-			'@media screen and (min-width:900px)': {
-				fontSize: '.1.15rem'
+			'@media screen and (min-width:600px)': {
+				fontSize: '1.08rem'
 			}
 		},
 		subtitle1: {
 			fontWeight: 600,
-			lineHeight: '1.35rem',
+			lineHeight: '1.15rem',
 			'@media screen and (min-width:0px)': {
-				fontSize: '.85rem'
+				fontSize: '.92rem'
 			},
-			'@media screen and (min-width:400px)': {
-				fontSize: '.9rem'
-			},
-			'@media screen and (min-width:900px)': {
-				fontSize: '.95rem'
+			'@media screen and (min-width:600px)': {
+				fontSize: '.94rem'
 			}
 		},
 		subtitle2: {
 			fontWeight: 500,
-			lineHeight: '1.35rem',
+			lineHeight: '1.15rem',
 			'@media screen and (min-width:0px)': {
-				fontSize: '.85rem'
+				fontSize: '.88rem'
 			},
-			'@media screen and (min-width:400px)': {
+			'@media screen and (min-width:600px)': {
 				fontSize: '.9rem'
-			},
-			'@media screen and (min-width:900px)': {
-				fontSize: '.95rem'
 			}
 		},
 		body1: {
-			fontWeight: 400,
-			lineHeight: '1.15rem',
+			fontWeight: 500,
+			lineHeight: '1.1rem',
 			'@media screen and (min-width:0px)': {
-				fontSize: '.75rem'
+				fontSize: '.85rem'
 			},
-			'@media screen and (min-width:400px)': {
-				fontSize: '.8rem'
-			},
-			'@media screen and (min-width:900px)': {
-				fontSize: '.83rem'
+			'@media screen and (min-width:600px)': {
+				fontSize: '.86rem',
 			}
 		},
 		body2: {
-			fontWeight: 400,
-			lineHeight: '1.15rem',
+			fontWeight: 500,
+			lineHeight: '1.05rem',
 			'@media screen and (min-width:0px)': {
-				fontSize: '.68rem'
+				fontSize: '.77rem'
 			},
-			'@media screen and (min-width:400px)': {
-				fontSize: '.7rem'
-			},
-			'@media screen and (min-width:900px)': {
-				fontSize: '.75rem'
+			'@media screen and (min-width:600px)': {
+				fontSize: '.8rem'
 			}
 		},
 	}

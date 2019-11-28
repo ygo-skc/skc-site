@@ -25,6 +25,7 @@ const BreadCrumbItem = styled(Link)`
 	&&
 	{
 		display: flex;
+		font-weight: 500;
 	}
 `
 
@@ -42,13 +43,13 @@ export default function BreadCrumb(props)
 	{
 		if ((ind === props.crumbs.length - 1))
 		{
-			return	<BreadCrumbItem color='inherit' key={ind} underline='none' >
+			return	<BreadCrumbItem variant='subtitle1' color='inherit' key={ind} underline='none' >
 						{BREADCRUMB_maps_ICON[item]}
 						{item}
 					</BreadCrumbItem>
 		}
 
-		return	<BreadCrumbItem color='inherit' href={NAME_maps_ROUTE[item]} key={ind} >
+		return	<BreadCrumbItem variant='subtitle1' color='inherit' href={NAME_maps_ROUTE[item]} key={ind} >
 					{BREADCRUMB_maps_ICON[item]}
 					{item}
 				</BreadCrumbItem>

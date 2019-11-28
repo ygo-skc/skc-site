@@ -127,7 +127,7 @@ function BanList(props)
 			<Paper>
 				<ExpansionPanel elevation={0} style={{ marginTop: '10px', paddingTop: '5px' }}>
 					<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-						<Typography style={{ fontFamily: 'Ubuntu, sans-serif !important' }} variant='h6' >{getDateString(months, new Date(selectedBanList))}</Typography>
+						<Typography variant='subtitle1' >{getDateString(months, new Date(selectedBanList))}</Typography>
 					</ExpansionPanelSummary>
 
 					<ExpansionPanelDetails>

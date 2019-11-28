@@ -10,17 +10,7 @@ const CardNameComponent = styled(Typography)`
 	&& {
 		font-weight: 500;
 		text-transform: uppercase;
-		marginBottom: '3px'
-
-		@media screen and (min-width: 0px)
-		{
-			margin-bottom: 6px;
-		}
-
-		@media screen and (min-width: 500px)
-		{
-			margin-bottom: 10px;
-		}
+		margin-bottom: .5rem;
 	}
 `
 
@@ -31,12 +21,12 @@ const MonsterTypeComponent = styled(Typography)`
 
 		@media screen and (min-width: 0px)
 		{
-			margin-bottom: 3px;
+			margin-bottom: .35rem;
 		}
 
 		@media screen and (min-width: 500px)
 		{
-			margin-bottom: 4px;
+			margin-bottom: .4rem;
 		}
 	}
 `
@@ -78,26 +68,33 @@ export default function CardDetail(props)
 
 	const CardEffectComponent = (props.fullDetails) ?
 		styled(Typography)`
-			white-space: pre-wrap;
+			&&
+			{
+				white-space: pre-wrap;
+				margin-bottom: .35rem;
+			}
 		`
 		: styled(Typography)`
-			white-space: pre-wrap;
-			display: -webkit-box;
-			-webkit-line-clamp: 3;
-			-webkit-box-orient: vertical;
-			overflow: hidden;
+			&&
+			{
+				white-space: pre-wrap;
+				display: -webkit-box;
+				-webkit-line-clamp: 3;
+				-webkit-box-orient: vertical;
+				overflow: hidden;
+			}
 		`
 
 
 	return (
 		<YGOCard onClick={cardClickedCallBack} >
 			<CardContentComponent >
-				<CardNameComponent variant='subtitle1'noWrap={true} >{props.cardName}</CardNameComponent>
+				<CardNameComponent variant='subtitle2'noWrap={true} >{props.cardName}</CardNameComponent>
 				<CardDescriptionComponent >
 					{
 						(props.cardColor === 'Spell' || props.cardColor === 'Trap') ?
 							undefined :
-							<MonsterTypeComponent variant='body2' noWrap={true} >[ {props.monsterType} ]</MonsterTypeComponent>
+							<MonsterTypeComponent variant='body1' noWrap={true} >[ {props.monsterType} ]</MonsterTypeComponent>
 					}
 
 					<CardEffectComponent variant='body1'>{props.cardEffect}</CardEffectComponent>
