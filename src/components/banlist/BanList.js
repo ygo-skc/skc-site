@@ -14,6 +14,7 @@ import CardDetail from '../card/CardDetail'
 import styled from 'styled-components'
 
 import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
+import {MainContentContainer} from '../MainContent'
 
 
 /*
@@ -113,7 +114,7 @@ function BanList(props)
 
 
 	return (
-		<div style={(initLoad) ? { 'display': 'none' }: {'display': 'block'}} >
+		<MainContentContainer style={(initLoad) ? { 'display': 'none' }: {'display': 'block'}} >
 			<BreadCrumb crumbs={['Home', 'Ban List']} />
 
 			<CardDialog open={showingCardDetail} keepMounted onClose={() => setShowingCardDetail(false)} >
@@ -148,7 +149,7 @@ function BanList(props)
 			</Paper>
 
 
-		</div>
+		</MainContentContainer>
 	)
 }
 
