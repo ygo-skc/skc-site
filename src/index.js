@@ -30,14 +30,14 @@ const theme = createMuiTheme({
 		},
 		h4: {
 			fontWeight: 500,
-			color: '#5f5f5f',
-			lineHeight: '2rem',
-			marginBottom: '.55rem',
+			color: '#353535',
+			lineHeight: '1.6rem',
+			marginBottom: '.4rem',
 			'@media screen and (min-width:0px)': {
-				fontSize: '1.6rem'
+				fontSize: '1.4rem'
 			},
 			'@media screen and (min-width:600px)': {
-				fontSize: '1.7rem'
+				fontSize: '1.45rem'
 			}
 		},
 		h5: {
@@ -56,20 +56,20 @@ const theme = createMuiTheme({
 			lineHeight: '1.2rem',
 			color: '#000',
 			'@media screen and (min-width:0px)': {
-				fontSize: '1.065rem'
+				fontSize: '.95rem'
 			},
 			'@media screen and (min-width:600px)': {
-				fontSize: '1.08rem'
+				fontSize: '.96rem'
 			}
 		},
 		subtitle1: {
 			fontWeight: 600,
 			lineHeight: '1.15rem',
 			'@media screen and (min-width:0px)': {
-				fontSize: '.92rem'
+				fontSize: '.91rem'
 			},
 			'@media screen and (min-width:600px)': {
-				fontSize: '.94rem'
+				fontSize: '.93rem'
 			}
 		},
 		subtitle2: {
