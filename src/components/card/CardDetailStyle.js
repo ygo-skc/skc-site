@@ -60,18 +60,18 @@ const cardStyles = {
 		color: 'black',
 	},
 	'pendulum-normalSummary': {
-		background: 'rgba(56, 133, 129, 0.41)',
+		background: 'rgba(238, 248, 247, 0.72)',
 		padding: '10',
-		color: 'rgb(243, 243, 243)'
+		color: 'black'
 	},
 	'pendulum-effect': {
 		background: `linear-gradient(#ff8000 50%, #00cdb1 55%)`,
 		color: '#f5f5f5',
 	},
 	'pendulum-effectSummary': {
-		background: 'rgba(56, 133, 129, 0.41)',
+		background: 'rgba(238, 248, 247, 0.72)',
 		padding: '10',
-		color: 'rgb(243, 243, 243)'
+		color: 'black'
 	},
 	link: {
 		background: `linear-gradient(45deg, ${blue[700]} 30%, ${blue[800]} 90%)`,
