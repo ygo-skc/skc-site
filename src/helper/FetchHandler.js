@@ -1,22 +1,26 @@
-export function handleFetch(endPoint, history, onJsonReceived) {
+import { NAME_maps_ROUTE } from '../Routes'
+
+
+function handleFetch(endPoint, history, onJsonReceived) {
 	fetch(endPoint)
 		.then((data) => {
 			if (data.ok) return data.json()
-			else throw new Error(data.statusText)
+			else
+			{
+				const err = new Error(data.statusText)
+				err.name = data.status
+				throw err
+			}
 		})
-		.then((resultJson) => {
-			onJsonReceived(resultJson)
-		})
-		.catch((err) => {
-			handleRedirect(history, '/server_err')
-		})
+		.then(onJsonReceived)
+		.catch((err) => handleRedirect(err, history))
 }
 
 
-export function handleRedirect(history, redirect='generic')
+function handleRedirect(err, history)
 {
-	history.push(redirect)
+	history.push(NAME_maps_ROUTE[err.name])
 }
 
 
-export default { handleFetch, handleRedirect }
+export { handleFetch }

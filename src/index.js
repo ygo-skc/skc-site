@@ -13,8 +13,22 @@ const theme = createMuiTheme({
 			contrastDefaultColor: 'light'
 		},
 		secondary: {
-			main: '#FEB300',
+			main: '#f27d0c',
 			contrastDefaultColor: 'light'
+		}
+	},
+	overrides: {
+		'MuiChip': {
+			label:
+			{
+				fontWeight: 500,
+				'@media screen and (min-width:0px)': {
+					fontSize: '.81rem'
+				},
+				'@media screen and (min-width:600px)': {
+					fontSize: '.825rem',
+				}
+			}
 		}
 	},
 	typography: {
