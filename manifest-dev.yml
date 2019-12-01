@@ -1,0 +1,12 @@
+applications:
+- name: Static Site Test
+  disk_quota: 20M
+  instances: 1
+  memory: 20M
+  routes:
+  - route: static-site-test.cfapps.io
+  buildpacks:
+  - staticfile_buildpack
+  pushstate: enabled
+  status_codes:
+  - 404: /index.html
