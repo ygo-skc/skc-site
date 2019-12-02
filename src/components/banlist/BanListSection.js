@@ -31,12 +31,12 @@ export default function BanListSection(props)
 
 	const SectionInfoText = styled(Typography)`
 		&& {
-			font-weight: 400;
+			font-weight: 500;
 			margin-top: .75rem;
-			margin-bottom: 3.5rem;
-			padding: 14px;
+			margin-bottom: 2.75rem;
+			padding: .9rem;
 			background: ${props.sectionExplanationBackground};
-			border-radius: 12px;
+			border-radius: .85rem;
 			display: -webkit-inline-flex;
 			color: white;
 		}
@@ -62,7 +62,7 @@ export default function BanListSection(props)
 		let cardTypeContentGrid = cardDisplayOrder.map(( cardType ) => {
 			if (cardDetailsMap.has(cardType)) {
 				return	<div key={cardType} >
-							<Typography variant='subtitle1' style={{ marginBottom: '10px', textTransform: 'uppercase', color: cardSectionTextColors[cardType] }} >
+							<Typography variant='subtitle1' style={{ marginBottom: '10px', textTransform: 'uppercase', color: cardSectionTextColors[cardType], letterSpacing: '.105rem' }} >
 								{cardType}
 							</Typography>
 							<Grid container spacing={1} style={{marginBottom: '30px'}} >

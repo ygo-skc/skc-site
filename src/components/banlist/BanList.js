@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react'
 
-import { Typography, Dialog, Paper } from '@material-ui/core'
+import { Dialog, Paper, Chip } from '@material-ui/core'
+import DateRangeRoundedIcon from '@material-ui/icons/DateRangeRounded'
 
 import Grid from '@material-ui/core/Grid'
 
 import { ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, CircularProgress } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import Button from '@material-ui/core/Button'
-
 import CardDetail from '../card/CardDetail'
 
-import styled from 'styled-components'
+import Styled from 'styled-components'
 
 import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
 import {MainContentContainer} from '../MainContent'
@@ -24,6 +23,62 @@ import BanListSection from './BanListSection'
 import BreadCrumb from '../Breadcrumb.js'
 import TabbedView from './TabbedView'
 import { handleFetch } from '../../helper/FetchHandler'
+
+
+const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+const CardDialog = Styled(Dialog)`
+	.MuiDialog-paper
+	{
+		background-color: transparent;
+	}
+
+	.MuiDialog-paperWidthSm
+	{
+		max-width: 350px;
+		min-width: 350px;
+	}
+`
+
+const BanDatesExpansionSummary = Styled(ExpansionPanelSummary)`
+	&&
+	{
+		@media only screen and (min-width: 0px)
+		{
+			padding-left: .85rem;
+			padding-right: .85rem;
+		}
+		@media only screen and (min-width: 600px)
+		{
+			padding-left: .95rem;
+			padding-right: .95rem;
+		}
+		@media only screen and (min-width: 800px)
+		{
+			padding-left: 1.25rem;
+			padding-right: 1.25rem;
+		}
+	}
+`
+
+const BanDatesExpansionDetail = Styled(ExpansionPanelDetails)`
+	&&
+	{
+		@media only screen and (min-width: 0px)
+		{
+			padding: .85rem;
+		}
+		@media only screen and (min-width: 600px)
+		{
+			padding: .95rem;
+		}
+		@media only screen and (min-width: 800px)
+		{
+			padding: 1.25rem;
+		}
+	}
+`
+
 
 function BanList(props)
 {
@@ -42,18 +97,6 @@ function BanList(props)
 	const [chosenCardID, setChosenCardID] = useState('')
 	const [chosenCard, setChosenCard] = useState('')
 
-	const CardDialog = styled(Dialog)`
-		.MuiDialog-paper
-		{
-			background-color: transparent;
-		}
-
-		.MuiDialog-paperWidthSm
-		{
-			max-width: 350px;
-			min-width: 350px;
-		}
-	`
 
 	useEffect(() => {
 		handleFetch(NAME_maps_ENDPOINT['banListsUrl'], props.history, (resultJson) => {
@@ -67,9 +110,8 @@ function BanList(props)
 		let banListGrid1 = []
 		banListsStartDates.forEach((item, ind) => {
 			banListGrid1.push(<Grid key={ind} item xs={4} sm={2} md={2} lg={1} xl={1} >
-				<Button style={{'textTransform': 'none'}} size='small' id={ind} onClick={(button) => setSelectedBanList(banListsStartDates[button.currentTarget.id])} >
-					{getDateString(months, new Date(item))}
-				</Button>
+				<Chip id={ind} color='secondary' variant='outlined' label={getDateString(months, new Date(item))}
+					onClick={(button) => setSelectedBanList(banListsStartDates[button.currentTarget.id])} />
 			</Grid>
 			)
 		})
@@ -110,8 +152,6 @@ function BanList(props)
 		if (showingCardDetail === false) setChosenCardID('')
 	}, [showingCardDetail])
 
-	const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-
 
 	return (
 		<MainContentContainer style={(initLoad) ? { 'display': 'none' }: {'display': 'block'}} >
@@ -126,17 +166,18 @@ function BanList(props)
 			</CardDialog>
 
 			<Paper>
-				<ExpansionPanel elevation={0} style={{ marginTop: '10px', paddingTop: '5px' }}>
-					<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-						<Typography variant='subtitle1' >{getDateString(months, new Date(selectedBanList))}</Typography>
-					</ExpansionPanelSummary>
+				<ExpansionPanel elevation={0}>
+					<BanDatesExpansionSummary expandIcon={<ExpandMoreIcon />}>
+						<Chip color='primary' label={getDateString(months, new Date(selectedBanList))} icon={<DateRangeRoundedIcon fontSize='small' />} />
+					</BanDatesExpansionSummary>
 
-					<ExpansionPanelDetails>
+					<BanDatesExpansionDetail>
 						<Grid container >
 							{banListGrid}
 						</Grid>
-					</ExpansionPanelDetails>
+					</BanDatesExpansionDetail>
 				</ExpansionPanel>
+
 				<TabbedView
 					content={
 						[
@@ -153,6 +194,6 @@ function BanList(props)
 	)
 }
 
-let getDateString = (months, date) => `${months[date.getMonth()]} ${date.getDate() + 1}, ${date.getFullYear()}`
+const getDateString = (months, date) => `${months[date.getMonth()]} ${date.getDate() + 1}, ${date.getFullYear()}`
 
 export default BanList

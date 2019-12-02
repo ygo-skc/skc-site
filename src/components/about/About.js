@@ -1,29 +1,9 @@
 import React from 'react'
-import Styled from 'styled-components'
 
-import { Paper, Typography, Link, Divider } from '@material-ui/core'
+import { Typography, Link, Divider } from '@material-ui/core'
 
 import Breadcrumb from '../Breadcrumb'
-import { MainContentContainer } from '../MainContent'
-
-const Content = Styled(Paper)`
-	&&
-	{
-		border-radius: .5rem;
-		@media screen and (min-width: 0px)
-		{
-			padding: 1.35rem;
-		}
-		@media screen and (min-width: 550px)
-		{
-			padding: 1.85rem;
-		}
-		@media screen and (min-width: 900px)
-		{
-			padding: 2.2rem;
-		}
-	}
-`
+import { MainContentContainer, ChildPaper } from '../MainContent'
 
 export default function()
 {
@@ -31,7 +11,7 @@ export default function()
 		<MainContentContainer>
 			<Breadcrumb crumbs={['Home', 'About']} />
 
-			<Content>
+			<ChildPaper>
 				<Typography variant='h4'>
 					The Developer
 				</Typography>
@@ -50,6 +30,7 @@ export default function()
 				</Typography>
 
 				<br />
+				<br />
 				<Divider variant='middle'/>
 				<br />
 				<br />
@@ -65,6 +46,7 @@ export default function()
 					The API was also created by me. It has two main functions: to get the contents of a specific ban list (basic info about a card, forbidden/limited/semi-limited cards) and get detailed information about a certain card (effect, attack/defense, etc). Right now it is limited in content. However, I would like to create a full blown database of cards so developers can have a fun and familiar service to use while learning about REST and HTTP in general.
 				</Typography>
 
+				<br />
 				<br />
 				<Divider variant='middle'/>
 				<br />
@@ -86,7 +68,7 @@ export default function()
 					<br />
 					Donations will be used to keep the website and API up and running as well as motivate me to keep it going. Not only that, this website uses open source software that I would also love to fund since I couldn't have built this thing as easily without the frameworks used. A portion of donations will be going to certain frameworks.
 				</Typography>
-			</Content>
+			</ChildPaper>
 		</MainContentContainer>
 	)
 }

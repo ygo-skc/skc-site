@@ -10,7 +10,7 @@ const CardNameComponent = styled(Typography)`
 	&& {
 		font-weight: 500;
 		text-transform: uppercase;
-		margin-bottom: .5rem;
+		margin-bottom: .415rem;
 	}
 `
 
@@ -26,18 +26,23 @@ const MonsterTypeComponent = styled(Typography)`
 
 		@media screen and (min-width: 500px)
 		{
-			margin-bottom: .4rem;
+			margin-bottom: .35rem;
 		}
 	}
 `
 
 const MonsterAtkDefComponent = styled(Typography)`
-	text-align: right;
+	&&
+	{
+		text-align: right;
+	}
 `
 
 const CardIDComponent = styled(Typography)`
-	color: #fff;
-	margin-top: 3px !important;
+	&& {
+		color: #fff;
+		margin-top: .25rem;
+	}
 `
 
 
@@ -56,12 +61,12 @@ export default function CardDetail(props)
 	`
 
 	const CardContentComponent = styled(CardContent)`
-		padding: 12px !important;
+		padding: .52rem !important;
 		background: ${cardStyles[cardColor].background};
 		color: ${cardStyles[cardColor].color};
 	`
 	const CardDescriptionComponent = styled(Box)`
-		padding: 10;
+		padding: .445rem;
 		background: ${cardStyles[cardColorSummary].background};
 		color: ${cardStyles[cardColorSummary].color};
 	`
@@ -112,7 +117,7 @@ export default function CardDetail(props)
 				{
 					(props.fullDetails) ?
 						<CardIDComponent variant='body2' >
-							{props.cardID}
+							{props.cardID} &nbsp;&nbsp; First Edition
 						</CardIDComponent>
 						: undefined
 				}

@@ -65,7 +65,7 @@ const cardStyles = {
 		color: 'black'
 	},
 	'pendulum-effect': {
-		background: `linear-gradient(#ff8000 50%, #00cdb1 55%)`,
+		background: `linear-gradient(#ff6410 50%, #00cdb1 55%)`,
 		color: '#f5f5f5',
 	},
 	'pendulum-effectSummary': {

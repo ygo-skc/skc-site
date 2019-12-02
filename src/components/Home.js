@@ -53,7 +53,7 @@ export default function Home()
 					News
 				</Typography>
 				<Typography variant='h6'>
-					<Link href={NAME_maps_ROUTE.BanList} >Ban List</Link> has been updated.
+					<Link href={NAME_maps_ROUTE.BanList} color='secondary' >Ban List</Link> has been updated.
 				</Typography>
 			</MainContentCard>
 		</HomeContent>
