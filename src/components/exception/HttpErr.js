@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { MainContentContainer } from '../MainContent'
+import Breadcrumbs from '../Breadcrumb'
 import CardDetail from '../card/CardDetail'
 
 
@@ -39,8 +41,8 @@ const ErrCard = styled(CardDetail)`
 `
 
 const HTTP_ERR_maps_ERR_NAME = {
-	400: 'Bad Request',
-	404: '404 Not Found',
+	400: '400 - Bad Request',
+	404: '404 - Not Found',
 	500: '500 - Internal Server Error',
 }
 
@@ -62,7 +64,8 @@ export default function HttpErr(props)
 {
 	console.log(props)
 	return(
-		<div>
+		<MainContentContainer>
+			<Breadcrumbs crumbs={['Home', 404]} />
 			<CenteredContent>
 				<ErrCard
 					cardColor='err'
@@ -72,6 +75,6 @@ export default function HttpErr(props)
 					cardID={`00000${props.httpErr}`}
 					fullDetails={true} />
 			</CenteredContent>
-		</div>
+		</MainContentContainer>
 	)
 }
