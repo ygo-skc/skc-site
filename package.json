@@ -6,27 +6,37 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@material-ui/core": "^4.7.0",
+    "@material-ui/core": "^4.8.0",
     "@material-ui/icons": "^4.5.1",
-    "@material-ui/styles": "^4.6.0",
-    "core-js-compat": "^3.4.2",
+    "@material-ui/styles": "^4.7.1",
+    "core-js-compat": "^3.5.0",
+    "env-cmd": "^10.0.1",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "^3.2.0",
+    "react-scripts": "^3.3.0",
     "react-swipeable-views": "^0.13.3",
     "styled-components": "^4.4.1",
-    "typeface-roboto": "0.0.54"
+    "typeface-roboto": "0.0.54",
+    "webpack": "4.41.2"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+	"start:development_remote": "env-cmd -f ./.env.development_remote react-scripts start",
+	"start:production": "env-cmd -f ./.env.production react scripts start",
+
+	"build": "env-cmd -f ./.env.development react-scripts build",
+	"build:development_remote": "env-cmd -f ./.env.development_remote react-scripts build",
+	"build:production": "react-scripts build",
+
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "uploadAWS": "aws s3 sync build s3://yugiohsite/",
-    "uploadAWSDev": "npm run build; aws s3 sync build s3://yugiohsitedev/",
+	"eject": "react-scripts eject",
+
+    "uploadAWS:Prod": "npm run build:production; aws s3 sync build s3://yugiohsite/",
+	"uploadAWS:Dev": "npm run build:development_remote; aws s3 sync build s3://yugiohsitedev/",
+
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public"
   },
@@ -40,9 +50,9 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@storybook/addon-actions": "^5.2.6",
-    "@storybook/addon-links": "^5.2.6",
-    "@storybook/addons": "^5.2.6",
-    "@storybook/react": "^5.2.6"
+    "@storybook/addon-actions": "^5.2.8",
+    "@storybook/addon-links": "^5.2.8",
+    "@storybook/addons": "^5.2.8",
+    "@storybook/react": "^5.2.8"
   }
 }
