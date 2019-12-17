@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
-import { Typography, Box, Card, CardContent} from '@material-ui/core'
+import { Typography, Box, Card, CardContent, Badge  } from '@material-ui/core'
 import styled from 'styled-components';
 
 import cardStyles from './CardDetailStyle'
@@ -52,6 +52,7 @@ export default function CardDetail(props)
 	const cardColorSummary = `${props.cardColor.toLowerCase()}Summary`
 	const cardClickedCallBack = (props.cardClicked) ? function () {props.cardClicked(props.cardID)} : undefined
 
+
 	let curser = 'pointer'
 	if (cardClickedCallBack === undefined)	curser = ''
 
@@ -90,38 +91,51 @@ export default function CardDetail(props)
 			}
 		`
 
+	const Temp = styled(Badge)`
+		&& {
+			.MuiBadge-badge {
+				margin-right: .8rem;
+				color: white;
+			}
+		}
+	`
+
+
 
 	return (
-		<YGOCard onClick={cardClickedCallBack} >
-			<CardContentComponent >
-				<CardNameComponent variant='subtitle2'noWrap={true} >{props.cardName}</CardNameComponent>
-				<CardDescriptionComponent >
-					{
-						(props.cardColor === 'Spell' || props.cardColor === 'Trap') ?
-							undefined :
-							<MonsterTypeComponent variant='body1' noWrap={true} >[ {props.monsterType} ]</MonsterTypeComponent>
-					}
+		<Temp badgeContent='NEW' variant='standard' overlap='rectangle' color='secondary'
+			invisible={ !props.isNew } style={{width: '100%', color: 'white', marginRight: '10px' }} >
+			<YGOCard onClick={cardClickedCallBack} style={{width: '100%'}} >
+					<CardContentComponent >
+						<CardNameComponent variant='subtitle2' noWrap={true} >{props.cardName}</CardNameComponent>
+						<CardDescriptionComponent >
+							{
+								(props.cardColor === 'Spell' || props.cardColor === 'Trap') ?
+									undefined :
+									<MonsterTypeComponent variant='body1' noWrap={true} >[ {props.monsterType} ]</MonsterTypeComponent>
+							}
 
-					<CardEffectComponent variant='body1'>{props.cardEffect}</CardEffectComponent>
+							<CardEffectComponent variant='body1'>{props.cardEffect}</CardEffectComponent>
 
-					{
-						(props.cardColor === 'Spell' || props.cardColor === 'Trap' || props.cardColor === 'err' ) ?
-							undefined :
+							{
+								(props.cardColor === 'Spell' || props.cardColor === 'Trap' || props.cardColor === 'err' ) ?
+									undefined :
+									(props.fullDetails) ?
+										<MonsterAtkDefComponent>
+											{props.monsterAtk} / {props.monsterDef}
+										</MonsterAtkDefComponent> :
+										undefined
+							}
+						</CardDescriptionComponent>
+						{
 							(props.fullDetails) ?
-								<MonsterAtkDefComponent>
-									{props.monsterAtk} / {props.monsterDef}
-								</MonsterAtkDefComponent> :
-								undefined
-					}
-				</CardDescriptionComponent>
-				{
-					(props.fullDetails) ?
-						<CardIDComponent variant='body2' >
-							{props.cardID} &nbsp;&nbsp; First Edition
-						</CardIDComponent>
-						: undefined
-				}
-			</CardContentComponent>
-		</YGOCard>
+								<CardIDComponent variant='body2' >
+									{props.cardID} &nbsp;&nbsp; First Edition
+								</CardIDComponent>
+								: undefined
+						}
+					</CardContentComponent>
+			</YGOCard>
+		</Temp>
 	)
 }

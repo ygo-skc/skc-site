@@ -80,9 +80,10 @@ const BanDatesExpansionDetail = Styled(ExpansionPanelDetails)`
 `
 
 
+
 function BanList(props)
 {
-	const [banListsStartDates, setBanListsStartDates] = useState([])
+	const [banListStartDates, setBanListStartDates] = useState([])
 	const [banListGrid, setBanListGrid] = useState([])
 	const [selectedBanList, setSelectedBanList] = useState('')
 
@@ -90,55 +91,70 @@ function BanList(props)
 	const [limited, setLimited] = useState([])
 	const [semiLimited, setSemiLimited] = useState([])
 
-	const [fetchingBanList, setFetchingBanList] = useState(false)
-	const [initLoad, setInitLoad] = useState(true)
+	const [isFetchingBanList, setIsFetchingBanList] = useState(true)
+	const [isFetchingNewCards, setIsFetchingNewCards] = useState(true)
+	const [isDataLoaded, setIsDataLoaded] = useState(false)
 
 	const [showingCardDetail, setShowingCardDetail] = useState(false)
-	const [chosenCardID, setChosenCardID] = useState('')
-	const [chosenCard, setChosenCard] = useState('')
+	const [chosenCardID, setChosenCardID] = useState(undefined)
+	const [chosenCard, setChosenCard] = useState(undefined)
+
+	const [newForbiddenCards, setNewForbiddenCards] = useState({})
+	const [newLimitedCards, setNewLimitedCards] = useState({})
+	const [newSemiLimitedCards, setNewSemiLimitedCards] = useState({})
+
 
 
 	useEffect(() => {
 		handleFetch(NAME_maps_ENDPOINT['banListsUrl'], props.history, (resultJson) => {
-			setBanListsStartDates(resultJson.banListStartDates)
+			setBanListStartDates(resultJson.banListStartDates)
 			setSelectedBanList(resultJson.banListStartDates[0])
 		})
 		// eslint-disable-next-line
 	}, [])
 
+
+	useEffect( () => {
+		if ( !isFetchingBanList && !isFetchingNewCards )	setIsDataLoaded(true)
+		else	setIsDataLoaded(false)
+	}, [isFetchingBanList, isFetchingNewCards])
+
+
 	useEffect(() => {
 		let banListGrid1 = []
-		banListsStartDates.forEach((item, ind) => {
+		banListStartDates.forEach((item, ind) => {
 			banListGrid1.push(<Grid key={ind} item xs={4} sm={2} md={2} lg={1} xl={1} >
 				<Chip id={ind} color='secondary' variant='outlined' label={getDateString(months, new Date(item))}
-					onClick={(button) => setSelectedBanList(banListsStartDates[button.currentTarget.id])} />
+					onClick={ (button) => setSelectedBanList(banListStartDates[button.currentTarget.id]) } />
 			</Grid>
 			)
 		})
 
 		setBanListGrid(banListGrid1)
 		// eslint-disable-next-line
-	}, [banListsStartDates])
+	}, [banListStartDates])
+
 
 	useEffect(() => {
 		if (selectedBanList !== '')
 		{
-			setInitLoad(false)
-			setFetchingBanList(true)
+			testing()
 
+			setIsFetchingBanList(true)
 			handleFetch(`${NAME_maps_ENDPOINT['banListInstanceUrl']}${selectedBanList}`, props.history, (resultJson) => {
 				setForbidden(resultJson.bannedCards.forbidden)
 				setLimited(resultJson.bannedCards.limited)
 				setSemiLimited(resultJson.bannedCards.semiLimited)
 
-				setFetchingBanList(false)
+				setIsFetchingBanList(false)
 			})
 		}
 		// eslint-disable-next-line
 	}, [selectedBanList])
 
+
 	useEffect(() => {
-		if (chosenCardID !== '')
+		if (chosenCardID !== undefined)
 		{
 			handleFetch(`${NAME_maps_ENDPOINT['cardInstanceUrl']}${chosenCardID}`, props.history, (resultJson) => {
 				setChosenCard(resultJson)
@@ -148,13 +164,15 @@ function BanList(props)
 		// eslint-disable-next-line
 	}, [chosenCardID])
 
+
 	useEffect(() => {
-		if (showingCardDetail === false) setChosenCardID('')
+		if (showingCardDetail === false) setChosenCardID(undefined)
 	}, [showingCardDetail])
 
 
+
 	return (
-		<MainContentContainer style={(initLoad) ? { 'display': 'none' }: {'display': 'block'}} >
+		<MainContentContainer >
 			<BreadCrumb crumbs={['Home', 'Ban List']} />
 
 			<CardDialog open={showingCardDetail} keepMounted onClose={() => setShowingCardDetail(false)} >
@@ -181,9 +199,17 @@ function BanList(props)
 				<TabbedView
 					content={
 						[
-							<BanListSection sectionName={'Forbidden'} sectionExplanation={"Forbidden cards cannot be used in Deck/Side Deck in the Advanced Format"} sectionExplanationBackground='#ff4557' cards={forbidden} fetchingBanList={fetchingBanList} cardClicked={(cardID) => setChosenCardID(cardID)} />,
-							<BanListSection sectionName={'Limited'} sectionExplanation="Limited cards can be included in Deck/Side deck - max 1" sectionExplanationBackground='#ff6c12' cards={limited} fetchingBanList={fetchingBanList} cardClicked={(cardID) => setChosenCardID(cardID)} />,
-							<BanListSection sectionName={'Semi-Limited'} sectionExplanation="Semi-Limited cards can be included in Deck/Side deck - max 2" sectionExplanationBackground='#f0c620' cards={semiLimited} fetchingBanList={fetchingBanList} cardClicked={(cardID) => setChosenCardID(cardID)} />
+							<BanListSection sectionName={'Forbidden'}
+							sectionExplanation={"Forbidden cards cannot be used in Deck/Side Deck in the Advanced Format"}
+							sectionExplanationBackground='#ff4557' cards={forbidden} newCards={newForbiddenCards} isDataLoaded={isDataLoaded}
+							cardClicked={(cardID) => setChosenCardID(cardID)} />,
+							<BanListSection sectionName={'Limited'}
+							sectionExplanation="Limited cards can be included in Deck/Side deck - max 1"
+							sectionExplanationBackground='#ff6c12' cards={limited} newCards={newLimitedCards} isDataLoaded={isDataLoaded}
+							cardClicked={(cardID) => setChosenCardID(cardID)} />,
+							<BanListSection sectionName={'Semi-Limited'} sectionExplanation="Semi-Limited cards can be included in Deck/Side deck - max 2"
+							sectionExplanationBackground='#f0c620' cards={semiLimited} newCards={newSemiLimitedCards} isDataLoaded={isDataLoaded}
+							cardClicked={(cardID) => setChosenCardID(cardID)} />
 						]
 					}
 				/>
@@ -192,6 +218,22 @@ function BanList(props)
 
 		</MainContentContainer>
 	)
+
+
+	function testing()
+	{
+		setIsFetchingNewCards(true)
+		const url = `${NAME_maps_ENDPOINT.newCardsInBanList}${selectedBanList}`
+
+		fetch(url)
+		.then(res => res.json())
+		.then(json => {
+			setNewForbiddenCards(json.newCards.forbidden)
+			setNewLimitedCards(json.newCards.limited)
+			setNewSemiLimitedCards(json.newCards.semiLimited)
+			setIsFetchingNewCards(false)
+		})
+	}
 }
 
 const getDateString = (months, date) => `${months[date.getMonth()]} ${date.getDate() + 1}, ${date.getFullYear()}`

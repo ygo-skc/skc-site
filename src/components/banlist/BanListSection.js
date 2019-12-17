@@ -28,6 +28,7 @@ const CenteredContent = styled(Box)`
 export default function BanListSection(props)
 {
 	const [cardTypeContentGrid, setCardTypeContentGrid] = useState([])
+	const [areCardsRendered, setAreCardsRendered] = useState(false)
 
 	const SectionInfoText = styled(Typography)`
 		&& {
@@ -42,40 +43,62 @@ export default function BanListSection(props)
 		}
 	`
 
+	function isNewCard(cardID)
+	{
+		if (props.newCards !== undefined && cardID !== undefined)
+		{
+			const isNew = props.newCards.find( currentItem => {
+				if (currentItem.id === cardID)	return true
+				return false
+			}, cardID)
+			return (isNew === undefined)? false: true
+		}
+
+		return false
+	}
+
 	useEffect(() => {
-		const cardDetailsMap = new Map()
+		setAreCardsRendered(false)
+		if ( props.isDataLoaded )
+		{
+			const cardDetailsMap = new Map()
 
-		props.cards.forEach((card, ind) => {
-			const cardColor = card.cardColor.toLowerCase()
-			if (!cardDetailsMap.has(cardColor))	cardDetailsMap.set(cardColor, [])
-
-
-			cardDetailsMap.get(cardColor).push(
-				<Grid key={ind} item xs={12} sm={4} md={3} lg={2} xl={2} >
-					<CardDetail key={ind} cardID={card.cardID} cardName={card.cardName} monsterType={card.monsterType} cardColor={card.cardColor}
-						cardEffect={card.cardEffect} cardClicked={props.cardClicked} fullDetails={false} />
-				</Grid>
-			)
-		})
+			props.cards.forEach((card, ind) => {
+				const cardColor = card.cardColor.toLowerCase()
+				if (!cardDetailsMap.has(cardColor))	cardDetailsMap.set(cardColor, [])
 
 
-		let cardTypeContentGrid = cardDisplayOrder.map(( cardType ) => {
-			if (cardDetailsMap.has(cardType)) {
-				return	<div key={cardType} >
-							<Typography variant='subtitle1' style={{ marginBottom: '10px', textTransform: 'uppercase', color: cardSectionTextColors[cardType], letterSpacing: '.105rem' }} >
-								{cardType}
-							</Typography>
-							<Grid container spacing={1} style={{marginBottom: '30px'}} >
-								{cardDetailsMap.get(cardType)}
-							</Grid>
-						</div>
-			}
-			return null
-		})
+				cardDetailsMap.get(cardColor).push(
+					<Grid key={ind} item xs={12} sm={4} md={3} lg={2} xl={2} >
+						<CardDetail key={ind} cardID={card.cardID} cardName={card.cardName} monsterType={card.monsterType}
+						cardColor={card.cardColor} cardEffect={card.cardEffect} cardClicked={props.cardClicked}
+						fullDetails={false} isNew={ isNewCard(card.cardID) }
+						/>
+					</Grid>
+				)
+			})
 
-		setCardTypeContentGrid(cardTypeContentGrid)
+
+			let cardTypeContentGrid = cardDisplayOrder.map(( cardType ) => {
+				if (cardDetailsMap.has(cardType)) {
+					return	<div key={cardType} >
+								<Typography variant='subtitle1' style={{ marginBottom: '10px', textTransform: 'uppercase', color: cardSectionTextColors[cardType], letterSpacing: '.105rem' }} >
+									{cardType}
+								</Typography>
+								<Grid container spacing={1} style={{marginBottom: '30px'}} >
+									{cardDetailsMap.get(cardType)}
+								</Grid>
+							</div>
+				}
+				return null
+			})
+
+			setCardTypeContentGrid(cardTypeContentGrid)
+			setAreCardsRendered(true)
+		}
 		// eslint-disable-next-line
-	}, [props.cards])
+	}, [props.isDataLoaded])
+
 
 
 	return (
@@ -87,13 +110,13 @@ export default function BanListSection(props)
 			</CenteredContent>
 
 			{
-				(props.fetchingBanList ?
-					(<CenteredContent>
+				(areCardsRendered ?
+					(	<div>
+						{cardTypeContentGrid}
+					</div>)
+					: 	(<CenteredContent>
 							<CircularProgress size={50} variant='indeterminate' thickness={3.6} disableShrink={true} />
-					</CenteredContent>)
-					: (	<div>
-							{cardTypeContentGrid}
-						</div>)
+						</CenteredContent>)
 				)
 			}
 		</div>
