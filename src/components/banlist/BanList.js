@@ -91,6 +91,7 @@ function BanList(props)
 	const [limited, setLimited] = useState([])
 	const [semiLimited, setSemiLimited] = useState([])
 
+	const [isSettingUpDates, setIsSettingUpDates] = useState(true)
 	const [isFetchingBanList, setIsFetchingBanList] = useState(true)
 	const [isFetchingNewCards, setIsFetchingNewCards] = useState(true)
 	const [isDataLoaded, setIsDataLoaded] = useState(false)
@@ -125,6 +126,7 @@ function BanList(props)
 		banListStartDates.forEach((item, ind) => {
 			banListGrid1.push(<Grid key={ind} item xs={4} sm={2} md={2} lg={1} xl={1} >
 				<Chip id={ind} color='secondary' variant='outlined' label={getDateString(months, new Date(item))}
+					icon={<DateRangeRoundedIcon fontSize='small' />}
 					onClick={ (button) => setSelectedBanList(banListStartDates[button.currentTarget.id]) } />
 			</Grid>
 			)
@@ -138,6 +140,7 @@ function BanList(props)
 	useEffect(() => {
 		if (selectedBanList !== '')
 		{
+			setIsSettingUpDates(false)
 			testing()
 
 			setIsFetchingBanList(true)
@@ -183,7 +186,7 @@ function BanList(props)
 				}
 			</CardDialog>
 
-			<Paper>
+			<Paper style={ (isSettingUpDates)? {display: 'none'}: {display: 'block' }  } >
 				<ExpansionPanel elevation={0}>
 					<BanDatesExpansionSummary expandIcon={<ExpandMoreIcon />}>
 						<Chip color='primary' label={getDateString(months, new Date(selectedBanList))} icon={<DateRangeRoundedIcon fontSize='small' />} />
