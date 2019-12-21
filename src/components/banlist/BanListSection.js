@@ -45,7 +45,7 @@ export default function BanListSection(props)
 
 	function isNewCard(cardID)
 	{
-		if (props.newCards != null && cardID !== undefined)
+		if (props.newCards != "" && cardID !== undefined)
 		{
 			const isNew = props.newCards.find( currentItem => {
 				if (currentItem.id === cardID)	return true
