@@ -124,9 +124,9 @@ function BanList(props)
 	useEffect(() => {
 		let banListGrid1 = []
 		banListStartDates.forEach((item, ind) => {
-			banListGrid1.push(<Grid key={ind} item xs={4} sm={2} md={2} lg={1} xl={1} >
-				<Chip id={ind} color='secondary' variant='outlined' label={getDateString(months, new Date(item))}
-					icon={<DateRangeRoundedIcon fontSize='small' />}
+			banListGrid1.push(<Grid key={ind} item xs={6} sm={4} md={2} lg={2} xl={1} >
+				<Chip id={ind} color='secondary' variant={ (item === selectedBanList)? 'default' : 'outlined' } label={getDateString(months, new Date(item))}
+					icon={<DateRangeRoundedIcon />}
 					onClick={ (button) => setSelectedBanList(banListStartDates[button.currentTarget.id]) } />
 			</Grid>
 			)
@@ -134,7 +134,7 @@ function BanList(props)
 
 		setBanListGrid(banListGrid1)
 		// eslint-disable-next-line
-	}, [banListStartDates])
+	}, [selectedBanList])
 
 
 	useEffect(() => {
@@ -189,17 +189,18 @@ function BanList(props)
 			<Paper style={ (isSettingUpDates)? {display: 'none'}: {display: 'block' }  } >
 				<ExpansionPanel elevation={0}>
 					<BanDatesExpansionSummary expandIcon={<ExpandMoreIcon />}>
-						<Chip color='primary' label={getDateString(months, new Date(selectedBanList))} icon={<DateRangeRoundedIcon fontSize='small' />} />
+						<Chip color='primary' label={getCurrentBanListDate(months, selectedBanList, banListStartDates)} icon={<DateRangeRoundedIcon />} />
 					</BanDatesExpansionSummary>
 
 					<BanDatesExpansionDetail>
-						<Grid container >
+						<Grid container spacing={1} >
 							{banListGrid}
 						</Grid>
 					</BanDatesExpansionDetail>
 				</ExpansionPanel>
 
 				<TabbedView
+					numForbidden={forbidden.length} numLimited={limited.length} numSemiLimited={semiLimited.length}
 					content={
 						[
 							<BanListSection sectionName={'Forbidden'}
@@ -217,8 +218,6 @@ function BanList(props)
 					}
 				/>
 			</Paper>
-
-
 		</MainContentContainer>
 	)
 
@@ -229,14 +228,44 @@ function BanList(props)
 		const url = `${NAME_maps_ENDPOINT.newCardsInBanList}${selectedBanList}`
 
 		fetch(url)
-		.then(res => res.json())
+		.then(res => {
+			if (res.status === 200)	return res.json()
+			else if (res.status === 204)	return null
+			else	throw new Error()
+		})
 		.then(json => {
-			setNewForbiddenCards(json.newCards.forbidden)
-			setNewLimitedCards(json.newCards.limited)
-			setNewSemiLimitedCards(json.newCards.semiLimited)
+			if (json == null)
+			{
+				setNewForbiddenCards([])
+				setNewLimitedCards([])
+				setNewSemiLimitedCards([])
+			}
+			else
+			{
+				setNewForbiddenCards(json.newCards.forbidden)
+				setNewLimitedCards(json.newCards.limited)
+				setNewSemiLimitedCards(json.newCards.semiLimited)
+			}
 			setIsFetchingNewCards(false)
 		})
 	}
+}
+
+const getCurrentBanListDate = (months, selectedBanList, banListStartDates) =>
+{
+	const banListPos = banListStartDates.findIndex(item => {
+		if (item === selectedBanList)	return true
+
+		return false
+	})
+
+	switch (banListPos) {
+		case 0:
+			return getDateString(months, new Date(selectedBanList)) + " - Present"
+		default:
+			return getDateString(months, new Date(selectedBanList)) + " - " + getDateString(months, new Date(banListStartDates[banListPos - 1]))
+	}
+
 }
 
 const getDateString = (months, date) => `${months[date.getMonth()]} ${date.getDate() + 1}, ${date.getFullYear()}`

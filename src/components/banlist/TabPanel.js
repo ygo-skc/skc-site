@@ -29,10 +29,13 @@ const Container = Styled(Box)`
 function TabPanel(props)
 {
 	const { children, value, index, ...other } = props;
+
+	console.log(props)
+
 	return(
-		<Typography component="div" role="tabpanel" hidden={value !== index} id={`full-width-tabpanel-${index}`} aria-labelledby={`full-width-tab-${index}`}
-			{...other}
-		>
+		<Typography component="div" role="tabpanel" hidden={value !== index} id={`full-width-tabpanel-${index}`}
+			aria-labelledby={`full-width-tab-${index}`}
+			{...other} >
 			<Container p={3}>{children}</Container>
 		</Typography>
 	)
