@@ -25,7 +25,7 @@ const ChildPaper = Styled(Paper)`
 	&&
 	{
 		border-radius: .5rem;
-		margin-bottom: 1rem;
+		margin-bottom: 2.75rem;
 		@media screen and (min-width: 0px)
 		{
 			padding: .9rem;
