@@ -47,7 +47,7 @@ export default function()
 					The Funding
 				</Typography>
 				<Typography variant='h5'>
-					Donations To Maintain Site • <Link color='secondary' href='https://ygoapi.cfapps.io/swagger-ui.html'>Patreon</Link>
+					Donations To Maintain Site • <Link color='secondary' href='https://www.patreon.com/javigomez'>Patreon</Link>
 				</Typography>
 				<Typography variant='body1'>
 					Since the website needs to be hosted somewhere and a good hosting platform costs money, donations are always welcome. If you use the website often/think its neat and you have a dollar or two laying around, use the link above.
