@@ -24,12 +24,12 @@ export default function NavigationBar(props)
 			<Toolbar>
 				<Link style={{marginRight: '30px'}} underline='none' color='inherit' href={NAME_maps_ROUTE.Home} >
 					<NavigationButton color='inherit' >
-						Yugioh Site
+						Supreme Kings Castle
 					</NavigationButton>
 				</Link>
 				<Link underline='none' color='inherit' href={NAME_maps_ROUTE.BanList} >
 					<NavigationButton color='inherit' >
-						Ban Lists
+						Ban List
 					</NavigationButton>
 				</Link>
 				<Link underline='none' color='inherit' href={NAME_maps_ROUTE.About} >
