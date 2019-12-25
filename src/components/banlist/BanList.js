@@ -87,6 +87,7 @@ const BanContentParent = Styled(Paper)`
 	{
 		padding: .85rem;
 		margin-bottom: 2.75rem;
+		border-radius: .5rem;
 	}
 
 `
@@ -129,6 +130,10 @@ function BanList(props)
 	const [isShowingNewLimitedCards, setIsShowingNewLimitedCards] = useState(false)
 	const [isShowingNewSemiLimitedCards, setIsShowingNewSemiLimitedCards] = useState(false)
 
+	const [removedCardsList, setRemovedCardsList] = useState({})
+
+	const [isShowingRemovedCards, setIsShowingRemovedCards] = useState(false)
+
 	const [newForbiddenCardsList, setNewForbiddenCardsList] = useState([])
 	const [newLimitedCardsList, setNewLimitedCardsList] = useState([])
 	const [newSemiLimitedCardsList, setNewSemiLimitedCardsList] = useState([])
@@ -147,6 +152,10 @@ function BanList(props)
 
 	const showNewSemiLimitedCards = () => {
 		setIsShowingNewSemiLimitedCards(!isShowingNewSemiLimitedCards)
+	}
+
+	const showRemovedCards = () => {
+		setIsShowingRemovedCards(!isShowingRemovedCards)
 	}
 
 
@@ -172,6 +181,19 @@ function BanList(props)
 	useEffect(() => {
 		if (selectedBanList !== '')
 		{
+			let banListGrid = []
+			banListStartDates.forEach((item, ind) => {
+				banListGrid.push(<Grid key={ind} item xs={6} sm={4} md={2} lg={2} xl={1} >
+					<Chip color='secondary' variant={ (item === selectedBanList)? 'default' : 'outlined' } label={getDateString(months, new Date(item))}
+						icon={<DateRangeRoundedIcon />}
+						onClick={ () => setSelectedBanList(banListStartDates[ind]) } />
+				</Grid>
+				)
+			})
+
+			setBanListGrid(banListGrid)
+
+
 			setIsSettingUpDates(false)
 			setIsFetchingBanList(true)
 			setIsFetchingNewCards(true)
@@ -179,6 +201,8 @@ function BanList(props)
 			setIsShowingNewForbiddenCards(false)
 			setIsShowingNewLimitedCards(false)
 			setIsShowingNewSemiLimitedCards(false)
+
+			setIsShowingRemovedCards(false)
 
 			setTimeout(() => {
 				handleFetch(`${NAME_maps_ENDPOINT['banListInstanceUrl']}${selectedBanList}`, props.history, (resultJson) => {
@@ -188,20 +212,10 @@ function BanList(props)
 
 					setIsFetchingBanList(false)
 					fetchNewCards()
+					fetchRemovedCards()
 				})
-			}, 75);
+			}, 250);
 
-			let banListGrid = []
-			banListStartDates.forEach((item, ind) => {
-				banListGrid.push(<Grid key={ind} item xs={6} sm={4} md={2} lg={2} xl={1} >
-					<Chip id={ind} color='secondary' variant={ (item === selectedBanList)? 'default' : 'outlined' } label={getDateString(months, new Date(item))}
-						icon={<DateRangeRoundedIcon />}
-						onClick={ (button) => setSelectedBanList(banListStartDates[button.currentTarget.id]) } />
-				</Grid>
-				)
-			})
-
-			setBanListGrid(banListGrid)
 		}
 		// eslint-disable-next-line
 	}, [selectedBanList])
@@ -229,11 +243,11 @@ function BanList(props)
 		<MainContentContainer >
 			<BreadCrumb crumbs={['Home', 'Ban List']} />
 
-			<CardDialog open={showingCardDetail} keepMounted onClose={() => setShowingCardDetail(false)} >
+			<CardDialog open={showingCardDetail} unmountOnExit onClose={() => setShowingCardDetail(false)} >
 				{
 					(showingCardDetail) ?
 						<CardDetail key={999} fullDetails cardID={chosenCard.cardID} cardName={chosenCard.cardName} monsterType={chosenCard.monsterType} cardColor={chosenCard.cardColor} cardEffect={chosenCard.cardEffect} cardClicked={props.cardClicked} monsterAtk={chosenCard.monsterAttack} monsterDef={chosenCard.monsterDefense} />
-						: <CircularProgress />
+						: undefined
 				}
 			</CardDialog>
 
@@ -243,7 +257,7 @@ function BanList(props)
 						<Chip color='primary' label={getCurrentBanListDate(months, selectedBanList, banListStartDates)} icon={<DateRangeRoundedIcon />} />
 					</BanDatesExpansionSummary>
 
-					<BanDatesExpansionDetail style={{padding: '.5rem'}}>
+					<BanDatesExpansionDetail style={{padding: '.5rem'}} unmountOnExit >
 						<Grid container spacing={1} >
 							{banListGrid}
 						</Grid>
@@ -300,6 +314,16 @@ function BanList(props)
 							</List>
 						</Collapse>
 
+						<ListStatItem button onClick={showRemovedCards}>
+							<ListItemText primary="Removed (Compared To Previous)" />
+								{isShowingRemovedCards ? <ExpandLess /> : <ExpandMore />}
+						</ListStatItem>
+						<Collapse in={isShowingRemovedCards} timeout="auto" unmountOnExit>
+							<List component="div" disablePadding>
+								{removedCardsList}
+							</List>
+						</Collapse>
+
 					</List>
 				</div>
 			</BanContentParent>
@@ -333,6 +357,31 @@ function BanList(props)
 	}
 
 
+	function fetchRemovedCards()
+	{
+		const url = `${NAME_maps_ENDPOINT.removedCardsInBanList}${selectedBanList}`
+		fetch(url)
+		.then( (res) => {
+			if (res.status === 200)	return res.json()
+			else if (res.status === 204)	return null
+			else	throw new Error()
+		})
+		.then( (json) => {
+			const removedCardsList = []
+			for (let card of json.removedCards)
+			{
+				handleFetchCardInfo(card.id, (cardResult) => {
+					removedCardsList.push(
+						<ListStatItem key={card.id} button onClick={ () => setChosenCardID(card.id) } style={{paddingLeft: '3rem'}}  >
+							<ListItemText primary={cardResult.cardName} />
+						</ListStatItem>)
+				})
+			}
+			setRemovedCardsList(removedCardsList)
+		} )
+	}
+
+
 	function fetchNewCards()
 	{
 		setIsFetchingNewCards(true)
@@ -362,7 +411,7 @@ function BanList(props)
 					handleFetchCardInfo(card.id, (cardResult) => {
 						card.name = cardResult.cardName
 						newForbiddenCardsList.push(
-							<ListStatItem button style={{paddingLeft: '3rem'}}  >
+							<ListStatItem key={card.id} button onClick={ () => setChosenCardID(card.id) } style={{paddingLeft: '3rem'}}  >
 								<ListItemText primary={card.name} />
 							</ListStatItem>)
 					})
@@ -375,7 +424,7 @@ function BanList(props)
 					handleFetchCardInfo(card.id, (cardResult) => {
 						card.name = cardResult.cardName
 						newLimitedCardsList.push(
-							<ListStatItem button style={{paddingLeft: '3rem'}}  >
+							<ListStatItem key={card.id} button onClick={ () => setChosenCardID(card.id) } style={{paddingLeft: '3rem'}}  >
 								<ListItemText primary={card.name} />
 							</ListStatItem>)
 					})
@@ -388,7 +437,7 @@ function BanList(props)
 					handleFetchCardInfo(card.id, (cardResult) => {
 						card.name = cardResult.cardName
 						newSemiLimitedCardsList.push(
-							<ListStatItem button style={{paddingLeft: '3rem'}}  >
+							<ListStatItem key={card.id} button onClick={ () => setChosenCardID(card.id) } style={{paddingLeft: '3rem'}}  >
 								<ListItemText primary={card.name} />
 							</ListStatItem>)
 					})
