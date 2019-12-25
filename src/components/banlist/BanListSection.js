@@ -8,6 +8,7 @@ import CardDetail from '../card/CardDetail.js'
 
 
 const cardDisplayOrder = ['normal', 'effect', 'ritual', 'fusion', 'synchro', 'xyz', 'pendulum-normal', 'pendulum-effect', 'link', 'spell', 'trap']
+
 const cardSectionTextColors = {
 	'normal': 'rgba(249, 160, 16, 1)'
 	, 'effect': 'rgba(248, 87, 0, 1)'
@@ -15,6 +16,8 @@ const cardSectionTextColors = {
 	, 'fusion': 'rgba(131, 93, 196, 1)'
 	, 'synchro': 'rgba(139, 139, 139, 0.91)'
 	, 'xyz': 'rgba(33, 33, 33, 0.71)'
+	, 'pendulum-normal': 'linear-gradient(45deg, #f9c414 0%, #00cdb1 50%)'
+	, 'pendulum-effect': 'linear-gradient(45deg, #ff6410 0%, #00cdb1 50%)'
 	, 'link': 'rgba(21, 101, 192, 0.8)'
 	, 'spell': 'rgba(0, 146, 126, 0.85)'
 	, 'trap': 'rgba(173, 20, 87, 0.78)'
@@ -80,11 +83,34 @@ export default function BanListSection(props)
 
 
 			let cardTypeContentGrid = cardDisplayOrder.map(( cardType ) => {
+
+				const CardSectionText = (cardType === 'pendulum-effect' || cardType === 'pendulum-normal')?
+					styled(Typography)`
+					&&
+					{
+						margin-bottom: 10px;
+						text-transform: uppercase;
+						letter-spacing: .105rem;
+						background: ${ cardSectionTextColors[cardType] };
+						-webkit-background-clip: text;
+						-webkit-text-fill-color: transparent;
+					}
+				`
+				: styled(Typography)`
+						&&
+						{
+							margin-bottom: 10px;
+							text-transform: uppercase;
+							color: ${ cardSectionTextColors[cardType] };
+							letter-spacing: .105rem;
+						}
+					`
+
 				if (cardDetailsMap.has(cardType)) {
 					return	<div key={cardType} >
-								<Typography variant='subtitle1' style={{ marginBottom: '10px', textTransform: 'uppercase', color: cardSectionTextColors[cardType], letterSpacing: '.105rem' }} >
+								<CardSectionText variant='subtitle1' >
 									{cardType}
-								</Typography>
+								</CardSectionText>
 								<Grid container spacing={1} style={{marginBottom: '30px'}} >
 									{cardDetailsMap.get(cardType)}
 								</Grid>
