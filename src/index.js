@@ -58,6 +58,7 @@ const theme = createMuiTheme({
 			fontWeight: 600,
 			lineHeight: '1.2rem',
 			marginBottom: '.25rem',
+			color: '#383838',
 			'@media screen and (min-width:0px)': {
 				fontSize: '1.05rem'
 			},
@@ -68,7 +69,7 @@ const theme = createMuiTheme({
 		h6: {
 			fontWeight: 500,
 			lineHeight: '1.2rem',
-			color: '#000',
+			color: '#383838',
 			'@media screen and (min-width:0px)': {
 				fontSize: '.95rem'
 			},
@@ -79,6 +80,7 @@ const theme = createMuiTheme({
 		subtitle1: {
 			fontWeight: 600,
 			lineHeight: '1.15rem',
+			color: '#2b2a2a',
 			'@media screen and (min-width:0px)': {
 				fontSize: '.91rem'
 			},
@@ -89,6 +91,7 @@ const theme = createMuiTheme({
 		subtitle2: {
 			fontWeight: 500,
 			lineHeight: '1.15rem',
+			color: '#2b2a2a',
 			'@media screen and (min-width:0px)': {
 				fontSize: '.88rem'
 			},
@@ -99,6 +102,7 @@ const theme = createMuiTheme({
 		body1: {
 			fontWeight: 500,
 			lineHeight: '1.1rem',
+			color: '#2b2a2a',
 			'@media screen and (min-width:0px)': {
 				fontSize: '.85rem'
 			},
@@ -109,6 +113,7 @@ const theme = createMuiTheme({
 		body2: {
 			fontWeight: 500,
 			lineHeight: '1.05rem',
+			color: '#2b2a2a',
 			'@media screen and (min-width:0px)': {
 				fontSize: '.77rem'
 			},

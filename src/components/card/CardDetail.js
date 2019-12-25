@@ -5,15 +5,6 @@ import styled from 'styled-components';
 
 import cardStyles from './CardDetailStyle'
 
-
-const CardNameComponent = styled(Typography)`
-	&& {
-		font-weight: 500;
-		text-transform: uppercase;
-		margin-bottom: .415rem;
-	}
-`
-
 const MonsterTypeComponent = styled(Typography)`
 	&&
 	{
@@ -62,14 +53,27 @@ export default function CardDetail(props)
 	`
 
 	const CardContentComponent = styled(CardContent)`
-		padding: .52rem !important;
-		background: ${cardStyles[cardColor].background};
-		color: ${cardStyles[cardColor].color};
+		&&
+		{
+			padding: .52rem !important;
+			background: ${cardStyles[ `${cardColor}Background` ]};
+		}
 	`
+
+	const CardNameComponent = styled(Typography)`
+	&& {
+		font-weight: 500;
+		text-transform: uppercase;
+		margin-bottom: .415rem;
+		color: ${cardStyles[ `${cardColor}Color` ]};
+	}
+`
 	const CardDescriptionComponent = styled(Box)`
-		padding: .445rem;
-		background: ${cardStyles[cardColorSummary].background};
-		color: ${cardStyles[cardColorSummary].color};
+		&&
+		{
+			padding: .445rem;
+			background: ${cardStyles[ `${cardColor}SummaryBackground` ]};
+		}
 	`
 
 	const CardEffectComponent = (props.fullDetails) ?
@@ -78,6 +82,7 @@ export default function CardDetail(props)
 			{
 				white-space: pre-wrap;
 				margin-bottom: .35rem;
+				color: ${cardStyles[ `${cardColor}SummaryColor` ]};
 			}
 		`
 		: styled(Typography)`
@@ -88,6 +93,7 @@ export default function CardDetail(props)
 				-webkit-line-clamp: 3;
 				-webkit-box-orient: vertical;
 				overflow: hidden;
+				color: ${cardStyles[ `${cardColor}SummaryColor` ]};
 			}
 		`
 

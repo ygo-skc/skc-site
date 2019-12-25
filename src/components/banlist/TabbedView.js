@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import styled from 'styled-components'
 import { AppBar, Tabs, Tab, Badge } from '@material-ui/core'
 
@@ -18,38 +18,56 @@ const Temp = styled(Badge)`
 function TabbedView(props)
 {
 	const [currentTab, setCurrentTab] = useState(0)
+	//console.log(props)
 
-	console.log(props)
+	const tabs = useMemo(() => {
+		const tabs = []
+		tabs.push(<Tab style={{'textTransform': 'none'}} label={
+			<Temp badgeContent={props.numForbidden} variant='standard' color='secondary' overlap='rectangle' >
+				Forbidden
+			</Temp> } {...allyProps(0) }
+		/>)
+		tabs.push(<Tab style={{ 'textTransform': 'none' }} label={
+			<Temp badgeContent={props.numLimited} variant='standard' color='secondary' overlap='rectangle' >
+				Limited
+			</Temp> } {...allyProps(0) } {...allyProps(1)} />)
+		tabs.push(<Tab style={{ 'textTransform': 'none' }} label={
+			<Temp badgeContent={props.numSemiLimited} variant='standard' color='secondary' overlap='rectangle' >
+				Semi-Limited
+			</Temp> } {...allyProps(0) } {...allyProps(2)} />)
+		return tabs
+	}, [props.numForbidden, props.numLimited, props.numSemiLimited])
+
+	const forbiddenTabContent = useMemo(() => {
+		return <TabPanel value={ currentTab } index={0}>
+			{props.forbiddenContent}
+		</TabPanel>
+	}, [props.forbiddenContent, currentTab])
+
+	const limitedTabContent = useMemo(() => {
+		return <TabPanel value={ currentTab } index={1}>
+		{props.limitedContent}
+	</TabPanel>
+	}, [props.limitedContent, currentTab])
+
+	const semiLimitedTabContent = useMemo(() => {
+		return <TabPanel value={ currentTab } index={2}>
+		{props.semiLimitedContent}
+	</TabPanel>
+	}, [props.semiLimitedContent, currentTab])
+
 
 		return (
 			<div>
-				<AppBar position='sticky' >
+				<AppBar position='sticky' style={{ marginLeft: '-.85rem', marginRight: '-.85rem'}}  >
 					<Tabs value={currentTab} onChange={(event, newValue) => { setCurrentTab(newValue)}} variant='fullWidth' >
-						<Tab style={{'textTransform': 'none'}} label={
-							<Temp badgeContent={props.numForbidden} variant='standard' color='secondary' overlap='rectangle' >
-								Forbidden
-							</Temp> } {...allyProps(0) }
-						/>
-						<Tab style={{ 'textTransform': 'none' }} label={
-							<Temp badgeContent={props.numLimited} variant='standard' color='secondary' overlap='rectangle' >
-								Limited
-							</Temp> } {...allyProps(0) } {...allyProps(1)} />
-						<Tab style={{ 'textTransform': 'none' }} label={
-							<Temp badgeContent={props.numSemiLimited} variant='standard' color='secondary' overlap='rectangle' >
-								Semi-Limited
-							</Temp> } {...allyProps(0) } {...allyProps(2)} />
+						{tabs}
 					</Tabs>
 				</AppBar>
 
-				<TabPanel value={ currentTab } index={0}>
-					{props.content[0]}
-				</TabPanel>
-				<TabPanel value={ currentTab } index={1}>
-					{props.content[1]}
-				</TabPanel>
-				<TabPanel value={ currentTab } index={2}>
-					{props.content[2]}
-				</TabPanel>
+				{forbiddenTabContent}
+				{limitedTabContent}
+				{semiLimitedTabContent}
 			</div>
 		)
 }
