@@ -34,8 +34,8 @@
     "test": "react-scripts test",
 	"eject": "react-scripts eject",
 
-    "uploadAWS:Prod": "npm run build:production; aws s3 sync build s3://yugiohsite/",
-	"uploadAWS:Dev": "npm run build:development_remote; aws s3 sync build s3://yugiohsitedev/",
+    "uploadAWS:production": "npm run build:production; aws s3 sync build s3://yugiohsite/",
+	"uploadAWS:development": "npm run build:development_remote; aws s3 sync build s3://yugiohsitedev/",
 
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public"
