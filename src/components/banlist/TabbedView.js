@@ -58,16 +58,18 @@ function TabbedView(props)
 
 
 		return (
-			<div>
-				<AppBar position='sticky' style={{ marginLeft: '-.85rem', marginRight: '-.85rem'}}  >
+			<div style={{ marginLeft: '-.85rem', marginRight: '-.85rem' }}>
+				<AppBar position='sticky'>
 					<Tabs value={currentTab} onChange={(event, newValue) => { setCurrentTab(newValue)}} variant='fullWidth' >
 						{tabs}
 					</Tabs>
 				</AppBar>
 
-				{forbiddenTabContent}
-				{limitedTabContent}
-				{semiLimitedTabContent}
+				<div style={{ padding: '.85rem' }} >
+					{forbiddenTabContent}
+					{limitedTabContent}
+					{semiLimitedTabContent}
+				</div>
 			</div>
 		)
 }
