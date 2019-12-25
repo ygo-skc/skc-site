@@ -28,14 +28,9 @@ export default function()
 					While checking out the newest ban list to make sure I'm playing the Limited Format correctly, I thought about how ugly the Konami website was.
 					This website was created as a side project to not only see if I can do a better job than Konami but also to learn the full stack of my new position. Full stack is the combination of both a product and the technology used for that product. For this website I used; <strong>Spring Boot</strong>, <strong>MySQL DB</strong>, and <strong>React.js</strong>.
 				</Typography>
+			</ChildPaper>
 
-				<br />
-				<br />
-				<Divider variant='middle'/>
-				<br />
-				<br />
-				<br />
-
+			<ChildPaper>
 				<Typography variant='h4'>
 					The API
 				</Typography>
@@ -45,14 +40,9 @@ export default function()
 				<Typography variant='body1'>
 					The API was also created by me. It has two main functions: to get the contents of a specific ban list (basic info about a card, forbidden/limited/semi-limited cards) and get detailed information about a certain card (effect, attack/defense, etc). Right now it is limited in content. However, I would like to create a full blown database of cards so developers can have a fun and familiar service to use while learning about REST and HTTP in general.
 				</Typography>
+			</ChildPaper>
 
-				<br />
-				<br />
-				<Divider variant='middle'/>
-				<br />
-				<br />
-				<br />
-
+			<ChildPaper>
 				<Typography variant='h4'>
 					The Funding
 				</Typography>
