@@ -25,7 +25,7 @@ const cardStyles = {
 	fusionSummaryColor: darkTextColor,
 
 	synchroBackground: `linear-gradient(180deg, ${grey[300]} 10%, ${grey[400]} 90%)`,
-	fusionColor: lightTextColor,
+	synchroColor: darkTextColor,
 	synchroSummaryBackground: grey[100],
 	synchroSummaryColor: darkTextColor,
 
@@ -62,7 +62,7 @@ const cardStyles = {
 	errBackground: `linear-gradient(45deg, ${red[500]} 30%, ${red[600]} 90%)`,
 	errColor: lightTextColor,
 	errSummaryBackground: red['100'],
-	errSummaryColor: lightTextColor,
+	errSummaryColor: darkTextColor,
 }
 
 export default cardStyles

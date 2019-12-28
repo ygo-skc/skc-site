@@ -62,16 +62,15 @@ const HTTP_ERR_maps_ERR_DESCRIPTION = {
 
 export default function HttpErr(props)
 {
-	console.log(props)
 	return(
 		<MainContentContainer>
-			<Breadcrumbs crumbs={['Home', 404]} />
+			<Breadcrumbs crumbs={['Home', props.httpErr ]} />
 			<CenteredContent>
 				<ErrCard
 					cardColor='err'
-					cardName={HTTP_ERR_maps_ERR_NAME[props.httpErr]}
-					monsterType={HTTP_ERR_maps_ERR_TYPE[props.httpErr]}
-					cardEffect={HTTP_ERR_maps_ERR_DESCRIPTION[props.httpErr]}
+					cardName={ HTTP_ERR_maps_ERR_NAME[props.httpErr] }
+					monsterType={ HTTP_ERR_maps_ERR_TYPE[props.httpErr] }
+					cardEffect={ HTTP_ERR_maps_ERR_DESCRIPTION[props.httpErr] }
 					cardID={`00000${props.httpErr}`}
 					fullDetails={true} />
 			</CenteredContent>

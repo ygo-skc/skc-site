@@ -8,7 +8,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 
 import Grid from '@material-ui/core/Grid'
 
-import { ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, CircularProgress } from '@material-ui/core';
+import { ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import CardDetail from '../card/CardDetail'
@@ -368,16 +368,19 @@ function BanList(props)
 		})
 		.then( (json) => {
 			const removedCardsList = []
-			for (let card of json.removedCards)
+			if (json != null)
 			{
-				handleFetchCardInfo(card.id, (cardResult) => {
-					removedCardsList.push(
-						<ListStatItem key={card.id} button onClick={ () => setChosenCardID(card.id) } style={{paddingLeft: '3rem'}}  >
-							<ListItemText primary={cardResult.cardName} />
-						</ListStatItem>)
-				})
+				for (let card of json.removedCards)
+				{
+					handleFetchCardInfo(card.id, (cardResult) => {
+						removedCardsList.push(
+							<ListStatItem key={card.id} button onClick={ () => setChosenCardID(card.id) } style={{paddingLeft: '3rem'}}  >
+								<ListItemText primary={cardResult.cardName} />
+							</ListStatItem>)
+					})
+				}
+				setRemovedCardsList(removedCardsList)
 			}
-			setRemovedCardsList(removedCardsList)
 		} )
 	}
 

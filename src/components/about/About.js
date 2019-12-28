@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Typography, Link, Divider } from '@material-ui/core'
+import { Typography, Link } from '@material-ui/core'
 
 import Breadcrumb from '../Breadcrumb'
 import { MainContentContainer, ChildPaper } from '../MainContent'

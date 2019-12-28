@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, {  } from 'react'
 
 import { Typography, Box, Card, CardContent, Badge  } from '@material-ui/core'
 import styled from 'styled-components';
@@ -40,7 +40,6 @@ const CardIDComponent = styled(Typography)`
 export default function CardDetail(props)
 {
 	const cardColor = props.cardColor.toLowerCase()
-	const cardColorSummary = `${props.cardColor.toLowerCase()}Summary`
 	const cardClickedCallBack = (props.cardClicked) ? function () {props.cardClicked(props.cardID)} : undefined
 
 

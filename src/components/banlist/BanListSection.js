@@ -48,6 +48,7 @@ export default function BanListSection(props)
 
 	function isNewCard(cardID)
 	{
+		// eslint-disable-next-line
 		if (props.newCards != "" && cardID !== undefined)
 		{
 			const isNew = props.newCards.find( currentItem => {
