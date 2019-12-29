@@ -18,6 +18,8 @@ import Styled from 'styled-components'
 import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
 import {MainContentContainer} from '../MainContent'
 
+import cardStyles from '../card/CardDetailStyle'
+
 
 /*
 	Custom Components
@@ -246,7 +248,7 @@ function BanList(props)
 			<CardDialog open={showingCardDetail} unmountOnExit onClose={() => setShowingCardDetail(false)} >
 				{
 					(showingCardDetail) ?
-						<CardDetail key={999} fullDetails cardID={chosenCard.cardID} cardName={chosenCard.cardName} monsterType={chosenCard.monsterType} cardColor={chosenCard.cardColor} cardEffect={chosenCard.cardEffect} cardClicked={props.cardClicked} monsterAtk={chosenCard.monsterAttack} monsterDef={chosenCard.monsterDefense} />
+						<CardDetail key={999} fullDetails cardID={chosenCard.cardID} cardName={chosenCard.cardName} monsterType={chosenCard.monsterType} cardColor={chosenCard.cardColor} cardEffect={chosenCard.cardEffect} cardClicked={props.cardClicked} monsterAtk={chosenCard.monsterAttack} monsterDef={chosenCard.monsterDefense} cardStyles={cardStyles} />
 						: undefined
 				}
 			</CardDialog>

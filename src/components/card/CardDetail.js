@@ -3,8 +3,6 @@ import React, {  } from 'react'
 import { Typography, Box, Card, CardContent, Badge  } from '@material-ui/core'
 import styled from 'styled-components';
 
-import cardStyles from './CardDetailStyle'
-
 const MonsterTypeComponent = styled(Typography)`
 	&&
 	{
@@ -41,6 +39,7 @@ export default function CardDetail(props)
 {
 	const cardColor = props.cardColor.toLowerCase()
 	const cardClickedCallBack = (props.cardClicked) ? function () {props.cardClicked(props.cardID)} : undefined
+	const cardStyles = props.cardStyles
 
 
 	let curser = 'pointer'

@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { Typography, Box, Grid, CircularProgress } from '@material-ui/core'
 
 import CardDetail from '../card/CardDetail.js'
+import cardStyles from '../card/CardDetailStyle'
 
 
 
@@ -74,9 +75,17 @@ export default function BanListSection(props)
 
 				cardDetailsMap.get(cardColor).push(
 					<Grid key={ind} item xs={12} sm={4} md={3} lg={2} xl={2} >
-						<CardDetail key={ind} cardID={card.cardID} cardName={card.cardName} monsterType={card.monsterType}
-						cardColor={card.cardColor} cardEffect={card.cardEffect} cardClicked={props.cardClicked}
-						fullDetails={false} isNew={ isNewCard(card.cardID) }
+						<CardDetail
+							key={ind}
+							cardID={card.cardID}
+							cardName={card.cardName}
+							monsterType={card.monsterType}
+							cardColor={card.cardColor}
+							cardEffect={card.cardEffect}
+							cardClicked={props.cardClicked}
+							fullDetails={false}
+							isNew={ isNewCard(card.cardID)}
+							cardStyles={cardStyles}
 						/>
 					</Grid>
 				)
@@ -142,7 +151,12 @@ export default function BanListSection(props)
 						{cardTypeContentGrid}
 					</div>)
 					: 	(<CenteredContent>
-							<CircularProgress size={50} variant='indeterminate' thickness={3.6} disableShrink={true} />
+							<CircularProgress
+								size={50}
+								variant='indeterminate'
+								thickness={3.6}
+								disableShrink={true}
+							/>
 						</CenteredContent>)
 				)
 			}
