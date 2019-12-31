@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import { Typography, Box, Grid, CircularProgress } from '@material-ui/core'
@@ -30,7 +31,7 @@ const CenteredContent = styled(Box)`
 `
 
 
-export const BanListSection = (props) =>
+export const BanListSection = ( { sectionExplanation, sectionExplanationBackground, cards, newCards, isDataLoaded, cardClicked } ) =>
 {
 	console.log('ban list section rendered')
 	const [cardTypeContentGrid, setCardTypeContentGrid] = useState([])
@@ -43,7 +44,7 @@ export const BanListSection = (props) =>
 			margin-top: .75rem;
 			margin-bottom: 2.75rem;
 			padding: .9rem;
-			background: ${props.sectionExplanationBackground};
+			background: ${ sectionExplanationBackground };
 			border-radius: .85rem;
 			display: -webkit-inline-flex;
 			color: white;
@@ -53,9 +54,9 @@ export const BanListSection = (props) =>
 	function isNewCard(cardID)
 	{
 		// eslint-disable-next-line
-		if (props.newCards != "" && cardID !== undefined)
+		if ( newCards != "" && cardID !== undefined )
 		{
-			const isNew = props.newCards.find( currentItem => {
+			const isNew = newCards.find( currentItem => {
 				if (currentItem.id === cardID)	return true
 				return false
 			}, cardID)
@@ -67,11 +68,11 @@ export const BanListSection = (props) =>
 
 	useEffect(() => {
 		setAreCardsRendered(false)
-		if ( props.isDataLoaded )
+		if ( isDataLoaded )
 		{
 			const cardDetailsMap = new Map()
 
-			props.cards.forEach((card, ind) => {
+			cards.forEach((card, ind) => {
 				const cardColor = card.cardColor.toLowerCase()
 				if (!cardDetailsMap.has(cardColor))	cardDetailsMap.set(cardColor, [])
 
@@ -85,7 +86,7 @@ export const BanListSection = (props) =>
 							monsterType={card.monsterType}
 							cardColor={card.cardColor}
 							cardEffect={card.cardEffect}
-							cardClicked={props.cardClicked}
+							cardClicked={cardClicked}
 							fullDetails={false}
 							isNew={ isNewCard(card.cardID)}
 							cardStyles={cardStyles}
@@ -136,7 +137,7 @@ export const BanListSection = (props) =>
 			setAreCardsRendered(true)
 		}
 		// eslint-disable-next-line
-	}, [props.isDataLoaded])
+	}, [isDataLoaded])
 
 
 
@@ -144,7 +145,7 @@ export const BanListSection = (props) =>
 		<div>
 			<CenteredContent>
 				<SectionInfoText variant='h6' >
-					{ props.sectionExplanation }
+					{ sectionExplanation }
 				</SectionInfoText>
 			</CenteredContent>
 
@@ -165,4 +166,15 @@ export const BanListSection = (props) =>
 			}
 		</div>
 	)
+}
+
+
+BanListSection.propTypes =
+{
+	sectionExplanation: PropTypes.string.isRequired,
+	sectionExplanationBackground: PropTypes.string.isRequired,
+	cards: PropTypes.array.isRequired,
+	newCards: PropTypes.array.isRequired,
+	isDataLoaded: PropTypes.bool.isRequired,
+	cardClicked: PropTypes.func.isRequired
 }

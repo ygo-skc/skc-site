@@ -112,3 +112,14 @@ function allyProps(index)
 		'aria-controls': `full-width-tabpanel-${index}`,
 	}
 }
+
+
+TabbedView.propTypes =
+{
+	numForbidden: PropTypes.number.isRequired,
+	numLimited: PropTypes.number.isRequired,
+	numSemiLimited: PropTypes.number,
+	forbiddenContent: PropTypes.objectOf(BanListSection).isRequired,
+	limitedContent: PropTypes.objectOf(BanListSection).isRequired,
+	semiLimitedContent: PropTypes.objectOf(BanListSection).isRequired
+}

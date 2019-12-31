@@ -126,9 +126,9 @@ export default function BanList(props)
 	const [chosenCardID, setChosenCardID] = useState(undefined)
 	const [chosenCard, setChosenCard] = useState(undefined)
 
-	const [newForbiddenCards, setNewForbiddenCards] = useState({})
-	const [newLimitedCards, setNewLimitedCards] = useState({})
-	const [newSemiLimitedCards, setNewSemiLimitedCards] = useState({})
+	const [newForbiddenCards, setNewForbiddenCards] = useState([])
+	const [newLimitedCards, setNewLimitedCards] = useState([])
+	const [newSemiLimitedCards, setNewSemiLimitedCards] = useState([])
 
 	const [isShowingNewCards, setIsShowingNewCards] = useState(false)
 	const [isShowingNewForbiddenCards, setIsShowingNewForbiddenCards] = useState(false)
@@ -281,8 +281,7 @@ export default function BanList(props)
 					</BanDatesExpansionSummary>
 
 					<BanDatesExpansionDetail
-						style={{padding: '.5rem'}}
-						unmountOnExit >
+						style={{padding: '.5rem'}} >
 						<Grid container spacing={1} >
 							{banListGrid}
 						</Grid>
