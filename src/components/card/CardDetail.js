@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-
+import he from 'he'
 import { Typography, Box, Card, CardContent, Badge  } from '@material-ui/core'
 import styled from 'styled-components';
 
@@ -125,7 +125,7 @@ export default function CardDetail(props)
 									<MonsterTypeComponent variant='body1' noWrap={true} >[ {props.monsterType} ]</MonsterTypeComponent>
 							}
 
-							<CardEffectComponent variant='body1'>{props.cardEffect}</CardEffectComponent>
+							<CardEffectComponent variant='body1'>{ he.decode(props.cardEffect) }</CardEffectComponent>
 
 							{
 								(props.cardColor === 'Spell' || props.cardColor === 'Trap' || props.cardColor === 'err' ) ?
