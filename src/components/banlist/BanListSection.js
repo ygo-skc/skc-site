@@ -8,7 +8,8 @@ import cardStyles from '../card/CardDetailStyle'
 
 
 
-const cardDisplayOrder = ['normal', 'effect', 'ritual', 'fusion', 'synchro', 'xyz', 'pendulum-normal', 'pendulum-effect', 'link', 'spell', 'trap']
+const cardDisplayOrder = ['normal', 'effect', 'ritual', 'fusion', 'synchro', 'xyz'
+	, 'pendulum-normal', 'pendulum-effect', 'link', 'spell', 'trap']
 
 const cardSectionTextColors = {
 	'normal': 'rgba(249, 160, 16, 1)'
@@ -29,13 +30,15 @@ const CenteredContent = styled(Box)`
 `
 
 
-export default function BanListSection(props)
+export const BanListSection = (props) =>
 {
+	console.log('ban list section rendered')
 	const [cardTypeContentGrid, setCardTypeContentGrid] = useState([])
 	const [areCardsRendered, setAreCardsRendered] = useState(false)
 
 	const SectionInfoText = styled(Typography)`
-		&& {
+		&&
+		{
 			font-weight: 500;
 			margin-top: .75rem;
 			margin-bottom: 2.75rem;
@@ -94,7 +97,7 @@ export default function BanListSection(props)
 
 			let cardTypeContentGrid = cardDisplayOrder.map(( cardType ) => {
 
-				const CardSectionText = (cardType === 'pendulum-effect' || cardType === 'pendulum-normal')?
+				const CardSectionText = ( cardType === 'pendulum-effect' || cardType === 'pendulum-normal' )?
 					styled(Typography)`
 					&&
 					{
@@ -141,7 +144,7 @@ export default function BanListSection(props)
 		<div>
 			<CenteredContent>
 				<SectionInfoText variant='h6' >
-					{props.sectionExplanation}
+					{ props.sectionExplanation }
 				</SectionInfoText>
 			</CenteredContent>
 

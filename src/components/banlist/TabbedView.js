@@ -1,12 +1,14 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useEffect, memo } from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { AppBar, Tabs, Tab, Badge } from '@material-ui/core'
 
-import TabPanel from './TabPanel'
+import { TabPanel } from './TabPanel'
+import { BanListSection } from './BanListSection'
 
 
 
-const Temp = styled(Badge)`
+const SummaryBadge = styled(Badge)`
 	&& {
 		.MuiBadge-badge {
 			right: -.25rem;
@@ -15,46 +17,64 @@ const Temp = styled(Badge)`
 		}
 	}
 `
-function TabbedView(props)
+export const TabbedView = memo( ( { numForbidden, numLimited, numSemiLimited, forbiddenContent, limitedContent, semiLimitedContent } ) =>
 {
 	const [currentTab, setCurrentTab] = useState(0)
-	//console.log(props)
+	const [tabs, setTabs] = useState([])
 
-	const tabs = useMemo(() => {
+	console.log('tabbed view rendered')
+
+	useEffect( () => {
 		const tabs = []
-		tabs.push(<Tab style={{'textTransform': 'none'}} label={
-			<Temp badgeContent={props.numForbidden} variant='standard' color='secondary' overlap='rectangle' >
-				Forbidden
-			</Temp> } {...allyProps(0) }
-		/>)
-		tabs.push(<Tab style={{ 'textTransform': 'none' }} label={
-			<Temp badgeContent={props.numLimited} variant='standard' color='secondary' overlap='rectangle' >
-				Limited
-			</Temp> } {...allyProps(0) } {...allyProps(1)} />)
-		tabs.push(<Tab style={{ 'textTransform': 'none' }} label={
-			<Temp badgeContent={props.numSemiLimited} variant='standard' color='secondary' overlap='rectangle' >
-				Semi-Limited
-			</Temp> } {...allyProps(0) } {...allyProps(2)} />)
-		return tabs
-	}, [props.numForbidden, props.numLimited, props.numSemiLimited])
+		tabs.push(
+			<Tab
+				style={{'textTransform': 'none'}}
+				label={
+					<SummaryBadge
+						badgeContent={ numForbidden }
+						variant='standard'
+						color='secondary'
+						overlap='rectangle' >
+						Forbidden
+					</SummaryBadge>
+				}
+				{...allyProps(0) }
+			/>
+		)
 
-	const forbiddenTabContent = useMemo(() => {
-		return <TabPanel value={ currentTab } index={0}>
-			{props.forbiddenContent}
-		</TabPanel>
-	}, [props.forbiddenContent, currentTab])
+		tabs.push(
+			<Tab
+				style={{ 'textTransform': 'none' }}
+				label={
+					<SummaryBadge
+						badgeContent={ numLimited }
+						variant='standard'
+						color='secondary'
+						overlap='rectangle' >
+						Limited
+					</SummaryBadge>
+				}
+				{...allyProps(1) }
+			/>
+		)
 
-	const limitedTabContent = useMemo(() => {
-		return <TabPanel value={ currentTab } index={1}>
-		{props.limitedContent}
-	</TabPanel>
-	}, [props.limitedContent, currentTab])
+		tabs.push(
+			<Tab
+				style={{ 'textTransform': 'none' }}
+				label={
+					<SummaryBadge
+						badgeContent={ numSemiLimited }
+						variant='standard'
+						color='secondary'
+						overlap='rectangle' >
+						Semi-Limited
+					</SummaryBadge>
+				}
+				{...allyProps(2) }
+			/>)
 
-	const semiLimitedTabContent = useMemo(() => {
-		return <TabPanel value={ currentTab } index={2}>
-		{props.semiLimitedContent}
-	</TabPanel>
-	}, [props.semiLimitedContent, currentTab])
+		setTabs(tabs)
+	}, [ numForbidden, numLimited, numSemiLimited ])
 
 
 		return (
@@ -66,13 +86,24 @@ function TabbedView(props)
 				</AppBar>
 
 				<div style={{ padding: '.85rem' }} >
-					{forbiddenTabContent}
-					{limitedTabContent}
-					{semiLimitedTabContent}
+					<TabPanel value={ currentTab } index={0}>
+						{ forbiddenContent }
+					</TabPanel>
+
+					<TabPanel value={ currentTab } index={1}>
+						{ limitedContent }
+					</TabPanel>
+
+					<TabPanel value={ currentTab } index={2}>
+						{ semiLimitedContent }
+					</TabPanel>
 				</div>
 			</div>
 		)
-}
+}, (prevProps, nextProps) => {
+	if (prevProps.forbiddenContent !== nextProps.forbiddenContent || prevProps.limitedContent !== nextProps.limitedContent || prevProps.semiLimitedContent !== nextProps.semiLimitedContent || prevProps.banList !== nextProps.banList)	return false
+	return true
+})
 
 function allyProps(index)
 {
@@ -81,5 +112,3 @@ function allyProps(index)
 		'aria-controls': `full-width-tabpanel-${index}`,
 	}
 }
-
-export default TabbedView

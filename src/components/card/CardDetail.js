@@ -1,4 +1,4 @@
-import React, {  } from 'react'
+import React, { useMemo } from 'react'
 
 import { Typography, Box, Card, CardContent, Badge  } from '@material-ui/core'
 import styled from 'styled-components';
@@ -34,6 +34,15 @@ const CardIDComponent = styled(Typography)`
 	}
 `
 
+const Temp = styled(Badge)`
+	&& {
+		.MuiBadge-badge {
+			margin-right: .8rem;
+			color: white;
+		}
+	}
+`
+
 
 export default function CardDetail(props)
 {
@@ -46,35 +55,40 @@ export default function CardDetail(props)
 	if (cardClickedCallBack === undefined)	curser = ''
 
 
-	const YGOCard = styled(Card)`
-		cursor: ${curser};
-	`
+	const YGOCard = useMemo( () => styled(Card)`
+			cursor: ${curser};
+		`, [ curser ]
+	)
 
-	const CardContentComponent = styled(CardContent)`
-		&&
-		{
-			padding: .52rem !important;
-			background: ${cardStyles[ `${cardColor}Background` ]};
-		}
-	`
+	const CardContentComponent = useMemo( () => styled(CardContent)`
+			&&
+			{
+				padding: .52rem !important;
+				background: ${cardStyles[ `${cardColor}Background` ]};
+			}
+		`, [ cardColor ]
+	)
 
-	const CardNameComponent = styled(Typography)`
-	&& {
-		font-weight: 500;
-		text-transform: uppercase;
-		margin-bottom: .415rem;
-		color: ${cardStyles[ `${cardColor}Color` ]};
-	}
-`
-	const CardDescriptionComponent = styled(Box)`
-		&&
-		{
-			padding: .445rem;
-			background: ${cardStyles[ `${cardColor}SummaryBackground` ]};
-		}
-	`
+	const CardNameComponent = useMemo( () => styled(Typography)`
+			&& {
+				font-weight: 500;
+				text-transform: uppercase;
+				margin-bottom: .415rem;
+				color: ${cardStyles[ `${cardColor}Color` ]};
+			},
+		`, [ cardColor ]
+	)
 
-	const CardEffectComponent = (props.fullDetails) ?
+	const CardDescriptionComponent = useMemo( () => styled(Box)`
+				&&
+				{
+					padding: .445rem;
+					background: ${cardStyles[ `${cardColor}SummaryBackground` ]};
+				}
+			`, [ cardColor ]
+	)
+
+	const CardEffectComponent = useMemo( () => (props.fullDetails) ?
 		styled(Typography)`
 			&&
 			{
@@ -93,16 +107,8 @@ export default function CardDetail(props)
 				overflow: hidden;
 				color: ${cardStyles[ `${cardColor}SummaryColor` ]};
 			}
-		`
-
-	const Temp = styled(Badge)`
-		&& {
-			.MuiBadge-badge {
-				margin-right: .8rem;
-				color: white;
-			}
-		}
-	`
+		`,[ cardColor ]
+	)
 
 
 
