@@ -1,11 +1,10 @@
 import React, { lazy, Suspense, useState, useEffect, useMemo } from 'react'
 
-import { Dialog, Paper, Chip, Typography, List, ListItem, ListItemText, Collapse, Grid, ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary } from '@material-ui/core'
+import { Dialog, Paper, Chip, Typography, List, ListItem, ListItemText, Collapse, Grid } from '@material-ui/core'
 
 import DateRangeRoundedIcon from '@material-ui/icons/DateRangeRounded'
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import Styled from 'styled-components'
 
@@ -25,6 +24,7 @@ import BreadCrumb from '../Breadcrumb.js'
 import { TabbedView } from './TabbedView'
 import { handleFetch } from '../../helper/FetchHandler'
 import SuspenseFallback from '../../SuspenseFallback'
+import { Javi } from './BanListDates'
 
 
 
@@ -44,45 +44,6 @@ const CardDialog = Styled(Dialog)`
 		{
 			max-width: 350px;
 			min-width: 350px;
-		}
-	}
-`
-
-const BanDatesExpansionSummary = Styled(ExpansionPanelSummary)`
-	&&
-	{
-		@media only screen and (min-width: 0px)
-		{
-			padding-left: .85rem;
-			padding-right: .85rem;
-		}
-		@media only screen and (min-width: 600px)
-		{
-			padding-left: .95rem;
-			padding-right: .95rem;
-		}
-		@media only screen and (min-width: 800px)
-		{
-			padding-left: 1.25rem;
-			padding-right: 1.25rem;
-		}
-	}
-`
-
-const BanDatesExpansionDetail = Styled(ExpansionPanelDetails)`
-	&&
-	{
-		@media only screen and (min-width: 0px)
-		{
-			padding: .85rem;
-		}
-		@media only screen and (min-width: 600px)
-		{
-			padding: .95rem;
-		}
-		@media only screen and (min-width: 800px)
-		{
-			padding: 1.25rem;
 		}
 	}
 `
@@ -110,7 +71,6 @@ const ListStatItem = Styled(ListItem)`
 export default function BanList(props)
 {
 	const [banListStartDates, setBanListStartDates] = useState([])
-	const [banListGrid, setBanListGrid] = useState([])
 	const [selectedBanList, setSelectedBanList] = useState('')
 
 	const [forbidden, setForbidden] = useState([])
@@ -182,22 +142,6 @@ export default function BanList(props)
 	useEffect(() => {
 		if (selectedBanList !== '')
 		{
-			let banListGrid = []
-			banListStartDates.forEach((item, ind) => {
-				banListGrid.push(<Grid key={ind} item xs={6} sm={4} md={2} lg={2} xl={1} >
-					<Chip
-						color='secondary'
-						variant={ (item === selectedBanList)? 'default' : 'outlined' }
-						label={getDateString(months, new Date(item))}
-						icon={<DateRangeRoundedIcon />}
-						onClick={ () => setSelectedBanList(banListStartDates[ind]) } />
-				</Grid>
-				)
-			})
-
-			setBanListGrid(banListGrid)
-
-
 			setIsSettingUpDates(false)
 			setIsFetchingBanList(true)
 			setIsFetchingNewCards(true)
@@ -270,23 +214,12 @@ export default function BanList(props)
 
 			<BanContentParent
 				style={ (isSettingUpDates)? {display: 'none'}: {display: 'block' }  } >
-				<ExpansionPanel elevation={0}  >
-					<BanDatesExpansionSummary
-						style={{padding: '0rem'}}
-						expandIcon={<ExpandMoreIcon />} >
-						<Chip
-							color='primary'
-							label={getCurrentBanListDate(months, selectedBanList, banListStartDates)}
-							icon={<DateRangeRoundedIcon />} />
-					</BanDatesExpansionSummary>
 
-					<BanDatesExpansionDetail
-						style={{padding: '.5rem'}} >
-						<Grid container spacing={1} >
-							{banListGrid}
-						</Grid>
-					</BanDatesExpansionDetail>
-				</ExpansionPanel>
+				{(isSettingUpDates)? undefined:  <BanListDates
+					months={months}
+					selectedBanList={selectedBanList}
+					banListStartDates={banListStartDates}
+					setSelectedBanList={ (ind) => setSelectedBanList(banListStartDates[ind]) } />}
 
 				<div style={{padding: '.75rem'}} >
 					<Typography variant='h4'>
@@ -561,23 +494,6 @@ export default function BanList(props)
 			setIsFetchingNewCards(false)
 		})
 	}
-}
-
-const getCurrentBanListDate = (months, selectedBanList, banListStartDates) =>
-{
-	const banListPos = banListStartDates.findIndex(item => {
-		if (item === selectedBanList)	return true
-
-		return false
-	})
-
-	switch (banListPos) {
-		case 0:
-			return getDateString(months, new Date(selectedBanList)) + " - Present"
-		default:
-			return getDateString(months, new Date(selectedBanList)) + " - " + getDateString(months, new Date(banListStartDates[banListPos - 1]))
-	}
-
 }
 
 const getDateString = (months, date) => `${months[date.getMonth()]} ${date.getDate() + 1}, ${date.getFullYear()}`

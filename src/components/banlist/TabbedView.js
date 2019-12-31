@@ -22,8 +22,6 @@ export const TabbedView = memo( ( { numForbidden, numLimited, numSemiLimited, fo
 	const [currentTab, setCurrentTab] = useState(0)
 	const [tabs, setTabs] = useState([])
 
-	console.log('tabbed view rendered')
-
 	useEffect( () => {
 		const tabs = []
 		tabs.push(

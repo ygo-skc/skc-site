@@ -33,7 +33,6 @@ const CenteredContent = styled(Box)`
 
 export const BanListSection = ( { sectionExplanation, sectionExplanationBackground, cards, newCards, isDataLoaded, cardClicked } ) =>
 {
-	console.log('ban list section rendered')
 	const [cardTypeContentGrid, setCardTypeContentGrid] = useState([])
 	const [areCardsRendered, setAreCardsRendered] = useState(false)
 
