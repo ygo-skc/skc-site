@@ -497,3 +497,15 @@ export default function BanList(props)
 }
 
 const getDateString = (months, date) => `${months[date.getMonth()]} ${date.getDate() + 1}, ${date.getFullYear()}`
+
+
+const trimCardEffect = (cards) =>
+{
+	console.log(cards)
+	const modifiedCards = cards
+	for(let card of modifiedCards)
+	{
+		card.cardEffect = card.cardEffect.substring(0, 160)
+	}
+	return modifiedCards
+}

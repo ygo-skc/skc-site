@@ -61,9 +61,9 @@ export default function CardDetail(props)
 	)
 
 	const CardContentComponent = useMemo( () => styled(CardContent)`
-			&&
+			&&&
 			{
-				padding: .52rem !important;
+				padding: .62rem;
 				background: ${cardStyles[ `${cardColor}Background` ]};
 			}
 		`, [ cardColor ]
