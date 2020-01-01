@@ -1,18 +1,10 @@
 import React, { lazy, Suspense, useState, useEffect, useMemo } from 'react'
-
-import { Dialog, Paper, Chip, Typography, List, ListItem, ListItemText, Collapse, Grid } from '@material-ui/core'
-
-import DateRangeRoundedIcon from '@material-ui/icons/DateRangeRounded'
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-
 import Styled from 'styled-components'
 
-import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
-import { MainContentContainer } from '../MainContent'
+import { Dialog, Paper, ListItem } from '@material-ui/core'
 
 /*
-	Supplement styles
+000	Supplement styles
 */
 import cardStyles from '../card/CardDetailStyle'
 
@@ -24,7 +16,10 @@ import BreadCrumb from '../Breadcrumb.js'
 import { TabbedView } from './TabbedView'
 import { handleFetch } from '../../helper/FetchHandler'
 import SuspenseFallback from '../../SuspenseFallback'
-import { Javi } from './BanListDates'
+import { BanListDates } from './BanListDates'
+import { BanListStats } from './BanListStats'
+import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
+import { MainContentContainer } from '../MainContent'
 
 
 
@@ -58,7 +53,6 @@ const BanContentParent = Styled(Paper)`
 
 `
 
-
 const ListStatItem = Styled(ListItem)`
 	&&
 	{
@@ -90,38 +84,7 @@ export default function BanList(props)
 	const [newLimitedCards, setNewLimitedCards] = useState([])
 	const [newSemiLimitedCards, setNewSemiLimitedCards] = useState([])
 
-	const [isShowingNewCards, setIsShowingNewCards] = useState(false)
-	const [isShowingNewForbiddenCards, setIsShowingNewForbiddenCards] = useState(false)
-	const [isShowingNewLimitedCards, setIsShowingNewLimitedCards] = useState(false)
-	const [isShowingNewSemiLimitedCards, setIsShowingNewSemiLimitedCards] = useState(false)
-
-	const [removedCardsList, setRemovedCardsList] = useState({})
-
-	const [isShowingRemovedCards, setIsShowingRemovedCards] = useState(false)
-
-	const [newForbiddenCardsList, setNewForbiddenCardsList] = useState([])
-	const [newLimitedCardsList, setNewLimitedCardsList] = useState([])
-	const [newSemiLimitedCardsList, setNewSemiLimitedCardsList] = useState([])
-
-	const showNewCards = () => {
-		setIsShowingNewCards(!isShowingNewCards)
-	}
-
-	const showNewForbiddenCards = () => {
-		setIsShowingNewForbiddenCards(!isShowingNewForbiddenCards)
-	}
-
-	const showNewLimitedCards = () => {
-		setIsShowingNewLimitedCards(!isShowingNewLimitedCards)
-	}
-
-	const showNewSemiLimitedCards = () => {
-		setIsShowingNewSemiLimitedCards(!isShowingNewSemiLimitedCards)
-	}
-
-	const showRemovedCards = () => {
-		setIsShowingRemovedCards(!isShowingRemovedCards)
-	}
+	const [removedCards, setRemovedCards] = useState([])
 
 
 	useEffect(() => {
@@ -146,17 +109,11 @@ export default function BanList(props)
 			setIsFetchingBanList(true)
 			setIsFetchingNewCards(true)
 
-			setIsShowingNewForbiddenCards(false)
-			setIsShowingNewLimitedCards(false)
-			setIsShowingNewSemiLimitedCards(false)
-
-			setIsShowingRemovedCards(false)
-
 			setTimeout(() => {
 				handleFetch(`${NAME_maps_ENDPOINT['banListInstanceUrl']}${selectedBanList}`, props.history, (resultJson) => {
-					setForbidden(resultJson.bannedCards.forbidden)
-					setLimited(resultJson.bannedCards.limited)
-					setSemiLimited(resultJson.bannedCards.semiLimited)
+					setForbidden( trimCardEffect( resultJson.bannedCards.forbidden ) )
+					setLimited( trimCardEffect( resultJson.bannedCards.limited ) )
+					setSemiLimited( trimCardEffect( resultJson.bannedCards.semiLimited) )
 
 					setIsFetchingBanList(false)
 					fetchNewCards()
@@ -221,115 +178,18 @@ export default function BanList(props)
 					banListStartDates={banListStartDates}
 					setSelectedBanList={ (ind) => setSelectedBanList(banListStartDates[ind]) } />}
 
-				<div style={{padding: '.75rem'}} >
-					<Typography variant='h4'>
-						List Stats
-					</Typography>
-					<List style={{ width: '100%', maxWidth: '400px' }}
-						component="nav"
-						aria-labelledby="nested-list-subheader">
-						<ListStatItem >
-							<ListItemText
-								primary="Total Cards"
-								secondary={forbidden.length + limited.length + semiLimited.length} />
-						</ListStatItem>
-
-						<ListStatItem
-							button
-							onClick={showNewCards}>
-							<ListItemText primary="Newly Added (Compared To Previous)" />
-								{isShowingNewCards ? <ExpandLess /> : <ExpandMore />}
-						</ListStatItem>
-
-						<Collapse
-							in={isShowingNewCards}
-							timeout="auto"
-							unmountOnExit >
-							<List
-								component="div"
-								disablePadding >
-								<ListStatItem
-									button
-									onClick={showNewForbiddenCards}
-									style={{paddingLeft: '2.5rem'}}  >
-									<ListItemText
-										primary="Forbidden"
-										secondary={newForbiddenCards.length} />
-									{isShowingNewForbiddenCards ? <ExpandLess /> : <ExpandMore />}
-								</ListStatItem>
-								<Collapse
-									in={isShowingNewForbiddenCards}
-									timeout="auto"
-									unmountOnExit >
-									<List
-										component="div"
-										disablePadding >
-										{newForbiddenCardsList}
-									</List>
-								</Collapse>
-
-								<ListStatItem
-									button
-									onClick={showNewLimitedCards}
-									style={{paddingLeft: '2.5rem'}}  >
-									<ListItemText
-										primary="Limited"
-										secondary={newLimitedCards.length} />
-									{isShowingNewForbiddenCards ? <ExpandLess /> : <ExpandMore />}
-								</ListStatItem>
-								<Collapse
-									in={isShowingNewLimitedCards}
-									timeout="auto"
-									unmountOnExit >
-									<List
-										component="div"
-										disablePadding >
-										{ newLimitedCardsList }
-									</List>
-								</Collapse>
-
-								<ListStatItem
-									button
-									onClick={showNewSemiLimitedCards}
-									style={{paddingLeft: '2.5rem'}}  >
-									<ListItemText
-										primary="Semi-Limited"
-										secondary={newSemiLimitedCards.length} />
-										{ isShowingNewForbiddenCards ? <ExpandLess /> : <ExpandMore /> }
-								</ListStatItem>
-								<Collapse
-									in={isShowingNewSemiLimitedCards}
-									timeout="auto"
-									unmountOnExit >
-									<List
-										component="div"
-										disablePadding >
-										{ newSemiLimitedCardsList }
-									</List>
-								</Collapse>
-							</List>
-						</Collapse>
-
-						<ListStatItem
-							button
-							onClick={ showRemovedCards } >
-							<ListItemText
-								primary="Removed (Compared To Previous)" />
-								{ isShowingRemovedCards ? <ExpandLess /> : <ExpandMore /> }
-						</ListStatItem>
-						<Collapse
-							in={ isShowingRemovedCards }
-							timeout="auto"
-							unmountOnExit>
-							<List
-								component="div"
-								disablePadding >
-								{removedCardsList}
-							</List>
-						</Collapse>
-
-					</List>
-				</div>
+				<BanListStats
+					numForbidden={forbidden.length}
+					numLimited={limited.length}
+					numSemiLimited={semiLimited.length}
+					selectedBanList={selectedBanList}
+					newForbiddenCards={newForbiddenCards}
+					newLimitedCards={newLimitedCards}
+					newSemiLimitedCards={newSemiLimitedCards}
+					removedCards={removedCards}
+					handleFetchCardInfo={handleFetchCardInfo}
+					cardClicked={ (cardID) => setChosenCardID(cardID) }
+				/>
 			</BanContentParent>
 
 
@@ -410,20 +270,7 @@ export default function BanList(props)
 			else	throw new Error()
 		})
 		.then( (json) => {
-			const removedCardsList = []
-			if (json != null)
-			{
-				for (let card of json.removedCards)
-				{
-					handleFetchCardInfo(card.id, (cardResult) => {
-						removedCardsList.push(
-							<ListStatItem key={card.id} button onClick={ () => setChosenCardID(card.id) } style={{paddingLeft: '3rem'}}  >
-								<ListItemText primary={cardResult.cardName} />
-							</ListStatItem>)
-					})
-				}
-				setRemovedCardsList(removedCardsList)
-			}
+			if (json != null)	setRemovedCards(json.removedCards)
 		} )
 	}
 
@@ -448,48 +295,9 @@ export default function BanList(props)
 			}
 			else
 			{
-				const newForbiddenCardsList = []
-				const newLimitedCardsList = []
-				const newSemiLimitedCardsList = []
-
-				for (let card of json.newCards.forbidden)
-				{
-					handleFetchCardInfo(card.id, (cardResult) => {
-						card.name = cardResult.cardName
-						newForbiddenCardsList.push(
-							<ListStatItem key={card.id} button onClick={ () => setChosenCardID(card.id) } style={{paddingLeft: '3rem'}}  >
-								<ListItemText primary={card.name} />
-							</ListStatItem>)
-					})
-				}
 				setNewForbiddenCards(json.newCards.forbidden)
-				setNewForbiddenCardsList(newForbiddenCardsList)
-
-				for (let card of json.newCards.limited)
-				{
-					handleFetchCardInfo(card.id, (cardResult) => {
-						card.name = cardResult.cardName
-						newLimitedCardsList.push(
-							<ListStatItem key={card.id} button onClick={ () => setChosenCardID(card.id) } style={{paddingLeft: '3rem'}}  >
-								<ListItemText primary={card.name} />
-							</ListStatItem>)
-					})
-				}
 				setNewLimitedCards(json.newCards.limited)
-				setNewLimitedCardsList(newLimitedCardsList)
-
-				for (let card of json.newCards.semiLimited)
-				{
-					handleFetchCardInfo(card.id, (cardResult) => {
-						card.name = cardResult.cardName
-						newSemiLimitedCardsList.push(
-							<ListStatItem key={card.id} button onClick={ () => setChosenCardID(card.id) } style={{paddingLeft: '3rem'}}  >
-								<ListItemText primary={card.name} />
-							</ListStatItem>)
-					})
-				}
 				setNewSemiLimitedCards(json.newCards.semiLimited)
-				setNewSemiLimitedCardsList(newSemiLimitedCardsList)
 			}
 			setIsFetchingNewCards(false)
 		})

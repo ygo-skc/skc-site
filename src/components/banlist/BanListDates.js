@@ -74,8 +74,6 @@ export const BanListDates = memo( ( { months, banListStartDates, setSelectedBanL
 		setBanListGrid(banListGrid)
 	}, [selectedBanListIndex])
 
-	console.log('dates rendered')
-
 
 
 	return(
