@@ -7,6 +7,9 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DateRangeRoundedIcon from '@material-ui/icons/DateRangeRounded'
 
 
+
+const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
 const BanDatesExpansionSummary = Styled(ExpansionPanelSummary)`
 	&&
 	{
@@ -46,7 +49,7 @@ const BanDatesExpansionDetail = Styled(ExpansionPanelDetails)`
 	}
 `
 
-export const BanListDates = memo( ( { months, banListStartDates, setSelectedBanList } ) =>
+export const BanListDates = memo( ( { banListStartDates, setSelectedBanList } ) =>
 {
 	const [banListGrid, setBanListGrid] = useState([])
 	const [selectedBanListIndex, setSelectedBanListIndex] = useState(0)

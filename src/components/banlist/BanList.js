@@ -4,7 +4,7 @@ import Styled from 'styled-components'
 import { Dialog, Paper, ListItem } from '@material-ui/core'
 
 /*
-000	Supplement styles
+	Supplement styles
 */
 import cardStyles from '../card/CardDetailStyle'
 
@@ -24,8 +24,6 @@ import { MainContentContainer } from '../MainContent'
 
 
 const CardDetail = lazy( () => import('../card/CardDetail') )
-
-const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
 const CardDialog = Styled(Dialog)`
 	&&
@@ -110,10 +108,10 @@ export default function BanList(props)
 			setIsFetchingNewCards(true)
 
 			setTimeout(() => {
-				handleFetch(`${NAME_maps_ENDPOINT['banListInstanceUrl']}${selectedBanList}`, props.history, (resultJson) => {
-					setForbidden( trimCardEffect( resultJson.bannedCards.forbidden ) )
-					setLimited( trimCardEffect( resultJson.bannedCards.limited ) )
-					setSemiLimited( trimCardEffect( resultJson.bannedCards.semiLimited) )
+				handleFetch(`${NAME_maps_ENDPOINT['banListInstanceUrl']}${selectedBanList}?saveBandwidth=true`, props.history, (resultJson) => {
+					setForbidden( resultJson.bannedCards.forbidden )
+					setLimited( resultJson.bannedCards.limited )
+					setSemiLimited( resultJson.bannedCards.semiLimited )
 
 					setIsFetchingBanList(false)
 					fetchNewCards()
@@ -173,7 +171,6 @@ export default function BanList(props)
 				style={ (isSettingUpDates)? {display: 'none'}: {display: 'block' }  } >
 
 				{(isSettingUpDates)? undefined:  <BanListDates
-					months={months}
 					selectedBanList={selectedBanList}
 					banListStartDates={banListStartDates}
 					setSelectedBanList={ (ind) => setSelectedBanList(banListStartDates[ind]) } />}
@@ -302,18 +299,4 @@ export default function BanList(props)
 			setIsFetchingNewCards(false)
 		})
 	}
-}
-
-const getDateString = (months, date) => `${months[date.getMonth()]} ${date.getDate() + 1}, ${date.getFullYear()}`
-
-
-const trimCardEffect = (cards) =>
-{
-	console.log(cards)
-	const modifiedCards = cards
-	for(let card of modifiedCards)
-	{
-		card.cardEffect = card.cardEffect.substring(0, 160)
-	}
-	return modifiedCards
 }
