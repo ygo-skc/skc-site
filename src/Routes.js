@@ -17,6 +17,7 @@ const NAME_maps_ROUTE =
 
 	400: '/bad_request',
 	500: '/server_err',
+	503: '/service_unavailable'
 }
 
 
@@ -52,6 +53,11 @@ export default function Routes()
 						path={NAME_maps_ROUTE[500]}
 						exact
 						component={() => <HttpErr httpErr={500} />}
+					/>
+					<Route
+						path={NAME_maps_ROUTE[503]}
+						exact
+						component={() => <HttpErr httpErr={503} />}
 					/>
 					<Route
 						component={() => <HttpErr httpErr={404} />}

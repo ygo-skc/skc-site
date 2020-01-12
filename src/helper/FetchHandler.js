@@ -13,12 +13,16 @@ function handleFetch(endPoint, history, onJsonReceived) {
 			}
 		})
 		.then(onJsonReceived)
-		.catch((err) => handleRedirect(err, history))
+		.catch((err) => handleRedirect(err, history) )
 }
 
 
 function handleRedirect(err, history)
 {
+	if ( err.name === 'TypeError' )
+	{
+		history.push(NAME_maps_ROUTE[503])
+	}
 	history.push(NAME_maps_ROUTE[err.name])
 }
 
