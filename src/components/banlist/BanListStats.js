@@ -15,7 +15,8 @@ const ListStatItem = Styled(ListItem)`
 `
 
 
-export const BanListStats = memo( ( { numForbidden, numLimited, numSemiLimited, selectedBanList, newForbiddenCards, newLimitedCards, newSemiLimitedCards, removedCards, handleFetchCardInfo, cardClicked } ) =>
+export const BanListStats = memo( ( { numForbidden, numLimited, numSemiLimited, selectedBanList
+	, newForbiddenCards, newLimitedCards, newSemiLimitedCards, removedCards, handleFetchCardInfo, cardClicked } ) =>
 {
 	console.log('stats rendered')
 	const [isShowingNewCards, setIsShowingNewCards] = useState(false)
@@ -68,17 +69,13 @@ export const BanListStats = memo( ( { numForbidden, numLimited, numSemiLimited, 
 	useEffect( () => {
 		const newForbiddenCardsList = []
 
-
-		for (let card of newForbiddenCards)
-		{
-			handleFetchCardInfo(card.id, (cardResult) => {
-				card.name = cardResult.cardName
-				newForbiddenCardsList.push(
-					<ListStatItem key={card.id} button onClick={ () => cardClicked(card.id) } style={{paddingLeft: '3rem'}}  >
-						<ListItemText primary={card.name} />
-					</ListStatItem>)
-			})
-		}
+		newForbiddenCards.forEach( (card, ind) => {
+			newForbiddenCardsList.push(
+				<ListStatItem key={ind} button onClick={ () => cardClicked(card.id) } style={{paddingLeft: '3rem'}}  >
+					<ListItemText primary={card.name} />
+				</ListStatItem>
+			)
+		})
 
 		setNewForbiddenCardsList(newForbiddenCardsList)
 	}, [newForbiddenCards])
@@ -87,16 +84,13 @@ export const BanListStats = memo( ( { numForbidden, numLimited, numSemiLimited, 
 	useEffect( () => {
 		const newLimitedCardsList = []
 
-		for (let card of newLimitedCards)
-		{
-			handleFetchCardInfo(card.id, (cardResult) => {
-				card.name = cardResult.cardName
-				newLimitedCardsList.push(
-					<ListStatItem key={card.id} button onClick={ () => cardClicked(card.id) } style={{paddingLeft: '3rem'}}  >
-						<ListItemText primary={card.name} />
-					</ListStatItem>)
-			})
-		}
+		newLimitedCards.forEach( (card, ind) => {
+			newLimitedCardsList.push(
+				<ListStatItem key={ind} button onClick={ () => cardClicked(card.id) } style={{paddingLeft: '3rem'}}  >
+					<ListItemText primary={card.name} />
+				</ListStatItem>
+			)
+		})
 
 		setNewLimitedCardsList(newLimitedCardsList)
 
@@ -106,17 +100,14 @@ export const BanListStats = memo( ( { numForbidden, numLimited, numSemiLimited, 
 	useEffect( () => {
 		const newSemiLimitedCardsList = []
 
+		newSemiLimitedCards.forEach( (card, ind) => {
+			newSemiLimitedCardsList.push(
+				<ListStatItem key={ind} button onClick={ () => cardClicked(card.id) } style={{paddingLeft: '3rem'}}  >
+					<ListItemText primary={card.name} />
+				</ListStatItem>
+			)
+		})
 
-		for (let card of newSemiLimitedCards)
-		{
-			handleFetchCardInfo(card.id, (cardResult) => {
-				card.name = cardResult.cardName
-				newSemiLimitedCardsList.push(
-					<ListStatItem key={card.id} button onClick={ () => cardClicked(card.id) } style={{paddingLeft: '3rem'}}  >
-						<ListItemText primary={card.name} />
-					</ListStatItem>)
-			})
-		}
 		setNewSemiLimitedCardsList(newSemiLimitedCardsList)
 
 	}, [newSemiLimitedCards])
