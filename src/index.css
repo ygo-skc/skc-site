@@ -1,5 +1,26 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:500,600,700|Overpass+Mono:400,600,700|PT+Sans:400,700&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Lexend+Deca&display=swap');
+@font-face {
+	font-family: OpenSans;
+	src: url(./fonts/OpenSans-Regular.ttf);
+	font-weight: 500;
+}
+
+@font-face {
+	font-family: OpenSans;
+	src: url(./fonts/OpenSans-SemiBold.ttf);
+	font-weight: 700;
+}
+
+@font-face {
+	font-family: OpenSans;
+	src: url(./fonts/OpenSans-Bold.ttf);
+	font-weight: 900;
+}
+
+@font-face {
+	font-family: VarelaRound;
+	src: url(./fonts/VarelaRound-Regular.ttf);
+	font-weight: 500;
+}
 
 html
 {
@@ -23,7 +44,7 @@ body
 }
 
 .MuiTypography-root {
-	font-family: 'PT Sans', sans-serif !important;
+	font-family: 'OpenSans', sans-serif !important;
 }
 
 .MuiExpansionPanel-root:before {

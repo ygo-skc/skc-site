@@ -75,6 +75,7 @@ export default function CardDetail(props)
 				text-transform: uppercase;
 				margin-bottom: .415rem;
 				color: ${cardStyles[ `${cardColor}Color` ]};
+				font-family: VarelaRound;
 			},
 		`, [ cardColor ]
 	)

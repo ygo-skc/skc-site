@@ -34,6 +34,7 @@ const theme = createMuiTheme({
 	},
 	typography: {
 		button: {
+			fontFamily: 'VarelaRound',
 			fontWeight: 500,
 			lineHeight: '1.1rem',
 			'@media screen and (min-width:0px)': {
@@ -44,10 +45,11 @@ const theme = createMuiTheme({
 			}
 		},
 		h4: {
+			fontFamily: 'VarelaRound',
 			fontWeight: 500,
 			color: '#353535',
 			lineHeight: '1.6rem',
-			marginBottom: '.4rem',
+			marginBottom: '.75rem',
 			'@media screen and (min-width:0px)': {
 				fontSize: '1.4rem'
 			},
@@ -58,7 +60,7 @@ const theme = createMuiTheme({
 		h5: {
 			fontWeight: 600,
 			lineHeight: '1.2rem',
-			marginBottom: '.25rem',
+			marginBottom: '.5rem',
 			color: '#383838',
 			'@media screen and (min-width:0px)': {
 				fontSize: '1.05rem'
