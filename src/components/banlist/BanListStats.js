@@ -72,7 +72,7 @@ export const BanListStats = memo( ( { numForbidden, numLimited, numSemiLimited, 
 		newForbiddenCards.forEach( (card, ind) => {
 			newForbiddenCardsList.push(
 				<ListStatItem key={ind} button onClick={ () => cardClicked(card.id) } style={{paddingLeft: '3rem'}}  >
-					<ListItemText primary={card.name} />
+					<ListItemText primary={card.name} secondary={`Was: ${card.previousStatus}`} />
 				</ListStatItem>
 			)
 		})
@@ -87,7 +87,7 @@ export const BanListStats = memo( ( { numForbidden, numLimited, numSemiLimited, 
 		newLimitedCards.forEach( (card, ind) => {
 			newLimitedCardsList.push(
 				<ListStatItem key={ind} button onClick={ () => cardClicked(card.id) } style={{paddingLeft: '3rem'}}  >
-					<ListItemText primary={card.name} />
+					<ListItemText primary={card.name} secondary={`Was: ${card.previousStatus}`} />
 				</ListStatItem>
 			)
 		})
@@ -103,7 +103,7 @@ export const BanListStats = memo( ( { numForbidden, numLimited, numSemiLimited, 
 		newSemiLimitedCards.forEach( (card, ind) => {
 			newSemiLimitedCardsList.push(
 				<ListStatItem key={ind} button onClick={ () => cardClicked(card.id) } style={{paddingLeft: '3rem'}}  >
-					<ListItemText primary={card.name} />
+					<ListItemText primary={card.name} secondary={`Was: ${card.previousStatus}`} />
 				</ListStatItem>
 			)
 		})
@@ -115,15 +115,15 @@ export const BanListStats = memo( ( { numForbidden, numLimited, numSemiLimited, 
 
 	useEffect( () => {
 		const removedCardsList = []
-		for (let card of removedCards)
-		{
-			handleFetchCardInfo(card.id, (cardResult) => {
-				removedCardsList.push(
-					<ListStatItem key={card.id} button onClick={ () => cardClicked(card.id) } style={{paddingLeft: '3rem'}}  >
-						<ListItemText primary={cardResult.cardName} />
-					</ListStatItem>)
-			})
-		}
+
+		console.log(removedCards)
+
+		removedCards.forEach( (card, ind) => {
+			removedCardsList.push(
+				<ListStatItem key={ind} button onClick={ () => cardClicked(card.id) } style={{paddingLeft: '3rem'}}  >
+					<ListItemText primary={card.name} secondary={`Was: ${card.previousStatus}`}  />
+				</ListStatItem>)
+		})
 		setRemovedCardsList(removedCardsList)
 	}, [removedCards])
 
