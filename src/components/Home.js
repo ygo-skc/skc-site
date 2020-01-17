@@ -56,7 +56,11 @@ export default function Home()
 					Site launch! - Dec 25, 2019
 				</Typography>
 				<Typography variant='h6'>
-					<Link href={NAME_maps_ROUTE.BanList} color='secondary' >Ban List</Link> has been updated - Oct 14, 2019
+					<Link
+						href={ NAME_maps_ROUTE.BanList }
+						color='secondary' >
+							Ban List
+					</Link> has been updated - Oct 14, 2019
 				</Typography>
 			</MainContentCard>
 		</HomeContent>

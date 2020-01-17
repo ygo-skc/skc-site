@@ -34,8 +34,11 @@ const CardIDComponent = styled(Typography)`
 	}
 `
 
-const Temp = styled(Badge)`
+const CardBadge = styled(Badge)`
 	&& {
+		width: 100%;
+		marginRight: 10px;
+
 		.MuiBadge-badge {
 			margin-right: .8rem;
 			color: white;
@@ -44,19 +47,19 @@ const Temp = styled(Badge)`
 `
 
 
-export default function CardDetail(props)
+export default function CardDetail( { isNew, cardName, cardColor, cardEffect, monsterType, monsterAtk, monsterDef, cardClicked, cardStyles, cardID, fullDetails } )
 {
-	const cardColor = props.cardColor.toLowerCase()
-	const cardClickedCallBack = (props.cardClicked) ? function () {props.cardClicked(props.cardID)} : undefined
-	const cardStyles = props.cardStyles
-
-
-	let curser = 'pointer'
-	if (cardClickedCallBack === undefined)	curser = ''
+	const cardColorLowerCase = cardColor.toLowerCase()
+	const cardClickedCallBack = (cardClicked) ? function () { cardClicked(cardID) } : undefined
+	const curser = (cardClickedCallBack === undefined) ? '' : 'pointer'
 
 
 	const YGOCard = useMemo( () => styled(Card)`
-			cursor: ${curser};
+			&&
+			{
+				width: 100%;
+				cursor: ${curser};
+			}
 		`, [ curser ]
 	)
 
@@ -64,9 +67,9 @@ export default function CardDetail(props)
 			&&&
 			{
 				padding: .62rem;
-				background: ${cardStyles[ `${cardColor}Background` ]};
+				background: ${cardStyles[ `${cardColorLowerCase}Background` ]};
 			}
-		`, [ cardColor ]
+		`, [ cardStyles, cardColorLowerCase ]
 	)
 
 	const CardNameComponent = useMemo( () => styled(Typography)`
@@ -74,28 +77,28 @@ export default function CardDetail(props)
 				font-weight: 500;
 				text-transform: uppercase;
 				margin-bottom: .415rem;
-				color: ${cardStyles[ `${cardColor}Color` ]};
+				color: ${cardStyles[ `${cardColorLowerCase}Color` ]};
 				font-family: VarelaRound;
 			},
-		`, [ cardColor ]
+		`, [ cardStyles, cardColorLowerCase ]
 	)
 
 	const CardDescriptionComponent = useMemo( () => styled(Box)`
 				&&
 				{
 					padding: .445rem;
-					background: ${cardStyles[ `${cardColor}SummaryBackground` ]};
+					background: ${cardStyles[ `${cardColorLowerCase}SummaryBackground` ]};
 				}
-			`, [ cardColor ]
+			`, [ cardStyles, cardColorLowerCase ]
 	)
 
-	const CardEffectComponent = useMemo( () => (props.fullDetails) ?
+	const CardEffectComponent = useMemo( () => (fullDetails) ?
 		styled(Typography)`
 			&&
 			{
 				white-space: pre-wrap;
 				margin-bottom: .35rem;
-				color: ${cardStyles[ `${cardColor}SummaryColor` ]};
+				color: ${cardStyles[ `${cardColorLowerCase}SummaryColor` ]};
 			}
 		`
 		: styled(Typography)`
@@ -106,47 +109,62 @@ export default function CardDetail(props)
 				-webkit-line-clamp: 3;
 				-webkit-box-orient: vertical;
 				overflow: hidden;
-				color: ${cardStyles[ `${cardColor}SummaryColor` ]};
+				color: ${cardStyles[ `${cardColorLowerCase}SummaryColor` ]};
 			}
-		`,[ cardColor ]
+		`,[ cardStyles, cardColorLowerCase ]
 	)
 
 
 
 	return (
-		<Temp badgeContent='NEW' variant='standard' overlap='rectangle' color='secondary'
-			invisible={ !props.isNew } style={{width: '100%', color: 'white', marginRight: '10px' }} >
-			<YGOCard onClick={cardClickedCallBack} style={{width: '100%'}} >
-					<CardContentComponent >
-						<CardNameComponent variant='subtitle2' noWrap={true} >{props.cardName}</CardNameComponent>
-						<CardDescriptionComponent >
-							{
-								(props.cardColor === 'Spell' || props.cardColor === 'Trap') ?
-									undefined :
-									<MonsterTypeComponent variant='body1' noWrap={true} >[ {props.monsterType} ]</MonsterTypeComponent>
-							}
-
-							<CardEffectComponent variant='body1'>{ he.decode(props.cardEffect) }</CardEffectComponent>
-
-							{
-								(props.cardColor === 'Spell' || props.cardColor === 'Trap' || props.cardColor === 'err' ) ?
-									undefined :
-									(props.fullDetails) ?
-										<MonsterAtkDefComponent>
-											{props.monsterAtk} / {props.monsterDef}
-										</MonsterAtkDefComponent> :
-										undefined
-							}
-						</CardDescriptionComponent>
+		<CardBadge
+			badgeContent='NEW'
+			variant='standard'
+			overlap='rectangle'
+			color='secondary'
+			invisible={ !isNew } >
+			<YGOCard onClick={ cardClickedCallBack } >
+				<CardContentComponent >
+					<CardNameComponent
+						variant='subtitle2'
+						noWrap={true} >
+							{ cardName }
+					</CardNameComponent>
+					<CardDescriptionComponent >
 						{
-							(props.fullDetails) ?
-								<CardIDComponent variant='body2' >
-									{props.cardID} &nbsp;&nbsp; First Edition
-								</CardIDComponent>
-								: undefined
+							( cardColor === 'Spell' || cardColor === 'Trap' ) ?
+								undefined :
+								<MonsterTypeComponent
+									variant='body1'
+									noWrap={true} >
+										[ { monsterType } ]
+								</MonsterTypeComponent>
 						}
-					</CardContentComponent>
+
+						<CardEffectComponent
+							variant='body1' >
+								{ he.decode(cardEffect) }
+						</CardEffectComponent>
+
+						{
+							( cardColor === 'Spell' || cardColor === 'Trap' || cardColor === 'err' ) ?
+								undefined :
+								(fullDetails) ?
+									<MonsterAtkDefComponent>
+										{monsterAtk} / {monsterDef}
+									</MonsterAtkDefComponent> :
+									undefined
+						}
+					</CardDescriptionComponent>
+					{
+						(fullDetails) ?
+							<CardIDComponent variant='body2' >
+								{cardID} &nbsp;&nbsp; First Edition
+							</CardIDComponent>
+							: undefined
+					}
+				</CardContentComponent>
 			</YGOCard>
-		</Temp>
+		</CardBadge>
 	)
 }

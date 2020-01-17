@@ -25,43 +25,38 @@ export default function Routes()
 {
 	return (
 		<Router >
-			<Suspense fallback={ <SuspenseFallback /> }>
+			<Suspense
+				fallback={ <SuspenseFallback /> }
+			>
 				<Switch>
 					<Route
 						path={NAME_maps_ROUTE.Home}
 						exact
-						component={Home}
-					/>
+						component={Home} />
 					<Route
 						path={NAME_maps_ROUTE.BanList}
 						exact
-						component={BanList}
-					/>
+						component={BanList} />
 					<Route
 						path={NAME_maps_ROUTE.About}
 						exact
-						component={About}
-					/>
+						component={About} />
 
-					/* Routes specifically for errs */
+					{ /* Routes specifically for errs */ }
 					<Route
 						path={NAME_maps_ROUTE[400]}
 						exact
-						component={() => <HttpErr httpErr={400} />}
-					/>
+						component={() => <HttpErr httpErr={400} />} />
 					<Route
 						path={NAME_maps_ROUTE[500]}
 						exact
-						component={() => <HttpErr httpErr={500} />}
-					/>
+						component={() => <HttpErr httpErr={500} />} />
 					<Route
 						path={NAME_maps_ROUTE[503]}
 						exact
-						component={() => <HttpErr httpErr={503} />}
-					/>
+						component={() => <HttpErr httpErr={503} />} />
 					<Route
-						component={() => <HttpErr httpErr={404} />}
-					/>
+						component={() => <HttpErr httpErr={404} />} />
 				</Switch>
 			</Suspense>
 		</Router>

@@ -129,7 +129,8 @@ const theme = createMuiTheme({
 
 render(
 	<div>
-		<ThemeProvider theme={theme} >
+		<ThemeProvider
+			theme={ theme } >
 			<NavigationBar />
 			<Routes />
 		</ThemeProvider>
