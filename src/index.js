@@ -34,95 +34,60 @@ const theme = createMuiTheme({
 	},
 	typography: {
 		button: {
-			fontFamily: 'VarelaRound',
+			fontFamily: 'Nunito',
 			lineHeight: '1.1rem',
-			'@media screen and (min-width:0px)': {
-				fontSize: '.867rem'
-			},
-			'@media screen and (min-width:600px)': {
-				fontSize: '.877rem',
-			}
+			fontSize: '.85rem',
 		},
 		h4: {
-			fontFamily: 'VarelaRound',
-			fontWeight: 800,
+			fontFamily: 'Nunito',
+			fontWeight: 600,
 			color: '#543fda',
-			lineHeight: '1.6rem',
+			lineHeight: '1.65rem',
 			marginBottom: '.75rem',
-			'@media screen and (min-width:0px)': {
-				fontSize: '1.4rem'
-			},
-			'@media screen and (min-width:600px)': {
-				fontSize: '1.45rem'
-			}
+			fontSize: '1.55rem',
 		},
 		h5: {
-			fontFamily: 'VarelaRound',
-			fontWeight: 500,
-			lineHeight: '1.2rem',
+			fontFamily: 'Nunito',
+			fontWeight: 800,
+			lineHeight: '1.3rem',
 			marginBottom: '.5rem',
 			color: '#595959',
-			'@media screen and (min-width:0px)': {
-				fontSize: '1.05rem'
-			},
-			'@media screen and (min-width:600px)': {
-				fontSize: '1.07rem'
-			}
+			fontSize: '1.05rem'
 		},
 		h6: {
-			fontWeight: 500,
-			lineHeight: '1.2rem',
+			fontFamily: 'Nunito',
+			fontWeight: 400,
+			lineHeight: '1.3rem',
 			color: '#383838',
-			'@media screen and (min-width:0px)': {
-				fontSize: '.95rem'
-			},
-			'@media screen and (min-width:600px)': {
-				fontSize: '.96rem'
-			}
+			fontSize: '.95rem',
 		},
 		subtitle1: {
+			fontFamily: 'OpenSans',
 			fontWeight: 600,
 			lineHeight: '1.15rem',
 			color: '#2b2a2a',
-			'@media screen and (min-width:0px)': {
-				fontSize: '.91rem'
-			},
-			'@media screen and (min-width:600px)': {
-				fontSize: '.93rem'
-			}
+			fontSize: '.91rem',
 		},
 		subtitle2: {
+			fontFamily: 'OpenSans',
 			fontWeight: 500,
 			lineHeight: '1.15rem',
 			color: '#2b2a2a',
-			'@media screen and (min-width:0px)': {
-				fontSize: '.88rem'
-			},
-			'@media screen and (min-width:600px)': {
-				fontSize: '.9rem'
-			}
+			fontSize: '.88rem',
 		},
 		body1: {
+			fontFamily: 'OpenSans',
+			fontWeight: 500,
+			lineHeight: '1.15rem',
+			color: '#2b2a2a',
+			fontSize: '.83rem',
+		},
+		body2: {
+			fontFamily: 'OpenSans',
 			fontWeight: 500,
 			lineHeight: '1.1rem',
 			color: '#2b2a2a',
-			'@media screen and (min-width:0px)': {
-				fontSize: '.85rem'
-			},
-			'@media screen and (min-width:600px)': {
-				fontSize: '.86rem',
-			}
-		},
-		body2: {
-			fontWeight: 500,
-			lineHeight: '1.05rem',
-			color: '#2b2a2a',
-			'@media screen and (min-width:0px)': {
-				fontSize: '.77rem'
-			},
-			'@media screen and (min-width:600px)': {
-				fontSize: '.8rem'
-			}
+			fontSize: '.77rem',
 		},
 	}
 })
