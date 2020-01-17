@@ -53,9 +53,13 @@ export default function Home()
 					News
 				</Typography>
 				<Typography variant='h6'>
-					Site launch! - Dec 25, 2019
+					&bull; <strong>January 20, 2020</strong> ban list has been added! The site has slight new look - updated fonts and colors. There are slight performance improvements to page loading. YGO API has been updated to include more info about new/removed cards.
 				</Typography>
 				<Typography variant='h6'>
+					&bull; Site launch! - Dec 25, 2019
+				</Typography>
+				<Typography variant='h6'>
+					&bull;
 					<Link
 						href={ NAME_maps_ROUTE.BanList }
 						color='secondary' >

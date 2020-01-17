@@ -18,7 +18,6 @@ const ListStatItem = Styled(ListItem)`
 export const BanListStats = memo( ( { numForbidden, numLimited, numSemiLimited, selectedBanList
 	, newForbiddenCards, newLimitedCards, newSemiLimitedCards, removedCards, handleFetchCardInfo, cardClicked } ) =>
 {
-	console.log('stats rendered')
 	const [isShowingNewCards, setIsShowingNewCards] = useState(false)
 	const [isShowingNewForbiddenCards, setIsShowingNewForbiddenCards] = useState(false)
 	const [isShowingNewLimitedCards, setIsShowingNewLimitedCards] = useState(false)
@@ -115,8 +114,6 @@ export const BanListStats = memo( ( { numForbidden, numLimited, numSemiLimited, 
 
 	useEffect( () => {
 		const removedCardsList = []
-
-		console.log(removedCards)
 
 		removedCards.forEach( (card, ind) => {
 			removedCardsList.push(
