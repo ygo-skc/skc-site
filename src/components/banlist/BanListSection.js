@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import { Typography, Box, Grid, CircularProgress } from '@material-ui/core'
 
 import CardDetail from '../card/CardDetail.js'
+import cardStyles from '../card/CardDetailStyle'
 
 
 
-const cardDisplayOrder = ['normal', 'effect', 'ritual', 'fusion', 'synchro', 'xyz', 'pendulum-normal', 'pendulum-effect', 'link', 'spell', 'trap']
+const cardDisplayOrder = ['normal', 'effect', 'ritual', 'fusion', 'synchro', 'xyz'
+	, 'pendulum-normal', 'pendulum-effect', 'link', 'spell', 'trap']
 
 const cardSectionTextColors = {
 	'normal': 'rgba(249, 160, 16, 1)'
@@ -28,18 +31,19 @@ const CenteredContent = styled(Box)`
 `
 
 
-export default function BanListSection(props)
+export const BanListSection = ( { sectionExplanation, sectionExplanationBackground, cards, newCards, isDataLoaded, cardClicked } ) =>
 {
 	const [cardTypeContentGrid, setCardTypeContentGrid] = useState([])
 	const [areCardsRendered, setAreCardsRendered] = useState(false)
 
 	const SectionInfoText = styled(Typography)`
-		&& {
+		&&
+		{
 			font-weight: 500;
 			margin-top: .75rem;
 			margin-bottom: 2.75rem;
 			padding: .9rem;
-			background: ${props.sectionExplanationBackground};
+			background: ${ sectionExplanationBackground };
 			border-radius: .85rem;
 			display: -webkit-inline-flex;
 			color: white;
@@ -49,9 +53,9 @@ export default function BanListSection(props)
 	function isNewCard(cardID)
 	{
 		// eslint-disable-next-line
-		if (props.newCards != "" && cardID !== undefined)
+		if ( newCards != "" && cardID !== undefined )
 		{
-			const isNew = props.newCards.find( currentItem => {
+			const isNew = newCards.find( currentItem => {
 				if (currentItem.id === cardID)	return true
 				return false
 			}, cardID)
@@ -63,20 +67,28 @@ export default function BanListSection(props)
 
 	useEffect(() => {
 		setAreCardsRendered(false)
-		if ( props.isDataLoaded )
+		if ( isDataLoaded )
 		{
 			const cardDetailsMap = new Map()
 
-			props.cards.forEach((card, ind) => {
+			cards.forEach((card, ind) => {
 				const cardColor = card.cardColor.toLowerCase()
 				if (!cardDetailsMap.has(cardColor))	cardDetailsMap.set(cardColor, [])
 
 
 				cardDetailsMap.get(cardColor).push(
 					<Grid key={ind} item xs={12} sm={4} md={3} lg={2} xl={2} >
-						<CardDetail key={ind} cardID={card.cardID} cardName={card.cardName} monsterType={card.monsterType}
-						cardColor={card.cardColor} cardEffect={card.cardEffect} cardClicked={props.cardClicked}
-						fullDetails={false} isNew={ isNewCard(card.cardID) }
+						<CardDetail
+							key={ind}
+							cardID={card.cardID}
+							cardName={card.cardName}
+							monsterType={card.monsterType}
+							cardColor={card.cardColor}
+							cardEffect={card.cardEffect}
+							cardClicked={cardClicked}
+							fullDetails={false}
+							isNew={ isNewCard(card.cardID)}
+							cardStyles={cardStyles}
 						/>
 					</Grid>
 				)
@@ -85,7 +97,7 @@ export default function BanListSection(props)
 
 			let cardTypeContentGrid = cardDisplayOrder.map(( cardType ) => {
 
-				const CardSectionText = (cardType === 'pendulum-effect' || cardType === 'pendulum-normal')?
+				const CardSectionText = ( cardType === 'pendulum-effect' || cardType === 'pendulum-normal' )?
 					styled(Typography)`
 					&&
 					{
@@ -124,7 +136,7 @@ export default function BanListSection(props)
 			setAreCardsRendered(true)
 		}
 		// eslint-disable-next-line
-	}, [props.isDataLoaded])
+	}, [isDataLoaded])
 
 
 
@@ -132,7 +144,7 @@ export default function BanListSection(props)
 		<div>
 			<CenteredContent>
 				<SectionInfoText variant='h6' >
-					{props.sectionExplanation}
+					{ sectionExplanation }
 				</SectionInfoText>
 			</CenteredContent>
 
@@ -142,10 +154,26 @@ export default function BanListSection(props)
 						{cardTypeContentGrid}
 					</div>)
 					: 	(<CenteredContent>
-							<CircularProgress size={50} variant='indeterminate' thickness={3.6} disableShrink={true} />
+							<CircularProgress
+								size={50}
+								variant='indeterminate'
+								thickness={3.6}
+								disableShrink={true}
+							/>
 						</CenteredContent>)
 				)
 			}
 		</div>
 	)
+}
+
+
+BanListSection.propTypes =
+{
+	sectionExplanation: PropTypes.string.isRequired,
+	sectionExplanationBackground: PropTypes.string.isRequired,
+	cards: PropTypes.array.isRequired,
+	newCards: PropTypes.array.isRequired,
+	isDataLoaded: PropTypes.bool.isRequired,
+	cardClicked: PropTypes.func.isRequired
 }

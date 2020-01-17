@@ -41,28 +41,42 @@ BREADCRUMB_maps_ICON['404 - Err'] = <ErrorIcon style={iconStyle} />
 BREADCRUMB_maps_ICON['About'] = <InfoIcon style={iconStyle} />
 
 
-export default function BreadCrumb(props)
+export default function BreadCrumb( { crumbs } )
 {
-	let Crumbs = props.crumbs.map((item, ind) =>
+	let Crumbs = crumbs.map((item, ind) =>
 	{
-		if ((ind === props.crumbs.length - 1))
+		if ((ind === crumbs.length - 1))
 		{
-			return	<BreadCrumbItem variant='subtitle1' color='inherit' key={ind} underline='none' >
-						{BREADCRUMB_maps_ICON[item]}
-						{item}
-					</BreadCrumbItem>
+			return(
+				<BreadCrumbItem
+					variant='subtitle1'
+					color='inherit'
+					key={ind}
+					underline='none' >
+						{ BREADCRUMB_maps_ICON[item] }
+						{ item }
+				</BreadCrumbItem>
+			)
 		}
 
-		return	<BreadCrumbItem variant='subtitle1' color='inherit' href={NAME_maps_ROUTE[item]} key={ind} >
-					{BREADCRUMB_maps_ICON[item]}
-					{item}
-				</BreadCrumbItem>
+		return(
+			<BreadCrumbItem
+				variant='subtitle1'
+				color='inherit'
+				href={NAME_maps_ROUTE[item]}
+				key={ind} >
+					{ BREADCRUMB_maps_ICON[item] }
+					{ item }
+			</BreadCrumbItem>
+		)
 	})
 
 	return(
 		<BreadCrumbsContent >
-			<Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label='breadcrumb' >
-				{Crumbs}
+			<Breadcrumbs
+				separator={<NavigateNextIcon fontSize="small" />}
+				aria-label='breadcrumb' >
+					{ Crumbs }
 			</Breadcrumbs>
 		</BreadCrumbsContent>
 	)

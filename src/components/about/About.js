@@ -16,7 +16,7 @@ export default function()
 					The Developer
 				</Typography>
 				<Typography variant='h5'>
-					Javi Gomez • <Link color='secondary' href='https://github.com/rtomyj'>GitHub</Link> • <Link color='secondary' href='mailto:rtomyj@gmail.com'>Email</Link>
+					Javi Gomez • <Link color='secondary' href='https://github.com/rtomyj'>GitHub</Link> • <Link color='secondary' href='mailto:rtomyj@gmail.com'>Email</Link> • <Link color='secondary' href='https://twitter.com/TheSupremeKin14'>Twitter</Link>
 				</Typography>
 				<Typography variant='body1'>
 					Hey guys. I started playing Yugioh when I was about 8 years old. I played at some local tourneys, but I wasn't exceptional by any means. I stopped playing when I got to high school, but I still collected cards for fun. My collecting then stopped when I got to college since it was hard convincing myself a pack of cards was more important than food/gas. Also, being a CS major and a Math minor with a full time job - hobbies were not really a priority.

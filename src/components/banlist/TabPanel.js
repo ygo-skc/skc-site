@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {  } from 'react'
 import PropTypes from 'prop-types'
 import Styled from 'styled-components'
 
@@ -11,15 +11,18 @@ const Container = Styled(Box)`
 	}
 `
 
-function TabPanel(props)
+export const TabPanel = ( { children, value, index } ) =>
 {
-	const { children, value, index } = props;
-
-
 	return(
-		<Typography component="div" role="tabpanel" hidden={value !== index} id={`full-width-tabpanel-${index}`}
+		<Typography
+			component="div"
+			role="tabpanel"
+			hidden={value !== index}
+			id={`full-width-tabpanel-${index}`}
 			aria-labelledby={`full-width-tab-${index}`} >
-			<Container p={3}>{children}</Container>
+			<Container p={3}>
+				{ children }
+			</Container>
 		</Typography>
 	)
 }
@@ -29,5 +32,3 @@ TabPanel.propTypes = {
 	index: PropTypes.any.isRequired,
 	value: PropTypes.any.isRequired,
 };
-
-export default TabPanel

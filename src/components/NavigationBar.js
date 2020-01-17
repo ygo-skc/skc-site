@@ -6,7 +6,7 @@ import { AppBar, Toolbar, Button, Link } from '@material-ui/core'
 import { NAME_maps_ROUTE } from '../Routes'
 
 
-export default function NavigationBar(props)
+export default function NavigationBar()
 {
 	const NavigationButton = styled(Button)`
 		&&
@@ -20,19 +20,29 @@ export default function NavigationBar(props)
 		}
 	`
 	return (
-		<AppBar position='static'>
+		<AppBar position='static' >
 			<Toolbar>
-				<Link style={{marginRight: '30px'}} underline='none' color='inherit' href={NAME_maps_ROUTE.Home} >
+				<Link
+					style={ { marginRight: '30px' } }
+					underline='none'
+					color='inherit'
+					href={NAME_maps_ROUTE.Home} >
 					<NavigationButton color='inherit' >
 						Supreme Kings Castle
 					</NavigationButton>
 				</Link>
-				<Link underline='none' color='inherit' href={NAME_maps_ROUTE.BanList} >
+				<Link
+					underline='none'
+					color='inherit'
+					href={ NAME_maps_ROUTE.BanList } >
 					<NavigationButton color='inherit' >
 						Ban List
 					</NavigationButton>
 				</Link>
-				<Link underline='none' color='inherit' href={NAME_maps_ROUTE.About} >
+				<Link
+					underline='none'
+					color='inherit'
+					href={ NAME_maps_ROUTE.About } >
 					<NavigationButton color='inherit' >
 						About
 					</NavigationButton>
