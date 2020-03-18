@@ -71,7 +71,7 @@ export const BanListStats = memo( ( { numForbidden, numLimited, numSemiLimited, 
 		newForbiddenCards.forEach( (card, ind) => {
 			newForbiddenCardsList.push(
 				<ListStatItem key={ind} button onClick={ () => cardClicked(card.id) } style={{paddingLeft: '3rem'}}  >
-					<ListItemText primary={card.name} secondary={`Was: ${card.previousStatus}`} />
+					<ListItemText primary={card.name} secondary={`Was: ${card.previousState}`} />
 				</ListStatItem>
 			)
 		})
@@ -86,7 +86,7 @@ export const BanListStats = memo( ( { numForbidden, numLimited, numSemiLimited, 
 		newLimitedCards.forEach( (card, ind) => {
 			newLimitedCardsList.push(
 				<ListStatItem key={ind} button onClick={ () => cardClicked(card.id) } style={{paddingLeft: '3rem'}}  >
-					<ListItemText primary={card.name} secondary={`Was: ${card.previousStatus}`} />
+					<ListItemText primary={card.name} secondary={`Was: ${card.previousState}`} />
 				</ListStatItem>
 			)
 		})
@@ -102,7 +102,7 @@ export const BanListStats = memo( ( { numForbidden, numLimited, numSemiLimited, 
 		newSemiLimitedCards.forEach( (card, ind) => {
 			newSemiLimitedCardsList.push(
 				<ListStatItem key={ind} button onClick={ () => cardClicked(card.id) } style={{paddingLeft: '3rem'}}  >
-					<ListItemText primary={card.name} secondary={`Was: ${card.previousStatus}`} />
+					<ListItemText primary={card.name} secondary={`Was: ${card.previousState}`} />
 				</ListStatItem>
 			)
 		})
@@ -118,7 +118,7 @@ export const BanListStats = memo( ( { numForbidden, numLimited, numSemiLimited, 
 		removedCards.forEach( (card, ind) => {
 			removedCardsList.push(
 				<ListStatItem key={ind} button onClick={ () => cardClicked(card.id) } style={{paddingLeft: '3rem'}}  >
-					<ListItemText primary={card.name} secondary={`Was: ${card.previousStatus}`}  />
+					<ListItemText primary={card.name} secondary={`Was: ${card.previousState}`}  />
 				</ListStatItem>)
 		})
 		setRemovedCardsList(removedCardsList)
