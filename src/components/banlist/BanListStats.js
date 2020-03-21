@@ -15,8 +15,8 @@ const ListStatItem = Styled(ListItem)`
 `
 
 
-export const BanListStats = memo( ( { numForbidden, numLimited, numSemiLimited, selectedBanList
-	, newForbiddenCards, newLimitedCards, newSemiLimitedCards, removedCards, handleFetchCardInfo, cardClicked } ) =>
+const BanListStats = memo( ( { totalCardsInSelectedList, selectedBanList
+	, newForbiddenCards, newLimitedCards, newSemiLimitedCards, numNewForbidden, numNewLimited, numNewSemiLimited, removedCards, numRemoved, cardClicked } ) =>
 {
 	const [isShowingNewCards, setIsShowingNewCards] = useState(false)
 	const [isShowingNewForbiddenCards, setIsShowingNewForbiddenCards] = useState(false)
@@ -70,8 +70,15 @@ export const BanListStats = memo( ( { numForbidden, numLimited, numSemiLimited, 
 
 		newForbiddenCards.forEach( (card, ind) => {
 			newForbiddenCardsList.push(
-				<ListStatItem key={ind} button onClick={ () => cardClicked(card.id) } style={{paddingLeft: '3rem'}}  >
-					<ListItemText primary={card.name} secondary={`Was: ${card.previousState}`} />
+				<ListStatItem
+					key={ind}
+					button
+					onClick={ () => cardClicked(card.id) }
+					style={{paddingLeft: '3rem'}}  >
+					<ListItemText
+						primary={card.name}
+						secondary={`Was: ${card.previousState}`}
+					/>
 				</ListStatItem>
 			)
 		})
@@ -127,8 +134,8 @@ export const BanListStats = memo( ( { numForbidden, numLimited, numSemiLimited, 
 
 	return(
 		<div style={{padding: '.75rem'}} >
-			<Typography variant='h4'>
-				List Stats
+			<Typography variant='h5'>
+				List Summary
 			</Typography>
 			<List style={{ width: '100%', maxWidth: '400px' }}
 				component="nav"
@@ -136,13 +143,17 @@ export const BanListStats = memo( ( { numForbidden, numLimited, numSemiLimited, 
 				<ListStatItem >
 					<ListItemText
 						primary="Total Cards"
-						secondary={numForbidden + numLimited + numSemiLimited} />
+						secondary={totalCardsInSelectedList}
+					/>
 				</ListStatItem>
 
 				<ListStatItem
 					button
 					onClick={showNewCards}>
-					<ListItemText primary="Newly Added (Compared To Previous)" />
+					<ListItemText
+						primary="Newly Added"
+						secondary={numNewForbidden + numNewLimited + numNewSemiLimited}
+					/>
 						{isShowingNewCards ? <ExpandLess /> : <ExpandMore />}
 				</ListStatItem>
 
@@ -159,7 +170,7 @@ export const BanListStats = memo( ( { numForbidden, numLimited, numSemiLimited, 
 							style={{paddingLeft: '2.5rem'}}  >
 							<ListItemText
 								primary="Forbidden"
-								secondary={newForbiddenCards.length} />
+								secondary={ numNewForbidden } />
 							{isShowingNewForbiddenCards ? <ExpandLess /> : <ExpandMore />}
 						</ListStatItem>
 						<Collapse
@@ -179,7 +190,7 @@ export const BanListStats = memo( ( { numForbidden, numLimited, numSemiLimited, 
 							style={{paddingLeft: '2.5rem'}}  >
 							<ListItemText
 								primary="Limited"
-								secondary={newLimitedCards.length} />
+								secondary={ numNewLimited } />
 							{isShowingNewForbiddenCards ? <ExpandLess /> : <ExpandMore />}
 						</ListStatItem>
 						<Collapse
@@ -199,7 +210,7 @@ export const BanListStats = memo( ( { numForbidden, numLimited, numSemiLimited, 
 							style={{paddingLeft: '2.5rem'}}  >
 							<ListItemText
 								primary="Semi-Limited"
-								secondary={newSemiLimitedCards.length} />
+								secondary={ numNewSemiLimited} />
 								{ isShowingNewForbiddenCards ? <ExpandLess /> : <ExpandMore /> }
 						</ListStatItem>
 						<Collapse
@@ -219,7 +230,9 @@ export const BanListStats = memo( ( { numForbidden, numLimited, numSemiLimited, 
 					button
 					onClick={ showRemovedCards } >
 					<ListItemText
-						primary="Removed (Compared To Previous)" />
+						primary="No Longer Restricted"
+						secondary={numRemoved}
+					/>
 						{ isShowingRemovedCards ? <ExpandLess /> : <ExpandMore /> }
 				</ListStatItem>
 				<Collapse
@@ -237,7 +250,10 @@ export const BanListStats = memo( ( { numForbidden, numLimited, numSemiLimited, 
 		</div>
 	)
 }, (prevProps, newProps) => {
-	if ( prevProps.selectedBanList !== newProps.selectedBanList || prevProps.newForbiddenCards !== newProps.newForbiddenCards || prevProps.newLimitedCards !== newProps.newLimitedCards || prevProps.newSemiLimitedCards !== newProps.newSemiLimitedCards || prevProps.removedCards !== newProps.removedCards )	return false
+	if ( prevProps.selectedBanList !== newProps.selectedBanList || prevProps.totalCardsInSelectedList !== newProps.totalCardsInSelectedList || prevProps.numNewForbidden !== newProps.numNewForbidden || prevProps.numNewLimited !== newProps.numNewLimited || prevProps.numNewSemiLimited !== newProps.numNewSemiLimited || prevProps.numRemoved !== newProps.numRemoved )
+		return false
 
 	return true
 })
+
+export default BanListStats

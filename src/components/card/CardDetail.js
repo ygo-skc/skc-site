@@ -78,7 +78,7 @@ export default function CardDetail( { isNew, cardName, cardColor, cardEffect, mo
 				text-transform: uppercase;
 				margin-bottom: .415rem;
 				color: ${cardStyles[ `${cardColorLowerCase}Color` ]};
-				font-family: VarelaRound;
+				font-family: Nunito;
 			},
 		`, [ cardStyles, cardColorLowerCase ]
 	)
@@ -106,7 +106,7 @@ export default function CardDetail( { isNew, cardName, cardColor, cardEffect, mo
 			{
 				white-space: pre-wrap;
 				display: -webkit-box;
-				-webkit-line-clamp: 3;
+				-webkit-line-clamp: 2;
 				-webkit-box-orient: vertical;
 				overflow: hidden;
 				color: ${cardStyles[ `${cardColorLowerCase}SummaryColor` ]};
