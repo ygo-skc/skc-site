@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from 'react'
 import Styled from 'styled-components'
 
-import { Chip, Grid, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails } from '@material-ui/core'
+import { Chip, Grid, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Typography } from '@material-ui/core'
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DateRangeRoundedIcon from '@material-ui/icons/DateRangeRounded'
@@ -80,18 +80,17 @@ export const BanListDates = memo( ( { banListStartDates, setSelectedBanList } ) 
 
 
 	return(
-		<ExpansionPanel elevation={0}  >
+		<ExpansionPanel elevation={0} style={ { paddingLeft: '.5rem' } }  >
 			<BanDatesExpansionSummary
 				style={{padding: '0rem'}}
 				expandIcon={<ExpandMoreIcon />} >
-				<Chip
-					color='primary'
-					label={ selectedRange }
-					icon={ <DateRangeRoundedIcon /> } />
+				<Typography
+					variant='h4' >
+					{ selectedRange }
+				</Typography>
 			</BanDatesExpansionSummary>
 
-			<BanDatesExpansionDetail
-				style={ { padding: '.5rem' } } >
+			<BanDatesExpansionDetail>
 				<Grid container spacing={ 1 } >
 					{ banListGrid }
 				</Grid>
