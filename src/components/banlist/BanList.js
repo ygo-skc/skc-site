@@ -12,18 +12,18 @@ import cardStyles from '../card/CardDetailStyle'
 	Custom Components
 */
 import { BanListSection } from './BanListSection'
-import BreadCrumb from '../Breadcrumb.js'
 import { TabbedView } from './TabbedView'
 import { handleFetch } from '../../helper/FetchHandler'
 import SuspenseFallback from '../../SuspenseFallback'
 import { BanListDates } from './BanListDates'
-import { BanListStats } from './BanListStats'
 import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
 import { MainContentContainer } from '../MainContent'
 
 
 
 const CardDetail = lazy( () => import('../card/CardDetail') )
+const BreadCrumb = lazy( () => import('../Breadcrumb') )
+const BanListStats = lazy( () => import('./BanListStats') )
 
 const CardDialog = Styled(Dialog)`
 	&&
@@ -69,6 +69,10 @@ export default function BanList(props)
 	const [limited, setLimited] = useState([])
 	const [semiLimited, setSemiLimited] = useState([])
 
+	const [numForbidden, setNumForbidden] = useState(undefined)
+	const [numLimited, setNumLimited] = useState(undefined)
+	const [numSemiLimited, setNumSemiLimited] = useState(undefined)
+
 	const [isSettingUpDates, setIsSettingUpDates] = useState(true)
 	const [isFetchingBanList, setIsFetchingBanList] = useState(true)
 	const [isFetchingNewCards, setIsFetchingNewCards] = useState(true)
@@ -82,8 +86,12 @@ export default function BanList(props)
 	const [newLimitedCards, setNewLimitedCards] = useState([])
 	const [newSemiLimitedCards, setNewSemiLimitedCards] = useState([])
 
-	const [removedCards, setRemovedCards] = useState([])
+	const [numNewForbidden, setNumNewForbidden] = useState(undefined)
+	const [numNewLimited, setNumNewLimited] = useState(undefined)
+	const [numNewSemiLimited, setNumNewSemiLimited] = useState(undefined)
 
+	const [removedCards, setRemovedCards] = useState([])
+	const [numRemoved, setNumRemoved] = useState(undefined)
 
 	useEffect(() => {
 		handleFetch(NAME_maps_ENDPOINT['banListsUrl'], props.history, (resultJson) => {
@@ -107,17 +115,22 @@ export default function BanList(props)
 			setIsFetchingBanList(true)
 			setIsFetchingNewCards(true)
 
-			setTimeout(() => {
-				handleFetch(`${NAME_maps_ENDPOINT['banListInstanceUrl']}${selectedBanList}?saveBandwidth=true`, props.history, (resultJson) => {
-					setForbidden( resultJson.bannedCards.forbidden )
-					setLimited( resultJson.bannedCards.limited )
-					setSemiLimited( resultJson.bannedCards.semiLimited )
+			handleFetch(`${NAME_maps_ENDPOINT['banListInstanceUrl']}${selectedBanList}?saveBandwidth=true`, props.history, (resultJson) => {
+				setForbidden( resultJson.bannedCards.forbidden )
+				setLimited( resultJson.bannedCards.limited )
+				setSemiLimited( resultJson.bannedCards.semiLimited )
 
-					setIsFetchingBanList(false)
-					fetchNewCards()
-					fetchRemovedCards()
-				})
-			}, 250);
+				setNumForbidden( resultJson.bannedCards.numForbidden )
+				setNumLimited( resultJson.bannedCards.numLimited )
+				setNumSemiLimited( resultJson.bannedCards.numSemiLimited )
+
+				console.log(resultJson.bannedCards)
+
+				setIsFetchingBanList(false)
+			})
+
+			fetchNewCards()
+			fetchRemovedCards()
 
 		}
 		// eslint-disable-next-line
@@ -170,20 +183,23 @@ export default function BanList(props)
 			<BanContentParent
 				style={ (isSettingUpDates)? {display: 'none'}: {display: 'block' }  } >
 
-				{(isSettingUpDates)? undefined:  <BanListDates
+				{(isSettingUpDates)? undefined
+					: <BanListDates
 					selectedBanList={selectedBanList}
 					banListStartDates={banListStartDates}
 					setSelectedBanList={ (ind) => setSelectedBanList(banListStartDates[ind]) } />}
 
 				<BanListStats
-					numForbidden={forbidden.length}
-					numLimited={limited.length}
-					numSemiLimited={semiLimited.length}
+					totalCardsInSelectedList={numForbidden + numLimited + numSemiLimited}
 					selectedBanList={selectedBanList}
 					newForbiddenCards={newForbiddenCards}
 					newLimitedCards={newLimitedCards}
 					newSemiLimitedCards={newSemiLimitedCards}
+					numNewForbidden={numNewForbidden}
+					numNewLimited={numNewLimited}
+					numNewSemiLimited={numNewSemiLimited}
 					removedCards={removedCards}
+					numRemoved={numRemoved}
 					handleFetchCardInfo={handleFetchCardInfo}
 					cardClicked={ (cardID) => setChosenCardID(cardID) }
 				/>
@@ -193,9 +209,9 @@ export default function BanList(props)
 			<BanContentParent
 				style={ (isSettingUpDates)? {display: 'none'}: {display: 'block', paddingTop: '0rem' }  } >
 				<TabbedView
-					numForbidden={forbidden.length}
-					numLimited={limited.length}
-					numSemiLimited={semiLimited.length}
+					numForbidden={numForbidden}
+					numLimited={numLimited}
+					numSemiLimited={numSemiLimited}
 					banList={selectedBanList}
 					forbiddenContent={
 						useMemo( () =>
@@ -266,9 +282,13 @@ export default function BanList(props)
 			else if (res.status === 204)	return null
 			else	throw new Error()
 		})
-		.then( (json) => {
-			if (json != null)	setRemovedCards(json.removedCards)
-		} )
+		.then(json => {
+			if (json != null)
+			{
+				setRemovedCards(json.removedCards)
+				setNumRemoved(json.numRemoved)
+			}
+		})
 	}
 
 
@@ -295,6 +315,10 @@ export default function BanList(props)
 				setNewForbiddenCards(json.newCards.forbidden)
 				setNewLimitedCards(json.newCards.limited)
 				setNewSemiLimitedCards(json.newCards.semiLimited)
+
+				setNumNewForbidden(json.newCards.numForbidden)
+				setNumNewLimited(json.newCards.numLimited)
+				setNumNewSemiLimited(json.newCards.numSemiLimited)
 			}
 			setIsFetchingNewCards(false)
 		})
