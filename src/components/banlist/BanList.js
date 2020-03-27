@@ -45,7 +45,7 @@ const BanContentParent = Styled(Paper)`
 	&&
 	{
 		padding: .85rem;
-		margin-bottom: 2.75rem;
+		margin-bottom: 1rem;
 		border-radius: .5rem;
 	}
 
@@ -123,8 +123,6 @@ export default function BanList(props)
 				setNumForbidden( resultJson.bannedCards.numForbidden )
 				setNumLimited( resultJson.bannedCards.numLimited )
 				setNumSemiLimited( resultJson.bannedCards.numSemiLimited )
-
-				console.log(resultJson.bannedCards)
 
 				setIsFetchingBanList(false)
 			})

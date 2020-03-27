@@ -62,7 +62,7 @@ export const BanListDates = memo( ( { banListStartDates, setSelectedBanList } ) 
 				<Chip
 					color='secondary'
 					variant={ (ind === selectedBanListIndex)? 'default' : 'outlined' }
-					label={getDateString(months, new Date(item))}
+					label={ getDateString(months, new Date(item)) }
 					icon={<DateRangeRoundedIcon />}
 					onClick={ () => {
 						setSelectedBanList(ind)
@@ -126,4 +126,4 @@ const getCurrentBanListDate = (months, selectedBanList, banListStartDates) =>
 }
 
 
-const getDateString = (months, date) => `${months[date.getMonth()]} ${date.getDate() + 1}, ${date.getFullYear()}`
+const getDateString = (months, date) => `${months[date.getUTCMonth()]} ${date.getUTCDate()}, ${date.getUTCFullYear()}`

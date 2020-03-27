@@ -7,16 +7,7 @@ const MonsterTypeComponent = styled(Typography)`
 	&&
 	{
 		font-weight: 600;
-
-		@media screen and (min-width: 0px)
-		{
-			margin-bottom: .35rem;
-		}
-
-		@media screen and (min-width: 500px)
-		{
-			margin-bottom: .35rem;
-		}
+		margin-bottom: .28rem;
 	}
 `
 
@@ -40,7 +31,8 @@ const CardBadge = styled(Badge)`
 		marginRight: 10px;
 
 		.MuiBadge-badge {
-			margin-right: .8rem;
+			margin-right: 1.1rem;
+			margin-bottom: .2rem;
 			color: white;
 		}
 	}
@@ -66,7 +58,7 @@ export default function CardDetail( { isNew, cardName, cardColor, cardEffect, mo
 	const CardContentComponent = useMemo( () => styled(CardContent)`
 			&&&
 			{
-				padding: .62rem;
+				padding: .375rem;
 				background: ${cardStyles[ `${cardColorLowerCase}Background` ]};
 			}
 		`, [ cardStyles, cardColorLowerCase ]
@@ -74,9 +66,9 @@ export default function CardDetail( { isNew, cardName, cardColor, cardEffect, mo
 
 	const CardNameComponent = useMemo( () => styled(Typography)`
 			&& {
-				font-weight: 500;
+				font-weight: 600;
+				margin-bottom: .18rem;
 				text-transform: uppercase;
-				margin-bottom: .415rem;
 				color: ${cardStyles[ `${cardColorLowerCase}Color` ]};
 				font-family: Nunito;
 			},
@@ -97,7 +89,6 @@ export default function CardDetail( { isNew, cardName, cardColor, cardEffect, mo
 			&&
 			{
 				white-space: pre-wrap;
-				margin-bottom: .35rem;
 				color: ${cardStyles[ `${cardColorLowerCase}SummaryColor` ]};
 			}
 		`
@@ -126,7 +117,7 @@ export default function CardDetail( { isNew, cardName, cardColor, cardEffect, mo
 			<YGOCard onClick={ cardClickedCallBack } >
 				<CardContentComponent >
 					<CardNameComponent
-						variant='subtitle2'
+						variant='body1'
 						noWrap={true} >
 							{ cardName }
 					</CardNameComponent>
@@ -159,7 +150,7 @@ export default function CardDetail( { isNew, cardName, cardColor, cardEffect, mo
 					{
 						(fullDetails) ?
 							<CardIDComponent variant='body2' >
-								{cardID} &nbsp;&nbsp; First Edition
+								{cardID}
 							</CardIDComponent>
 							: undefined
 					}

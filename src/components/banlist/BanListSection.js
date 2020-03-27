@@ -39,7 +39,6 @@ export const BanListSection = ( { sectionExplanation, sectionExplanationBackgrou
 	const SectionInfoText = styled(Typography)`
 		&&
 		{
-			font-weight: 500;
 			margin-top: .75rem;
 			margin-bottom: 2.75rem;
 			padding: .9rem;
@@ -143,7 +142,7 @@ export const BanListSection = ( { sectionExplanation, sectionExplanationBackgrou
 	return (
 		<div>
 			<CenteredContent>
-				<SectionInfoText variant='h6' >
+				<SectionInfoText variant='subtitle1' >
 					{ sectionExplanation }
 				</SectionInfoText>
 			</CenteredContent>
