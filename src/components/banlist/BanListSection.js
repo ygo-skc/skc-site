@@ -76,7 +76,7 @@ export const BanListSection = ( { sectionExplanation, sectionExplanationBackgrou
 
 
 				cardDetailsMap.get(cardColor).push(
-					<Grid key={ind} item xs={12} sm={4} md={3} lg={2} xl={2} >
+					<Grid key={ind} item xs={12} sm={4} md={3} lg={2} xl={1} >
 						<CardDetail
 							key={ind}
 							cardID={card.cardID}
