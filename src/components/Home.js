@@ -39,6 +39,9 @@ export default function Home()
 					API Change Log
 				</Typography>
 				<Typography variant='subtitle2' >
+					&bull; <strong>March 26, 2020:</strong> Added data for next ban list (04/01/2020).
+				</Typography>
+				<Typography variant='subtitle2' >
 					&bull; <strong>March 21, 2020:</strong> Updated caching mechanism to reduce latency from DB to client. Added client level caching to minimize API to client requests. Updated implementations to increase code quality.
 				</Typography>
 				<Typography variant='subtitle2' >
