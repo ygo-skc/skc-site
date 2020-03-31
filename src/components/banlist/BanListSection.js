@@ -8,10 +8,6 @@ import CardDetail from '../card/CardDetail.js'
 import cardStyles from '../card/CardDetailStyle'
 
 
-
-const cardDisplayOrder = ['normal', 'effect', 'ritual', 'fusion', 'synchro', 'xyz'
-	, 'pendulum-normal', 'pendulum-effect', 'link', 'spell', 'trap']
-
 const cardSectionTextColors = {
 	'normal': 'rgba(249, 160, 16, 1)'
 	, 'effect': 'rgba(248, 87, 0, 1)'
@@ -69,9 +65,10 @@ export const BanListSection = ( { sectionExplanation, sectionExplanationBackgrou
 		if ( isDataLoaded )
 		{
 			const cardDetailsMap = new Map()
+			const cardTypeContentGrid = []
 
 			cards.forEach((card, ind) => {
-				const cardColor = card.cardColor.toLowerCase()
+				const cardColor = card.cardColor
 				if (!cardDetailsMap.has(cardColor))	cardDetailsMap.set(cardColor, [])
 
 
@@ -93,17 +90,15 @@ export const BanListSection = ( { sectionExplanation, sectionExplanationBackgrou
 				)
 			})
 
-
-			let cardTypeContentGrid = cardDisplayOrder.map(( cardType ) => {
-
-				const CardSectionText = ( cardType === 'pendulum-effect' || cardType === 'pendulum-normal' )?
+			cardDetailsMap.forEach((details, cardColor) => {
+				const CardSectionText = ( cardColor === 'Pendulum-Effect' || cardColor === 'Pendulum-Normal' )?
 					styled(Typography)`
 					&&
 					{
 						margin-bottom: 10px;
 						text-transform: uppercase;
 						letter-spacing: .105rem;
-						background: ${ cardSectionTextColors[cardType] };
+						background: ${ cardSectionTextColors[cardColor.toLowerCase()] };
 						-webkit-background-clip: text;
 						-webkit-text-fill-color: transparent;
 					}
@@ -113,22 +108,21 @@ export const BanListSection = ( { sectionExplanation, sectionExplanationBackgrou
 						{
 							margin-bottom: 10px;
 							text-transform: uppercase;
-							color: ${ cardSectionTextColors[cardType] };
+							color: ${ cardSectionTextColors[cardColor.toLowerCase()] };
 							letter-spacing: .105rem;
 						}
 					`
 
-				if (cardDetailsMap.has(cardType)) {
-					return	<div key={cardType} >
-								<CardSectionText variant='subtitle1' >
-									{cardType}
-								</CardSectionText>
-								<Grid container spacing={1} style={{marginBottom: '30px'}} >
-									{cardDetailsMap.get(cardType)}
-								</Grid>
-							</div>
-				}
-				return null
+				cardTypeContentGrid.push(
+					<div key={cardColor} >
+						<CardSectionText variant='subtitle1' >
+							{cardColor}
+						</CardSectionText>
+						<Grid container spacing={1} style={{marginBottom: '30px'}} >
+							{ details }
+						</Grid>
+					</div>
+				)
 			})
 
 			setCardTypeContentGrid(cardTypeContentGrid)
