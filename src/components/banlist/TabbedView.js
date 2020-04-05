@@ -77,8 +77,17 @@ export const TabbedView = memo( ( { numForbidden, numLimited, numSemiLimited, fo
 
 		return (
 			<div style={{ marginLeft: '-.85rem', marginRight: '-.85rem' }}>
-				<AppBar position='sticky'>
-					<Tabs value={currentTab} onChange={(event, newValue) => { setCurrentTab(newValue)}} variant='fullWidth' >
+				<AppBar
+					style={{boxShadow: 'none', background: 'rgba(0, 0, 0, .12)'}}
+					position='static'
+					color='transparent'
+				>
+					<Tabs
+						textColor='primary'
+						value={currentTab}
+						onChange={(event, newValue) => { setCurrentTab(newValue)}}
+						centered
+						variant='standard' >
 						{tabs}
 					</Tabs>
 				</AppBar>

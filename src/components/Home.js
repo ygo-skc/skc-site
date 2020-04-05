@@ -4,6 +4,7 @@ import styled from 'styled-components'
 
 import { Typography } from '@material-ui/core'
 import { MainContentContainer, ChildPaper } from './MainContent'
+import Breadcrumb from './Breadcrumb'
 
 
 const HomeContent = styled.div`
@@ -15,14 +16,22 @@ const HomeContent = styled.div`
 	align-content: center;
 `
 
+const CenteredText = styled(Typography)`
+	text-align: center;
+`
+
 export default function Home()
 {
 	return (
 		<MainContentContainer>
+			<Breadcrumb crumbs={['Home']} />
+
 			<ChildPaper>
-				<Typography variant='h4' >
+				<CenteredText variant='h4' >
 					Website Change Log
-				</Typography>
+				</CenteredText>
+				<br />
+
 				<Typography variant='subtitle2' >
 					&bull; <strong>March 21, 2020:</strong> Removed unneeded / simplified fonts to improve load times. Decoupled React.js resources to improve loading.
 				</Typography>
@@ -35,9 +44,11 @@ export default function Home()
 			</ChildPaper>
 
 			<ChildPaper>
-				<Typography variant='h4' >
+				<CenteredText variant='h4' >
 					API Change Log
-				</Typography>
+				</CenteredText>
+				<br />
+
 				<Typography variant='subtitle2' >
 					&bull; <strong>March 26, 2020:</strong> Added data for next ban list (04/01/2020).
 				</Typography>

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {Breadcrumbs, Link, Paper} from '@material-ui/core'
+import {Breadcrumbs, Link, Box} from '@material-ui/core'
 
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import HomeIcon from '@material-ui/icons/Home'
@@ -12,14 +12,13 @@ import { NAME_maps_ROUTE } from '../Routes'
 
 import styled from 'styled-components'
 
-const BreadCrumbsContent = styled(Paper)`
+const BreadCrumbsContent = styled(Box)`
 	&&
 	{
 		display: flex;
-		margin-top: .5rem;
-		margin-bottom: 1rem;
-		border-radius: .5rem;
+		margin-bottom: 1.5rem;
 		padding: 1rem;
+		background: rgba(195, 188, 242, .2);
 	}
 
 `
@@ -28,7 +27,8 @@ const BreadCrumbItem = styled(Link)`
 	&&
 	{
 		display: flex;
-		font-weight: 500;
+		font-weight: 600;
+		color: black;
 	}
 `
 

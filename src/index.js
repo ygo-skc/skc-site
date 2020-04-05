@@ -20,17 +20,27 @@ const theme = createMuiTheme({
 	},
 	overrides: {
 		'MuiChip': {
-			label:
-			{
+			label: {
 				fontWeight: 500,
-				'@media screen and (min-width:0px)': {
-					fontSize: '.81rem'
-				},
-				'@media screen and (min-width:600px)': {
-					fontSize: '.825rem',
-				}
+				fontSize: '.81rem'
 			}
-		}
+		},
+		'MuiTableCell': {
+			head: {
+				fontFamily: 'Nunito',
+				fontWeight: 600,
+				fontSize: '.93rem'
+			},
+			body: {
+				fontFamily: 'Nunito',
+				fontWeight: 500,
+				fontSize: '.85rem'
+			},
+			root: {
+				padding: '.4rem',
+				'border-bottom': '0rem'
+			}
+		},
 	},
 	typography: {
 		button: {
@@ -44,7 +54,7 @@ const theme = createMuiTheme({
 			color: '#543fda',
 			lineHeight: '1.35rem',
 			marginBottom: '.75rem',
-			fontSize: '1.15rem',
+			fontSize: '1.3rem',
 		},
 		h5: {
 			fontFamily: 'Nunito',
@@ -72,7 +82,7 @@ const theme = createMuiTheme({
 		},
 		subtitle2: {
 			fontFamily: 'OpenSans',
-			fontWeight: 400,
+			fontWeight: 500,
 			lineHeight: '1.15rem',
 			marginBottom: '.25rem',
 			color: '#2b2a2a',
@@ -82,14 +92,14 @@ const theme = createMuiTheme({
 			fontFamily: 'OpenSans',
 			fontWeight: 500,
 			lineHeight: '1.15rem',
-			color: '#1a1919',
+			color: 'black',
 			fontSize: '.82rem',
 		},
 		body2: {
 			fontFamily: 'OpenSans',
 			fontWeight: 500,
 			lineHeight: '1rem',
-			color: '#000',
+			color: 'black',
 			fontSize: '.75rem',
 		},
 	}

@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from 'react'
 import Styled from 'styled-components'
 
-import { Chip, Grid, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Typography } from '@material-ui/core'
+import { Button, Grid, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Typography } from '@material-ui/core'
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DateRangeRoundedIcon from '@material-ui/icons/DateRangeRounded'
@@ -34,18 +34,7 @@ const BanDatesExpansionSummary = Styled(ExpansionPanelSummary)`
 const BanDatesExpansionDetail = Styled(ExpansionPanelDetails)`
 	&&
 	{
-		@media only screen and (min-width: 0px)
-		{
-			padding: .85rem;
-		}
-		@media only screen and (min-width: 600px)
-		{
-			padding: .95rem;
-		}
-		@media only screen and (min-width: 800px)
-		{
-			padding: 1.25rem;
-		}
+		padding:
 	}
 `
 
@@ -58,17 +47,21 @@ export const BanListDates = memo( ( { banListStartDates, setSelectedBanList } ) 
 	useEffect( () => {
 		let banListGrid = []
 		banListStartDates.forEach((item, ind) => {
-			banListGrid.push(<Grid key={ind} item xs={6} sm={4} md={2} lg={2} xl={1} >
-				<Chip
-					color='secondary'
-					variant={ (ind === selectedBanListIndex)? 'default' : 'outlined' }
-					label={ getDateString(months, new Date(item)) }
-					icon={<DateRangeRoundedIcon />}
+			banListGrid.push(<Grid key={ind} item xs={6} sm={4} md={12} lg={12} xl={6} >
+				<Button
+					style={{color: '#fff'}}
+					color={ (ind === selectedBanListIndex)? 'primary': 'secondary' }
+					size='small'
+					disableElevation={true}
+					variant='contained'
+					startIcon={<DateRangeRoundedIcon />}
 					onClick={ () => {
 						setSelectedBanList(ind)
 						setSelectedBanListIndex(ind)
 						}
-					} />
+					} >
+					{ getDateString(months, new Date(item)) }
+				</Button>
 			</Grid>
 			)
 		})

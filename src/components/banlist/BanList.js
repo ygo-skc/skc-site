@@ -1,7 +1,7 @@
 import React, { lazy, Suspense, useState, useEffect, useMemo } from 'react'
 import Styled from 'styled-components'
 
-import { Dialog, Paper, ListItem } from '@material-ui/core'
+import { Dialog, Paper, Grid } from '@material-ui/core'
 
 /*
 	Supplement styles
@@ -18,6 +18,7 @@ import SuspenseFallback from '../../SuspenseFallback'
 import { BanListDates } from './BanListDates'
 import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
 import { MainContentContainer } from '../MainContent'
+import BanListTable from './BanListTable'
 
 
 
@@ -49,13 +50,6 @@ const BanContentParent = Styled(Paper)`
 		border-radius: .5rem;
 	}
 
-`
-
-const ListStatItem = Styled(ListItem)`
-	&&
-	{
-		padding: .25rem;
-	}
 `
 
 
@@ -178,6 +172,9 @@ export default function BanList(props)
 				}
 			</CardDialog>
 
+			<Grid container spacing={3} >
+
+			<Grid item xs={12} sm={12} md={3} lg={3} xl={3} >
 			<BanContentParent
 				style={ (isSettingUpDates)? {display: 'none'}: {display: 'block' }  } >
 
@@ -202,7 +199,36 @@ export default function BanList(props)
 					cardClicked={ (cardID) => setChosenCardID(cardID) }
 				/>
 			</BanContentParent>
+			</Grid>
 
+
+			<Grid item xs={12} sm={12} md={9} lg={9} xl={9} >
+				{/* <BanListTable
+					isDataLoaded={ isDataLoaded }
+					bannedContent={ forbidden }
+					contentTitle='Forbidden'
+					contentExplanation='Forbidden cards cannot be used in Deck/Side Deck in the Advanced Format'
+					contentColor='#ff4557'
+					cardClicked={ cardID => setChosenCardID(cardID) }
+				/>
+				<br />
+				<BanListTable
+					isDataLoaded={ isDataLoaded }
+					bannedContent={ limited }
+					contentTitle='Limited'
+					contentExplanation='Limited cards can be included in Deck/Side deck - max 1'
+					contentColor='#ff6c12'
+					cardClicked={ cardID => setChosenCardID(cardID) }
+				/>
+				<br />
+				<BanListTable
+					isDataLoaded={ isDataLoaded }
+					bannedContent={ semiLimited }
+					contentTitle='Semi-Limited'
+					contentExplanation='Semi-Limited cards can be included in Deck/Side deck - max 2'
+					contentColor='#f0c620'
+					cardClicked={ cardID => setChosenCardID(cardID) }
+				/> */}
 
 			<BanContentParent
 				style={ (isSettingUpDates)? {display: 'none'}: {display: 'block', paddingTop: '0rem' }  } >
@@ -217,7 +243,7 @@ export default function BanList(props)
 							return <BanListSection
 								sectionName='Forbidden'
 								sectionExplanation='Forbidden cards cannot be used in Deck/Side Deck in the Advanced Format'
-								sectionExplanationBackground='#ff4557'
+								sectionExplanationBackground='rgba(255, 69, 87, .17)'
 								cards={forbidden}
 								newCards={newForbiddenCards}
 								isDataLoaded={isDataLoaded}
@@ -233,7 +259,7 @@ export default function BanList(props)
 							return <BanListSection
 								sectionName='Limited'
 								sectionExplanation='Limited cards can be included in Deck/Side deck - max 1'
-								sectionExplanationBackground='#ff6c12'
+								sectionExplanationBackground='rgba(255, 108, 18, .17)'
 								cards={limited}
 								newCards={newLimitedCards}
 								isDataLoaded={isDataLoaded}
@@ -249,7 +275,7 @@ export default function BanList(props)
 							return <BanListSection
 								sectionName='Semi-Limited'
 								sectionExplanation='Semi-Limited cards can be included in Deck/Side deck - max 2'
-								sectionExplanationBackground='#f0c620'
+								sectionExplanationBackground='rgba(240, 198, 32, .17)'
 								cards={semiLimited}
 								newCards={newSemiLimitedCards}
 								isDataLoaded={isDataLoaded}
@@ -261,6 +287,9 @@ export default function BanList(props)
 					}
 				/>
 				</BanContentParent>
+				</Grid>
+
+			</Grid>
 		</MainContentContainer>
 	)
 

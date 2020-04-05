@@ -37,11 +37,9 @@ export const BanListSection = ( { sectionExplanation, sectionExplanationBackgrou
 		{
 			margin-top: .75rem;
 			margin-bottom: 2.75rem;
-			padding: .9rem;
+			padding: 1.4rem;
 			background: ${ sectionExplanationBackground };
-			border-radius: .85rem;
-			display: -webkit-inline-flex;
-			color: white;
+			color: black;
 		}
 	`
 

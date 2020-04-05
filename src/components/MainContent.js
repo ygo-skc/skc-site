@@ -21,34 +21,22 @@ const MainContentContainer = Styled(Box)`
 	}
 `
 
-const ChildPaper = Styled(Paper)`
+const ChildPaper = Styled(Box)`
 	&&
 	{
-		border-radius: .75rem;
-		margin-bottom: 1rem;
+		margin-bottom: 2rem;
+		background: white;
 		@media screen and (min-width: 0px)
 		{
-			padding: .9rem;
+			padding: 1rem;
 		}
 		@media screen and (min-width: 400px)
 		{
-			padding: 1.05rem;
-		}
-		@media screen and (min-width: 550px)
-		{
-			padding: 1.35rem;
-		}
-		@media screen and (min-width: 750px)
-		{
-			padding: 1.6rem;
+			padding: 1.4rem;
 		}
 		@media screen and (min-width: 900px)
 		{
-			padding: 2.15rem;
-		}
-		@media screen and (min-width: 1200px)
-		{
-			padding: 2.5rem;
+			padding: 3rem;
 		}
 	}
 `

@@ -1,9 +1,22 @@
 import React from 'react'
 
 import { Typography, Link } from '@material-ui/core'
+import styled from 'styled-components'
 
 import Breadcrumb from '../Breadcrumb'
 import { MainContentContainer, ChildPaper } from '../MainContent'
+
+const CustomLink = styled(Link)`
+	&&
+	{
+		background: rgba(253, 237, 221, 1);
+		padding: .15rem;
+	}
+`
+
+const CenteredText = styled(Typography)`
+	text-align: center;
+`
 
 export default function()
 {
@@ -12,12 +25,14 @@ export default function()
 			<Breadcrumb crumbs={['Home', 'About']} />
 
 			<ChildPaper>
-				<Typography variant='h4'>
+				<CenteredText variant='h4'>
 					The Developer
-				</Typography>
-				<Typography variant='h5'>
-					Javi Gomez • <Link color='secondary' href='https://github.com/rtomyj'>GitHub</Link> • <Link color='secondary' href='mailto:rtomyj@gmail.com'>Email</Link> • <Link color='secondary' href='https://twitter.com/TheSupremeKin14'>Twitter</Link>
-				</Typography>
+				</CenteredText>
+				<CenteredText variant='h5'>
+					Javi Gomez • <CustomLink color='secondary' href='https://github.com/rtomyj'>GitHub</CustomLink> • <CustomLink color='secondary' href='mailto:rtomyj@gmail.com'>Email</CustomLink> • <CustomLink color='secondary' href='https://twitter.com/TheSupremeKin14'>Twitter</CustomLink>
+				</CenteredText>
+				<br />
+
 				<Typography variant='body1'>
 					Hey guys. I started playing Yugioh when I was about 8 years old. I played at some local tourneys, but I wasn't exceptional by any means. I stopped playing when I got to high school, but I still collected cards for fun. My collecting then stopped when I got to college since it was hard convincing myself a pack of cards was more important than food/gas. Also, being a CS major and a Math minor with a full time job - hobbies were not really a priority.
 					<br />
@@ -31,24 +46,28 @@ export default function()
 			</ChildPaper>
 
 			<ChildPaper>
-				<Typography variant='h4'>
+				<CenteredText variant='h4'>
 					The API
-				</Typography>
-				<Typography variant='h5'>
-					YGO API • <Link color='secondary' href='https://ygoapi.cfapps.io/swagger-ui.html'>Documentation</Link>
-				</Typography>
+				</CenteredText>
+				<CenteredText variant='h5'>
+					YGO API • <CustomLink color='secondary' href='https://ygoapi.cfapps.io/swagger-ui.html'>Documentation</CustomLink>
+				</CenteredText>
+				<br />
+
 				<Typography variant='body1'>
 					The API was also created by me. It has two main functions: to get the contents of a specific ban list (basic info about a card, forbidden/limited/semi-limited cards) and get detailed information about a certain card (effect, attack/defense, etc). Right now it is limited in content. However, I would like to create a full blown database of cards so developers can have a fun and familiar service to use while learning about REST and HTTP in general.
 				</Typography>
 			</ChildPaper>
 
 			<ChildPaper>
-				<Typography variant='h4'>
+				<CenteredText variant='h4'>
 					The Funding
-				</Typography>
-				<Typography variant='h5'>
-					Donations To Maintain Site • <Link color='secondary' href='https://www.patreon.com/javigomez'>Patreon</Link>
-				</Typography>
+				</CenteredText>
+				<CenteredText variant='h5'>
+					Donations To Maintain Site • <CustomLink color='secondary' href='https://www.patreon.com/javigomez'>Patreon</CustomLink>
+				</CenteredText>
+				<br />
+
 				<Typography variant='body1'>
 					Since the website needs to be hosted somewhere and a good hosting platform costs money, donations are always welcome. If you use the website often/think its neat and you have a dollar or two laying around, use the link above.
 					<br />
