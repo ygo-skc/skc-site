@@ -18,9 +18,7 @@ const CenteredText = styled(Typography)`
 	text-align: center;
 `
 
-export default function()
-{
-	return (
+const About: React.FC = () => (
 		<MainContentContainer>
 			<Breadcrumb crumbs={['Home', 'About']} />
 
@@ -28,7 +26,7 @@ export default function()
 				<CenteredText variant='h4'>
 					The Developer
 				</CenteredText>
-				<CenteredText variant='h5'>
+				<CenteredText variant='subtitle1'>
 					Javi Gomez • <CustomLink color='secondary' href='https://github.com/rtomyj'>GitHub</CustomLink> • <CustomLink color='secondary' href='mailto:rtomyj@gmail.com'>Email</CustomLink> • <CustomLink color='secondary' href='https://twitter.com/TheSupremeKin14'>Twitter</CustomLink>
 				</CenteredText>
 				<br />
@@ -49,7 +47,7 @@ export default function()
 				<CenteredText variant='h4'>
 					The API
 				</CenteredText>
-				<CenteredText variant='h5'>
+				<CenteredText variant='subtitle1'>
 					YGO API • <CustomLink color='secondary' href='https://ygoapi.cfapps.io/swagger-ui.html'>Documentation</CustomLink>
 				</CenteredText>
 				<br />
@@ -63,7 +61,7 @@ export default function()
 				<CenteredText variant='h4'>
 					The Funding
 				</CenteredText>
-				<CenteredText variant='h5'>
+				<CenteredText variant='subtitle1'>
 					Donations To Maintain Site • <CustomLink color='secondary' href='https://www.patreon.com/javigomez'>Patreon</CustomLink>
 				</CenteredText>
 				<br />
@@ -80,4 +78,3 @@ export default function()
 			</ChildPaper>
 		</MainContentContainer>
 	)
-}

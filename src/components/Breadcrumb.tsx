@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { FunctionComponent } from 'react'
 
 import {Breadcrumbs, Link, Box} from '@material-ui/core'
 
-import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import HomeIcon from '@material-ui/icons/Home'
+import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import Block from '@material-ui/icons/Block'
 import ErrorIcon from '@material-ui/icons/Error'
 import InfoIcon from '@material-ui/icons/Info';
@@ -11,6 +11,10 @@ import InfoIcon from '@material-ui/icons/Info';
 import { NAME_maps_ROUTE } from '../Routes'
 
 import styled from 'styled-components'
+
+type BreadcrumbProps = {
+	crumbs: string[]
+}
 
 const BreadCrumbsContent = styled(Box)`
 	&&
@@ -35,15 +39,15 @@ const BreadCrumbItem = styled(Link)`
 
 const BREADCRUMB_maps_ICON = new Map()
 const iconStyle = { width: 20, height: 20, marginRight: 5, color: 'rgba(68, 68, 68, 0.68)' }
-BREADCRUMB_maps_ICON['Home'] = <HomeIcon style={iconStyle} />
-BREADCRUMB_maps_ICON['Ban List'] = <Block style={iconStyle} />
-BREADCRUMB_maps_ICON['404 - Err'] = <ErrorIcon style={iconStyle} />
-BREADCRUMB_maps_ICON['About'] = <InfoIcon style={iconStyle} />
+BREADCRUMB_maps_ICON.set('Home', <HomeIcon style={iconStyle} />)
+BREADCRUMB_maps_ICON.set('Ban List', <Block style={iconStyle} />)
+BREADCRUMB_maps_ICON.set('404 - Err', <ErrorIcon style={iconStyle} />)
+BREADCRUMB_maps_ICON.set('About', <InfoIcon style={iconStyle} />)
 
 
-export default function BreadCrumb( { crumbs } )
+const Breadcrumb: FunctionComponent<BreadcrumbProps> = ( { crumbs }  ) =>
 {
-	let Crumbs = crumbs.map((item, ind) =>
+	var Crumbs: JSX.Element[] = crumbs.map((item, ind) =>
 	{
 		if ((ind === crumbs.length - 1))
 		{
@@ -53,7 +57,7 @@ export default function BreadCrumb( { crumbs } )
 					color='inherit'
 					key={ind}
 					underline='none' >
-						{ BREADCRUMB_maps_ICON[item] }
+						{ BREADCRUMB_maps_ICON.get(item) }
 						{ item }
 				</BreadCrumbItem>
 			)
@@ -65,7 +69,7 @@ export default function BreadCrumb( { crumbs } )
 				color='inherit'
 				href={NAME_maps_ROUTE[item]}
 				key={ind} >
-					{ BREADCRUMB_maps_ICON[item] }
+					{ BREADCRUMB_maps_ICON.get(item) }
 					{ item }
 			</BreadCrumbItem>
 		)
@@ -81,3 +85,5 @@ export default function BreadCrumb( { crumbs } )
 		</BreadCrumbsContent>
 	)
 }
+
+export default Breadcrumb
