@@ -22,7 +22,6 @@ const BreadCrumbsContent = styled(Box)`
 		display: flex;
 		margin-bottom: 1.5rem;
 		padding: 1rem;
-		background: rgba(195, 188, 242, .2);
 	}
 
 `
@@ -67,7 +66,7 @@ const Breadcrumb: FunctionComponent<BreadcrumbProps> = ( { crumbs }  ) =>
 			<BreadCrumbItem
 				variant='subtitle1'
 				color='inherit'
-				href={NAME_maps_ROUTE[item]}
+				// href={ NAME_maps_ROUTE[item] } --- fix me
 				key={ind} >
 					{ BREADCRUMB_maps_ICON.get(item) }
 					{ item }
