@@ -13,21 +13,8 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
 const BanDatesExpansionSummary = Styled(ExpansionPanelSummary)`
 	&&
 	{
-		@media only screen and (min-width: 0px)
-		{
-			padding-left: .85rem;
-			padding-right: .85rem;
-		}
-		@media only screen and (min-width: 600px)
-		{
-			padding-left: .95rem;
-			padding-right: .95rem;
-		}
-		@media only screen and (min-width: 800px)
-		{
-			padding-left: 1.25rem;
-			padding-right: 1.25rem;
-		}
+		padding-left: .9rem;
+		padding-right: .9rem;
 	}
 `
 
@@ -49,7 +36,7 @@ export const BanListDates = memo( ( { banListStartDates, setSelectedBanList } ) 
 		banListStartDates.forEach((item, ind) => {
 			banListGrid.push(<Grid key={ind} item xs={6} sm={4} md={12} lg={12} xl={6} >
 				<Button
-					style={{color: '#fff'}}
+					style={{color: '#fff', width: '88%', fontSize: '.7rem'}}
 					color={ (ind === selectedBanListIndex)? 'primary': 'secondary' }
 					size='small'
 					disableElevation={true}

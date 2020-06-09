@@ -46,7 +46,6 @@ const BanContentParent = Styled(Paper)`
 	&&
 	{
 		padding: .85rem;
-		margin-bottom: 1rem;
 		border-radius: .5rem;
 	}
 
@@ -172,7 +171,7 @@ export default function BanList(props)
 				}
 			</CardDialog>
 
-			<Grid container spacing={3} >
+			<Grid container spacing={1} style={{margin: 0, width: '100%'}} >
 
 			<Grid item xs={12} sm={12} md={3} lg={3} xl={3} >
 			<BanContentParent

@@ -87,7 +87,7 @@ export const TabbedView = memo( ( { numForbidden, numLimited, numSemiLimited, fo
 						value={currentTab}
 						onChange={(event, newValue) => { setCurrentTab(newValue)}}
 						centered
-						variant='standard' >
+						variant='fullWidth' >
 						{tabs}
 					</Tabs>
 				</AppBar>

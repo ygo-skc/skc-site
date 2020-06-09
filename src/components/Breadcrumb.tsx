@@ -20,7 +20,6 @@ const BreadCrumbsContent = styled(Box)`
 	&&
 	{
 		display: flex;
-		margin-bottom: 1.5rem;
 		padding: 1rem;
 	}
 
