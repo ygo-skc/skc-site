@@ -78,7 +78,7 @@ export const TabbedView = memo( ( { numForbidden, numLimited, numSemiLimited, fo
 		return (
 			<div style={{ marginLeft: '-.85rem', marginRight: '-.85rem' }}>
 				<AppBar
-					style={{boxShadow: 'none', background: 'rgba(0, 0, 0, .12)'}}
+					style={{boxShadow: 'none'}}
 					position='static'
 					color='transparent'
 				>

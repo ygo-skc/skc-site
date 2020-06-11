@@ -33,7 +33,7 @@ export default function Home()
 							Welcome Duelist
 						</CenteredText>
 
-						<Typography variant='h6' >
+						<Typography variant='body1' >
 							This is the Supreme Kings Castle. The Supreme King is the most formidable duelist you will ever meet. His castle has many secrets waiting to be explored.
 						</Typography>
 
@@ -43,10 +43,10 @@ export default function Home()
 							Content
 						</CenteredText>
 
-						<Typography variant='h6' >
+						<Typography variant='body1' >
 							There are <strong>986</strong> cards currently in the database. There are also <Link color='secondary' href='/ban_list'><strong>11</strong></Link> ban lists from the past 3 years to browse.
 						</Typography>
-						<Typography variant='h6' >
+						<Typography variant='body1' >
 							Yugioh is ever expanding and evolving. New products are continuously released and new ban lists established. As such this website will also  be continuously updated to accommodate.
 							Enjoy the website ad free with a fast and beautiful UI. There is no tracking and the only money we make is though donations. Want to become a patreon or learn more? Check out the <Link color='secondary' href='/ban_list'><strong>About</strong></Link> section
 						</Typography>
@@ -59,21 +59,21 @@ export default function Home()
 							Whats New?
 						</CenteredText>
 
-						<Typography variant='subtitle2' >
+						<Typography variant='body1' >
 							<strong>March 26, 2020:</strong> New ban list - content added for it.
 						</Typography>
-						<Typography variant='subtitle2' >
+						<Typography variant='body1' >
 							<strong>March 21, 2020:</strong> The Castle was cleaned up - navigating it is faster. The Database was updated to improve load times The Supreme King expects.
 						</Typography>
-						<Typography variant='subtitle2' >
+						<Typography variant='body1' >
 							<strong>January 20, 2020:</strong> New ban list - content added for it. The Castle got a slight change in looks.
 						</Typography>
-						<Typography variant='subtitle2'>
+						<Typography variant='body1'>
 							<strong>Dec 25, 2019:</strong> The Supreme King allows guests to The Castle.
 						</Typography>
 					</ChildPaper>
-					<CenteredText variant='subtitle2'>Copyright 2020</CenteredText>
-					<CenteredText variant='subtitle2'>Konami Digital Entertainment owns all rights to Yu-Gi-Oh!</CenteredText>
+					<CenteredText variant='body2' style={{color: 'rgb(101, 119, 134)'}} >Copyright 2020</CenteredText>
+					<CenteredText variant='body2' style={{color: 'rgb(101, 119, 134)'}} >Konami Digital Entertainment owns all rights to Yu-Gi-Oh!</CenteredText>
 				</Grid>
 			</Grid>
 		</MainContentContainer>

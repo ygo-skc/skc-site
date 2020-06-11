@@ -30,7 +30,7 @@ const BreadCrumbItem = styled(Link)`
 	{
 		display: flex;
 		font-weight: 600;
-		color: black;
+		color: rgb(101, 119, 134);
 	}
 `
 
@@ -51,7 +51,7 @@ const Breadcrumb: FunctionComponent<BreadcrumbProps> = ( { crumbs }  ) =>
 		{
 			return(
 				<BreadCrumbItem
-					variant='subtitle1'
+					variant='subtitle2'
 					color='inherit'
 					key={ind}
 					underline='none' >
@@ -63,7 +63,7 @@ const Breadcrumb: FunctionComponent<BreadcrumbProps> = ( { crumbs }  ) =>
 
 		return(
 			<BreadCrumbItem
-				variant='subtitle1'
+				variant='subtitle2'
 				color='inherit'
 				// href={ NAME_maps_ROUTE[item] } --- fix me
 				key={ind} >

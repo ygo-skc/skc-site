@@ -36,10 +36,8 @@ export const BanListSection = ( { sectionExplanation, sectionExplanationBackgrou
 		&&
 		{
 			margin-top: .75rem;
-			margin-bottom: 2.75rem;
-			padding: 1.4rem;
-			background: ${ sectionExplanationBackground };
-			color: black;
+			margin-bottom: 1.75rem;
+			color: #2b3239;
 		}
 	`
 
@@ -93,9 +91,9 @@ export const BanListSection = ( { sectionExplanation, sectionExplanationBackgrou
 					styled(Typography)`
 					&&
 					{
-						margin-bottom: 10px;
+						margin-bottom: 1rem;
 						text-transform: uppercase;
-						letter-spacing: .105rem;
+						letter-spacing: .25rem;
 						background: ${ cardSectionTextColors[cardColor.toLowerCase()] };
 						-webkit-background-clip: text;
 						-webkit-text-fill-color: transparent;
@@ -104,10 +102,10 @@ export const BanListSection = ( { sectionExplanation, sectionExplanationBackgrou
 				: styled(Typography)`
 						&&
 						{
-							margin-bottom: 10px;
+							margin-bottom: 1rem;
 							text-transform: uppercase;
 							color: ${ cardSectionTextColors[cardColor.toLowerCase()] };
-							letter-spacing: .105rem;
+							letter-spacing: .25rem;
 						}
 					`
 
@@ -116,7 +114,7 @@ export const BanListSection = ( { sectionExplanation, sectionExplanationBackgrou
 						<CardSectionText variant='subtitle1' >
 							{cardColor}
 						</CardSectionText>
-						<Grid container spacing={1} style={{marginBottom: '30px'}} >
+						<Grid container spacing={1} style={{marginBottom: '2.8rem'}} >
 							{ details }
 						</Grid>
 					</div>
@@ -134,7 +132,7 @@ export const BanListSection = ( { sectionExplanation, sectionExplanationBackgrou
 	return (
 		<div>
 			<CenteredContent>
-				<SectionInfoText variant='subtitle1' >
+				<SectionInfoText variant='subtitle2' >
 					{ sectionExplanation }
 				</SectionInfoText>
 			</CenteredContent>

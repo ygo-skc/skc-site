@@ -45,8 +45,8 @@ const theme = createMuiTheme({
 	typography: {
 		button: {
 			fontFamily: 'Nunito',
-			lineHeight: '1.1rem',
-			fontSize: '.85rem',
+			lineHeight: '1.3rem',
+			fontSize: '1.1rem',
 		},
 		h4: {
 			fontFamily: 'Nunito',
@@ -54,7 +54,7 @@ const theme = createMuiTheme({
 			color: '#543fda',
 			lineHeight: '1.35rem',
 			marginBottom: '.75rem',
-			fontSize: '1.3rem',
+			fontSize: '1.4rem',
 		},
 		h5: {
 			fontFamily: 'Nunito',
@@ -62,7 +62,7 @@ const theme = createMuiTheme({
 			lineHeight: '1.3rem',
 			marginBottom: '.5rem',
 			color: '#404040',
-			fontSize: '1.05rem'
+			fontSize: '1.35rem'
 		},
 		h6: {
 			fontFamily: 'OpenSans',
@@ -70,37 +70,37 @@ const theme = createMuiTheme({
 			lineHeight: '1.3rem',
 			marginBottom: '.45rem',
 			color: '#383838',
-			fontSize: '.98rem',
+			fontSize: '1.3rem',
 		},
 		subtitle1: {
 			fontFamily: 'OpenSans',
 			fontWeight: 600,
-			lineHeight: '1.15rem',
+			lineHeight: '1.35rem',
 			marginBottom: '.25rem',
 			color: '#2b2a2a',
-			fontSize: '.88rem',
+			fontSize: '1.25rem',
 		},
 		subtitle2: {
 			fontFamily: 'OpenSans',
 			fontWeight: 500,
-			lineHeight: '1.15rem',
+			lineHeight: '1.35rem',
 			marginBottom: '.25rem',
 			color: '#2b2a2a',
-			fontSize: '.85rem',
+			fontSize: '1.2rem',
 		},
 		body1: {
 			fontFamily: 'OpenSans',
 			fontWeight: 500,
-			lineHeight: '1.15rem',
+			lineHeight: '1.35rem',
 			color: 'black',
-			fontSize: '.82rem',
+			fontSize: '1.12rem',
 		},
 		body2: {
 			fontFamily: 'OpenSans',
 			fontWeight: 500,
-			lineHeight: '1rem',
+			lineHeight: '1.35rem',
 			color: 'black',
-			fontSize: '.75rem',
+			fontSize: '.96rem',
 		},
 	}
 })

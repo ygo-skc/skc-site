@@ -117,7 +117,7 @@ export default function CardDetail( { isNew, cardName, cardColor, cardEffect, mo
 			<YGOCard onClick={ cardClickedCallBack } >
 				<CardContentComponent >
 					<CardNameComponent
-						variant='body1'
+						variant='body2'
 						noWrap={true} >
 							{ cardName }
 					</CardNameComponent>
@@ -126,14 +126,14 @@ export default function CardDetail( { isNew, cardName, cardColor, cardEffect, mo
 							( cardColor === 'Spell' || cardColor === 'Trap' ) ?
 								undefined :
 								<MonsterTypeComponent
-									variant='body1'
+									variant='body2'
 									noWrap={true} >
 										[ { monsterType } ]
 								</MonsterTypeComponent>
 						}
 
 						<CardEffectComponent
-							variant='body1' >
+							variant='body2' >
 								{ he.decode(cardEffect) }
 						</CardEffectComponent>
 
