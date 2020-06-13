@@ -1,10 +1,12 @@
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import { Typography, Grid, Link } from '@material-ui/core'
 import { MainContentContainer, ChildPaper } from './MainContent'
 import Breadcrumb from './Breadcrumb'
+import { handleFetch } from '../helper/FetchHandler'
+import NAME_maps_ENDPOINT from '../helper/YgoApiEndpoints'
 
 
 const HomeContent = styled.div`
@@ -20,8 +22,23 @@ const CenteredText = styled(Typography)`
 	text-align: center;
 `
 
-export default function Home()
+export default function Home( {history} )
 {
+	useEffect( () => {
+		console.log("yooo")
+		handleFetch(NAME_maps_ENDPOINT['databaseStats'], history, (json) => {
+			setCardTotal(json.cardTotal)
+			setBanListTotal(json.banListTotal)
+			setProductTotal(json.productTotal)
+		})
+	}, [])
+
+
+	const [cardTotal, setCardTotal] = useState(0)
+	const [banListTotal, setBanListTotal] = useState(0)
+	const [productTotal, setProductTotal] = useState(0)
+
+
 	return (
 		<MainContentContainer>
 			<Breadcrumb crumbs={['Home']} />
@@ -37,14 +54,14 @@ export default function Home()
 							This is the Supreme Kings Castle. The Supreme King is the most formidable duelist you will ever meet. His castle has many secrets waiting to be explored.
 						</Typography>
 
-						<br /><br />
+						<br /><br /><br />
 
 						<CenteredText variant='h4' >
 							Content
 						</CenteredText>
 
 						<Typography variant='body1' >
-							There are <strong>986</strong> cards currently in the database. There are also <Link color='secondary' href='/ban_list'><strong>11</strong></Link> ban lists from the past 3 years to browse.
+							There are <strong>{ cardTotal }</strong> cards currently in the database. There are also <Link color='secondary' href='/ban_list'><strong>{ banListTotal }</strong></Link> ban lists from the past 3 years to browse.
 						</Typography>
 						<Typography variant='body1' >
 							Yugioh is ever expanding and evolving. New products are continuously released and new ban lists established. As such this website will also  be continuously updated to accommodate.
@@ -60,16 +77,16 @@ export default function Home()
 						</CenteredText>
 
 						<Typography variant='body1' >
-							<strong>March 26, 2020:</strong> New ban list - content added for it.
+							<Typography variant='inherit' style={{ color: '#2b3239' }} ><strong>March 26, 2020:</strong></Typography> New ban list - content added for it.
 						</Typography>
 						<Typography variant='body1' >
-							<strong>March 21, 2020:</strong> The Castle was cleaned up - navigating it is faster. The Database was updated to improve load times The Supreme King expects.
+							<Typography variant='inherit' style={{ color: '#2b3239' }} ><strong>March 21, 2020:</strong></Typography> The Castle was cleaned up - navigating it is faster. The Database was updated to improve load times The Supreme King expects.
 						</Typography>
 						<Typography variant='body1' >
-							<strong>January 20, 2020:</strong> New ban list - content added for it. The Castle got a slight change in looks.
+							<Typography variant='inherit' style={{ color: '#2b3239' }} ><strong>January 20, 2020:</strong></Typography> New ban list - content added for it. The Castle got a slight change in looks.
 						</Typography>
 						<Typography variant='body1'>
-							<strong>Dec 25, 2019:</strong> The Supreme King allows guests to The Castle.
+							<Typography variant='inherit' style={{ color: '#2b3239' }} ><strong>Dec 25, 2019:</strong></Typography> The Supreme King allows guests to The Castle.
 						</Typography>
 					</ChildPaper>
 					<CenteredText variant='body2' style={{color: 'rgb(101, 119, 134)'}} >Copyright 2020</CenteredText>
