@@ -51,6 +51,11 @@ export default function CardDetail( { isNew, cardName, cardColor, cardEffect, mo
 			{
 				width: 100%;
 				cursor: ${curser};
+
+				:hover
+				{
+					transform: scale(1.06);
+				}
 			}
 		`, [ curser ]
 	)
