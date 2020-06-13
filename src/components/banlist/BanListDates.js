@@ -19,10 +19,6 @@ const BanDatesExpansionSummary = Styled(ExpansionPanelSummary)`
 `
 
 const BanDatesExpansionDetail = Styled(ExpansionPanelDetails)`
-	&&
-	{
-		padding:
-	}
 `
 
 export const BanListDates = memo( ( { banListStartDates, setSelectedBanList } ) =>
@@ -36,10 +32,11 @@ export const BanListDates = memo( ( { banListStartDates, setSelectedBanList } ) 
 		banListStartDates.forEach((item, ind) => {
 			banListGrid.push(<Grid key={ind} item xs={6} sm={4} md={12} lg={12} xl={6} >
 				<Button
-					style={{color: '#fff', width: '88%', fontSize: '.7rem'}}
+					style={{color: '#fff', width: '88%', fontSize: '.95rem'}}
 					color={ (ind === selectedBanListIndex)? 'primary': 'secondary' }
 					size='small'
-					disableElevation={true}
+
+					disableElevation={false}
 					variant='contained'
 					startIcon={<DateRangeRoundedIcon />}
 					onClick={ () => {
