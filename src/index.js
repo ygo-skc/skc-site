@@ -10,11 +10,11 @@ import './index.css'
 const theme = createMuiTheme({
 	palette: {
 		primary: {
-			main: '#241776',
+			main: '#53539e',
 			contrastDefaultColor: 'light'
 		},
 		secondary: {
-			main: '#f27d0c',
+			main: '#c6694b',
 			contrastDefaultColor: 'light'
 		}
 	},
@@ -52,14 +52,14 @@ const theme = createMuiTheme({
 			fontFamily: 'Nunito',
 			fontWeight: 600,
 			color: '#543fda',
-			lineHeight: '1.35rem',
+			lineHeight: '1.52rem',
 			marginBottom: '.75rem',
 			fontSize: '1.4rem',
 		},
 		h5: {
 			fontFamily: 'Nunito',
 			fontWeight: 800,
-			lineHeight: '1.3rem',
+			lineHeight: '1.52rem',
 			marginBottom: '.5rem',
 			color: '#404040',
 			fontSize: '1.35rem'
@@ -67,7 +67,7 @@ const theme = createMuiTheme({
 		h6: {
 			fontFamily: 'OpenSans',
 			fontWeight: 500,
-			lineHeight: '1.3rem',
+			lineHeight: '1.52rem',
 			marginBottom: '.45rem',
 			color: '#383838',
 			fontSize: '1.3rem',
@@ -75,7 +75,7 @@ const theme = createMuiTheme({
 		subtitle1: {
 			fontFamily: 'OpenSans',
 			fontWeight: 600,
-			lineHeight: '1.35rem',
+			lineHeight: '1.52rem',
 			marginBottom: '.25rem',
 			color: '#2b2a2a',
 			fontSize: '1.25rem',
@@ -83,7 +83,7 @@ const theme = createMuiTheme({
 		subtitle2: {
 			fontFamily: 'OpenSans',
 			fontWeight: 500,
-			lineHeight: '1.35rem',
+			lineHeight: '1.52rem',
 			marginBottom: '.25rem',
 			color: '#2b2a2a',
 			fontSize: '1.2rem',
@@ -91,14 +91,14 @@ const theme = createMuiTheme({
 		body1: {
 			fontFamily: 'OpenSans',
 			fontWeight: 500,
-			lineHeight: '1.35rem',
+			lineHeight: '1.52rem',
 			color: 'black',
 			fontSize: '1.12rem',
 		},
 		body2: {
 			fontFamily: 'OpenSans',
 			fontWeight: 500,
-			lineHeight: '1.35rem',
+			lineHeight: '1.52rem',
 			color: 'black',
 			fontSize: '.96rem',
 		},

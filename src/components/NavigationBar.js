@@ -15,7 +15,7 @@ export default function NavigationBar()
 
 			:hover
 			{
-				background: #7E3390;
+				background: #5c5ca9;
 			}
 		}
 	`
