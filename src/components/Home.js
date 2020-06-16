@@ -25,10 +25,11 @@ const CenteredText = styled(Typography)`
 export default function Home( {history} )
 {
 	useEffect( () => {
-		console.log("yooo")
 		handleFetch(NAME_maps_ENDPOINT['databaseStats'], history, (json) => {
+			console.log(json)
 			setCardTotal(json.cardTotal)
 			setBanListTotal(json.banListTotal)
+			setYearsOfBanListCoverage(json.yearsOfBanListCoverage)
 			setProductTotal(json.productTotal)
 		})
 	}, [])
@@ -36,6 +37,7 @@ export default function Home( {history} )
 
 	const [cardTotal, setCardTotal] = useState(0)
 	const [banListTotal, setBanListTotal] = useState(0)
+	const [yearsOfBanListCoverage, setYearsOfBanListCoverage] = useState(0)
 	const [productTotal, setProductTotal] = useState(0)
 
 
@@ -61,8 +63,9 @@ export default function Home( {history} )
 						</CenteredText>
 
 						<Typography variant='body1' >
-							There are <strong>{ cardTotal }</strong> cards currently in the database. There are also <Link color='secondary' href='/ban_list'><strong>{ banListTotal }</strong></Link> ban lists from the past 3 years to browse.
+							Currently there are <strong>{ cardTotal }</strong> cards, <Link color='secondary' href='/ban_list'><strong>{ banListTotal }</strong></Link> ban lists from the past <strong>{ yearsOfBanListCoverage }</strong> and information about <strong>{ productTotal }</strong> card products.
 						</Typography>
+						<br />
 						<Typography variant='body1' >
 							Yugioh is ever expanding and evolving. New products are continuously released and new ban lists established. As such this website will also  be continuously updated to accommodate.
 							Enjoy the website ad free with a fast and beautiful UI. There is no tracking and the only money we make is though donations. Want to become a patreon or learn more? Check out the <Link color='secondary' href='/ban_list'><strong>About</strong></Link> section
