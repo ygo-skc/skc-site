@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import SuspenseFallback from './SuspenseFallback'
 
+import { Card } from './components/card/Card'
+
 const Home = lazy( () => import('./components/Home') )
 const BanList = lazy( () => import('./components/banlist/BanList') )
 const About = lazy( () => import( './components/about/About') )
@@ -14,6 +16,7 @@ const NAME_maps_ROUTE =
 	'Home': '/',
 	'BanList': '/ban_list',
 	'About': '/about',
+	'Card': '/card/:cardId',
 
 	400: '/bad_request',
 	500: '/server_err',
@@ -37,6 +40,10 @@ export default function Routes()
 						path={NAME_maps_ROUTE.BanList}
 						exact
 						component={BanList} />
+					<Route
+						path={NAME_maps_ROUTE.Card}
+						exact
+						component={Card} />
 					<Route
 						path={NAME_maps_ROUTE.About}
 						exact
