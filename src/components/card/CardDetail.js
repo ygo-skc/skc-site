@@ -3,13 +3,6 @@ import he from 'he'
 import { Typography, Box, Card, CardContent, Badge  } from '@material-ui/core'
 import styled from 'styled-components';
 
-const MonsterTypeComponent = styled(Typography)`
-	&&
-	{
-		font-weight: 600;
-		margin-bottom: .28rem;
-	}
-`
 
 const MonsterAtkDefComponent = styled(Typography)`
 	&&
@@ -41,55 +34,54 @@ const CardBadge = styled(Badge)`
 
 export default function CardDetail( { isNew, cardName, cardColor, cardEffect, monsterType, monsterAtk, monsterDef, cardClicked, cardStyles, cardID, fullDetails } )
 {
+
+	if (cardEffect === undefined || cardColor === undefined)	return(null)
+
 	const cardColorLowerCase = cardColor.toLowerCase()
 	const cardClickedCallBack = (cardClicked) ? function () { cardClicked(cardID) } : undefined
 	const curser = (cardClickedCallBack === undefined) ? '' : 'pointer'
 
 
-	const YGOCard = useMemo( () => styled(Card)`
-			&&
-			{
-				width: 100%;
-				cursor: ${curser};
+	const YGOCard = styled(Card)`
+		&&
+		{
+			width: 100%;
+			cursor: ${curser};
 
-				:hover
-				{
-					transform: scale(1.06);
-				}
-			}
-		`, [ curser ]
-	)
+			// :hover
+			// {
+			// 	transform: scale(1.03);
+			// }
+		}
+	`
 
-	const CardContentComponent = useMemo( () => styled(CardContent)`
-			&&&
-			{
-				padding: .375rem;
-				background: ${cardStyles[ `${cardColorLowerCase}Background` ]};
-			}
-		`, [ cardStyles, cardColorLowerCase ]
-	)
+	const CardContentComponent = styled(CardContent)`
+		&&&
+		{
+			padding: .375rem;
+			background: ${cardStyles[ `${cardColorLowerCase}Background` ]};
+		}
+	`
 
-	const CardNameComponent = useMemo( () => styled(Typography)`
-			&& {
-				font-weight: 600;
-				margin-bottom: .18rem;
-				text-transform: uppercase;
-				color: ${cardStyles[ `${cardColorLowerCase}Color` ]};
-				font-family: Nunito;
-			},
-		`, [ cardStyles, cardColorLowerCase ]
-	)
+	const CardNameComponent = styled(Typography)`
+		&& {
+			font-weight: 600;
+			margin-bottom: .18rem;
+			text-transform: uppercase;
+			color: ${cardStyles[ `${cardColorLowerCase}Color` ]};
+			font-family: Nunito;
+		},
+	`
 
-	const CardDescriptionComponent = useMemo( () => styled(Box)`
-				&&
-				{
-					padding: .445rem;
-					background: ${cardStyles[ `${cardColorLowerCase}SummaryBackground` ]};
-				}
-			`, [ cardStyles, cardColorLowerCase ]
-	)
+	const CardDescriptionComponent = styled(Box)`
+		&&
+		{
+			padding: .445rem;
+			background: ${cardStyles[ `${cardColorLowerCase}SummaryBackground` ]};
+		}
+	`
 
-	const CardEffectComponent = useMemo( () => (fullDetails) ?
+	const CardEffectComponent = (fullDetails) ?
 		styled(Typography)`
 			&&
 			{
@@ -107,9 +99,17 @@ export default function CardDetail( { isNew, cardName, cardColor, cardEffect, mo
 				overflow: hidden;
 				color: ${cardStyles[ `${cardColorLowerCase}SummaryColor` ]};
 			}
-		`,[ cardStyles, cardColorLowerCase ]
-	)
+		`
 
+
+	const MonsterTypeComponent = styled(Typography)`
+		&&
+		{
+			font-weight: 600;
+			margin-bottom: .28rem;
+			color: ${cardStyles[ `${cardColorLowerCase}SummaryColor` ]};
+		}
+	`
 
 
 	return (

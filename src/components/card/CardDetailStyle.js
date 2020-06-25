@@ -69,10 +69,10 @@ const cardStyles = {
 	trapSummaryBackground: pink[400],
 	trapSummaryColor: lightTextColor,
 
-	errBackground: `linear-gradient(45deg, ${red[500]} 30%, ${red[600]} 90%)`,
+	errBackground: '#7B3944',
 	errColor: lightTextColor,
-	errSummaryBackground: red['100'],
-	errSummaryColor: darkTextColor,
+	errSummaryBackground: '#C9573E',
+	errSummaryColor: lightTextColor,
 }
 
 export default cardStyles
