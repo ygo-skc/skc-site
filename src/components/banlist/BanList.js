@@ -1,5 +1,6 @@
 import React, { lazy, Suspense, useState, useEffect, useMemo } from 'react'
 import Styled from 'styled-components'
+import throttle from 'lodash/throttle'
 
 import { Dialog, Paper, Grid } from '@material-ui/core'
 
@@ -108,7 +109,7 @@ export default function BanList(props)
 			setIsFetchingBanList(true)
 			setIsFetchingNewCards(true)
 
-			handleFetch(`${NAME_maps_ENDPOINT['banListInstanceUrl']}${selectedBanList}?saveBandwidth=true`, props.history, (resultJson) => {
+			handleFetch(`${NAME_maps_ENDPOINT['banListInstanceUrl']}/${selectedBanList}?saveBandwidth=true`, props.history, (resultJson) => {
 				setForbidden( resultJson.bannedCards.forbidden )
 				setLimited( resultJson.bannedCards.limited )
 				setSemiLimited( resultJson.bannedCards.semiLimited )
@@ -145,7 +146,6 @@ export default function BanList(props)
 	}, [showingCardDetail])
 
 
-
 	return (
 		<MainContentContainer >
 			<BreadCrumb crumbs={['Home', 'Ban List']} />
@@ -173,7 +173,7 @@ export default function BanList(props)
 
 			<Grid container spacing={1} style={{margin: 0, width: '100%'}} >
 
-			<Grid item xs={12} sm={12} md={3} lg={3} xl={3} >
+			<Grid item xs={12} sm={12} md={3} lg={2} xl={2} >
 			<BanContentParent
 				style={ (isSettingUpDates)? {display: 'none'}: {display: 'block' }  } >
 
@@ -183,6 +183,12 @@ export default function BanList(props)
 					banListStartDates={banListStartDates}
 					setSelectedBanList={ (ind) => setSelectedBanList(banListStartDates[ind]) } />}
 
+			</BanContentParent>
+
+			<br />
+
+			<BanContentParent
+				style={ (isSettingUpDates)? {display: 'none'}: {display: 'block' }  } >
 				<BanListStats
 					totalCardsInSelectedList={numForbidden + numLimited + numSemiLimited}
 					selectedBanList={selectedBanList}
@@ -198,10 +204,11 @@ export default function BanList(props)
 					cardClicked={ (cardID) => setChosenCardID(cardID) }
 				/>
 			</BanContentParent>
+
 			</Grid>
 
 
-			<Grid item xs={12} sm={12} md={9} lg={9} xl={9} >
+			<Grid item xs={12} sm={12} md={9} lg={10} xl={10} >
 				{/* <BanListTable
 					isDataLoaded={ isDataLoaded }
 					bannedContent={ forbidden }
@@ -295,13 +302,13 @@ export default function BanList(props)
 
 	function handleFetchCardInfo(cardId, callback)
 	{
-		handleFetch(`${NAME_maps_ENDPOINT['cardInstanceUrl']}${cardId}`, props.history, callback)
+		handleFetch(`${NAME_maps_ENDPOINT['cardInstanceUrl']}/${cardId}`, props.history, callback)
 	}
 
 
 	function fetchRemovedCards()
 	{
-		const url = `${NAME_maps_ENDPOINT.removedCardsInBanList}${selectedBanList}`
+		const url = `${NAME_maps_ENDPOINT.removedCardsInBanList}/${selectedBanList}`
 		fetch(url)
 		.then( (res) => {
 			if (res.status === 200)	return res.json()
@@ -321,7 +328,7 @@ export default function BanList(props)
 	function fetchNewCards()
 	{
 		setIsFetchingNewCards(true)
-		const url = `${NAME_maps_ENDPOINT.newCardsInBanList}${selectedBanList}`
+		const url = `${NAME_maps_ENDPOINT.newCardsInBanList}/${selectedBanList}`
 
 		fetch(url)
 		.then(res => {
