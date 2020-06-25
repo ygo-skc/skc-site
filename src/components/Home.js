@@ -1,8 +1,10 @@
 
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import throttle from 'lodash/throttle'
 
-import { Typography, Grid, Link } from '@material-ui/core'
+import { Typography, Grid, Link, TextField, Divider, Badge } from '@material-ui/core'
+import Autocomplete from '@material-ui/lab/Autocomplete'
 import { MainContentContainer, ChildPaper } from './MainContent'
 import Breadcrumb from './Breadcrumb'
 import { handleFetch } from '../helper/FetchHandler'
@@ -21,6 +23,7 @@ const HomeContent = styled.div`
 const CenteredText = styled(Typography)`
 	text-align: center;
 `
+
 
 export default function Home( {history} )
 {
@@ -41,9 +44,77 @@ export default function Home( {history} )
 	const [productTotal, setProductTotal] = useState(0)
 
 
+	const [searchInput, setSearchInput] = useState('')
+	const [searchOptions, setSearchOptions] = useState([])
+
+	const searchThrottle = throttle( () => {
+		handleFetch(`${NAME_maps_ENDPOINT['search']}?limit=12&cName=${searchInput}`, history, json => { setSearchOptions(json) })
+	}, 10000)
+
+
+	useEffect( () => {
+		if (searchInput === '' || searchInput === null || searchInput === undefined)
+		{
+			setSearchOptions([])
+			return
+		}
+
+		searchThrottle()
+	}
+	, [searchInput])
+
+
 	return (
 		<MainContentContainer>
 			<Breadcrumb crumbs={['Home']} />
+
+			<CenteredText style={{background: '#53539e', width: '100%', height: '100px', justifyContent: 'center', display: 'flex', justifyContent: 'center', alignItems: 'center'}} >
+				<Autocomplete
+					id='search'
+					noOptionsText={ (searchInput === '')? 'Type For Suggestions' : 'No Results' }
+					getOptionLabel={ option => option.cardName }
+					options={searchOptions}
+					autoComplete
+					includeInputInList
+					groupBy={ option => option.cardColor }
+					freeSolo
+					disableCloseOnSelect
+					getOptionSelected={ (option, value) => window.location.assign(`/card/${value.cardID}`) }
+					renderGroup={ option => {
+						return(
+							<div style={{margin: '1rem'}} >
+								<Badge color='secondary' variant='dot'>
+									<Typography variant='subtitle2'>{option.group}</Typography>
+								</Badge>
+								<Divider />
+								{option.children}
+							</div>
+						)
+					}}
+					renderInput={ (params) => (
+						<TextField
+							{...params}
+							style={{ minWidth: '70%', minWidth: '400px', background: 'rgba(255, 255, 255, .3)' }}
+							label={null}
+							placeholder='Search...'
+							variant='filled'
+							fullWidth={false}
+							onChange={ event => {setSearchInput(event.target.value)} }
+							/>
+					)}
+					renderOption={ option => {
+						return(
+							<div>
+								<Typography variant='body1'>{option.cardName}</Typography>
+								<Typography variant='body2' style={{marginLeft: '.5rem', color: 'rgb(101,119,134)'}} >{option.monsterType}</Typography>
+							</div>
+						)
+					}}
+				/>
+			</CenteredText>
+
+			<br /><br /><br />
+
 
 			<Grid container spacing={2} >
 				<Grid item xs={12} sm={12} md={7} lg={8} xl={9} >
@@ -63,7 +134,7 @@ export default function Home( {history} )
 						</CenteredText>
 
 						<Typography variant='body1' >
-							Currently there are <strong>{ cardTotal }</strong> cards, <Link color='secondary' href='/ban_list'><strong>{ banListTotal }</strong></Link> ban lists from the past <strong>{ yearsOfBanListCoverage }</strong> and information about <strong>{ productTotal }</strong> card products.
+							Currently there are <strong>{ cardTotal } cards</strong>, <Link color='secondary' href='/ban_list'><strong>{ banListTotal } ban lists</strong></Link> from the past <strong>{ yearsOfBanListCoverage }</strong> years and information about <strong>{ productTotal }</strong> products.
 						</Typography>
 						<br />
 						<Typography variant='body1' >
