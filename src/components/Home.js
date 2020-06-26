@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import throttle from 'lodash/throttle'
+import { throttle } from 'underscore'
 
 import { Typography, Grid, Link, TextField, Divider, Badge } from '@material-ui/core'
 import Autocomplete from '@material-ui/lab/Autocomplete'
@@ -23,6 +23,11 @@ const HomeContent = styled.div`
 const CenteredText = styled(Typography)`
 	text-align: center;
 `
+
+
+const searchThrottle = throttle( (searchSubject, setSearchOptions, history) => {
+	handleFetch(`${NAME_maps_ENDPOINT['search']}?limit=12&cName=${searchSubject}`, history, json => { setSearchOptions(json) })
+}, 100)
 
 
 export default function Home( {history} )
@@ -47,19 +52,11 @@ export default function Home( {history} )
 	const [searchInput, setSearchInput] = useState('')
 	const [searchOptions, setSearchOptions] = useState([])
 
-	const searchThrottle = throttle( () => {
-		handleFetch(`${NAME_maps_ENDPOINT['search']}?limit=12&cName=${searchInput}`, history, json => { setSearchOptions(json) })
-	}, 10000)
 
 
 	useEffect( () => {
-		if (searchInput === '' || searchInput === null || searchInput === undefined)
-		{
-			setSearchOptions([])
-			return
-		}
-
-		searchThrottle()
+		if (searchInput !== '' || searchInput !== null || searchInput !== undefined)	searchThrottle(searchInput, setSearchOptions, history)
+		else setSearchOptions([])
 	}
 	, [searchInput])
 
@@ -71,6 +68,7 @@ export default function Home( {history} )
 			<CenteredText style={{background: '#53539e', width: '100%', height: '100px', justifyContent: 'center', display: 'flex', justifyContent: 'center', alignItems: 'center'}} >
 				<Autocomplete
 					id='search'
+					style={{ minWidth: '70%', background: 'rgba(255, 255, 255, .3)' }}
 					noOptionsText={ (searchInput === '')? 'Type For Suggestions' : 'No Results' }
 					getOptionLabel={ option => option.cardName }
 					options={searchOptions}
@@ -83,9 +81,7 @@ export default function Home( {history} )
 					renderGroup={ option => {
 						return(
 							<div style={{margin: '1rem'}} >
-								<Badge color='secondary' variant='dot'>
-									<Typography variant='subtitle2'>{option.group}</Typography>
-								</Badge>
+								<Typography variant='subtitle2'>{option.group}</Typography>
 								<Divider />
 								{option.children}
 							</div>
@@ -94,7 +90,7 @@ export default function Home( {history} )
 					renderInput={ (params) => (
 						<TextField
 							{...params}
-							style={{ minWidth: '70%', minWidth: '400px', background: 'rgba(255, 255, 255, .3)' }}
+							style={{ minWidth: '100%', background: 'rgba(255, 255, 255, .3)' }}
 							label={null}
 							placeholder='Search...'
 							variant='filled'
