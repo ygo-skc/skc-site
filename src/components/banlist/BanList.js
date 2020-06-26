@@ -69,7 +69,6 @@ export default function BanList(props)
 
 	const [isSettingUpDates, setIsSettingUpDates] = useState(true)
 	const [isFetchingBanList, setIsFetchingBanList] = useState(true)
-	const [isFetchingNewCards, setIsFetchingNewCards] = useState(true)
 	const [isDataLoaded, setIsDataLoaded] = useState(false)
 
 	const [showingCardDetail, setShowingCardDetail] = useState(false)
@@ -97,9 +96,9 @@ export default function BanList(props)
 
 
 	useEffect( () => {
-		if ( !isFetchingBanList && !isFetchingNewCards )	setIsDataLoaded(true)
+		if ( !isFetchingBanList )	setIsDataLoaded(true)
 		else	setIsDataLoaded(false)
-	}, [isFetchingBanList, isFetchingNewCards])
+	}, [isFetchingBanList])
 
 
 	useEffect(() => {
@@ -107,22 +106,32 @@ export default function BanList(props)
 		{
 			setIsSettingUpDates(false)
 			setIsFetchingBanList(true)
-			setIsFetchingNewCards(true)
 
-			handleFetch(`${NAME_maps_ENDPOINT['banListInstanceUrl']}/${selectedBanList}?saveBandwidth=true`, props.history, (resultJson) => {
-				setForbidden( resultJson.bannedCards.forbidden )
-				setLimited( resultJson.bannedCards.limited )
-				setSemiLimited( resultJson.bannedCards.semiLimited )
+			handleFetch(`${NAME_maps_ENDPOINT['banListInstanceUrl']}/${selectedBanList}?saveBandwidth=true&allInfo=true`, props.history, (resultJson) => {
 
-				setNumForbidden( resultJson.bannedCards.numForbidden )
-				setNumLimited( resultJson.bannedCards.numLimited )
-				setNumSemiLimited( resultJson.bannedCards.numSemiLimited )
+				setForbidden( resultJson.banListInstance.forbidden )
+				setLimited( resultJson.banListInstance.limited )
+				setSemiLimited( resultJson.banListInstance.semiLimited )
+
+				setNumForbidden( resultJson.banListInstance.numForbidden )
+				setNumLimited( resultJson.banListInstance.numLimited )
+				setNumSemiLimited( resultJson.banListInstance.numSemiLimited )
+
+				// Removed cards compared to previous ban list
+				setRemovedCards(resultJson.banListInstance.removedContent.removedCards)
+				setNumRemoved(resultJson.banListInstance.removedContent.numRemoved)
+
+				// Newly added cads compared to previous ban list
+				setNewForbiddenCards(resultJson.banListInstance.newContent.newCards.forbidden)
+				setNewLimitedCards(resultJson.banListInstance.newContent.newCards.limited)
+				setNewSemiLimitedCards(resultJson.banListInstance.newContent.newCards.semiLimited)
+
+				setNumNewForbidden(resultJson.banListInstance.newContent.newCards.numForbidden)
+				setNumNewLimited(resultJson.banListInstance.newContent.newCards.numLimited)
+				setNumNewSemiLimited(resultJson.banListInstance.newContent.newCards.numSemiLimited)
 
 				setIsFetchingBanList(false)
 			})
-
-			fetchNewCards()
-			fetchRemovedCards()
 
 		}
 		// eslint-disable-next-line
@@ -303,57 +312,5 @@ export default function BanList(props)
 	function handleFetchCardInfo(cardId, callback)
 	{
 		handleFetch(`${NAME_maps_ENDPOINT['cardInstanceUrl']}/${cardId}`, props.history, callback)
-	}
-
-
-	function fetchRemovedCards()
-	{
-		const url = `${NAME_maps_ENDPOINT.removedCardsInBanList}/${selectedBanList}`
-		fetch(url)
-		.then( (res) => {
-			if (res.status === 200)	return res.json()
-			else if (res.status === 204)	return null
-			else	throw new Error()
-		})
-		.then(json => {
-			if (json != null)
-			{
-				setRemovedCards(json.removedCards)
-				setNumRemoved(json.numRemoved)
-			}
-		})
-	}
-
-
-	function fetchNewCards()
-	{
-		setIsFetchingNewCards(true)
-		const url = `${NAME_maps_ENDPOINT.newCardsInBanList}/${selectedBanList}`
-
-		fetch(url)
-		.then(res => {
-			if (res.status === 200)	return res.json()
-			else if (res.status === 204)	return null
-			else	throw new Error()
-		})
-		.then(json => {
-			if (json == null)
-			{
-				setNewForbiddenCards([])
-				setNewLimitedCards([])
-				setNewSemiLimitedCards([])
-			}
-			else
-			{
-				setNewForbiddenCards(json.newCards.forbidden)
-				setNewLimitedCards(json.newCards.limited)
-				setNewSemiLimitedCards(json.newCards.semiLimited)
-
-				setNumNewForbidden(json.newCards.numForbidden)
-				setNumNewLimited(json.newCards.numLimited)
-				setNumNewSemiLimited(json.newCards.numSemiLimited)
-			}
-			setIsFetchingNewCards(false)
-		})
 	}
 }
