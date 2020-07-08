@@ -20,9 +20,14 @@ const theme = createMuiTheme({
 	},
 	overrides: {
 		'MuiChip': {
-			label: {
+			root: {
+				marginRight: '.85rem',
+				marginTop: '.5rem'
+			}
+			, label: {
+				fontFamily: 'Nunito',
 				fontWeight: 500,
-				fontSize: '.81rem'
+				fontSize: '.97rem'
 			}
 		},
 		'MuiTableCell': {
@@ -93,20 +98,20 @@ const theme = createMuiTheme({
 			fontWeight: 500,
 			lineHeight: '1.52rem',
 			color: 'black',
-			fontSize: '1.12rem',
+			fontSize: '1.1rem',
 		},
 		body2: {
 			fontFamily: 'OpenSans',
 			fontWeight: 500,
 			lineHeight: '1.52rem',
 			color: 'black',
-			fontSize: '.96rem',
+			fontSize: '1rem',
 		},
 	}
 })
 
 render(
-	<div>
+	<div style={{ display: 'flex', flexFlow: 'column', height: '100%' }} >
 		<ThemeProvider
 			theme={ theme } >
 			<NavigationBar />
