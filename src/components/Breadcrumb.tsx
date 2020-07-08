@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react'
 
 import {Breadcrumbs, Link, Box} from '@material-ui/core'
+import { Skeleton } from '@material-ui/lab'
 
 import HomeIcon from '@material-ui/icons/Home'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
@@ -50,14 +51,19 @@ const Breadcrumb: FunctionComponent<BreadcrumbProps> = ( { crumbs }  ) =>
 		if ((ind === crumbs.length - 1))
 		{
 			return(
-				<BreadCrumbItem
-					variant='subtitle2'
-					color='inherit'
-					key={ind}
-					underline='none' >
-						{ BREADCRUMB_maps_ICON.get(item) }
-						{ item }
-				</BreadCrumbItem>
+				(item === '') ?
+					<Skeleton
+						variant='text'
+						width={ 150 }
+					/>
+					: <BreadCrumbItem
+						variant='subtitle2'
+						color='inherit'
+						key={ind}
+						underline='none' >
+							{ BREADCRUMB_maps_ICON.get(item) }
+							{ item }
+					</BreadCrumbItem>
 			)
 		}
 
