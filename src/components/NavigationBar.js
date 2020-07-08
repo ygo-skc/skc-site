@@ -31,6 +31,7 @@ export default function NavigationBar()
 						Supreme Kings Castle
 					</NavigationButton>
 				</Link>
+
 				<Link
 					underline='none'
 					color='inherit'
@@ -39,6 +40,16 @@ export default function NavigationBar()
 						Ban List
 					</NavigationButton>
 				</Link>
+
+				<Link
+					underline='none'
+					color='inherit'
+					href={ NAME_maps_ROUTE.CardBrowse } >
+					<NavigationButton color='inherit' >
+						Browse
+					</NavigationButton>
+				</Link>
+
 				<Link
 					underline='none'
 					color='inherit'

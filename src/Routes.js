@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import SuspenseFallback from './SuspenseFallback'
 
 import { Card } from './components/card/Card'
+import { Browse } from './components/Browse'
 
 const Home = lazy( () => import('./components/Home') )
 const BanList = lazy( () => import('./components/banlist/BanList') )
@@ -17,6 +18,7 @@ const NAME_maps_ROUTE =
 	'BanList': '/ban_list',
 	'About': '/about',
 	'Card': '/card/:cardId',
+	'CardBrowse': '/cards/browse',
 
 	400: '/bad_request',
 	500: '/server_err',
@@ -29,8 +31,7 @@ export default function Routes()
 	return (
 		<Router >
 			<Suspense
-				fallback={ <SuspenseFallback /> }
-			>
+				fallback={ <SuspenseFallback /> } >
 				<Switch>
 					<Route
 						path={NAME_maps_ROUTE.Home}
@@ -44,6 +45,11 @@ export default function Routes()
 						path={NAME_maps_ROUTE.Card}
 						exact
 						component={Card} />
+					<Route
+						path={NAME_maps_ROUTE.CardBrowse}
+						exact
+						component={Browse} />
+
 					<Route
 						path={NAME_maps_ROUTE.About}
 						exact
