@@ -31,10 +31,10 @@ export const Card = ( { match, history } ) =>
 	const [monsterAtk, setMonsterAtk] = useState(undefined)
 	const [monsterDef, setMonsterDef] = useState(undefined)
 
-	const [packInfo, setPackInfo] = useState([])
+	const [productInfo, setPackInfo] = useState([])
 	const [banListInfo, setBanListInfo] = useState([])
 
-	const [packInfoChips, setPackInfoChips] = useState(undefined)
+	const [productInfoChips, setPackInfoChips] = useState(undefined)
 	const [banListInfoChips, setBanListInfoChips] = useState(undefined)
 
 	const [dynamicCrumbs, setDynamicCrumbs] = useState(['Home', ''])
@@ -68,17 +68,17 @@ export const Card = ( { match, history } ) =>
 
 
 	useEffect( () => {
-		if ( packInfo !== undefined && packInfoChips === undefined )
+		if ( productInfo !== undefined && productInfoChips === undefined )
 		{
-			const packInfoChips = []
+			const productInfoChips = []
 
-			packInfo.forEach( item => {
+			productInfo.forEach( item => {
 				console.log(item)
-				packInfoChips.push(<Chip label={`${item.packName}  •  ${item.packId}`} />)
-				setPackInfoChips(packInfoChips)
+				productInfoChips.push(<Chip label={`${item.productName}  •  ${item.productId}`} />)
+				setPackInfoChips(productInfoChips)
 			})
 		}
-	}, [packInfo])
+	}, [productInfo])
 
 
 	useEffect( () => {
@@ -162,14 +162,14 @@ export const Card = ( { match, history } ) =>
 				<div style={ (showPackInfo === true)? { display: 'block' } : {display: 'none'} } >
 					<Typography variant='subtitle1' >Packs:</Typography>
 					<br />
-					{ packInfoChips }
+					{ (productInfo)? productInfoChips : <Typography align='center' variant='subtitle2' >{cardName} Not Found In Packs Currently In Database</Typography> }
 					<Divider style={{ marginTop: '2rem', marginBottom: '.5rem'}} />
 				</div>
 
 				<div style={ (showBanInfo === true)? { display: 'block' } : {display: 'none'} } >
 					<Typography variant='subtitle1' >Banned In:</Typography>
 					<br />
-					{ banListInfoChips }
+					{ (banListInfo)? banListInfoChips: <Typography align='center' variant='subtitle2' >No Instances of {cardName} Being Banned.</Typography> }
 					<Divider style={{ marginTop: '2rem', marginBottom: '.5rem'}} />
 				</div>
 
