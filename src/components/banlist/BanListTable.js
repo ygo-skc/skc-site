@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/core/styles'
 import { Table, TableHead, TableContainer, Paper, TableCell, TableBody, Typography } from '@material-ui/core'
 import TableRow from '@material-ui/core/TableRow'
 
-import cardStyles from '../card/CardDetailStyle'
+import cardStyles from '../card/YGOCardStyles'
 
 const StyledTableHeadCell = withStyles(theme => ({
 	body: {

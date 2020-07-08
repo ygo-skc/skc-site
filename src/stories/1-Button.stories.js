@@ -1,10 +1,10 @@
 import React from 'react';
-import CardDetail from '../components/card/CardDetail'
+import CardDetails from '../components/card/BanListYGOCard'
 
 export default {
-  title: 'CardDetail',
+  title: 'CardDetails',
 };
 
-export const CardDetails = () => <CardDetail
+export const CardDetails = () => <CardDetails
 cardID={12345678} cardName='Javi' monsterType='Spellcaster' cardColor='fusion'
 						cardEffect='When summoned, win duel' cardClicked={false} fullDetails={false}/>;

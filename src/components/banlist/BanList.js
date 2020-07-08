@@ -7,7 +7,7 @@ import { Dialog, Paper, Grid } from '@material-ui/core'
 /*
 	Supplement styles
 */
-import cardStyles from '../card/CardDetailStyle'
+import cardStyles from '../card/YGOCardStyles'
 
 /*
 	Custom Components
@@ -20,10 +20,10 @@ import { BanListDates } from './BanListDates'
 import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
 import { MainContentContainer } from '../MainContent'
 import BanListTable from './BanListTable'
+import {YGOCard} from '../card/YGOCard'
 
 
 
-const CardDetail = lazy( () => import('../card/CardDetail') )
 const BreadCrumb = lazy( () => import('../Breadcrumb') )
 const BanListStats = lazy( () => import('./BanListStats') )
 
@@ -163,7 +163,7 @@ export default function BanList(props)
 				{
 					(showingCardDetail) ?
 						<Suspense fallback={ <SuspenseFallback /> } >
-							<CardDetail
+							<YGOCard
 								key={999}
 								fullDetails
 								cardID={chosenCard.cardID}
@@ -171,7 +171,6 @@ export default function BanList(props)
 								monsterType={chosenCard.monsterType}
 								cardColor={chosenCard.cardColor}
 								cardEffect={chosenCard.cardEffect}
-								cardClicked={props.cardClicked}
 								monsterAtk={chosenCard.monsterAttack}
 								monsterDef={chosenCard.monsterDefense}
 								cardStyles={cardStyles} />

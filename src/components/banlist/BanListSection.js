@@ -4,8 +4,8 @@ import styled from 'styled-components'
 
 import { Typography, Box, Grid, CircularProgress } from '@material-ui/core'
 
-import CardDetail from '../card/CardDetail.js'
-import cardStyles from '../card/CardDetailStyle'
+import CardDetails from '../card/BanListYGOCard.js'
+import cardStyles from '../card/YGOCardStyles'
 
 
 const cardSectionTextColors = {
@@ -70,7 +70,7 @@ export const BanListSection = ( { sectionExplanation, sectionExplanationBackgrou
 
 				cardDetailsMap.get(cardColor).push(
 					<Grid key={ind} item xs={12} sm={4} md={3} lg={2} xl={1} >
-						<CardDetail
+						<CardDetails
 							key={ind}
 							cardID={card.cardID}
 							cardName={card.cardName}

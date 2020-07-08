@@ -3,8 +3,8 @@ import styled from 'styled-components'
 
 import { MainContentContainer } from '../MainContent'
 import Breadcrumbs from '../Breadcrumb'
-import CardDetail from '../card/CardDetail'
-import cardStyles from '../card/CardDetailStyle'
+import {YGOCard} from '../card/YGOCard'
+import cardStyles from '../card/YGOCardStyles'
 
 
 const CenteredContent = styled.div`
@@ -15,7 +15,7 @@ const CenteredContent = styled.div`
 	margin-top: 30px;
 `
 
-const ErrCard = styled(CardDetail)`
+const ErrCard = styled(YGOCard)`
 	&&
 	{
 		min-width: 550px;
