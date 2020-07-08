@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { throttle } from 'underscore'
 
-import { Typography, Grid, Link, TextField, Divider, Badge } from '@material-ui/core'
+import { Typography, Grid, Link, TextField, Divider, InputBase, Paper, IconButton, Popper } from '@material-ui/core'
+import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import { MainContentContainer, ChildPaper } from './MainContent'
 import Breadcrumb from './Breadcrumb'
@@ -24,10 +25,32 @@ const CenteredText = styled(Typography)`
 	text-align: center;
 `
 
+const DatabaseSearch = styled(Autocomplete)`
+	&&&&&&&&&&&&&&&
+	{
+		.MuiAutocomplete-popper
+		{
+			width: 1000px;
+		}
+	}
+`
+
+
+const SearchSuggestionTypography = styled(Typography)`
+	&&
+	{
+		white-space: pre-wrap;
+		display: -webkit-box;
+		-webkit-line-clamp: 1;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+`
+
 
 const searchThrottle = throttle( (searchSubject, setSearchOptions, history) => {
-	handleFetch(`${NAME_maps_ENDPOINT['search']}?limit=12&cName=${searchSubject}`, history, json => { setSearchOptions(json) })
-}, 100)
+	handleFetch(`${NAME_maps_ENDPOINT['search']}?limit=18&cName=${searchSubject}`, history, json => { setSearchOptions(json) })
+}, 70)
 
 
 export default function Home( {history} )
@@ -55,8 +78,10 @@ export default function Home( {history} )
 
 
 	useEffect( () => {
-		if (searchInput !== '' || searchInput !== null || searchInput !== undefined)	searchThrottle(searchInput, setSearchOptions, history)
-		else setSearchOptions([])
+		if (searchInput !== '')
+		{
+			searchThrottle(searchInput, setSearchOptions, history)
+		}
 	}
 	, [searchInput])
 
@@ -65,48 +90,55 @@ export default function Home( {history} )
 		<MainContentContainer>
 			<Breadcrumb crumbs={['Home']} />
 
-			<CenteredText style={{background: '#53539e', width: '100%', height: '100px', justifyContent: 'center', display: 'flex', justifyContent: 'center', alignItems: 'center'}} >
-				<Autocomplete
-					id='search'
-					style={{ minWidth: '70%', background: 'rgba(255, 255, 255, .3)' }}
-					noOptionsText={ (searchInput === '')? 'Type For Suggestions' : 'No Results' }
-					getOptionLabel={ option => option.cardName }
-					options={searchOptions}
-					autoComplete
-					includeInputInList
-					groupBy={ option => option.cardColor }
-					freeSolo
-					disableCloseOnSelect
-					getOptionSelected={ (option, value) => window.location.assign(`/card/${value.cardID}`) }
-					renderGroup={ option => {
-						return(
-							<div style={{margin: '1rem'}} >
-								<Typography variant='subtitle2'>{option.group}</Typography>
-								<Divider />
-								{option.children}
+			<CenteredText style={{ alignContent: 'center', width: '100%', justifyContent: 'center' }} >
+				<Paper style={{ alignItems: 'center', display: 'flex', width: '90%', maxWidth: '450px', display: 'flex' }} >
+					<DatabaseSearch
+						id='search'
+						style={{ flex: '1' }}
+						noOptionsText={ (searchInput === '')? 'Type For Suggestions' : 'No Results' }
+						getOptionLabel={ option => option.cardName }
+						options={searchOptions}
+						autoComplete
+						includeInputInList
+						groupBy={ option => option.cardColor }
+						freeSolo
+						disableCloseOnSelect
+						getOptionSelected={ (option, value) => window.location.assign(`/card/${value.cardID}`) }
+						renderGroup={ option => {
+							return(
+								<div style={{margin: '1.5rem', width: '100%'}} >
+									<Typography
+										variant='subtitle2'
+										style={{ fontFamily: 'Nunito' }}>{option.group}</Typography>
+									<Divider />
+									{option.children}
+								</div>
+							)
+						}}
+						renderInput={ (params) => (
+							<div style={{ width: '100%', display: 'flex' }} >
+							<InputBase
+								ref={params.InputProps.ref}
+								inputProps={params.inputProps}
+								style={{ color: 'black', fontFamily: 'Nunito', flex: '1', margin: '.8rem', fontSize: '1.23rem' }}
+								placeholder='Search...'
+								onChange={ event => {setSearchInput(event.target.value)} }
+								/>
+								<IconButton>
+									<SearchIcon />
+								</IconButton>
 							</div>
-						)
-					}}
-					renderInput={ (params) => (
-						<TextField
-							{...params}
-							style={{ minWidth: '100%', background: 'rgba(255, 255, 255, .3)' }}
-							label={null}
-							placeholder='Search...'
-							variant='filled'
-							fullWidth={false}
-							onChange={ event => {setSearchInput(event.target.value)} }
-							/>
-					)}
-					renderOption={ option => {
-						return(
-							<div>
-								<Typography variant='body1'>{option.cardName}</Typography>
-								<Typography variant='body2' style={{marginLeft: '.5rem', color: 'rgb(101,119,134)'}} >{option.monsterType}</Typography>
-							</div>
-						)
-					}}
-				/>
+						)}
+						renderOption={ option => {
+							return(
+								<div>
+									<SearchSuggestionTypography variant='body1'>{option.cardName}</SearchSuggestionTypography>
+									<SearchSuggestionTypography variant='body1' style={{ color: 'rgb(101,119,134)'}} >{option.monsterType}</SearchSuggestionTypography>
+								</div>
+							)
+						}}
+					/>
+				</Paper>
 			</CenteredText>
 
 			<br /><br /><br />
@@ -114,7 +146,7 @@ export default function Home( {history} )
 
 			<Grid container spacing={2} >
 				<Grid item xs={12} sm={12} md={7} lg={8} xl={9} >
-					<ChildPaper>
+					<ChildPaper style={{border: '.1rem solid', borderColor: '#c6694b'}} >
 						<CenteredText variant='h4' >
 							Welcome Duelist
 						</CenteredText>
@@ -141,7 +173,7 @@ export default function Home( {history} )
 				</Grid>
 
 				<Grid item xs={12} sm={12} md={5} lg={4} xl={3} >
-					<ChildPaper>
+					<ChildPaper style={{border: '.1rem solid', borderColor: '#c6694b'}} >
 						<CenteredText variant='h4' >
 							Whats New?
 						</CenteredText>
