@@ -2,7 +2,8 @@ import React, { lazy, Suspense, useState, useEffect, useMemo } from 'react'
 import Styled from 'styled-components'
 import throttle from 'lodash/throttle'
 
-import { Dialog, Paper, Grid } from '@material-ui/core'
+import { Dialog, Paper, Grid, Button, Box } from '@material-ui/core'
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
 /*
 	Supplement styles
@@ -30,26 +31,51 @@ const BanListStats = lazy( () => import('./BanListStats') )
 const CardDialog = Styled(Dialog)`
 	&&
 	{
-		.MuiDialog-paper
-		{
-			background-color: transparent;
-		}
-
-		.MuiDialog-paperWidthSm
-		{
-			max-width: 350px;
-			min-width: 350px;
-		}
+		width: 100%;
+		max-width: 380px;
+		margin: 0 auto;
+		background: transparent;
 	}
 `
 
 const BanContentParent = Styled(Paper)`
 	&&
 	{
-		padding: .85rem;
 		border-radius: .5rem;
-	}
 
+		@media screen and (min-width: 0px)
+		{
+			padding: .67rem;
+			margin-bottom: 1.5rem;
+		}
+		@media screen and (min-width: 600px)
+		{
+			padding: 1rem;
+			margin-bottom: 1.5rem;
+		}
+		@media screen and (min-width: 960px)
+		{
+			padding: .5rem;
+			margin-bottom: 1.5rem;
+		}
+		@media screen and (min-width: 2200px)
+		{
+			padding: 1.5rem;
+			margin-bottom: 1.5rem;
+		}
+	}
+`
+
+const BannedContentContainer = Styled(Paper)`
+	&&
+	{
+		border-radius: 0rem;
+
+		@media screen and (min-width: 960px)
+		{
+			margin-right: 2rem;
+		}
+	}
 `
 
 
@@ -156,67 +182,70 @@ export default function BanList(props)
 
 
 	return (
-		<MainContentContainer >
+		<Box >
 			<BreadCrumb crumbs={['Home', 'Ban List']} />
 
 			<CardDialog open={showingCardDetail} unmountOnExit onClose={() => setShowingCardDetail(false)} >
 				{
 					(showingCardDetail) ?
-						<Suspense fallback={ <SuspenseFallback /> } >
-							<YGOCard
-								key={999}
-								fullDetails
-								cardID={chosenCard.cardID}
-								cardName={chosenCard.cardName}
-								monsterType={chosenCard.monsterType}
-								cardColor={chosenCard.cardColor}
-								cardEffect={chosenCard.cardEffect}
-								monsterAtk={chosenCard.monsterAttack}
-								monsterDef={chosenCard.monsterDefense}
-								cardStyles={cardStyles} />
+						<Suspense style={{background: 'transparent'}} fallback={ <SuspenseFallback /> } >
+								<YGOCard
+									key={999}
+									fullDetails
+									cardID={chosenCard.cardID}
+									cardName={chosenCard.cardName}
+									monsterType={chosenCard.monsterType}
+									cardColor={chosenCard.cardColor}
+									cardEffect={chosenCard.cardEffect}
+									monsterAtk={chosenCard.monsterAttack}
+									monsterDef={chosenCard.monsterDefense}
+									cardStyles={cardStyles} />
+
+								<Button onClick={ () => window.location.assign(`/card/${chosenCard.cardID}`) } variant='contained' style={{ marginTop: '1rem' }} endIcon={ <ArrowForwardIcon /> } >Info</Button>
 						</Suspense>
 						: undefined
 				}
 			</CardDialog>
 
-			<Grid container spacing={1} style={{margin: 0, width: '100%'}} >
+			<Grid container spacing={0} style={{ width: '100%' }} >
 
-			<Grid item xs={12} sm={12} md={3} lg={2} xl={2} >
-			<BanContentParent
-				style={ (isSettingUpDates)? {display: 'none'}: {display: 'block' }  } >
+				<Grid item xs={12} sm={12} md={3} lg={2} xl={2}
+						style={{ paddingLeft: '2rem', paddingRight: '2rem', width: '100%' }} >
+					<BanContentParent
+						style={ (isSettingUpDates)? {display: 'none'}: {display: 'block' }  } >
 
-				{(isSettingUpDates)? undefined
-					: <BanListDates
-					selectedBanList={selectedBanList}
-					banListStartDates={banListStartDates}
-					setSelectedBanList={ (ind) => setSelectedBanList(banListStartDates[ind]) } />}
+						{(isSettingUpDates)? undefined
+							: <BanListDates
+							selectedBanList={selectedBanList}
+							banListStartDates={banListStartDates}
+							setSelectedBanList={ (ind) => setSelectedBanList(banListStartDates[ind]) } />}
 
-			</BanContentParent>
+					</BanContentParent>
 
-			<br />
+					<BanContentParent
+						style={ (isSettingUpDates)? {display: 'none'}: {display: 'block' }  } >
+						<BanListStats
+							totalCardsInSelectedList={numForbidden + numLimited + numSemiLimited}
+							selectedBanList={selectedBanList}
+							newForbiddenCards={newForbiddenCards}
+							newLimitedCards={newLimitedCards}
+							newSemiLimitedCards={newSemiLimitedCards}
+							numNewForbidden={numNewForbidden}
+							numNewLimited={numNewLimited}
+							numNewSemiLimited={numNewSemiLimited}
+							removedCards={removedCards}
+							numRemoved={numRemoved}
+							handleFetchCardInfo={handleFetchCardInfo}
+							cardClicked={ (cardID) => setChosenCardID(cardID) }
+						/>
+					</BanContentParent>
 
-			<BanContentParent
-				style={ (isSettingUpDates)? {display: 'none'}: {display: 'block' }  } >
-				<BanListStats
-					totalCardsInSelectedList={numForbidden + numLimited + numSemiLimited}
-					selectedBanList={selectedBanList}
-					newForbiddenCards={newForbiddenCards}
-					newLimitedCards={newLimitedCards}
-					newSemiLimitedCards={newSemiLimitedCards}
-					numNewForbidden={numNewForbidden}
-					numNewLimited={numNewLimited}
-					numNewSemiLimited={numNewSemiLimited}
-					removedCards={removedCards}
-					numRemoved={numRemoved}
-					handleFetchCardInfo={handleFetchCardInfo}
-					cardClicked={ (cardID) => setChosenCardID(cardID) }
-				/>
-			</BanContentParent>
-
-			</Grid>
+					<br />
+				</Grid>
 
 
-			<Grid item xs={12} sm={12} md={9} lg={10} xl={10} >
+			<Grid item xs={12} sm={12} md={9} lg={10} xl={10}
+						style={{ width: '100%' }} >
 				{/* <BanListTable
 					isDataLoaded={ isDataLoaded }
 					bannedContent={ forbidden }
@@ -244,8 +273,7 @@ export default function BanList(props)
 					cardClicked={ cardID => setChosenCardID(cardID) }
 				/> */}
 
-			<BanContentParent
-				style={ (isSettingUpDates)? {display: 'none'}: {display: 'block', paddingTop: '0rem' }  } >
+			<BannedContentContainer >
 				<TabbedView
 					numForbidden={numForbidden}
 					numLimited={numLimited}
@@ -300,11 +328,11 @@ export default function BanList(props)
 						, [isDataLoaded])
 					}
 				/>
-				</BanContentParent>
+				</BannedContentContainer>
 				</Grid>
 
 			</Grid>
-		</MainContentContainer>
+		</Box>
 	)
 
 

@@ -22,10 +22,6 @@ const cardSectionTextColors = {
 	, 'trap': 'rgba(173, 20, 87, 0.78)'
 }
 
-const CenteredContent = styled(Box)`
-	text-align: center;
-`
-
 
 export const BanListSection = ( { sectionExplanation, sectionExplanationBackground, cards, newCards, isDataLoaded, cardClicked } ) =>
 {
@@ -38,6 +34,66 @@ export const BanListSection = ( { sectionExplanation, sectionExplanationBackgrou
 			margin-top: .75rem;
 			margin-bottom: 1.75rem;
 			color: #2b3239;
+		}
+	`
+
+
+	const CardItem = styled(Grid)`
+		&&
+		{
+			@media screen and (min-width: 0px)
+			{
+				padding-bottom: .75rem;
+			}
+			@media screen and (min-width: 600px)
+			{
+				padding: .5rem;
+			}
+			@media screen and (min-width: 800px)
+			{
+				padding: .7rem;
+			}
+			@media screen and (min-width: 960px)
+			{
+				padding: .5rem;
+			}
+			@media screen and (min-width: 1500px)
+			{
+				padding: .75rem;
+			}
+			@media screen and (min-width: 1800px)
+			{
+				padding: 1rem;
+			}
+		}
+	`
+
+	const CardGrid = styled(Grid)`
+		&&
+		{
+			@media screen and (min-width: 0px)
+			{
+				padding: .6rem;
+			}
+			@media screen and (min-width: 800px)
+			{
+				padding: .8rem;
+			}
+			@media screen and (min-width: 960px)
+			{
+				padding: 1rem;
+			}
+			@media screen and (min-width: 1500px)
+			{
+				padding: 1rem;
+			}
+			@media screen and (min-width: 1800px)
+			{
+				padding: 1rem;
+			}
+
+			margin: auto;
+			width: 100%
 		}
 	`
 
@@ -69,7 +125,7 @@ export const BanListSection = ( { sectionExplanation, sectionExplanationBackgrou
 
 
 				cardDetailsMap.get(cardColor).push(
-					<Grid key={ind} item xs={12} sm={4} md={3} lg={2} xl={1} >
+					<CardItem key={ind} item xs={12} sm={4} md={3} lg={2} xl={2}>
 						<CardDetails
 							key={ind}
 							cardID={card.cardID}
@@ -82,7 +138,7 @@ export const BanListSection = ( { sectionExplanation, sectionExplanationBackgrou
 							isNew={ isNewCard(card.cardID)}
 							cardStyles={cardStyles}
 						/>
-					</Grid>
+					</CardItem>
 				)
 			})
 
@@ -92,31 +148,76 @@ export const BanListSection = ( { sectionExplanation, sectionExplanationBackgrou
 					&&
 					{
 						margin-bottom: 1rem;
+						margin-top: 2rem;
 						text-transform: uppercase;
 						letter-spacing: .25rem;
 						background: ${ cardSectionTextColors[cardColor.toLowerCase()] };
 						-webkit-background-clip: text;
 						-webkit-text-fill-color: transparent;
+
+						@media screen and (min-width: 0px)
+						{
+							margin-left: .5rem;
+						}
+						@media screen and (min-width: 600px)
+						{
+							margin-left: .5rem;
+						}
+						@media screen and (min-width: 800px)
+						{
+							margin-left: 1rem;
+						}
+						@media screen and (min-width: 1500px)
+						{
+							margin-left: 1.2rem;
+						}
+						@media screen and (min-width: 1800px)
+						{
+							margin-left: 1.5rem;
+						}
+					}
 					}
 				`
 				: styled(Typography)`
 						&&
 						{
 							margin-bottom: 1rem;
+							margin-top: 2rem;
 							text-transform: uppercase;
 							color: ${ cardSectionTextColors[cardColor.toLowerCase()] };
 							letter-spacing: .25rem;
+
+							@media screen and (min-width: 0px)
+							{
+								margin-left: .5rem;
+							}
+							@media screen and (min-width: 600px)
+							{
+								margin-left: .5rem;
+							}
+							@media screen and (min-width: 800px)
+							{
+								margin-left: 1rem;
+							}
+							@media screen and (min-width: 1500px)
+							{
+								margin-left: 1.2rem;
+							}
+							@media screen and (min-width: 1800px)
+							{
+								margin-left: 1.5rem;
+							}
 						}
 					`
 
 				cardTypeContentGrid.push(
 					<div key={cardColor} >
-						<CardSectionText variant='subtitle1' >
+						<CardSectionText variant='h6' >
 							{cardColor}
 						</CardSectionText>
-						<Grid container spacing={1} style={{marginBottom: '2.8rem'}} >
+						<CardGrid container spacing={0} >
 							{ details }
-						</Grid>
+						</CardGrid>
 					</div>
 				)
 			})
@@ -130,29 +231,26 @@ export const BanListSection = ( { sectionExplanation, sectionExplanationBackgrou
 
 
 	return (
-		<div>
-			<CenteredContent>
-				<SectionInfoText variant='subtitle2' >
-					{ sectionExplanation }
-				</SectionInfoText>
-			</CenteredContent>
+		<Box>
+			<SectionInfoText variant='subtitle2' align='center' >
+				{ sectionExplanation }
+			</SectionInfoText>
 
 			{
 				(areCardsRendered ?
 					(	<div>
 						{cardTypeContentGrid}
 					</div>)
-					: 	(<CenteredContent>
-							<CircularProgress
-								size={50}
-								variant='indeterminate'
-								thickness={3.6}
-								disableShrink={true}
-							/>
-						</CenteredContent>)
+					: 	<CircularProgress
+							size={50}
+							variant='indeterminate'
+							thickness={3}
+							disableShrink={true}
+							style={{ margin: '0 auto' }}
+						/>
 				)
 			}
-		</div>
+		</Box>
 	)
 }
 

@@ -13,12 +13,16 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
 const BanDatesExpansionSummary = Styled(ExpansionPanelSummary)`
 	&&
 	{
-		padding-left: .9rem;
-		padding-right: .9rem;
+		padding: 0rem;
 	}
 `
 
 const BanDatesExpansionDetail = Styled(ExpansionPanelDetails)`
+	&&
+	{
+		padding: 0rem;
+		margin-bottom: .7rem;
+	}
 `
 
 export const BanListDates = memo( ( { banListStartDates, setSelectedBanList } ) =>
@@ -57,22 +61,27 @@ export const BanListDates = memo( ( { banListStartDates, setSelectedBanList } ) 
 
 
 	return(
-		<ExpansionPanel elevation={0} style={ { paddingLeft: '.5rem' } }  >
-			<BanDatesExpansionSummary
-				style={{padding: '0rem'}}
-				expandIcon={<ExpandMoreIcon />} >
-				<Typography
-					variant='h4' >
-					{ selectedRange }
-				</Typography>
-			</BanDatesExpansionSummary>
+		<div>
+			<Typography
+				variant='h5' >
+				Date Range
+			</Typography>
+			<ExpansionPanel elevation={0} style={ { paddingLeft: '.5rem' } }  >
+				<BanDatesExpansionSummary
+					expandIcon={<ExpandMoreIcon />} >
+					<Typography
+						variant='subtitle1' >
+						{ selectedRange }
+					</Typography>
+				</BanDatesExpansionSummary>
 
-			<BanDatesExpansionDetail>
-				<Grid container spacing={ 1 } >
-					{ banListGrid }
-				</Grid>
-			</BanDatesExpansionDetail>
-		</ExpansionPanel>
+				<BanDatesExpansionDetail>
+					<Grid container spacing={ 1 } >
+						{ banListGrid }
+					</Grid>
+				</BanDatesExpansionDetail>
+			</ExpansionPanel>
+		</div>
 	)
 }, (prevProps, nextProps) => {
 	if (prevProps.banListStartDates.length !== nextProps.banListStartDates.length)	return false
