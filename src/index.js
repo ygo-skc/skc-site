@@ -21,90 +21,85 @@ const theme = createMuiTheme({
 	overrides: {
 		'MuiChip': {
 			root: {
+				fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 				marginRight: '.85rem',
 				marginTop: '.5rem'
 			}
 			, label: {
-				fontFamily: 'Nunito',
 				fontWeight: 500,
-				fontSize: '.97rem'
+				fontSize: '1rem'
 			}
 		},
 		'MuiTableCell': {
 			head: {
-				fontFamily: 'Nunito',
 				fontWeight: 600,
 				fontSize: '.93rem'
 			},
 			body: {
-				fontFamily: 'Nunito',
 				fontWeight: 500,
 				fontSize: '.85rem'
 			},
 			root: {
+				fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 				padding: '.4rem',
 				'border-bottom': '0rem'
 			}
-		},
+		}
 	},
 	typography: {
 		button: {
-			fontFamily: 'Nunito',
+			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			lineHeight: '1.3rem',
 			fontSize: '1.1rem',
 		},
 		h4: {
-			fontFamily: 'Nunito',
+			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 600,
 			color: '#543fda',
 			lineHeight: '1.52rem',
-			marginBottom: '.75rem',
-			fontSize: '1.4rem',
+			marginBottom: '.8rem',
+			fontSize: '1.6rem',
 		},
 		h5: {
-			fontFamily: 'Nunito',
+			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 800,
 			lineHeight: '1.52rem',
-			marginBottom: '.5rem',
+			marginBottom: '.8rem',
 			color: '#404040',
-			fontSize: '1.35rem'
+			fontSize: '1.5rem'
 		},
 		h6: {
-			fontFamily: 'OpenSans',
+			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 500,
 			lineHeight: '1.52rem',
-			marginBottom: '.45rem',
+			marginBottom: '.8rem',
 			color: '#383838',
-			fontSize: '1.3rem',
+			fontSize: '1.45rem',
 		},
 		subtitle1: {
-			fontFamily: 'OpenSans',
+			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 600,
 			lineHeight: '1.52rem',
 			marginBottom: '.25rem',
-			color: '#2b2a2a',
 			fontSize: '1.25rem',
 		},
 		subtitle2: {
-			fontFamily: 'OpenSans',
+			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 500,
 			lineHeight: '1.52rem',
 			marginBottom: '.25rem',
-			color: '#2b2a2a',
 			fontSize: '1.2rem',
 		},
 		body1: {
-			fontFamily: 'OpenSans',
+			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 500,
 			lineHeight: '1.52rem',
-			color: 'black',
 			fontSize: '1.1rem',
 		},
 		body2: {
-			fontFamily: 'OpenSans',
+			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 500,
 			lineHeight: '1.52rem',
-			color: 'black',
 			fontSize: '1rem',
 		},
 	}
