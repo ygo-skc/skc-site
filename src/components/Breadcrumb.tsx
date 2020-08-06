@@ -22,6 +22,7 @@ const BreadCrumbsContent = styled(Box)`
 	{
 		display: flex;
 		padding: 1rem;
+		margin-bottom: 1.3rem;
 	}
 
 `
