@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Chip, Typography, Paper, Divider, IconButton, Popover, Switch, FormControlLabel, Grid, Avatar } from '@material-ui/core'
+import { Chip, Typography, Paper, IconButton, Popover, Switch, FormControlLabel, Grid, Avatar } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
 import FilterListOutlinedIcon from '@material-ui/icons/FilterListOutlined'
 
@@ -11,6 +11,8 @@ import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
 import { MainContentContainer } from '../MainContent'
 
 import styled from 'styled-components'
+
+import {OneThirdTwoThirdsGrid} from '../grid/OneThirdTwoThirdsGrid'
 
 
 // When user wants to include or exclude a category from the info component the corresponding local storage variable is updated and the corresponding
@@ -36,22 +38,22 @@ const ContentPaper = styled(Paper)
 		{
 			padding: .7rem
 		}
-		@media screen and (min-width: 700px)
+		@media screen and (min-width: 600px)
 		{
 			padding: 2rem
 			margin-right: 2rem
 		}
-		@media screen and (min-width: 1000px)
+		@media screen and (min-width: 960px)
 		{
 			padding: 2.5rem
 			margin-right: 2rem
 		}
-		@media screen and (min-width: 1200px)
+		@media screen and (min-width: 1280px)
 		{
 			padding: 3rem
 			margin-right: 2rem
 		}
-		@media screen and (min-width: 1500px)
+		@media screen and (min-width: 1920px)
 		{
 			padding: 5rem
 			margin-right: 2rem
@@ -145,15 +147,16 @@ export const Card = ( { match, history } ) =>
 
 
 	return (
-		<div style={{ display: 'flex', flexFlow: 'column', height: '100%' }} >
+		<MainContentContainer style={{ paddingLeft: '0rem', paddingRight: '0rem', paddingBottom: '0rem' }}  >
 			<Popover
 				open={isShowingFilter}
 				onClose={ () => setIsShowingFilter(false) } anchorEl={filterAnchor}
 				anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
 				transformOrigin={{ vertical: 'bottom', horizontal: 'center' }} >
+
 				<Paper style={{width: '250px', padding: '2rem'}} >
 					<Typography
-						variant='subtitle1'
+						variant='h6'
 						align='center'
 						style={{ marginBottom: '1.5rem' }} >
 							Display...
@@ -167,20 +170,21 @@ export const Card = ( { match, history } ) =>
 						label='Ban Info'
 					/>
 				</Paper>
+
 			</Popover>
 
-			<div style={{ flexGrow: '1' }} >
-				<Breadcrumb crumbs={ dynamicCrumbs } />
 
-				<Grid container spacing={0} style={{ margin: 'auto', width: '100%' }} >
-					<Grid item xs={12} sm={5} md={4} lg={3} xl={2}
-						style={{ padding: '2rem' }} >
+			<Breadcrumb crumbs={ dynamicCrumbs } />
+
+			<OneThirdTwoThirdsGrid
+				oneThirdComponent={
+					<div>
 						<div
 							style={{ textAlign: 'center', marginBottom: '.5rem' }} >
-							<img src={`https://storage.googleapis.com/ygoprodeck.com/pics_artgame/${cardId}.jpg`} width = '72%' style={{ borderRadius: '50%' }} />
+							<img src={`https://storage.googleapis.com/ygoprodeck.com/pics_artgame/${cardId}.jpg`} width = '55%' style={{ borderRadius: '50%' }} />
 						</div>
 						<div
-							style={{ width: '350px', maxWidth: '100%', margin: 'auto' }} >
+							style={{ width: '350px', maxWidth: '100%', margin: 'auto', paddingBottom: '3.5rem' }} >
 							<YGOCard
 									isNew={ false }
 									cardName={cardName}
@@ -196,37 +200,35 @@ export const Card = ( { match, history } ) =>
 									isLoading={ isLoading }
 								/>
 						</div>
-					</Grid>
+					</div>
+				}
+				twoThirdComponent={
+					<ContentPaper >
+						<div style={{ textAlign: 'center' }} >
+							<IconButton onClick={ (event) => {
+								setFilterAnchor(event.target)
+								setIsShowingFilter(!isShowingFilter)
+							}} >
+								<FilterListOutlinedIcon fontSize='large' />
+							</IconButton>
+						</div>
 
-					<Grid item xs={12} sm={7} md={8} lg={9} xl={10} >
-						<ContentPaper >
-							<div style={{ textAlign: 'center' }} >
-								<IconButton onClick={ (event) => {
-									setFilterAnchor(event.target)
-									setIsShowingFilter(!isShowingFilter)
-								}} >
-									<FilterListOutlinedIcon fontSize='large' />
-								</IconButton>
-							</div>
+						<div style={{ marginBottom: '2rem' }} >
+							{
+								(isLoading)?
+									<Skeleton height={30} style={{ margin: '0 auto', width: '420', maxWidth: '90%' }} />
+									: <Typography variant='h6' align='center'>Content Associated With <strong>{cardName}</strong></Typography>
+							}
+						</div>
 
-							<div style={{ marginBottom: '2rem' }} >
-								{
-									(isLoading)?
-										<Skeleton height={30} style={{ margin: '0 auto', width: '420', maxWidth: '90%' }} />
-										: <Typography variant='h6' align='center'>Content Associated With <strong>{cardName}</strong></Typography>
-								}
-							</div>
+						<Grid container >
+							<Grid item xs={12} sm={12} md={12} lg={6} xl={6}  style={ (showPackInfo === true)? { display: 'inline-grid', padding: '1.2rem' } : {display: 'none'} } >
 
-							<Divider />
-							<br />
-
-							<Grid container spacing={2} >
-								<Grid item xs={12} sm={12} md={12} lg={6} xl={6}  style={ (showPackInfo === true)? { display: 'block', marginBottom: '1.2rem' } : {display: 'none'} } >
-
+								<div style={{background: '#7d7dba', padding: '1rem'}}>
 									{
 										(isLoading)?
 											<Skeleton width={150} height={25} />
-											: <Typography variant='subtitle1' >Product(s):</Typography>
+											: <Typography variant='subtitle1' align='center' style={{color: '#eee'}} >Product(s)</Typography>
 									}
 									<br />
 									{
@@ -234,15 +236,17 @@ export const Card = ( { match, history } ) =>
 											undefined
 											: (productInfo)?
 												productInfoChips
-												: <Typography style={{ color: 'rgb(101,119,134)' }} align='center' variant='body1' ><strong>{cardName}</strong> Not Found In Any Product</Typography>
+												: <Typography style={{ color: '#fff' }} align='center' variant='body1' ><strong>{cardName}</strong> Not Found In Any Product</Typography>
 									}
-								</Grid>
+								</div>
+							</Grid>
 
-								<Grid item xs={12} sm={12} md={12} lg={6} xl={6} style={ (showBanInfo === true)? { display: 'block', marginBottom: '1.2rem' } : {display: 'none'} } >
+							<Grid item xs={12} sm={12} md={12} lg={6} xl={6} style={ (showBanInfo === true)? { display: 'inline-grid', padding: '1.2rem' } : {display: 'none'} } >
+								<div style={{background: '#ce7e65', padding: '1rem'}}>
 									{
 										(isLoading)?
 											<Skeleton width={150} height={25} />
-											: <Typography variant='subtitle1' >Ban List(s):</Typography>
+											: <Typography variant='subtitle1' align='center' style={{color: '#eee'}} >Ban List(s)</Typography>
 									}
 									<br />
 									{
@@ -250,17 +254,15 @@ export const Card = ( { match, history } ) =>
 											undefined
 											: (banListInfo)?
 												banListInfoChips
-												: <Typography style={{ color: 'rgb(101,119,134)' }} align='center' variant='body1' >No Instances of <strong>{cardName}</strong> Being Forbidden, Limited, or Semi-Limited</Typography>
+												: <Typography style={{ color: '#fff' }} align='center' variant='subtitle2' >No Instances of <strong>{cardName}</strong> Being Forbidden, Limited, or Semi-Limited</Typography>
 									}
-								</Grid>
+								</div>
 							</Grid>
-						</ContentPaper>
-					</Grid>
-				</Grid>
+						</Grid>
+					</ContentPaper>
+					}
+				/>
 
-			</div>
-
-
-		</div>
+		</MainContentContainer>
 	)
 }
