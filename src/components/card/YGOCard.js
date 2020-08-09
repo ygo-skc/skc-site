@@ -54,7 +54,6 @@ const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, mon
 			margin-bottom: .18rem;
 			text-transform: uppercase;
 			color: ${cardStyles[ `${cardColorLowerCase}Color` ]};
-			font-family: Nunito;
 		},
 	`
 

@@ -22,12 +22,12 @@ const theme = createMuiTheme({
 		'MuiChip': {
 			root: {
 				fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
-				marginRight: '.85rem',
+				marginRight: '.55rem',
 				marginTop: '.5rem'
 			}
 			, label: {
-				fontWeight: 500,
-				fontSize: '1rem'
+				fontWeight: 600,
+				fontSize: '.95rem'
 			}
 		},
 		'MuiTableCell': {
