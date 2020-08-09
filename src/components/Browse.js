@@ -8,6 +8,8 @@ import { MainContentContainer } from './MainContent'
 import {YGOCard} from './card/YGOCard'
 import cardStyles from './card/YGOCardStyles'
 
+import {OneThirdTwoThirdsGrid} from './grid/OneThirdTwoThirdsGrid'
+
 import { handleFetch } from '../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../helper/YgoApiEndpoints'
 
@@ -171,9 +173,8 @@ export const Browse =( {history} ) =>
 		<MainContentContainer>
 			<Breadcrumb crumbs={ ['Home', 'Browse'] } />
 
-			<Grid container spacing={0} >
-				<Grid item xs={12} sm={5} md={4} lg={3} xl={2}>
-
+			<OneThirdTwoThirdsGrid
+				oneThirdComponent={
 					<Paper style={{padding: '1.4rem'}} >
 						<Autocomplete
 							multiple
@@ -216,10 +217,8 @@ export const Browse =( {history} ) =>
 						</Typography>
 
 					</Paper>
-
-				</Grid>
-
-				<Grid item xs={12} sm={7} md={8} lg={9} xl={10} >
+				}
+				twoThirdComponent={
 					<Grid container >
 
 						{cardDataForSelectedCriteria}
@@ -229,9 +228,8 @@ export const Browse =( {history} ) =>
 						</Button>
 
 					</Grid>
-
-				</Grid>
-			</Grid>
+				}
+			/>
 		</MainContentContainer>
 	)
 }
