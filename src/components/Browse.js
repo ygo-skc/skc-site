@@ -109,10 +109,10 @@ export const Browse =( {history} ) =>
 			cards.push(
 				<Grid item xs={6} sm={4} md={3} lg={2} xl={1}
 					style={{ padding: '.25rem', cursor: 'pointer' }} >
-						<div style={{margin: 'auto', marginBottom: '.5rem', width: '85%'}} >
+						<div style={{marginBottom: '.5rem', width: '85%'}} >
 							<div
 								style={{ borderRadius: '50%', overflow: 'hidden', width: '100%',  height: '0', paddingBottom: '100%' }} >
-								<img src={`https://storage.googleapis.com/ygoprodeck.com/pics_artgame/${card.cardID}.jpg`} style={{  width: '100%', height: '100%', objectFit: 'cover' }} />
+								<img src={`https://storage.googleapis.com/ygoprodeck.com/pics_artgame/${card.cardID}.jpg`} style={{  width: '100%', objectFit: 'cover' }} />
 							</div>
 						</div>
 					<YGOCard
