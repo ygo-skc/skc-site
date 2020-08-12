@@ -141,7 +141,7 @@ export default function Home( {history} )
 
 			<Grid container spacing={2} style={{ marginTop: '4rem' }} >
 				<Grid item xs={12} sm={12} md={7} lg={8} xl={9} >
-					<ChildPaper style={{border: '.1rem solid', borderColor: '#c6694b'}} >
+					<ChildPaper >
 						<CenteredText variant='h4' >
 							Welcome Duelist
 						</CenteredText>
@@ -168,7 +168,7 @@ export default function Home( {history} )
 				</Grid>
 
 				<Grid item xs={12} sm={12} md={5} lg={4} xl={3} >
-					<ChildPaper style={{border: '.1rem solid', borderColor: '#c6694b'}} >
+					<ChildPaper >
 						<CenteredText variant='h4' >
 							Whats New?
 						</CenteredText>
