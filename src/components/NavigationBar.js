@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import { AppBar, Toolbar, Button, Link } from '@material-ui/core'
 
-import { NAME_maps_ROUTE } from '../Routes'
+import { NAME_maps_ROUTE } from '../Routes.tsx'
 
 
 export default function NavigationBar()
