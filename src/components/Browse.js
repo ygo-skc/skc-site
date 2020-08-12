@@ -13,10 +13,10 @@ import {OneThirdTwoThirdsGrid} from './grid/OneThirdTwoThirdsGrid'
 import { handleFetch } from '../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../helper/YgoApiEndpoints'
 
-import styled from 'styled-components'
+import Styled from 'styled-components'
 
 
-const MainBrowseInfoTypography = styled(Typography)`
+const MainBrowseInfoTypography = Styled(Typography)`
 	&&
 	{
 	}
@@ -59,7 +59,6 @@ export const Browse =( {history} ) =>
 					})
 				})
 			}
-			console.log(browseCriteria)
 			setBrowseCriteria(browseCriteria)
 		})
 	}, [])
@@ -73,16 +72,15 @@ export const Browse =( {history} ) =>
 
 
 		const criteriaMap = new Map()
-		const selectedCriteriaChips = []
 		criteriaMap.set('cardColors', [])
 		criteriaMap.set('attributes', [])
 
-		selectedCriteria.forEach(criteria => {
+		const selectedCriteriaChips = selectedCriteria.map(criteria => {
 			if (criteria.criteriaName == 'cardColors' || criteria.criteriaName == 'attributes')
 				criteriaMap.get(criteria.criteriaName).push(criteria.criteriaValue)
 
 
-			selectedCriteriaChips.push(<Chip label={criteria.criteriaValue} />)
+			return <Chip key={criteria.criteriaValue} label={criteria.criteriaValue} />
 		})
 
 		setSelectedCriteriaChips(selectedCriteriaChips)
@@ -103,30 +101,34 @@ export const Browse =( {history} ) =>
 	useEffect( () => {
 		if (jsonResults === undefined)	return
 
-		const cards = []
-		jsonResults.slice(numResultsDisplayed - numResultsLoaded, numResultsDisplayed).forEach( card => {
-			console.log(card)
-			cards.push(
-				<Grid item xs={6} sm={4} md={3} lg={2} xl={1}
-					style={{ padding: '.25rem', cursor: 'pointer' }} >
-						<div style={{marginBottom: '.5rem', width: '85%'}} >
-							<div
-								style={{ borderRadius: '50%', overflow: 'hidden', width: '100%',  height: '0', paddingBottom: '100%' }} >
-								<img src={`https://storage.googleapis.com/ygoprodeck.com/pics_artgame/${card.cardID}.jpg`} style={{  width: '100%', objectFit: 'cover' }} />
-							</div>
+		const cards = jsonResults.slice(numResultsDisplayed - numResultsLoaded, numResultsDisplayed).map( card => {
+			return <Grid
+				key={card.cardID}
+				item
+				xs={6}
+				sm={4}
+				md={3}
+				lg={2}
+				xl={1}
+				style={{ padding: '.25rem', cursor: 'pointer' }} >
+					<div style={{margin: 'auto', marginBottom: '.5rem', width: '85%'}} >
+						<div
+							style={{ borderRadius: '50%', overflow: 'hidden', width: '100%',  height: '0', paddingBottom: '100%' }} >
+							<img src={`https://storage.googleapis.com/ygoprodeck.com/pics_artgame/${card.cardID}.jpg`} style={{  width: '100%', objectFit: 'cover' }} />
 						</div>
-					<YGOCard
-						isNew={ false }
-						cardName={card.cardName}
-						cardColor={card.cardColor}
-						cardEffect={card.cardEffect + '\n\n\n'}
-						monsterType={card.monsterType}
-						cardStyles={ cardStyles }
-						cardID={card.cardID}
-						fullDetails={ false }
-						effectMaxLineHeight={3}
-					/>
-				</Grid>)
+					</div>
+				<YGOCard
+					isNew={ false }
+					cardName={card.cardName}
+					cardColor={card.cardColor}
+					cardEffect={card.cardEffect + '\n\n\n'}
+					monsterType={card.monsterType}
+					cardStyles={ cardStyles }
+					cardID={card.cardID}
+					fullDetails={ false }
+					effectMaxLineHeight={3}
+				/>
+			</Grid>
 		})
 
 		setCardDataForSelectedCriteria([...cardDataForSelectedCriteria, ...cards])
