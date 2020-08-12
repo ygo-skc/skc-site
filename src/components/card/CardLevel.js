@@ -18,7 +18,7 @@ const CardLevel = ( { level } ) =>
 		}
 		setLevelImages(stars)
 
-	}, level)
+	}, [level])
 
 
 	return(
