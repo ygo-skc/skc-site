@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { FunctionComponent } from 'react'
 
 import { Typography, Link } from '@material-ui/core'
 import styled from 'styled-components'
 
 import Breadcrumb from '../Breadcrumb'
 import { MainContentContainer, ChildPaper } from '../MainContent'
+
 
 const CustomLink = styled(Link)`
 	&&
@@ -14,11 +15,13 @@ const CustomLink = styled(Link)`
 	}
 `
 
+
 const CenteredText = styled(Typography)`
 	text-align: center;
 `
 
-const About: React.FC = () => (
+
+const About: FunctionComponent = () => (
 		<MainContentContainer>
 			<Breadcrumb crumbs={['Home', 'About']} />
 
@@ -78,3 +81,6 @@ const About: React.FC = () => (
 			</ChildPaper>
 		</MainContentContainer>
 	)
+
+
+export default About

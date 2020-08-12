@@ -13,9 +13,11 @@ import { NAME_maps_ROUTE } from '../Routes'
 
 import styled from 'styled-components'
 
+
 type BreadcrumbProps = {
 	crumbs: string[]
 }
+
 
 const BreadCrumbsContent = styled(Box)`
 	&&
@@ -47,20 +49,21 @@ BREADCRUMB_maps_ICON.set('About', <InfoIcon style={iconStyle} />)
 
 const Breadcrumb: FunctionComponent<BreadcrumbProps> = ( { crumbs }  ) =>
 {
-	var Crumbs: JSX.Element[] = crumbs.map((item, ind) =>
+	var Crumbs: JSX.Element[] = crumbs.map((item: string, ind: number) =>
 	{
 		if ((ind === crumbs.length - 1))
 		{
 			return(
 				(item === '') ?
 					<Skeleton
+						key={item}
 						variant='text'
 						width={ 150 }
 					/>
 					: <BreadCrumbItem
 						variant='subtitle2'
 						color='inherit'
-						key={ind}
+						key={item}
 						underline='none' >
 							{ BREADCRUMB_maps_ICON.get(item) }
 							{ item }
@@ -72,8 +75,8 @@ const Breadcrumb: FunctionComponent<BreadcrumbProps> = ( { crumbs }  ) =>
 			<BreadCrumbItem
 				variant='subtitle2'
 				color='inherit'
-				// href={ NAME_maps_ROUTE[item] } --- fix me
-				key={ind} >
+				href={ NAME_maps_ROUTE[item] }
+				key={item} >
 					{ BREADCRUMB_maps_ICON.get(item) }
 					{ item }
 			</BreadCrumbItem>

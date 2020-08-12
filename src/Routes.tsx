@@ -8,21 +8,23 @@ import { Browse } from './components/Browse'
 
 const Home = lazy( () => import('./components/Home') )
 const BanList = lazy( () => import('./components/banlist/BanList') )
+const ProductInfo = lazy( () => import('./components/product/ProductInfo') )
 const About = lazy( () => import( './components/about/About') )
 const HttpErr = lazy( () => import('./components/exception/HttpErr') )
 
 
-const NAME_maps_ROUTE =
+const NAME_maps_ROUTE : { [key: string]: string } =
 {
 	'Home': '/',
 	'BanList': '/ban_list',
 	'About': '/about',
 	'Card': '/card/:cardId',
 	'CardBrowse': '/cards/browse',
+	'ProductInfo': '/product/:productId',
 
-	400: '/bad_request',
-	500: '/server_err',
-	503: '/service_unavailable'
+	'400': '/bad_request',
+	'500': '/server_err',
+	'503': '/service_unavailable'
 }
 
 
@@ -49,6 +51,10 @@ export default function Routes()
 						path={NAME_maps_ROUTE.CardBrowse}
 						exact
 						component={Browse} />
+					<Route
+						path={NAME_maps_ROUTE.ProductInfo}
+						exact
+						component={ProductInfo} />
 
 					<Route
 						path={NAME_maps_ROUTE.About}
