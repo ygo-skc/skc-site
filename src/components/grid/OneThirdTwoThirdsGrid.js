@@ -1,6 +1,29 @@
 import React from 'react'
 import { Grid } from '@material-ui/core'
 
+import Styled from 'styled-components'
+
+
+const LeftGrid = Styled(Grid)`
+	&&
+	{
+		padding-right: 1.25rem;
+		padding-left: 1.25rem;
+	}
+`
+
+
+const RightGrid = Styled(Grid)`
+	&&
+	{
+		display: inline-grid;
+
+		@media screen and (min-width: 600px)
+		{
+			padding-right: 1.25rem
+		}
+	}
+`
 
 
 export const OneThirdTwoThirdsGrid = ( { match, history, oneThirdComponent, twoThirdComponent } ) =>
@@ -8,13 +31,13 @@ export const OneThirdTwoThirdsGrid = ( { match, history, oneThirdComponent, twoT
 
 	return(
 		<Grid container spacing={0} style={{ margin: 'auto', width: '100%' }} >
-			<Grid item xs={12} sm={5} md={4} lg={3} xl={2}
-				style={{ paddingLeft: '1.25rem', paddingRight: '1.25rem' }} >
+			<LeftGrid item xs={12} sm={5} md={4} lg={3} xl={2} >
 					{oneThirdComponent}
-			</Grid>
+			</LeftGrid>
 
-			<Grid item xs={12} sm={7} md={8} lg={9} xl={10} style={{display: 'inline-grid'}} >
+			<RightGrid item xs={12} sm={7} md={8} lg={9} xl={10} >
 				{twoThirdComponent}
-			</Grid>
-		</Grid>)
-		}
+			</RightGrid>
+		</Grid>
+	)
+}

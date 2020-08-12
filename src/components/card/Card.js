@@ -41,22 +41,18 @@ const ContentPaper = styled(Paper)
 		@media screen and (min-width: 600px)
 		{
 			padding: 2rem
-			margin-right: 2rem
 		}
 		@media screen and (min-width: 960px)
 		{
 			padding: 2.5rem
-			margin-right: 2rem
 		}
 		@media screen and (min-width: 1280px)
 		{
 			padding: 3rem
-			margin-right: 2rem
 		}
 		@media screen and (min-width: 1920px)
 		{
 			padding: 5rem
-			margin-right: 2rem
 		}
 	}
 `
