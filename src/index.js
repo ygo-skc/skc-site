@@ -27,10 +27,16 @@ const theme = createMuiTheme({
 			}
 			, label: {
 				fontWeight: 600,
-				fontSize: '.95rem'
+				fontSize: '.98rem'
 			}
 		},
-		'MuiTableCell': {
+		'MuiBadge': {
+			badge: {
+				fontSize: '1.1rem'
+				, padding: '.8rem'
+			}
+		}
+		, 'MuiTableCell': {
 			head: {
 				fontWeight: 600,
 				fontSize: '.93rem'
