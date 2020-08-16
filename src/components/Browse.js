@@ -5,8 +5,7 @@ import { TextField, Chip, Typography, Grid, Paper, Divider, Button } from '@mate
 import Breadcrumb from './Breadcrumb'
 import { MainContentContainer } from './MainContent'
 
-import {YGOCard} from './card/YGOCard'
-import cardStyles from './card/YGOCardStyles'
+import CardDisplayGrid from './grid/CardDisplayGrid'
 
 import {OneThirdTwoThirdsGrid} from './grid/OneThirdTwoThirdsGrid'
 
@@ -34,7 +33,6 @@ export const Browse =( {history} ) =>
 
 	const [selectedCriteriaChips, setSelectedCriteriaChips] = useState([])
 	const [jsonResults, setJsonResults] = useState(undefined)
-	const [cardDataForSelectedCriteria, setCardDataForSelectedCriteria] = useState([])
 
 	const [numResults, setNumResults] = useState(0)
 	const [numResultsDisplayed, setNumResultsDisplayed] = useState(0)
@@ -98,43 +96,6 @@ export const Browse =( {history} ) =>
 	}, [numResults])
 
 
-	useEffect( () => {
-		if (jsonResults === undefined)	return
-
-		const cards = jsonResults.slice(numResultsDisplayed - numResultsLoaded, numResultsDisplayed).map( card => {
-			return <Grid
-				key={card.cardID}
-				item
-				xs={6}
-				sm={4}
-				md={3}
-				lg={2}
-				xl={1}
-				style={{ padding: '.25rem', cursor: 'pointer' }} >
-					<div style={{margin: 'auto', marginBottom: '.5rem', width: '85%'}} >
-						<div
-							style={{ borderRadius: '50%', overflow: 'hidden', width: '100%',  height: '0', paddingBottom: '100%' }} >
-							<img src={`https://storage.googleapis.com/ygoprodeck.com/pics_artgame/${card.cardID}.jpg`} style={{  width: '100%', objectFit: 'cover' }} />
-						</div>
-					</div>
-				<YGOCard
-					isNew={ false }
-					cardName={card.cardName}
-					cardColor={card.cardColor}
-					cardEffect={card.cardEffect + '\n\n\n'}
-					monsterType={card.monsterType}
-					cardStyles={ cardStyles }
-					cardID={card.cardID}
-					fullDetails={ false }
-					effectMaxLineHeight={3}
-				/>
-			</Grid>
-		})
-
-		setCardDataForSelectedCriteria([...cardDataForSelectedCriteria, ...cards])
-	}, [numResultsDisplayed])
-
-
 	const loadMore = () => {
 		const newCap = numResultsDisplayed + defaultDisplayNum
 
@@ -161,7 +122,7 @@ export const Browse =( {history} ) =>
 
 	const reset = (fullReset = false) =>
 	{
-		setCardDataForSelectedCriteria([])
+		// setCardDataForSelectedCriteria([])
 		setNumResults(0)
 		if (fullReset)
 		{
@@ -224,15 +185,12 @@ export const Browse =( {history} ) =>
 					</Paper>
 				}
 				twoThirdComponent={
-					<Grid container >
-
-						{cardDataForSelectedCriteria}
-
-						<Button onClick={loadMore} style={(isLoadMoreVisible)? {display: 'block'} : {display: 'none'}} >
-							Press me to load more
-						</Button>
-
-					</Grid>
+					<CardDisplayGrid
+					cardJsonResults={jsonResults}
+					numResultsDisplayed={numResultsDisplayed}
+					numResultsLoaded={numResultsLoaded}
+					loadMoreCallback={loadMore}
+					isLoadMoreOptionVisible={isLoadMoreVisible} />
 				}
 			/>
 		</MainContentContainer>

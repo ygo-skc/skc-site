@@ -10,6 +10,9 @@ import Breadcrumb from '../Breadcrumb'
 
 import {OneThirdTwoThirdsGrid} from '../grid/OneThirdTwoThirdsGrid'
 
+
+import CardDisplayGrid from '../grid/CardDisplayGrid'
+
 export default function ProductInfo({match, history}) {
 	const [dynamicBreadcrumbs, setDynamicBreadcrumbs] = useState(['Home', ''])
 
@@ -18,6 +21,10 @@ export default function ProductInfo({match, history}) {
 	const [productType, setProductType] = useState('')
 	const [productSubType, setProductSubType] = useState('')
 	const [productReleaseDate, setProductReleaseDate] = useState('')
+	const [productTotal, setProductTotal] = useState('')
+
+	const [cardJsonResults, setCardJsonResults] = useState(undefined)
+
 
 	useEffect( () => {
 		handleFetch(`${NAME_maps_ENDPOINT['productDetails']}/${match.params.productId}/en`, history, json => {
@@ -29,6 +36,9 @@ export default function ProductInfo({match, history}) {
 			setProductType(json.productType)
 			setProductSubType(json.productSubType)
 			setProductReleaseDate(json.productReleaseDate)
+
+			setCardJsonResults(json.productContent.map(item => item.card))
+			setProductTotal(json.productTotal)
 		})
 	}, [])
 
@@ -41,12 +51,11 @@ export default function ProductInfo({match, history}) {
 				oneThirdComponent={
 					<Paper style={{padding: '1.5rem'}}>
 
-						<Typography>
-							<strong>Product Name:</strong> {productName}
+						<Typography variant='h5' align='center' >
+							{productName} ({productId})
 						</Typography>
-						<Typography>
-							<strong>Product ID:</strong> {productId}
-						</Typography>
+						<br/>
+
 						<Typography>
 							<strong>Product Type:</strong> {productType}
 						</Typography>
@@ -58,15 +67,24 @@ export default function ProductInfo({match, history}) {
 						</Typography>
 
 						<Divider style={{marginTop: '1.3rem', marginBottom: '1.3rem'}} />
+
+						<Typography variant='h6' align='center' >
+							Product Stats
+						</Typography>
+						<br/>
 						<Typography>
-							<strong>Product Sub-Type:</strong> {productSubType}
+							<strong>Product Total:</strong> {productTotal}
 						</Typography>
 					</Paper>
 				}
 				twoThirdComponent={
-					<Paper>
-
-					</Paper>
+					<CardDisplayGrid
+						cardJsonResults={cardJsonResults}
+						numResultsDisplayed={productTotal}
+						numResultsLoaded={productTotal}
+						loadMoreCallback={() => {console.log('I WAS CLICKED')}}
+						isLoadMoreOptionVisible={false}
+					/>
 				}
 			/>
 		</MainContentContainer>
