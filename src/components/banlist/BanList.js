@@ -1,14 +1,8 @@
-import React, { lazy, Suspense, useState, useEffect, useMemo } from 'react'
+import React, { lazy, useState, useEffect, useMemo } from 'react'
 import Styled from 'styled-components'
-import throttle from 'lodash/throttle'
 
-import { Dialog, Paper, DialogContent, Button, Box, Popper } from '@material-ui/core'
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import { Paper, Box } from '@material-ui/core'
 
-/*
-	Supplement styles
-*/
-import cardStyles from '../card/YGOCardStyles'
 
 /*
 	Custom Components
@@ -16,12 +10,8 @@ import cardStyles from '../card/YGOCardStyles'
 import { BanListSection } from './BanListSection'
 import { TabbedView } from './TabbedView'
 import { handleFetch } from '../../helper/FetchHandler'
-import SuspenseFallback from '../../SuspenseFallback'
 import { BanListDates } from './BanListDates'
 import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
-import { MainContentContainer } from '../MainContent'
-import BanListTable from './BanListTable'
-import {YGOCard} from '../card/YGOCard'
 
 import {OneThirdTwoThirdsGrid} from '../grid/OneThirdTwoThirdsGrid'
 
@@ -29,28 +19,6 @@ import {OneThirdTwoThirdsGrid} from '../grid/OneThirdTwoThirdsGrid'
 const BreadCrumb = lazy( () => import('../Breadcrumb') )
 const BanListStats = lazy( () => import('./BanListStats') )
 
-const CardDialog = Styled(Dialog)`
-	&&
-	{
-		.MuiDialog-paper
-		{
-			width: 90%;
-			max-width: 430px;
-			margin: 0 auto;
-			background: transparent;
-		}
-	}
-`
-const CardDialogContent = Styled(DialogContent)`
-	&&
-	{
-		.MuiDialogContent-root:first-child
-		{
-			padding: 0rem
-			background: transparent;
-		}
-	}
-`
 
 const BanContentParent = Styled(Paper)`
 	&&
@@ -103,17 +71,13 @@ export default function BanList(props)
 	const [limited, setLimited] = useState([])
 	const [semiLimited, setSemiLimited] = useState([])
 
-	const [numForbidden, setNumForbidden] = useState(undefined)
-	const [numLimited, setNumLimited] = useState(undefined)
-	const [numSemiLimited, setNumSemiLimited] = useState(undefined)
+	const [numForbidden, setNumForbidden] = useState(0)
+	const [numLimited, setNumLimited] = useState(0)
+	const [numSemiLimited, setNumSemiLimited] = useState(0)
 
 	const [isSettingUpDates, setIsSettingUpDates] = useState(true)
 	const [isFetchingBanList, setIsFetchingBanList] = useState(true)
 	const [isDataLoaded, setIsDataLoaded] = useState(false)
-
-	const [showingCardDetail, setShowingCardDetail] = useState(false)
-	const [chosenCardID, setChosenCardID] = useState(undefined)
-	const [chosenCard, setChosenCard] = useState(undefined)
 
 	const [newForbiddenCards, setNewForbiddenCards] = useState([])
 	const [newLimitedCards, setNewLimitedCards] = useState([])
@@ -153,9 +117,9 @@ export default function BanList(props)
 				setLimited( resultJson.banListInstance.limited )
 				setSemiLimited( resultJson.banListInstance.semiLimited )
 
-				setNumForbidden( resultJson.banListInstance.numForbidden )
-				setNumLimited( resultJson.banListInstance.numLimited )
-				setNumSemiLimited( resultJson.banListInstance.numSemiLimited )
+				setNumForbidden( (resultJson.banListInstance.numForbidden == undefined)? 0 : resultJson.banListInstance.numForbidden )
+				setNumLimited( (resultJson.banListInstance.numLimited == undefined)? 0 : resultJson.banListInstance.numLimited )
+				setNumSemiLimited( (resultJson.banListInstance.numSemiLimited == undefined)? 0 : resultJson.banListInstance.numSemiLimited )
 
 				// Removed cards compared to previous ban list
 				setRemovedCards(resultJson.banListInstance.removedContent.removedCards)
@@ -177,22 +141,6 @@ export default function BanList(props)
 		// eslint-disable-next-line
 	}, [selectedBanList])
 
-
-	useEffect(() => {
-		if (chosenCardID !== undefined)
-		{
-			handleFetchCardInfo(chosenCardID, (resultJson) => {
-				setChosenCard(resultJson)
-				setShowingCardDetail(true)
-			})
-		}
-		// eslint-disable-next-line
-	}, [chosenCardID])
-
-
-	useEffect(() => {
-		if (showingCardDetail === false) setChosenCardID(undefined)
-	}, [showingCardDetail])
 
 
 	return (
@@ -227,66 +175,54 @@ export default function BanList(props)
 								numNewSemiLimited={numNewSemiLimited}
 								removedCards={removedCards}
 								numRemoved={numRemoved}
-								handleFetchCardInfo={handleFetchCardInfo}
-								cardClicked={ (cardID) => setChosenCardID(cardID) }
 							/>
 						</BanContentParent>
 					</div>
 				}
 				twoThirdComponent={
-					<BannedContentContainer >
+					<BannedContentContainer style={ (!isSettingUpDates)? {display: 'block'} : {display: 'none'}} >
 						<TabbedView
 							numForbidden={numForbidden}
 							numLimited={numLimited}
 							numSemiLimited={numSemiLimited}
 							banList={selectedBanList}
 							forbiddenContent={
-								useMemo( () =>
-								{
-									return <BanListSection
-										sectionName='Forbidden'
-										sectionExplanation='Forbidden cards cannot be used in Deck/Side Deck in the Advanced Format'
-										sectionExplanationBackground='rgba(255, 69, 87, .17)'
-										cards={forbidden}
-										newCards={newForbiddenCards}
-										isDataLoaded={isDataLoaded}
-										cardClicked={(cardID) => window.location.assign(`/card/${cardID}`)}
-										banList={selectedBanList}
-									/>
-								}
-								, [isDataLoaded])
+								<BanListSection
+									sectionName='Forbidden'
+									sectionExplanation='Forbidden cards cannot be used in Deck/Side Deck in the Advanced Format'
+									sectionExplanationBackground='rgba(255, 69, 87, .17)'
+									cards={forbidden}
+									newCards={newForbiddenCards}
+									isDataLoaded={isDataLoaded}
+									cardClicked={(cardID) => window.location.assign(`/card/${cardID}`)}
+									banList={selectedBanList}
+								/>
 							}
 
 							limitedContent={
-								useMemo( () => {
-									return <BanListSection
-										sectionName='Limited'
-										sectionExplanation='Limited cards can be included in Deck/Side deck - max 1'
-										sectionExplanationBackground='rgba(255, 108, 18, .17)'
-										cards={limited}
-										newCards={newLimitedCards}
-										isDataLoaded={isDataLoaded}
-										cardClicked={(cardID) => window.location.assign(`/card/${cardID}`)}
-										banList={selectedBanList}
-									/>
-								}
-								, [isDataLoaded])
+								<BanListSection
+									sectionName='Limited'
+									sectionExplanation='Limited cards can be included in Deck/Side deck - max 1'
+									sectionExplanationBackground='rgba(255, 108, 18, .17)'
+									cards={limited}
+									newCards={newLimitedCards}
+									isDataLoaded={isDataLoaded}
+									cardClicked={(cardID) => window.location.assign(`/card/${cardID}`)}
+									banList={selectedBanList}
+								/>
 							}
 
 							semiLimitedContent={
-								useMemo( () => {
-									return <BanListSection
-										sectionName='Semi-Limited'
-										sectionExplanation='Semi-Limited cards can be included in Deck/Side deck - max 2'
-										sectionExplanationBackground='rgba(240, 198, 32, .17)'
-										cards={semiLimited}
-										newCards={newSemiLimitedCards}
-										isDataLoaded={isDataLoaded}
-										cardClicked={(cardID) => window.location.assign(`/card/${cardID}`) }
-										banList={selectedBanList}
-									/>
-								}
-								, [isDataLoaded])
+								<BanListSection
+									sectionName='Semi-Limited'
+									sectionExplanation='Semi-Limited cards can be included in Deck/Side deck - max 2'
+									sectionExplanationBackground='rgba(240, 198, 32, .17)'
+									cards={semiLimited}
+									newCards={newSemiLimitedCards}
+									isDataLoaded={isDataLoaded}
+									cardClicked={(cardID) => window.location.assign(`/card/${cardID}`) }
+									banList={selectedBanList}
+								/>
 							}
 						/>
 						</BannedContentContainer>
@@ -323,10 +259,4 @@ export default function BanList(props)
 
 		</Box>
 	)
-
-
-	function handleFetchCardInfo(cardId, callback)
-	{
-		handleFetch(`${NAME_maps_ENDPOINT['cardInstanceUrl']}/${cardId}`, props.history, callback)
-	}
 }
