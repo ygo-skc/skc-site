@@ -6,6 +6,8 @@ import styled from 'styled-components'
 import Breadcrumb from '../Breadcrumb'
 import { MainContentContainer, ChildPaper } from '../MainContent'
 
+import GenericLinkPhoto from '../photo/GenericLinkPhoto'
+
 
 const CustomLink = styled(Link)`
 	&&
@@ -30,7 +32,18 @@ const About: FunctionComponent = () => (
 					The Developer
 				</CenteredText>
 				<CenteredText variant='subtitle1'>
-					Javi Gomez • <CustomLink color='secondary' href='https://github.com/rtomyj'>GitHub</CustomLink> • <CustomLink color='secondary' href='mailto:rtomyj@gmail.com'>Email</CustomLink> • <CustomLink color='secondary' href='https://twitter.com/TheSupremeKin14'>Twitter</CustomLink>
+					<GenericLinkPhoto
+						imageName='twitter_logo.png'
+						link="https://twitter.com/TheSupremeKin14"
+					/>
+					<GenericLinkPhoto
+						imageName='email_logo.png'
+						link="mailto:rtomyj@gmail.com"
+					/>
+					<GenericLinkPhoto
+						imageName='github_logo.png'
+						link="https://github.com/rtomyj"
+					/>
 				</CenteredText>
 				<br />
 
@@ -48,10 +61,13 @@ const About: FunctionComponent = () => (
 
 			<ChildPaper>
 				<CenteredText variant='h4'>
-					The API
+					YGO API
 				</CenteredText>
 				<CenteredText variant='subtitle1'>
-					YGO API • <CustomLink color='secondary' href='https://ygoapi.cfapps.io/swagger-ui.html'>Documentation</CustomLink>
+					<GenericLinkPhoto
+						imageName='api_logo.jpg'
+						link="https://ygoapi.cfapps.io/swagger-ui.html"
+					/>
 				</CenteredText>
 				<br />
 
