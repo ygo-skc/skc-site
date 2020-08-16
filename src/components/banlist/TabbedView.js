@@ -11,8 +11,8 @@ import { BanListSection } from './BanListSection'
 const SummaryBadge = styled(Badge)`
 	&& {
 		.MuiBadge-badge {
-			right: -.25rem;
-			top: -.23rem;
+			right: -.35rem;
+			top: -.5rem;
 			color: white;
 		}
 	}
@@ -26,6 +26,7 @@ export const TabbedView = memo( ( { numForbidden, numLimited, numSemiLimited, fo
 		const tabs = []
 		tabs.push(
 			<Tab
+				key='forbidden'
 				style={{'textTransform': 'none'}}
 				label={
 					<SummaryBadge
@@ -42,6 +43,7 @@ export const TabbedView = memo( ( { numForbidden, numLimited, numSemiLimited, fo
 
 		tabs.push(
 			<Tab
+				key='limited'
 				style={{ 'textTransform': 'none' }}
 				label={
 					<SummaryBadge
@@ -58,6 +60,7 @@ export const TabbedView = memo( ( { numForbidden, numLimited, numSemiLimited, fo
 
 		tabs.push(
 			<Tab
+				key='semiLimited'
 				style={{ 'textTransform': 'none' }}
 				label={
 					<SummaryBadge
