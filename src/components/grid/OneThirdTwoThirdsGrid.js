@@ -9,6 +9,16 @@ const LeftGrid = Styled(Grid)`
 	{
 		padding-right: 1.25rem;
 		padding-left: 1.25rem;
+
+		@media screen and (min-width: 0px)
+		{
+			margin-bottom: 2.75rem;
+		}
+
+		@media screen and (min-width: 600px)
+		{
+			margin-bottom: 0rem;
+		}
 	}
 `
 

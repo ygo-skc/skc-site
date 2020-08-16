@@ -178,6 +178,16 @@ export const Browse =( {history} ) =>
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={
 					<Paper style={{padding: '1.4rem'}} >
+
+
+						<MainBrowseInfoTypography
+							style={{marginBottom: '1rem'}}
+							variant='h6' >
+							Current Criteria
+						</MainBrowseInfoTypography>
+
+						{selectedCriteriaChips}
+
 						<Autocomplete
 							multiple
 							limitTags={2}
@@ -199,13 +209,6 @@ export const Browse =( {history} ) =>
 							)}
 						/>
 
-						<Divider style={{marginTop: '1.5rem', marginBottom: '1.5rem'}} />
-
-						<MainBrowseInfoTypography variant='h6' >
-							Current Criteria
-						</MainBrowseInfoTypography>
-
-						{selectedCriteriaChips}
 
 						<Divider style={{marginTop: '1.5rem', marginBottom: '1.5rem'}} />
 						<Typography variant='h6' >

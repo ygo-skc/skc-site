@@ -92,7 +92,7 @@ export const TabbedView = memo( ( { numForbidden, numLimited, numSemiLimited, fo
 					</Tabs>
 				</AppBar>
 
-				<div style={{ padding: '.85rem' }} >
+				<div >
 					<TabPanel value={ currentTab } index={0}>
 						{ forbiddenContent }
 					</TabPanel>

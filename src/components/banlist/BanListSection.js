@@ -69,35 +69,6 @@ export const BanListSection = ( { sectionExplanation, sectionExplanationBackgrou
 		}
 	`
 
-	const CardGrid = styled(Grid)`
-		&&
-		{
-			@media screen and (min-width: 0px)
-			{
-				padding: .6rem;
-			}
-			@media screen and (min-width: 800px)
-			{
-				padding: .8rem;
-			}
-			@media screen and (min-width: 960px)
-			{
-				padding: 1rem;
-			}
-			@media screen and (min-width: 1500px)
-			{
-				padding: 1rem;
-			}
-			@media screen and (min-width: 1800px)
-			{
-				padding: 1rem;
-			}
-
-			margin: auto;
-			width: 100%
-		}
-	`
-
 	function isNewCard(cardID)
 	{
 		// eslint-disable-next-line
@@ -128,7 +99,7 @@ export const BanListSection = ( { sectionExplanation, sectionExplanationBackgrou
 				cardDetailsMap.get(cardColor).push(
 					<CardItem key={ind} item xs={12} sm={4} md={3} lg={2} xl={2}>
 						<CardDetails
-							key={ind}
+							key={card.cardID}
 							cardID={card.cardID}
 							cardName={card.cardName}
 							monsterType={card.monsterType}
@@ -216,9 +187,9 @@ export const BanListSection = ( { sectionExplanation, sectionExplanationBackgrou
 						<CardSectionText variant='h6' >
 							{cardColor}
 						</CardSectionText>
-						<CardGrid container spacing={0} >
+						<Grid container spacing={0} >
 							{ details }
-						</CardGrid>
+						</Grid>
 					</div>
 				)
 			})

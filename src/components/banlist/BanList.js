@@ -89,11 +89,6 @@ const BannedContentContainer = Styled(Paper)`
 	&&
 	{
 		border-radius: 0rem;
-
-		@media screen and (min-width: 960px)
-		{
-			margin-right: 2rem;
-		}
 	}
 `
 
@@ -220,7 +215,7 @@ export default function BanList(props)
 						</BanContentParent>
 
 						<BanContentParent
-							style={ (isSettingUpDates)? {display: 'none'}: {display: 'block' }  } >
+							style={ (isSettingUpDates)? {display: 'none'}: { display: 'block', marginBottom: '0rem' }  } >
 							<BanListStats
 								totalCardsInSelectedList={numForbidden + numLimited + numSemiLimited}
 								selectedBanList={selectedBanList}

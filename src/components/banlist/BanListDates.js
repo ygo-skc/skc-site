@@ -32,15 +32,14 @@ export const BanListDates = memo( ( { banListStartDates, setSelectedBanList } ) 
 	const [selectedRange, setSelectedRange] = useState('')
 
 	useEffect( () => {
-		let banListGrid = []
-		banListStartDates.forEach((item, ind) => {
-			banListGrid.push(<Grid key={ind} item xs={6} sm={4} md={12} lg={12} xl={6} >
+		let banListGrid = banListStartDates.map((item, ind) => {
+			return(<Grid key={getDateString(months, new Date(item))} item xs={6} sm={6} md={6} lg={12} xl={6} >
 				<Button
-					style={{color: '#fff', width: '88%', fontSize: '.95rem'}}
+					style={{color: '#fff', width: '99%'}}
 					color={ (ind === selectedBanListIndex)? 'primary': 'secondary' }
-					size='small'
+					size='large'
 
-					disableElevation={false}
+					disableElevation={true}
 					variant='contained'
 					startIcon={<DateRangeRoundedIcon />}
 					onClick={ () => {
@@ -61,7 +60,7 @@ export const BanListDates = memo( ( { banListStartDates, setSelectedBanList } ) 
 
 
 	return(
-		<div>
+		<div style={{padding: '.5rem'}} >
 			<Typography
 				variant='h6' >
 				Date Range
