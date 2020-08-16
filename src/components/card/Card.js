@@ -223,7 +223,7 @@ export const Card = ( { match, history } ) =>
 								<div style={{background: '#7d7dba', padding: '1rem'}}>
 									{
 										(isLoading)?
-											<Skeleton width={150} height={25} />
+											<Skeleton width={150} height={25} style={{margin: 'auto'}} />
 											: <Typography variant='subtitle1' align='center' style={{color: '#eee'}} >Product(s)</Typography>
 									}
 									<br />
@@ -241,7 +241,7 @@ export const Card = ( { match, history } ) =>
 								<div style={{background: '#ce7e65', padding: '1rem'}}>
 									{
 										(isLoading)?
-											<Skeleton width={150} height={25} />
+											<Skeleton width={150} height={25} style={{margin: 'auto'}}  />
 											: <Typography variant='subtitle1' align='center' style={{color: '#eee'}} >Ban List(s)</Typography>
 									}
 									<br />

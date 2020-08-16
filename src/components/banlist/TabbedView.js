@@ -11,7 +11,7 @@ import { BanListSection } from './BanListSection'
 const SummaryBadge = styled(Badge)`
 	&& {
 		.MuiBadge-badge {
-			right: -.35rem;
+			right: -.5rem;
 			top: -.5rem;
 			color: white;
 		}
@@ -79,7 +79,7 @@ export const TabbedView = memo( ( { numForbidden, numLimited, numSemiLimited, fo
 
 
 		return (
-			<div >
+			<div style={{width: '100%'}} >
 				<AppBar
 					style={{boxShadow: 'none'}}
 					position='static'

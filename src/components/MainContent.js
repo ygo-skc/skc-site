@@ -52,4 +52,30 @@ const ChildPaper = Styled(Paper)`
 	}
 `
 
-export { MainContentContainer, ChildPaper }
+const ChildBox = Styled(Box)`
+	&&
+	{
+		@media screen and (min-width: 0px)
+		{
+			padding: .25rem;
+		}
+		@media screen and (min-width: 600px)
+		{
+			padding: .3rem;
+		}
+		@media screen and (min-width: 960px)
+		{
+			padding: .4rem;
+		}
+		@media screen and (min-width: 1280px)
+		{
+			padding: .7rem;
+		}
+		@media screen and (min-width: 1920px)
+		{
+			padding: 1.5rem;
+		}
+	}
+`
+
+export { MainContentContainer, ChildPaper, ChildBox }

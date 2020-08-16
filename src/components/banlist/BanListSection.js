@@ -7,6 +7,8 @@ import { Typography, Box, Grid, CircularProgress } from '@material-ui/core'
 import CardDetails from '../card/BanListYGOCard.js'
 import cardStyles from '../card/YGOCardStyles'
 
+import { ChildBox } from '../MainContent'
+
 
 const cardSectionTextColors = {
 	'normal': 'rgba(249, 160, 16, 1)'
@@ -23,7 +25,78 @@ const cardSectionTextColors = {
 }
 
 
-export const BanListSection = ( { sectionExplanation, sectionExplanationBackground, cards, newCards, isDataLoaded, cardClicked } ) =>
+const CardSectionBaseText = styled(Typography)`
+	&&
+	{
+		margin-bottom: 1rem;
+		margin-top: 2rem;
+		text-transform: uppercase;
+		letter-spacing: .25rem;
+
+		@media screen and (min-width: 0px)
+		{
+			margin-left: .5rem;
+		}
+		@media screen and (min-width: 600px)
+		{
+			margin-left: .5rem;
+		}
+		@media screen and (min-width: 800px)
+		{
+			margin-left: 1rem;
+		}
+		@media screen and (min-width: 1500px)
+		{
+			margin-left: 1.2rem;
+		}
+		@media screen and (min-width: 1800px)
+		{
+			margin-left: 1.5rem;
+		}
+	}
+`
+
+const CardSectionBasePendulum = styled(CardSectionBaseText)`
+	&&
+	{
+		-webkit-text-fill-color: transparent;
+	}
+`
+
+
+const CardItem = styled(Grid)`
+&&
+{
+	cursor: pointer;
+	@media screen and (min-width: 0px)
+	{
+		padding-bottom: .75rem;
+	}
+	@media screen and (min-width: 600px)
+	{
+		padding: .5rem;
+	}
+	@media screen and (min-width: 800px)
+	{
+		padding: .7rem;
+	}
+	@media screen and (min-width: 960px)
+	{
+		padding: .5rem;
+	}
+	@media screen and (min-width: 1500px)
+	{
+		padding: .75rem;
+	}
+	@media screen and (min-width: 1800px)
+	{
+		padding: 1rem;
+	}
+}
+`
+
+
+export const BanListSection = ( { sectionExplanation, cards, newCards, isDataLoaded, cardClicked } ) =>
 {
 	const [cardTypeContentGrid, setCardTypeContentGrid] = useState([])
 	const [areCardsRendered, setAreCardsRendered] = useState(false)
@@ -34,38 +107,6 @@ export const BanListSection = ( { sectionExplanation, sectionExplanationBackgrou
 			margin-top: .75rem;
 			margin-bottom: 1.75rem;
 			color: #2b3239;
-		}
-	`
-
-
-	const CardItem = styled(Grid)`
-		&&
-		{
-			cursor: pointer;
-			@media screen and (min-width: 0px)
-			{
-				padding-bottom: .75rem;
-			}
-			@media screen and (min-width: 600px)
-			{
-				padding: .5rem;
-			}
-			@media screen and (min-width: 800px)
-			{
-				padding: .7rem;
-			}
-			@media screen and (min-width: 960px)
-			{
-				padding: .5rem;
-			}
-			@media screen and (min-width: 1500px)
-			{
-				padding: .75rem;
-			}
-			@media screen and (min-width: 1800px)
-			{
-				padding: 1rem;
-			}
 		}
 	`
 
@@ -115,78 +156,15 @@ export const BanListSection = ( { sectionExplanation, sectionExplanationBackgrou
 			})
 
 			cardDetailsMap.forEach((details, cardColor) => {
-				const CardSectionText = ( cardColor === 'Pendulum-Effect' || cardColor === 'Pendulum-Normal' )?
-					styled(Typography)`
-					&&
-					{
-						margin-bottom: 1rem;
-						margin-top: 2rem;
-						text-transform: uppercase;
-						letter-spacing: .25rem;
-						background: ${ cardSectionTextColors[cardColor.toLowerCase()] };
-						-webkit-background-clip: text;
-						-webkit-text-fill-color: transparent;
-
-						@media screen and (min-width: 0px)
-						{
-							margin-left: .5rem;
-						}
-						@media screen and (min-width: 600px)
-						{
-							margin-left: .5rem;
-						}
-						@media screen and (min-width: 800px)
-						{
-							margin-left: 1rem;
-						}
-						@media screen and (min-width: 1500px)
-						{
-							margin-left: 1.2rem;
-						}
-						@media screen and (min-width: 1800px)
-						{
-							margin-left: 1.5rem;
-						}
-					}
-					}
-				`
-				: styled(Typography)`
-						&&
-						{
-							margin-bottom: 1rem;
-							margin-top: 2rem;
-							text-transform: uppercase;
-							color: ${ cardSectionTextColors[cardColor.toLowerCase()] };
-							letter-spacing: .25rem;
-
-							@media screen and (min-width: 0px)
-							{
-								margin-left: .5rem;
-							}
-							@media screen and (min-width: 600px)
-							{
-								margin-left: .5rem;
-							}
-							@media screen and (min-width: 800px)
-							{
-								margin-left: 1rem;
-							}
-							@media screen and (min-width: 1500px)
-							{
-								margin-left: 1.2rem;
-							}
-							@media screen and (min-width: 1800px)
-							{
-								margin-left: 1.5rem;
-							}
-						}
-					`
+				const SectionText = (cardColor === 'Pendulum-Effect' || cardColor === 'Pendulum-Normal')? CardSectionBasePendulum : CardSectionBaseText
 
 				cardTypeContentGrid.push(
 					<div key={cardColor} >
-						<CardSectionText variant='h6' >
+						<SectionText
+							style={ (cardColor === 'Pendulum-Effect' || cardColor === 'Pendulum-Normal')? {background: cardSectionTextColors[cardColor.toLowerCase()], '-webkit-background-clip': 'text'}: {color: cardSectionTextColors[cardColor.toLowerCase()]} }
+							variant='h6' >
 							{cardColor}
-						</CardSectionText>
+						</SectionText>
 						<Grid container spacing={0} >
 							{ details }
 						</Grid>
@@ -203,7 +181,7 @@ export const BanListSection = ( { sectionExplanation, sectionExplanationBackgrou
 
 
 	return (
-		<Box>
+		<ChildBox >
 			<SectionInfoText variant='subtitle2' align='center' >
 				{ sectionExplanation }
 			</SectionInfoText>
@@ -222,7 +200,7 @@ export const BanListSection = ( { sectionExplanation, sectionExplanationBackgrou
 						/>
 				)
 			}
-		</Box>
+		</ChildBox>
 	)
 }
 

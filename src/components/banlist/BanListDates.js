@@ -37,7 +37,7 @@ export const BanListDates = memo( ( { banListStartDates, setSelectedBanList } ) 
 				<Button
 					style={{color: '#fff', width: '99%'}}
 					color={ (ind === selectedBanListIndex)? 'primary': 'secondary' }
-					size='large'
+					size='small'
 
 					disableElevation={true}
 					variant='contained'

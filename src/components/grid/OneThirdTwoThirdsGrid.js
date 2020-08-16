@@ -7,17 +7,16 @@ import Styled from 'styled-components'
 const LeftGrid = Styled(Grid)`
 	&&
 	{
-		padding-right: 1.25rem;
-		padding-left: 1.25rem;
-
 		@media screen and (min-width: 0px)
 		{
-			margin-bottom: 2.75rem;
+			padding-right: 1.25rem;
+			padding-left: 1.25rem;
 		}
 
 		@media screen and (min-width: 600px)
 		{
-			margin-bottom: 0rem;
+			padding-left: 0rem;
+			padding-right: 1.25rem;
 		}
 	}
 `
@@ -26,21 +25,35 @@ const LeftGrid = Styled(Grid)`
 const RightGrid = Styled(Grid)`
 	&&
 	{
-		display: inline-grid;
+		width: 100%;
+	}
+`
+
+const ParentGrid = Styled(Grid)`
+	&&
+	{
+		width: 100%;
+
+		@media screen and (min-width: 0px)
+		{
+			margin-bottom: 2.75rem;
+		}
 
 		@media screen and (min-width: 600px)
 		{
-			padding-right: 1.25rem
+			margin-bottom: 1rem;
+			padding-left: 1.25rem;
+			padding-right: 1.25rem;
 		}
 	}
 `
 
 
-export const OneThirdTwoThirdsGrid = ( { match, history, oneThirdComponent, twoThirdComponent } ) =>
+export const OneThirdTwoThirdsGrid = ( { oneThirdComponent, twoThirdComponent } ) =>
 {
 
 	return(
-		<Grid container spacing={0} style={{ margin: 'auto', width: '100%' }} >
+		<ParentGrid container spacing={0} >
 			<LeftGrid item xs={12} sm={5} md={4} lg={3} xl={2} >
 					{oneThirdComponent}
 			</LeftGrid>
@@ -48,6 +61,6 @@ export const OneThirdTwoThirdsGrid = ( { match, history, oneThirdComponent, twoT
 			<RightGrid item xs={12} sm={7} md={8} lg={9} xl={10} >
 				{twoThirdComponent}
 			</RightGrid>
-		</Grid>
+		</ParentGrid>
 	)
 }

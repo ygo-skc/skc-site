@@ -14,7 +14,7 @@ const CardBadge = styled(Badge)`
 		marginRight: 10px;
 
 		.MuiBadge-badge {
-			margin-right: 1.1rem;
+			margin-right: 2.0rem;
 			margin-bottom: .2rem;
 			color: white;
 		}

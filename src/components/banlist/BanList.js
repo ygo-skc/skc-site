@@ -144,7 +144,7 @@ export default function BanList(props)
 
 
 	return (
-		<Box >
+		<Box style={{}} >
 			<BreadCrumb crumbs={['Home', 'Ban List']} />
 
 
@@ -180,7 +180,7 @@ export default function BanList(props)
 					</div>
 				}
 				twoThirdComponent={
-					<BannedContentContainer style={ (!isSettingUpDates)? {display: 'block'} : {display: 'none'}} >
+					<BannedContentContainer  >
 						<TabbedView
 							numForbidden={numForbidden}
 							numLimited={numLimited}
