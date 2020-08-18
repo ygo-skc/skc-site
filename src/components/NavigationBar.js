@@ -11,8 +11,10 @@ export default function NavigationBar()
 	const NavigationButton = styled(Button)`
 		&&
 		{
-			text-transform: none;
+			margin-left: .25rem;
+			margin-right: .25rem;
 
+			font-size: .95rem;
 			:hover
 			{
 				background: #5c5ca9;
@@ -20,15 +22,28 @@ export default function NavigationBar()
 		}
 	`
 	return (
-		<AppBar position='static' >
-			<Toolbar>
+		<AppBar position='static' style={{background: '#310e68', backgroundImage: 'linear-gradient(316deg, #310e68 0%, #5f0f40 74%)'}} >
+			<Toolbar style={{minHeight: '48px'}}>
 				<Link
-					style={ { marginRight: '30px' } }
 					underline='none'
 					color='inherit'
 					href={NAME_maps_ROUTE.Home} >
-					<NavigationButton color='inherit' >
+					<NavigationButton
+						style={ { fontSize: '1.25rem', textTransform: 'none'} }
+						color='inherit' >
 						Supreme Kings Castle
+					</NavigationButton>
+				</Link>
+
+			</Toolbar>
+			<div style={{whiteSpace: 'nowrap', textAlign: 'center', overflow: 'auto'}} >
+
+			<Link
+					underline='none'
+					color='inherit'
+					href={ NAME_maps_ROUTE.Home } >
+					<NavigationButton color='inherit' >
+						Home
 					</NavigationButton>
 				</Link>
 
@@ -46,7 +61,16 @@ export default function NavigationBar()
 					color='inherit'
 					href={ NAME_maps_ROUTE.CardBrowse } >
 					<NavigationButton color='inherit' >
-						Browse
+						Card Browse
+					</NavigationButton>
+				</Link>
+
+				<Link
+					underline='none'
+					color='inherit'
+					href={ NAME_maps_ROUTE.CardBrowse } >
+					<NavigationButton color='inherit' >
+						Product Browse
 					</NavigationButton>
 				</Link>
 
@@ -58,7 +82,8 @@ export default function NavigationBar()
 						About
 					</NavigationButton>
 				</Link>
-			</Toolbar>
+
+			</div>
 		</AppBar>
 	)
 }
