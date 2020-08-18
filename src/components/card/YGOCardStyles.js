@@ -69,9 +69,9 @@ const cardStyles = {
 	trapSummaryBackground: pink[400],
 	trapSummaryColor: lightTextColor,
 
-	errBackground: '#7B3944',
+	errBackground: 'linear-gradient(315deg, #feae96 0%, #fe0944 74%)',
 	errColor: lightTextColor,
-	errSummaryBackground: '#C9573E',
+	errSummaryBackground: 'rgba(0, 0, 0, .25)',
 	errSummaryColor: lightTextColor,
 }
 
