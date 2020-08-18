@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Chip, Typography, Paper, IconButton, Popover, Switch, FormControlLabel, Grid, Avatar } from '@material-ui/core'
+import withWidth from '@material-ui/core/withWidth'
 import { Skeleton } from '@material-ui/lab'
 import FilterListOutlinedIcon from '@material-ui/icons/FilterListOutlined'
 
@@ -58,7 +59,7 @@ const ContentPaper = styled(Paper)
 `
 
 
-export const Card = ( { match, history } ) =>
+function Card( { match, history, width } )
 {
 	const [isLoading, setIsLoading] = useState(true)
 	const cardId = match.params.cardId
@@ -174,53 +175,35 @@ export const Card = ( { match, history } ) =>
 
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={
-					<div>
+					<div
+						style={{ width: '420px', maxWidth: '95%', margin: 'auto', paddingBottom: '3.5rem' }}>
 						<div
 							style={{ textAlign: 'center', marginBottom: '.5rem' }} >
-							<img src={`https://storage.googleapis.com/ygoprodeck.com/pics_artgame/${cardId}.jpg`} width = '55%' style={{ borderRadius: '50%' }} />
+							<img src={`https://storage.googleapis.com/ygoprodeck.com/pics_artgame/${cardId}.jpg`} width = {(width === 'xs')? '65%' : '90%'} style={{ borderRadius: '50%' }} />
 						</div>
-						<div
-							style={{ width: '350px', maxWidth: '100%', margin: 'auto', paddingBottom: '3.5rem' }} >
-							<YGOCard
-									isNew={ false }
-									cardName={cardName}
-									cardColor={cardColor}
-									cardEffect={cardEffect}
-									monsterType={monsterType}
-									monsterAtk={monsterAtk}
-									monsterDef={monsterDef}
-									monsterAssociation={monsterAssociation}
-									cardStyles={ cardStyles }
-									cardID={cardId}
-									fullDetails={ true }
-									isLoading={ isLoading }
-								/>
-						</div>
+						<YGOCard
+							isNew={ false }
+							cardName={cardName}
+							cardColor={cardColor}
+							cardEffect={cardEffect}
+							monsterType={monsterType}
+							monsterAtk={monsterAtk}
+							monsterDef={monsterDef}
+							monsterAssociation={monsterAssociation}
+							cardStyles={ cardStyles }
+							cardID={cardId}
+							fullDetails={ true }
+							isLoading={ isLoading }
+							/>
 					</div>
 				}
 				twoThirdComponent={
-					<ContentPaper >
-						<div style={{ textAlign: 'center' }} >
-							<IconButton onClick={ (event) => {
-								setFilterAnchor(event.target)
-								setIsShowingFilter(!isShowingFilter)
-							}} >
-								<FilterListOutlinedIcon fontSize='large' />
-							</IconButton>
-						</div>
 
-						<div style={{ marginBottom: '2rem' }} >
-							{
-								(isLoading)?
-									<Skeleton height={30} style={{ margin: '0 auto', width: '420', maxWidth: '90%' }} />
-									: <Typography variant='h6' align='center'>Content Associated With <strong>{cardName}</strong></Typography>
-							}
-						</div>
 
 						<Grid container >
 							<Grid item xs={12} sm={12} md={12} lg={6} xl={6}  style={ (showPackInfo === true)? { display: 'inline-grid', padding: '1.2rem' } : {display: 'none'} } >
 
-								<div style={{background: '#7d7dba', padding: '1rem'}}>
+								<Paper style={{background: '#a4508', backgroundImage: 'linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)', padding: '1rem'}} >
 									{
 										(isLoading)?
 											<Skeleton width={150} height={25} style={{margin: 'auto'}} />
@@ -234,15 +217,15 @@ export const Card = ( { match, history } ) =>
 												productInfoChips
 												: <Typography style={{ color: '#fff' }} align='center' variant='body1' ><strong>{cardName}</strong> Not Found In Any Product</Typography>
 									}
-								</div>
+								</Paper>
 							</Grid>
 
 							<Grid item xs={12} sm={12} md={12} lg={6} xl={6} style={ (showBanInfo === true)? { display: 'inline-grid', padding: '1.2rem' } : {display: 'none'} } >
-								<div style={{background: '#ce7e65', padding: '1rem'}}>
+								<Paper style={{backgroundColor: '#fc9842', backgroundImage: 'linear-gradient(315deg, #fc9842 0%, #fe5f75 74%)', padding: '1rem'}}>
 									{
 										(isLoading)?
 											<Skeleton width={150} height={25} style={{margin: 'auto'}}  />
-											: <Typography variant='subtitle1' align='center' style={{color: '#eee'}} >Ban List(s)</Typography>
+											: <Typography variant='subtitle1' align='center' style={{color: '#fff'}} >Ban List(s)</Typography>
 									}
 									<br />
 									{
@@ -252,13 +235,15 @@ export const Card = ( { match, history } ) =>
 												banListInfoChips
 												: <Typography style={{ color: '#fff' }} align='center' variant='subtitle2' >No Instances of <strong>{cardName}</strong> Being Forbidden, Limited, or Semi-Limited</Typography>
 									}
-								</div>
+								</Paper>
 							</Grid>
 						</Grid>
-					</ContentPaper>
 					}
 				/>
 
 		</MainContentContainer>
 	)
 }
+
+
+export default withWidth()(Card)

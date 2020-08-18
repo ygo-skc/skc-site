@@ -22,6 +22,9 @@ const CardBadge = styled(Badge)`
 `
 
 const YGOCardStyled = styled(YGOCard)`
+	&&{
+		width: 100%;
+	}
 `
 
 

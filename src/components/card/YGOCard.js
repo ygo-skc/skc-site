@@ -1,22 +1,22 @@
 import React from 'react'
 
-import { Typography, Box, Card, CardContent } from '@material-ui/core'
+import { Typography, Box, Card, Paper } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
 
-import styled from 'styled-components'
+import Styled from 'styled-components'
 import he from 'he'
 
 import { CardLevel } from './CardLevel'
 
 
-const MonsterAtkDefComponent = styled(Typography)`
+const MonsterAtkDefComponent = Styled(Typography)`
 	&&
 	{
 		text-align: right;
 	}
 `
 
-const CardIDComponent = styled(Typography)`
+const CardIDComponent = Styled(Typography)`
 	&& {
 		color: #fff;
 		margin-top: .25rem;
@@ -24,7 +24,7 @@ const CardIDComponent = styled(Typography)`
 `
 
 
-const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, monsterDef, monsterAssociation, cardStyles, cardID, fullDetails, effectMaxLineHeight, isLoading } )  =>
+const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, monsterDef, monsterAssociation, cardStyles, cardID, fullDetails, effectMaxLineHeight, isLoading, className } )  =>
 {
 
 	if (isLoading)
@@ -35,29 +35,32 @@ const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, mon
 	}
 	const cardColorLowerCase = cardColor.toLowerCase()
 
-	const CardContentComponent = styled(CardContent)`
-		&&&
+	const CardContentComponent = Styled(Paper)`
+		&&
 		{
-			padding: .375rem;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+
 			background: ${cardStyles[ `${cardColorLowerCase}Background` ]};
 
-			@media screen and (min-width: 1500px)
+			@media screen and (min-width: 0px)
 			{
-				padding: .52rem;
+				padding: .69rem;
 			}
 		}
 	`
 
-	const CardNameComponent = styled(Typography)`
+	const CardNameComponent = Styled(Typography)`
 		&& {
 			font-weight: 600;
 			margin-bottom: .18rem;
-			text-transform: uppercase;
+
 			color: ${cardStyles[ `${cardColorLowerCase}Color` ]};
 		},
 	`
 
-	const CardDescriptionComponent = styled(Box)`
+	const CardDescriptionComponent = Styled(Box)`
 		&&
 		{
 			padding: .445rem;
@@ -66,14 +69,14 @@ const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, mon
 	`
 
 	const CardEffectComponent = (fullDetails) ?
-		styled(Typography)`
+		Styled(Typography)`
 			&&
 			{
 				white-space: pre-wrap;
 				color: ${cardStyles[ `${cardColorLowerCase}SummaryColor` ]};
 			}
 		`
-		: styled(Typography)`
+		: Styled(Typography)`
 			&&
 			{
 				white-space: pre-wrap;
@@ -86,7 +89,7 @@ const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, mon
 		`
 
 
-	const MonsterTypeComponent = styled(Typography)`
+	const MonsterTypeComponent = Styled(Typography)`
 		&&
 		{
 			font-weight: 600;
@@ -95,66 +98,56 @@ const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, mon
 		}
 	`
 
-	const YGOCardContainer = styled(Card)
-	`
-		&&
-		{
-			width: 100%;
-		}
-	`
-
 	return(
-		<YGOCardContainer  >
-			<CardContentComponent >
+		<CardContentComponent className={className} >
 
-				<div style={{ width: '100%', display: 'flex', marginBottom: '.5rem' }} >
-					<CardNameComponent
-						variant='body1'
-						noWrap={true}
-						style={{ flex: '1' }}
-						>
-							{ cardName }
-					</CardNameComponent>
-				</div>
+			<div style={{ width: '100%', display: 'flex', marginBottom: '.5rem', whiteSpace: 'normal' }} >
+				<CardNameComponent
+					variant='body1'
+					noWrap={true}
+					style={{ flex: '1' }}
+					>
+						{ cardName }
+				</CardNameComponent>
+			</div>
 
-				<CardLevel level={(monsterAssociation !== undefined && monsterAssociation.level !== undefined)? monsterAssociation.level: 0 } />
+			<CardLevel level={(monsterAssociation !== undefined && monsterAssociation.level !== undefined)? monsterAssociation.level: 0 } />
 
 
-				<CardDescriptionComponent >
-					{
-						( cardColor === 'Spell' || cardColor === 'Trap' ) ?
-							undefined :
-							<MonsterTypeComponent
-								variant='body2'
-								noWrap={true} >
-									[ { monsterType } ]
-							</MonsterTypeComponent>
-					}
-
-					<CardEffectComponent
-						variant='body2' >
-							{ he.decode(cardEffect) }
-					</CardEffectComponent>
-
-					{
-						( cardColor === 'Spell' || cardColor === 'Trap' || cardColor === 'err' ) ?
-							undefined :
-							(fullDetails) ?
-								<MonsterAtkDefComponent>
-									{monsterAtk} / {monsterDef}
-								</MonsterAtkDefComponent> :
-								undefined
-					}
-				</CardDescriptionComponent>
+			<CardDescriptionComponent >
 				{
-					(fullDetails) ?
-						<CardIDComponent variant='body2' >
-							{cardID}
-						</CardIDComponent>
-						: undefined
+					( cardColor === 'Spell' || cardColor === 'Trap' ) ?
+						undefined :
+						<MonsterTypeComponent
+							variant='body2'
+							noWrap={true} >
+								[ { monsterType } ]
+						</MonsterTypeComponent>
 				}
-			</CardContentComponent>
-		</YGOCardContainer>
+
+				<CardEffectComponent
+					variant='body2' >
+						{ he.decode(cardEffect) }
+				</CardEffectComponent>
+
+				{
+					( cardColor === 'Spell' || cardColor === 'Trap' || cardColor === 'err' ) ?
+						undefined :
+						(fullDetails) ?
+							<MonsterAtkDefComponent>
+								{monsterAtk} / {monsterDef}
+							</MonsterAtkDefComponent> :
+							undefined
+				}
+			</CardDescriptionComponent>
+			{
+				(fullDetails) ?
+					<CardIDComponent variant='body2' >
+						{cardID}
+					</CardIDComponent>
+					: undefined
+			}
+		</CardContentComponent>
 	)
 }
 

@@ -68,6 +68,7 @@ const CardItem = styled(Grid)`
 &&
 {
 	cursor: pointer;
+
 	@media screen and (min-width: 0px)
 	{
 		padding-bottom: .75rem;

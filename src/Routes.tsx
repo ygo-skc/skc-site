@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import SuspenseFallback from './SuspenseFallback'
 
-import { Card } from './components/card/Card'
+import Card from './components/card/Card'
 import { Browse } from './components/Browse'
 
 const Home = lazy( () => import('./components/Home') )
