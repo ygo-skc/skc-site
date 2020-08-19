@@ -36,7 +36,7 @@ export default function NavigationBar()
 				</Link>
 
 			</Toolbar>
-			<div style={{whiteSpace: 'nowrap', textAlign: 'center', overflow: 'auto'}} >
+			<div style={{whiteSpace: 'nowrap', textAlign: 'center', overflow: 'auto', backgroundColor: 'rgba(0, 0, 0, .17)'}}>
 
 			<Link
 					underline='none'

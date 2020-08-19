@@ -163,7 +163,7 @@ export default function Home( {history} )
 				<br />
 				<Typography variant='body1' >
 					Yugioh is ever expanding and evolving. New products are continuously released and new ban lists established. As such this website will also  be continuously updated to accommodate.
-					Enjoy the website ad free with a fast and beautiful UI. There is no tracking and the only money we make is though donations. Want to become a patreon or learn more? Check out the <Link color='secondary' href='/ban_list'><strong>About</strong></Link> section
+					Enjoy the website ad free with a fast and beautiful UI. There is no tracking and the only money we make is though donations. Want to become a patreon or learn more? Check out the <Link color='secondary' href='/about'><strong>About</strong></Link> section
 				</Typography>
 			</ChildPaper>
 

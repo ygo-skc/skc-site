@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import { Typography, Box, Grid, CircularProgress } from '@material-ui/core'
+import { Typography, Grid, CircularProgress } from '@material-ui/core'
 
 import CardDetails from '../card/BanListYGOCard.js'
 import cardStyles from '../card/YGOCardStyles'
