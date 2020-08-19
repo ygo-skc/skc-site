@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import Autocomplete from '@material-ui/lab/Autocomplete'
-import { TextField, Chip, Typography, Grid, Paper, Divider, Button } from '@material-ui/core'
+import { TextField, Chip, Typography, Grid, Paper, Divider, InputBase, IconButton } from '@material-ui/core'
+
+import SearchIcon from '@material-ui/icons/Search'
 
 import Breadcrumb from './Breadcrumb'
 import { MainContentContainer } from './MainContent'
@@ -18,6 +20,7 @@ import Styled from 'styled-components'
 const MainBrowseInfoTypography = Styled(Typography)`
 	&&
 	{
+		color: rgba(255, 255, 255, .95);
 	}
 `
 
@@ -25,10 +28,9 @@ const MainBrowseInfoTypography = Styled(Typography)`
 const defaultDisplayNum = 40
 
 
-export const Browse =( {history} ) =>
+export default function Browse( {history} )
 {
 	const [browseCriteria, setBrowseCriteria] = useState([])
-	const [intermediateSelectedCriteria, setIntermediateSelectedCriteria] = useState([])
 	const [selectedCriteria, setSelectedCriteria] = useState([])
 
 	const [selectedCriteriaChips, setSelectedCriteriaChips] = useState([])
@@ -62,8 +64,10 @@ export const Browse =( {history} ) =>
 	}, [])
 
 	useEffect( () => {
+		console.log(selectedCriteria)
 		if (selectedCriteria.length === 0)
 		{
+			console.log('hi')
 			reset(true)
 			return
 		}
@@ -77,8 +81,10 @@ export const Browse =( {history} ) =>
 			if (criteria.criteriaName == 'cardColors' || criteria.criteriaName == 'attributes')
 				criteriaMap.get(criteria.criteriaName).push(criteria.criteriaValue)
 
-
-			return <Chip key={criteria.criteriaValue} label={criteria.criteriaValue} />
+			return <Chip
+				key={criteria.criteriaValue}
+				label={criteria.criteriaValue}
+				style={{backgroundColor: 'rgba(0, 0, 0, .37)'}} />
 		})
 
 		setSelectedCriteriaChips(selectedCriteriaChips)
@@ -122,7 +128,6 @@ export const Browse =( {history} ) =>
 
 	const reset = (fullReset = false) =>
 	{
-		// setCardDataForSelectedCriteria([])
 		setNumResults(0)
 		if (fullReset)
 		{
@@ -133,12 +138,13 @@ export const Browse =( {history} ) =>
 
 
 	return(
-		<MainContentContainer>
+		<MainContentContainer style={{}} >
 			<Breadcrumb crumbs={ ['Home', 'Browse'] } />
 
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={
-					<Paper style={{padding: '1.4rem'}} >
+
+					<Paper style={{padding: '1.4rem', backgroundColor: '#7f5a83', backgroundImage: 'linear-gradient(315deg, #7f5a83 0%, #0d324d 74%)' }} >
 
 
 						<MainBrowseInfoTypography
@@ -149,48 +155,62 @@ export const Browse =( {history} ) =>
 
 						{selectedCriteriaChips}
 
+						<br />
+						<br />
 						<Autocomplete
 							multiple
-							limitTags={2}
 							id='browseCriteriaFilter'
 							options={browseCriteria}
 							getOptionLabel={option => option.criteriaValue}
 							groupBy={option => option.criteriaName}
 							autoHighlight
 							onChange={ (event, val)  => {
-								setIntermediateSelectedCriteria(val)
+								console.log(val)
+								setSelectedCriteria(val)
+								// setIntermediateSelectedCriteria(val)
 							}}
 							renderTags={ () => null }
 							disableCloseOnSelect
 							onClose={ (event, reason) => {
-								setSelectedCriteria(intermediateSelectedCriteria)
+								// setSelectedCriteria(intermediateSelectedCriteria)
 							}}
 							renderInput={(params) => (
-								<TextField {...params} variant='filled' label='' placeholder='Card Type' />
+								<div style={{ width: '100%', display: 'flex', backgroundColor: 'rgba(0, 0, 0, .37)' }} >
+								<InputBase
+									ref={params.InputProps.ref}
+									inputProps={params.inputProps}
+									style={{ color: 'white', flex: '1', margin: '.8rem', fontSize: '1.23rem' }}
+									placeholder='Search...'
+									/>
+									<IconButton>
+										<SearchIcon style={{ color: 'rgba(255, 255, 255, .56)' }} />
+									</IconButton>
+								</div>
 							)}
-						/>
+					/>
 
 
 						<Divider style={{marginTop: '1.5rem', marginBottom: '1.5rem'}} />
-						<Typography variant='h6' >
+						<MainBrowseInfoTypography variant='h6' >
 							Results
-						</Typography>
-						<Typography variant='body1' >
+						</MainBrowseInfoTypography>
+						<MainBrowseInfoTypography variant='body1' >
 							Total: {numResults}
-						</Typography>
-						<Typography variant='body1' >
+						</MainBrowseInfoTypography>
+						<MainBrowseInfoTypography variant='body1' >
 							Displaying: {numResultsDisplayed}
-						</Typography>
+						</MainBrowseInfoTypography>
 
 					</Paper>
 				}
 				twoThirdComponent={
 					<CardDisplayGrid
-					cardJsonResults={jsonResults}
-					numResultsDisplayed={numResultsDisplayed}
-					numResultsLoaded={numResultsLoaded}
-					loadMoreCallback={loadMore}
-					isLoadMoreOptionVisible={isLoadMoreVisible} />
+						cardJsonResults={jsonResults}
+						numResultsDisplayed={numResultsDisplayed}
+						numResultsLoaded={numResultsLoaded}
+						loadMoreCallback={loadMore}
+						isLoadMoreOptionVisible={isLoadMoreVisible}
+						/>
 				}
 			/>
 		</MainContentContainer>

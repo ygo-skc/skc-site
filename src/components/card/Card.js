@@ -136,7 +136,7 @@ function Card( { match, history, width } )
 			const banListInfoChips = []
 
 			banListInfo.forEach( item => {
-				banListInfoChips.push(<CardSummaryChip label={`${item.banListDate}  •  ${item.banStatus}`} />)
+				banListInfoChips.push(<CardSummaryChip label={`${item.banListDate}  •  ${item.banStatus.charAt(0)}`} />)
 				setBanListInfoChips(banListInfoChips)
 			})
 		}
@@ -203,7 +203,7 @@ function Card( { match, history, width } )
 						<Grid container >
 							<Grid item xs={12} sm={12} md={12} lg={6} xl={6}  style={ (showPackInfo === true)? { display: 'inline-grid', padding: '1.2rem' } : {display: 'none'} } >
 
-								<Paper style={{background: '#a4508', backgroundImage: 'linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)', padding: '1rem'}} >
+								<Paper style={{background: '#a4508', backgroundImage: 'linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)', padding: '1.5rem'}} >
 									{
 										(isLoading)?
 											<Skeleton width={150} height={25} style={{margin: 'auto'}} />
@@ -221,7 +221,7 @@ function Card( { match, history, width } )
 							</Grid>
 
 							<Grid item xs={12} sm={12} md={12} lg={6} xl={6} style={ (showBanInfo === true)? { display: 'inline-grid', padding: '1.2rem' } : {display: 'none'} } >
-								<Paper style={{backgroundColor: '#fc9842', backgroundImage: 'linear-gradient(315deg, #fc9842 0%, #fe5f75 74%)', padding: '1rem'}}>
+								<Paper style={{backgroundColor: '#fc9842', backgroundImage: 'linear-gradient(315deg, #fc9842 0%, #fe5f75 74%)', padding: '1.5rem'}}>
 									{
 										(isLoading)?
 											<Skeleton width={150} height={25} style={{margin: 'auto'}}  />

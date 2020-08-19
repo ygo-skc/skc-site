@@ -7,6 +7,7 @@ import Styled from 'styled-components'
 const LeftGrid = Styled(Grid)`
 	&&
 	{
+		margin-bottom: 2.5rem;
 		@media screen and (min-width: 0px)
 		{
 			padding-right: 1.25rem;

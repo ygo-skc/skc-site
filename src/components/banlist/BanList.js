@@ -23,6 +23,7 @@ const BanListStats = lazy( () => import('./BanListStats') )
 const BanContentParent = Styled(Paper)`
 	&&
 	{
+		background-image: linear-gradient(315deg, #fc9842 0%, #fe5f75 74%);
 		border-radius: .5rem;
 
 		@media screen and (min-width: 0px)

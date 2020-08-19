@@ -23,7 +23,9 @@ const theme = createMuiTheme({
 			root: {
 				fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 				marginRight: '.55rem',
-				marginTop: '.5rem'
+				marginTop: '.5rem',
+				backgroundColor: 'rgba(0, 0, 0, .23)',
+				color: 'white'
 			}
 			, label: {
 				fontWeight: 600,
