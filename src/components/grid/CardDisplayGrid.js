@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react'
 
-import { Grid, Button } from '@material-ui/core'
+import { Grid, IconButton, Box } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
+import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded';
 
 
 import {YGOCard} from '../card/YGOCard'
@@ -98,21 +99,20 @@ export default function CardDisplayGrid({ cardJsonResults, numResultsDisplayed, 
 
 
 	return(
-		<Grid>
-
-			<Grid container >
-
-				{(isLoadingData)? cardGridUISkeleton : cardGridUI}
-				{
-					(isLoadingData)?
-					undefined :
-					<Button onClick={ () => loadMoreCallback()} style={(isLoadMoreOptionVisible)? {display: 'block'} : {display: 'none'}} >
-						Press me to load more
-					</Button>
-				}
-
+		<Box>
+			<Grid>
+				<Grid container >
+					{(isLoadingData)? cardGridUISkeleton : cardGridUI}
+				</Grid>
 			</Grid>
 
-		</Grid>
+			{
+				(isLoadingData)?
+				undefined :
+				<IconButton onClick={ () => loadMoreCallback()} style={(isLoadMoreOptionVisible)? {display: 'block', margin: 'auto', background: '#310e68', backgroundImage: 'linear-gradient(316deg, #310e68 0%, #5f0f40 74%)', color: 'rgba(255, 255, 255, .95)'} : {display: 'none'}} >
+					<ExpandMoreRoundedIcon />
+				</IconButton>
+			}
+		</Box>
 	)
 }
