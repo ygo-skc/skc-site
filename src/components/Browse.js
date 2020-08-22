@@ -9,7 +9,7 @@ import { MainContentContainer } from './MainContent'
 
 import CardDisplayGrid from './grid/CardDisplayGrid'
 
-import {OneThirdTwoThirdsGrid} from './grid/OneThirdTwoThirdsGrid'
+import OneThirdTwoThirdsGrid from './grid/OneThirdTwoThirdsGrid'
 
 import { handleFetch } from '../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../helper/YgoApiEndpoints'
@@ -146,6 +146,12 @@ export default function Browse( {history} )
 
 					<Paper style={{padding: '1.4rem', backgroundColor: '#7f5a83', backgroundImage: 'linear-gradient(315deg, #7f5a83 0%, #0d324d 74%)' }} >
 
+						<MainBrowseInfoTypography variant='h4' align='center' >
+							Card Browse Tool
+						</MainBrowseInfoTypography>
+
+						<br />
+						<br />
 
 						<MainBrowseInfoTypography
 							style={{marginBottom: '1rem'}}
@@ -190,7 +196,7 @@ export default function Browse( {history} )
 					/>
 
 
-						<Divider style={{marginTop: '1.5rem', marginBottom: '1.5rem'}} />
+						<Divider style={{marginTop: '1.75rem', marginBottom: '1.75rem', backgroundColor: 'rgba(255, 255, 255, .25)'}} />
 						<MainBrowseInfoTypography variant='h6' >
 							Results
 						</MainBrowseInfoTypography>
