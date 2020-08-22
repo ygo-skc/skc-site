@@ -68,7 +68,7 @@ export default function NavigationBar()
 				<Link
 					underline='none'
 					color='inherit'
-					href={ NAME_maps_ROUTE.CardBrowse } >
+					href={ NAME_maps_ROUTE.ProductBrowse } >
 					<NavigationButton color='inherit' >
 						Product Browse
 					</NavigationButton>
