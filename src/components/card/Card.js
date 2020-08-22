@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import { Chip, Typography, Paper, IconButton, Popover, Switch, FormControlLabel, Grid, Avatar } from '@material-ui/core'
+import React, { useState, useEffect, lazy, Suspense } from 'react'
+import { Chip, Typography, Grid, Box } from '@material-ui/core'
 import withWidth from '@material-ui/core/withWidth'
-import { Skeleton } from '@material-ui/lab'
-import FilterListOutlinedIcon from '@material-ui/icons/FilterListOutlined'
 
 import Breadcrumb from '../Breadcrumb'
 import {YGOCard} from './YGOCard'
@@ -13,16 +11,10 @@ import { MainContentContainer } from '../MainContent'
 
 import styled from 'styled-components'
 
-import {OneThirdTwoThirdsGrid} from '../grid/OneThirdTwoThirdsGrid'
+import OneThirdTwoThirdsGrid from '../grid/OneThirdTwoThirdsGrid'
 
+const CardInformationSection = lazy( () => import('./CardInformationSection') )
 
-// When user wants to include or exclude a category from the info component the corresponding local storage variable is updated and the corresponding
-// state variable is also updated. This method will take a reference to the state variable to update, the method used to update the state variable and
-// the name of the variable used in local storage.
-const onFilterItemClicked = (stateVariable, stateChangeMethod, localStorageItemName) => {
-	localStorage.setItem(localStorageItemName, !stateVariable)
-	stateChangeMethod(!stateVariable)
-}
 
 const CardSummaryChip = styled(Chip)`
 	&&
@@ -31,32 +23,13 @@ const CardSummaryChip = styled(Chip)`
 	}
 `
 
-const ContentPaper = styled(Paper)
-`
-	&&
-	{
-		@media screen and (min-width: 400px)
-		{
-			padding: .7rem
-		}
-		@media screen and (min-width: 600px)
-		{
-			padding: 2rem
-		}
-		@media screen and (min-width: 960px)
-		{
-			padding: 2.5rem
-		}
-		@media screen and (min-width: 1280px)
-		{
-			padding: 3rem
-		}
-		@media screen and (min-width: 1920px)
-		{
-			padding: 5rem
-		}
-	}
-`
+// When user wants to include or exclude a category from the info component the corresponding local storage variable is updated and the corresponding
+// state variable is also updated. This method will take a reference to the state variable to update, the method used to update the state variable and
+// the name of the variable used in local storage.
+const onFilterItemClicked = (stateVariable, stateChangeMethod, localStorageItemName) => {
+	localStorage.setItem(localStorageItemName, !stateVariable)
+	stateChangeMethod(!stateVariable)
+}
 
 
 function Card( { match, history, width } )
@@ -75,18 +48,10 @@ function Card( { match, history, width } )
 	const [productInfo, setPackInfo] = useState([])
 	const [banListInfo, setBanListInfo] = useState([])
 
-	const [productInfoChips, setPackInfoChips] = useState(undefined)
-	const [banListInfoChips, setBanListInfoChips] = useState(undefined)
+	const [productInfoChips, setPackInfoChips] = useState([])
+	const [banListInfoChips, setBanListInfoChips] = useState([])
 
 	const [dynamicCrumbs, setDynamicCrumbs] = useState(['Home', ''])
-
-	const [isShowingFilter, setIsShowingFilter] = useState(false)
-	const [filterAnchor, setFilterAnchor] = useState(undefined)
-
-	const [showPackInfo, setShowPackInfo] = useState( (localStorage.getItem('showPackInfo') === null)? true: JSON.parse(localStorage.getItem('showPackInfo')) )
-	const [showBanInfo, setShowBanInfo] = useState( (localStorage.getItem('showBanInfo') === null)? true: JSON.parse(localStorage.getItem('showBanInfo')) )
-	const [showDependencyInfo, setShowDependencyInfo] = useState( (localStorage.getItem('showDependencyInfo') === null)? true: JSON.parse(localStorage.getItem('showDependencyInfo')) )
-	const [showSupportInfo, setShowSupportInfo] = useState( (localStorage.getItem('showSupportInfo') === null)? true: JSON.parse(localStorage.getItem('showSupportInfo')) )
 
 
 	useEffect( () => {
@@ -99,8 +64,8 @@ function Card( { match, history, width } )
 			setMonsterDef(json.monsterDefense)
 			setMonsterAssociation(json.monsterAssociation)
 
-			setPackInfo(json.foundIn)
-			setBanListInfo(json.restrictedIn)
+			setPackInfo( (json.foundIn === undefined)? [] : json.foundIn )
+			setBanListInfo( (json.restrictedIn === undefined)? [] : json.restrictedIn )
 
 			const crumbs = ['Home', json.cardName]
 			setDynamicCrumbs(crumbs)
@@ -112,7 +77,7 @@ function Card( { match, history, width } )
 
 
 	useEffect( () => {
-		if ( productInfo !== undefined && productInfoChips === undefined )
+		if ( productInfoChips.length === 0 )
 		{
 			const productInfoChips = []
 
@@ -131,7 +96,7 @@ function Card( { match, history, width } )
 
 
 	useEffect( () => {
-		if ( banListInfo !== undefined && banListInfoChips === undefined )
+		if ( banListInfoChips.length === 0 )
 		{
 			const banListInfoChips = []
 
@@ -145,42 +110,24 @@ function Card( { match, history, width } )
 
 	return (
 		<MainContentContainer style={{ paddingLeft: '0rem', paddingRight: '0rem', paddingBottom: '0rem' }}  >
-			<Popover
-				open={isShowingFilter}
-				onClose={ () => setIsShowingFilter(false) } anchorEl={filterAnchor}
-				anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-				transformOrigin={{ vertical: 'bottom', horizontal: 'center' }} >
-
-				<Paper style={{width: '250px', padding: '2rem'}} >
-					<Typography
-						variant='h6'
-						align='center'
-						style={{ marginBottom: '1.5rem' }} >
-							Display...
-					</Typography>
-					<FormControlLabel
-						control={<Switch checked={showPackInfo} onChange={ () => onFilterItemClicked(showPackInfo, setShowPackInfo, 'showPackInfo') } />}
-						label='Pack Info'
-					/>
-					<FormControlLabel
-						control={<Switch checked={showBanInfo} onChange={ () => onFilterItemClicked(showBanInfo, setShowBanInfo, 'showBanInfo') } />}
-						label='Ban Info'
-					/>
-				</Paper>
-
-			</Popover>
-
-
 			<Breadcrumb crumbs={ dynamicCrumbs } />
 
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={
-					<div
-						style={{ width: '420px', maxWidth: '95%', margin: 'auto', paddingBottom: '3.5rem' }}>
-						<div
+					<Box
+						style={{ margin: 'auto', paddingBottom: '3.5rem' }}>
+
+						<Typography variant='h4' align='center' >
+							Card Information
+						</Typography>
+
+						<br />
+
+						<Box
 							style={{ textAlign: 'center', marginBottom: '.5rem' }} >
 							<img src={`https://storage.googleapis.com/ygoprodeck.com/pics_artgame/${cardId}.jpg`} width = {(width === 'xs')? '65%' : '90%'} style={{ borderRadius: '50%' }} />
-						</div>
+						</Box>
+
 						<YGOCard
 							isNew={ false }
 							cardName={cardName}
@@ -195,49 +142,38 @@ function Card( { match, history, width } )
 							fullDetails={ true }
 							isLoading={ isLoading }
 							/>
-					</div>
+					</Box>
 				}
 				twoThirdComponent={
-
-
-						<Grid container >
-							<Grid item xs={12} sm={12} md={12} lg={6} xl={6}  style={ (showPackInfo === true)? { display: 'inline-grid', padding: '1.2rem' } : {display: 'none'} } >
-
-								<Paper style={{background: '#a4508', backgroundImage: 'linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)', padding: '1.5rem'}} >
-									{
-										(isLoading)?
-											<Skeleton width={150} height={25} style={{margin: 'auto'}} />
-											: <Typography variant='subtitle1' align='center' style={{color: '#eee'}} >Product(s)</Typography>
-									}
-									<br />
-									{
-										(isLoading)?
-											undefined
-											: (productInfo)?
-												productInfoChips
-												: <Typography style={{ color: '#fff' }} align='center' variant='body1' ><strong>{cardName}</strong> Not Found In Any Product</Typography>
-									}
-								</Paper>
-							</Grid>
-
-							<Grid item xs={12} sm={12} md={12} lg={6} xl={6} style={ (showBanInfo === true)? { display: 'inline-grid', padding: '1.2rem' } : {display: 'none'} } >
-								<Paper style={{backgroundColor: '#fc9842', backgroundImage: 'linear-gradient(315deg, #fc9842 0%, #fe5f75 74%)', padding: '1.5rem'}}>
-									{
-										(isLoading)?
-											<Skeleton width={150} height={25} style={{margin: 'auto'}}  />
-											: <Typography variant='subtitle1' align='center' style={{color: '#fff'}} >Ban List(s)</Typography>
-									}
-									<br />
-									{
-										(isLoading)?
-											undefined
-											: (banListInfo)?
-												banListInfoChips
-												: <Typography style={{ color: '#fff' }} align='center' variant='subtitle2' >No Instances of <strong>{cardName}</strong> Being Forbidden, Limited, or Semi-Limited</Typography>
-									}
-								</Paper>
-							</Grid>
+					<Grid container >
+						<Grid item xs={12} sm={12} md={12} lg={6} xl={6}  style={ { display: 'inline-grid', padding: '1.2rem' } } >
+							<Suspense fallback={undefined}>
+								<CardInformationSection
+									isLoading={isLoading}
+									hasInfo={ (productInfo.length === 0)? false : true }
+									infoChips={productInfoChips}
+									headerText={'Product(s)'}
+									noInfoText={'Not Found In Any Product'}
+									background='#a4508b'
+									backgroundImage='linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)'
+								/>
+							</Suspense>
 						</Grid>
+
+						<Grid item xs={12} sm={12} md={12} lg={6} xl={6} style={ { display: 'inline-grid', padding: '1.2rem' } } >
+							<Suspense fallback={undefined}>
+								<CardInformationSection
+									isLoading={isLoading}
+									hasInfo={ (banListInfo.length === 0)? false : true }
+									infoChips={banListInfoChips}
+									headerText={'Ban List(s)'}
+									noInfoText={'No Instances of {cardName} Being Forbidden, Limited, or Semi-Limited'}
+									background='#fc9842'
+									backgroundImage='linear-gradient(315deg, #fc9842 0%, #fe5f75 74%)'
+								/>
+							</Suspense>
+						</Grid>
+					</Grid>
 					}
 				/>
 
