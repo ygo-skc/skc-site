@@ -3,12 +3,17 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import SuspenseFallback from './SuspenseFallback'
 
-import Card from './components/card/Card'
-import Browse from './components/Browse'
 
 const Home = lazy( () => import('./components/Home') )
+
 const BanList = lazy( () => import('./components/banlist/BanList') )
+
+const ProductBrowse = lazy( () => import('./components/product/ProductBrowse') )
 const ProductInfo = lazy( () => import('./components/product/ProductInfo') )
+
+const Browse = lazy( () => import('./components/Browse') )
+const Card = lazy( () => import('./components/card/Card') )
+
 const About = lazy( () => import( './components/about/About') )
 const HttpErr = lazy( () => import('./components/exception/HttpErr') )
 
@@ -19,7 +24,8 @@ const NAME_maps_ROUTE : { [key: string]: string } =
 	'BanList': '/ban_list',
 	'About': '/about',
 	'Card': '/card/:cardId',
-	'CardBrowse': '/cards/browse',
+	'CardBrowse': '/browse/card',
+	'ProductBrowse': '/browse/product',
 	'ProductInfo': '/product/:productId',
 
 	'400': '/bad_request',
@@ -51,6 +57,11 @@ export default function Routes()
 						path={NAME_maps_ROUTE.CardBrowse}
 						exact
 						component={Browse} />
+
+					<Route
+						path={NAME_maps_ROUTE.ProductBrowse}
+						exact
+						component={ProductBrowse} />
 					<Route
 						path={NAME_maps_ROUTE.ProductInfo}
 						exact
