@@ -5,6 +5,7 @@ import { Paper, Typography } from '@material-ui/core'
 import Breadcrumb from '../Breadcrumb'
 import { MainContentContainer } from '../MainContent'
 import OneThirdTwoThirdsGrid from '../grid/OneThirdTwoThirdsGrid'
+import Footer from '../Footer'
 
 import Styled from 'styled-components'
 
@@ -30,6 +31,8 @@ export default function ProductBrowse()
 				}
 				twoThirdComponent={undefined}
 			/>
+
+			<Footer />
 		</MainContentContainer>
 	)
 }

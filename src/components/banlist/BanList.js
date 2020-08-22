@@ -12,6 +12,7 @@ import { TabbedView } from './TabbedView'
 import { handleFetch } from '../../helper/FetchHandler'
 import { BanListDates } from './BanListDates'
 import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
+import Footer from '../Footer'
 
 import OneThirdTwoThirdsGrid from '../grid/OneThirdTwoThirdsGrid'
 
@@ -258,6 +259,7 @@ export default function BanList(props)
 					cardClicked={ cardID => setChosenCardID(cardID) }
 				/> */}
 
+			<Footer />
 		</Box>
 	)
 }

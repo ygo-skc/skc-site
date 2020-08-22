@@ -5,6 +5,7 @@ import styled from 'styled-components'
 
 import Breadcrumb from '../Breadcrumb'
 import { MainContentContainer, ChildPaper } from '../MainContent'
+import Footer from '../Footer'
 
 import GenericLinkPhoto from '../photo/GenericLinkPhoto'
 
@@ -95,6 +96,8 @@ const About: FunctionComponent = () => (
 					Donations will be used to keep the website and API up and running as well as motivate me to keep it going. Not only that, this website uses open source software that I would also love to fund since I couldn't have built this thing as easily without the frameworks used. A portion of donations will be going to certain frameworks.
 				</Typography>
 			</ChildPaper>
+
+			<Footer />
 		</MainContentContainer>
 	)
 

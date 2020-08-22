@@ -47,7 +47,7 @@ export default function CardDisplayGrid({ cardJsonResults, numResultsDisplayed, 
 		setCardGridUISkeleton([...cardGridUI, getPlaceholderCardComponent()])
 		setTimeout(() => {
 			setIsLoadingData(false)
-		}, 250);
+		}, 350);
 
 		const cards = cardJsonResults.slice(numResultsDisplayed - numResultsLoaded, numResultsDisplayed).map( card => {
 			return <Grid
@@ -109,7 +109,9 @@ export default function CardDisplayGrid({ cardJsonResults, numResultsDisplayed, 
 			{
 				(isLoadingData)?
 				undefined :
-				<IconButton onClick={ () => loadMoreCallback()} style={(isLoadMoreOptionVisible)? {display: 'block', margin: 'auto', background: '#310e68', backgroundImage: 'linear-gradient(316deg, #310e68 0%, #5f0f40 74%)', color: 'rgba(255, 255, 255, .95)'} : {display: 'none'}} >
+				<IconButton
+					onClick={ () => loadMoreCallback()}
+					style={(isLoadMoreOptionVisible)? {display: 'block', margin: 'auto', background: '#310e68', backgroundImage: 'linear-gradient(316deg, #310e68 0%, #5f0f40 74%)', color: 'rgba(255, 255, 255, .95)', marginTop: '1.5rem', marginBottom: '1.5rem'} : {display: 'none'}} >
 					<ExpandMoreRoundedIcon />
 				</IconButton>
 			}

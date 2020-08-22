@@ -8,6 +8,7 @@ import cardStyles from './YGOCardStyles'
 import { handleFetch } from '../../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
 import { MainContentContainer } from '../MainContent'
+import Footer from '../Footer'
 
 import styled from 'styled-components'
 
@@ -177,6 +178,7 @@ function Card( { match, history, width } )
 					}
 				/>
 
+			<Footer />
 		</MainContentContainer>
 	)
 }
