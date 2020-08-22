@@ -26,7 +26,7 @@ const CenteredText = styled(Typography)`
 `
 
 const DatabaseSearch = styled(Autocomplete)`
-	&&&&&&&&&&&&&&&
+	&&&
 	{
 		.MuiAutocomplete-popper
 		{
@@ -104,10 +104,11 @@ export default function Home( {history} )
 					getOptionSelected={ (option, value) => window.location.assign(`/card/${value.cardID}`) }
 					renderGroup={ option => {
 						return(
-							<div style={{margin: '1.5rem', width: '100%'}} >
+							<div style={{padding: '1.5rem'}} >
 								<Typography
-									variant='subtitle2'>
-										{option.group}</Typography>
+									variant='h6'>
+										{option.group}
+								</Typography>
 								<Divider />
 								{option.children}
 							</div>
@@ -129,7 +130,7 @@ export default function Home( {history} )
 					)}
 					renderOption={ option => {
 						return(
-							<div>
+							<div style={{padding: '.25rem'}} >
 								<SearchSuggestionTypography variant='body1'>{option.cardName}</SearchSuggestionTypography>
 								<SearchSuggestionTypography variant='body1' style={{ color: 'rgb(101,119,134)'}} >{option.monsterType}</SearchSuggestionTypography>
 							</div>
