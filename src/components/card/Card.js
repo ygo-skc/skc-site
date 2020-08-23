@@ -83,15 +83,13 @@ function Card( { match, history, width } )
 			const productInfoChips = []
 
 			productInfo.forEach( item => {
-
-				const rarities = item.productContent.map( item => {
-					return item.rarity
+				const productId = item.productId
+				item.productContent.forEach(item => {
+					console.log(item)
+					productInfoChips.push(<CardSummaryChip label={`${productId} #${item.position}  •  ${item.rarities.join(', ')}`} />)
 				})
-
-				const raritiesString = rarities.join(', ')
-				productInfoChips.push(<CardSummaryChip label={`${item.productId} #${item.productContent[0].position}  •  ${raritiesString}`} />)
-				setPackInfoChips(productInfoChips)
 			})
+			setPackInfoChips(productInfoChips)
 		}
 	}, [productInfo])
 
