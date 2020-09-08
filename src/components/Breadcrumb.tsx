@@ -75,7 +75,7 @@ const Breadcrumb: FunctionComponent<BreadcrumbProps> = ( { crumbs }  ) =>
 			<BreadCrumbItem
 				variant='subtitle2'
 				color='inherit'
-				href={ NAME_maps_ROUTE[item] }
+				href={ NAME_maps_ROUTE[item.replace(' ', '')] }
 				key={item} >
 					{ BREADCRUMB_maps_ICON.get(item) }
 					{ item }

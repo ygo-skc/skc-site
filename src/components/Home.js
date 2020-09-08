@@ -13,15 +13,6 @@ import NAME_maps_ENDPOINT from '../helper/YgoApiEndpoints'
 import Footer from './Footer'
 
 
-const HomeContent = styled.div`
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	margin-top: 30px;
-	align-content: center;
-`
-
 const DatabaseSearch = styled(Autocomplete)`
 	&&&
 	{
@@ -69,7 +60,6 @@ export default function Home({ history }) {
 
 	const [searchInput, setSearchInput] = useState('')
 	const [searchOptions, setSearchOptions] = useState([])
-	const [isLoadingSearchOptions, setIsLoadingSearchOptions] = useState(false)
 
 
 
@@ -91,7 +81,7 @@ export default function Home({ history }) {
 				<DatabaseSearch
 					id='search'
 					style={{ flex: '1' }}
-					noOptionsText={(searchInput == '') ? 'Type For Suggestions' : 'No Results'}
+					noOptionsText={(searchInput === '') ? 'Type For Suggestions' : 'No Results'}
 					getOptionLabel={option => option.cardName}
 					options={searchOptions}
 					autoHighlight

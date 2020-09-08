@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Typography, Box, Card, Paper } from '@material-ui/core'
+import { Typography, Box, Paper } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
 
 import Styled from 'styled-components'

@@ -1,4 +1,4 @@
-import { blue, teal, pink, deepPurple, grey, red, lightBlue } from '@material-ui/core/colors'
+import { blue, teal, pink, deepPurple, grey, lightBlue } from '@material-ui/core/colors'
 
 const lightTextColor = '#fffbeb'
 const darkTextColor = '#2b2a2a'

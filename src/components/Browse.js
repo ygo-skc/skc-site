@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Autocomplete from '@material-ui/lab/Autocomplete'
-import { TextField, Chip, Typography, Grid, Paper, Divider, InputBase, IconButton } from '@material-ui/core'
+import { Chip, Typography, Paper, InputBase, IconButton, Box } from '@material-ui/core'
 
 import SearchIcon from '@material-ui/icons/Search'
 
@@ -17,6 +17,7 @@ import NAME_maps_ENDPOINT from '../helper/YgoApiEndpoints'
 
 import Styled from 'styled-components'
 
+import {LightTranslucentDivider} from './util/Divider'
 
 const MainBrowseInfoTypography = Styled(Typography)`
 	&&
@@ -50,9 +51,9 @@ export default function Browse( {history} )
 			for (const criteria of Object.keys(json))
 			{
 				json[criteria].forEach(criteriaValue => {
-					if (criteria == 'levels') criteriaValue = `Level ${criteriaValue}`
-					if (criteria == 'ranks') criteriaValue = `Rank ${criteriaValue}`
-					if (criteria == 'linkRatings') criteriaValue = `Link Rating ${criteriaValue}`
+					if (criteria === 'levels') criteriaValue = `Level ${criteriaValue}`
+					if (criteria === 'ranks') criteriaValue = `Rank ${criteriaValue}`
+					if (criteria === 'linkRatings') criteriaValue = `Link Rating ${criteriaValue}`
 
 					browseCriteria.push({
 						'criteriaName': criteria
@@ -79,7 +80,7 @@ export default function Browse( {history} )
 		criteriaMap.set('attributes', [])
 
 		const selectedCriteriaChips = selectedCriteria.map(criteria => {
-			if (criteria.criteriaName == 'cardColors' || criteria.criteriaName == 'attributes')
+			if (criteria.criteriaName === 'cardColors' || criteria.criteriaName === 'attributes')
 				criteriaMap.get(criteria.criteriaName).push(criteria.criteriaValue)
 
 			return <Chip
@@ -140,75 +141,76 @@ export default function Browse( {history} )
 
 	return(
 		<MainContentContainer style={{}} >
-			<Breadcrumb crumbs={ ['Home', 'Browse'] } />
+			<Breadcrumb crumbs={ ['Home', 'Card Browse Tool'] } />
 
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={
 
-					<Paper style={{padding: '1.4rem', backgroundColor: '#7f5a83', backgroundImage: 'linear-gradient(315deg, #7f5a83 0%, #0d324d 74%)' }} >
+					<Box>
 
-						<MainBrowseInfoTypography variant='h4' align='center' >
+						<Typography
+							variant='h4'
+							align='center'
+							style={{marginBottom: '2rem'}} >
 							Card Browse Tool
-						</MainBrowseInfoTypography>
+						</Typography>
 
-						<br />
-						<br />
+						<Paper style={{padding: '1.4rem', backgroundColor: '#7f5a83', backgroundImage: 'linear-gradient(315deg, #7f5a83 0%, #0d324d 74%)' }} >
 
-						<MainBrowseInfoTypography
-							style={{marginBottom: '1rem'}}
-							variant='h6' >
-							Current Criteria
-						</MainBrowseInfoTypography>
+							<MainBrowseInfoTypography
+								style={{marginBottom: '1rem'}}
+								variant='h6' >
+								Current Criteria
+							</MainBrowseInfoTypography>
 
-						{selectedCriteriaChips}
+							{selectedCriteriaChips}
 
-						<br />
-						<br />
-						<Autocomplete
-							multiple
-							id='browseCriteriaFilter'
-							options={browseCriteria}
-							getOptionLabel={option => option.criteriaValue}
-							groupBy={option => option.criteriaName}
-							autoHighlight
-							onChange={ (event, val)  => {
-								console.log(val)
-								setSelectedCriteria(val)
-								// setIntermediateSelectedCriteria(val)
-							}}
-							renderTags={ () => null }
-							disableCloseOnSelect
-							onClose={ (event, reason) => {
-								// setSelectedCriteria(intermediateSelectedCriteria)
-							}}
-							renderInput={(params) => (
-								<div style={{ width: '100%', display: 'flex', backgroundColor: 'rgba(0, 0, 0, .37)' }} >
-								<InputBase
-									ref={params.InputProps.ref}
-									inputProps={params.inputProps}
-									style={{ color: 'white', flex: '1', margin: '.8rem', fontSize: '1.23rem' }}
-									placeholder='Search...'
-									/>
-									<IconButton>
-										<SearchIcon style={{ color: 'rgba(255, 255, 255, .56)' }} />
-									</IconButton>
-								</div>
-							)}
-					/>
+							<br />
+							<br />
+							<Autocomplete
+								multiple
+								id='browseCriteriaFilter'
+								options={browseCriteria}
+								getOptionLabel={option => option.criteriaValue}
+								groupBy={option => option.criteriaName}
+								autoHighlight
+								onChange={ (event, val)  => {
+									setSelectedCriteria(val)
+								}}
+								renderTags={ () => null }
+								disableCloseOnSelect
+								onClose={ (event, reason) => {
+									// setSelectedCriteria(intermediateSelectedCriteria)
+								}}
+								renderInput={(params) => (
+									<div style={{ width: '100%', display: 'flex', backgroundColor: 'rgba(0, 0, 0, .37)' }} >
+									<InputBase
+										ref={params.InputProps.ref}
+										inputProps={params.inputProps}
+										style={{ color: 'white', flex: '1', margin: '.8rem', fontSize: '1.23rem' }}
+										placeholder='Search...'
+										/>
+										<IconButton>
+											<SearchIcon style={{ color: 'rgba(255, 255, 255, .56)' }} />
+										</IconButton>
+									</div>
+								)}
+							/>
 
+							<LightTranslucentDivider />
 
-						<Divider style={{marginTop: '1.75rem', marginBottom: '1.75rem', backgroundColor: 'rgba(255, 255, 255, .25)'}} />
-						<MainBrowseInfoTypography variant='h6' >
-							Results
-						</MainBrowseInfoTypography>
-						<MainBrowseInfoTypography variant='body1' >
-							Total: {numResults}
-						</MainBrowseInfoTypography>
-						<MainBrowseInfoTypography variant='body1' >
-							Displaying: {numResultsDisplayed}
-						</MainBrowseInfoTypography>
+							<MainBrowseInfoTypography variant='h6' >
+								Results
+							</MainBrowseInfoTypography>
+							<MainBrowseInfoTypography variant='body1' >
+								Total: {numResults}
+							</MainBrowseInfoTypography>
+							<MainBrowseInfoTypography variant='body1' >
+								Displaying: {numResultsDisplayed}
+							</MainBrowseInfoTypography>
 
-					</Paper>
+							</Paper>
+					</Box>
 				}
 				twoThirdComponent={
 					<CardDisplayGrid

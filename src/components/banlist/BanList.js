@@ -1,4 +1,4 @@
-import React, { lazy, useState, useEffect, useMemo } from 'react'
+import React, { lazy, useState, useEffect } from 'react'
 import Styled from 'styled-components'
 
 import { Paper, Box } from '@material-ui/core'
@@ -94,8 +94,8 @@ export default function BanList(props)
 
 	useEffect(() => {
 		handleFetch(NAME_maps_ENDPOINT['banListsUrl'], props.history, (resultJson) => {
-			setBanListStartDates(resultJson.banListStartDates)
-			setSelectedBanList(resultJson.banListStartDates[0])
+			setBanListStartDates(resultJson.banListStartDates.map(item => item.banListDate))
+			setSelectedBanList(resultJson.banListStartDates[0].banListDate)
 		})
 		// eslint-disable-next-line
 	}, [])
@@ -119,9 +119,9 @@ export default function BanList(props)
 				setLimited( resultJson.banListInstance.limited )
 				setSemiLimited( resultJson.banListInstance.semiLimited )
 
-				setNumForbidden( (resultJson.banListInstance.numForbidden == undefined)? 0 : resultJson.banListInstance.numForbidden )
-				setNumLimited( (resultJson.banListInstance.numLimited == undefined)? 0 : resultJson.banListInstance.numLimited )
-				setNumSemiLimited( (resultJson.banListInstance.numSemiLimited == undefined)? 0 : resultJson.banListInstance.numSemiLimited )
+				setNumForbidden( (resultJson.banListInstance.numForbidden === undefined)? 0 : resultJson.banListInstance.numForbidden )
+				setNumLimited( (resultJson.banListInstance.numLimited === undefined)? 0 : resultJson.banListInstance.numLimited )
+				setNumSemiLimited( (resultJson.banListInstance.numSemiLimited === undefined)? 0 : resultJson.banListInstance.numSemiLimited )
 
 				// Removed cards compared to previous ban list
 				setRemovedCards(resultJson.banListInstance.removedContent.removedCards)

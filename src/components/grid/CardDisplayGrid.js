@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import {useHistory} from 'react-router-dom'
 
 import { Grid, IconButton, Box } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
@@ -40,6 +41,8 @@ export default function CardDisplayGrid({ cardJsonResults, numResultsDisplayed, 
 	const [isLoadingData, setIsLoadingData] = useState(false)
 	const [cardGridUISkeleton, setCardGridUISkeleton] = useState([])
 
+	const history = useHistory()
+
 	useEffect( () => {
 		if (cardJsonResults === undefined) return
 
@@ -47,7 +50,7 @@ export default function CardDisplayGrid({ cardJsonResults, numResultsDisplayed, 
 		setCardGridUISkeleton([...cardGridUI, getPlaceholderCardComponent()])
 		setTimeout(() => {
 			setIsLoadingData(false)
-		}, 350);
+		}, 200);
 
 		const cards = cardJsonResults.slice(numResultsDisplayed - numResultsLoaded, numResultsDisplayed).map( card => {
 			return <Grid
@@ -59,7 +62,7 @@ export default function CardDisplayGrid({ cardJsonResults, numResultsDisplayed, 
 				lg={3}
 				xl={2}
 				style={{ padding: '.25rem', cursor: 'pointer' }}
-				onClick={ () => window.location.assign(`/card/${card.cardID}`) } >
+				onClick={ () => history.push(`/card/${card.cardID}`) } >
 					<div style={{margin: 'auto', marginBottom: '.5rem', width: '85%'}} >
 						<div
 							style={{ borderRadius: '50%', overflow: 'hidden', width: '100%',  height: '0', paddingBottom: '100%' }} >

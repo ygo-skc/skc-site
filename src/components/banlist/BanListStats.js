@@ -75,8 +75,8 @@ const BanListStats = memo( ( { totalCardsInSelectedList, selectedBanList
 					button
 					style={{paddingLeft: '3rem'}}  >
 					<ListItemText
-						primary={card.name}
-						secondary={`Was: ${card.previousState}`}
+						primary={card.cardName}
+						secondary={`Was: ${card.previousBanStatus}`}
 					/>
 				</ListStatItem>
 			)
@@ -92,7 +92,7 @@ const BanListStats = memo( ( { totalCardsInSelectedList, selectedBanList
 		newLimitedCards.forEach( (card, ind) => {
 			newLimitedCardsList.push(
 				<ListStatItem key={ind} button style={{paddingLeft: '3rem'}}  >
-					<ListItemText primary={card.name} secondary={`Was: ${card.previousState}`} />
+					<ListItemText primary={card.cardName} secondary={`Was: ${card.previousBanStatus}`} />
 				</ListStatItem>
 			)
 		})
@@ -108,7 +108,7 @@ const BanListStats = memo( ( { totalCardsInSelectedList, selectedBanList
 		newSemiLimitedCards.forEach( (card, ind) => {
 			newSemiLimitedCardsList.push(
 				<ListStatItem key={ind} button style={{paddingLeft: '3rem'}}  >
-					<ListItemText primary={card.name} secondary={`Was: ${card.previousState}`} />
+					<ListItemText primary={card.cardName} secondary={`Was: ${card.previousBanStatus}`} />
 				</ListStatItem>
 			)
 		})
@@ -124,7 +124,7 @@ const BanListStats = memo( ( { totalCardsInSelectedList, selectedBanList
 		removedCards.forEach( (card, ind) => {
 			removedCardsList.push(
 				<ListStatItem key={ind} button style={{paddingLeft: '3rem'}}  >
-					<ListItemText primary={card.name} secondary={`Was: ${card.previousState}`}  />
+					<ListItemText primary={card.cardName} secondary={`Was: ${card.previousBanStatus}`}  />
 				</ListStatItem>)
 		})
 		setRemovedCardsList(removedCardsList)

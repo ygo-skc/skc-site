@@ -21,6 +21,7 @@ export default function NavigationBar()
 			}
 		}
 	`
+
 	return (
 		<AppBar position='static' style={{background: '#310e68', backgroundImage: 'linear-gradient(316deg, #310e68 0%, #5f0f40 74%)'}} >
 			<Toolbar style={{minHeight: '48px'}}>

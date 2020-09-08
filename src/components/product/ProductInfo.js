@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 
-import {Paper, Typography, Divider} from '@material-ui/core'
+import {Paper, Typography, Box} from '@material-ui/core'
+import {Skeleton} from '@material-ui/lab'
 
 import {handleFetch} from '../../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
@@ -8,13 +9,25 @@ import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
 import {MainContentContainer} from '../MainContent'
 import Breadcrumb from '../Breadcrumb'
 
-import {OneThirdTwoThirdsGrid} from '../grid/OneThirdTwoThirdsGrid'
+import OneThirdTwoThirdsGrid from '../grid/OneThirdTwoThirdsGrid'
 
 
 import CardDisplayGrid from '../grid/CardDisplayGrid'
+import Styled from 'styled-components'
+import {LightTranslucentDivider} from '../util/Divider'
+import Footer from '../Footer'
+
+
+const MainBrowseInfoTypography = Styled(Typography)`
+	&&
+	{
+		color: rgba(255, 255, 255, .95);
+	}
+`
+
 
 export default function ProductInfo({match, history}) {
-	const [dynamicBreadcrumbs, setDynamicBreadcrumbs] = useState(['Home', ''])
+	const [dynamicBreadcrumbs, setDynamicBreadcrumbs] = useState(['Home', 'Product Browse', ''])
 
 	const [productName, setProductName] = useState('')
 	const [productId, setProductId] = useState('')
@@ -23,13 +36,15 @@ export default function ProductInfo({match, history}) {
 	const [productReleaseDate, setProductReleaseDate] = useState('')
 	const [productTotal, setProductTotal] = useState('')
 
-	const [cardJsonResults, setCardJsonResults] = useState(undefined)
+	const [isDataLoaded, setIsDataLoaded] = useState(false)
+
+	const [cardJsonResults, setCardJsonResults] = useState([])
 
 
 	useEffect( () => {
 		handleFetch(`${NAME_maps_ENDPOINT['productDetails']}/${match.params.productId}/en`, history, json => {
 			console.log(json)
-			setDynamicBreadcrumbs(['Home', `${json.productName} (${json.productId})`])
+			setDynamicBreadcrumbs(['Home', 'Product Browse', `${json.productId}`])
 
 			setProductName(json.productName)
 			setProductId(json.productId)
@@ -39,6 +54,8 @@ export default function ProductInfo({match, history}) {
 
 			setCardJsonResults(json.productContent.map(item => item.card))
 			setProductTotal(json.productTotal)
+
+			setIsDataLoaded(true)
 		})
 	}, [])
 
@@ -49,44 +66,72 @@ export default function ProductInfo({match, history}) {
 
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={
-					<Paper style={{padding: '1.5rem'}}>
+					<Box>
 
-						<Typography variant='h5' align='center' >
-							{productName} ({productId})
-						</Typography>
-						<br/>
-
-						<Typography>
-							<strong>Product Type:</strong> {productType}
-						</Typography>
-						<Typography>
-							<strong>Product Sub-Type:</strong> {productSubType}
-						</Typography>
-						<Typography>
-							<strong>American Release:</strong> {productReleaseDate}
+						<Typography
+							variant='h4'
+							align='center'
+							style={{marginBottom: '2rem'}} >
+							Product Information
 						</Typography>
 
-						<Divider style={{marginTop: '1.3rem', marginBottom: '1.3rem'}} />
+						<Paper style={{padding: '1.4rem', background: '#a4508', backgroundImage: 'linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)' }} >
 
-						<Typography variant='h6' align='center' >
-							Product Stats
-						</Typography>
-						<br/>
-						<Typography>
-							<strong>Product Total:</strong> {productTotal}
-						</Typography>
-					</Paper>
+							{(isDataLoaded)?
+								<MainBrowseInfoTypography
+									style={{marginBottom: '1.5rem'}}
+									variant='h6'
+									align='center' >
+									{productName}
+								</MainBrowseInfoTypography>
+								: <Skeleton
+									variant='rect'
+									height={20}
+									width={250}
+									style={{margin: 'auto', marginBottom: '.8rem'}}
+									/>
+							}
+
+							<MainBrowseInfoTypography variant='h6' >
+								Summary
+							</MainBrowseInfoTypography>
+
+							<MainBrowseInfoTypography variant='body1' >
+								<strong>Product ID:</strong> {productId}
+							</MainBrowseInfoTypography>
+							<MainBrowseInfoTypography variant='body1' >
+								<strong>Product Type:</strong> {productType}
+							</MainBrowseInfoTypography>
+							<MainBrowseInfoTypography variant='body1'>
+								<strong>Product Sub-Type:</strong> {productSubType}
+							</MainBrowseInfoTypography >
+							<MainBrowseInfoTypography variant='body1'>
+								<strong>American Release:</strong> {productReleaseDate}
+							</MainBrowseInfoTypography>
+
+							<LightTranslucentDivider />
+
+							<MainBrowseInfoTypography variant='h6' >
+								Product Stats
+							</MainBrowseInfoTypography>
+							<MainBrowseInfoTypography variant='body1'>
+								<strong>Product Total:</strong> {productTotal}
+							</MainBrowseInfoTypography>
+						</Paper>
+
+					</Box>
 				}
 				twoThirdComponent={
 					<CardDisplayGrid
 						cardJsonResults={cardJsonResults}
 						numResultsDisplayed={productTotal}
 						numResultsLoaded={productTotal}
-						loadMoreCallback={() => {console.log('I WAS CLICKED')}}
+						loadMoreCallback={undefined}
 						isLoadMoreOptionVisible={false}
 					/>
 				}
 			/>
+			<Footer />
 		</MainContentContainer>
 	)
 }

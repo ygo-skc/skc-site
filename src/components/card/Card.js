@@ -27,10 +27,10 @@ const CardSummaryChip = styled(Chip)`
 // When user wants to include or exclude a category from the info component the corresponding local storage variable is updated and the corresponding
 // state variable is also updated. This method will take a reference to the state variable to update, the method used to update the state variable and
 // the name of the variable used in local storage.
-const onFilterItemClicked = (stateVariable, stateChangeMethod, localStorageItemName) => {
-	localStorage.setItem(localStorageItemName, !stateVariable)
-	stateChangeMethod(!stateVariable)
-}
+// const onFilterItemClicked = (stateVariable, stateChangeMethod, localStorageItemName) => {
+// 	localStorage.setItem(localStorageItemName, !stateVariable)
+// 	stateChangeMethod(!stateVariable)
+// }
 
 
 function Card( { match, history, width } )
@@ -52,7 +52,7 @@ function Card( { match, history, width } )
 	const [productInfoChips, setPackInfoChips] = useState([])
 	const [banListInfoChips, setBanListInfoChips] = useState([])
 
-	const [dynamicCrumbs, setDynamicCrumbs] = useState(['Home', ''])
+	const [dynamicCrumbs, setDynamicCrumbs] = useState(['Home', 'Card Browse', ''])
 
 
 	useEffect( () => {
@@ -68,7 +68,7 @@ function Card( { match, history, width } )
 			setPackInfo( (json.foundIn === undefined)? [] : json.foundIn )
 			setBanListInfo( (json.restrictedIn === undefined)? [] : json.restrictedIn )
 
-			const crumbs = ['Home', json.cardName]
+			const crumbs = ['Home', 'Card Browse', json.cardID]
 			setDynamicCrumbs(crumbs)
 			setTimeout(() => {
 				setIsLoading(false)
@@ -116,11 +116,12 @@ function Card( { match, history, width } )
 					<Box
 						style={{ margin: 'auto', paddingBottom: '3.5rem' }}>
 
-						<Typography variant='h4' align='center' >
+						<Typography
+							variant='h4'
+							align='center'
+							style={{marginBottom: '2rem'}} >
 							Card Information
 						</Typography>
-
-						<br />
 
 						<Box
 							style={{ textAlign: 'center', marginBottom: '.5rem' }} >

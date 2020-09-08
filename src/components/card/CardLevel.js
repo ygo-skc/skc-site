@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react'
 
 
-const levelImage = <img src={`${process.env.PUBLIC_URL}/Img/card_level.svg`} style={{ width: '20px', marginLeft: '1px' }} />
+const levelImage = <img
+	src={`${process.env.PUBLIC_URL}/Img/card_level.svg`}
+	alt='Card Level Icon'
+	style={{ width: '20px', marginLeft: '1px' }} />
 
 
 const CardLevel = ( { level } ) =>
@@ -11,7 +14,7 @@ const CardLevel = ( { level } ) =>
 		let starsToCreate = Number(level)
 		const stars = []
 
-		while (starsToCreate != 0)
+		while (starsToCreate !== 0)
 		{
 			stars.push(levelImage)
 			starsToCreate--

@@ -6,15 +6,6 @@ import Breadcrumbs from '../Breadcrumb'
 import {YGOCard} from '../card/YGOCard'
 import cardStyles from '../card/YGOCardStyles'
 
-
-const CenteredContent = Styled.div`
-	-webkit-align-items: center;
-	-webkit-box-align: center;
-	justify-content: center;
-	display: flex;
-	margin-top: 30px;
-`
-
 const ErrCard = Styled(YGOCard)`
 	&&
 	{
