@@ -68,6 +68,7 @@ export default function BanList(props)
 {
 	const [banListStartDates, setBanListStartDates] = useState([])
 	const [selectedBanList, setSelectedBanList] = useState('')
+	const [banListInstanceLinks, setBanListInstanceLinks] = useState([])
 
 	const [forbidden, setForbidden] = useState([])
 	const [limited, setLimited] = useState([])
@@ -94,11 +95,17 @@ export default function BanList(props)
 
 	useEffect(() => {
 		handleFetch(NAME_maps_ENDPOINT['banListsUrl'], props.history, (resultJson) => {
-			setBanListStartDates(resultJson.banListStartDates.map(item => item.banListDate))
-			setSelectedBanList(resultJson.banListStartDates[0].banListDate)
+			setBanListInstanceLinks(resultJson.banListDates.map(item => item._links['Ban List Content'].href))
+			setBanListStartDates(resultJson.banListDates.map(item => item.effectiveDate))
 		})
 		// eslint-disable-next-line
 	}, [])
+
+
+	useEffect(() => {
+		if (banListInstanceLinks.length !== 0)
+			setSelectedBanList(banListStartDates[0])
+	}, [banListInstanceLinks, banListStartDates])
 
 
 	useEffect( () => {
@@ -113,8 +120,8 @@ export default function BanList(props)
 			setIsSettingUpDates(false)
 			setIsFetchingBanList(true)
 
-			handleFetch(`${NAME_maps_ENDPOINT['banListInstanceUrl']}/${selectedBanList}?saveBandwidth=true&allInfo=true`, props.history, (resultJson) => {
-
+			handleFetch(banListInstanceLinks[banListStartDates.indexOf(selectedBanList)], props.history, (resultJson) => {
+				console.log('hello world')
 				setForbidden( resultJson.banListInstance.forbidden )
 				setLimited( resultJson.banListInstance.limited )
 				setSemiLimited( resultJson.banListInstance.semiLimited )
@@ -128,13 +135,13 @@ export default function BanList(props)
 				setNumRemoved(resultJson.banListInstance.removedContent.numRemoved)
 
 				// Newly added cads compared to previous ban list
-				setNewForbiddenCards(resultJson.banListInstance.newContent.newCards.forbidden)
-				setNewLimitedCards(resultJson.banListInstance.newContent.newCards.limited)
-				setNewSemiLimitedCards(resultJson.banListInstance.newContent.newCards.semiLimited)
+				setNewForbiddenCards(resultJson.banListInstance.newContent.newForbidden)
+				setNewLimitedCards(resultJson.banListInstance.newContent.newLimited)
+				setNewSemiLimitedCards(resultJson.banListInstance.newContent.newSemiLimited)
 
-				setNumNewForbidden(resultJson.banListInstance.newContent.newCards.numForbidden)
-				setNumNewLimited(resultJson.banListInstance.newContent.newCards.numLimited)
-				setNumNewSemiLimited(resultJson.banListInstance.newContent.newCards.numSemiLimited)
+				setNumNewForbidden(resultJson.banListInstance.newContent.numNewForbidden)
+				setNumNewLimited(resultJson.banListInstance.newContent.numNewLimited)
+				setNumNewSemiLimited(resultJson.banListInstance.newContent.numNewSemiLimited)
 
 				setIsFetchingBanList(false)
 			})
