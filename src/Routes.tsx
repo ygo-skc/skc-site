@@ -26,7 +26,7 @@ const NAME_maps_ROUTE : { [key: string]: string } =
 	'Card': '/card/:cardId',
 	'CardBrowse': '/browse/card',
 	'ProductBrowse': '/browse/product',
-	'ProductInfo': '/product/:productId',
+	'ProductInformation': '/product/:productId',
 
 	'400': '/bad_request',
 	'500': '/server_err',
@@ -63,7 +63,7 @@ export default function Routes()
 						exact
 						component={ProductBrowse} />
 					<Route
-						path={NAME_maps_ROUTE.ProductInfo}
+						path={NAME_maps_ROUTE.ProductInformation}
 						exact
 						component={ProductInfo} />
 

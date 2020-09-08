@@ -10,7 +10,8 @@ const NAME_maps_ENDPOINT = {
 	'search':				`${API_HOST}/api/v1/card/search`,
 	'browseCriteria':				`${API_HOST}/api/v1/card/browse/criteria`,
 	'browse':				`${API_HOST}/api/v1/card/browse`,
-	'productDetails':				`${API_HOST}/api/v1/product`
+	'productDetails':				`${API_HOST}/api/v1/product`,
+	'productBrowse':				`${API_HOST}/api/v1/products/PACK/en`
 
 }
 
