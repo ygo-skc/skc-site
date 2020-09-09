@@ -86,7 +86,7 @@ export default function ProductInfo({match, history}) {
 								</MainBrowseInfoTypography>
 								: <Skeleton
 									variant='rect'
-									height={20}
+									height={30}
 									width={250}
 									style={{margin: 'auto', marginBottom: '.8rem'}}
 									/>

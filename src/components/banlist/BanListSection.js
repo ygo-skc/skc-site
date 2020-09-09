@@ -97,7 +97,7 @@ const CardItem = styled(Grid)`
 `
 
 
-export const BanListSection = ( { sectionExplanation, cards, newCards, isDataLoaded, cardClicked } ) =>
+const BanListSection = ( { sectionExplanation, cards, newCards, isDataLoaded, cardClicked } ) =>
 {
 	const [cardTypeContentGrid, setCardTypeContentGrid] = useState([])
 	const [areCardsRendered, setAreCardsRendered] = useState(false)
@@ -215,3 +215,6 @@ BanListSection.propTypes =
 	isDataLoaded: PropTypes.bool.isRequired,
 	cardClicked: PropTypes.func.isRequired
 }
+
+
+export default BanListSection

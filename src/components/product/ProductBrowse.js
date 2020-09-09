@@ -44,7 +44,7 @@ function getPlaceholderCardComponent()
 	const placeHolder = []
 
 	var i = 0;
-	for (i = 0; i < 10; i++)
+	for (i = 0; i < 50; i++)
 	{
 		placeHolder.push(<Grid
 			key={`skeleton-${i}`}
@@ -74,10 +74,8 @@ export default function ProductBrowse({history})
 
 	useEffect( () => {
 		handleFetch(NAME_maps_ENDPOINT['productBrowse'], history, json => {
-			setTimeout( () =>{
-				setProductJson(json.products)
-				setIsDataLoaded(true)
-			}, 150)
+			setProductJson(json.products)
+			setIsDataLoaded(true)
 		})
 	}, [])
 
@@ -92,7 +90,7 @@ export default function ProductBrowse({history})
 				lg={2}
 				xl={1}
 				key={item.productId}
-				style={{padding: '.5rem'}}
+				style={{padding: '.5rem', display: 'inline-grid'}}
 				onClick={ () => window.location.assign(`/product/${item.productId}`) }
 				>
 					<ProductInstance

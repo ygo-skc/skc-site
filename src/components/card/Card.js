@@ -86,7 +86,7 @@ function Card( { match, history, width } )
 				const productId = item.productId
 				item.productContent.forEach(item => {
 					console.log(item)
-					productInfoChips.push(<CardSummaryChip label={`${productId} #${item.position}  •  ${item.rarities.join(', ')}`} />)
+					productInfoChips.push(<CardSummaryChip label={`${productId} #${item.productPosition}  •  ${item.rarities.join(', ')}`} />)
 				})
 			})
 			setPackInfoChips(productInfoChips)
@@ -167,7 +167,7 @@ function Card( { match, history, width } )
 									hasInfo={ (banListInfo.length === 0)? false : true }
 									infoChips={banListInfoChips}
 									headerText={'Ban List(s)'}
-									noInfoText={'No Instances of {cardName} Being Forbidden, Limited, or Semi-Limited'}
+									noInfoText={`No Instances of ${cardName} Being Forbidden, Limited, or Semi-Limited`}
 									background='#fc9842'
 									backgroundImage='linear-gradient(315deg, #fc9842 0%, #fe5f75 74%)'
 								/>

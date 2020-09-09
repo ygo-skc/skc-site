@@ -1,4 +1,4 @@
-import React, { lazy, useState, useEffect } from 'react'
+import React, { lazy, useState, useEffect, Suspense } from 'react'
 import Styled from 'styled-components'
 
 import { Paper, Box } from '@material-ui/core'
@@ -7,18 +7,22 @@ import { Paper, Box } from '@material-ui/core'
 /*
 	Custom Components
 */
-import { BanListSection } from './BanListSection'
-import { TabbedView } from './TabbedView'
+// import { BanListSection } from './BanListSection'
+// import { TabbedView } from './TabbedView'
 import { handleFetch } from '../../helper/FetchHandler'
 import { BanListDates } from './BanListDates'
 import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
-import Footer from '../Footer'
 
 import OneThirdTwoThirdsGrid from '../grid/OneThirdTwoThirdsGrid'
 
 
-const BreadCrumb = lazy( () => import('../Breadcrumb') )
+// import BanListStats from './BanListStats'
+import BreadCrumb from '../Breadcrumb'
+const TabbedView = lazy( () => import('./TabbedView') )
+const BanListSection = lazy( () => import('./BanListSection') )
+// const BreadCrumb = lazy( () => import('../Breadcrumb') )
 const BanListStats = lazy( () => import('./BanListStats') )
+const Footer = lazy( () => import('../Footer') )
 
 
 const BanContentParent = Styled(Paper)`
@@ -97,6 +101,7 @@ export default function BanList(props)
 		handleFetch(NAME_maps_ENDPOINT['banListsUrl'], props.history, (resultJson) => {
 			setBanListInstanceLinks(resultJson.banListDates.map(item => item._links['Ban List Content'].href))
 			setBanListStartDates(resultJson.banListDates.map(item => item.effectiveDate))
+			setIsSettingUpDates(false)
 		})
 		// eslint-disable-next-line
 	}, [])
@@ -117,7 +122,6 @@ export default function BanList(props)
 	useEffect(() => {
 		if (selectedBanList !== '')
 		{
-			setIsSettingUpDates(false)
 			setIsFetchingBanList(true)
 
 			handleFetch(banListInstanceLinks[banListStartDates.indexOf(selectedBanList)], props.history, (resultJson) => {
@@ -160,8 +164,7 @@ export default function BanList(props)
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={
 					<div>
-						<BanContentParent
-							style={ (isSettingUpDates)? {display: 'none'}: {display: 'block' }  } >
+						<BanContentParent>
 
 							{(isSettingUpDates)? undefined
 								: <BanListDates
@@ -171,69 +174,78 @@ export default function BanList(props)
 
 						</BanContentParent>
 
-						<BanContentParent
-							style={ (isSettingUpDates)? {display: 'none'}: { display: 'block', marginBottom: '0rem' }  } >
-							<BanListStats
-								totalCardsInSelectedList={numForbidden + numLimited + numSemiLimited}
-								selectedBanList={selectedBanList}
-								newForbiddenCards={newForbiddenCards}
-								newLimitedCards={newLimitedCards}
-								newSemiLimitedCards={newSemiLimitedCards}
-								numNewForbidden={numNewForbidden}
-								numNewLimited={numNewLimited}
-								numNewSemiLimited={numNewSemiLimited}
-								removedCards={removedCards}
-								numRemoved={numRemoved}
-							/>
+						<BanContentParent>
+							<Suspense fallback={undefined} >
+								<BanListStats
+									totalCardsInSelectedList={numForbidden + numLimited + numSemiLimited}
+									selectedBanList={selectedBanList}
+									newForbiddenCards={newForbiddenCards}
+									newLimitedCards={newLimitedCards}
+									newSemiLimitedCards={newSemiLimitedCards}
+									numNewForbidden={numNewForbidden}
+									numNewLimited={numNewLimited}
+									numNewSemiLimited={numNewSemiLimited}
+									removedCards={removedCards}
+									numRemoved={numRemoved}
+								/>
+							</Suspense>
 						</BanContentParent>
 					</div>
 				}
 				twoThirdComponent={
 					<BannedContentContainer  >
-						<TabbedView
-							numForbidden={numForbidden}
-							numLimited={numLimited}
-							numSemiLimited={numSemiLimited}
-							banList={selectedBanList}
-							forbiddenContent={
-								<BanListSection
-									sectionName='Forbidden'
-									sectionExplanation='Forbidden cards cannot be used in Deck/Side Deck in the Advanced Format'
-									sectionExplanationBackground='rgba(255, 69, 87, .17)'
-									cards={forbidden}
-									newCards={newForbiddenCards}
-									isDataLoaded={isDataLoaded}
-									cardClicked={(cardID) => window.location.assign(`/card/${cardID}`)}
-									banList={selectedBanList}
-								/>
+						<Suspense fallback={undefined} >
+							<TabbedView
+								numForbidden={numForbidden}
+								numLimited={numLimited}
+								numSemiLimited={numSemiLimited}
+								banList={selectedBanList}
+								forbiddenContent={
+									<Suspense fallback={undefined} >
+										<BanListSection
+											sectionName='Forbidden'
+											sectionExplanation='Forbidden cards cannot be used in Deck/Side Deck in the Advanced Format'
+											sectionExplanationBackground='rgba(255, 69, 87, .17)'
+											cards={forbidden}
+											newCards={newForbiddenCards}
+											isDataLoaded={isDataLoaded}
+											cardClicked={(cardID) => window.location.assign(`/card/${cardID}`)}
+											banList={selectedBanList}
+										/>
+									</Suspense>
 							}
 
 							limitedContent={
-								<BanListSection
-									sectionName='Limited'
-									sectionExplanation='Limited cards can be included in Deck/Side deck - max 1'
-									sectionExplanationBackground='rgba(255, 108, 18, .17)'
-									cards={limited}
-									newCards={newLimitedCards}
-									isDataLoaded={isDataLoaded}
-									cardClicked={(cardID) => window.location.assign(`/card/${cardID}`)}
-									banList={selectedBanList}
-								/>
+								<Suspense fallback={undefined} >
+									<BanListSection
+										sectionName='Limited'
+										sectionExplanation='Limited cards can be included in Deck/Side deck - max 1'
+										sectionExplanationBackground='rgba(255, 108, 18, .17)'
+										cards={limited}
+										newCards={newLimitedCards}
+										isDataLoaded={isDataLoaded}
+										cardClicked={(cardID) => window.location.assign(`/card/${cardID}`)}
+										banList={selectedBanList}
+									/>
+								</Suspense>
 							}
 
 							semiLimitedContent={
-								<BanListSection
-									sectionName='Semi-Limited'
-									sectionExplanation='Semi-Limited cards can be included in Deck/Side deck - max 2'
-									sectionExplanationBackground='rgba(240, 198, 32, .17)'
-									cards={semiLimited}
-									newCards={newSemiLimitedCards}
-									isDataLoaded={isDataLoaded}
-									cardClicked={(cardID) => window.location.assign(`/card/${cardID}`) }
-									banList={selectedBanList}
-								/>
+								<Suspense fallback={undefined} >
+									<BanListSection
+										sectionName='Semi-Limited'
+										sectionExplanation='Semi-Limited cards can be included in Deck/Side deck - max 2'
+										sectionExplanationBackground='rgba(240, 198, 32, .17)'
+										cards={semiLimited}
+										newCards={newSemiLimitedCards}
+										isDataLoaded={isDataLoaded}
+										cardClicked={(cardID) => window.location.assign(`/card/${cardID}`) }
+										banList={selectedBanList}
+									/>
+								</Suspense>
 							}
 						/>
+						</Suspense>
 						</BannedContentContainer>
 					}
 				/>
@@ -266,7 +278,9 @@ export default function BanList(props)
 					cardClicked={ cardID => setChosenCardID(cardID) }
 				/> */}
 
-			<Footer />
+			<Suspense fallback={undefined} >
+				<Footer />
+			</Suspense>
 		</Box>
 	)
 }

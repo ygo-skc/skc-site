@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import { AppBar, Tabs, Tab, Badge } from '@material-ui/core'
 
 import { TabPanel } from './TabPanel'
-import { BanListSection } from './BanListSection'
 
 
 
@@ -17,7 +16,7 @@ const SummaryBadge = styled(Badge)`
 		}
 	}
 `
-export const TabbedView = memo( ( { numForbidden, numLimited, numSemiLimited, forbiddenContent, limitedContent, semiLimitedContent } ) =>
+const TabbedView = memo( ( { numForbidden, numLimited, numSemiLimited, forbiddenContent, limitedContent, semiLimitedContent } ) =>
 {
 	const [currentTab, setCurrentTab] = useState(0)
 	const [tabs, setTabs] = useState([])
@@ -128,8 +127,8 @@ TabbedView.propTypes =
 {
 	numForbidden: PropTypes.number.isRequired,
 	numLimited: PropTypes.number.isRequired,
-	numSemiLimited: PropTypes.number,
-	forbiddenContent: PropTypes.objectOf(BanListSection).isRequired,
-	limitedContent: PropTypes.objectOf(BanListSection).isRequired,
-	semiLimitedContent: PropTypes.objectOf(BanListSection).isRequired
+	numSemiLimited: PropTypes.number
 }
+
+
+export default TabbedView
