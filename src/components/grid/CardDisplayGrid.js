@@ -7,6 +7,7 @@ import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded';
 
 
 import {YGOCard} from '../card/YGOCard'
+import CardImageRounded from '../card/CardImageRounded'
 import cardStyles from '../card/YGOCardStyles'
 
 function getPlaceholderCardComponent()
@@ -65,12 +66,9 @@ export default function CardDisplayGrid({ cardJsonResults, numResultsDisplayed, 
 				style={{ padding: '.25rem', cursor: 'pointer' }}
 				onClick={ () => history.push(`/card/${card.cardID}`) } >
 
-				<div style={{margin: 'auto', marginBottom: '.5rem', width: '85%'}} >
-					<div
-						style={{ borderRadius: '50%', overflow: 'hidden', width: '100%',  height: '0', paddingBottom: '100%' }} >
-						<img src={`https://storage.googleapis.com/ygoprodeck.com/pics_artgame/${card.cardID}.jpg`} style={{  width: '100%', objectFit: 'cover' }} />
-					</div>
-				</div>
+				<CardImageRounded
+					cardID={card.cardID}
+					/>
 
 				<YGOCard
 					isNew={ false }

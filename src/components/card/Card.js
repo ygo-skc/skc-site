@@ -4,6 +4,7 @@ import withWidth from '@material-ui/core/withWidth'
 
 import Breadcrumb from '../Breadcrumb'
 import {YGOCard} from './YGOCard'
+import CardImageRounded from './CardImageRounded'
 import cardStyles from './YGOCardStyles'
 import { handleFetch } from '../../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
@@ -123,10 +124,9 @@ function Card( { match, history, width } )
 							Card Information
 						</Typography>
 
-						<Box
-							style={{ textAlign: 'center', marginBottom: '.5rem' }} >
-							<img src={`https://storage.googleapis.com/ygoprodeck.com/pics_artgame/${cardId}.jpg`} width = {(width === 'xs')? '65%' : '90%'} style={{ borderRadius: '50%' }} />
-						</Box>
+						<CardImageRounded
+							cardID={cardId}
+							/>
 
 						<YGOCard
 							isNew={ false }
