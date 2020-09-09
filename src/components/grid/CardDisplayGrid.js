@@ -25,7 +25,7 @@ function getPlaceholderCardComponent()
 			lg={3}
 			xl={2}
 			style={{ padding: '.25rem' }} >
-				<Skeleton variant='circle' height='100' width='100' style={{margin: 'auto'}} />
+				<Skeleton variant='circle' height='150' width='150' style={{margin: 'auto'}} />
 				<Skeleton variant='rect' width='100%' height='100' />
 		</Grid>)
 	}
@@ -45,12 +45,13 @@ export default function CardDisplayGrid({ cardJsonResults, numResultsDisplayed, 
 
 	useEffect( () => {
 		if (cardJsonResults === undefined) return
+		if (cardJsonResults.length === 0)	setCardGridUISkeleton([getPlaceholderCardComponent()])
 
 		setIsLoadingData(true)
 		setCardGridUISkeleton([...cardGridUI, getPlaceholderCardComponent()])
 		setTimeout(() => {
 			setIsLoadingData(false)
-		}, 200);
+		}, 130);
 
 		const cards = cardJsonResults.slice(numResultsDisplayed - numResultsLoaded, numResultsDisplayed).map( card => {
 			return <Grid
@@ -63,12 +64,14 @@ export default function CardDisplayGrid({ cardJsonResults, numResultsDisplayed, 
 				xl={2}
 				style={{ padding: '.25rem', cursor: 'pointer' }}
 				onClick={ () => history.push(`/card/${card.cardID}`) } >
-					<div style={{margin: 'auto', marginBottom: '.5rem', width: '85%'}} >
-						<div
-							style={{ borderRadius: '50%', overflow: 'hidden', width: '100%',  height: '0', paddingBottom: '100%' }} >
-							<img src={`https://storage.googleapis.com/ygoprodeck.com/pics_artgame/${card.cardID}.jpg`} style={{  width: '100%', objectFit: 'cover' }} />
-						</div>
+
+				<div style={{margin: 'auto', marginBottom: '.5rem', width: '85%'}} >
+					<div
+						style={{ borderRadius: '50%', overflow: 'hidden', width: '100%',  height: '0', paddingBottom: '100%' }} >
+						<img src={`https://storage.googleapis.com/ygoprodeck.com/pics_artgame/${card.cardID}.jpg`} style={{  width: '100%', objectFit: 'cover' }} />
 					</div>
+				</div>
+
 				<YGOCard
 					isNew={ false }
 					cardName={card.cardName}
@@ -85,12 +88,7 @@ export default function CardDisplayGrid({ cardJsonResults, numResultsDisplayed, 
 		})
 
 		setCardGridUI([...cardGridUI, ...cards])
-	}, [numResultsDisplayed])
-
-
-	useEffect( () => {
-		setCardGridUI([])
-	}, [cardJsonResults])
+	}, [numResultsDisplayed, cardJsonResults])
 
 
 	useEffect( () => {

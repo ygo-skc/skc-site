@@ -55,7 +55,7 @@ function getPlaceholderCardComponent()
 			lg={2}
 			xl={1}
 			style={{ padding: '.5rem' }} >
-				<Skeleton variant='rect' width='100%' height='180' />
+				<Skeleton variant='rect' width='100%' height='130' />
 		</Grid>)
 	}
 
@@ -94,25 +94,25 @@ export default function ProductBrowse({history})
 				onClick={ () => window.location.assign(`/product/${item.productId}`) }
 				>
 					<ProductInstance
-						style={{padding: '1.75rem'}}
+						style={{padding: '.75rem'}}
 						>
 						<MainBrowseInfoTypography2
-							onClick
-							variant='h6'
+							style={{marginBottom: '1rem'}}
+							variant='subtitle1'
 							align='center' >
 							{item.productName}
 						</MainBrowseInfoTypography2>
 						<MainBrowseInfoTypography2
 							variant='subtitle2' >
-							Product ID: {item.productId}
+							ID: {item.productId}
 						</MainBrowseInfoTypography2>
 						<MainBrowseInfoTypography2
 							variant='subtitle2' >
-							Product Type: {item.productType}
+							Type: {item.productType}
 						</MainBrowseInfoTypography2>
 						<MainBrowseInfoTypography2
 							variant='subtitle2' >
-							Product Sub-Type: {item.productSubType}
+							Sub-Type: {item.productSubType}
 						</MainBrowseInfoTypography2>
 					</ProductInstance>
 				</Grid>

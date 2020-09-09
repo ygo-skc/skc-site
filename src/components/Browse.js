@@ -33,7 +33,7 @@ const defaultDisplayNum = 40
 export default function Browse( {history} )
 {
 	const [browseCriteria, setBrowseCriteria] = useState([])
-	const [selectedCriteria, setSelectedCriteria] = useState([])
+	const [selectedCriteria, setSelectedCriteria] = useState(undefined)
 
 	const [selectedCriteriaChips, setSelectedCriteriaChips] = useState([])
 	const [jsonResults, setJsonResults] = useState(undefined)
@@ -66,10 +66,9 @@ export default function Browse( {history} )
 	}, [])
 
 	useEffect( () => {
-		console.log(selectedCriteria)
+		if (selectedCriteria === undefined)	return
 		if (selectedCriteria.length === 0)
 		{
-			console.log('hi')
 			reset(true)
 			return
 		}
@@ -130,7 +129,9 @@ export default function Browse( {history} )
 
 	const reset = (fullReset = false) =>
 	{
+		setIsLoadMoreVisible(false)
 		setNumResults(0)
+		setJsonResults([])
 		if (fullReset)
 		{
 			setSelectedCriteriaChips([])
