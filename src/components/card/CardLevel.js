@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 const levelImage = <img
 	src={`${process.env.PUBLIC_URL}/Img/card_level.svg`}
 	alt='Card Level Icon'
-	style={{ width: '20px', marginLeft: '1px' }} />
+	style={{ width: '22px', marginLeft: '1px' }} />
 
 
 const CardLevel = ( { level } ) =>
