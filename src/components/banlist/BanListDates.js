@@ -62,13 +62,15 @@ export const BanListDates = memo( ( { banListStartDates, setSelectedBanList } ) 
 	return(
 		<div style={{padding: '.5rem'}} >
 			<Typography
+				style={{color: 'rgba(255, 255, 255, .95)'}}
 				variant='h6' >
 				Date Range
 			</Typography>
-			<ExpansionPanel elevation={0} style={ { paddingLeft: '.5rem' } }  >
+			<ExpansionPanel elevation={0} style={ { padding: '.5rem', background: 'rgba(255, 255, 255, .85)', borderRadius: '1rem' } }  >
 				<BanDatesExpansionSummary
 					expandIcon={<ExpandMoreIcon />} >
 					<Typography
+						style={{color: 'rgba(0, 0, 0, .75)'}}
 						variant='subtitle2' >
 						{ selectedRange }
 					</Typography>

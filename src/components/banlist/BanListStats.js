@@ -11,8 +11,25 @@ const ListStatItem = Styled(ListItem)`
 	&&
 	{
 		padding: .25rem;
+		color: rgba(255, 255, 255, .9);
+
+		.MuiListItemText-secondary
+		{
+			color: rgba(255, 255, 255, .825);
+		}
 	}
 `
+
+
+function getListItemCardChild(cardName, previousBanStatus, cardId)
+{
+	return <ListItemText
+		onClick={() => window.location.assign(`/card/${cardId}`)}
+		primary={cardName}
+		secondary={`Was: ${previousBanStatus}`}
+	/>
+
+}
 
 
 const BanListStats = memo( ( { totalCardsInSelectedList, selectedBanList
@@ -69,15 +86,13 @@ const BanListStats = memo( ( { totalCardsInSelectedList, selectedBanList
 		const newForbiddenCardsList = []
 
 		newForbiddenCards.forEach( (card, ind) => {
+			console.log(card)
 			newForbiddenCardsList.push(
 				<ListStatItem
 					key={ind}
 					button
 					style={{paddingLeft: '3rem'}}  >
-					<ListItemText
-						primary={card.cardName}
-						secondary={`Was: ${card.previousBanStatus}`}
-					/>
+					{getListItemCardChild(card.cardName, card.previousBanStatus, card.cardId)}
 				</ListStatItem>
 			)
 		})
@@ -92,7 +107,7 @@ const BanListStats = memo( ( { totalCardsInSelectedList, selectedBanList
 		newLimitedCards.forEach( (card, ind) => {
 			newLimitedCardsList.push(
 				<ListStatItem key={ind} button style={{paddingLeft: '3rem'}}  >
-					<ListItemText primary={card.cardName} secondary={`Was: ${card.previousBanStatus}`} />
+					{getListItemCardChild(card.cardName, card.previousBanStatus, card.cardId)}
 				</ListStatItem>
 			)
 		})
@@ -108,7 +123,7 @@ const BanListStats = memo( ( { totalCardsInSelectedList, selectedBanList
 		newSemiLimitedCards.forEach( (card, ind) => {
 			newSemiLimitedCardsList.push(
 				<ListStatItem key={ind} button style={{paddingLeft: '3rem'}}  >
-					<ListItemText primary={card.cardName} secondary={`Was: ${card.previousBanStatus}`} />
+					{getListItemCardChild(card.cardName, card.previousBanStatus, card.cardId)}
 				</ListStatItem>
 			)
 		})
@@ -124,7 +139,7 @@ const BanListStats = memo( ( { totalCardsInSelectedList, selectedBanList
 		removedCards.forEach( (card, ind) => {
 			removedCardsList.push(
 				<ListStatItem key={ind} button style={{paddingLeft: '3rem'}}  >
-					<ListItemText primary={card.cardName} secondary={`Was: ${card.previousBanStatus}`}  />
+					{getListItemCardChild(card.cardName, card.previousBanStatus, card.cardId)}
 				</ListStatItem>)
 		})
 		setRemovedCardsList(removedCardsList)
@@ -133,9 +148,12 @@ const BanListStats = memo( ( { totalCardsInSelectedList, selectedBanList
 
 	return(
 		<div style={{padding: '.5rem'}} >
-			<Typography variant='subtitle1' style={{color: 'rgb(101, 119, 134)'}} >
+			<Typography
+				variant='subtitle1'
+				style={{color: 'rgba(255, 255, 255, .95)'}} >
 				List Summary
 			</Typography>
+
 			<List style={{ width: '100%', maxWidth: '400px' }}
 				component="nav"
 				aria-labelledby="nested-list-subheader">
