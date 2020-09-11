@@ -193,60 +193,68 @@ export default function BanList(props)
 					</div>
 				}
 				twoThirdComponent={
-					<BannedContentContainer  >
-						<Suspense fallback={undefined} >
-							<TabbedView
-								numForbidden={numForbidden}
-								numLimited={numLimited}
-								numSemiLimited={numSemiLimited}
-								banList={selectedBanList}
-								forbiddenContent={
+					<Box>
+
+						<BannedContentContainer  >
+							<Suspense fallback={undefined} >
+								<TabbedView
+									numForbidden={numForbidden}
+									numLimited={numLimited}
+									numSemiLimited={numSemiLimited}
+									banList={selectedBanList}
+									forbiddenContent={
+										<Suspense fallback={undefined} >
+											<BanListSection
+												sectionName='Forbidden'
+												sectionExplanation='Forbidden cards cannot be used in Deck/Side Deck in the Advanced Format'
+												sectionExplanationBackground='rgba(255, 69, 87, .17)'
+												cards={forbidden}
+												newCards={newForbiddenCards}
+												isDataLoaded={isDataLoaded}
+												cardClicked={(cardID) => window.location.assign(`/card/${cardID}`)}
+												banList={selectedBanList}
+											/>
+										</Suspense>
+								}
+
+								limitedContent={
 									<Suspense fallback={undefined} >
 										<BanListSection
-											sectionName='Forbidden'
-											sectionExplanation='Forbidden cards cannot be used in Deck/Side Deck in the Advanced Format'
-											sectionExplanationBackground='rgba(255, 69, 87, .17)'
-											cards={forbidden}
-											newCards={newForbiddenCards}
+											sectionName='Limited'
+											sectionExplanation='Limited cards can be included in Deck/Side deck - max 1'
+											sectionExplanationBackground='rgba(255, 108, 18, .17)'
+											cards={limited}
+											newCards={newLimitedCards}
 											isDataLoaded={isDataLoaded}
 											cardClicked={(cardID) => window.location.assign(`/card/${cardID}`)}
 											banList={selectedBanList}
 										/>
 									</Suspense>
-							}
+								}
 
-							limitedContent={
-								<Suspense fallback={undefined} >
-									<BanListSection
-										sectionName='Limited'
-										sectionExplanation='Limited cards can be included in Deck/Side deck - max 1'
-										sectionExplanationBackground='rgba(255, 108, 18, .17)'
-										cards={limited}
-										newCards={newLimitedCards}
-										isDataLoaded={isDataLoaded}
-										cardClicked={(cardID) => window.location.assign(`/card/${cardID}`)}
-										banList={selectedBanList}
-									/>
+								semiLimitedContent={
+									<Suspense fallback={undefined} >
+										<BanListSection
+											sectionName='Semi-Limited'
+											sectionExplanation='Semi-Limited cards can be included in Deck/Side deck - max 2'
+											sectionExplanationBackground='rgba(240, 198, 32, .17)'
+											cards={semiLimited}
+											newCards={newSemiLimitedCards}
+											isDataLoaded={isDataLoaded}
+											cardClicked={(cardID) => window.location.assign(`/card/${cardID}`) }
+											banList={selectedBanList}
+										/>
+									</Suspense>
+								}
+								/>
 								</Suspense>
-							}
 
-							semiLimitedContent={
-								<Suspense fallback={undefined} >
-									<BanListSection
-										sectionName='Semi-Limited'
-										sectionExplanation='Semi-Limited cards can be included in Deck/Side deck - max 2'
-										sectionExplanationBackground='rgba(240, 198, 32, .17)'
-										cards={semiLimited}
-										newCards={newSemiLimitedCards}
-										isDataLoaded={isDataLoaded}
-										cardClicked={(cardID) => window.location.assign(`/card/${cardID}`) }
-										banList={selectedBanList}
-									/>
-								</Suspense>
-							}
-						/>
-						</Suspense>
-						</BannedContentContainer>
+							</BannedContentContainer>
+
+							<Suspense fallback={undefined} >
+								<Footer />
+							</Suspense>
+						</Box>
 					}
 				/>
 
@@ -278,9 +286,6 @@ export default function BanList(props)
 					cardClicked={ cardID => setChosenCardID(cardID) }
 				/> */}
 
-			<Suspense fallback={undefined} >
-				<Footer />
-			</Suspense>
 		</Box>
 	)
 }

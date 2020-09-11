@@ -8,7 +8,7 @@ const FooterComponent = Styled(Box)`
 	&&
 	{
 		margin-bottom: 1.5rem;
-		margin-top: auto 1.5rem;
+		margin-top: 3.5rem;
 
 		width: 100%;
 	}

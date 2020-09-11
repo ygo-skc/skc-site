@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {useHistory} from 'react-router-dom'
 
-import { Grid, IconButton, Box } from '@material-ui/core'
+import { Grid, IconButton, Box, Typography } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
 import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded';
 
@@ -9,6 +9,7 @@ import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded';
 import {YGOCard} from '../card/YGOCard'
 import CardImageRounded from '../card/CardImageRounded'
 import cardStyles from '../card/YGOCardStyles'
+import Footer from '../Footer'
 
 function getPlaceholderCardComponent()
 {
@@ -101,7 +102,7 @@ export default function CardDisplayGrid({ cardJsonResults, numResultsDisplayed, 
 		<Box>
 			<Grid>
 				<Grid container >
-					{(isLoadingData)? cardGridUISkeleton : cardGridUI}
+					{(isLoadingData)? cardGridUISkeleton : (cardGridUI.length === 0)? <Typography variant='h5' style={{margin: 'auto'}} >No Content To Show</Typography> : cardGridUI}
 				</Grid>
 			</Grid>
 
@@ -114,6 +115,9 @@ export default function CardDisplayGrid({ cardJsonResults, numResultsDisplayed, 
 					<ExpandMoreRoundedIcon />
 				</IconButton>
 			}
+
+
+			<Footer />
 		</Box>
 	)
 }

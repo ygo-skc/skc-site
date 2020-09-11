@@ -10,7 +10,6 @@ import { MainContentContainer } from './MainContent'
 import CardDisplayGrid from './grid/CardDisplayGrid'
 
 import OneThirdTwoThirdsGrid from './grid/OneThirdTwoThirdsGrid'
-import Footer from './Footer'
 
 import { handleFetch } from '../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../helper/YgoApiEndpoints'
@@ -223,8 +222,6 @@ export default function Browse( {history} )
 						/>
 				}
 			/>
-
-			<Footer />
 		</MainContentContainer>
 	)
 }

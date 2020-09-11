@@ -15,7 +15,6 @@ import OneThirdTwoThirdsGrid from '../grid/OneThirdTwoThirdsGrid'
 import CardDisplayGrid from '../grid/CardDisplayGrid'
 import Styled from 'styled-components'
 import {LightTranslucentDivider} from '../util/Divider'
-import Footer from '../Footer'
 
 
 const MainBrowseInfoTypography = Styled(Typography)`
@@ -131,7 +130,6 @@ export default function ProductInfo({match, history}) {
 					/>
 				}
 			/>
-			<Footer />
 		</MainContentContainer>
 	)
 }

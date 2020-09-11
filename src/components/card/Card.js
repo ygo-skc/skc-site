@@ -114,8 +114,7 @@ function Card( { match, history, width } )
 
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={
-					<Box
-						style={{ margin: 'auto', paddingBottom: '3.5rem' }}>
+					<Box>
 
 						<Typography
 							variant='h4'
@@ -172,12 +171,15 @@ function Card( { match, history, width } )
 									backgroundImage='linear-gradient(315deg, #fc9842 0%, #fe5f75 74%)'
 								/>
 							</Suspense>
+
 						</Grid>
+
+						<Footer />
+
 					</Grid>
 					}
 				/>
 
-			<Footer />
 		</MainContentContainer>
 	)
 }
