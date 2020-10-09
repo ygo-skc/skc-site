@@ -9,6 +9,8 @@ import cardStyles from '../card/YGOCardStyles'
 
 import { ChildBox } from '../MainContent'
 
+import CardDisplayGrid from '../grid/CardDisplayGrid'
+
 
 const cardSectionTextColors = {
 	'normal': 'rgba(249, 160, 16, 1)'
@@ -97,10 +99,9 @@ const CardItem = styled(Grid)`
 `
 
 
-const BanListSection = ( { sectionExplanation, cards, newCards, isDataLoaded, cardClicked } ) =>
+const BanListSection = ( { sectionExplanation, cards, newCards, isDataLoaded } ) =>
 {
 	const [cardTypeContentGrid, setCardTypeContentGrid] = useState([])
-	const [areCardsRendered, setAreCardsRendered] = useState(false)
 
 	const SectionInfoText = styled(Typography)`
 		&&
@@ -126,56 +127,20 @@ const BanListSection = ( { sectionExplanation, cards, newCards, isDataLoaded, ca
 		return false
 	}
 
+
 	useEffect(() => {
-		setAreCardsRendered(false)
 		if ( isDataLoaded )
 		{
-			const cardDetailsMap = new Map()
-			const cardTypeContentGrid = []
-
-			cards.forEach((card, ind) => {
-				const cardColor = card.cardColor
-				if (!cardDetailsMap.has(cardColor))	cardDetailsMap.set(cardColor, [])
-
-
-				cardDetailsMap.get(cardColor).push(
-					<CardItem key={ind} item xs={12} sm={4} md={3} lg={2} xl={2}>
-						<CardDetails
-							key={card.cardID}
-							cardID={card.cardID}
-							cardName={card.cardName}
-							monsterType={card.monsterType}
-							cardColor={card.cardColor}
-							cardEffect={card.cardEffect}
-							cardClicked={cardClicked}
-							fullDetails={false}
-							isNew={ isNewCard(card.cardID)}
-							cardStyles={cardStyles}
-						/>
-					</CardItem>
-				)
-			})
-
-			cardDetailsMap.forEach((details, cardColor) => {
-				const SectionText = (cardColor === 'Pendulum-Effect' || cardColor === 'Pendulum-Normal')? CardSectionBasePendulum : CardSectionBaseText
-
-				cardTypeContentGrid.push(
-					<div key={cardColor} >
-						<SectionText
-							style={ (cardColor === 'Pendulum-Effect' || cardColor === 'Pendulum-Normal')? {background: cardSectionTextColors[cardColor.toLowerCase()], '-webkit-background-clip': 'text'}: {color: cardSectionTextColors[cardColor.toLowerCase()]} }
-							variant='h6' >
-							{cardColor}
-						</SectionText>
-						<Grid container spacing={0} >
-							{ details }
-						</Grid>
-					</div>
-				)
-			})
-
-			setCardTypeContentGrid(cardTypeContentGrid)
-			setAreCardsRendered(true)
+			setCardTypeContentGrid(<CardDisplayGrid
+				cardJsonResults={cards}
+				numResultsDisplayed={cards.length}
+				numResultsLoaded={cards.length}
+				loadMoreCallback={undefined}
+				isLoadMoreOptionVisible={false}
+				showFooter={false}
+			/>)
 		}
+		else setCardTypeContentGrid(undefined)
 		// eslint-disable-next-line
 	}, [isDataLoaded])
 
@@ -187,20 +152,7 @@ const BanListSection = ( { sectionExplanation, cards, newCards, isDataLoaded, ca
 				{ sectionExplanation }
 			</SectionInfoText>
 
-			{
-				(areCardsRendered ?
-					(	<div>
-						{cardTypeContentGrid}
-					</div>)
-					: 	<CircularProgress
-							size={50}
-							variant='indeterminate'
-							thickness={3}
-							disableShrink={true}
-							style={{ margin: '0 auto' }}
-						/>
-				)
-			}
+			{cardTypeContentGrid}
 		</ChildBox>
 	)
 }
