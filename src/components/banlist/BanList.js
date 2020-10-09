@@ -125,7 +125,6 @@ export default function BanList(props)
 			setIsFetchingBanList(true)
 
 			handleFetch(banListInstanceLinks[banListStartDates.indexOf(selectedBanList)], props.history, (resultJson) => {
-				console.log('hello world')
 				setForbidden( resultJson.banListInstance.forbidden )
 				setLimited( resultJson.banListInstance.limited )
 				setSemiLimited( resultJson.banListInstance.semiLimited )

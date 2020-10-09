@@ -127,6 +127,7 @@ export default function ProductInfo({match, history}) {
 						numResultsLoaded={productTotal}
 						loadMoreCallback={undefined}
 						isLoadMoreOptionVisible={false}
+						history={history}
 					/>
 				}
 			/>

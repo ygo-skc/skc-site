@@ -47,7 +47,7 @@ export default function NavigationBar()
 					<NavigationButton
 						style={ { fontSize: '1.25rem', textTransform: 'none'} }
 						color='inherit' >
-						Supreme Kings Castle
+						Supreme Kings Castle [BETA]
 					</NavigationButton>
 				</Link>
 

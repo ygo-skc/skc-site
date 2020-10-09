@@ -71,7 +71,7 @@ export const BanListDates = memo( ( { banListStartDates, setSelectedBanList } ) 
 					expandIcon={<ExpandMoreIcon />} >
 					<Typography
 						style={{color: 'rgba(0, 0, 0, .75)'}}
-						variant='subtitle2' >
+						variant='body1' >
 						{ selectedRange }
 					</Typography>
 				</BanDatesExpansionSummary>

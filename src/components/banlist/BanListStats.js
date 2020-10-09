@@ -86,7 +86,6 @@ const BanListStats = memo( ( { totalCardsInSelectedList, selectedBanList
 		const newForbiddenCardsList = []
 
 		newForbiddenCards.forEach( (card, ind) => {
-			console.log(card)
 			newForbiddenCardsList.push(
 				<ListStatItem
 					key={ind}

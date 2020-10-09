@@ -35,7 +35,7 @@ const About: FunctionComponent = () => (
 				<CenteredText variant='subtitle1'>
 					<GenericLinkPhoto
 						imageName='twitter_logo.png'
-						link="https://twitter.com/TheSupremeKin14"
+						link="https://twitter.com/SupremeKing93"
 					/>
 					<GenericLinkPhoto
 						imageName='email_logo.png'
@@ -49,14 +49,16 @@ const About: FunctionComponent = () => (
 				<br />
 
 				<Typography variant='body1'>
-					Hey guys. I started playing Yugioh when I was about 8 years old. I played at some local tourneys, but I wasn't exceptional by any means. I stopped playing when I got to high school, but I still collected cards for fun. My collecting then stopped when I got to college since it was hard convincing myself a pack of cards was more important than food/gas. Also, being a CS major and a Math minor with a full time job - hobbies were not really a priority.
+					I started playing Yugioh when I was about 8 years old. I played at some local tourneys, but I wasn't exceptional by any means. I stopped playing when I got to high school, but I still collected cards for fun. My collecting then stopped when I got to college since it was hard convincing myself a pack of cards was more important than food/gas. Also, being a CS major and a Math minor with a full time job - hobbies were not really a priority.
 					<br />
 					<br />
-					Anyways, recently I graduated and  got a full time Programming gig. Through it, I got more time and money for Yugioh again! I play HERO's and Neo Spacians. I doubt I'll ever play tourneys again but it's been fun getting back into the game.
+					Anyways, I graduated sometime in 2018 and got a decent job in my field. Through it, I got more time and money for Yugioh again! I play HERO's and Neo Spacians primarily. Other archetypes I like are; Sacred Beasts, Cyber Dragons, and Toons. I primarily collect cards and play Duel Links. Tournaments have been on my mind as well.
 					<br />
 					<br />
-					While checking out the newest ban list to make sure I'm playing the Limited Format correctly, I thought about how ugly the Konami website was.
-					This website was created as a side project to not only see if I can do a better job than Konami but also to learn the full stack of my new position. Full stack is the combination of both a product and the technology used for that product. For this website I used; <strong>Spring Boot</strong>, <strong>MySQL DB</strong>, and <strong>React.js</strong>.
+					This website was created for two reasons. The first and most important was that I needed to learn technologies I wasn't exposed to (primarily Spring) that I needed to know for my job. In case you are wondering, it did help me become adept and am able to do my job faster than most and with ease. Secondly, I thought I could do a better job displaying content than Konami. This website began as a place to display info about the current and previous ban lists. However, I wanted to keep going and built a full blown Database for Yu-Gi-Oh content.
+					<br />
+					<br />
+					I have some more plans for the website so please stay tuned. Something I wanted to start learning was Machine Learning / AI. The first step I see myself taking is creating a robust suggestion engine that uses card information (parsing text) to help Duelists find related cards easier. I haven't seen a good engine yet...
 				</Typography>
 			</ChildPaper>
 
@@ -67,13 +69,13 @@ const About: FunctionComponent = () => (
 				<CenteredText variant='subtitle1'>
 					<GenericLinkPhoto
 						imageName='api_logo.jpg'
-						link="https://ygoapi.cfapps.io/swagger-ui.html"
+						link="https://ygoapi.cfapps.io//api/v1/swagger-ui/index.html"
 					/>
 				</CenteredText>
 				<br />
 
 				<Typography variant='body1'>
-					The API was also created by me. It has two main functions: to get the contents of a specific ban list (basic info about a card, forbidden/limited/semi-limited cards) and get detailed information about a certain card (effect, attack/defense, etc). Right now it is limited in content. However, I would like to create a full blown database of cards so developers can have a fun and familiar service to use while learning about REST and HTTP in general.
+					This website uses an new API created to support the site and also to help people who are learning about web APIs. It has a very easy to read/follow companion site that wsa created using Swagger. Click the above image to for the documentation.
 				</Typography>
 			</ChildPaper>
 
@@ -87,13 +89,10 @@ const About: FunctionComponent = () => (
 				<br />
 
 				<Typography variant='body1'>
-					Since the website needs to be hosted somewhere and a good hosting platform costs money, donations are always welcome. If you use the website often/think its neat and you have a dollar or two laying around, use the link above.
+					Besides time, hosting is another resource needed to have this website/API live and updated. If you like the website or learned a bit by messing with the API please consider donating.
 					<br />
 					<br />
-					I have no plans for an Ad centric business model. Quite frankly, Ads are annoying, ugly and abuse user data.
-					<br />
-					<br />
-					Donations will be used to keep the website and API up and running as well as motivate me to keep it going. Not only that, this website uses open source software that I would also love to fund since I couldn't have built this thing as easily without the frameworks used. A portion of donations will be going to certain frameworks.
+					I am not a fan of Ads, but there are plans on adding minimal ads to help maintain the site in the future.
 				</Typography>
 			</ChildPaper>
 

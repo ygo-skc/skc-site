@@ -36,7 +36,7 @@ function getPlaceholderCardComponent()
 }
 
 
-export default function CardDisplayGrid({ cardJsonResults, numResultsDisplayed, numResultsLoaded, loadMoreCallback, isLoadMoreOptionVisible })
+export default function CardDisplayGrid({ cardJsonResults, numResultsDisplayed, numResultsLoaded, loadMoreCallback, isLoadMoreOptionVisible, showFooter=true})
 {
 	const [cardGridUI, setCardGridUI] = useState([])
 
@@ -65,7 +65,7 @@ export default function CardDisplayGrid({ cardJsonResults, numResultsDisplayed, 
 				lg={3}
 				xl={2}
 				style={{ padding: '.25rem', cursor: 'pointer' }}
-				onClick={ () => history.push(`/card/${card.cardID}`) } >
+				onClick={ () => window.location.assign(`/card/${card.cardID}`) } >
 
 				<CardImageRounded
 					cardID={card.cardID}
@@ -117,7 +117,7 @@ export default function CardDisplayGrid({ cardJsonResults, numResultsDisplayed, 
 			}
 
 
-			<Footer />
+			{ (showFooter)? <Footer /> : undefined }
 		</Box>
 	)
 }

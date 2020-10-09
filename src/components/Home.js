@@ -80,11 +80,12 @@ export default function Home({ history }) {
 			<Paper style={{ display: 'flex', width: '90%', maxWidth: '500px', margin: '0 auto' }} >
 				<DatabaseSearch
 					id='search'
+					clearOnEscape
+					selectOnFocus
 					style={{ flex: '1' }}
 					noOptionsText={(searchInput === '') ? 'Type For Suggestions' : 'No Results'}
 					getOptionLabel={option => option.cardName}
 					options={searchOptions}
-					autoHighlight
 					groupBy={option => option.cardColor}
 					getOptionSelected={(option, value) => window.location.assign(`/card/${value.cardID}`)}
 					renderGroup={option => {
