@@ -201,12 +201,12 @@ export default function Browse( {history} )
 								}}
 								renderInput={(params) => (
 									<div style={{ width: '100%', display: 'flex', backgroundColor: 'rgba(0, 0, 0, .37)' }} >
-									<InputBase
-										ref={params.InputProps.ref}
-										inputProps={params.inputProps}
-										style={{ color: 'white', flex: '1', margin: '.8rem', fontSize: '1.23rem' }}
-										placeholder='Search...'
-										/>
+										<InputBase
+											ref={params.InputProps.ref}
+											inputProps={params.inputProps}
+											style={{ color: 'white', flex: '1', margin: '.8rem', fontSize: '1.23rem' }}
+											placeholder='Search...'
+											/>
 										<IconButton>
 											<SearchIcon style={{ color: 'rgba(255, 255, 255, .56)' }} />
 										</IconButton>

@@ -87,7 +87,10 @@ export default function Home({ history }) {
 					getOptionLabel={option => option.cardName}
 					options={searchOptions}
 					groupBy={option => option.cardColor}
-					getOptionSelected={(option, value) => window.location.assign(`/card/${value.cardID}`)}
+					onChange={ (event, value, reason) => {
+						if (reason === 'select-option') { window.location.assign(`/card/${value.cardID}`) }
+					}
+					}
 					renderGroup={option => {
 						return (
 							<div style={{ padding: '1.5rem' }} >
