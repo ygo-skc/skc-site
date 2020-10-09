@@ -47,12 +47,14 @@ export default function Browse( {history} )
 	useEffect( () => {
 		handleFetch(NAME_maps_ENDPOINT['browseCriteria'], history, (json) => {
 			const browseCriteria = []
+			console.log(json)
 			for (const criteria of Object.keys(json))
 			{
+				if (criteria === '_links')	continue
 				json[criteria].forEach(criteriaValue => {
 					if (criteria === 'levels') criteriaValue = `Level ${criteriaValue}`
-					if (criteria === 'ranks') criteriaValue = `Rank ${criteriaValue}`
-					if (criteria === 'linkRatings') criteriaValue = `Link Rating ${criteriaValue}`
+					else if (criteria === 'ranks') criteriaValue = `Rank ${criteriaValue}`
+					else if (criteria === 'linkRatings') criteriaValue = `Link Rating ${criteriaValue}`
 
 					browseCriteria.push({
 						'criteriaName': criteria
@@ -76,10 +78,23 @@ export default function Browse( {history} )
 		const criteriaMap = new Map()
 		criteriaMap.set('cardColors', [])
 		criteriaMap.set('attributes', [])
+		criteriaMap.set('levels', [])
+		criteriaMap.set('ranks', [])
+		criteriaMap.set('linkRatings', [])
 
 		const selectedCriteriaChips = selectedCriteria.map(criteria => {
 			if (criteria.criteriaName === 'cardColors' || criteria.criteriaName === 'attributes')
 				criteriaMap.get(criteria.criteriaName).push(criteria.criteriaValue)
+			else if(criteria.criteriaName === 'levels'){
+				criteriaMap.get(criteria.criteriaName).push(criteria.criteriaValue.replace('Level ', ""))
+			}
+			else if(criteria.criteriaName === 'ranks'){
+				criteriaMap.get(criteria.criteriaName).push(criteria.criteriaValue.replace('Rank ', ""))
+			}
+			else if(criteria.criteriaName === 'linkRatings'){
+				console.log('yo')
+				criteriaMap.get(criteria.criteriaName).push(criteria.criteriaValue.replace('Link Rating ', ""))
+			}
 
 			return <Chip
 				key={criteria.criteriaValue}
@@ -90,7 +105,9 @@ export default function Browse( {history} )
 		setSelectedCriteriaChips(selectedCriteriaChips)
 		reset()
 
-		handleFetch(`${NAME_maps_ENDPOINT['browse']}?cardColors=${criteriaMap.get('cardColors').join(',')}&attributes=${criteriaMap.get('attributes').join(',')}`, history, json => {
+		console.log(`${NAME_maps_ENDPOINT['browse']}?cardColors=${criteriaMap.get('cardColors').join(',')}&attributes=${criteriaMap.get('attributes').join(',')}&levels=${criteriaMap.get('levels').join(',')}&ranks=${criteriaMap.get('ranks').join(',')}&linkRatings=${criteriaMap.get('linkRatings').join(',')}`)
+		handleFetch(`${NAME_maps_ENDPOINT['browse']}?cardColors=${criteriaMap.get('cardColors').join(',')}&attributes=${criteriaMap.get('attributes').join(',')}&levels=${criteriaMap.get('levels').join(',')}&ranks=${criteriaMap.get('ranks').join(',')}&linkRatings=${criteriaMap.get('linkRatings').join(',')}`, history, json => {
+			console.log("i ran")
 			setJsonResults(json.results)
 			setNumResults(json.numResults)
 		})
