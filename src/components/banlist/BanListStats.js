@@ -11,12 +11,29 @@ const ListStatItem = Styled(ListItem)`
 	&&
 	{
 		padding: .25rem;
+		color: rgba(255, 255, 255, .9);
+
+		.MuiListItemText-secondary
+		{
+			color: rgba(255, 255, 255, .825);
+		}
 	}
 `
 
 
+function getListItemCardChild(cardName, previousBanStatus, cardId)
+{
+	return <ListItemText
+		onClick={() => window.location.assign(`/card/${cardId}`)}
+		primary={cardName}
+		secondary={`Was: ${previousBanStatus}`}
+	/>
+
+}
+
+
 const BanListStats = memo( ( { totalCardsInSelectedList, selectedBanList
-	, newForbiddenCards, newLimitedCards, newSemiLimitedCards, numNewForbidden, numNewLimited, numNewSemiLimited, removedCards, numRemoved, cardClicked } ) =>
+	, newForbiddenCards, newLimitedCards, newSemiLimitedCards, numNewForbidden, numNewLimited, numNewSemiLimited, removedCards, numRemoved } ) =>
 {
 	const [isShowingNewCards, setIsShowingNewCards] = useState(false)
 	const [isShowingNewForbiddenCards, setIsShowingNewForbiddenCards] = useState(false)
@@ -73,12 +90,8 @@ const BanListStats = memo( ( { totalCardsInSelectedList, selectedBanList
 				<ListStatItem
 					key={ind}
 					button
-					onClick={ () => cardClicked(card.id) }
 					style={{paddingLeft: '3rem'}}  >
-					<ListItemText
-						primary={card.name}
-						secondary={`Was: ${card.previousState}`}
-					/>
+					{getListItemCardChild(card.cardName, card.previousBanStatus, card.cardId)}
 				</ListStatItem>
 			)
 		})
@@ -92,8 +105,8 @@ const BanListStats = memo( ( { totalCardsInSelectedList, selectedBanList
 
 		newLimitedCards.forEach( (card, ind) => {
 			newLimitedCardsList.push(
-				<ListStatItem key={ind} button onClick={ () => cardClicked(card.id) } style={{paddingLeft: '3rem'}}  >
-					<ListItemText primary={card.name} secondary={`Was: ${card.previousState}`} />
+				<ListStatItem key={ind} button style={{paddingLeft: '3rem'}}  >
+					{getListItemCardChild(card.cardName, card.previousBanStatus, card.cardId)}
 				</ListStatItem>
 			)
 		})
@@ -108,8 +121,8 @@ const BanListStats = memo( ( { totalCardsInSelectedList, selectedBanList
 
 		newSemiLimitedCards.forEach( (card, ind) => {
 			newSemiLimitedCardsList.push(
-				<ListStatItem key={ind} button onClick={ () => cardClicked(card.id) } style={{paddingLeft: '3rem'}}  >
-					<ListItemText primary={card.name} secondary={`Was: ${card.previousState}`} />
+				<ListStatItem key={ind} button style={{paddingLeft: '3rem'}}  >
+					{getListItemCardChild(card.cardName, card.previousBanStatus, card.cardId)}
 				</ListStatItem>
 			)
 		})
@@ -124,8 +137,8 @@ const BanListStats = memo( ( { totalCardsInSelectedList, selectedBanList
 
 		removedCards.forEach( (card, ind) => {
 			removedCardsList.push(
-				<ListStatItem key={ind} button onClick={ () => cardClicked(card.id) } style={{paddingLeft: '3rem'}}  >
-					<ListItemText primary={card.name} secondary={`Was: ${card.previousState}`}  />
+				<ListStatItem key={ind} button style={{paddingLeft: '3rem'}}  >
+					{getListItemCardChild(card.cardName, card.previousBanStatus, card.cardId)}
 				</ListStatItem>)
 		})
 		setRemovedCardsList(removedCardsList)
@@ -133,10 +146,13 @@ const BanListStats = memo( ( { totalCardsInSelectedList, selectedBanList
 
 
 	return(
-		<div style={{paddingLeft: '.5rem', paddingRight: '.5rem'}} >
-			<Typography variant='h5'>
+		<div style={{padding: '.5rem'}} >
+			<Typography
+				variant='subtitle1'
+				style={{color: 'rgba(255, 255, 255, .95)'}} >
 				List Summary
 			</Typography>
+
 			<List style={{ width: '100%', maxWidth: '400px' }}
 				component="nav"
 				aria-labelledby="nested-list-subheader">
@@ -152,7 +168,7 @@ const BanListStats = memo( ( { totalCardsInSelectedList, selectedBanList
 					onClick={showNewCards}>
 					<ListItemText
 						primary="Newly Added"
-						secondary={numNewForbidden + numNewLimited + numNewSemiLimited}
+						secondary={ ( isNaN(numNewForbidden + numNewLimited + numNewSemiLimited))? '' : numNewForbidden + numNewLimited + numNewSemiLimited }
 					/>
 						{isShowingNewCards ? <ExpandLess /> : <ExpandMore />}
 				</ListStatItem>

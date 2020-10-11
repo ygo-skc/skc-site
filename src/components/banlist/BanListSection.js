@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import { Typography, Box, Grid, CircularProgress } from '@material-ui/core'
+import { Typography, Grid, CircularProgress } from '@material-ui/core'
 
-import CardDetail from '../card/CardDetail.js'
-import cardStyles from '../card/CardDetailStyle'
+import CardDetails from '../card/BanListYGOCard.js'
+import cardStyles from '../card/YGOCardStyles'
 
+import { ChildBox } from '../MainContent'
 
+import CardDisplayGrid from '../grid/CardDisplayGrid'
 
-const cardDisplayOrder = ['normal', 'effect', 'ritual', 'fusion', 'synchro', 'xyz'
-	, 'pendulum-normal', 'pendulum-effect', 'link', 'spell', 'trap']
 
 const cardSectionTextColors = {
 	'normal': 'rgba(249, 160, 16, 1)'
@@ -26,26 +26,89 @@ const cardSectionTextColors = {
 	, 'trap': 'rgba(173, 20, 87, 0.78)'
 }
 
-const CenteredContent = styled(Box)`
-	text-align: center;
+
+const CardSectionBaseText = styled(Typography)`
+	&&
+	{
+		margin-bottom: 1rem;
+		margin-top: 2rem;
+		text-transform: uppercase;
+		letter-spacing: .25rem;
+
+		@media screen and (min-width: 0px)
+		{
+			margin-left: .5rem;
+		}
+		@media screen and (min-width: 600px)
+		{
+			margin-left: .5rem;
+		}
+		@media screen and (min-width: 800px)
+		{
+			margin-left: 1rem;
+		}
+		@media screen and (min-width: 1500px)
+		{
+			margin-left: 1.2rem;
+		}
+		@media screen and (min-width: 1800px)
+		{
+			margin-left: 1.5rem;
+		}
+	}
+`
+
+const CardSectionBasePendulum = styled(CardSectionBaseText)`
+	&&
+	{
+		-webkit-text-fill-color: transparent;
+	}
 `
 
 
-export const BanListSection = ( { sectionExplanation, sectionExplanationBackground, cards, newCards, isDataLoaded, cardClicked } ) =>
+const CardItem = styled(Grid)`
+&&
+{
+	cursor: pointer;
+
+	@media screen and (min-width: 0px)
+	{
+		padding-bottom: .75rem;
+	}
+	@media screen and (min-width: 600px)
+	{
+		padding: .5rem;
+	}
+	@media screen and (min-width: 800px)
+	{
+		padding: .7rem;
+	}
+	@media screen and (min-width: 960px)
+	{
+		padding: .5rem;
+	}
+	@media screen and (min-width: 1500px)
+	{
+		padding: .75rem;
+	}
+	@media screen and (min-width: 1800px)
+	{
+		padding: 1rem;
+	}
+}
+`
+
+
+const BanListSection = ( { sectionExplanation, cards, newCards, isDataLoaded } ) =>
 {
 	const [cardTypeContentGrid, setCardTypeContentGrid] = useState([])
-	const [areCardsRendered, setAreCardsRendered] = useState(false)
 
 	const SectionInfoText = styled(Typography)`
 		&&
 		{
 			margin-top: .75rem;
-			margin-bottom: 2.75rem;
-			padding: .9rem;
-			background: ${ sectionExplanationBackground };
-			border-radius: .85rem;
-			display: -webkit-inline-flex;
-			color: white;
+			margin-bottom: 1.75rem;
+			color: #2b3239;
 		}
 	`
 
@@ -64,105 +127,33 @@ export const BanListSection = ( { sectionExplanation, sectionExplanationBackgrou
 		return false
 	}
 
+
 	useEffect(() => {
-		setAreCardsRendered(false)
 		if ( isDataLoaded )
 		{
-			const cardDetailsMap = new Map()
-
-			cards.forEach((card, ind) => {
-				const cardColor = card.cardColor.toLowerCase()
-				if (!cardDetailsMap.has(cardColor))	cardDetailsMap.set(cardColor, [])
-
-
-				cardDetailsMap.get(cardColor).push(
-					<Grid key={ind} item xs={12} sm={4} md={3} lg={2} xl={2} >
-						<CardDetail
-							key={ind}
-							cardID={card.cardID}
-							cardName={card.cardName}
-							monsterType={card.monsterType}
-							cardColor={card.cardColor}
-							cardEffect={card.cardEffect}
-							cardClicked={cardClicked}
-							fullDetails={false}
-							isNew={ isNewCard(card.cardID)}
-							cardStyles={cardStyles}
-						/>
-					</Grid>
-				)
-			})
-
-
-			let cardTypeContentGrid = cardDisplayOrder.map(( cardType ) => {
-
-				const CardSectionText = ( cardType === 'pendulum-effect' || cardType === 'pendulum-normal' )?
-					styled(Typography)`
-					&&
-					{
-						margin-bottom: 10px;
-						text-transform: uppercase;
-						letter-spacing: .105rem;
-						background: ${ cardSectionTextColors[cardType] };
-						-webkit-background-clip: text;
-						-webkit-text-fill-color: transparent;
-					}
-				`
-				: styled(Typography)`
-						&&
-						{
-							margin-bottom: 10px;
-							text-transform: uppercase;
-							color: ${ cardSectionTextColors[cardType] };
-							letter-spacing: .105rem;
-						}
-					`
-
-				if (cardDetailsMap.has(cardType)) {
-					return	<div key={cardType} >
-								<CardSectionText variant='subtitle1' >
-									{cardType}
-								</CardSectionText>
-								<Grid container spacing={1} style={{marginBottom: '30px'}} >
-									{cardDetailsMap.get(cardType)}
-								</Grid>
-							</div>
-				}
-				return null
-			})
-
-			setCardTypeContentGrid(cardTypeContentGrid)
-			setAreCardsRendered(true)
+			setCardTypeContentGrid(<CardDisplayGrid
+				cardJsonResults={cards}
+				numResultsDisplayed={cards.length}
+				numResultsLoaded={cards.length}
+				loadMoreCallback={undefined}
+				isLoadMoreOptionVisible={false}
+				showFooter={false}
+			/>)
 		}
+		else setCardTypeContentGrid(undefined)
 		// eslint-disable-next-line
 	}, [isDataLoaded])
 
 
 
 	return (
-		<div>
-			<CenteredContent>
-				<SectionInfoText variant='subtitle1' >
-					{ sectionExplanation }
-				</SectionInfoText>
-			</CenteredContent>
+		<ChildBox >
+			<SectionInfoText variant='subtitle2' align='center' >
+				{ sectionExplanation }
+			</SectionInfoText>
 
-			{
-				(areCardsRendered ?
-					(	<div>
-						{cardTypeContentGrid}
-					</div>)
-					: 	(<CenteredContent>
-							<CircularProgress
-								size={50}
-								variant='indeterminate'
-								thickness={3.6}
-								disableShrink={true}
-							/>
-						</CenteredContent>)
-				)
-			}
-		</div>
+			{cardTypeContentGrid}
+		</ChildBox>
 	)
 }
 
@@ -176,3 +167,6 @@ BanListSection.propTypes =
 	isDataLoaded: PropTypes.bool.isRequired,
 	cardClicked: PropTypes.func.isRequired
 }
+
+
+export default BanListSection

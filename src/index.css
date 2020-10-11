@@ -1,20 +1,4 @@
-@font-face {
-	font-family: OpenSans;
-	src: url(./fonts/OpenSans-Regular.ttf);
-	font-weight: 500;
-}
 
-@font-face {
-	font-family: OpenSans;
-	src: url(./fonts/OpenSans-Bold.ttf);
-	font-weight: 700;
-}
-
-@font-face {
-	font-family: Nunito;
-	src: url(./fonts/Nunito-Bold.ttf);
-	font-weight: 700;
-}
 
 html
 {
@@ -23,22 +7,22 @@ html
 	left: 0;
 	right: 0;
 	margin: 0 auto;
-	font-size: 16px;
+	font-size: 13px;
 }
 
 body
 {
-	max-width: 2000px;
 	top: 0;
 	bottom: 0;
 	left: 0;
 	right: 0;
 	margin: 0 auto;
-	background: #f2f2f2;
+	background: #f0f0f0;
 
+	text-rendering: optimizeLegibility;
 
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+	font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+
 }
 
 .MuiExpansionPanel-root:before {
@@ -47,5 +31,5 @@ body
 
 
 .MuiAppBar-colorPrimary {
-	background-color: #241776 !important;
+	background-color: #3B4968 !important;
 }

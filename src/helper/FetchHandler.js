@@ -1,4 +1,4 @@
-import { NAME_maps_ROUTE } from '../Routes'
+import { NAME_maps_ROUTE } from '../Routes.tsx'
 
 
 function handleFetch(endPoint, history, onJsonReceived) {

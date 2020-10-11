@@ -6,51 +6,76 @@ import { Box, Paper } from '@material-ui/core'
 const MainContentContainer = Styled(Box)`
 	&&
 	{
-		@media screen and (min-width: 0px)
-		{
-			padding: .6rem;
-		}
-		@media screen and (min-width: 550px)
-		{
-			padding: .8rem;
-		}
-		@media screen and (min-width: 900px)
-		{
-			padding: 1.35rem;
-		}
 	}
 `
 
 const ChildPaper = Styled(Paper)`
 	&&
 	{
-		border-radius: .75rem;
-		margin-bottom: 1rem;
+		background: white;
+
 		@media screen and (min-width: 0px)
 		{
-			padding: .9rem;
+			max-width: 87%;
+			margin: auto;
+			margin-bottom: 3rem;
+			padding: 1.8rem;
 		}
-		@media screen and (min-width: 400px)
+		@media screen and (min-width: 600px)
 		{
-			padding: 1.05rem;
-		}
-		@media screen and (min-width: 550px)
-		{
-			padding: 1.35rem;
-		}
-		@media screen and (min-width: 750px)
-		{
-			padding: 1.6rem;
-		}
-		@media screen and (min-width: 900px)
-		{
-			padding: 2.15rem;
-		}
-		@media screen and (min-width: 1200px)
-		{
+			max-width: 87%;
+			margin: auto;
+			margin-bottom: 3rem;
 			padding: 2.5rem;
+		}
+		@media screen and (min-width: 960px)
+		{
+			max-width: 85%;
+			margin: auto;
+			margin-bottom: 4rem;
+			padding: 3rem;
+		}
+		@media screen and (min-width: 1280px)
+		{
+			max-width: 85%;
+			margin: auto;
+			margin-bottom: 4.5rem;
+			padding: 3.5rem;
+		}
+		@media screen and (min-width: 1920px)
+		{
+			max-width: 80%;
+			margin: auto;
+			margin-bottom: 5rem;
+			padding: 4rem;
 		}
 	}
 `
 
-export { MainContentContainer, ChildPaper }
+const ChildBox = Styled(Box)`
+	&&
+	{
+		@media screen and (min-width: 0px)
+		{
+			padding: .25rem;
+		}
+		@media screen and (min-width: 600px)
+		{
+			padding: .3rem;
+		}
+		@media screen and (min-width: 960px)
+		{
+			padding: .4rem;
+		}
+		@media screen and (min-width: 1280px)
+		{
+			padding: .7rem;
+		}
+		@media screen and (min-width: 1920px)
+		{
+			padding: 1.5rem;
+		}
+	}
+`
+
+export { MainContentContainer, ChildPaper, ChildBox }

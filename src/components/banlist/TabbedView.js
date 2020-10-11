@@ -4,20 +4,19 @@ import styled from 'styled-components'
 import { AppBar, Tabs, Tab, Badge } from '@material-ui/core'
 
 import { TabPanel } from './TabPanel'
-import { BanListSection } from './BanListSection'
 
 
 
 const SummaryBadge = styled(Badge)`
 	&& {
 		.MuiBadge-badge {
-			right: -.25rem;
-			top: -.23rem;
+			right: -.5rem;
+			top: -.5rem;
 			color: white;
 		}
 	}
 `
-export const TabbedView = memo( ( { numForbidden, numLimited, numSemiLimited, forbiddenContent, limitedContent, semiLimitedContent } ) =>
+const TabbedView = memo( ( { numForbidden, numLimited, numSemiLimited, forbiddenContent, limitedContent, semiLimitedContent } ) =>
 {
 	const [currentTab, setCurrentTab] = useState(0)
 	const [tabs, setTabs] = useState([])
@@ -26,6 +25,7 @@ export const TabbedView = memo( ( { numForbidden, numLimited, numSemiLimited, fo
 		const tabs = []
 		tabs.push(
 			<Tab
+				key='forbidden'
 				style={{'textTransform': 'none'}}
 				label={
 					<SummaryBadge
@@ -42,6 +42,7 @@ export const TabbedView = memo( ( { numForbidden, numLimited, numSemiLimited, fo
 
 		tabs.push(
 			<Tab
+				key='limited'
 				style={{ 'textTransform': 'none' }}
 				label={
 					<SummaryBadge
@@ -58,6 +59,7 @@ export const TabbedView = memo( ( { numForbidden, numLimited, numSemiLimited, fo
 
 		tabs.push(
 			<Tab
+				key='semiLimited'
 				style={{ 'textTransform': 'none' }}
 				label={
 					<SummaryBadge
@@ -76,14 +78,23 @@ export const TabbedView = memo( ( { numForbidden, numLimited, numSemiLimited, fo
 
 
 		return (
-			<div style={{ marginLeft: '-.85rem', marginRight: '-.85rem' }}>
-				<AppBar position='sticky'>
-					<Tabs value={currentTab} onChange={(event, newValue) => { setCurrentTab(newValue)}} variant='fullWidth' >
+			<div style={{width: '100%'}} >
+				<AppBar
+					style={{boxShadow: 'none'}}
+					position='static'
+					color='transparent'
+				>
+					<Tabs
+						textColor='primary'
+						value={currentTab}
+						onChange={(event, newValue) => { setCurrentTab(newValue)}}
+						centered
+						variant='fullWidth' >
 						{tabs}
 					</Tabs>
 				</AppBar>
 
-				<div style={{ padding: '.85rem' }} >
+				<div >
 					<TabPanel value={ currentTab } index={0}>
 						{ forbiddenContent }
 					</TabPanel>
@@ -116,8 +127,8 @@ TabbedView.propTypes =
 {
 	numForbidden: PropTypes.number.isRequired,
 	numLimited: PropTypes.number.isRequired,
-	numSemiLimited: PropTypes.number,
-	forbiddenContent: PropTypes.objectOf(BanListSection).isRequired,
-	limitedContent: PropTypes.objectOf(BanListSection).isRequired,
-	semiLimitedContent: PropTypes.objectOf(BanListSection).isRequired
+	numSemiLimited: PropTypes.number
 }
+
+
+export default TabbedView

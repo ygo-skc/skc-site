@@ -1,60 +1,68 @@
-import React, { lazy, Suspense, useState, useEffect, useMemo } from 'react'
+import React, { lazy, useState, useEffect, Suspense } from 'react'
 import Styled from 'styled-components'
 
-import { Dialog, Paper, ListItem } from '@material-ui/core'
+import { Paper, Box } from '@material-ui/core'
 
-/*
-	Supplement styles
-*/
-import cardStyles from '../card/CardDetailStyle'
 
 /*
 	Custom Components
 */
-import { BanListSection } from './BanListSection'
-import { TabbedView } from './TabbedView'
+// import { BanListSection } from './BanListSection'
+// import { TabbedView } from './TabbedView'
 import { handleFetch } from '../../helper/FetchHandler'
-import SuspenseFallback from '../../SuspenseFallback'
 import { BanListDates } from './BanListDates'
 import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
-import { MainContentContainer } from '../MainContent'
+
+import OneThirdTwoThirdsGrid from '../grid/OneThirdTwoThirdsGrid'
 
 
-
-const CardDetail = lazy( () => import('../card/CardDetail') )
-const BreadCrumb = lazy( () => import('../Breadcrumb') )
+// import BanListStats from './BanListStats'
+import BreadCrumb from '../Breadcrumb'
+const TabbedView = lazy( () => import('./TabbedView') )
+const BanListSection = lazy( () => import('./BanListSection') )
+// const BreadCrumb = lazy( () => import('../Breadcrumb') )
 const BanListStats = lazy( () => import('./BanListStats') )
+const Footer = lazy( () => import('../Footer') )
 
-const CardDialog = Styled(Dialog)`
-	&&
-	{
-		.MuiDialog-paper
-		{
-			background-color: transparent;
-		}
-
-		.MuiDialog-paperWidthSm
-		{
-			max-width: 350px;
-			min-width: 350px;
-		}
-	}
-`
 
 const BanContentParent = Styled(Paper)`
 	&&
 	{
-		padding: .85rem;
-		margin-bottom: 1rem;
+		background-image: linear-gradient(315deg, #fc9842 0%, #fe5f75 74%);
 		border-radius: .5rem;
-	}
 
+		@media screen and (min-width: 0px)
+		{
+			padding: .67rem;
+			margin-bottom: 1.5rem;
+		}
+		@media screen and (min-width: 600px)
+		{
+			padding: 1rem;
+			margin-bottom: 1.5rem;
+		}
+		@media screen and (min-width: 960px)
+		{
+			padding: 1.1rem;
+			margin-bottom: 1.5rem;
+		}
+		@media screen and (min-width: 1280px)
+		{
+			padding: 1.2rem;
+			margin-bottom: 1.5rem;
+		}
+		@media screen and (min-width: 1920px)
+		{
+			padding: 1.2rem;
+			margin-bottom: 1.5rem;
+		}
+	}
 `
 
-const ListStatItem = Styled(ListItem)`
+const BannedContentContainer = Styled(Paper)`
 	&&
 	{
-		padding: .25rem;
+		border-radius: 0rem;
 	}
 `
 
@@ -64,23 +72,19 @@ export default function BanList(props)
 {
 	const [banListStartDates, setBanListStartDates] = useState([])
 	const [selectedBanList, setSelectedBanList] = useState('')
+	const [banListInstanceLinks, setBanListInstanceLinks] = useState([])
 
 	const [forbidden, setForbidden] = useState([])
 	const [limited, setLimited] = useState([])
 	const [semiLimited, setSemiLimited] = useState([])
 
-	const [numForbidden, setNumForbidden] = useState(undefined)
-	const [numLimited, setNumLimited] = useState(undefined)
-	const [numSemiLimited, setNumSemiLimited] = useState(undefined)
+	const [numForbidden, setNumForbidden] = useState(0)
+	const [numLimited, setNumLimited] = useState(0)
+	const [numSemiLimited, setNumSemiLimited] = useState(0)
 
 	const [isSettingUpDates, setIsSettingUpDates] = useState(true)
 	const [isFetchingBanList, setIsFetchingBanList] = useState(true)
-	const [isFetchingNewCards, setIsFetchingNewCards] = useState(true)
 	const [isDataLoaded, setIsDataLoaded] = useState(false)
-
-	const [showingCardDetail, setShowingCardDetail] = useState(false)
-	const [chosenCardID, setChosenCardID] = useState(undefined)
-	const [chosenCard, setChosenCard] = useState(undefined)
 
 	const [newForbiddenCards, setNewForbiddenCards] = useState([])
 	const [newLimitedCards, setNewLimitedCards] = useState([])
@@ -95,230 +99,192 @@ export default function BanList(props)
 
 	useEffect(() => {
 		handleFetch(NAME_maps_ENDPOINT['banListsUrl'], props.history, (resultJson) => {
-			setBanListStartDates(resultJson.banListStartDates)
-			setSelectedBanList(resultJson.banListStartDates[0])
+			setBanListInstanceLinks(resultJson.banListDates.map(item => item._links['Ban List Content'].href))
+			setBanListStartDates(resultJson.banListDates.map(item => item.effectiveDate))
+			setIsSettingUpDates(false)
 		})
 		// eslint-disable-next-line
 	}, [])
 
 
+	useEffect(() => {
+		if (banListInstanceLinks.length !== 0)
+			setSelectedBanList(banListStartDates[0])
+	}, [banListInstanceLinks, banListStartDates])
+
+
 	useEffect( () => {
-		if ( !isFetchingBanList && !isFetchingNewCards )	setIsDataLoaded(true)
+		if ( !isFetchingBanList )	setIsDataLoaded(true)
 		else	setIsDataLoaded(false)
-	}, [isFetchingBanList, isFetchingNewCards])
+	}, [isFetchingBanList])
 
 
 	useEffect(() => {
 		if (selectedBanList !== '')
 		{
-			setIsSettingUpDates(false)
 			setIsFetchingBanList(true)
-			setIsFetchingNewCards(true)
 
-			handleFetch(`${NAME_maps_ENDPOINT['banListInstanceUrl']}${selectedBanList}?saveBandwidth=true`, props.history, (resultJson) => {
-				setForbidden( resultJson.bannedCards.forbidden )
-				setLimited( resultJson.bannedCards.limited )
-				setSemiLimited( resultJson.bannedCards.semiLimited )
+			handleFetch(banListInstanceLinks[banListStartDates.indexOf(selectedBanList)], props.history, (resultJson) => {
+				setForbidden( resultJson.banListInstance.forbidden )
+				setLimited( resultJson.banListInstance.limited )
+				setSemiLimited( resultJson.banListInstance.semiLimited )
 
-				setNumForbidden( resultJson.bannedCards.numForbidden )
-				setNumLimited( resultJson.bannedCards.numLimited )
-				setNumSemiLimited( resultJson.bannedCards.numSemiLimited )
+				setNumForbidden( (resultJson.banListInstance.numForbidden === undefined)? 0 : resultJson.banListInstance.numForbidden )
+				setNumLimited( (resultJson.banListInstance.numLimited === undefined)? 0 : resultJson.banListInstance.numLimited )
+				setNumSemiLimited( (resultJson.banListInstance.numSemiLimited === undefined)? 0 : resultJson.banListInstance.numSemiLimited )
+
+				// Removed cards compared to previous ban list
+				setRemovedCards(resultJson.banListInstance.removedContent.removedCards)
+				setNumRemoved(resultJson.banListInstance.removedContent.numRemoved)
+
+				// Newly added cads compared to previous ban list
+				setNewForbiddenCards(resultJson.banListInstance.newContent.newForbidden)
+				setNewLimitedCards(resultJson.banListInstance.newContent.newLimited)
+				setNewSemiLimitedCards(resultJson.banListInstance.newContent.newSemiLimited)
+
+				setNumNewForbidden(resultJson.banListInstance.newContent.numNewForbidden)
+				setNumNewLimited(resultJson.banListInstance.newContent.numNewLimited)
+				setNumNewSemiLimited(resultJson.banListInstance.newContent.numNewSemiLimited)
 
 				setIsFetchingBanList(false)
 			})
-
-			fetchNewCards()
-			fetchRemovedCards()
 
 		}
 		// eslint-disable-next-line
 	}, [selectedBanList])
 
 
-	useEffect(() => {
-		if (chosenCardID !== undefined)
-		{
-			handleFetchCardInfo(chosenCardID, (resultJson) => {
-				setChosenCard(resultJson)
-				setShowingCardDetail(true)
-			})
-		}
-		// eslint-disable-next-line
-	}, [chosenCardID])
-
-
-	useEffect(() => {
-		if (showingCardDetail === false) setChosenCardID(undefined)
-	}, [showingCardDetail])
-
-
 
 	return (
-		<MainContentContainer >
+		<Box style={{}} >
 			<BreadCrumb crumbs={['Home', 'Ban List']} />
 
-			<CardDialog open={showingCardDetail} unmountOnExit onClose={() => setShowingCardDetail(false)} >
-				{
-					(showingCardDetail) ?
-						<Suspense fallback={ <SuspenseFallback /> } >
-							<CardDetail
-								key={999}
-								fullDetails
-								cardID={chosenCard.cardID}
-								cardName={chosenCard.cardName}
-								monsterType={chosenCard.monsterType}
-								cardColor={chosenCard.cardColor}
-								cardEffect={chosenCard.cardEffect}
-								cardClicked={props.cardClicked}
-								monsterAtk={chosenCard.monsterAttack}
-								monsterDef={chosenCard.monsterDefense}
-								cardStyles={cardStyles} />
-						</Suspense>
-						: undefined
+
+			<OneThirdTwoThirdsGrid
+				oneThirdComponent={
+					<div>
+						<BanContentParent>
+
+							{(isSettingUpDates)? undefined
+								: <BanListDates
+								selectedBanList={selectedBanList}
+								banListStartDates={banListStartDates}
+								setSelectedBanList={ (ind) => setSelectedBanList(banListStartDates[ind]) } />}
+
+						</BanContentParent>
+
+						<BanContentParent>
+							<Suspense fallback={undefined} >
+								<BanListStats
+									totalCardsInSelectedList={numForbidden + numLimited + numSemiLimited}
+									selectedBanList={selectedBanList}
+									newForbiddenCards={newForbiddenCards}
+									newLimitedCards={newLimitedCards}
+									newSemiLimitedCards={newSemiLimitedCards}
+									numNewForbidden={numNewForbidden}
+									numNewLimited={numNewLimited}
+									numNewSemiLimited={numNewSemiLimited}
+									removedCards={removedCards}
+									numRemoved={numRemoved}
+								/>
+							</Suspense>
+						</BanContentParent>
+					</div>
 				}
-			</CardDialog>
+				twoThirdComponent={
+					<Box>
 
-			<BanContentParent
-				style={ (isSettingUpDates)? {display: 'none'}: {display: 'block' }  } >
+						<BannedContentContainer  >
+							<Suspense fallback={undefined} >
+								<TabbedView
+									numForbidden={numForbidden}
+									numLimited={numLimited}
+									numSemiLimited={numSemiLimited}
+									banList={selectedBanList}
+									forbiddenContent={
+										<Suspense fallback={undefined} >
+											<BanListSection
+												sectionName='Forbidden'
+												sectionExplanation='Forbidden cards cannot be used in Deck/Side Deck in the Advanced Format'
+												sectionExplanationBackground='rgba(255, 69, 87, .17)'
+												cards={forbidden}
+												newCards={newForbiddenCards}
+												isDataLoaded={isDataLoaded}
+												cardClicked={(cardID) => window.location.assign(`/card/${cardID}`)}
+												banList={selectedBanList}
+											/>
+										</Suspense>
+								}
 
-				{(isSettingUpDates)? undefined
-					: <BanListDates
-					selectedBanList={selectedBanList}
-					banListStartDates={banListStartDates}
-					setSelectedBanList={ (ind) => setSelectedBanList(banListStartDates[ind]) } />}
+								limitedContent={
+									<Suspense fallback={undefined} >
+										<BanListSection
+											sectionName='Limited'
+											sectionExplanation='Limited cards can be included in Deck/Side deck - max 1'
+											sectionExplanationBackground='rgba(255, 108, 18, .17)'
+											cards={limited}
+											newCards={newLimitedCards}
+											isDataLoaded={isDataLoaded}
+											cardClicked={(cardID) => window.location.assign(`/card/${cardID}`)}
+											banList={selectedBanList}
+										/>
+									</Suspense>
+								}
 
-				<BanListStats
-					totalCardsInSelectedList={numForbidden + numLimited + numSemiLimited}
-					selectedBanList={selectedBanList}
-					newForbiddenCards={newForbiddenCards}
-					newLimitedCards={newLimitedCards}
-					newSemiLimitedCards={newSemiLimitedCards}
-					numNewForbidden={numNewForbidden}
-					numNewLimited={numNewLimited}
-					numNewSemiLimited={numNewSemiLimited}
-					removedCards={removedCards}
-					numRemoved={numRemoved}
-					handleFetchCardInfo={handleFetchCardInfo}
-					cardClicked={ (cardID) => setChosenCardID(cardID) }
-				/>
-			</BanContentParent>
+								semiLimitedContent={
+									<Suspense fallback={undefined} >
+										<BanListSection
+											sectionName='Semi-Limited'
+											sectionExplanation='Semi-Limited cards can be included in Deck/Side deck - max 2'
+											sectionExplanationBackground='rgba(240, 198, 32, .17)'
+											cards={semiLimited}
+											newCards={newSemiLimitedCards}
+											isDataLoaded={isDataLoaded}
+											cardClicked={(cardID) => window.location.assign(`/card/${cardID}`) }
+											banList={selectedBanList}
+										/>
+									</Suspense>
+								}
+								/>
+								</Suspense>
 
+							</BannedContentContainer>
 
-			<BanContentParent
-				style={ (isSettingUpDates)? {display: 'none'}: {display: 'block', paddingTop: '0rem' }  } >
-				<TabbedView
-					numForbidden={numForbidden}
-					numLimited={numLimited}
-					numSemiLimited={numSemiLimited}
-					banList={selectedBanList}
-					forbiddenContent={
-						useMemo( () =>
-						{
-							return <BanListSection
-								sectionName='Forbidden'
-								sectionExplanation='Forbidden cards cannot be used in Deck/Side Deck in the Advanced Format'
-								sectionExplanationBackground='#ff4557'
-								cards={forbidden}
-								newCards={newForbiddenCards}
-								isDataLoaded={isDataLoaded}
-								cardClicked={(cardID) => setChosenCardID(cardID)}
-								banList={selectedBanList}
-							/>
-						}
-						, [isDataLoaded])
-					}
-
-					limitedContent={
-						useMemo( () => {
-							return <BanListSection
-								sectionName='Limited'
-								sectionExplanation='Limited cards can be included in Deck/Side deck - max 1'
-								sectionExplanationBackground='#ff6c12'
-								cards={limited}
-								newCards={newLimitedCards}
-								isDataLoaded={isDataLoaded}
-								cardClicked={(cardID) => setChosenCardID(cardID)}
-								banList={selectedBanList}
-							/>
-						}
-						, [isDataLoaded])
-					}
-
-					semiLimitedContent={
-						useMemo( () => {
-							return <BanListSection
-								sectionName='Semi-Limited'
-								sectionExplanation='Semi-Limited cards can be included in Deck/Side deck - max 2'
-								sectionExplanationBackground='#f0c620'
-								cards={semiLimited}
-								newCards={newSemiLimitedCards}
-								isDataLoaded={isDataLoaded}
-								cardClicked={(cardID) => setChosenCardID(cardID)}
-								banList={selectedBanList}
-							/>
-						}
-						, [isDataLoaded])
+							<Suspense fallback={undefined} >
+								<Footer />
+							</Suspense>
+						</Box>
 					}
 				/>
-				</BanContentParent>
-		</MainContentContainer>
+
+
+				{/* <BanListTable
+					isDataLoaded={ isDataLoaded }
+					bannedContent={ forbidden }
+					contentTitle='Forbidden'
+					contentExplanation='Forbidden cards cannot be used in Deck/Side Deck in the Advanced Format'
+					contentColor='#ff4557'
+					cardClicked={ cardID => setChosenCardID(cardID) }
+				/>
+				<br />
+				<BanListTable
+					isDataLoaded={ isDataLoaded }
+					bannedContent={ limited }
+					contentTitle='Limited'
+					contentExplanation='Limited cards can be included in Deck/Side deck - max 1'
+					contentColor='#ff6c12'
+					cardClicked={ cardID => setChosenCardID(cardID) }
+				/>
+				<br />
+				<BanListTable
+					isDataLoaded={ isDataLoaded }
+					bannedContent={ semiLimited }
+					contentTitle='Semi-Limited'
+					contentExplanation='Semi-Limited cards can be included in Deck/Side deck - max 2'
+					contentColor='#f0c620'
+					cardClicked={ cardID => setChosenCardID(cardID) }
+				/> */}
+
+		</Box>
 	)
-
-
-	function handleFetchCardInfo(cardId, callback)
-	{
-		handleFetch(`${NAME_maps_ENDPOINT['cardInstanceUrl']}${cardId}`, props.history, callback)
-	}
-
-
-	function fetchRemovedCards()
-	{
-		const url = `${NAME_maps_ENDPOINT.removedCardsInBanList}${selectedBanList}`
-		fetch(url)
-		.then( (res) => {
-			if (res.status === 200)	return res.json()
-			else if (res.status === 204)	return null
-			else	throw new Error()
-		})
-		.then(json => {
-			if (json != null)
-			{
-				setRemovedCards(json.removedCards)
-				setNumRemoved(json.numRemoved)
-			}
-		})
-	}
-
-
-	function fetchNewCards()
-	{
-		setIsFetchingNewCards(true)
-		const url = `${NAME_maps_ENDPOINT.newCardsInBanList}${selectedBanList}`
-
-		fetch(url)
-		.then(res => {
-			if (res.status === 200)	return res.json()
-			else if (res.status === 204)	return null
-			else	throw new Error()
-		})
-		.then(json => {
-			if (json == null)
-			{
-				setNewForbiddenCards([])
-				setNewLimitedCards([])
-				setNewSemiLimitedCards([])
-			}
-			else
-			{
-				setNewForbiddenCards(json.newCards.forbidden)
-				setNewLimitedCards(json.newCards.limited)
-				setNewSemiLimitedCards(json.newCards.semiLimited)
-
-				setNumNewForbidden(json.newCards.numForbidden)
-				setNumNewLimited(json.newCards.numLimited)
-				setNumNewSemiLimited(json.newCards.numSemiLimited)
-			}
-			setIsFetchingNewCards(false)
-		})
-	}
 }
