@@ -34,8 +34,11 @@ const theme = createMuiTheme({
 		},
 		'MuiBadge': {
 			badge: {
-				fontSize: '1.1rem'
-				, padding: '.8rem'
+				fontSize: '1.05rem'
+				, paddingLeft: '.8rem'
+				, paddingRight: '.8rem'
+				, paddingTop: '.4rem'
+				, paddingBottom: '.4rem'
 			}
 		}
 		, 'MuiTableCell': {
