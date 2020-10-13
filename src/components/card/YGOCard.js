@@ -6,13 +6,13 @@ import { Skeleton } from '@material-ui/lab'
 import Styled from 'styled-components'
 import he from 'he'
 
-import { CardLevel } from './CardLevel'
+import { CardLevel } from './CardAssociation'
 
 
 const MonsterAtkDefComponent = Styled(Typography)`
 	&&
 	{
-		text-align: right;
+		display: inline-block;
 	}
 `
 
@@ -112,7 +112,7 @@ const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, mon
 				</CardNameComponent>
 			</div>
 
-			{(monsterAssociation === undefined)? undefined : <CardLevel level={monsterAssociation.level} />}
+			<CardLevel monsterAssociation={monsterAssociation} />
 
 
 			<CardDescriptionComponent >
@@ -135,11 +135,21 @@ const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, mon
 					( cardColor === 'Spell' || cardColor === 'Trap' || cardColor === 'err' ) ?
 						undefined :
 						(fullDetails) ?
-							<MonsterAtkDefComponent
-								variant='body1'
-								>
-								{monsterAtk} / {monsterDef}
-							</MonsterAtkDefComponent> :
+							<div style={{ width: '100%', textAlign: 'right', marginTop: '.5rem'}} >
+								<div style={{ background: 'rgba(255, 255, 255, .75)', display: 'inline-block', padding: '.3rem', borderRadius: '4rem', textAlign: 'center'}} >
+									<MonsterAtkDefComponent
+										style={{ color: 'rgb(215, 24, 114, .65)' }}
+										variant='body1' >
+										{monsterAtk}
+									</MonsterAtkDefComponent>
+									<MonsterAtkDefComponent
+										style={{ marginLeft: '1rem', color: 'rgba(51, 193, 255, .9)' }}
+										variant='body1' >
+										{monsterDef}
+									</MonsterAtkDefComponent>
+								</div>
+							</div>
+							:
 							undefined
 				}
 			</CardDescriptionComponent>
