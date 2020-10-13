@@ -45,6 +45,8 @@ export default function Browse( {history} )
 
 
 	useEffect( () => {
+		document.title = 'SKC - Card Browse'
+
 		handleFetch(NAME_maps_ENDPOINT['browseCriteria'], history, (json) => {
 			const browseCriteria = []
 			console.log(json)

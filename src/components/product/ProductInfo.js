@@ -41,6 +41,8 @@ export default function ProductInfo({match, history}) {
 
 
 	useEffect( () => {
+		document.title = `SKC - Product: ${match.params.productId}`
+
 		handleFetch(`${NAME_maps_ENDPOINT['productDetails']}/${match.params.productId}/en`, history, json => {
 			console.log(json)
 			setDynamicBreadcrumbs(['Home', 'Product Browse', `${json.productId}`])

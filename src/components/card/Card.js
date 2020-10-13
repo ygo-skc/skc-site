@@ -57,6 +57,8 @@ function Card( { match, history, width } )
 
 
 	useEffect( () => {
+		document.title = `SKC - Card: ${cardId}`
+
 		handleFetch(`${NAME_maps_ENDPOINT['cardInstanceUrl']}${cardId}?allInfo=true`, history, (json) => {
 			setCardName(json.cardName)
 			setCardColor(json.cardColor)

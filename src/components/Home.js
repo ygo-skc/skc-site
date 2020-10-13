@@ -43,6 +43,8 @@ const searchThrottle = throttle((searchSubject, setSearchOptions, history) => {
 
 export default function Home({ history }) {
 	useEffect(() => {
+		document.title = 'The Supreme Kings Castle'
+
 		handleFetch(NAME_maps_ENDPOINT['databaseStats'], history, (json) => {
 			setCardTotal(json.cardTotal)
 			setBanListTotal(json.banListTotal)

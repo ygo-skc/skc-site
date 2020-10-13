@@ -73,6 +73,8 @@ export default function ProductBrowse({history})
 
 
 	useEffect( () => {
+		document.title = 'SKC - Product Browse'
+
 		handleFetch(NAME_maps_ENDPOINT['productBrowse'], history, json => {
 			setProductJson(json.products)
 			setIsDataLoaded(true)

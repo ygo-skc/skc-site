@@ -98,6 +98,8 @@ export default function BanList(props)
 	const [numRemoved, setNumRemoved] = useState(undefined)
 
 	useEffect(() => {
+		document.title = 'SKC - Ban List'
+
 		handleFetch(NAME_maps_ENDPOINT['banListsUrl'], props.history, (resultJson) => {
 			setBanListInstanceLinks(resultJson.banListDates.map(item => item._links['Ban List Content'].href))
 			setBanListStartDates(resultJson.banListDates.map(item => item.effectiveDate))
