@@ -103,7 +103,7 @@ const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, mon
 
 			<div style={{ width: '100%', display: 'flex', marginBottom: '.5rem', whiteSpace: 'normal' }} >
 				<CardNameComponent
-					variant='body1'
+					variant='subtitle1'
 					noWrap={true}
 					style={{ flex: '1' }}
 					>
@@ -111,7 +111,7 @@ const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, mon
 				</CardNameComponent>
 			</div>
 
-			<CardLevel level={(monsterAssociation !== undefined && monsterAssociation.level !== undefined)? monsterAssociation.level: 0 } />
+			{(monsterAssociation === undefined)? undefined : <CardLevel level={monsterAssociation.level} />}
 
 
 			<CardDescriptionComponent >
