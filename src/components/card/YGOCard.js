@@ -53,8 +53,9 @@ const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, mon
 
 	const CardNameComponent = Styled(Typography)`
 		&& {
-			font-weight: 600;
+			font-weight: 700;
 			margin-bottom: .18rem;
+			text-align: center;
 
 			color: ${cardStyles[ `${cardColorLowerCase}Color` ]};
 		},
@@ -92,7 +93,7 @@ const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, mon
 	const MonsterTypeComponent = Styled(Typography)`
 		&&
 		{
-			font-weight: 600;
+			font-weight: 700;
 			margin-bottom: .28rem;
 			color: ${cardStyles[ `${cardColorLowerCase}SummaryColor` ]};
 		}
@@ -119,9 +120,9 @@ const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, mon
 					( cardColor === 'Spell' || cardColor === 'Trap' ) ?
 						undefined :
 						<MonsterTypeComponent
-							variant='body2'
+							variant='body1'
 							noWrap={true} >
-								[ { monsterType } ]
+								{ monsterType }
 						</MonsterTypeComponent>
 				}
 
@@ -134,7 +135,9 @@ const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, mon
 					( cardColor === 'Spell' || cardColor === 'Trap' || cardColor === 'err' ) ?
 						undefined :
 						(fullDetails) ?
-							<MonsterAtkDefComponent>
+							<MonsterAtkDefComponent
+								variant='body1'
+								>
 								{monsterAtk} / {monsterDef}
 							</MonsterAtkDefComponent> :
 							undefined
