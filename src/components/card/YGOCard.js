@@ -13,6 +13,7 @@ const MonsterAtkDefComponent = Styled(Typography)`
 	&&
 	{
 		display: inline-block;
+		font-weight: 800;
 	}
 `
 
@@ -66,6 +67,7 @@ const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, mon
 		{
 			padding: .445rem;
 			background: ${cardStyles[ `${cardColorLowerCase}SummaryBackground` ]};
+			border-radius: .5rem;
 		}
 	`
 
@@ -136,14 +138,14 @@ const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, mon
 						undefined :
 						(fullDetails) ?
 							<div style={{ width: '100%', textAlign: 'right', marginTop: '.5rem'}} >
-								<div style={{ background: 'rgba(255, 255, 255, .75)', display: 'inline-block', padding: '.3rem', borderRadius: '4rem', textAlign: 'center'}} >
+								<div style={{ background: 'rgba(255, 255, 255, .75)', display: 'inline-block', paddingTop: '.2rem', paddingBottom: '.2rem', paddingLeft: '.7rem', paddingRight: '.7rem', borderRadius: '4rem', textAlign: 'center'}} >
 									<MonsterAtkDefComponent
 										style={{ color: 'rgb(215, 24, 114, .65)' }}
 										variant='body1' >
 										{monsterAtk}
 									</MonsterAtkDefComponent>
 									<MonsterAtkDefComponent
-										style={{ marginLeft: '1rem', color: 'rgba(51, 193, 255, .9)' }}
+										style={{ marginLeft: '.6rem', color: 'rgba(51, 193, 255, .9)' }}
 										variant='body1' >
 										{monsterDef}
 									</MonsterAtkDefComponent>
