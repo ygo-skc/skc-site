@@ -1,14 +1,10 @@
 import React, { lazy, useState, useEffect, Suspense } from 'react'
 import Styled from 'styled-components'
+import { Helmet } from 'react-helmet'
 
 import { Paper, Box } from '@material-ui/core'
 
 
-/*
-	Custom Components
-*/
-// import { BanListSection } from './BanListSection'
-// import { TabbedView } from './TabbedView'
 import { handleFetch } from '../../helper/FetchHandler'
 import { BanListDates } from './BanListDates'
 import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
@@ -97,9 +93,8 @@ export default function BanList(props)
 	const [removedCards, setRemovedCards] = useState([])
 	const [numRemoved, setNumRemoved] = useState(undefined)
 
-	useEffect(() => {
-		document.title = 'SKC - Ban List'
 
+	useEffect(() => {
 		handleFetch(NAME_maps_ENDPOINT['banListsUrl'], props.history, (resultJson) => {
 			setBanListInstanceLinks(resultJson.banListDates.map(item => item._links['Ban List Content'].href))
 			setBanListStartDates(resultJson.banListDates.map(item => item.effectiveDate))
@@ -158,9 +153,17 @@ export default function BanList(props)
 
 
 	return (
-		<Box style={{}} >
-			<BreadCrumb crumbs={['Home', 'Ban List']} />
+		<Box >
+			<Helmet>
+				<title>{`SKC - Ban List: ${selectedBanList}`}</title>
+				<meta
+					name={`SKC - Ban List: ${selectedBanList}`}
+					content={`Ban list content/info for list effective ${selectedBanList}`}
+					/>
+				<meta name="keywords" content={`YuGiOh, ban list, The Supreme Kings Castle, ${selectedBanList}`} />
+			</Helmet>
 
+			<BreadCrumb crumbs={['Home', 'Ban List']} />
 
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={

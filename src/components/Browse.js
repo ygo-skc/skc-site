@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import { Chip, Typography, Paper, InputBase, IconButton, Box } from '@material-ui/core'
+import { Helmet } from 'react-helmet'
 
 import SearchIcon from '@material-ui/icons/Search'
 
@@ -45,8 +46,6 @@ export default function Browse( {history} )
 
 
 	useEffect( () => {
-		document.title = 'SKC - Card Browse'
-
 		handleFetch(NAME_maps_ENDPOINT['browseCriteria'], history, (json) => {
 			const browseCriteria = []
 			console.log(json)
@@ -159,7 +158,16 @@ export default function Browse( {history} )
 
 
 	return(
-		<MainContentContainer style={{}} >
+		<MainContentContainer  >
+			<Helmet>
+				<title>{`SKC - Card Browser`}</title>
+				<meta
+					name={`SKC - Card Browser`}
+					content={`Browse all cards in database to find the right card you want.`}
+					/>
+				<meta name="keywords" content={`YuGiOh, card browse, The Supreme Kings Castle`} />
+			</Helmet>
+
 			<Breadcrumb crumbs={ ['Home', 'Card Browse Tool'] } />
 
 			<OneThirdTwoThirdsGrid

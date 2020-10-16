@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import { Helmet } from 'react-helmet'
 
 import {Paper, Typography, Box} from '@material-ui/core'
 import {Skeleton} from '@material-ui/lab'
@@ -41,8 +42,6 @@ export default function ProductInfo({match, history}) {
 
 
 	useEffect( () => {
-		document.title = `SKC - Product: ${match.params.productId}`
-
 		handleFetch(`${NAME_maps_ENDPOINT['productDetails']}/${match.params.productId}/en`, history, json => {
 			console.log(json)
 			setDynamicBreadcrumbs(['Home', 'Product Browse', `${json.productId}`])
@@ -63,6 +62,15 @@ export default function ProductInfo({match, history}) {
 
 	return(
 		<MainContentContainer>
+			<Helmet>
+				<title>{`SKC - Product: ${productName}`}</title>
+				<meta
+					name={`SKC - Product: ${productName}`}
+					content={`Contents, info, dates, etc for ${productName}`}
+					/>
+				<meta name="keywords" content={`YuGiOh, product browse, The Supreme Kings Castle`} />
+			</Helmet>
+
 			<Breadcrumb crumbs={dynamicBreadcrumbs} />
 
 			<OneThirdTwoThirdsGrid

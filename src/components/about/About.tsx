@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useEffect } from 'react'
+import { Helmet } from 'react-helmet'
 
 import { Typography, Link } from '@material-ui/core'
 import styled from 'styled-components'
@@ -26,6 +27,15 @@ const CenteredText = styled(Typography)`
 
 const About: FunctionComponent = () => (
 	<MainContentContainer>
+		<Helmet>
+			<title>{`SKC - About`}</title>
+			<meta
+				name={`SKC - About`}
+				content={`Find how to use API backed by site, how to support, etc.`}
+				/>
+			<meta name="keywords" content={`YuGiOh, about, YGO-API, support, The Supreme Kings Castle`} />
+		</Helmet>
+
 		<Breadcrumb crumbs={['Home', 'About']} />
 
 		<ChildPaper>

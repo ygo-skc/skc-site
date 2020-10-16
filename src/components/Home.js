@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { throttle } from 'underscore'
+import { Helmet } from 'react-helmet'
 
 import { Typography, Link, Divider, InputBase, Paper, IconButton } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search';
@@ -43,8 +44,6 @@ const searchThrottle = throttle((searchSubject, setSearchOptions, history) => {
 
 export default function Home({ history }) {
 	useEffect(() => {
-		document.title = 'The Supreme Kings Castle'
-
 		handleFetch(NAME_maps_ENDPOINT['databaseStats'], history, (json) => {
 			setCardTotal(json.cardTotal)
 			setBanListTotal(json.banListTotal)
@@ -75,6 +74,15 @@ export default function Home({ history }) {
 
 	return (
 		<MainContentContainer>
+			<Helmet>
+				<title>The Supreme Kings Castle</title>
+				<meta
+					name={`The Supreme Kings Castle`}
+					content={`YuGiOh Site for checking; card information, current and past ban lists, search cards, and browse cards.`}
+					/>
+				<meta name="keywords" content={`YuGiOh, ban list, card info, The Supreme Kings Castle`} />
+			</Helmet>
+
 			<Breadcrumb crumbs={['Home']} />
 
 			<br />
