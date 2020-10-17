@@ -27,7 +27,7 @@ const MainBrowseInfoTypography = Styled(Typography)`
 `
 
 
-const defaultDisplayNum = 40
+const defaultDisplayNum = 50
 
 
 export default function Browse( {history} )
@@ -40,7 +40,7 @@ export default function Browse( {history} )
 
 	const [numResults, setNumResults] = useState(0)
 	const [numResultsDisplayed, setNumResultsDisplayed] = useState(0)
-	const [numResultsLoaded, setNumResultsLoaded] = useState(0)
+	const [numItemsToLoadWhenNeeded, setnumItemsToLoadWhenNeeded] = useState(0)
 
 	const [isLoadMoreVisible, setIsLoadMoreVisible] = useState(false)
 
@@ -131,13 +131,13 @@ export default function Browse( {history} )
 	{
 		if (numResults < newCap)
 		{
-			setNumResultsLoaded(numResults - numResultsDisplayed)
+			setnumItemsToLoadWhenNeeded(numResults - numResultsDisplayed)
 			setNumResultsDisplayed(numResults)
 			setIsLoadMoreVisible(false)
 		}
 		else
 		{
-			setNumResultsLoaded(defaultDisplayNum)
+			setnumItemsToLoadWhenNeeded(defaultDisplayNum)
 			setNumResultsDisplayed(newCap)
 			setIsLoadMoreVisible(true)
 		}
@@ -243,9 +243,10 @@ export default function Browse( {history} )
 					<CardDisplayGrid
 						cardJsonResults={jsonResults}
 						numResultsDisplayed={numResultsDisplayed}
-						numResultsLoaded={numResultsLoaded}
+						numItemsToLoadWhenNeeded={numItemsToLoadWhenNeeded}
 						loadMoreCallback={loadMore}
 						isLoadMoreOptionVisible={isLoadMoreVisible}
+						numResults={numResults}
 						/>
 				}
 			/>
