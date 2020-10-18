@@ -11,12 +11,12 @@ import CardImageRounded from '../card/CardImageRounded'
 import cardStyles from '../card/YGOCardStyles'
 import Footer from '../Footer'
 
-function getPlaceholderCardComponent()
+async function getPlaceholderCardComponent()
 {
 	const placeHolder = []
 
 	var i = 0;
-	for (i = 0; i < 10; i++)
+	for (i = 0; i < 40; i++)
 	{
 		placeHolder.push(<Grid
 			key={`skeleton-${i}`}
@@ -83,14 +83,14 @@ export default function CardDisplayGrid({ cardJsonResults, numResultsDisplayed, 
 
 
 	useEffect( () => {
-		if (cardJsonResults === undefined) return
-		if (cardJsonResults.length === 0)	setCardGridUISkeleton([getPlaceholderCardComponent()])
+		if (cardJsonResults === undefined || cardJsonResults.length === 0) return
+
+		getPlaceholderCardComponent().then( placeholders => setCardGridUISkeleton([...cardGridUI, placeholders]) )
 
 		setIsLoadingData(true)
-		setCardGridUISkeleton([...cardGridUI, getPlaceholderCardComponent()])
 		setTimeout(() => {
 			setIsLoadingData(false)
-		}, 150);
+		}, 180);
 
 		if (numResults === 0)	setClearGrid(true)
 		else	renderCards().then( (cards) => setCardGridUI([...cardGridUI, ...cards]) )
