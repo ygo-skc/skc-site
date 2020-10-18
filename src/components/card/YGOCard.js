@@ -6,13 +6,14 @@ import { Skeleton } from '@material-ui/lab'
 import Styled from 'styled-components'
 import he from 'he'
 
-import { CardLevel } from './CardLevel'
+import { CardLevel } from './CardAssociation'
 
 
 const MonsterAtkDefComponent = Styled(Typography)`
 	&&
 	{
-		text-align: right;
+		display: inline-block;
+		font-weight: 800;
 	}
 `
 
@@ -53,8 +54,9 @@ const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, mon
 
 	const CardNameComponent = Styled(Typography)`
 		&& {
-			font-weight: 600;
+			font-weight: 700;
 			margin-bottom: .18rem;
+			text-align: center;
 
 			color: ${cardStyles[ `${cardColorLowerCase}Color` ]};
 		},
@@ -65,6 +67,7 @@ const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, mon
 		{
 			padding: .445rem;
 			background: ${cardStyles[ `${cardColorLowerCase}SummaryBackground` ]};
+			border-radius: .5rem;
 		}
 	`
 
@@ -92,7 +95,7 @@ const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, mon
 	const MonsterTypeComponent = Styled(Typography)`
 		&&
 		{
-			font-weight: 600;
+			font-weight: 700;
 			margin-bottom: .28rem;
 			color: ${cardStyles[ `${cardColorLowerCase}SummaryColor` ]};
 		}
@@ -103,7 +106,7 @@ const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, mon
 
 			<div style={{ width: '100%', display: 'flex', marginBottom: '.5rem', whiteSpace: 'normal' }} >
 				<CardNameComponent
-					variant='body1'
+					variant='subtitle1'
 					noWrap={true}
 					style={{ flex: '1' }}
 					>
@@ -111,7 +114,7 @@ const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, mon
 				</CardNameComponent>
 			</div>
 
-			<CardLevel level={(monsterAssociation !== undefined && monsterAssociation.level !== undefined)? monsterAssociation.level: 0 } />
+			<CardLevel monsterAssociation={monsterAssociation} />
 
 
 			<CardDescriptionComponent >
@@ -119,9 +122,9 @@ const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, mon
 					( cardColor === 'Spell' || cardColor === 'Trap' ) ?
 						undefined :
 						<MonsterTypeComponent
-							variant='body2'
+							variant='body1'
 							noWrap={true} >
-								[ { monsterType } ]
+								{ monsterType }
 						</MonsterTypeComponent>
 				}
 
@@ -134,9 +137,21 @@ const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, mon
 					( cardColor === 'Spell' || cardColor === 'Trap' || cardColor === 'err' ) ?
 						undefined :
 						(fullDetails) ?
-							<MonsterAtkDefComponent>
-								{monsterAtk} / {monsterDef}
-							</MonsterAtkDefComponent> :
+							<div style={{ width: '100%', textAlign: 'right', marginTop: '.5rem'}} >
+								<div style={{ background: 'rgba(255, 255, 255, .75)', display: 'inline-block', paddingTop: '.2rem', paddingBottom: '.2rem', paddingLeft: '.7rem', paddingRight: '.7rem', borderRadius: '4rem', textAlign: 'center'}} >
+									<MonsterAtkDefComponent
+										style={{ color: 'rgb(215, 24, 114, .65)' }}
+										variant='body1' >
+										{monsterAtk}
+									</MonsterAtkDefComponent>
+									<MonsterAtkDefComponent
+										style={{ marginLeft: '.6rem', color: 'rgba(51, 193, 255, .9)' }}
+										variant='body1' >
+										{monsterDef}
+									</MonsterAtkDefComponent>
+								</div>
+							</div>
+							:
 							undefined
 				}
 			</CardDescriptionComponent>

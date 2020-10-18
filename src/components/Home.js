@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { throttle } from 'underscore'
+import { Helmet } from 'react-helmet'
 
 import { Typography, Link, Divider, InputBase, Paper, IconButton } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search';
@@ -73,6 +74,15 @@ export default function Home({ history }) {
 
 	return (
 		<MainContentContainer>
+			<Helmet>
+				<title>The Supreme Kings Castle</title>
+				<meta
+					name={`The Supreme Kings Castle`}
+					content={`YuGiOh Site for checking; card information, current and past ban lists, search cards, and browse cards.`}
+					/>
+				<meta name="keywords" content={`YuGiOh, ban list, card info, The Supreme Kings Castle`} />
+			</Helmet>
+
 			<Breadcrumb crumbs={['Home']} />
 
 			<br />
@@ -87,7 +97,10 @@ export default function Home({ history }) {
 					getOptionLabel={option => option.cardName}
 					options={searchOptions}
 					groupBy={option => option.cardColor}
-					getOptionSelected={(option, value) => window.location.assign(`/card/${value.cardID}`)}
+					onChange={ (event, value, reason) => {
+						if (reason === 'select-option') { window.location.assign(`/card/${value.cardID}`) }
+					}
+					}
 					renderGroup={option => {
 						return (
 							<div style={{ padding: '1.5rem' }} >

@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react'
 import { Paper, Typography, Grid, Box } from '@material-ui/core'
 import {Skeleton} from '@material-ui/lab'
+import { Helmet } from 'react-helmet'
 
 import Breadcrumb from '../Breadcrumb'
 import { MainContentContainer } from '../MainContent'
-import OneThirdTwoThirdsGrid from '../grid/OneThirdTwoThirdsGrid'
 import Footer from '../Footer'
 
 import {handleFetch} from '../../helper/FetchHandler'
@@ -125,6 +125,15 @@ export default function ProductBrowse({history})
 
 	return (
 		<MainContentContainer style={{}} >
+			<Helmet>
+				<title>{`SKC - Product Browser`}</title>
+				<meta
+					name={`SKC - Product Browser`}
+					content={`Browse all products in database to check the progression of YuGiOh.`}
+					/>
+				<meta name="keywords" content={`YuGiOh, product browse, The Supreme Kings Castle`} />
+			</Helmet>
+
 			<Breadcrumb crumbs={ ['Home', 'Product Browse'] } />
 
 			<Typography

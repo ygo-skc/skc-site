@@ -1,6 +1,7 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react'
 import { Chip, Typography, Grid, Box } from '@material-ui/core'
 import withWidth from '@material-ui/core/withWidth'
+import {Helmet} from 'react-helmet'
 
 import Breadcrumb from '../Breadcrumb'
 import {YGOCard} from './YGOCard'
@@ -57,6 +58,8 @@ function Card( { match, history, width } )
 
 
 	useEffect( () => {
+		// document.title = `SKC - Card: ${cardId}`
+
 		handleFetch(`${NAME_maps_ENDPOINT['cardInstanceUrl']}${cardId}?allInfo=true`, history, (json) => {
 			setCardName(json.cardName)
 			setCardColor(json.cardColor)
@@ -110,6 +113,14 @@ function Card( { match, history, width } )
 
 	return (
 		<MainContentContainer style={{ paddingLeft: '0rem', paddingRight: '0rem', paddingBottom: '0rem' }}  >
+			<Helmet>
+				<title>SKC - Card: {cardId}</title>
+				<meta
+					name={`SKC - Card: ${cardId}`}
+					content={`Information for YuGiOh card ${cardName} such as ban lists it was in, products it can be found in, effect/stats, etc.`}
+					/>
+				<meta name="keywords" content={`YuGiOh, The Supreme Kings Castle, card, ${cardName}, ${cardId}, ${cardColor}`} />
+			</Helmet>
 			<Breadcrumb crumbs={ dynamicCrumbs } />
 
 			<OneThirdTwoThirdsGrid

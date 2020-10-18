@@ -36,26 +36,20 @@ function getPlaceholderCardComponent()
 }
 
 
-export default function CardDisplayGrid({ cardJsonResults, numResultsDisplayed, numResultsLoaded, loadMoreCallback, isLoadMoreOptionVisible, showFooter=true})
+export default function CardDisplayGrid({ cardJsonResults, numResultsDisplayed, numItemsToLoadWhenNeeded, loadMoreCallback, isLoadMoreOptionVisible, showFooter=true, numResults})
 {
 	const [cardGridUI, setCardGridUI] = useState([])
 
 	const [isLoadingData, setIsLoadingData] = useState(false)
 	const [cardGridUISkeleton, setCardGridUISkeleton] = useState([])
+	const [clearGrid, setClearGrid] = useState(false)
 
 	const history = useHistory()
 
-	useEffect( () => {
-		if (cardJsonResults === undefined) return
-		if (cardJsonResults.length === 0)	setCardGridUISkeleton([getPlaceholderCardComponent()])
 
-		setIsLoadingData(true)
-		setCardGridUISkeleton([...cardGridUI, getPlaceholderCardComponent()])
-		setTimeout(() => {
-			setIsLoadingData(false)
-		}, 130);
-
-		const cards = cardJsonResults.slice(numResultsDisplayed - numResultsLoaded, numResultsDisplayed).map( card => {
+	const renderCards = async() =>
+	{
+		return cardJsonResults.slice(numResultsDisplayed - numItemsToLoadWhenNeeded, numResultsDisplayed).map( card => {
 			return <Grid
 				key={card.cardID}
 				item
@@ -85,24 +79,39 @@ export default function CardDisplayGrid({ cardJsonResults, numResultsDisplayed, 
 			</Grid>
 
 		})
+	}
 
-		setCardGridUI([...cardGridUI, ...cards])
+
+	useEffect( () => {
+		if (cardJsonResults === undefined) return
+		if (cardJsonResults.length === 0)	setCardGridUISkeleton([getPlaceholderCardComponent()])
+
+		setIsLoadingData(true)
+		setCardGridUISkeleton([...cardGridUI, getPlaceholderCardComponent()])
+		setTimeout(() => {
+			setIsLoadingData(false)
+		}, 150);
+
+		if (numResults === 0)	setClearGrid(true)
+		else	renderCards().then( (cards) => setCardGridUI([...cardGridUI, ...cards]) )
+
 	}, [numResultsDisplayed, cardJsonResults])
 
 
 	useEffect( () => {
-		if (numResultsDisplayed == 0)
+		if (clearGrid === true)
 		{
 			setCardGridUI([])
+			setClearGrid(false)
 		}
-	}, [numResultsDisplayed])
+	}, [clearGrid])
 
 
 	return(
 		<Box>
 			<Grid>
 				<Grid container >
-					{(isLoadingData)? cardGridUISkeleton : (cardGridUI.length === 0)? <Typography variant='h5' style={{margin: 'auto'}} >No Content To Show</Typography> : cardGridUI}
+					{(isLoadingData)? cardGridUISkeleton : (numResults === 0)? <Typography variant='h5' style={{margin: 'auto'}} >No Content To Show</Typography> : cardGridUI}
 				</Grid>
 			</Grid>
 
@@ -115,7 +124,6 @@ export default function CardDisplayGrid({ cardJsonResults, numResultsDisplayed, 
 					<ExpandMoreRoundedIcon />
 				</IconButton>
 			}
-
 
 			{ (showFooter)? <Footer /> : undefined }
 		</Box>

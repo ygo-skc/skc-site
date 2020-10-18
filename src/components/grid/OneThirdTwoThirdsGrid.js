@@ -56,12 +56,12 @@ function OneThirdTwoThirdsGrid( { oneThirdComponent, twoThirdComponent, width } 
 
 	return(
 		<ParentGrid container spacing={0} >
-			<LeftGrid item xs={12} sm={5} md={4} lg={3} xl={2} >
+			<LeftGrid item xs={12} sm={6} md={4} lg={3} xl={3} >
 					{oneThirdComponent}
 					{ (width === 'xs')? <Divider /> : undefined }
 			</LeftGrid>
 
-			<RightGrid item xs={12} sm={7} md={8} lg={9} xl={10} >
+			<RightGrid item xs={12} sm={6} md={8} lg={9} xl={9} >
 				{twoThirdComponent}
 			</RightGrid>
 		</ParentGrid>
