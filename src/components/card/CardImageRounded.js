@@ -11,7 +11,7 @@ export default function CardImageRounded({cardID})
 
 				{/* <object data={`${process.env.PUBLIC_URL}/Img/card_back_square.svg`} type="image/png"> */}
 					<img
-						src={`https://storage.googleapis.com/ygoprodeck.com/pics_artgame/${cardID}.jpg`}
+						src={`https://yugiohsiteimages.s3.us-east-2.amazonaws.com/${cardID}.jpg`}
 						style={{  width: '100%', objectFit: 'cover' }}
 						onError={(error) => {
 							error.target.src=`${process.env.PUBLIC_URL}/Img/card_back_square.svg`
