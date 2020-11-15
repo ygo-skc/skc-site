@@ -85,15 +85,19 @@ export default function CardDisplayGrid({ cardJsonResults, numResultsDisplayed, 
 	useEffect( () => {
 		if (cardJsonResults === undefined || cardJsonResults.length === 0) return
 
+		setIsLoadingData(true)
 		getPlaceholderCardComponent().then( placeholders => setCardGridUISkeleton([...cardGridUI, placeholders]) )
 
-		setIsLoadingData(true)
-		setTimeout(() => {
-			setIsLoadingData(false)
-		}, 180);
-
 		if (numResults === 0)	setClearGrid(true)
-		else	renderCards().then( (cards) => setCardGridUI([...cardGridUI, ...cards]) )
+		else
+		{
+			renderCards().then( (cards) => {
+				setCardGridUI([...cardGridUI, ...cards])
+				setTimeout( () => {
+					setIsLoadingData(false)
+				}, 70)
+			})
+		}
 
 	}, [numResultsDisplayed, cardJsonResults])
 
