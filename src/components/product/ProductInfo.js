@@ -1,8 +1,5 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, lazy} from 'react'
 import { Helmet } from 'react-helmet'
-
-import {Paper, Typography, Box} from '@material-ui/core'
-import {Skeleton} from '@material-ui/lab'
 
 import {handleFetch} from '../../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
@@ -13,9 +10,16 @@ import Breadcrumb from '../Breadcrumb'
 import OneThirdTwoThirdsGrid from '../grid/OneThirdTwoThirdsGrid'
 
 
-import CardDisplayGrid from '../grid/CardDisplayGrid'
 import Styled from 'styled-components'
 import {LightTranslucentDivider} from '../util/Divider'
+
+
+const CardDisplayGrid = lazy( () => import('../grid/CardDisplayGrid') )
+
+const Typography = lazy( () => import('@material-ui/core/Typography') )
+const Paper = lazy( () => import('@material-ui/core/Paper') )
+const Box = lazy( () => import('@material-ui/core/Box') )
+const Skeleton = lazy( () => import('@material-ui/lab/Skeleton') )
 
 
 const MainBrowseInfoTypography = Styled(Typography)`

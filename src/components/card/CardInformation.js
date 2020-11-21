@@ -8,10 +8,11 @@ import { handleFetch } from '../../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
 import { MainContentContainer } from '../MainContent'
 
+import Breadcrumb from '../Breadcrumb'
+
 const CardInformationSection = lazy( () => import('./CardInformationSection') )
 const YGOCard = lazy( () => import('./YGOCard') )
 
-const Breadcrumb = lazy( () => import('../Breadcrumb') )
 const Footer = lazy( () => import('../Footer') )
 const OneThirdTwoThirdsGrid = lazy( () => import('../grid/OneThirdTwoThirdsGrid') )
 
