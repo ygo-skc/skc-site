@@ -3,7 +3,6 @@ import { NAME_maps_ROUTE } from '../Routes.tsx'
 const CLIENT_UUID = process.env.REACT_APP_CLIENT_UUID
 
 function handleFetch(endPoint, history, onJsonReceived) {
-	console.log(process.env)
 	fetch(endPoint
 		, { headers:
 			{

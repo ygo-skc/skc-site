@@ -1,41 +1,28 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react'
-import { Chip, Typography, Grid, Box } from '@material-ui/core'
 import withWidth from '@material-ui/core/withWidth'
 import {Helmet} from 'react-helmet'
 
-import Breadcrumb from '../Breadcrumb'
-import {YGOCard} from './YGOCard'
 import CardImageRounded from './CardImageRounded'
 import cardStyles from './YGOCardStyles'
 import { handleFetch } from '../../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
 import { MainContentContainer } from '../MainContent'
-import Footer from '../Footer'
-
-import styled from 'styled-components'
-
-import OneThirdTwoThirdsGrid from '../grid/OneThirdTwoThirdsGrid'
 
 const CardInformationSection = lazy( () => import('./CardInformationSection') )
+const YGOCard = lazy( () => import('./YGOCard') )
+
+const Breadcrumb = lazy( () => import('../Breadcrumb') )
+const Footer = lazy( () => import('../Footer') )
+const OneThirdTwoThirdsGrid = lazy( () => import('../grid/OneThirdTwoThirdsGrid') )
+
+const Typography = lazy( () => import('@material-ui/core/Typography') )
+const Chip = lazy( () => import('@material-ui/core/Chip') )
+const Grid = lazy( () => import('@material-ui/core/Grid') )
+const Box = lazy( () => import('@material-ui/core/Box') )
 
 
-const CardSummaryChip = styled(Chip)`
-	&&
-	{
 
-	}
-`
-
-// When user wants to include or exclude a category from the info component the corresponding local storage variable is updated and the corresponding
-// state variable is also updated. This method will take a reference to the state variable to update, the method used to update the state variable and
-// the name of the variable used in local storage.
-// const onFilterItemClicked = (stateVariable, stateChangeMethod, localStorageItemName) => {
-// 	localStorage.setItem(localStorageItemName, !stateVariable)
-// 	stateChangeMethod(!stateVariable)
-// }
-
-
-function Card( { match, history, width } )
+function Card( { match, history } )
 {
 	const [isLoading, setIsLoading] = useState(true)
 	const cardId = match.params.cardId
@@ -43,6 +30,7 @@ function Card( { match, history, width } )
 	const [cardName, setCardName] = useState(undefined)
 	const [cardColor, setCardColor] = useState(undefined)
 	const [cardEffect, setCardEffect] = useState(undefined)
+	const [cardAttribute, setCardAttribute] = useState(undefined)
 	const [monsterType, setMonsterType] = useState(undefined)
 	const [monsterAtk, setMonsterAtk] = useState(undefined)
 	const [monsterDef, setMonsterDef] = useState(undefined)
@@ -58,12 +46,12 @@ function Card( { match, history, width } )
 
 
 	useEffect( () => {
-		// document.title = `SKC - Card: ${cardId}`
 
 		handleFetch(`${NAME_maps_ENDPOINT['cardInstanceUrl']}${cardId}?allInfo=true`, history, (json) => {
 			setCardName(json.cardName)
 			setCardColor(json.cardColor)
 			setCardEffect(json.cardEffect)
+			setCardAttribute(json.cardAttribute)
 			setMonsterType(json.monsterType)
 			setMonsterAtk(json.monsterAttack)
 			setMonsterDef(json.monsterDefense)
@@ -74,9 +62,7 @@ function Card( { match, history, width } )
 
 			const crumbs = ['Home', 'Card Browse', json.cardID]
 			setDynamicCrumbs(crumbs)
-			setTimeout(() => {
-				setIsLoading(false)
-			});
+			setIsLoading(false)
 		})
 	}, [])
 
@@ -84,16 +70,15 @@ function Card( { match, history, width } )
 	useEffect( () => {
 		if ( productInfoChips.length === 0 )
 		{
-			const productInfoChips = []
+			async function populateProductChips(productInfo)
+			{
+				return productInfo.map( item => {
+					const productId = item.productId
+					return item.productContent.map(item => <Chip label={`${productId} #${item.productPosition}  •  ${item.rarities.join(', ')}`} />)
+					})
+			}
 
-			productInfo.forEach( item => {
-				const productId = item.productId
-				item.productContent.forEach(item => {
-					console.log(item)
-					productInfoChips.push(<CardSummaryChip label={`${productId} #${item.productPosition}  •  ${item.rarities.join(', ')}`} />)
-				})
-			})
-			setPackInfoChips(productInfoChips)
+			populateProductChips(productInfo).then(productInfoChips => setPackInfoChips(productInfoChips))
 		}
 	}, [productInfo])
 
@@ -101,12 +86,12 @@ function Card( { match, history, width } )
 	useEffect( () => {
 		if ( banListInfoChips.length === 0 )
 		{
-			const banListInfoChips = []
+			async function populateBanListChips(banListInfo)
+			{
+				return banListInfo.map( item => <Chip label={`${item.banListDate}  •  ${item.banStatus.charAt(0)}`} />)
+			}
 
-			banListInfo.forEach( item => {
-				banListInfoChips.push(<CardSummaryChip label={`${item.banListDate}  •  ${item.banStatus.charAt(0)}`} />)
-				setBanListInfoChips(banListInfoChips)
-			})
+			populateBanListChips(banListInfo).then(banListInfoChips => setBanListInfoChips(banListInfoChips))
 		}
 	}, [banListInfo])
 
@@ -143,6 +128,7 @@ function Card( { match, history, width } )
 							cardName={cardName}
 							cardColor={cardColor}
 							cardEffect={cardEffect}
+							cardAttribute={cardAttribute}
 							monsterType={monsterType}
 							monsterAtk={monsterAtk}
 							monsterDef={monsterDef}

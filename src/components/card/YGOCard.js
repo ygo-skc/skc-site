@@ -25,7 +25,7 @@ const CardIDComponent = Styled(Typography)`
 `
 
 
-const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, monsterDef, monsterAssociation, cardStyles, cardID, fullDetails, effectMaxLineHeight, isLoading, className } )  =>
+export default function YGOCard({cardName, cardColor, cardEffect, monsterType, cardAttribute, monsterAtk, monsterDef, monsterAssociation, cardStyles, cardID, fullDetails, effectMaxLineHeight, isLoading, className })
 {
 
 	if (isLoading)
@@ -114,7 +114,7 @@ const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, mon
 				</CardNameComponent>
 			</div>
 
-			<CardLevel monsterAssociation={monsterAssociation} />
+			<CardLevel monsterAssociation={monsterAssociation} attribute={cardAttribute} />
 
 
 			<CardDescriptionComponent >
@@ -166,4 +166,5 @@ const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, mon
 	)
 }
 
-export { YGOCard }
+
+export {YGOCard}
