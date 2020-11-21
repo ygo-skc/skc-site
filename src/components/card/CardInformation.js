@@ -72,9 +72,9 @@ function Card( { match, history } )
 		{
 			async function populateProductChips(productInfo)
 			{
-				return productInfo.map( item => {
+				return productInfo.map( (item, index) => {
 					const productId = item.productId
-					return item.productContent.map(item => <Chip label={`${productId} #${item.productPosition}  •  ${item.rarities.join(', ')}`} />)
+					return item.productContent.map(item => <Chip key={index} label={`${productId} #${item.productPosition}  •  ${item.rarities.join(', ')}`} />)
 					})
 			}
 
@@ -88,7 +88,7 @@ function Card( { match, history } )
 		{
 			async function populateBanListChips(banListInfo)
 			{
-				return banListInfo.map( item => <Chip label={`${item.banListDate}  •  ${item.banStatus.charAt(0)}`} />)
+				return banListInfo.map( (item, index) => <Chip key={index} label={`${item.banListDate}  •  ${item.banStatus.charAt(0)}`} />)
 			}
 
 			populateBanListChips(banListInfo).then(banListInfoChips => setBanListInfoChips(banListInfoChips))

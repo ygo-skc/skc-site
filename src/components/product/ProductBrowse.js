@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react'
-import { Paper, Typography, Grid, Box } from '@material-ui/core'
+import React, { useState, useEffect, useMemo } from 'react'
+import { Paper, Typography, Grid } from '@material-ui/core'
 import {Skeleton} from '@material-ui/lab'
 import { Helmet } from 'react-helmet'
 
@@ -12,12 +12,6 @@ import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
 
 import Styled from 'styled-components'
 
-const MainBrowseInfoTypography = Styled(Typography)`
-	&&
-	{
-		color: rgba(255, 255, 255, .95);
-	}
-`
 
 const MainBrowseInfoTypography2 = Styled(Typography)`
 	&&
@@ -69,7 +63,7 @@ export default function ProductBrowse({history})
 	const [productGridItems, setProductGridItems] = useState([])
 	const [isDataLoaded, setIsDataLoaded] = useState(false)
 
-	const getPlaceholderCardComponentMemoized = useMemo(() => getPlaceholderCardComponent(), [isDataLoaded])
+	const getPlaceholderCardComponentMemoized = useMemo(() => getPlaceholderCardComponent(), [])
 
 
 	useEffect( () => {

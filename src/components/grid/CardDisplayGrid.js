@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react'
-import {useHistory} from 'react-router-dom'
 
 import { Grid, IconButton, Box, Typography } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
@@ -43,8 +42,6 @@ export default function CardDisplayGrid({ cardJsonResults, numResultsDisplayed, 
 	const [isLoadingData, setIsLoadingData] = useState(false)
 	const [cardGridUISkeleton, setCardGridUISkeleton] = useState([])
 	const [clearGrid, setClearGrid] = useState(false)
-
-	const history = useHistory()
 
 
 	const renderCards = async() =>
