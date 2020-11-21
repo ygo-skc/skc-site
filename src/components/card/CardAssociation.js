@@ -14,7 +14,7 @@ const rankImage = <img
 	style={{ width: '34px', height: '34px', display: 'inline-block', marginRight: '.35rem', verticalAlign: 'middle' }} />
 
 
-const CardLevel = ( { monsterAssociation } ) =>
+const CardLevel = ( { monsterAssociation, attribute } ) =>
 {
 	if (monsterAssociation === undefined)	return (null)
 	if (monsterAssociation.level === undefined && monsterAssociation.rank === undefined)	return (null)
@@ -25,7 +25,7 @@ const CardLevel = ( { monsterAssociation } ) =>
 			<div style={{ background: 'rgba(255, 255, 255, .75)', display: 'inline-block', paddingTop: '.2rem', paddingBottom: '.2rem', paddingLeft: '.7rem', paddingRight: '.7rem', borderRadius: '4rem', textAlign: 'center'}} >
 				<img
 					style={{ width: '34px', height: '34px', display: 'inline-block', marginRight: '.85rem', verticalAlign: 'middle' }}
-					src={`${process.env.PUBLIC_URL}/Img/dark_attribute.svg`}
+					src={`${process.env.PUBLIC_URL}/Img/${attribute}.svg`}
 					/>
 
 				{(monsterAssociation.level === undefined)?
