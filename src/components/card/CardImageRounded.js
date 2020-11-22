@@ -17,7 +17,7 @@ export default function CardImageRounded({cardID})
 
 					<img
 						alt={`Card Having ID ${cardID}`}
-						src={`https://yugiohsiteimages.s3.us-east-2.amazonaws.com/${cardID}.jpg`}
+						src={`https://images.thesupremekingscastle.com/${cardID}.jpg`}
 						style={{  width: '100%', objectFit: 'cover' }}
 						onError={ () => {
 							setShowDefault(true)
