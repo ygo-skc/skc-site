@@ -1,4 +1,5 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react'
+import { Grid, Box, Chip, Typography } from '@material-ui/core'
 import withWidth from '@material-ui/core/withWidth'
 import {Helmet} from 'react-helmet'
 
@@ -15,12 +16,6 @@ const YGOCard = lazy( () => import('./YGOCard') )
 
 const Footer = lazy( () => import('../Footer') )
 const OneThirdTwoThirdsGrid = lazy( () => import('../grid/OneThirdTwoThirdsGrid') )
-
-const Typography = lazy( () => import('@material-ui/core/Typography') )
-const Chip = lazy( () => import('@material-ui/core/Chip') )
-const Grid = lazy( () => import('@material-ui/core/Grid') )
-const Box = lazy( () => import('@material-ui/core/Box') )
-
 
 
 function Card( { match, history } )

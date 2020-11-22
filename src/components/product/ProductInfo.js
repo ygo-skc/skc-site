@@ -1,6 +1,9 @@
 import React, {useState, useEffect, lazy} from 'react'
 import { Helmet } from 'react-helmet'
 
+import { Paper, Box, Typography } from '@material-ui/core'
+import { Skeleton } from '@material-ui/lab'
+
 import {handleFetch} from '../../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
 
@@ -14,12 +17,9 @@ import Styled from 'styled-components'
 import {LightTranslucentDivider} from '../util/Divider'
 
 
-const CardDisplayGrid = lazy( () => import('../grid/CardDisplayGrid') )
 
-const Typography = lazy( () => import('@material-ui/core/Typography') )
-const Paper = lazy( () => import('@material-ui/core/Paper') )
-const Box = lazy( () => import('@material-ui/core/Box') )
-const Skeleton = lazy( () => import('@material-ui/lab/Skeleton') )
+import CardDisplayGrid from '../grid/CardDisplayGrid'
+// const CardDisplayGrid = lazy( () => import('../grid/CardDisplayGrid') )
 
 
 const MainBrowseInfoTypography = Styled(Typography)`
@@ -47,7 +47,6 @@ export default function ProductInfo({match, history}) {
 
 	useEffect( () => {
 		handleFetch(`${NAME_maps_ENDPOINT['productDetails']}/${match.params.productId}/en`, history, json => {
-			console.log(json)
 			setDynamicBreadcrumbs(['Home', 'Product Browse', `${json.productId}`])
 
 			setProductName(json.productName)
@@ -58,7 +57,6 @@ export default function ProductInfo({match, history}) {
 
 			setCardJsonResults(json.productContent.map(item => item.card))
 			setProductTotal(json.productTotal)
-
 			setIsDataLoaded(true)
 		})
 	}, [])
@@ -142,6 +140,7 @@ export default function ProductInfo({match, history}) {
 						loadMoreCallback={undefined}
 						isLoadMoreOptionVisible={false}
 						history={history}
+						isDataLoaded={isDataLoaded}
 					/>
 				}
 			/>

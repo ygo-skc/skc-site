@@ -36,19 +36,19 @@ export default function Browse( {history} )
 	const [selectedCriteria, setSelectedCriteria] = useState(undefined)
 
 	const [selectedCriteriaChips, setSelectedCriteriaChips] = useState([])
-	const [jsonResults, setJsonResults] = useState(undefined)
+	const [jsonResults, setJsonResults] = useState([])
 
 	const [numResults, setNumResults] = useState(0)
 	const [numResultsDisplayed, setNumResultsDisplayed] = useState(0)
 	const [numItemsToLoadWhenNeeded, setnumItemsToLoadWhenNeeded] = useState(0)
 
 	const [isLoadMoreVisible, setIsLoadMoreVisible] = useState(false)
+	const [isCardBrowseDataLoaded, setIsCardBrowseDataLoaded] = useState(true)
 
 
 	useEffect( () => {
 		handleFetch(NAME_maps_ENDPOINT['browseCriteria'], history, (json) => {
 			const browseCriteria = []
-			console.log(json)
 			for (const criteria of Object.keys(json))
 			{
 				if (criteria === '_links')	continue
@@ -106,11 +106,13 @@ export default function Browse( {history} )
 		setSelectedCriteriaChips(selectedCriteriaChips)
 		reset()
 
-		console.log(`${NAME_maps_ENDPOINT['browse']}?cardColors=${criteriaMap.get('cardColors').join(',')}&attributes=${criteriaMap.get('attributes').join(',')}&levels=${criteriaMap.get('levels').join(',')}&ranks=${criteriaMap.get('ranks').join(',')}&linkRatings=${criteriaMap.get('linkRatings').join(',')}`)
+
+		setIsCardBrowseDataLoaded(false)
 		handleFetch(`${NAME_maps_ENDPOINT['browse']}?cardColors=${criteriaMap.get('cardColors').join(',')}&attributes=${criteriaMap.get('attributes').join(',')}&levels=${criteriaMap.get('levels').join(',')}&ranks=${criteriaMap.get('ranks').join(',')}&linkRatings=${criteriaMap.get('linkRatings').join(',')}`, history, json => {
-			console.log("i ran")
 			setJsonResults(json.results)
 			setNumResults(json.numResults)
+
+			setIsCardBrowseDataLoaded(true)
 		})
 	}, [selectedCriteria])
 
@@ -247,6 +249,7 @@ export default function Browse( {history} )
 						loadMoreCallback={loadMore}
 						isLoadMoreOptionVisible={isLoadMoreVisible}
 						numResults={numResults}
+						isDataLoaded={isCardBrowseDataLoaded}
 						/>
 				}
 			/>

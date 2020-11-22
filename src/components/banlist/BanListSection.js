@@ -48,6 +48,7 @@ const BanListSection = ( { sectionExplanation, cards, newCards, isDataLoaded } )
 				loadMoreCallback={undefined}
 				isLoadMoreOptionVisible={false}
 				showFooter={false}
+				isDataLoaded={isDataLoaded}
 			/>)
 		}
 		else setCardTypeContentGrid(undefined)

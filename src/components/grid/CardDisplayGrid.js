@@ -1,4 +1,4 @@
-import React, {useState, useEffect, lazy} from 'react'
+import React, {useState, useEffect} from 'react'
 
 import { Grid, IconButton, Box, Typography } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
@@ -17,7 +17,7 @@ async function getPlaceholderCardComponent()
 	const placeHolder = []
 
 	var i = 0;
-	for (i = 0; i < 40; i++)
+	for (i = 0; i < 20; i++)
 	{
 		placeHolder.push(<Grid
 			key={`skeleton-${i}`}
@@ -37,14 +37,12 @@ async function getPlaceholderCardComponent()
 }
 
 
-export default function CardDisplayGrid({ cardJsonResults, numResultsDisplayed, numItemsToLoadWhenNeeded, loadMoreCallback, isLoadMoreOptionVisible, showFooter=true, numResults})
+export default function CardDisplayGrid({ cardJsonResults, numResultsDisplayed, numItemsToLoadWhenNeeded, loadMoreCallback, isLoadMoreOptionVisible, showFooter=true, numResults, isDataLoaded})
 {
 	const [cardGridUI, setCardGridUI] = useState([])
 
-	const [isLoadingData, setIsLoadingData] = useState(false)
 	const [cardGridUISkeleton, setCardGridUISkeleton] = useState([])
 	const [clearGrid, setClearGrid] = useState(false)
-
 
 	const renderCards = async() =>
 	{
@@ -82,21 +80,21 @@ export default function CardDisplayGrid({ cardJsonResults, numResultsDisplayed, 
 
 
 	useEffect( () => {
-		if (cardJsonResults === undefined || cardJsonResults.length === 0) return
+		if (isDataLoaded === false) getPlaceholderCardComponent().then( placeholders => setCardGridUISkeleton(placeholders) )
+	}, [isDataLoaded])
 
-		setIsLoadingData(true)
-		getPlaceholderCardComponent().then( placeholders => setCardGridUISkeleton([...cardGridUI, placeholders]) )
 
-		if (numResults === 0)	setClearGrid(true)
-		else
+	useEffect( () => {
+		if (numResults === 0)
 		{
-			renderCards().then( (cards) => {
-				setCardGridUI([...cardGridUI, ...cards])
-				setIsLoadingData(false)
-			})
+			setClearGrid(true)
+			return
 		}
 
-	}, [numResultsDisplayed, cardJsonResults])
+		renderCards().then( (cards) => {
+			setCardGridUI([...cardGridUI, ...cards])
+		})
+	}, [numResultsDisplayed,, cardJsonResults, numResults])
 
 
 	useEffect( () => {
@@ -112,12 +110,12 @@ export default function CardDisplayGrid({ cardJsonResults, numResultsDisplayed, 
 		<Box>
 			<Grid>
 				<Grid container >
-					{(isLoadingData)? cardGridUISkeleton : (numResults === 0)? <Typography variant='h5' style={{margin: 'auto'}} >No Content To Show</Typography> : cardGridUI}
+					{(!isDataLoaded)? cardGridUISkeleton : (numResults === 0)? <Typography variant='h5' style={{margin: 'auto'}} >No Content To Show</Typography> : cardGridUI}
 				</Grid>
 			</Grid>
 
 			{
-				(isLoadingData)?
+				(!isDataLoaded)?
 				undefined :
 				<IconButton
 					onClick={ () => loadMoreCallback()}
