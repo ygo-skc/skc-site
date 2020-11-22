@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {memo} from 'react'
 
 import { Typography, Box, Paper } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
@@ -25,7 +25,7 @@ const CardIDComponent = Styled(Typography)`
 `
 
 
-export default function YGOCard({cardName, cardColor, cardEffect, monsterType, cardAttribute, monsterAtk, monsterDef, monsterAssociation, cardStyles, cardID, fullDetails, effectMaxLineHeight, isLoading, className })
+const YGOCard = memo(( {cardName, cardColor, cardEffect, monsterType, cardAttribute, monsterAtk, monsterDef, monsterAssociation, cardStyles, cardID, fullDetails, effectMaxLineHeight, isLoading, className }) =>
 {
 
 	if (isLoading)
@@ -164,7 +164,12 @@ export default function YGOCard({cardName, cardColor, cardEffect, monsterType, c
 			}
 		</CardContentComponent>
 	)
-}
+}, (prevProps, newProps) => {
+	if ( prevProps.cardName !== newProps.cardName || prevProps.isLoading !== newProps.isLoading )
+		return false
+
+	return true
+})
 
 
-export {YGOCard}
+export default YGOCard

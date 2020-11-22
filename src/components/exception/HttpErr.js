@@ -3,7 +3,7 @@ import Styled from 'styled-components'
 
 import { MainContentContainer } from '../MainContent'
 import Breadcrumbs from '../Breadcrumb'
-import {YGOCard} from '../card/YGOCard'
+import YGOCard from '../card/YGOCard'
 import cardStyles from '../card/YGOCardStyles'
 
 const ErrCard = Styled(YGOCard)`

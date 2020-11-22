@@ -18,8 +18,7 @@ import {LightTranslucentDivider} from '../util/Divider'
 
 
 
-import CardDisplayGrid from '../grid/CardDisplayGrid'
-// const CardDisplayGrid = lazy( () => import('../grid/CardDisplayGrid') )
+const CardDisplayGrid = lazy( () => import('../grid/CardDisplayGrid') )
 
 
 const MainBrowseInfoTypography = Styled(Typography)`

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, memo} from 'react'
 
 import { Grid, IconButton, Box, Typography } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
@@ -8,7 +8,7 @@ import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded';
 import CardImageRounded from '../card/CardImageRounded'
 import cardStyles from '../card/YGOCardStyles'
 
-import {YGOCard} from '../card/YGOCard'
+import YGOCard from '../card/YGOCard'
 import Footer from '../Footer'
 
 
@@ -37,12 +37,14 @@ async function getPlaceholderCardComponent()
 }
 
 
-export default function CardDisplayGrid({ cardJsonResults, numResultsDisplayed, numItemsToLoadWhenNeeded, loadMoreCallback, isLoadMoreOptionVisible, showFooter=true, numResults, isDataLoaded})
+const CardDisplayGrid = memo( ({ cardJsonResults, numResultsDisplayed, numItemsToLoadWhenNeeded, loadMoreCallback, isLoadMoreOptionVisible, showFooter=true, numResults, isDataLoaded}) =>
 {
 	const [cardGridUI, setCardGridUI] = useState([])
 
 	const [cardGridUISkeleton, setCardGridUISkeleton] = useState([])
 	const [clearGrid, setClearGrid] = useState(false)
+
+	console.log('hello world')
 
 	const renderCards = async() =>
 	{
@@ -94,7 +96,7 @@ export default function CardDisplayGrid({ cardJsonResults, numResultsDisplayed, 
 		renderCards().then( (cards) => {
 			setCardGridUI([...cardGridUI, ...cards])
 		})
-	}, [numResultsDisplayed,, cardJsonResults, numResults])
+	}, [numResultsDisplayed, cardJsonResults, numResults])
 
 
 	useEffect( () => {
@@ -127,4 +129,11 @@ export default function CardDisplayGrid({ cardJsonResults, numResultsDisplayed, 
 			{ (showFooter)? <Footer /> : undefined }
 		</Box>
 	)
-}
+}, (prevProps, newProps) => {
+	if ( prevProps.isDataLoaded !== newProps.isDataLoaded || prevProps.numResults !== newProps.numResults || prevProps.numResultsDisplayed !== newProps.numResultsDisplayed || prevProps.cardJsonResults !== newProps.cardJsonResults )
+		return false
+
+	return true
+})
+
+export default CardDisplayGrid
