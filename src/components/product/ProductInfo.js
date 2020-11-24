@@ -1,4 +1,4 @@
-import React, {useState, useEffect, lazy} from 'react'
+import React, {useState, useEffect, lazy, Suspense} from 'react'
 import { Helmet } from 'react-helmet'
 
 import { Paper, Box, Typography } from '@material-ui/core'
@@ -8,7 +8,6 @@ import {handleFetch} from '../../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
 
 import {MainContentContainer} from '../MainContent'
-import Breadcrumb from '../Breadcrumb'
 
 import OneThirdTwoThirdsGrid from '../grid/OneThirdTwoThirdsGrid'
 
@@ -18,6 +17,7 @@ import {LightTranslucentDivider} from '../util/Divider'
 
 
 
+const Breadcrumb = lazy( () => import('../Breadcrumb') )
 const CardDisplayGrid = lazy( () => import('../grid/CardDisplayGrid') )
 
 
@@ -72,7 +72,9 @@ export default function ProductInfo({match, history}) {
 				<meta name="keywords" content={`YuGiOh, product browse, The Supreme Kings Castle`} />
 			</Helmet>
 
-			<Breadcrumb crumbs={dynamicBreadcrumbs} />
+			<Suspense>
+				<Breadcrumb crumbs={dynamicBreadcrumbs} />
+			</Suspense>
 
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={
@@ -132,15 +134,17 @@ export default function ProductInfo({match, history}) {
 					</Box>
 				}
 				twoThirdComponent={
-					<CardDisplayGrid
-						cardJsonResults={cardJsonResults}
-						numResultsDisplayed={productTotal}
-						numResultsLoaded={productTotal}
-						loadMoreCallback={undefined}
-						isLoadMoreOptionVisible={false}
-						history={history}
-						isDataLoaded={isDataLoaded}
-					/>
+					<Suspense>
+						<CardDisplayGrid
+							cardJsonResults={cardJsonResults}
+							numResultsDisplayed={productTotal}
+							numResultsLoaded={productTotal}
+							loadMoreCallback={undefined}
+							isLoadMoreOptionVisible={false}
+							history={history}
+							isDataLoaded={isDataLoaded}
+						/>
+					</Suspense>
 				}
 			/>
 		</MainContentContainer>

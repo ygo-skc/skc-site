@@ -1,17 +1,17 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo, lazy, Suspense } from 'react'
 import { Paper, Typography, Grid } from '@material-ui/core'
 import {Skeleton} from '@material-ui/lab'
 import { Helmet } from 'react-helmet'
 
-import Breadcrumb from '../Breadcrumb'
 import { MainContentContainer } from '../MainContent'
-import Footer from '../Footer'
 
 import {handleFetch} from '../../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
 
 import Styled from 'styled-components'
 
+const Breadcrumb = lazy( () => import('../Breadcrumb') )
+const Footer = lazy( () => import('../Footer') )
 
 const MainBrowseInfoTypography2 = Styled(Typography)`
 	&&
@@ -128,7 +128,9 @@ export default function ProductBrowse({history})
 				<meta name="keywords" content={`YuGiOh, product browse, The Supreme Kings Castle`} />
 			</Helmet>
 
-			<Breadcrumb crumbs={ ['Home', 'Product Browse'] } />
+			<Suspense>
+				<Breadcrumb crumbs={ ['Home', 'Product Browse'] } />
+			</Suspense>
 
 			<Typography
 				variant='h4'
@@ -141,7 +143,10 @@ export default function ProductBrowse({history})
 				{(isDataLoaded)? productGridItems : getPlaceholderCardComponentMemoized}
 			</Grid>
 
-			<Footer />
+			<Suspense>
+				<Footer />
+			</Suspense>
+
 		</MainContentContainer>
 	)
 }
