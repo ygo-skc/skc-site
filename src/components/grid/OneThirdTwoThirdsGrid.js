@@ -53,7 +53,7 @@ const Parent = Styled(Box)`
 `
 
 
-function OneThirdTwoThirdsGrid( { oneThirdComponent, twoThirdComponent, width } )
+function OneThirdTwoThirdsGrid( { oneThirdComponent, twoThirdComponent } )
 {
 
 	return(

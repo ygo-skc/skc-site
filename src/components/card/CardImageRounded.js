@@ -11,7 +11,7 @@ export default function CardImageRounded({cardID})
 				style={{ borderRadius: '50%', overflow: 'hidden', width: '100%',  height: '0', paddingBottom: '100%' }} >
 					<img
 						alt={`Default Image`}
-						src={`${process.env.PUBLIC_URL}/Img/card_back_square.svg`}
+						src={`${process.env.PUBLIC_URL}/Img/card_back_square.jpg`}
 						style={(showDefault)? {  width: '100%', objectFit: 'cover' } : {display: 'none'}}
 					/>
 

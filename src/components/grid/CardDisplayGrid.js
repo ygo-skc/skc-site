@@ -44,8 +44,6 @@ const CardDisplayGrid = memo( ({ cardJsonResults, numResultsDisplayed, numItemsT
 	const [cardGridUISkeleton, setCardGridUISkeleton] = useState([])
 	const [clearGrid, setClearGrid] = useState(false)
 
-	console.log('hello world')
-
 	const renderCards = async() =>
 	{
 		return cardJsonResults.slice(numResultsDisplayed - numItemsToLoadWhenNeeded, numResultsDisplayed).map( card => {
