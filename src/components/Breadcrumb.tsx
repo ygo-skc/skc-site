@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, memo } from 'react'
 
 import {Breadcrumbs, Link, Box} from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
@@ -47,7 +47,7 @@ BREADCRUMB_maps_ICON.set('404 - Err', <ErrorIcon style={iconStyle} />)
 BREADCRUMB_maps_ICON.set('About', <InfoIcon style={iconStyle} />)
 
 
-const Breadcrumb: FunctionComponent<BreadcrumbProps> = ( { crumbs }  ) =>
+const Breadcrumb: FunctionComponent<BreadcrumbProps> = memo( ( { crumbs }  ) =>
 {
 	var Crumbs: JSX.Element[] = crumbs.map((item: string, ind: number) =>
 	{
@@ -92,6 +92,6 @@ const Breadcrumb: FunctionComponent<BreadcrumbProps> = ( { crumbs }  ) =>
 			</Breadcrumbs>
 		</BreadCrumbsContent>
 	)
-}
+})
 
 export default Breadcrumb

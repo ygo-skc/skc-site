@@ -14,7 +14,7 @@ const rankImage = <img
 	style={{ width: '34px', height: '34px', display: 'inline-block', marginRight: '.35rem', verticalAlign: 'middle' }} />
 
 
-const CardLevel = ( { monsterAssociation, attribute } ) =>
+const CardAssociation = ( { monsterAssociation, attribute } ) =>
 {
 	if (monsterAssociation === undefined)	return (null)
 	if (monsterAssociation.level === undefined && monsterAssociation.rank === undefined)	return (null)
@@ -49,4 +49,4 @@ const CardLevel = ( { monsterAssociation, attribute } ) =>
 	)
 }
 
-export { CardLevel }
+export default CardAssociation

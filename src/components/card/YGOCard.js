@@ -6,7 +6,7 @@ import { Skeleton } from '@material-ui/lab'
 import Styled from 'styled-components'
 import he from 'he'
 
-import { CardLevel } from './CardAssociation'
+import CardAssociation from './CardAssociation'
 
 
 const MonsterAtkDefComponent = Styled(Typography)`
@@ -27,7 +27,6 @@ const CardIDComponent = Styled(Typography)`
 
 const YGOCard = memo(( {cardName, cardColor, cardEffect, monsterType, cardAttribute, monsterAtk, monsterDef, monsterAssociation, cardStyles, cardID, fullDetails, effectMaxLineHeight, isLoading, className }) =>
 {
-
 	if (isLoading)
 	{
 		return(
@@ -114,7 +113,7 @@ const YGOCard = memo(( {cardName, cardColor, cardEffect, monsterType, cardAttrib
 				</CardNameComponent>
 			</div>
 
-			<CardLevel monsterAssociation={monsterAssociation} attribute={cardAttribute} />
+			<CardAssociation monsterAssociation={monsterAssociation} attribute={cardAttribute} />
 
 
 			<CardDescriptionComponent >

@@ -1,24 +1,27 @@
-import React, { useState, useEffect, lazy, Suspense } from 'react'
+import React, { useState, useEffect, lazy, Suspense, memo } from 'react'
 import { Grid, Box, Chip, Typography } from '@material-ui/core'
 import withWidth from '@material-ui/core/withWidth'
 import {Helmet} from 'react-helmet'
 
-import CardImageRounded from './CardImageRounded'
 import cardStyles from './YGOCardStyles'
 import { handleFetch } from '../../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
 import { MainContentContainer } from '../MainContent'
 
-import Breadcrumb from '../Breadcrumb'
+import { Skeleton } from '@material-ui/lab'
+
+import OneThirdTwoThirdsGrid from '../grid/OneThirdTwoThirdsGrid'
+
+const Breadcrumb = lazy( () => import('../Breadcrumb') )
 
 const CardInformationSection = lazy( () => import('./CardInformationSection') )
+const CardImageRounded = lazy( () => import('./CardImageRounded') )
 const YGOCard = lazy( () => import('./YGOCard') )
 
 const Footer = lazy( () => import('../Footer') )
-const OneThirdTwoThirdsGrid = lazy( () => import('../grid/OneThirdTwoThirdsGrid') )
 
 
-function Card( { match, history } )
+const Card = ( { match, history } ) =>
 {
 	const [isLoading, setIsLoading] = useState(true)
 	const cardId = match.params.cardId
@@ -102,7 +105,10 @@ function Card( { match, history } )
 					/>
 				<meta name="keywords" content={`YuGiOh, The Supreme Kings Castle, card, ${cardName}, ${cardId}, ${cardColor}`} />
 			</Helmet>
-			<Breadcrumb crumbs={ dynamicCrumbs } />
+
+			<Suspense>
+				<Breadcrumb crumbs={ dynamicCrumbs } />
+			</Suspense>
 
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={
@@ -115,30 +121,34 @@ function Card( { match, history } )
 							Card Information
 						</Typography>
 
-						<CardImageRounded
-							cardID={cardId}
-							/>
+						<Suspense>
+							<CardImageRounded
+								cardID={cardId}
+								/>
+						</Suspense>
 
-						<YGOCard
-							isNew={ false }
-							cardName={cardName}
-							cardColor={cardColor}
-							cardEffect={cardEffect}
-							cardAttribute={cardAttribute}
-							monsterType={monsterType}
-							monsterAtk={monsterAtk}
-							monsterDef={monsterDef}
-							monsterAssociation={monsterAssociation}
-							cardStyles={ cardStyles }
-							cardID={cardId}
-							fullDetails={ true }
-							isLoading={ isLoading }
-							/>
+						<Suspense fallback={<Skeleton width={'100%'} height={150} />} >
+							<YGOCard
+								isNew={ false }
+								cardName={cardName}
+								cardColor={cardColor}
+								cardEffect={cardEffect}
+								cardAttribute={cardAttribute}
+								monsterType={monsterType}
+								monsterAtk={monsterAtk}
+								monsterDef={monsterDef}
+								monsterAssociation={monsterAssociation}
+								cardStyles={ cardStyles }
+								cardID={cardId}
+								fullDetails={ true }
+								isLoading={ isLoading }
+								/>
+						</Suspense>
 					</Box>
 				}
 				twoThirdComponent={
 					<Grid container >
-						<Grid item xs={12} sm={12} md={12} lg={6} xl={6}  style={ { display: 'inline-grid', padding: '1.2rem' } } >
+						<Grid item xs={12} sm={12} md={12} lg={6} xl={6}  style={ { display: 'inline-grid', padding: '.8rem' } } >
 							<Suspense fallback={undefined}>
 								<CardInformationSection
 									isLoading={isLoading}
@@ -152,7 +162,7 @@ function Card( { match, history } )
 							</Suspense>
 						</Grid>
 
-						<Grid item xs={12} sm={12} md={12} lg={6} xl={6} style={ { display: 'inline-grid', padding: '1.2rem' } } >
+						<Grid item xs={12} sm={12} md={12} lg={6} xl={6} style={ { display: 'inline-grid', padding: '.8rem' } } >
 							<Suspense fallback={undefined}>
 								<CardInformationSection
 									isLoading={isLoading}
@@ -167,7 +177,9 @@ function Card( { match, history } )
 
 						</Grid>
 
-						<Footer />
+						<Suspense fallback={<Skeleton width={100} height={25} />}>
+							<Footer />
+						</Suspense>
 
 					</Grid>
 					}
