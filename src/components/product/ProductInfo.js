@@ -1,7 +1,7 @@
 import React, {useState, useEffect, lazy, Suspense} from 'react'
 import { Helmet } from 'react-helmet'
 
-import { Paper, Box, Typography } from '@material-ui/core'
+import { Paper, Typography } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
 
 import {handleFetch} from '../../helper/FetchHandler'
@@ -14,6 +14,8 @@ import OneThirdTwoThirdsGrid from '../grid/OneThirdTwoThirdsGrid'
 
 import Styled from 'styled-components'
 import {LightTranslucentDivider} from '../util/Divider'
+
+import {StickyBox} from '../util/StyledContainers'
 
 
 
@@ -78,7 +80,7 @@ export default function ProductInfo({match, history}) {
 
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={
-					<Box>
+					<StickyBox>
 
 						<Typography
 							variant='h4'
@@ -131,7 +133,7 @@ export default function ProductInfo({match, history}) {
 							</MainBrowseInfoTypography>
 						</Paper>
 
-					</Box>
+					</StickyBox>
 				}
 				twoThirdComponent={
 					<Suspense>

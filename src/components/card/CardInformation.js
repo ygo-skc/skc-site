@@ -12,6 +12,8 @@ import { Skeleton } from '@material-ui/lab'
 
 import OneThirdTwoThirdsGrid from '../grid/OneThirdTwoThirdsGrid'
 
+import {StickyBox} from '../util/StyledContainers'
+
 const Breadcrumb = lazy( () => import('../Breadcrumb') )
 
 const CardInformationSection = lazy( () => import('./CardInformationSection') )
@@ -112,7 +114,7 @@ const Card = ( { match, history } ) =>
 
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={
-					<Box>
+					<StickyBox>
 
 						<Typography
 							variant='h4'
@@ -144,7 +146,7 @@ const Card = ( { match, history } ) =>
 								isLoading={ isLoading }
 								/>
 						</Suspense>
-					</Box>
+					</StickyBox>
 				}
 				twoThirdComponent={
 					<Grid container >

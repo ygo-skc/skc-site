@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Autocomplete from '@material-ui/lab/Autocomplete'
-import { Chip, Typography, Paper, InputBase, IconButton, Box } from '@material-ui/core'
+import { Chip, Typography, Paper, InputBase, IconButton } from '@material-ui/core'
 import { Helmet } from 'react-helmet'
 
 import SearchIcon from '@material-ui/icons/Search'
@@ -18,6 +18,7 @@ import NAME_maps_ENDPOINT from '../helper/YgoApiEndpoints'
 import Styled from 'styled-components'
 
 import {LightTranslucentDivider} from './util/Divider'
+import {StickyBox} from './util/StyledContainers'
 
 const MainBrowseInfoTypography = Styled(Typography)`
 	&&
@@ -175,7 +176,7 @@ export default function Browse( {history} )
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={
 
-					<Box>
+					<StickyBox>
 
 						<Typography
 							variant='h4'
@@ -239,7 +240,7 @@ export default function Browse( {history} )
 							</MainBrowseInfoTypography>
 
 							</Paper>
-					</Box>
+					</StickyBox>
 				}
 				twoThirdComponent={
 					<CardDisplayGrid
