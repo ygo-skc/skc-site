@@ -1,0 +1,48 @@
+import React, {lazy, Suspense } from 'react'
+import { Skeleton } from '@material-ui/lab'
+import { Typography } from '@material-ui/core'
+
+import {StickyBox} from '../util/StyledContainers'
+
+const YGOCard = lazy( () => import('./YGOCard') )
+const CardImageRounded = lazy( () => import('./CardImageRounded') )
+
+const CardData = ( { cardID, cardName, cardColor, cardEffect, cardAttribute, monsterType, monsterAtk, monsterDef, monsterAssociation, isLoading } ) =>
+{
+
+	return(<StickyBox>
+		<Typography
+			variant='h4'
+			align='center'
+			style={{marginBottom: '2rem'}} >
+			Card Information
+		</Typography>
+
+		<Suspense>
+			<CardImageRounded
+				cardID={cardID}
+				/>
+		</Suspense>
+
+		<Suspense fallback={<Skeleton width={'100%'} height={150} />} >
+			<YGOCard
+				isNew={ false }
+				cardName={cardName}
+				cardColor={cardColor}
+				cardEffect={cardEffect}
+				cardAttribute={cardAttribute}
+				monsterType={monsterType}
+				monsterAtk={monsterAtk}
+				monsterDef={monsterDef}
+				monsterAssociation={monsterAssociation}
+				cardID={cardID}
+				fullDetails={ true }
+				isLoading={ isLoading }
+				/>
+		</Suspense>
+	</StickyBox>
+	)
+}
+
+
+export default CardData
