@@ -8,7 +8,8 @@ import { MainContentContainer } from '../MainContent'
 
 import OneThirdTwoThirdsGrid from '../grid/OneThirdTwoThirdsGrid'
 
-const Breadcrumb = lazy( () => import('../Breadcrumb') )
+
+import Breadcrumb from '../Breadcrumb'
 const CardInformationSection = lazy( () => import('./CardInformationSection') )
 const CardData = lazy( () => import('./CardData') )
 const Footer = lazy( () => import('../Footer') )

@@ -20,6 +20,8 @@ import Styled from 'styled-components'
 import {LightTranslucentDivider} from './util/Divider'
 import {StickyBox} from './util/StyledContainers'
 
+import {RenderGroup, SearchSuggestionTypography} from './util/Search'
+
 const MainBrowseInfoTypography = Styled(Typography)`
 	&&
 	{
@@ -208,6 +210,14 @@ export default function Browse( {history} )
 									setSelectedCriteria(val)
 								}}
 								renderTags={ () => null }
+								renderGroup={option => {
+									return (
+										<RenderGroup
+											group={option.group}
+											children={option.children}
+										/>
+									)
+								}}
 								disableCloseOnSelect
 								onClose={ (event, reason) => {
 									// setSelectedCriteria(intermediateSelectedCriteria)
@@ -225,6 +235,14 @@ export default function Browse( {history} )
 										</IconButton>
 									</div>
 								)}
+
+							renderOption={option => {
+								return (
+									<div style={{ padding: '0rem', margin: '0rem' }} >
+										<SearchSuggestionTypography variant='body1'>{option.criteriaValue}</SearchSuggestionTypography>
+									</div>
+								)
+							}}
 							/>
 
 							<LightTranslucentDivider />
