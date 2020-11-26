@@ -22,8 +22,9 @@ export default function CardImageRounded({cardID})
 	return(
       <VizSensor
 			partialVisibility
-			offset={{bottom:-5000, top: -10000}}
+			offset={{bottom:-5000, top: -2000}}
 			onChange={(isVisible) => {
+				if (isVisible !== false)
 				setVisible(isVisible)
 			}} >
 			<div style={{margin: 'auto', marginBottom: '.5rem', width: '85%'}} >

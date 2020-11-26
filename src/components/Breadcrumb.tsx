@@ -92,6 +92,11 @@ const Breadcrumb: FunctionComponent<BreadcrumbProps> = memo( ( { crumbs }  ) =>
 			</Breadcrumbs>
 		</BreadCrumbsContent>
 	)
+}, (prevProps, newProps) => {
+	if ( prevProps.crumbs[prevProps.crumbs.length - 1] !== newProps.crumbs[newProps.crumbs.length - 1] )
+		return false
+
+	return true
 })
 
 export default Breadcrumb

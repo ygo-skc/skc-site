@@ -27,6 +27,7 @@ const YGOCard = memo(( {cardName, cardColor, cardEffect, monsterType, cardAttrib
 			<Skeleton variant='rect' height='150' style={{ borderRadius: '.5rem' }} />
 		)
 	}
+
 	const cardColorLowerCase = cardColor.toLowerCase()
 
 	const CardContentComponent = Styled(Paper)`

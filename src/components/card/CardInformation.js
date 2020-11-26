@@ -1,4 +1,4 @@
-import React, { useState, useEffect, lazy, Suspense, useMemo } from 'react'
+import React, { useState, useEffect, lazy, Suspense, useMemo, memo } from 'react'
 import { Grid, Chip } from '@material-ui/core'
 import {Helmet} from 'react-helmet'
 
@@ -10,15 +10,17 @@ import OneThirdTwoThirdsGrid from '../grid/OneThirdTwoThirdsGrid'
 
 
 import Breadcrumb from '../Breadcrumb'
+import CardData from './CardData'
 const CardInformationSection = lazy( () => import('./CardInformationSection') )
-const CardData = lazy( () => import('./CardData') )
 const Footer = lazy( () => import('../Footer') )
 
 
 const Card = ( { match, history } ) =>
 {
 	const [isLoading, setIsLoading] = useState(true)
-	const cardID = match.params.cardId
+	let cardID = useMemo( () => {
+		return match.params.cardId
+	}, [])
 
 	const [cardName, setCardName] = useState(undefined)
 	const [cardColor, setCardColor] = useState(undefined)
@@ -161,6 +163,5 @@ const Card = ( { match, history } ) =>
 		</MainContentContainer>
 	)
 }
-
 
 export default Card

@@ -1,5 +1,4 @@
 import React, {lazy, Suspense } from 'react'
-import { Skeleton } from '@material-ui/lab'
 import { Typography } from '@material-ui/core'
 
 import {StickyBox} from '../util/StyledContainers'
@@ -9,7 +8,6 @@ const CardImageRounded = lazy( () => import('./CardImageRounded') )
 
 const CardData = ( { cardID, cardName, cardColor, cardEffect, cardAttribute, monsterType, monsterAtk, monsterDef, monsterAssociation, isLoading } ) =>
 {
-
 	return(<StickyBox>
 		<Typography
 			variant='h4'
@@ -18,12 +16,13 @@ const CardData = ( { cardID, cardName, cardColor, cardEffect, cardAttribute, mon
 			Card Information
 		</Typography>
 
+		<Suspense>
+			<CardImageRounded
+				cardID={cardID}
+				/>
+		</Suspense>
 
-		<CardImageRounded
-			cardID={cardID}
-			/>
-
-		<Suspense fallback={<Skeleton width={'100%'} height={150} />} >
+		<Suspense >
 			<YGOCard
 				isNew={ false }
 				cardName={cardName}
