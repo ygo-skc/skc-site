@@ -79,7 +79,7 @@ const About: FunctionComponent = () => (
 			<CenteredText variant='subtitle1'>
 				<GenericLinkPhoto
 					imageName='api_logo.jpg'
-					link="https://ygoapi.cfapps.io//api/v1/swagger-ui/index.html"
+					link={`${process.env.REACT_APP_API_HOST}/api/v1/swagger-ui/index.html`}
 				/>
 			</CenteredText>
 			<br />
