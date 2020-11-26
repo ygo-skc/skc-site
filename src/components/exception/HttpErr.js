@@ -4,7 +4,6 @@ import Styled from 'styled-components'
 import { MainContentContainer } from '../MainContent'
 import Breadcrumbs from '../Breadcrumb'
 import YGOCard from '../card/YGOCard'
-import cardStyles from '../card/YGOCardStyles'
 
 const ErrCard = Styled(YGOCard)`
 	&&
@@ -50,8 +49,7 @@ export default function HttpErr( {httpErr} )
 					monsterType={ HTTP_ERR_maps_ERR_TYPE[httpErr] }
 					cardEffect={ HTTP_ERR_maps_ERR_DESCRIPTION[httpErr] }
 					cardID={`00000${httpErr}`}
-					fullDetails={true}
-					cardStyles={cardStyles} />
+					fullDetails={true} />
 		</MainContentContainer>
 	)
 }

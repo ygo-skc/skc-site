@@ -6,7 +6,6 @@ import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded';
 
 
 import CardImageRounded from '../card/CardImageRounded'
-import cardStyles from '../card/YGOCardStyles'
 
 import YGOCard from '../card/YGOCard'
 import Footer from '../Footer'
@@ -68,7 +67,6 @@ const CardDisplayGrid = memo( ({ cardJsonResults, numResultsDisplayed, numItemsT
 					cardColor={card.cardColor}
 					cardEffect={card.cardEffect + '\n\n\n'}
 					monsterType={card.monsterType}
-					cardStyles={ cardStyles }
 					cardID={card.cardID}
 					fullDetails={ false }
 					effectMaxLineHeight={3}
