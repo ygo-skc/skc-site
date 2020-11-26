@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Autocomplete from '@material-ui/lab/Autocomplete'
-import { Chip, Typography, Paper, InputBase, IconButton, Box } from '@material-ui/core'
+import { Chip, Typography, Paper, InputBase, IconButton } from '@material-ui/core'
 import { Helmet } from 'react-helmet'
 
 import SearchIcon from '@material-ui/icons/Search'
@@ -18,6 +18,9 @@ import NAME_maps_ENDPOINT from '../helper/YgoApiEndpoints'
 import Styled from 'styled-components'
 
 import {LightTranslucentDivider} from './util/Divider'
+import {StickyBox} from './util/StyledContainers'
+
+import {RenderGroup, SearchSuggestionTypography} from './util/Search'
 
 const MainBrowseInfoTypography = Styled(Typography)`
 	&&
@@ -36,19 +39,19 @@ export default function Browse( {history} )
 	const [selectedCriteria, setSelectedCriteria] = useState(undefined)
 
 	const [selectedCriteriaChips, setSelectedCriteriaChips] = useState([])
-	const [jsonResults, setJsonResults] = useState(undefined)
+	const [jsonResults, setJsonResults] = useState([])
 
 	const [numResults, setNumResults] = useState(0)
 	const [numResultsDisplayed, setNumResultsDisplayed] = useState(0)
 	const [numItemsToLoadWhenNeeded, setnumItemsToLoadWhenNeeded] = useState(0)
 
 	const [isLoadMoreVisible, setIsLoadMoreVisible] = useState(false)
+	const [isCardBrowseDataLoaded, setIsCardBrowseDataLoaded] = useState(true)
 
 
 	useEffect( () => {
 		handleFetch(NAME_maps_ENDPOINT['browseCriteria'], history, (json) => {
 			const browseCriteria = []
-			console.log(json)
 			for (const criteria of Object.keys(json))
 			{
 				if (criteria === '_links')	continue
@@ -106,11 +109,13 @@ export default function Browse( {history} )
 		setSelectedCriteriaChips(selectedCriteriaChips)
 		reset()
 
-		console.log(`${NAME_maps_ENDPOINT['browse']}?cardColors=${criteriaMap.get('cardColors').join(',')}&attributes=${criteriaMap.get('attributes').join(',')}&levels=${criteriaMap.get('levels').join(',')}&ranks=${criteriaMap.get('ranks').join(',')}&linkRatings=${criteriaMap.get('linkRatings').join(',')}`)
+
+		setIsCardBrowseDataLoaded(false)
 		handleFetch(`${NAME_maps_ENDPOINT['browse']}?cardColors=${criteriaMap.get('cardColors').join(',')}&attributes=${criteriaMap.get('attributes').join(',')}&levels=${criteriaMap.get('levels').join(',')}&ranks=${criteriaMap.get('ranks').join(',')}&linkRatings=${criteriaMap.get('linkRatings').join(',')}`, history, json => {
-			console.log("i ran")
 			setJsonResults(json.results)
 			setNumResults(json.numResults)
+
+			setIsCardBrowseDataLoaded(true)
 		})
 	}, [selectedCriteria])
 
@@ -173,7 +178,7 @@ export default function Browse( {history} )
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={
 
-					<Box>
+					<StickyBox>
 
 						<Typography
 							variant='h4'
@@ -205,6 +210,14 @@ export default function Browse( {history} )
 									setSelectedCriteria(val)
 								}}
 								renderTags={ () => null }
+								renderGroup={option => {
+									return (
+										<RenderGroup
+											group={option.group}
+											children={option.children}
+										/>
+									)
+								}}
 								disableCloseOnSelect
 								onClose={ (event, reason) => {
 									// setSelectedCriteria(intermediateSelectedCriteria)
@@ -222,6 +235,14 @@ export default function Browse( {history} )
 										</IconButton>
 									</div>
 								)}
+
+							renderOption={option => {
+								return (
+									<div style={{ padding: '0rem', margin: '0rem' }} >
+										<SearchSuggestionTypography variant='body1'>{option.criteriaValue}</SearchSuggestionTypography>
+									</div>
+								)
+							}}
 							/>
 
 							<LightTranslucentDivider />
@@ -237,7 +258,7 @@ export default function Browse( {history} )
 							</MainBrowseInfoTypography>
 
 							</Paper>
-					</Box>
+					</StickyBox>
 				}
 				twoThirdComponent={
 					<CardDisplayGrid
@@ -247,6 +268,7 @@ export default function Browse( {history} )
 						loadMoreCallback={loadMore}
 						isLoadMoreOptionVisible={isLoadMoreVisible}
 						numResults={numResults}
+						isDataLoaded={isCardBrowseDataLoaded}
 						/>
 				}
 			/>

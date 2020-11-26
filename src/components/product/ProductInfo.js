@@ -1,21 +1,26 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, lazy, Suspense} from 'react'
 import { Helmet } from 'react-helmet'
 
-import {Paper, Typography, Box} from '@material-ui/core'
-import {Skeleton} from '@material-ui/lab'
+import { Paper, Typography } from '@material-ui/core'
+import { Skeleton } from '@material-ui/lab'
 
 import {handleFetch} from '../../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
 
 import {MainContentContainer} from '../MainContent'
-import Breadcrumb from '../Breadcrumb'
 
 import OneThirdTwoThirdsGrid from '../grid/OneThirdTwoThirdsGrid'
 
 
-import CardDisplayGrid from '../grid/CardDisplayGrid'
 import Styled from 'styled-components'
 import {LightTranslucentDivider} from '../util/Divider'
+
+import {StickyBox} from '../util/StyledContainers'
+
+
+
+const Breadcrumb = lazy( () => import('../Breadcrumb') )
+const CardDisplayGrid = lazy( () => import('../grid/CardDisplayGrid') )
 
 
 const MainBrowseInfoTypography = Styled(Typography)`
@@ -43,7 +48,6 @@ export default function ProductInfo({match, history}) {
 
 	useEffect( () => {
 		handleFetch(`${NAME_maps_ENDPOINT['productDetails']}/${match.params.productId}/en`, history, json => {
-			console.log(json)
 			setDynamicBreadcrumbs(['Home', 'Product Browse', `${json.productId}`])
 
 			setProductName(json.productName)
@@ -54,7 +58,6 @@ export default function ProductInfo({match, history}) {
 
 			setCardJsonResults(json.productContent.map(item => item.card))
 			setProductTotal(json.productTotal)
-
 			setIsDataLoaded(true)
 		})
 	}, [])
@@ -71,11 +74,13 @@ export default function ProductInfo({match, history}) {
 				<meta name="keywords" content={`YuGiOh, product browse, The Supreme Kings Castle`} />
 			</Helmet>
 
-			<Breadcrumb crumbs={dynamicBreadcrumbs} />
+			<Suspense>
+				<Breadcrumb crumbs={dynamicBreadcrumbs} />
+			</Suspense>
 
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={
-					<Box>
+					<StickyBox>
 
 						<Typography
 							variant='h4'
@@ -128,17 +133,20 @@ export default function ProductInfo({match, history}) {
 							</MainBrowseInfoTypography>
 						</Paper>
 
-					</Box>
+					</StickyBox>
 				}
 				twoThirdComponent={
-					<CardDisplayGrid
-						cardJsonResults={cardJsonResults}
-						numResultsDisplayed={productTotal}
-						numResultsLoaded={productTotal}
-						loadMoreCallback={undefined}
-						isLoadMoreOptionVisible={false}
-						history={history}
-					/>
+					<Suspense>
+						<CardDisplayGrid
+							cardJsonResults={cardJsonResults}
+							numResultsDisplayed={productTotal}
+							numResultsLoaded={productTotal}
+							loadMoreCallback={undefined}
+							isLoadMoreOptionVisible={false}
+							history={history}
+							isDataLoaded={isDataLoaded}
+						/>
+					</Suspense>
 				}
 			/>
 		</MainContentContainer>

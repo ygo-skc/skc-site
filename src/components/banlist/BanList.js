@@ -10,6 +10,7 @@ import { BanListDates } from './BanListDates'
 import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
 
 import OneThirdTwoThirdsGrid from '../grid/OneThirdTwoThirdsGrid'
+import {StickyBox} from '../util/StyledContainers'
 
 
 // import BanListStats from './BanListStats'
@@ -167,7 +168,7 @@ export default function BanList(props)
 
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={
-					<div>
+					<StickyBox>
 						<BanContentParent>
 
 							{(isSettingUpDates)? undefined
@@ -194,7 +195,7 @@ export default function BanList(props)
 								/>
 							</Suspense>
 						</BanContentParent>
-					</div>
+					</StickyBox>
 				}
 				twoThirdComponent={
 					<Box>

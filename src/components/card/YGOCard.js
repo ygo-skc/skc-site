@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {memo, lazy} from 'react'
 
 import { Typography, Box, Paper } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
@@ -6,16 +6,10 @@ import { Skeleton } from '@material-ui/lab'
 import Styled from 'styled-components'
 import he from 'he'
 
-import { CardLevel } from './CardAssociation'
+import CardAssociation from './CardAssociation'
+import cardStyles from './YGOCardStyles'
 
-
-const MonsterAtkDefComponent = Styled(Typography)`
-	&&
-	{
-		display: inline-block;
-		font-weight: 800;
-	}
-`
+const AtkDef = lazy( () => import('./AtkDef') )
 
 const CardIDComponent = Styled(Typography)`
 	&& {
@@ -25,15 +19,15 @@ const CardIDComponent = Styled(Typography)`
 `
 
 
-const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, monsterDef, monsterAssociation, cardStyles, cardID, fullDetails, effectMaxLineHeight, isLoading, className } )  =>
+const YGOCard = memo(( {cardName, cardColor, cardEffect, monsterType, cardAttribute, monsterAtk, monsterDef, monsterAssociation, cardID, fullDetails, effectMaxLineHeight, isLoading, className }) =>
 {
-
 	if (isLoading)
 	{
 		return(
 			<Skeleton variant='rect' height='150' style={{ borderRadius: '.5rem' }} />
 		)
 	}
+
 	const cardColorLowerCase = cardColor.toLowerCase()
 
 	const CardContentComponent = Styled(Paper)`
@@ -114,7 +108,7 @@ const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, mon
 				</CardNameComponent>
 			</div>
 
-			<CardLevel monsterAssociation={monsterAssociation} />
+			<CardAssociation monsterAssociation={monsterAssociation} attribute={cardAttribute} />
 
 
 			<CardDescriptionComponent >
@@ -136,23 +130,7 @@ const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, mon
 				{
 					( cardColor === 'Spell' || cardColor === 'Trap' || cardColor === 'err' ) ?
 						undefined :
-						(fullDetails) ?
-							<div style={{ width: '100%', textAlign: 'right', marginTop: '.5rem'}} >
-								<div style={{ background: 'rgba(255, 255, 255, .75)', display: 'inline-block', paddingTop: '.2rem', paddingBottom: '.2rem', paddingLeft: '.7rem', paddingRight: '.7rem', borderRadius: '4rem', textAlign: 'center'}} >
-									<MonsterAtkDefComponent
-										style={{ color: 'rgb(215, 24, 114, .65)' }}
-										variant='body1' >
-										{monsterAtk}
-									</MonsterAtkDefComponent>
-									<MonsterAtkDefComponent
-										style={{ marginLeft: '.6rem', color: 'rgba(51, 193, 255, .9)' }}
-										variant='body1' >
-										{monsterDef}
-									</MonsterAtkDefComponent>
-								</div>
-							</div>
-							:
-							undefined
+						(fullDetails) ? <AtkDef monsterAtk={monsterAtk} monsterDef={monsterDef} cardColor={cardColor} /> : undefined
 				}
 			</CardDescriptionComponent>
 			{
@@ -164,6 +142,12 @@ const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, mon
 			}
 		</CardContentComponent>
 	)
-}
+}, (prevProps, newProps) => {
+	if ( prevProps.cardName !== newProps.cardName || prevProps.isLoading !== newProps.isLoading )
+		return false
 
-export { YGOCard }
+	return true
+})
+
+
+export default YGOCard
