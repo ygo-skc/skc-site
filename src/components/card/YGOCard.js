@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {memo, lazy} from 'react'
 
 import { Typography, Box, Paper } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
@@ -6,15 +6,10 @@ import { Skeleton } from '@material-ui/lab'
 import Styled from 'styled-components'
 import he from 'he'
 
-import { CardLevel } from './CardLevel'
+import CardAssociation from './CardAssociation'
+import cardStyles from './YGOCardStyles'
 
-
-const MonsterAtkDefComponent = Styled(Typography)`
-	&&
-	{
-		text-align: right;
-	}
-`
+const AtkDef = lazy( () => import('./AtkDef') )
 
 const CardIDComponent = Styled(Typography)`
 	&& {
@@ -24,15 +19,15 @@ const CardIDComponent = Styled(Typography)`
 `
 
 
-const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, monsterDef, monsterAssociation, cardStyles, cardID, fullDetails, effectMaxLineHeight, isLoading, className } )  =>
+const YGOCard = memo(( {cardName, cardColor, cardEffect, monsterType, cardAttribute, monsterAtk, monsterDef, monsterAssociation, cardID, fullDetails, effectMaxLineHeight, isLoading, className }) =>
 {
-
 	if (isLoading)
 	{
 		return(
 			<Skeleton variant='rect' height='150' style={{ borderRadius: '.5rem' }} />
 		)
 	}
+
 	const cardColorLowerCase = cardColor.toLowerCase()
 
 	const CardContentComponent = Styled(Paper)`
@@ -53,8 +48,9 @@ const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, mon
 
 	const CardNameComponent = Styled(Typography)`
 		&& {
-			font-weight: 600;
+			font-weight: 700;
 			margin-bottom: .18rem;
+			text-align: center;
 
 			color: ${cardStyles[ `${cardColorLowerCase}Color` ]};
 		},
@@ -65,6 +61,7 @@ const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, mon
 		{
 			padding: .445rem;
 			background: ${cardStyles[ `${cardColorLowerCase}SummaryBackground` ]};
+			border-radius: .5rem;
 		}
 	`
 
@@ -92,7 +89,7 @@ const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, mon
 	const MonsterTypeComponent = Styled(Typography)`
 		&&
 		{
-			font-weight: 600;
+			font-weight: 700;
 			margin-bottom: .28rem;
 			color: ${cardStyles[ `${cardColorLowerCase}SummaryColor` ]};
 		}
@@ -103,7 +100,7 @@ const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, mon
 
 			<div style={{ width: '100%', display: 'flex', marginBottom: '.5rem', whiteSpace: 'normal' }} >
 				<CardNameComponent
-					variant='body1'
+					variant='subtitle1'
 					noWrap={true}
 					style={{ flex: '1' }}
 					>
@@ -111,7 +108,7 @@ const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, mon
 				</CardNameComponent>
 			</div>
 
-			<CardLevel level={(monsterAssociation !== undefined && monsterAssociation.level !== undefined)? monsterAssociation.level: 0 } />
+			<CardAssociation monsterAssociation={monsterAssociation} attribute={cardAttribute} />
 
 
 			<CardDescriptionComponent >
@@ -119,9 +116,9 @@ const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, mon
 					( cardColor === 'Spell' || cardColor === 'Trap' ) ?
 						undefined :
 						<MonsterTypeComponent
-							variant='body2'
+							variant='body1'
 							noWrap={true} >
-								[ { monsterType } ]
+								{ monsterType }
 						</MonsterTypeComponent>
 				}
 
@@ -133,11 +130,7 @@ const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, mon
 				{
 					( cardColor === 'Spell' || cardColor === 'Trap' || cardColor === 'err' ) ?
 						undefined :
-						(fullDetails) ?
-							<MonsterAtkDefComponent>
-								{monsterAtk} / {monsterDef}
-							</MonsterAtkDefComponent> :
-							undefined
+						(fullDetails) ? <AtkDef monsterAtk={monsterAtk} monsterDef={monsterDef} cardColor={cardColor} /> : undefined
 				}
 			</CardDescriptionComponent>
 			{
@@ -149,6 +142,12 @@ const YGOCard = ( {cardName, cardColor, cardEffect, monsterType, monsterAtk, mon
 			}
 		</CardContentComponent>
 	)
-}
+}, (prevProps, newProps) => {
+	if ( prevProps.cardName !== newProps.cardName || prevProps.isLoading !== newProps.isLoading )
+		return false
 
-export { YGOCard }
+	return true
+})
+
+
+export default YGOCard

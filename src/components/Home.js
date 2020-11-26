@@ -2,8 +2,9 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { throttle } from 'underscore'
+import { Helmet } from 'react-helmet'
 
-import { Typography, Link, Divider, InputBase, Paper, IconButton } from '@material-ui/core'
+import { Typography, Link, InputBase, Paper, IconButton } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import { MainContentContainer, ChildPaper } from './MainContent'
@@ -12,6 +13,7 @@ import { handleFetch } from '../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../helper/YgoApiEndpoints'
 import Footer from './Footer'
 
+import {RenderGroup, SearchSuggestionTypography} from './util/Search'
 
 const DatabaseSearch = styled(Autocomplete)`
 	&&&
@@ -24,21 +26,9 @@ const DatabaseSearch = styled(Autocomplete)`
 `
 
 
-const SearchSuggestionTypography = styled(Typography)`
-	&&
-	{
-		white-space: pre-wrap;
-		display: -webkit-box;
-		-webkit-line-clamp: 1;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
-	}
-`
-
-
 const searchThrottle = throttle((searchSubject, setSearchOptions, history) => {
 	handleFetch(`${NAME_maps_ENDPOINT['search']}?limit=18&cName=${searchSubject}`, history, json => { setSearchOptions(json) })
-}, 65)
+}, 25)
 
 
 export default function Home({ history }) {
@@ -73,6 +63,15 @@ export default function Home({ history }) {
 
 	return (
 		<MainContentContainer>
+			<Helmet>
+				<title>The Supreme Kings Castle</title>
+				<meta
+					name={`The Supreme Kings Castle`}
+					content={`YuGiOh Site for checking; card information, current and past ban lists, search cards, and browse cards.`}
+					/>
+				<meta name="keywords" content={`YuGiOh, ban list, card info, The Supreme Kings Castle`} />
+			</Helmet>
+
 			<Breadcrumb crumbs={['Home']} />
 
 			<br />
@@ -87,17 +86,16 @@ export default function Home({ history }) {
 					getOptionLabel={option => option.cardName}
 					options={searchOptions}
 					groupBy={option => option.cardColor}
-					getOptionSelected={(option, value) => window.location.assign(`/card/${value.cardID}`)}
+					onChange={ (event, value, reason) => {
+						if (reason === 'select-option') { window.location.assign(`/card/${value.cardID}`) }
+					}
+					}
 					renderGroup={option => {
 						return (
-							<div style={{ padding: '1.5rem' }} >
-								<Typography
-									variant='h6'>
-									{option.group}
-								</Typography>
-								<Divider />
-								{option.children}
-							</div>
+							<RenderGroup
+								group={option.group}
+								children={option.children}
+							/>
 						)
 					}}
 					renderInput={(params) => (
@@ -105,7 +103,7 @@ export default function Home({ history }) {
 							<InputBase
 								ref={params.InputProps.ref}
 								inputProps={params.inputProps}
-								style={{ color: 'rgba(0,0,0,.87)', flex: '1', margin: '.8rem', fontSize: '1.23rem' }}
+								style={{ color: 'rgba(0,0,0,.87)', flex: '1', margin: '.65rem', fontSize: '1.23rem' }}
 								placeholder='Search...'
 								onChange={event => { setSearchInput(event.target.value) }}
 							/>
@@ -116,7 +114,7 @@ export default function Home({ history }) {
 					)}
 					renderOption={option => {
 						return (
-							<div style={{ padding: '.25rem' }} >
+							<div style={{ padding: '0rem', margin: '0rem' }} >
 								<SearchSuggestionTypography variant='body1'>{option.cardName}</SearchSuggestionTypography>
 								<SearchSuggestionTypography variant='body1' style={{ color: 'rgb(101,119,134)' }} >{option.monsterType}</SearchSuggestionTypography>
 							</div>

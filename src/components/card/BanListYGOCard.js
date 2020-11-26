@@ -28,7 +28,7 @@ const YGOCardStyled = styled(YGOCard)`
 `
 
 
-export default function CardDetails( { isNew, cardName, cardColor, cardEffect, monsterType, monsterAtk, monsterDef, cardClicked, cardStyles, cardID, fullDetails } )
+export default function CardDetails( { isNew, cardName, cardColor, cardEffect, monsterType, monsterAtk, monsterDef, cardClicked, cardID, fullDetails } )
 {
 
 	const cardClickedCallBack = (cardClicked) ? function () { cardClicked(cardID) } : undefined
@@ -49,7 +49,6 @@ export default function CardDetails( { isNew, cardName, cardColor, cardEffect, m
 					monsterAtk={monsterAtk}
 					monsterDef={monsterDef}
 					cardClicked={cardClicked}
-					cardStyles={cardStyles}
 					cardID={cardID}
 					fullDetails={fullDetails}
 					effectMaxLineHeight={2}

@@ -11,7 +11,7 @@ const SummaryBadge = styled(Badge)`
 	&& {
 		.MuiBadge-badge {
 			right: -.5rem;
-			top: -.5rem;
+			top: -.35rem;
 			color: white;
 		}
 	}

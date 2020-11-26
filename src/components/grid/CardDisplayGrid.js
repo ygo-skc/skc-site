@@ -1,22 +1,22 @@
-import React, {useState, useEffect} from 'react'
-import {useHistory} from 'react-router-dom'
+import React, {useState, useEffect, memo} from 'react'
 
 import { Grid, IconButton, Box, Typography } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
 import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded';
 
 
-import {YGOCard} from '../card/YGOCard'
 import CardImageRounded from '../card/CardImageRounded'
-import cardStyles from '../card/YGOCardStyles'
+
+import YGOCard from '../card/YGOCard'
 import Footer from '../Footer'
 
-function getPlaceholderCardComponent()
+
+async function getPlaceholderCardComponent()
 {
 	const placeHolder = []
 
 	var i = 0;
-	for (i = 0; i < 10; i++)
+	for (i = 0; i < 20; i++)
 	{
 		placeHolder.push(<Grid
 			key={`skeleton-${i}`}
@@ -36,26 +36,16 @@ function getPlaceholderCardComponent()
 }
 
 
-export default function CardDisplayGrid({ cardJsonResults, numResultsDisplayed, numResultsLoaded, loadMoreCallback, isLoadMoreOptionVisible, showFooter=true})
+const CardDisplayGrid = memo( ({ cardJsonResults, numResultsDisplayed, numItemsToLoadWhenNeeded, loadMoreCallback, isLoadMoreOptionVisible, showFooter=true, numResults, isDataLoaded}) =>
 {
 	const [cardGridUI, setCardGridUI] = useState([])
 
-	const [isLoadingData, setIsLoadingData] = useState(false)
 	const [cardGridUISkeleton, setCardGridUISkeleton] = useState([])
+	const [clearGrid, setClearGrid] = useState(false)
 
-	const history = useHistory()
-
-	useEffect( () => {
-		if (cardJsonResults === undefined) return
-		if (cardJsonResults.length === 0)	setCardGridUISkeleton([getPlaceholderCardComponent()])
-
-		setIsLoadingData(true)
-		setCardGridUISkeleton([...cardGridUI, getPlaceholderCardComponent()])
-		setTimeout(() => {
-			setIsLoadingData(false)
-		}, 130);
-
-		const cards = cardJsonResults.slice(numResultsDisplayed - numResultsLoaded, numResultsDisplayed).map( card => {
+	const renderCards = async() =>
+	{
+		return cardJsonResults.slice(numResultsDisplayed - numItemsToLoadWhenNeeded, numResultsDisplayed).map( card => {
 			return <Grid
 				key={card.cardID}
 				item
@@ -77,7 +67,6 @@ export default function CardDisplayGrid({ cardJsonResults, numResultsDisplayed, 
 					cardColor={card.cardColor}
 					cardEffect={card.cardEffect + '\n\n\n'}
 					monsterType={card.monsterType}
-					cardStyles={ cardStyles }
 					cardID={card.cardID}
 					fullDetails={ false }
 					effectMaxLineHeight={3}
@@ -85,29 +74,46 @@ export default function CardDisplayGrid({ cardJsonResults, numResultsDisplayed, 
 			</Grid>
 
 		})
-
-		setCardGridUI([...cardGridUI, ...cards])
-	}, [numResultsDisplayed, cardJsonResults])
+	}
 
 
 	useEffect( () => {
-		if (numResultsDisplayed == 0)
+		if (isDataLoaded === false) getPlaceholderCardComponent().then( placeholders => setCardGridUISkeleton(placeholders) )
+	}, [isDataLoaded])
+
+
+	useEffect( () => {
+		if (numResults === 0)
+		{
+			setClearGrid(true)
+			return
+		}
+
+		renderCards().then( (cards) => {
+			setCardGridUI([...cardGridUI, ...cards])
+		})
+	}, [numResultsDisplayed, cardJsonResults, numResults])
+
+
+	useEffect( () => {
+		if (clearGrid === true)
 		{
 			setCardGridUI([])
+			setClearGrid(false)
 		}
-	}, [numResultsDisplayed])
+	}, [clearGrid])
 
 
 	return(
 		<Box>
 			<Grid>
 				<Grid container >
-					{(isLoadingData)? cardGridUISkeleton : (cardGridUI.length === 0)? <Typography variant='h5' style={{margin: 'auto'}} >No Content To Show</Typography> : cardGridUI}
+					{(!isDataLoaded)? cardGridUISkeleton : (numResults === 0)? <Typography variant='h5' style={{margin: 'auto'}} >No Content To Show</Typography> : cardGridUI}
 				</Grid>
 			</Grid>
 
 			{
-				(isLoadingData)?
+				(!isDataLoaded)?
 				undefined :
 				<IconButton
 					onClick={ () => loadMoreCallback()}
@@ -116,8 +122,14 @@ export default function CardDisplayGrid({ cardJsonResults, numResultsDisplayed, 
 				</IconButton>
 			}
 
-
 			{ (showFooter)? <Footer /> : undefined }
 		</Box>
 	)
-}
+}, (prevProps, newProps) => {
+	if ( prevProps.isDataLoaded !== newProps.isDataLoaded || prevProps.numResults !== newProps.numResults || prevProps.numResultsDisplayed !== newProps.numResultsDisplayed || prevProps.cardJsonResults !== newProps.cardJsonResults )
+		return false
+
+	return true
+})
+
+export default CardDisplayGrid

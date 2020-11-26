@@ -1,7 +1,7 @@
 repository:
   # See https://developer.github.com/v3/repos/#edit for all available settings.
   name: ygo-site
-  description: API to use to access info on individual YGO; cards, ban lists, and products.
+  description: React SPA that displays data from YGO API in a clean and elegant way.
   homepage: https://www.thesupremekingscastle.com/about
   private: false
   has_issues: true
@@ -11,7 +11,7 @@ repository:
   has_downloads: true
 
   # Updates the default branch for this repository.
-  default_branch: v1.2.1
+  default_branch: v1.2.2
 
   # Either `true` to allow squash-merging pull requests, or `false` to prevent
   # squash-merging.

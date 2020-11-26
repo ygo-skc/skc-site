@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Autocomplete from '@material-ui/lab/Autocomplete'
-import { Chip, Typography, Paper, InputBase, IconButton, Box } from '@material-ui/core'
+import { Chip, Typography, Paper, InputBase, IconButton } from '@material-ui/core'
+import { Helmet } from 'react-helmet'
 
 import SearchIcon from '@material-ui/icons/Search'
 
@@ -17,6 +18,9 @@ import NAME_maps_ENDPOINT from '../helper/YgoApiEndpoints'
 import Styled from 'styled-components'
 
 import {LightTranslucentDivider} from './util/Divider'
+import {StickyBox} from './util/StyledContainers'
+
+import {RenderGroup, SearchSuggestionTypography} from './util/Search'
 
 const MainBrowseInfoTypography = Styled(Typography)`
 	&&
@@ -26,7 +30,7 @@ const MainBrowseInfoTypography = Styled(Typography)`
 `
 
 
-const defaultDisplayNum = 40
+const defaultDisplayNum = 50
 
 
 export default function Browse( {history} )
@@ -35,19 +39,19 @@ export default function Browse( {history} )
 	const [selectedCriteria, setSelectedCriteria] = useState(undefined)
 
 	const [selectedCriteriaChips, setSelectedCriteriaChips] = useState([])
-	const [jsonResults, setJsonResults] = useState(undefined)
+	const [jsonResults, setJsonResults] = useState([])
 
 	const [numResults, setNumResults] = useState(0)
 	const [numResultsDisplayed, setNumResultsDisplayed] = useState(0)
-	const [numResultsLoaded, setNumResultsLoaded] = useState(0)
+	const [numItemsToLoadWhenNeeded, setnumItemsToLoadWhenNeeded] = useState(0)
 
 	const [isLoadMoreVisible, setIsLoadMoreVisible] = useState(false)
+	const [isCardBrowseDataLoaded, setIsCardBrowseDataLoaded] = useState(true)
 
 
 	useEffect( () => {
 		handleFetch(NAME_maps_ENDPOINT['browseCriteria'], history, (json) => {
 			const browseCriteria = []
-			console.log(json)
 			for (const criteria of Object.keys(json))
 			{
 				if (criteria === '_links')	continue
@@ -105,11 +109,13 @@ export default function Browse( {history} )
 		setSelectedCriteriaChips(selectedCriteriaChips)
 		reset()
 
-		console.log(`${NAME_maps_ENDPOINT['browse']}?cardColors=${criteriaMap.get('cardColors').join(',')}&attributes=${criteriaMap.get('attributes').join(',')}&levels=${criteriaMap.get('levels').join(',')}&ranks=${criteriaMap.get('ranks').join(',')}&linkRatings=${criteriaMap.get('linkRatings').join(',')}`)
+
+		setIsCardBrowseDataLoaded(false)
 		handleFetch(`${NAME_maps_ENDPOINT['browse']}?cardColors=${criteriaMap.get('cardColors').join(',')}&attributes=${criteriaMap.get('attributes').join(',')}&levels=${criteriaMap.get('levels').join(',')}&ranks=${criteriaMap.get('ranks').join(',')}&linkRatings=${criteriaMap.get('linkRatings').join(',')}`, history, json => {
-			console.log("i ran")
 			setJsonResults(json.results)
 			setNumResults(json.numResults)
+
+			setIsCardBrowseDataLoaded(true)
 		})
 	}, [selectedCriteria])
 
@@ -130,13 +136,13 @@ export default function Browse( {history} )
 	{
 		if (numResults < newCap)
 		{
-			setNumResultsLoaded(numResults - numResultsDisplayed)
+			setnumItemsToLoadWhenNeeded(numResults - numResultsDisplayed)
 			setNumResultsDisplayed(numResults)
 			setIsLoadMoreVisible(false)
 		}
 		else
 		{
-			setNumResultsLoaded(defaultDisplayNum)
+			setnumItemsToLoadWhenNeeded(defaultDisplayNum)
 			setNumResultsDisplayed(newCap)
 			setIsLoadMoreVisible(true)
 		}
@@ -157,13 +163,22 @@ export default function Browse( {history} )
 
 
 	return(
-		<MainContentContainer style={{}} >
+		<MainContentContainer  >
+			<Helmet>
+				<title>{`SKC - Card Browser`}</title>
+				<meta
+					name={`SKC - Card Browser`}
+					content={`Browse all cards in database to find the right card you want.`}
+					/>
+				<meta name="keywords" content={`YuGiOh, card browse, The Supreme Kings Castle`} />
+			</Helmet>
+
 			<Breadcrumb crumbs={ ['Home', 'Card Browse Tool'] } />
 
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={
 
-					<Box>
+					<StickyBox>
 
 						<Typography
 							variant='h4'
@@ -195,23 +210,39 @@ export default function Browse( {history} )
 									setSelectedCriteria(val)
 								}}
 								renderTags={ () => null }
+								renderGroup={option => {
+									return (
+										<RenderGroup
+											group={option.group}
+											children={option.children}
+										/>
+									)
+								}}
 								disableCloseOnSelect
 								onClose={ (event, reason) => {
 									// setSelectedCriteria(intermediateSelectedCriteria)
 								}}
 								renderInput={(params) => (
 									<div style={{ width: '100%', display: 'flex', backgroundColor: 'rgba(0, 0, 0, .37)' }} >
-									<InputBase
-										ref={params.InputProps.ref}
-										inputProps={params.inputProps}
-										style={{ color: 'white', flex: '1', margin: '.8rem', fontSize: '1.23rem' }}
-										placeholder='Search...'
-										/>
+										<InputBase
+											ref={params.InputProps.ref}
+											inputProps={params.inputProps}
+											style={{ color: 'white', flex: '1', margin: '.8rem', fontSize: '1.23rem' }}
+											placeholder='Search...'
+											/>
 										<IconButton>
 											<SearchIcon style={{ color: 'rgba(255, 255, 255, .56)' }} />
 										</IconButton>
 									</div>
 								)}
+
+							renderOption={option => {
+								return (
+									<div style={{ padding: '0rem', margin: '0rem' }} >
+										<SearchSuggestionTypography variant='body1'>{option.criteriaValue}</SearchSuggestionTypography>
+									</div>
+								)
+							}}
 							/>
 
 							<LightTranslucentDivider />
@@ -227,15 +258,17 @@ export default function Browse( {history} )
 							</MainBrowseInfoTypography>
 
 							</Paper>
-					</Box>
+					</StickyBox>
 				}
 				twoThirdComponent={
 					<CardDisplayGrid
 						cardJsonResults={jsonResults}
 						numResultsDisplayed={numResultsDisplayed}
-						numResultsLoaded={numResultsLoaded}
+						numItemsToLoadWhenNeeded={numItemsToLoadWhenNeeded}
 						loadMoreCallback={loadMore}
 						isLoadMoreOptionVisible={isLoadMoreVisible}
+						numResults={numResults}
+						isDataLoaded={isCardBrowseDataLoaded}
 						/>
 				}
 			/>

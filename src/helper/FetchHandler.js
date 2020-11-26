@@ -1,8 +1,14 @@
 import { NAME_maps_ROUTE } from '../Routes.tsx'
 
+const CLIENT_UUID = process.env.REACT_APP_CLIENT_UUID
 
 function handleFetch(endPoint, history, onJsonReceived) {
-	fetch(endPoint)
+	fetch(endPoint
+		, { headers:
+			{
+				'CLIENT_UUID': CLIENT_UUID
+			}
+		})
 		.then((data) => {
 			if (data.ok) return data.json()
 			else

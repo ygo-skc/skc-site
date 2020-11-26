@@ -13,6 +13,7 @@ export default function CardInformationSection({ isLoading, hasInfo, infoChips, 
 			background: ${background};
 			background-image: ${backgroundImage};
 			padding: 1.5rem;
+			text-align: center;
 		}
 	`
 

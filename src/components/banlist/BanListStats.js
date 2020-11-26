@@ -165,7 +165,8 @@ const BanListStats = memo( ( { totalCardsInSelectedList, selectedBanList
 
 				<ListStatItem
 					button
-					onClick={showNewCards}>
+					disabled={( (numNewForbidden + numNewLimited + numNewSemiLimited) === 0 )? true : false}
+					onClick={showNewCards} >
 					<ListItemText
 						primary="Newly Added"
 						secondary={ ( isNaN(numNewForbidden + numNewLimited + numNewSemiLimited))? '' : numNewForbidden + numNewLimited + numNewSemiLimited }
@@ -182,6 +183,7 @@ const BanListStats = memo( ( { totalCardsInSelectedList, selectedBanList
 						disablePadding >
 						<ListStatItem
 							button
+							disabled={(numNewForbidden === 0)? true : false }
 							onClick={showNewForbiddenCards}
 							style={{paddingLeft: '2.5rem'}}  >
 							<ListItemText
@@ -202,6 +204,7 @@ const BanListStats = memo( ( { totalCardsInSelectedList, selectedBanList
 
 						<ListStatItem
 							button
+							disabled={(numNewLimited === 0)? true : false }
 							onClick={showNewLimitedCards}
 							style={{paddingLeft: '2.5rem'}}  >
 							<ListItemText
@@ -222,6 +225,7 @@ const BanListStats = memo( ( { totalCardsInSelectedList, selectedBanList
 
 						<ListStatItem
 							button
+							disabled={(numNewSemiLimited === 0)? true : false }
 							onClick={showNewSemiLimitedCards}
 							style={{paddingLeft: '2.5rem'}}  >
 							<ListItemText
@@ -244,6 +248,7 @@ const BanListStats = memo( ( { totalCardsInSelectedList, selectedBanList
 
 				<ListStatItem
 					button
+					disabled={(numRemoved === 0)? true : false }
 					onClick={ showRemovedCards } >
 					<ListItemText
 						primary="No Longer Restricted"
