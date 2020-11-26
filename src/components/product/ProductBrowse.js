@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, lazy, Suspense } from 'react'
-import { Paper, Typography, Grid } from '@material-ui/core'
+import { Typography, Grid } from '@material-ui/core'
 import {Skeleton} from '@material-ui/lab'
 import { Helmet } from 'react-helmet'
 
@@ -8,30 +8,11 @@ import { MainContentContainer } from '../MainContent'
 import {handleFetch} from '../../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
 
-import Styled from 'styled-components'
+// const ProductCardGridItem = lazy( () => import('./ProductCardGridItem') )
+import ProductCardGridItem from './ProductCardGridItem'
 
 const Breadcrumb = lazy( () => import('../Breadcrumb') )
 const Footer = lazy( () => import('../Footer') )
-
-const MainBrowseInfoTypography2 = Styled(Typography)`
-	&&
-	{
-		color: rgba(0, 0, 0, .79);
-	}
-`
-
-
-const ProductInstance = Styled(Paper)`
-	&&
-	{
-		background-color: #cdc1ff;
-		background-image: linear-gradient(316deg, #cdc1ff 0%, #e5d9f2 74%);
-		padding: 1.75rem;
-
-		cursor: pointer;
-	}
-`
-
 
 function getPlaceholderCardComponent()
 {
@@ -87,28 +68,12 @@ export default function ProductBrowse({history})
 				style={{padding: '.5rem', display: 'inline-grid'}}
 				onClick={ () => window.location.assign(`/product/${item.productId}`) }
 				>
-					<ProductInstance
-						style={{padding: '.75rem'}}
-						>
-						<MainBrowseInfoTypography2
-							style={{marginBottom: '1rem'}}
-							variant='subtitle1'
-							align='center' >
-							{item.productName}
-						</MainBrowseInfoTypography2>
-						<MainBrowseInfoTypography2
-							variant='subtitle2' >
-							ID: {item.productId}
-						</MainBrowseInfoTypography2>
-						<MainBrowseInfoTypography2
-							variant='subtitle2' >
-							Type: {item.productType}
-						</MainBrowseInfoTypography2>
-						<MainBrowseInfoTypography2
-							variant='subtitle2' >
-							Sub-Type: {item.productSubType}
-						</MainBrowseInfoTypography2>
-					</ProductInstance>
+					<ProductCardGridItem
+						productName={item.productName}
+						productId={item.productId}
+						productType={item.productType}
+						productSubType={item.productSubType}
+					/>
 				</Grid>
 		})
 
@@ -128,9 +93,8 @@ export default function ProductBrowse({history})
 				<meta name="keywords" content={`YuGiOh, product browse, The Supreme Kings Castle`} />
 			</Helmet>
 
-			<Suspense>
-				<Breadcrumb crumbs={ ['Home', 'Product Browse'] } />
-			</Suspense>
+
+			<Breadcrumb crumbs={ ['Home', 'Product Browse'] } />
 
 			<Typography
 				variant='h4'
@@ -143,9 +107,7 @@ export default function ProductBrowse({history})
 				{(isDataLoaded)? productGridItems : getPlaceholderCardComponentMemoized}
 			</Grid>
 
-			<Suspense>
-				<Footer />
-			</Suspense>
+			<Footer />
 
 		</MainContentContainer>
 	)
