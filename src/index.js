@@ -4,7 +4,6 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 
 import NavigationBar from './components/NavigationBar'
 import Routes from './Routes.tsx'
-import './index.css'
 
 
 const theme = createMuiTheme({
