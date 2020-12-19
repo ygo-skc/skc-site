@@ -30,6 +30,12 @@ const theme = createMuiTheme({
 				fontWeight: 600,
 				fontSize: '.98rem'
 			}
+			, clickable: {
+				'&:hover': {
+
+				backgroundColor: 'rgba(0, 0, 0, .5)'
+				}
+			}
 		},
 		'MuiBadge': {
 			badge: {

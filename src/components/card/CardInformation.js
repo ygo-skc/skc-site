@@ -79,7 +79,11 @@ const Card = ( { match, history } ) =>
 			async function populateProductChips(productInfo)
 			{
 				return productInfo.map( (product, index) => {
-					return product.productContent.map(item => <Chip key={index} label={`${product.productReleaseDate}  •  ${product.productId} #${item.productPosition}  •  ${item.rarities.join(', ')}`} />)
+					return product.productContent.map(item => <Chip
+							key={index}
+							label={`${product.productReleaseDate}  •  ${product.productId} #${item.productPosition}  •  ${item.rarities.join(', ')}`}
+							onClick={ () => window.location.assign(`/product/${product.productId}`) }
+					/>)
 					})
 			}
 
