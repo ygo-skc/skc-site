@@ -32,8 +32,10 @@ const theme = createMuiTheme({
 			}
 			, clickable: {
 				'&:hover': {
-
-				backgroundColor: 'rgba(0, 0, 0, .5)'
+					backgroundColor: 'rgba(0, 0, 0, .5)'
+				}
+				, '&:focus': {
+					backgroundColor: 'rgba(0, 0, 0, .6)'
 				}
 			}
 		},
