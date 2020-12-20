@@ -43,9 +43,9 @@ const CardDisplayGrid = memo( ({ cardJsonResults, numResultsDisplayed, numItemsT
 	const [cardGridUISkeleton, setCardGridUISkeleton] = useState([])
 	const [clearGrid, setClearGrid] = useState(false)
 
-	const renderCards = async() =>
+	const renderCards = () =>
 	{
-		return cardJsonResults.slice(numResultsDisplayed - numItemsToLoadWhenNeeded, numResultsDisplayed).map( card => {
+		return cardJsonResults.slice(numResultsDisplayed - numItemsToLoadWhenNeeded, numResultsDisplayed).map( (card, index) => {
 			return <Grid
 				key={card.cardID}
 				item
@@ -59,6 +59,7 @@ const CardDisplayGrid = memo( ({ cardJsonResults, numResultsDisplayed, numItemsT
 
 				<CardImageRounded
 					cardID={card.cardID}
+					timeout={index % 6 * 5}
 					/>
 
 				<YGOCard
@@ -89,9 +90,7 @@ const CardDisplayGrid = memo( ({ cardJsonResults, numResultsDisplayed, numItemsT
 			return
 		}
 
-		renderCards().then( (cards) => {
-			setCardGridUI([...cardGridUI, ...cards])
-		})
+		setCardGridUI([...cardGridUI, ...renderCards()])
 	}, [numResultsDisplayed, cardJsonResults, numResults])
 
 

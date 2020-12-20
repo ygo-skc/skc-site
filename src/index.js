@@ -4,7 +4,6 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 
 import NavigationBar from './components/NavigationBar'
 import Routes from './Routes.tsx'
-import './index.css'
 
 
 const theme = createMuiTheme({
@@ -30,6 +29,14 @@ const theme = createMuiTheme({
 			, label: {
 				fontWeight: 600,
 				fontSize: '.98rem'
+			}
+			, clickable: {
+				'&:hover': {
+					backgroundColor: 'rgba(0, 0, 0, .5)'
+				}
+				, '&:focus': {
+					backgroundColor: 'rgba(0, 0, 0, .6)'
+				}
 			}
 		},
 		'MuiBadge': {

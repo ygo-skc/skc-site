@@ -9,8 +9,7 @@ import { NAME_maps_ROUTE } from '../Routes.tsx'
 const NavigationButton = styled(Button)`
 &&
 {
-	margin-left: .25rem;
-	margin-right: .25rem;
+	margin: .3rem;
 
 	font-size: .95rem;
 	:hover
@@ -26,7 +25,7 @@ const NavScroll = styled.div`
 		white-space: nowrap;
 		text-align: center;
 		overflow: auto;
-		background-color: rgba(0, 0, 0, .17);
+		background-color: rgba(0, 0, 0, .37);
 
 		::-webkit-scrollbar
 		{

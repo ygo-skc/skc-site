@@ -16,11 +16,9 @@ const CardData = ( { cardID, cardName, cardColor, cardEffect, cardAttribute, mon
 			Card Information
 		</Typography>
 
-		<Suspense>
-			<CardImageRounded
-				cardID={cardID}
-				/>
-		</Suspense>
+		<CardImageRounded
+			cardID={cardID}
+			/>
 
 		<Suspense >
 			<YGOCard

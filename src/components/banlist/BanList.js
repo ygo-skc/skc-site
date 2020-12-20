@@ -136,6 +136,7 @@ export default function BanList(props)
 				setNumRemoved(resultJson.banListInstance.removedContent.numRemoved)
 
 				// Newly added cads compared to previous ban list
+				console.log(resultJson.banListInstance.newContent.newForbidden)
 				setNewForbiddenCards(resultJson.banListInstance.newContent.newForbidden)
 				setNewLimitedCards(resultJson.banListInstance.newContent.newLimited)
 				setNewSemiLimitedCards(resultJson.banListInstance.newContent.newSemiLimited)
