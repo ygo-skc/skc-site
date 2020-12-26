@@ -1,4 +1,4 @@
-import React, {useState, useEffect, memo} from 'react'
+import React, {useState, useEffect, memo, useRef} from 'react'
 
 import { Grid, IconButton, Box, Typography } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
@@ -36,17 +36,21 @@ async function getPlaceholderCardComponent()
 }
 
 
-const CardDisplayGrid = memo( ({ cardJsonResults, numResultsDisplayed, numItemsToLoadWhenNeeded, loadMoreCallback, isLoadMoreOptionVisible, showFooter=true, numResults, isDataLoaded}) =>
+const CardDisplayGrid = memo( ({ cardJsonResults, numResultsDisplayed, numItemsToLoadWhenNeeded, loadMoreCallback, isLoadMoreOptionVisible, showFooter=true, numResults, isDataLoaded, target}) =>
 {
 	const [cardGridUI, setCardGridUI] = useState([])
 
 	const [cardGridUISkeleton, setCardGridUISkeleton] = useState([])
 	const [clearGrid, setClearGrid] = useState(false)
 
+	const rrr = useRef(null)
+
 	const renderCards = () =>
 	{
 		return cardJsonResults.slice(numResultsDisplayed - numItemsToLoadWhenNeeded, numResultsDisplayed).map( (card, index) => {
 			return <Grid
+				ref={(card.cardID === target)? rrr : null}
+				id={card.cardID}
 				key={card.cardID}
 				item
 				xs={6}
@@ -73,7 +77,6 @@ const CardDisplayGrid = memo( ({ cardJsonResults, numResultsDisplayed, numItemsT
 					effectMaxLineHeight={3}
 				/>
 			</Grid>
-
 		})
 	}
 
@@ -101,6 +104,11 @@ const CardDisplayGrid = memo( ({ cardJsonResults, numResultsDisplayed, numItemsT
 			setClearGrid(false)
 		}
 	}, [clearGrid])
+
+
+	useEffect( () => {
+		if (rrr.current !== null)	window.scrollTo(0, rrr.current.offsetTop)
+	}, [cardGridUI])
 
 
 	return(
