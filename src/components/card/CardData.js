@@ -9,13 +9,6 @@ const CardImageRounded = lazy( () => import('./CardImageRounded') )
 const CardData = ( { cardID, cardName, cardColor, cardEffect, cardAttribute, monsterType, monsterAtk, monsterDef, monsterAssociation, isLoading } ) =>
 {
 	return(<StickyBox>
-		<Typography
-			variant='h4'
-			align='center'
-			style={{marginBottom: '2rem'}} >
-			Card Information
-		</Typography>
-
 		<CardImageRounded
 			cardID={cardID}
 			/>

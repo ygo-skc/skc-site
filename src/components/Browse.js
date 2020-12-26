@@ -179,14 +179,6 @@ export default function Browse( {history} )
 				oneThirdComponent={
 
 					<StickyBox>
-
-						<Typography
-							variant='h4'
-							align='center'
-							style={{marginBottom: '2rem'}} >
-							Card Browse Tool
-						</Typography>
-
 						<Paper style={{padding: '1.4rem', backgroundColor: '#7f5a83', backgroundImage: 'linear-gradient(315deg, #7f5a83 0%, #0d324d 74%)' }} >
 
 							<MainBrowseInfoTypography
