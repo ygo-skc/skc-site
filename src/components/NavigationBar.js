@@ -9,9 +9,9 @@ import { NAME_maps_ROUTE } from '../Routes.tsx'
 const NavigationButton = styled(Button)`
 &&
 {
-	margin: .3rem;
+	margin: .4rem;
 
-	font-size: .95rem;
+	font-size: .9rem;
 	:hover
 	{
 		background: #5c5ca9;
