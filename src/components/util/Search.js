@@ -29,6 +29,7 @@ const SearchSuggestionTypography = styled(Typography)`
 		overflow: hidden;
 		padding: 0rem;
 		margin: 0rem;
+		font-weight: 400;
 	}
 `
 

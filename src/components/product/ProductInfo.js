@@ -82,13 +82,6 @@ export default function ProductInfo({match, history}) {
 				oneThirdComponent={
 					<StickyBox>
 
-						<Typography
-							variant='h4'
-							align='center'
-							style={{marginBottom: '2rem'}} >
-							Product Information
-						</Typography>
-
 						<Paper style={{padding: '1.4rem', background: '#a4508', backgroundImage: 'linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)' }} >
 
 							{(isDataLoaded)?
@@ -145,6 +138,7 @@ export default function ProductInfo({match, history}) {
 							isLoadMoreOptionVisible={false}
 							history={history}
 							isDataLoaded={isDataLoaded}
+							target={window.location.hash.substr(1)}
 						/>
 					</Suspense>
 				}

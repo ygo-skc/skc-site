@@ -99,6 +99,7 @@ const theme = createMuiTheme({
 			fontWeight: 600,
 			lineHeight: '1.52rem',
 			marginBottom: '.25rem',
+			color: '#444',
 			fontSize: '1.25rem',
 		},
 		subtitle2: {
@@ -106,18 +107,21 @@ const theme = createMuiTheme({
 			fontWeight: 500,
 			lineHeight: '1.52rem',
 			marginBottom: '.25rem',
+			color: '#444',
 			fontSize: '1.2rem',
 		},
 		body1: {
 			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 500,
 			lineHeight: '1.52rem',
+			color: '#444',
 			fontSize: '1.1rem',
 		},
 		body2: {
 			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 500,
 			lineHeight: '1.52rem',
+			color: '#444',
 			fontSize: '1rem',
 		},
 	}

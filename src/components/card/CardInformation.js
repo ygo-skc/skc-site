@@ -82,7 +82,7 @@ const Card = ( { match, history } ) =>
 					return product.productContent.map(item => <Chip
 							key={index}
 							label={`${product.productReleaseDate}  •  ${product.productId} #${item.productPosition}  •  ${item.rarities.join(', ')}`}
-							onClick={ () => setTimeout( () => window.location.assign(`/product/${product.productId}`), 250 ) }
+							onClick={ () => setTimeout( () => window.location.assign(`/product/${product.productId}#${cardID}`), 250 ) }
 					/>)
 					})
 			}
