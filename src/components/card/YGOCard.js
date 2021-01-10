@@ -48,9 +48,10 @@ const YGOCard = memo(( {cardName, cardColor, cardEffect, monsterType, cardAttrib
 
 	const CardNameComponent = Styled(Typography)`
 		&& {
-			font-weight: 700;
-			margin-bottom: .18rem;
+			font-weight: 400;
+			margin-bottom: .25rem;
 			text-align: center;
+			text-transform: uppercase;
 
 			color: ${cardStyles[ `${cardColorLowerCase}Color` ]};
 		},
@@ -89,7 +90,7 @@ const YGOCard = memo(( {cardName, cardColor, cardEffect, monsterType, cardAttrib
 	const MonsterTypeComponent = Styled(Typography)`
 		&&
 		{
-			font-weight: 700;
+			font-weight: 600;
 			margin-bottom: .28rem;
 			color: ${cardStyles[ `${cardColorLowerCase}SummaryColor` ]};
 		}
