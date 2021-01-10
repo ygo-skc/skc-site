@@ -123,11 +123,11 @@ export default function Home({ history }) {
 						return (
 							<div style={{ padding: '0rem', margin: '0rem' }} >
 								<SearchSuggestionTypography variant='body1'>
-									{CARD_NAME.slice(0, INDEX_OF_SEARCH_TERM)}
-									<strong style={{color: '#543fda'}}>{CARD_NAME.slice(INDEX_OF_SEARCH_TERM, INDEX_OF_SEARCH_TERM + LENGTH_OF_SEARCH_TERM)}</strong>
-									{CARD_NAME.slice(INDEX_OF_SEARCH_TERM + LENGTH_OF_SEARCH_TERM)}
+									<strong >{CARD_NAME.slice(0, INDEX_OF_SEARCH_TERM)}</strong>
+									{CARD_NAME.slice(INDEX_OF_SEARCH_TERM, INDEX_OF_SEARCH_TERM + LENGTH_OF_SEARCH_TERM)}
+									<strong>{CARD_NAME.slice(INDEX_OF_SEARCH_TERM + LENGTH_OF_SEARCH_TERM)}</strong>
 								</SearchSuggestionTypography>
-								<SearchSuggestionTypography variant='body1' style={{ color: 'rgb(101,119,134)' }} >{option.monsterType}</SearchSuggestionTypography>
+								<SearchSuggestionTypography variant='body1' style={{ color: 'rgb(81,99,114)' }} >{option.monsterType}</SearchSuggestionTypography>
 							</div>
 						)
 					}}
