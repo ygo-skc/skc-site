@@ -1,7 +1,7 @@
 import React, {useState, useEffect, lazy, Suspense} from 'react'
 import { Helmet } from 'react-helmet'
 
-import { Paper, Typography } from '@material-ui/core'
+import { Paper } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
 
 import {handleFetch} from '../../helper/FetchHandler'
@@ -11,24 +11,16 @@ import {MainContentContainer} from '../MainContent'
 
 import OneThirdTwoThirdsGrid from '../grid/OneThirdTwoThirdsGrid'
 
-
-import Styled from 'styled-components'
-import {LightTranslucentDivider} from '../util/Divider'
+import {LightTranslucentDivider, DarkTranslucentDivider} from '../util/Divider'
 
 import {StickyBox} from '../util/StyledContainers'
+
+import {LeftBoxSectionTypography, LeftBoxSectionHeaderTypography, RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography} from '../grid/OneThirdTwoThirdsGrid'
 
 
 
 const Breadcrumb = lazy( () => import('../Breadcrumb') )
 const CardDisplayGrid = lazy( () => import('../grid/CardDisplayGrid') )
-
-
-const MainBrowseInfoTypography = Styled(Typography)`
-	&&
-	{
-		color: rgba(255, 255, 255, .95);
-	}
-`
 
 
 export default function ProductInfo({match, history}) {
@@ -85,12 +77,12 @@ export default function ProductInfo({match, history}) {
 						<Paper style={{padding: '1.4rem', background: '#a4508', backgroundImage: 'linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)' }} >
 
 							{(isDataLoaded)?
-								<MainBrowseInfoTypography
-									style={{marginBottom: '1.5rem'}}
-									variant='h6'
+								<LeftBoxSectionTypography
+									style={{marginBottom: '1.75rem'}}
+									variant='h4'
 									align='center' >
 									{productName}
-								</MainBrowseInfoTypography>
+								</LeftBoxSectionTypography>
 								: <Skeleton
 									variant='rect'
 									height={30}
@@ -99,47 +91,58 @@ export default function ProductInfo({match, history}) {
 									/>
 							}
 
-							<MainBrowseInfoTypography variant='h6' >
+							<LeftBoxSectionHeaderTypography variant='h6' >
 								Summary
-							</MainBrowseInfoTypography>
+							</LeftBoxSectionHeaderTypography>
 
-							<MainBrowseInfoTypography variant='body1' >
+							<LeftBoxSectionTypography variant='body1' >
 								<strong>Product ID:</strong> {productId}
-							</MainBrowseInfoTypography>
-							<MainBrowseInfoTypography variant='body1' >
+							</LeftBoxSectionTypography>
+							<LeftBoxSectionTypography variant='body1' >
 								<strong>Product Type:</strong> {productType}
-							</MainBrowseInfoTypography>
-							<MainBrowseInfoTypography variant='body1'>
+							</LeftBoxSectionTypography>
+							<LeftBoxSectionTypography variant='body1'>
 								<strong>Product Sub-Type:</strong> {productSubType}
-							</MainBrowseInfoTypography >
-							<MainBrowseInfoTypography variant='body1'>
+							</LeftBoxSectionTypography >
+							<LeftBoxSectionTypography variant='body1'>
 								<strong>American Release:</strong> {productReleaseDate}
-							</MainBrowseInfoTypography>
+							</LeftBoxSectionTypography>
 
-							<LightTranslucentDivider />
+							<LightTranslucentDivider  />
 
-							<MainBrowseInfoTypography variant='h6' >
+							<LeftBoxSectionHeaderTypography variant='h6' >
 								Product Stats
-							</MainBrowseInfoTypography>
-							<MainBrowseInfoTypography variant='body1'>
+							</LeftBoxSectionHeaderTypography>
+							<LeftBoxSectionTypography variant='body1'>
 								<strong>Product Total:</strong> {productTotal}
-							</MainBrowseInfoTypography>
+							</LeftBoxSectionTypography>
 						</Paper>
 
 					</StickyBox>
 				}
 				twoThirdComponent={
 					<Suspense>
-						<CardDisplayGrid
-							cardJsonResults={cardJsonResults}
-							numResultsDisplayed={productTotal}
-							numResultsLoaded={productTotal}
-							loadMoreCallback={undefined}
-							isLoadMoreOptionVisible={false}
-							history={history}
-							isDataLoaded={isDataLoaded}
-							target={window.location.hash.substr(1)}
-						/>
+						<RightBoxPaper >
+							<RightBoxHeaderTypography variant='h4' >
+								Contents
+							</RightBoxHeaderTypography>
+							<RightBoxSubHeaderTypography variant='subtitle1' >
+								Sorted By Pack Order
+							</RightBoxSubHeaderTypography>
+
+							<DarkTranslucentDivider />
+
+							<CardDisplayGrid
+								cardJsonResults={cardJsonResults}
+								numResultsDisplayed={productTotal}
+								numResultsLoaded={productTotal}
+								loadMoreCallback={undefined}
+								isLoadMoreOptionVisible={false}
+								history={history}
+								isDataLoaded={isDataLoaded}
+								target={window.location.hash.substr(1)}
+							/>
+						</RightBoxPaper>
 					</Suspense>
 				}
 			/>

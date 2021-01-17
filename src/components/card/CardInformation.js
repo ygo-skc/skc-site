@@ -11,6 +11,9 @@ import OneThirdTwoThirdsGrid from '../grid/OneThirdTwoThirdsGrid'
 
 import Breadcrumb from '../Breadcrumb'
 import CardData from './CardData'
+import {RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography} from '../grid/OneThirdTwoThirdsGrid'
+import {DarkTranslucentDivider} from '../util/Divider'
+
 const CardInformationSection = lazy( () => import('./CardInformationSection') )
 const Footer = lazy( () => import('../Footer') )
 
@@ -128,38 +131,47 @@ const Card = ( { match, history } ) =>
 					/>
 				}
 				twoThirdComponent={
-					<Grid container >
-						<Grid item xs={12} sm={12} md={12} lg={6} xl={6}  style={ { display: 'inline-grid', padding: '.8rem' } } >
-							{(isLoading)? undefined
-							: <CardInformationSection
-								isLoading={isLoading}
-								hasInfo={ (productInfo.length === 0)? false : true }
-								infoChips={productInfoChips}
-								headerText={'Product(s)'}
-								noInfoText={'Not Found In Any Product'}
-								background='#a4508b'
-								backgroundImage='linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)'
-							/>
-							}
+					<RightBoxPaper>
+						<RightBoxHeaderTypography variant='h4' >
+							Explore
+						</RightBoxHeaderTypography>
+						<RightBoxSubHeaderTypography variant='subtitle1' style={{marginBottom: '3rem'}} >
+							Related Content For <i>{cardName}</i>
+						</RightBoxSubHeaderTypography>
+
+						<Grid container spacing={1} >
+							<Grid item xs={12} sm={12} md={12} lg={6} xl={6}  style={ { display: 'inline-grid' } } >
+								{(isLoading)? undefined
+								: <CardInformationSection
+									isLoading={isLoading}
+									hasInfo={ (productInfo.length === 0)? false : true }
+									infoChips={productInfoChips}
+									headerText={'Products'}
+									noInfoText={'Not Found In Any Product'}
+									background='#a4508b'
+									backgroundImage='linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)'
+								/>
+								}
+							</Grid>
+
+							<Grid item xs={12} sm={12} md={12} lg={6} xl={6} style={ { display: 'inline-grid' } } >
+								{(isLoading)? undefined
+								: <CardInformationSection
+									isLoading={isLoading}
+									hasInfo={ (banListInfo.length === 0)? false : true }
+									infoChips={banListInfoChips}
+									headerText={'Ban Lists'}
+									noInfoText={`No Instances of ${cardName} Being Forbidden, Limited, or Semi-Limited`}
+									background='#fc9842'
+									backgroundImage='linear-gradient(315deg, #fc9842 0%, #fe5f75 74%)'
+								/>
+								}
+
+							</Grid>
+							<Footer />
+
 						</Grid>
-
-						<Grid item xs={12} sm={12} md={12} lg={6} xl={6} style={ { display: 'inline-grid', padding: '.8rem' } } >
-							{(isLoading)? undefined
-							: <CardInformationSection
-								isLoading={isLoading}
-								hasInfo={ (banListInfo.length === 0)? false : true }
-								infoChips={banListInfoChips}
-								headerText={'Ban List(s)'}
-								noInfoText={`No Instances of ${cardName} Being Forbidden, Limited, or Semi-Limited`}
-								background='#fc9842'
-								backgroundImage='linear-gradient(315deg, #fc9842 0%, #fe5f75 74%)'
-							/>
-							}
-
-						</Grid>
-						<Footer />
-
-					</Grid>
+					</RightBoxPaper>
 					}
 				/>
 

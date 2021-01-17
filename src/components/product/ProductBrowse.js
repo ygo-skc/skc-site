@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, lazy, Suspense } from 'react'
-import { Typography, Grid } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import {Skeleton} from '@material-ui/lab'
 import { Helmet } from 'react-helmet'
 
@@ -10,6 +10,8 @@ import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
 
 // const ProductCardGridItem = lazy( () => import('./ProductCardGridItem') )
 import ProductCardGridItem from './ProductCardGridItem'
+import {RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography} from '../grid/OneThirdTwoThirdsGrid'
+import {DarkTranslucentDivider} from '../util/Divider'
 
 const Breadcrumb = lazy( () => import('../Breadcrumb') )
 const Footer = lazy( () => import('../Footer') )
@@ -65,7 +67,7 @@ export default function ProductBrowse({history})
 				lg={2}
 				xl={1}
 				key={item.productId}
-				style={{padding: '.5rem', display: 'inline-grid'}}
+				style={{padding: '.2rem', display: 'inline-grid'}}
 				onClick={ () => window.location.assign(`/product/${item.productId}`) }
 				>
 					<ProductCardGridItem
@@ -96,18 +98,23 @@ export default function ProductBrowse({history})
 
 			<Breadcrumb crumbs={ ['Home', 'Product Browse'] } />
 
-			<Typography
-				variant='h4'
-				align='center'
-				style={{marginBottom: '2rem'}} >
-				Product Browse Tool
-			</Typography>
+			<RightBoxPaper>
+				<RightBoxHeaderTypography variant='h4' >
+					Products In Database
+				</RightBoxHeaderTypography>
+				<RightBoxSubHeaderTypography variant='subtitle1' >
+					Sorted By Release Date
+				</RightBoxSubHeaderTypography>
 
-			<Grid style={{width: '100%', gridAutoRows: '1fr'}} container spacing={0} >
-				{(isDataLoaded)? productGridItems : getPlaceholderCardComponentMemoized}
-			</Grid>
+				<DarkTranslucentDivider />
 
-			<Footer />
+				<Grid style={{width: '100%', gridAutoRows: '1fr'}} container >
+					{(isDataLoaded)? productGridItems : getPlaceholderCardComponentMemoized}
+				</Grid>
+
+				<Footer />
+
+			</RightBoxPaper>
 
 		</MainContentContainer>
 	)
