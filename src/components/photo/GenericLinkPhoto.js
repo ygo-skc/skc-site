@@ -6,12 +6,13 @@ import Styled from 'styled-components'
 const CustomImg = Styled('img')`
 	&&
 	{
-		margin-bottom: 1rem;
 		width: 120px;
 		:hover
 		{
 			cursor: pointer
 		}
+
+		border-radius: 50%;
 	}
 `
 
