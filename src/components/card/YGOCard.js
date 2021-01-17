@@ -48,7 +48,7 @@ const YGOCard = memo(( {cardName, cardColor, cardEffect, monsterType, cardAttrib
 
 	const CardNameComponent = Styled(Typography)`
 		&& {
-			font-weight: 400;
+			font-weight: 600;
 			margin-bottom: .25rem;
 			text-align: center;
 			text-transform: uppercase;
@@ -113,15 +113,13 @@ const YGOCard = memo(( {cardName, cardColor, cardEffect, monsterType, cardAttrib
 
 
 			<CardDescriptionComponent >
-				{
-					( cardColor === 'Spell' || cardColor === 'Trap' ) ?
-						undefined :
-						<MonsterTypeComponent
-							variant='body1'
-							noWrap={true} >
-								{ monsterType }
-						</MonsterTypeComponent>
-				}
+				<MonsterTypeComponent
+					variant='body1'
+					noWrap={true} >
+						{
+							( cardColor === 'Spell' || cardColor === 'Trap' ) ? cardColor : monsterType
+						}
+				</MonsterTypeComponent>
 
 				<CardEffectComponent
 					variant='body2' >
