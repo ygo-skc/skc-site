@@ -1,5 +1,5 @@
 import React from 'react'
-import { Paper, Typography } from '@material-ui/core'
+import { Paper, Typography, Box } from '@material-ui/core'
 
 import Styled from 'styled-components'
 
@@ -11,14 +11,22 @@ const MainBrowseInfoTypography2 = Styled(Typography)`
 `
 
 
-const ProductInstance = Styled(Paper)`
+const ProductInstance = Styled(Box)`
 	&&
 	{
-		background-color: #cdc1ff;
-		background-image: linear-gradient(316deg, #cdc1ff 0%, #e5d9f2 74%);
-		padding: 1.75rem;
+		padding: 1.5rem;
 
+		border-radius: 1.5rem;
 		cursor: pointer;
+
+		border: solid;
+		border-width: .25rem;
+		border-color: #DC5010;
+
+		:hover
+		{
+			background: #eee;
+		}
 	}
 `
 
