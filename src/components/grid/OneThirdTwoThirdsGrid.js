@@ -5,6 +5,14 @@ import Styled from 'styled-components'
 import withWidth from '@material-ui/core/withWidth'
 
 
+const LeftBoxHeaderTypography = Styled(Typography)`
+	&&
+	{
+		color: rgba(255, 255, 255, .95);
+		margin-bottom: 1.75rem;
+	}
+`
+
 const LeftBoxSectionHeaderTypography = Styled(Typography)`
 	&&
 	{
@@ -32,6 +40,15 @@ const RightBoxPaper = Styled(Paper)`
 		border-radius: 1.75rem;
 		padding-top: 1.4rem;
 		padding-bottom: 1.4rem;
+	}
+`
+
+
+const RightBoxHeaderContainer = Styled(Box)`
+	&&
+	{
+		margin-left: .5rem;
+		margin-right: .5rem;
 	}
 `
 
@@ -120,4 +137,4 @@ function OneThirdTwoThirdsGrid( { oneThirdComponent, twoThirdComponent } )
 
 export default withWidth()(OneThirdTwoThirdsGrid)
 
-export {LeftBoxSectionTypography, LeftBoxSectionHeaderTypography, RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography}
+export {LeftBoxHeaderTypography, LeftBoxSectionTypography, LeftBoxSectionHeaderTypography, RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer}

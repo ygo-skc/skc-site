@@ -10,7 +10,7 @@ import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
 
 // const ProductCardGridItem = lazy( () => import('./ProductCardGridItem') )
 import ProductCardGridItem from './ProductCardGridItem'
-import {RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography} from '../grid/OneThirdTwoThirdsGrid'
+import {RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from '../grid/OneThirdTwoThirdsGrid'
 import {DarkTranslucentDivider} from '../util/Divider'
 
 const Breadcrumb = lazy( () => import('../Breadcrumb') )
@@ -99,14 +99,16 @@ export default function ProductBrowse({history})
 			<Breadcrumb crumbs={ ['Home', 'Product Browse'] } />
 
 			<RightBoxPaper>
-				<RightBoxHeaderTypography variant='h4' >
-					Products In Database
-				</RightBoxHeaderTypography>
-				<RightBoxSubHeaderTypography variant='subtitle1' >
-					Sorted By Release Date
-				</RightBoxSubHeaderTypography>
+				<RightBoxHeaderContainer >
+					<RightBoxHeaderTypography variant='h4' >
+						Products In Database
+					</RightBoxHeaderTypography>
+					<RightBoxSubHeaderTypography variant='subtitle1' >
+						Sorted By Release Date
+					</RightBoxSubHeaderTypography>
 
-				<DarkTranslucentDivider />
+					<DarkTranslucentDivider />
+				</ RightBoxHeaderContainer>
 
 				<Grid style={{width: '100%', gridAutoRows: '1fr'}} container >
 					{(isDataLoaded)? productGridItems : getPlaceholderCardComponentMemoized}

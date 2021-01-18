@@ -7,10 +7,19 @@ import Styled from 'styled-components'
 const FooterComponent = Styled(Box)`
 	&&
 	{
-		margin-bottom: 1.5rem;
 		margin-top: 3.5rem;
 
 		width: 100%;
+	}
+`
+
+
+const FooterTypography = Styled(Typography)`
+	&&
+	{
+		font-weight: 500;
+		font-size: .86rem;
+		color: rgb(102, 102, 102);
 	}
 `
 
@@ -19,19 +28,17 @@ export default function Footer()
 {
 	return(
 		<FooterComponent>
-			<Typography
+			<FooterTypography
 				variant='body2'
-				align='center'
-				style={{color: 'rgb(101, 119, 134)'}} >
-				Copyright 2020
-			</Typography>
+				align='center' >
+				Copyright 2021
+			</FooterTypography>
 
-			<Typography
+			<FooterTypography
 				variant='body2'
-				align='center'
-				style={{color: 'rgb(101, 119, 134)'}} >
+				align='center' >
 				Konami Digital Entertainment owns all rights to Yu-Gi-Oh!
-			</Typography>
+			</FooterTypography>
 		</FooterComponent>
 	)
 }

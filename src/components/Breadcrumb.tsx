@@ -57,7 +57,7 @@ const Breadcrumb: FunctionComponent<BreadcrumbProps> = memo( ( { crumbs }  ) =>
 					<Skeleton
 						key={item}
 						variant='text'
-						width={ 150 }
+						width={ 50 }
 					/>
 					: <BreadCrumbItem
 						variant='subtitle2'

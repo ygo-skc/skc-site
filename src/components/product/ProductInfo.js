@@ -15,7 +15,7 @@ import {LightTranslucentDivider, DarkTranslucentDivider} from '../util/Divider'
 
 import {StickyBox} from '../util/StyledContainers'
 
-import {LeftBoxSectionTypography, LeftBoxSectionHeaderTypography, RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography} from '../grid/OneThirdTwoThirdsGrid'
+import {LeftBoxHeaderTypography, LeftBoxSectionTypography, LeftBoxSectionHeaderTypography, RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from '../grid/OneThirdTwoThirdsGrid'
 
 
 
@@ -77,12 +77,11 @@ export default function ProductInfo({match, history}) {
 						<Paper style={{padding: '1.4rem', background: '#a4508', backgroundImage: 'linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)' }} >
 
 							{(isDataLoaded)?
-								<LeftBoxSectionTypography
-									style={{marginBottom: '1.75rem'}}
+								<LeftBoxHeaderTypography
 									variant='h4'
 									align='center' >
 									{productName}
-								</LeftBoxSectionTypography>
+								</LeftBoxHeaderTypography>
 								: <Skeleton
 									variant='rect'
 									height={30}
@@ -123,14 +122,16 @@ export default function ProductInfo({match, history}) {
 				twoThirdComponent={
 					<Suspense>
 						<RightBoxPaper >
-							<RightBoxHeaderTypography variant='h4' >
-								Contents
-							</RightBoxHeaderTypography>
-							<RightBoxSubHeaderTypography variant='subtitle1' >
-								Sorted By Pack Order
-							</RightBoxSubHeaderTypography>
+							<RightBoxHeaderContainer >
+								<RightBoxHeaderTypography variant='h4' >
+									Contents
+								</RightBoxHeaderTypography>
+								<RightBoxSubHeaderTypography variant='subtitle1' >
+									Sorted By Pack Order
+								</RightBoxSubHeaderTypography>
 
-							<DarkTranslucentDivider />
+								<DarkTranslucentDivider />
+							</RightBoxHeaderContainer>
 
 							<CardDisplayGrid
 								cardJsonResults={cardJsonResults}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Autocomplete from '@material-ui/lab/Autocomplete'
-import { Chip, Typography, Paper, InputBase, IconButton } from '@material-ui/core'
+import { Chip, Paper, InputBase, IconButton } from '@material-ui/core'
 import { Helmet } from 'react-helmet'
 
 import SearchIcon from '@material-ui/icons/Search'
@@ -15,14 +15,12 @@ import OneThirdTwoThirdsGrid from './grid/OneThirdTwoThirdsGrid'
 import { handleFetch } from '../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../helper/YgoApiEndpoints'
 
-import Styled from 'styled-components'
-
 import {LightTranslucentDivider, DarkTranslucentDivider} from './util/Divider'
 import {StickyBox} from './util/StyledContainers'
 
 import {RenderGroup, SearchSuggestionTypography} from './util/Search'
 
-import {LeftBoxSectionTypography, LeftBoxSectionHeaderTypography, RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography} from './grid/OneThirdTwoThirdsGrid'
+import {LeftBoxSectionTypography, LeftBoxSectionHeaderTypography, RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from './grid/OneThirdTwoThirdsGrid'
 
 
 const defaultDisplayNum = 50
@@ -248,13 +246,15 @@ export default function Browse( {history} )
 				}
 				twoThirdComponent={
 					<RightBoxPaper>
-						<RightBoxHeaderTypography variant='h4' >
-							Browse Results
-						</RightBoxHeaderTypography>
-						<RightBoxSubHeaderTypography variant='subtitle1' >
-							Sorted Alphabetically
-						</RightBoxSubHeaderTypography>
-						<DarkTranslucentDivider />
+						<RightBoxHeaderContainer >
+							<RightBoxHeaderTypography variant='h4' >
+								Browse Results
+							</RightBoxHeaderTypography>
+							<RightBoxSubHeaderTypography variant='subtitle1' >
+								Sorted Alphabetically
+							</RightBoxSubHeaderTypography>
+							<DarkTranslucentDivider />
+						</RightBoxHeaderContainer>
 
 						<CardDisplayGrid
 							cardJsonResults={jsonResults}
