@@ -1,21 +1,41 @@
 import React, { memo, useState, useEffect, useCallback } from 'react'
 import Styled from 'styled-components'
 
-import { Typography, List, ListItemText, Collapse, ListItem } from '@material-ui/core'
+import { List, ListItemText, Collapse, ListItem } from '@material-ui/core'
 
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import {LeftBoxSectionHeaderTypography} from '../grid/OneThirdTwoThirdsGrid'
 
 
 const ListStatItem = Styled(ListItem)`
 	&&
 	{
 		padding: .25rem;
-		color: rgba(255, 255, 255, .9);
 
 		.MuiListItemText-secondary
 		{
-			color: rgba(255, 255, 255, .825);
+			font-size: 1.15rem;
+			color: rgba(255, 255, 255, .95);
+		}
+
+		.MuiListItemText-primary
+		{
+			font-weight: 700;
+			font-size: 1.15rem;
+			color: rgba(255, 255, 255, .95);
+		}
+	}
+`
+
+const StatList = Styled(List)`
+	&&
+	{
+		.MuiListItem-root
+		{
+			border-bottom: solid;
+			border-color: rgba(255, 255, 255, .25);
+			border-width: 1px;
 		}
 	}
 `
@@ -26,7 +46,7 @@ function getListItemCardChild(cardName, previousBanStatus, cardId)
 	return <ListItemText
 		onClick={() => window.location.assign(`/card/${cardId}`)}
 		primary={cardName}
-		secondary={`Was: ${previousBanStatus}`}
+		secondary={`Previously ${previousBanStatus}`}
 	/>
 
 }
@@ -90,7 +110,7 @@ const BanListStats = memo( ( { totalCardsInSelectedList, selectedBanList
 				<ListStatItem
 					key={ind}
 					button
-					style={{paddingLeft: '3rem'}}  >
+					style={{marginLeft: '2.3rem', marginRight: '2.3rem'}}  >
 					{getListItemCardChild(card.cardName, card.previousBanStatus, card.cardId)}
 				</ListStatItem>
 			)
@@ -105,7 +125,7 @@ const BanListStats = memo( ( { totalCardsInSelectedList, selectedBanList
 
 		newLimitedCards.forEach( (card, ind) => {
 			newLimitedCardsList.push(
-				<ListStatItem key={ind} button style={{paddingLeft: '3rem'}}  >
+				<ListStatItem key={ind} button style={{marginLeft: '2.3rem', marginRight: '2.3rem'}}  >
 					{getListItemCardChild(card.cardName, card.previousBanStatus, card.cardId)}
 				</ListStatItem>
 			)
@@ -121,7 +141,7 @@ const BanListStats = memo( ( { totalCardsInSelectedList, selectedBanList
 
 		newSemiLimitedCards.forEach( (card, ind) => {
 			newSemiLimitedCardsList.push(
-				<ListStatItem key={ind} button style={{paddingLeft: '3rem'}}  >
+				<ListStatItem key={ind} button style={{marginLeft: '2.3rem', marginRight: '2.3rem'}}  >
 					{getListItemCardChild(card.cardName, card.previousBanStatus, card.cardId)}
 				</ListStatItem>
 			)
@@ -137,7 +157,7 @@ const BanListStats = memo( ( { totalCardsInSelectedList, selectedBanList
 
 		removedCards.forEach( (card, ind) => {
 			removedCardsList.push(
-				<ListStatItem key={ind} button style={{paddingLeft: '3rem'}}  >
+				<ListStatItem key={ind} button style={{marginLeft: '1.15rem', marginRight: '1.15rem'}}  >
 					{getListItemCardChild(card.cardName, card.previousBanStatus, card.cardId)}
 				</ListStatItem>)
 		})
@@ -147,15 +167,14 @@ const BanListStats = memo( ( { totalCardsInSelectedList, selectedBanList
 
 	return(
 		<div style={{padding: '.5rem'}} >
-			<Typography
-				variant='subtitle1'
-				style={{color: 'rgba(255, 255, 255, .95)'}} >
-				List Summary
-			</Typography>
+			<LeftBoxSectionHeaderTypography
+				variant='h6' >
+				Summary
+			</LeftBoxSectionHeaderTypography>
 
-			<List style={{ width: '100%', maxWidth: '400px' }}
+			<StatList style={{ width: '100%', maxWidth: '400px' }}
 				component="nav"
-				aria-labelledby="nested-list-subheader">
+				aria-labelledby="nested-StatList-subheader">
 				<ListStatItem >
 					<ListItemText
 						primary="Total Cards"
@@ -178,14 +197,14 @@ const BanListStats = memo( ( { totalCardsInSelectedList, selectedBanList
 					in={isShowingNewCards}
 					timeout="auto"
 					unmountOnExit >
-					<List
+					<StatList
 						component="div"
 						disablePadding >
 						<ListStatItem
 							button
 							disabled={(numNewForbidden === 0)? true : false }
 							onClick={showNewForbiddenCards}
-							style={{paddingLeft: '2.5rem'}}  >
+							style={{marginLeft: '1.15rem', marginRight: '1.15rem'}}  >
 							<ListItemText
 								primary="Forbidden"
 								secondary={ numNewForbidden } />
@@ -195,18 +214,18 @@ const BanListStats = memo( ( { totalCardsInSelectedList, selectedBanList
 							in={isShowingNewForbiddenCards}
 							timeout="auto"
 							unmountOnExit >
-							<List
+							<StatList
 								component="div"
 								disablePadding >
 								{newForbiddenCardsList}
-							</List>
+							</StatList>
 						</Collapse>
 
 						<ListStatItem
 							button
 							disabled={(numNewLimited === 0)? true : false }
 							onClick={showNewLimitedCards}
-							style={{paddingLeft: '2.5rem'}}  >
+							style={{marginLeft: '1.15rem', marginRight: '1.15rem'}}  >
 							<ListItemText
 								primary="Limited"
 								secondary={ numNewLimited } />
@@ -216,18 +235,18 @@ const BanListStats = memo( ( { totalCardsInSelectedList, selectedBanList
 							in={isShowingNewLimitedCards}
 							timeout="auto"
 							unmountOnExit >
-							<List
+							<StatList
 								component="div"
 								disablePadding >
 								{ newLimitedCardsList }
-							</List>
+							</StatList>
 						</Collapse>
 
 						<ListStatItem
 							button
 							disabled={(numNewSemiLimited === 0)? true : false }
 							onClick={showNewSemiLimitedCards}
-							style={{paddingLeft: '2.5rem'}}  >
+							style={{marginLeft: '1.15rem', marginRight: '1.15rem'}}  >
 							<ListItemText
 								primary="Semi-Limited"
 								secondary={ numNewSemiLimited} />
@@ -237,13 +256,13 @@ const BanListStats = memo( ( { totalCardsInSelectedList, selectedBanList
 							in={isShowingNewSemiLimitedCards}
 							timeout="auto"
 							unmountOnExit >
-							<List
+							<StatList
 								component="div"
 								disablePadding >
 								{ newSemiLimitedCardsList }
-							</List>
+							</StatList>
 						</Collapse>
-					</List>
+					</StatList>
 				</Collapse>
 
 				<ListStatItem
@@ -260,14 +279,14 @@ const BanListStats = memo( ( { totalCardsInSelectedList, selectedBanList
 					in={ isShowingRemovedCards }
 					timeout="auto"
 					unmountOnExit>
-					<List
+					<StatList
 						component="div"
 						disablePadding >
 						{removedCardsList}
-					</List>
+					</StatList>
 				</Collapse>
 
-			</List>
+			</StatList>
 		</div>
 	)
 }, (prevProps, newProps) => {

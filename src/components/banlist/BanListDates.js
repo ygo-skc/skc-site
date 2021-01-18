@@ -5,6 +5,7 @@ import { Button, Grid, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDeta
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DateRangeRoundedIcon from '@material-ui/icons/DateRangeRounded'
+import {LeftBoxSectionHeaderTypography} from '../grid/OneThirdTwoThirdsGrid'
 
 
 
@@ -61,11 +62,10 @@ export const BanListDates = memo( ( { banListStartDates, setSelectedBanList } ) 
 
 	return(
 		<div style={{padding: '.5rem'}} >
-			<Typography
-				style={{color: 'rgba(255, 255, 255, .95)'}}
+			<LeftBoxSectionHeaderTypography
 				variant='h6' >
 				Date Range
-			</Typography>
+			</LeftBoxSectionHeaderTypography>
 			<ExpansionPanel elevation={0} style={ { padding: '.5rem', background: 'rgba(255, 255, 255, .85)', borderRadius: '1rem' } }  >
 				<BanDatesExpansionSummary
 					expandIcon={<ExpandMoreIcon />} >
