@@ -80,7 +80,7 @@ const CardDisplayGrid = memo( ({ cardJsonResults, numResultsDisplayed, numItemsT
 
 				<CardImageRounded
 					cardID={card.cardID}
-					timeout={index % 6 * 5}
+					timeout={index % 20 * 10}
 					/>
 
 				<YGOCard

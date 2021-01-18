@@ -1,7 +1,7 @@
 import React, {lazy, Suspense } from 'react'
-import { Typography } from '@material-ui/core'
 
 import {StickyBox} from '../util/StyledContainers'
+// import CardImageRounded from './CardImageRounded'
 
 const YGOCard = lazy( () => import('./YGOCard') )
 const CardImageRounded = lazy( () => import('./CardImageRounded') )
@@ -9,9 +9,12 @@ const CardImageRounded = lazy( () => import('./CardImageRounded') )
 const CardData = ( { cardID, cardName, cardColor, cardEffect, cardAttribute, monsterType, monsterAtk, monsterDef, monsterAssociation, isLoading } ) =>
 {
 	return(<StickyBox>
-		<CardImageRounded
-			cardID={cardID}
-			/>
+		<Suspense >
+			<CardImageRounded
+				cardID={cardID}
+				timeout={0}
+				/>
+		</Suspense>
 
 		<Suspense >
 			<YGOCard
