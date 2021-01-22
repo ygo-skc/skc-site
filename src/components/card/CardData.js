@@ -1,22 +1,22 @@
-import React, {lazy, Suspense } from 'react'
+import React, {lazy, memo } from 'react'
 
 import {StickyBox} from '../util/StyledContainers'
+import {RightBoxPaper} from '../grid/OneThirdTwoThirdsGrid'
 // import CardImageRounded from './CardImageRounded'
 
 const YGOCard = lazy( () => import('./YGOCard') )
 const CardImageRounded = lazy( () => import('./CardImageRounded') )
 
-const CardData = ( { cardID, cardName, cardColor, cardEffect, cardAttribute, monsterType, monsterAtk, monsterDef, monsterAssociation, isLoading } ) =>
+const CardData = memo( ( { cardID, cardName, cardColor, cardEffect, cardAttribute, monsterType, monsterAtk, monsterDef, monsterAssociation, isLoading } ) =>
 {
-	return(<StickyBox>
-		<Suspense >
+	return(<StickyBox >
+		<RightBoxPaper>
 			<CardImageRounded
 				cardID={cardID}
 				timeout={0}
+				defaultVisibility={true}
 				/>
-		</Suspense>
 
-		<Suspense >
 			<YGOCard
 				isNew={ false }
 				cardName={cardName}
@@ -31,10 +31,15 @@ const CardData = ( { cardID, cardName, cardColor, cardEffect, cardAttribute, mon
 				fullDetails={ true }
 				isLoading={ isLoading }
 				/>
-		</Suspense>
+		</RightBoxPaper>
 	</StickyBox>
 	)
-}
+},  (prevProps, newProps) => {
+	if ( prevProps.isLoading !== newProps.isLoading )
+		return false
+
+	return true
+})
 
 
 export default CardData

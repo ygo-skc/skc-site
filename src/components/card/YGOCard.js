@@ -36,6 +36,7 @@ const YGOCard = memo(( {cardName, cardColor, cardEffect, monsterType, cardAttrib
 			white-space: nowrap;
 			overflow: hidden;
 			text-overflow: ellipsis;
+			border-radius: 1rem;
 
 			background: ${cardStyles[ `${cardColorLowerCase}Background` ]};
 

@@ -28,8 +28,8 @@ async function getPlaceholderCardComponent()
 			md={4}
 			lg={3}
 			xl={2}
-			style={{ padding: '.25rem' }} >
-				<Skeleton variant='circle' height='150' width='150' style={{margin: 'auto'}} />
+			style={{ padding: '.3rem' }} >
+				<Skeleton variant='rect' height='170' width='100%'  style={{borderRadius: '4rem', marginBottom: '1rem'}} />
 				<Skeleton variant='rect' width='100%' height='100' />
 		</Grid>)
 	}
@@ -41,7 +41,7 @@ const GridItem = Styled(Grid)`
 	&&
 	{
 		border-radius: 1.2rem;
-		padding: .25rem;
+		padding: .3rem;
 		cursor: pointer;
 
 		:hover

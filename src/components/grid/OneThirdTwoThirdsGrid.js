@@ -74,12 +74,13 @@ const LeftBox = Styled(Box)`
 	&&
 	{
 		margin-bottom: 2.5rem;
-		padding-left: .8rem;
-		padding-right: .8rem;
+		padding-left: .2rem;
+		padding-right: .2rem;
 
 		@media screen and (min-width: 800px)
 		{
-
+			padding-left: .8rem;
+			padding-right: .8rem;
 			min-width: 29rem;
 			max-width: 29rem;
 		}
