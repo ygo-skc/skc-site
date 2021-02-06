@@ -9,9 +9,9 @@ async function getImg(imgURL)
 	/>
 }
 
-export default function CardImageRounded({cardID, timeout=10})
+export default function CardImageRounded({cardID, timeout=10, defaultVisibility=false})
 {
-	const [visible, setVisible] = useState(false)
+	const [visible, setVisible] = useState(defaultVisibility)
 	const [img, setImg] = useState(undefined)
 
 	useEffect( () => {
@@ -24,14 +24,14 @@ export default function CardImageRounded({cardID, timeout=10})
 	return(
       <VizSensor
 			partialVisibility
-			offset={{bottom:-750, top: -500}}
+			offset={{bottom:-350, top: -200}}
 			onChange={(isVisible) => {
 				if (isVisible !== false)
 				setVisible(isVisible)
 			}} >
-			<div style={{margin: 'auto', marginBottom: '.5rem', width: '85%'}} >
+			<div style={{margin: 'auto', marginBottom: '.5rem', width: '96%'}} >
 				<div
-					style={{ borderRadius: '50%', overflow: 'hidden', width: '100%',  height: '0', paddingBottom: '100%' }} >
+					style={{ borderRadius: '4rem', overflow: 'hidden', width: '100%',  height: '0', paddingBottom: '100%' }} >
 					{(visible)? img : undefined
 					}
 				</div>

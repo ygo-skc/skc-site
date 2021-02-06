@@ -13,7 +13,7 @@ const theme = createMuiTheme({
 			contrastDefaultColor: 'light'
 		},
 		secondary: {
-			main: '#c6694b',
+			main: '#DC5010',
 			contrastDefaultColor: 'light'
 		}
 	},
@@ -72,11 +72,11 @@ const theme = createMuiTheme({
 		},
 		h4: {
 			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
-			fontWeight: 600,
+			fontWeight: 500,
 			color: '#543fda',
-			lineHeight: '1.52rem',
+			lineHeight: '2rem',
 			marginBottom: '1rem',
-			fontSize: '2rem',
+			fontSize: '1.85rem',
 		},
 		h5: {
 			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',

@@ -10,6 +10,7 @@ const NavigationButton = styled(Button)`
 &&
 {
 	margin: .4rem;
+	font-weight: 600;
 
 	font-size: .9rem;
 	:hover

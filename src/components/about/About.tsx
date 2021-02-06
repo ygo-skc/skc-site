@@ -7,6 +7,7 @@ import styled from 'styled-components'
 import Breadcrumb from '../Breadcrumb'
 import { MainContentContainer } from '../MainContent'
 import Footer from '../Footer'
+import {DarkTranslucentDivider} from '../util/Divider'
 
 import GenericLinkPhoto from '../photo/GenericLinkPhoto'
 
@@ -95,6 +96,14 @@ const InfoContainer = styled.div`
 `
 
 
+const ParagraphTypography = styled(Typography)`
+	&&
+	{
+		margin-left: .55rem;
+	}
+`
+
+
 const About: FunctionComponent = () => (
 	<MainContentContainer>
 		<Helmet>
@@ -110,25 +119,38 @@ const About: FunctionComponent = () => (
 
 		<div style={{width: '100%'}} >
 
-			<AboutPaper style={{maxWidth: '1000px', margin: 'auto'}} >
+
+			<InfoPaper2 style={{maxWidth: '1000px', margin: 'auto'}} >
 				<CenteredText variant='h4'>
 					About
 				</CenteredText>
 				<br />
 
-				<Typography variant='body1'>
-					I started playing Yugioh when I was about 8 years old. I played at some local tourneys, but I wasn't exceptional by any means. I stopped playing when I got to high school, but I still collected cards for fun. My collecting then stopped when I got to college since it was hard convincing myself a pack of cards was more important than food/gas. Also, being a CS major and a Math minor with a full time job - hobbies were not really a priority.
-					<br />
-					<br />
-					Anyways, I graduated sometime in 2018 and got a decent job in my field. Through it, I got more time and money for Yugioh again! I play HERO's and Neo Spacians primarily. Other archetypes I like are; Sacred Beasts, Cyber Dragons, and Toons. I primarily collect cards and play Duel Links. Tournaments have been on my mind as well.
-					<br />
-					<br />
-					This website was created for two reasons. The first and most important was that I needed to learn technologies I wasn't exposed to (primarily Spring) that I needed to know for my job. In case you are wondering, it did help me become adept and am able to do my job faster than most and with ease. Secondly, I thought I could do a better job displaying content than Konami. This website began as a place to display info about the current and previous ban lists. However, I wanted to keep going and built a full blown Database for Yu-Gi-Oh content.
-					<br />
-					<br />
-					I have some more plans for the website so please stay tuned. Something I wanted to start learning was Machine Learning / AI. The first step I see myself taking is creating a robust suggestion engine that uses card information (parsing text) to help Duelists find related cards easier. I haven't seen a good engine yet...
+				<Typography variant='h6'>
+					Background
 				</Typography>
-			</AboutPaper>
+				<ParagraphTypography variant='body1'>
+					I started playing Yugioh when I was about 8 years old. I played at some local tourneys, but I wasn't exceptional by any means. I stopped playing when I got to high school, but I still collected cards for fun. My collecting then stopped when I got to college since it was hard convincing myself a pack of cards was more important than food/gas. Also, being a CS major and a Math minor with a full time job - hobbies were not really a priority.
+				</ParagraphTypography>
+					<br />
+				<Typography variant='h6'>
+					Purpose Of Site
+				</Typography>
+				<ParagraphTypography>
+					I graduated sometime in 2018 and got a decent job in my field. Through it, I got more time and money for Yugioh again! I play HERO's and Neo Spacians primarily. Other archetypes I like are; Sacred Beasts, Cyber Dragons, and Toons. I primarily collect cards and play Duel Links. Tournaments have been on my mind as well.
+				</ParagraphTypography>
+					<br />
+				<ParagraphTypography>
+					This website was created for two reasons. The first and most important was that I needed to learn technologies I wasn't exposed to (primarily Spring) that I needed to know for my job. In case you are wondering, it did help me become adept and am able to do my job faster than most and with ease. Secondly, I thought I could do a better job displaying content than Konami. This website began as a place to display info about the current and previous ban lists. However, I wanted to keep going and built a full blown Database for Yu-Gi-Oh content.
+				</ParagraphTypography>
+					<br />
+				<Typography variant='h6'>
+					Future Features
+				</Typography>
+				<ParagraphTypography>
+					I have some more plans for the website so please stay tuned. Something I wanted to start learning was Machine Learning / AI. The first step I see myself taking is creating a robust suggestion engine that uses card information (parsing text) to help Duelists find related cards easier. I haven't seen a good engine yet...
+				</ParagraphTypography>
+			</InfoPaper2>
 
 			<InfoContainer>
 				<Grid container spacing={2} >
@@ -151,10 +173,12 @@ const About: FunctionComponent = () => (
 								YGO API
 							</HeaderWithSubheader>
 							<CenteredText
-								style={{marginBottom: '1.6rem', color: '#c6694b'}}
+								style={{color: '#c6694b'}}
 								variant='subtitle1'>
 								The Backend
 							</CenteredText>
+
+							<DarkTranslucentDivider />
 
 							<Typography variant='body1'>
 								A new API was created in the process of creating this site. Though there are other API's available, my purpose was in creating my own to learn a new stack.
@@ -180,7 +204,7 @@ const About: FunctionComponent = () => (
 						lg={4}
 						xl={4} >
 						<InfoPaper2  >
-							<CenteredImage >
+							<CenteredImage style={{height: '120px'}} >
 								<form
 									action="https://www.paypal.com/donate" method="post" target="_top">
 									<input type="hidden" name="hosted_button_id" value="S3MFF6AVW662U" />
@@ -192,10 +216,12 @@ const About: FunctionComponent = () => (
 								Contributions
 							</HeaderWithSubheader>
 							<CenteredText
-								style={{marginBottom: '1.6rem', color: '#c6694b'}}
+								style={{color: '#c6694b'}}
 								variant='subtitle1'>
 								Donations To Website
 							</CenteredText>
+
+							<DarkTranslucentDivider />
 
 							<Typography variant='body1'>
 								As you can tell, this site has no ads and no trackers trying to get information about you. This has two intended effects:
@@ -230,25 +256,27 @@ const About: FunctionComponent = () => (
 								Other Information
 							</HeaderWithSubheader>
 							<CenteredText
-								style={{marginBottom: '1.6rem', color: '#c6694b'}}
+								style={{color: '#c6694b'}}
 								variant='subtitle1'>
 								Contact & Other Stuff
 							</CenteredText>
 
+							<DarkTranslucentDivider />
+
 							<Typography variant='h6'>
 								Contact
 							</Typography>
-							<Typography variant='body1' style={{marginLeft: '.5rem'}}>
+							<ParagraphTypography variant='body1'>
 								If you have questions or want to submit a bug/feature request you can always <CustomLink color='secondary' href='mailto:thesupremeking25@gmail.com'>email me</CustomLink>. Otherwise, feel free to follow me on <CustomLink color='secondary' href='https://twitter.com/SupremeKing93'>twitter</CustomLink>. Though I don't really do social media, I will try my best to post updates there.
-							</Typography>
+							</ParagraphTypography>
 
 							<br />
 							<Typography variant='h6'>
 								Privacy
 							</Typography>
-							<Typography variant='body1' style={{marginLeft: '.5rem'}}>
+							<ParagraphTypography variant='body1' >
 								Though there are no trackers on this site, every request sent to the API has the IP address of the requester. This is strictly to fight DDOS attacks by blacklisting IPs based on attacks. Regular user IPs are not stored in a database and are only written to a log accessible only by me.
-							</Typography>
+							</ParagraphTypography>
 						</InfoPaper2>
 					</Grid>
 
@@ -272,10 +300,12 @@ const About: FunctionComponent = () => (
 								More Ways To Support
 							</HeaderWithSubheader>
 							<CenteredText
-								style={{marginBottom: '1.6rem', color: '#c6694b'}}
+								style={{color: '#c6694b'}}
 								variant='subtitle1'>
 								Subscribe On YouTube
 							</CenteredText>
+
+							<DarkTranslucentDivider />
 
 							<Typography variant='body1'>
 								To help keep the site up (and in no ways an excuse to buy more cards), I started an unboxing/pack opening channel. I feel that I could give you, the consumers, more content. While also making money to support this project.

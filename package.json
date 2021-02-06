@@ -52,12 +52,12 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@storybook/addon-actions": "5.3.21",
-    "@storybook/addon-links": "5.3.21",
-    "@storybook/addons": "5.3.21",
-    "@storybook/react": "5.3.21",
+    "@storybook/addon-actions": "6.1.17",
+    "@storybook/addon-links": "6.1.17",
+    "@storybook/addons": "6.1.17",
+    "@storybook/react": "6.1.17",
     "@types/jest": "25.2.3",
-    "@types/node": "13.13.39",
+    "@types/node": "13.13.41",
     "@types/react": "17.0.0",
     "@types/react-dom": "17.0.0",
     "@types/react-router-dom": "5.1.7",

@@ -10,6 +10,8 @@ import CardImageRounded from '../card/CardImageRounded'
 import YGOCard from '../card/YGOCard'
 import Footer from '../Footer'
 
+import Styled from 'styled-components'
+
 
 async function getPlaceholderCardComponent()
 {
@@ -26,14 +28,29 @@ async function getPlaceholderCardComponent()
 			md={4}
 			lg={3}
 			xl={2}
-			style={{ padding: '.25rem' }} >
-				<Skeleton variant='circle' height='150' width='150' style={{margin: 'auto'}} />
+			style={{ padding: '.3rem' }} >
+				<Skeleton variant='rect' height='170' width='100%'  style={{borderRadius: '4rem', marginBottom: '1rem'}} />
 				<Skeleton variant='rect' width='100%' height='100' />
 		</Grid>)
 	}
 
 	return placeHolder
 }
+
+const GridItem = Styled(Grid)`
+	&&
+	{
+		border-radius: 1.2rem;
+		padding: .3rem;
+		cursor: pointer;
+
+		:hover
+		{
+			background: #eee;
+		}
+	}
+`
+
 
 
 const CardDisplayGrid = memo( ({ cardJsonResults, numResultsDisplayed, numItemsToLoadWhenNeeded, loadMoreCallback, isLoadMoreOptionVisible, showFooter=true, numResults, isDataLoaded, target}) =>
@@ -48,7 +65,7 @@ const CardDisplayGrid = memo( ({ cardJsonResults, numResultsDisplayed, numItemsT
 	const renderCards = () =>
 	{
 		return cardJsonResults.slice(numResultsDisplayed - numItemsToLoadWhenNeeded, numResultsDisplayed).map( (card, index) => {
-			return <Grid
+			return <GridItem
 				ref={(card.cardID === target)? rrr : null}
 				id={card.cardID}
 				key={card.cardID}
@@ -58,25 +75,25 @@ const CardDisplayGrid = memo( ({ cardJsonResults, numResultsDisplayed, numItemsT
 				md={4}
 				lg={3}
 				xl={2}
-				style={{ padding: '.25rem', cursor: 'pointer' }}
+				style={{  }}
 				onClick={ () => window.location.assign(`/card/${card.cardID}`) } >
 
 				<CardImageRounded
 					cardID={card.cardID}
-					timeout={index % 6 * 5}
+					timeout={index % 20 * 10}
 					/>
 
 				<YGOCard
 					isNew={ false }
 					cardName={card.cardName}
 					cardColor={card.cardColor}
-					cardEffect={card.cardEffect + '\n\n\n'}
+					cardEffect={card.cardEffect}
 					monsterType={card.monsterType}
 					cardID={card.cardID}
 					fullDetails={ false }
 					effectMaxLineHeight={3}
 				/>
-			</Grid>
+			</GridItem>
 		})
 	}
 
@@ -112,10 +129,10 @@ const CardDisplayGrid = memo( ({ cardJsonResults, numResultsDisplayed, numItemsT
 
 
 	return(
-		<Box>
+		<Box >
 			<Grid>
 				<Grid container >
-					{(!isDataLoaded)? cardGridUISkeleton : (numResults === 0)? <Typography variant='h5' style={{margin: 'auto'}} >No Content To Show</Typography> : cardGridUI}
+					{(!isDataLoaded)? cardGridUISkeleton : (numResults === 0)? <Typography variant='h5' style={{margin: 'auto', paddingTop: '3rem', paddingBottom: '3rem'}} >No Content To Show</Typography> : cardGridUI}
 				</Grid>
 			</Grid>
 

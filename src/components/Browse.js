@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Autocomplete from '@material-ui/lab/Autocomplete'
-import { Chip, Typography, Paper, InputBase, IconButton } from '@material-ui/core'
+import { Chip, Paper, InputBase, IconButton } from '@material-ui/core'
 import { Helmet } from 'react-helmet'
 
 import SearchIcon from '@material-ui/icons/Search'
@@ -15,19 +15,12 @@ import OneThirdTwoThirdsGrid from './grid/OneThirdTwoThirdsGrid'
 import { handleFetch } from '../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../helper/YgoApiEndpoints'
 
-import Styled from 'styled-components'
-
-import {LightTranslucentDivider} from './util/Divider'
+import {LightTranslucentDivider, DarkTranslucentDivider} from './util/Divider'
 import {StickyBox} from './util/StyledContainers'
 
 import {RenderGroup, SearchSuggestionTypography} from './util/Search'
 
-const MainBrowseInfoTypography = Styled(Typography)`
-	&&
-	{
-		color: rgba(255, 255, 255, .95);
-	}
-`
+import {LeftBoxSectionTypography, LeftBoxSectionHeaderTypography, RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from './grid/OneThirdTwoThirdsGrid'
 
 
 const defaultDisplayNum = 50
@@ -82,12 +75,13 @@ export default function Browse( {history} )
 		const criteriaMap = new Map()
 		criteriaMap.set('cardColors', [])
 		criteriaMap.set('attributes', [])
+		criteriaMap.set('monsterTypes', [])
 		criteriaMap.set('levels', [])
 		criteriaMap.set('ranks', [])
 		criteriaMap.set('linkRatings', [])
 
 		const selectedCriteriaChips = selectedCriteria.map(criteria => {
-			if (criteria.criteriaName === 'cardColors' || criteria.criteriaName === 'attributes')
+			if (criteria.criteriaName === 'cardColors' || criteria.criteriaName === 'attributes' || criteria.criteriaName === 'monsterTypes')
 				criteriaMap.get(criteria.criteriaName).push(criteria.criteriaValue)
 			else if(criteria.criteriaName === 'levels'){
 				criteriaMap.get(criteria.criteriaName).push(criteria.criteriaValue.replace('Level ', ""))
@@ -111,7 +105,7 @@ export default function Browse( {history} )
 
 
 		setIsCardBrowseDataLoaded(false)
-		handleFetch(`${NAME_maps_ENDPOINT['browse']}?cardColors=${criteriaMap.get('cardColors').join(',')}&attributes=${criteriaMap.get('attributes').join(',')}&levels=${criteriaMap.get('levels').join(',')}&ranks=${criteriaMap.get('ranks').join(',')}&linkRatings=${criteriaMap.get('linkRatings').join(',')}`, history, json => {
+		handleFetch(`${NAME_maps_ENDPOINT['browse']}?cardColors=${criteriaMap.get('cardColors').join(',')}&attributes=${criteriaMap.get('attributes').join(',')}&monsterTypes=${criteriaMap.get('monsterTypes').join(',')}&levels=${criteriaMap.get('levels').join(',')}&ranks=${criteriaMap.get('ranks').join(',')}&linkRatings=${criteriaMap.get('linkRatings').join(',')}`, history, json => {
 			setJsonResults(json.results)
 			setNumResults(json.numResults)
 
@@ -181,16 +175,6 @@ export default function Browse( {history} )
 					<StickyBox>
 						<Paper style={{padding: '1.4rem', backgroundColor: '#7f5a83', backgroundImage: 'linear-gradient(315deg, #7f5a83 0%, #0d324d 74%)' }} >
 
-							<MainBrowseInfoTypography
-								style={{marginBottom: '1rem'}}
-								variant='h6' >
-								Current Criteria
-							</MainBrowseInfoTypography>
-
-							{selectedCriteriaChips}
-
-							<br />
-							<br />
 							<Autocomplete
 								multiple
 								id='browseCriteriaFilter'
@@ -215,7 +199,7 @@ export default function Browse( {history} )
 									// setSelectedCriteria(intermediateSelectedCriteria)
 								}}
 								renderInput={(params) => (
-									<div style={{ width: '100%', display: 'flex', backgroundColor: 'rgba(0, 0, 0, .37)' }} >
+									<div style={{ width: '100%', display: 'flex', backgroundColor: 'rgba(0, 0, 0, .37)', borderRadius: '1.25rem', marginBottom: '2.75rem' }} >
 										<InputBase
 											ref={params.InputProps.ref}
 											inputProps={params.inputProps}
@@ -237,31 +221,52 @@ export default function Browse( {history} )
 							}}
 							/>
 
+
+							<LeftBoxSectionHeaderTypography variant='h6' >
+								Current Criteria
+							</LeftBoxSectionHeaderTypography>
+
+							<div style={{minHeight: '1.5rem'}} >
+								{selectedCriteriaChips}
+							</div>
+
 							<LightTranslucentDivider />
 
-							<MainBrowseInfoTypography variant='h6' >
+							<LeftBoxSectionHeaderTypography variant='h6' >
 								Results
-							</MainBrowseInfoTypography>
-							<MainBrowseInfoTypography variant='body1' >
+							</LeftBoxSectionHeaderTypography>
+							<LeftBoxSectionTypography variant='body1' >
 								Total: {numResults}
-							</MainBrowseInfoTypography>
-							<MainBrowseInfoTypography variant='body1' >
+							</LeftBoxSectionTypography>
+							<LeftBoxSectionTypography variant='body1' >
 								Displaying: {numResultsDisplayed}
-							</MainBrowseInfoTypography>
+							</LeftBoxSectionTypography>
 
 							</Paper>
 					</StickyBox>
 				}
 				twoThirdComponent={
-					<CardDisplayGrid
-						cardJsonResults={jsonResults}
-						numResultsDisplayed={numResultsDisplayed}
-						numItemsToLoadWhenNeeded={numItemsToLoadWhenNeeded}
-						loadMoreCallback={loadMore}
-						isLoadMoreOptionVisible={isLoadMoreVisible}
-						numResults={numResults}
-						isDataLoaded={isCardBrowseDataLoaded}
-						/>
+					<RightBoxPaper>
+						<RightBoxHeaderContainer >
+							<RightBoxHeaderTypography variant='h4' >
+								Browse Results
+							</RightBoxHeaderTypography>
+							<RightBoxSubHeaderTypography variant='subtitle1' >
+								Sorted Alphabetically
+							</RightBoxSubHeaderTypography>
+							<DarkTranslucentDivider />
+						</RightBoxHeaderContainer>
+
+						<CardDisplayGrid
+							cardJsonResults={jsonResults}
+							numResultsDisplayed={numResultsDisplayed}
+							numItemsToLoadWhenNeeded={numItemsToLoadWhenNeeded}
+							loadMoreCallback={loadMore}
+							isLoadMoreOptionVisible={isLoadMoreVisible}
+							numResults={numResults}
+							isDataLoaded={isCardBrowseDataLoaded}
+							/>
+					</RightBoxPaper>
 				}
 			/>
 		</MainContentContainer>

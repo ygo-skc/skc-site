@@ -24,7 +24,6 @@ const BreadCrumbsContent = styled(Box)`
 	{
 		display: flex;
 		padding: 1rem;
-		margin-bottom: 1.3rem;
 	}
 
 `
@@ -33,8 +32,8 @@ const BreadCrumbItem = styled(Link)`
 	&&
 	{
 		display: flex;
-		font-weight: 600;
-		color: rgb(101, 119, 134);
+		font-weight: 400;
+		color: #666;
 	}
 `
 
@@ -58,7 +57,7 @@ const Breadcrumb: FunctionComponent<BreadcrumbProps> = memo( ( { crumbs }  ) =>
 					<Skeleton
 						key={item}
 						variant='text'
-						width={ 150 }
+						width={ 50 }
 					/>
 					: <BreadCrumbItem
 						variant='subtitle2'

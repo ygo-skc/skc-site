@@ -3,7 +3,7 @@ import {Paper, Typography} from '@material-ui/core'
 import {Skeleton} from '@material-ui/lab'
 
 import Styled from 'styled-components'
-
+import {LightTranslucentDivider} from '../util/Divider'
 
 export default function CardInformationSection({ isLoading, hasInfo, infoChips, headerText, noInfoText, background, backgroundImage })
 {
@@ -12,8 +12,12 @@ export default function CardInformationSection({ isLoading, hasInfo, infoChips, 
 		{
 			background: ${background};
 			background-image: ${backgroundImage};
-			padding: 1.5rem;
+			padding-left: .5rem;
+			padding-right: .5rem;
+			padding-top: 2.25rem;
+			padding-bottom: 2.25rem;
 			text-align: center;
+			border-radius: .7rem;
 		}
 	`
 
@@ -23,17 +27,17 @@ export default function CardInformationSection({ isLoading, hasInfo, infoChips, 
 			{
 				(isLoading)?
 					<Skeleton width={150} height={25} style={{margin: 'auto'}}  />
-					: <Typography variant='subtitle1' align='center' style={{color: '#fff'}} >
+					: <Typography variant='h6' align='center' style={{color: '#fff', marginBottom: '0rem'}} >
 						{headerText}
 					</Typography>
 			}
-			<br />
+			<LightTranslucentDivider />
 			{
 				(isLoading)?
 					undefined
 					: (hasInfo)?
 						infoChips
-						: <Typography style={{ color: '#fff' }} align='center' variant='subtitle2' >
+						: <Typography style={{ color: '#fff' }} align='center' variant='subtitle1' >
 							{noInfoText}
 						</Typography>
 			}
