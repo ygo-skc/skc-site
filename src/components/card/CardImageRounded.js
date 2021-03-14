@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import { Skeleton } from '@material-ui/lab'
 import VizSensor from 'react-visibility-sensor'
 
 async function getImg(imgURL)
@@ -32,7 +33,7 @@ export default function CardImageRounded({cardID, timeout=10, defaultVisibility=
 			<div style={{margin: 'auto', marginBottom: '.5rem', width: '96%'}} >
 				<div
 					style={{ borderRadius: '4rem', overflow: 'hidden', width: '100%',  height: '0', paddingBottom: '100%' }} >
-					{(visible)? img : undefined
+					{(visible)? img : <Skeleton width='100%' height='100%' style={{objectFit: 'cover'}} />
 					}
 				</div>
 			</div>

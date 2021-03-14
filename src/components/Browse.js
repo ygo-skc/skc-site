@@ -76,12 +76,13 @@ export default function Browse( {history} )
 		criteriaMap.set('cardColors', [])
 		criteriaMap.set('attributes', [])
 		criteriaMap.set('monsterTypes', [])
+		criteriaMap.set('monsterSubTypes', [])
 		criteriaMap.set('levels', [])
 		criteriaMap.set('ranks', [])
 		criteriaMap.set('linkRatings', [])
 
 		const selectedCriteriaChips = selectedCriteria.map(criteria => {
-			if (criteria.criteriaName === 'cardColors' || criteria.criteriaName === 'attributes' || criteria.criteriaName === 'monsterTypes')
+			if (criteria.criteriaName === 'cardColors' || criteria.criteriaName === 'attributes' || criteria.criteriaName === 'monsterTypes' || criteria.criteriaName === 'monsterSubTypes')
 				criteriaMap.get(criteria.criteriaName).push(criteria.criteriaValue)
 			else if(criteria.criteriaName === 'levels'){
 				criteriaMap.get(criteria.criteriaName).push(criteria.criteriaValue.replace('Level ', ""))
@@ -105,7 +106,7 @@ export default function Browse( {history} )
 
 
 		setIsCardBrowseDataLoaded(false)
-		handleFetch(`${NAME_maps_ENDPOINT['browse']}?cardColors=${criteriaMap.get('cardColors').join(',')}&attributes=${criteriaMap.get('attributes').join(',')}&monsterTypes=${criteriaMap.get('monsterTypes').join(',')}&levels=${criteriaMap.get('levels').join(',')}&ranks=${criteriaMap.get('ranks').join(',')}&linkRatings=${criteriaMap.get('linkRatings').join(',')}`, history, json => {
+		handleFetch(`${NAME_maps_ENDPOINT['browse']}?cardColors=${criteriaMap.get('cardColors').join(',')}&attributes=${criteriaMap.get('attributes').join(',')}&monsterTypes=${criteriaMap.get('monsterTypes').join(',')}&monsterSubTypes=${criteriaMap.get('monsterSubTypes').join(',')}&levels=${criteriaMap.get('levels').join(',')}&ranks=${criteriaMap.get('ranks').join(',')}&linkRatings=${criteriaMap.get('linkRatings').join(',')}`, history, json => {
 			setJsonResults(json.results)
 			setNumResults(json.numResults)
 

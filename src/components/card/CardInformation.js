@@ -1,4 +1,4 @@
-import React, { useState, useEffect, lazy, Suspense, useMemo } from 'react'
+import React, { useState, useEffect, Suspense, useMemo } from 'react'
 import { Chip } from '@material-ui/core'
 import {Helmet} from 'react-helmet'
 
@@ -11,8 +11,9 @@ import OneThirdTwoThirdsGrid from '../grid/OneThirdTwoThirdsGrid'
 
 import Breadcrumb from '../Breadcrumb'
 import CardData from './CardData'
+import CardInformationRelatedContent from './CardInformationRelatedContent'
 
-const CardInformationRelatedContent = lazy( () => import('./CardInformationRelatedContent') )
+// const CardInformationRelatedContent = lazy( () => import('./CardInformationRelatedContent') )
 
 const crumbs = ['Home', 'Card Browse']
 
