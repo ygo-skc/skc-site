@@ -6,6 +6,12 @@ import { Box, Paper } from '@material-ui/core'
 const MainContentContainer = Styled(Box)`
 	&&
 	{
+		padding-left: 0rem;
+		padding-right: 0rem;
+		padding-bottom: 0rem;
+
+		max-width: 100%;
+		width: 100%;
 	}
 `
 
