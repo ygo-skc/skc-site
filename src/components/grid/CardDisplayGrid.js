@@ -129,11 +129,9 @@ const CardDisplayGrid = memo( ({ cardJsonResults, numResultsDisplayed, numItemsT
 
 
 	return(
-		<Box >
-			<Grid>
-				<Grid container >
-					{(!isDataLoaded)? cardGridUISkeleton : (numResults === 0)? <Typography variant='h5' style={{margin: 'auto', paddingTop: '3rem', paddingBottom: '3rem'}} >No Content To Show</Typography> : cardGridUI}
-				</Grid>
+		<Box style={{maxWidth: '100%'}} >
+			<Grid container >
+				{(!isDataLoaded)? cardGridUISkeleton : (numResults === 0)? <Typography variant='h5' style={{margin: 'auto', paddingTop: '1.5rem', paddingBottom: '1.5rem'}} >No Content To Show</Typography> : cardGridUI}
 			</Grid>
 
 			{

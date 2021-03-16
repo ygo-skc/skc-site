@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet'
 import { Paper, Box } from '@material-ui/core'
 
 
+import { MainContentContainer } from '../MainContent'
 import { handleFetch } from '../../helper/FetchHandler'
 import { BanListDates } from './BanListDates'
 import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
@@ -13,11 +14,9 @@ import OneThirdTwoThirdsGrid from '../grid/OneThirdTwoThirdsGrid'
 import {StickyBox} from '../util/StyledContainers'
 
 
-// import BanListStats from './BanListStats'
 import BreadCrumb from '../Breadcrumb'
 const TabbedView = lazy( () => import('./TabbedView') )
 const BanListSection = lazy( () => import('./BanListSection') )
-// const BreadCrumb = lazy( () => import('../Breadcrumb') )
 const BanListStats = lazy( () => import('./BanListStats') )
 const Footer = lazy( () => import('../Footer') )
 
@@ -155,7 +154,7 @@ export default function BanList(props)
 
 
 	return (
-		<Box >
+		<MainContentContainer >
 			<Helmet>
 				<title>{`SKC - Ban List: ${selectedBanList}`}</title>
 				<meta
@@ -264,34 +263,6 @@ export default function BanList(props)
 					}
 				/>
 
-
-				{/* <BanListTable
-					isDataLoaded={ isDataLoaded }
-					bannedContent={ forbidden }
-					contentTitle='Forbidden'
-					contentExplanation='Forbidden cards cannot be used in Deck/Side Deck in the Advanced Format'
-					contentColor='#ff4557'
-					cardClicked={ cardID => setChosenCardID(cardID) }
-				/>
-				<br />
-				<BanListTable
-					isDataLoaded={ isDataLoaded }
-					bannedContent={ limited }
-					contentTitle='Limited'
-					contentExplanation='Limited cards can be included in Deck/Side deck - max 1'
-					contentColor='#ff6c12'
-					cardClicked={ cardID => setChosenCardID(cardID) }
-				/>
-				<br />
-				<BanListTable
-					isDataLoaded={ isDataLoaded }
-					bannedContent={ semiLimited }
-					contentTitle='Semi-Limited'
-					contentExplanation='Semi-Limited cards can be included in Deck/Side deck - max 2'
-					contentColor='#f0c620'
-					cardClicked={ cardID => setChosenCardID(cardID) }
-				/> */}
-
-		</Box>
+		</MainContentContainer>
 	)
 }

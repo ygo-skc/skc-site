@@ -108,7 +108,7 @@ const Card = ( { match, history } ) =>
 
 
 	return (
-		<MainContentContainer style={{ paddingLeft: '0rem', paddingRight: '0rem', paddingBottom: '0rem' }}  >
+		<MainContentContainer >
 			{helmetData}
 			<Suspense>
 				<Breadcrumb crumbs={ dynamicCrumbs } />
