@@ -12,12 +12,8 @@ export default function CardInformationSection({ isLoading, hasInfo, infoChips, 
 		{
 			background: ${background};
 			background-image: ${backgroundImage};
-			padding-left: .5rem;
-			padding-right: .5rem;
-			padding-top: 2.25rem;
-			padding-bottom: 2.25rem;
-			text-align: center;
-			border-radius: .7rem;
+			padding: 2rem;
+			border-radius: 1.5rem;
 		}
 	`
 
@@ -26,8 +22,8 @@ export default function CardInformationSection({ isLoading, hasInfo, infoChips, 
 		<StyledPaper >
 			{
 				(isLoading)?
-					<Skeleton width={150} height={25} style={{margin: 'auto'}}  />
-					: <Typography variant='h6' align='center' style={{color: '#fff', marginBottom: '0rem'}} >
+					<Skeleton width={150} height={25} />
+					: <Typography variant='h6'style={{color: '#fff', marginBottom: '0rem'}} >
 						{headerText}
 					</Typography>
 			}

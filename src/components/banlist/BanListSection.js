@@ -1,24 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
-
-import { Typography, Box } from '@material-ui/core'
 
 import { ChildBox } from '../MainContent'
 
 import CardDisplayGrid from '../util/grid/CardDisplayGrid'
 
+import { Hint } from '../util/Hints'
+
 
 const BanListSection = ( { sectionExplanation, cards, isDataLoaded } ) =>
 {
 	const [cardTypeContentGrid, setCardTypeContentGrid] = useState([])
-
-	const SectionInfoText = styled(Typography)`
-		&&
-		{
-			color: #5e6d7d;
-		}
-	`
 
 
 	useEffect(() => {
@@ -39,15 +31,9 @@ const BanListSection = ( { sectionExplanation, cards, isDataLoaded } ) =>
 	}, [isDataLoaded])
 
 
-
 	return (
 		<ChildBox >
-			<Box style={{backgroundColor: '#f6f2fb', padding: '1.4rem', maxWidth: '85%', borderRadius: '1.25rem', margin: 'auto', marginTop: '2rem', marginBottom: '2rem'}} >
-				<SectionInfoText variant='subtitle2' align='center' >
-					{ sectionExplanation }
-				</SectionInfoText>
-			</Box>
-
+			<Hint text={sectionExplanation} textVariant='subtitle1' />
 			{cardTypeContentGrid}
 		</ChildBox>
 	)

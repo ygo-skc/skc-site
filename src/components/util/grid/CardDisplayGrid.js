@@ -10,6 +10,8 @@ import CardImageRounded from '../../card/CardImageRounded'
 import YGOCard from '../../card/YGOCard'
 import Footer from '../../Footer'
 
+import { Hint } from '../../util/Hints'
+
 import Styled from 'styled-components'
 
 
@@ -131,7 +133,7 @@ const CardDisplayGrid = memo( ({ cardJsonResults, numResultsDisplayed, numItemsT
 	return(
 		<Box style={{maxWidth: '100%'}} >
 			<Grid container >
-				{(!isDataLoaded)? cardGridUISkeleton : (numResults === 0)? <Typography variant='h5' style={{margin: 'auto', paddingTop: '1.5rem', paddingBottom: '1.5rem'}} >No Content To Show</Typography> : cardGridUI}
+				{(!isDataLoaded)? cardGridUISkeleton : (numResults === 0)? <Hint text='No Content To Show' textVariant='h5' />: cardGridUI}
 			</Grid>
 
 			{

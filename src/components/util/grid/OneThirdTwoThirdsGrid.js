@@ -36,10 +36,8 @@ const RightBoxPaper = Styled(Paper)`
 	&&
 	{
 		background: #fafafa;
-		padding: .5rem;
+		padding: .85rem;
 		border-radius: 1.75rem;
-		padding-top: 1.75rem;
-		padding-bottom: 1.75rem;
 	}
 `
 
