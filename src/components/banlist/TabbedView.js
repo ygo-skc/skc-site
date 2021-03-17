@@ -107,8 +107,7 @@ const TabbedView = memo( ( { numForbidden, numLimited, numSemiLimited, forbidden
 				<AppBar
 					style={{boxShadow: 'none'}}
 					position='static'
-					color='transparent'
-				>
+					color='transparent'>
 					<CustomTabs
 						textColor='primary'
 						value={currentTab}
@@ -118,19 +117,17 @@ const TabbedView = memo( ( { numForbidden, numLimited, numSemiLimited, forbidden
 					</CustomTabs>
 				</AppBar>
 
-				<div >
-					<TabPanel value={ currentTab } index={0}>
-						{ forbiddenContent }
-					</TabPanel>
+				<TabPanel value={ currentTab } index={0}>
+					{ forbiddenContent }
+				</TabPanel>
 
-					<TabPanel value={ currentTab } index={1}>
-						{ limitedContent }
-					</TabPanel>
+				<TabPanel value={ currentTab } index={1}>
+					{ limitedContent }
+				</TabPanel>
 
-					<TabPanel value={ currentTab } index={2}>
-						{ semiLimitedContent }
-					</TabPanel>
-				</div>
+				<TabPanel value={ currentTab } index={2}>
+					{ semiLimitedContent }
+				</TabPanel>
 			</div>
 		)
 }, (prevProps, nextProps) => {

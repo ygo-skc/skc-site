@@ -42,7 +42,7 @@ const BanListSection = ( { sectionExplanation, cards, isDataLoaded } ) =>
 
 	return (
 		<ChildBox >
-			<Box style={{backgroundColor: '#f6f2fb', padding: '1.4rem', margin: '1.5rem', borderRadius: '1.5rem'}} >
+			<Box style={{backgroundColor: '#f6f2fb', padding: '1.4rem', margin: '1.5rem', borderRadius: '1.25rem'}} >
 				<SectionInfoText variant='subtitle2' align='center' >
 					{ sectionExplanation }
 				</SectionInfoText>
