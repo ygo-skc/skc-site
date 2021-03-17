@@ -13,8 +13,6 @@ import Breadcrumb from '../Breadcrumb'
 import CardData from './CardData'
 import CardInformationRelatedContent from './CardInformationRelatedContent'
 
-// const CardInformationRelatedContent = lazy( () => import('./CardInformationRelatedContent') )
-
 const crumbs = ['Home', 'Card Browse']
 
 async function populateBanListChips(banListInfo)

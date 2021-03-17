@@ -3,6 +3,8 @@ import { Grid } from '@material-ui/core'
 import {RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from '../grid/OneThirdTwoThirdsGrid'
 import Footer from '../Footer'
 
+import {DarkTranslucentDivider} from '../util/Divider'
+
 const CardInformationSection = lazy( () => import('./CardInformationSection') )
 
 
@@ -14,9 +16,11 @@ const CardInformationRelatedContent = ( { cardName, isLoading, productInfo, prod
 				<RightBoxHeaderTypography variant='h4' >
 					Explore
 				</RightBoxHeaderTypography>
-				<RightBoxSubHeaderTypography variant='subtitle1' style={{marginBottom: '3rem'}} >
+				<RightBoxSubHeaderTypography variant='h5'>
 					Related Content For <i>{cardName}</i>
 				</RightBoxSubHeaderTypography>
+
+				<DarkTranslucentDivider />
 			</RightBoxHeaderContainer>
 
 			<Grid container spacing={1} >

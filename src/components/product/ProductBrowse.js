@@ -103,7 +103,7 @@ export default function ProductBrowse({history})
 					<RightBoxHeaderTypography variant='h4' >
 						Products In Database
 					</RightBoxHeaderTypography>
-					<RightBoxSubHeaderTypography variant='subtitle1' >
+					<RightBoxSubHeaderTypography variant='h5' >
 						Sorted By Release Date
 					</RightBoxSubHeaderTypography>
 

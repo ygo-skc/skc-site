@@ -252,7 +252,7 @@ export default function Browse( {history} )
 							<RightBoxHeaderTypography variant='h4' >
 								Browse Results
 							</RightBoxHeaderTypography>
-							<RightBoxSubHeaderTypography variant='subtitle1' >
+							<RightBoxSubHeaderTypography variant='h5' >
 								Sorted Alphabetically
 							</RightBoxSubHeaderTypography>
 							<DarkTranslucentDivider />

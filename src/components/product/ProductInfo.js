@@ -78,15 +78,14 @@ export default function ProductInfo({match, history}) {
 
 							{(isDataLoaded)?
 								<LeftBoxHeaderTypography
-									variant='h4'
-									align='center' >
+									variant='h4' >
 									{productName}
 								</LeftBoxHeaderTypography>
 								: <Skeleton
 									variant='rect'
 									height={30}
 									width={250}
-									style={{margin: 'auto', marginBottom: '.8rem'}}
+									style={{marginBottom: '.8rem'}}
 									/>
 							}
 
@@ -126,7 +125,7 @@ export default function ProductInfo({match, history}) {
 								<RightBoxHeaderTypography variant='h4' >
 									Contents
 								</RightBoxHeaderTypography>
-								<RightBoxSubHeaderTypography variant='subtitle1' >
+								<RightBoxSubHeaderTypography variant='h5' >
 									Sorted By Pack Order
 								</RightBoxSubHeaderTypography>
 
