@@ -10,7 +10,7 @@ import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
 
 // const ProductCardGridItem = lazy( () => import('./ProductCardGridItem') )
 import ProductCardGridItem from './ProductCardGridItem'
-import {RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from '../grid/OneThirdTwoThirdsGrid'
+import {RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from '../util/grid/OneThirdTwoThirdsGrid'
 import {DarkTranslucentDivider} from '../util/Divider'
 
 const Breadcrumb = lazy( () => import('../Breadcrumb') )

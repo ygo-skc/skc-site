@@ -8,9 +8,9 @@ import SearchIcon from '@material-ui/icons/Search'
 import Breadcrumb from './Breadcrumb'
 import { MainContentContainer } from './MainContent'
 
-import CardDisplayGrid from './grid/CardDisplayGrid'
+import CardDisplayGrid from './util/grid/CardDisplayGrid'
 
-import OneThirdTwoThirdsGrid from './grid/OneThirdTwoThirdsGrid'
+import OneThirdTwoThirdsGrid from './util/grid/OneThirdTwoThirdsGrid'
 
 import { handleFetch } from '../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../helper/YgoApiEndpoints'
@@ -20,7 +20,7 @@ import {StickyBox} from './util/StyledContainers'
 
 import {RenderGroup, SearchSuggestionTypography} from './util/Search'
 
-import {LeftBoxSectionTypography, LeftBoxSectionHeaderTypography, RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from './grid/OneThirdTwoThirdsGrid'
+import {LeftBoxSectionTypography, LeftBoxSectionHeaderTypography, RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from './util/grid/OneThirdTwoThirdsGrid'
 
 
 const defaultDisplayNum = 50

@@ -1,6 +1,6 @@
 import React, { lazy } from 'react'
 import { Grid } from '@material-ui/core'
-import {RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from '../grid/OneThirdTwoThirdsGrid'
+import {RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from '../util/grid/OneThirdTwoThirdsGrid'
 import Footer from '../Footer'
 
 import {DarkTranslucentDivider} from '../util/Divider'

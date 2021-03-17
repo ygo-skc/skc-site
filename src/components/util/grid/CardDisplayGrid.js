@@ -5,10 +5,10 @@ import { Skeleton } from '@material-ui/lab'
 import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded';
 
 
-import CardImageRounded from '../card/CardImageRounded'
+import CardImageRounded from '../../card/CardImageRounded'
 
-import YGOCard from '../card/YGOCard'
-import Footer from '../Footer'
+import YGOCard from '../../card/YGOCard'
+import Footer from '../../Footer'
 
 import Styled from 'styled-components'
 

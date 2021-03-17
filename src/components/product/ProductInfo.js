@@ -9,18 +9,18 @@ import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
 
 import {MainContentContainer} from '../MainContent'
 
-import OneThirdTwoThirdsGrid from '../grid/OneThirdTwoThirdsGrid'
+import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 
 import {LightTranslucentDivider, DarkTranslucentDivider} from '../util/Divider'
 
 import {StickyBox} from '../util/StyledContainers'
 
-import {LeftBoxHeaderTypography, LeftBoxSectionTypography, LeftBoxSectionHeaderTypography, RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from '../grid/OneThirdTwoThirdsGrid'
+import {LeftBoxHeaderTypography, LeftBoxSectionTypography, LeftBoxSectionHeaderTypography, RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from '../util/grid/OneThirdTwoThirdsGrid'
 
 
 
 const Breadcrumb = lazy( () => import('../Breadcrumb') )
-const CardDisplayGrid = lazy( () => import('../grid/CardDisplayGrid') )
+const CardDisplayGrid = lazy( () => import('../util/grid/CardDisplayGrid') )
 
 
 export default function ProductInfo({match, history}) {

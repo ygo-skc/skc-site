@@ -5,7 +5,7 @@ import { Button, Grid, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDeta
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DateRangeRoundedIcon from '@material-ui/icons/DateRangeRounded'
-import {LeftBoxSectionHeaderTypography} from '../grid/OneThirdTwoThirdsGrid'
+import {LeftBoxSectionHeaderTypography} from '../util/grid/OneThirdTwoThirdsGrid'
 
 
 

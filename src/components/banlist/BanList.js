@@ -10,7 +10,7 @@ import { handleFetch } from '../../helper/FetchHandler'
 import { BanListDates } from './BanListDates'
 import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
 
-import OneThirdTwoThirdsGrid from '../grid/OneThirdTwoThirdsGrid'
+import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 import {StickyBox} from '../util/StyledContainers'
 
 

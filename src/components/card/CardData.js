@@ -1,7 +1,7 @@
 import React, {lazy, memo } from 'react'
 
 import {StickyBox} from '../util/StyledContainers'
-import {RightBoxPaper} from '../grid/OneThirdTwoThirdsGrid'
+import {RightBoxPaper} from '../util/grid/OneThirdTwoThirdsGrid'
 // import CardImageRounded from './CardImageRounded'
 
 const YGOCard = lazy( () => import('./YGOCard') )

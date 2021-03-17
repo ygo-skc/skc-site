@@ -6,7 +6,7 @@ import { handleFetch } from '../../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
 import { MainContentContainer } from '../MainContent'
 
-import OneThirdTwoThirdsGrid from '../grid/OneThirdTwoThirdsGrid'
+import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 
 
 import Breadcrumb from '../Breadcrumb'
