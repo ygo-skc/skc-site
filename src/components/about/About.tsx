@@ -9,7 +9,7 @@ import { MainContentContainer } from '../MainContent'
 import Footer from '../Footer'
 import {DarkTranslucentDivider} from '../util/Divider'
 
-import GenericLinkPhoto from '../photo/GenericLinkPhoto'
+import GenericLinkPhoto from '../util/photo/GenericLinkPhoto'
 
 const CustomLink = styled(Link)`
 	&&
