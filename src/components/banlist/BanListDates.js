@@ -61,7 +61,7 @@ export const BanListDates = memo( ( { banListStartDates, setSelectedBanList } ) 
 
 
 	return(
-		<div style={{padding: '.5rem'}} >
+		<div >
 			<LeftBoxSectionHeaderTypography
 				variant='h6' >
 				Date Range

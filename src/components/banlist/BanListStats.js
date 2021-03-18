@@ -166,7 +166,7 @@ const BanListStats = memo( ( { totalCardsInSelectedList, selectedBanList
 
 
 	return(
-		<div style={{padding: '.5rem'}} >
+		<div >
 			<LeftBoxSectionHeaderTypography
 				variant='h6' >
 				Summary
