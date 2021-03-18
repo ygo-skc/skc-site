@@ -36,8 +36,13 @@ const RightBoxPaper = Styled(Paper)`
 	&&
 	{
 		background: #fafafa;
-		padding: .85rem;
 		border-radius: 1.75rem;
+		padding: .85rem;
+
+		@media screen and (min-width: 800px)
+		{
+			padding: 1.3rem;
+		}
 	}
 `
 
@@ -45,8 +50,6 @@ const RightBoxPaper = Styled(Paper)`
 const RightBoxHeaderContainer = Styled(Box)`
 	&&
 	{
-		margin-left: .75rem;
-		margin-right: .75rem;
 	}
 `
 

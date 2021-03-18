@@ -11,6 +11,9 @@ import { BanListDates } from './BanListDates'
 import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
 
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
+import { RightBoxPaper} from '../util/grid/OneThirdTwoThirdsGrid'
+import {LightTranslucentDivider} from '../util/Divider'
+
 import {StickyBox} from '../util/StyledContainers'
 
 
@@ -21,47 +24,12 @@ const BanListStats = lazy( () => import('./BanListStats') )
 const Footer = lazy( () => import('../Footer') )
 
 
-const BanContentParent = Styled(Paper)`
-	&&
-	{
-		background-image: linear-gradient(315deg, #fc9842 0%, #fe5f75 74%);
-		border-radius: .5rem;
-
-		@media screen and (min-width: 0px)
-		{
-			padding: .67rem;
-			margin-bottom: 1.5rem;
-		}
-		@media screen and (min-width: 600px)
-		{
-			padding: 1rem;
-			margin-bottom: 1.5rem;
-		}
-		@media screen and (min-width: 960px)
-		{
-			padding: 1.1rem;
-			margin-bottom: 1.5rem;
-		}
-		@media screen and (min-width: 1280px)
-		{
-			padding: 1.2rem;
-			margin-bottom: 1.5rem;
-		}
-		@media screen and (min-width: 1920px)
-		{
-			padding: 1.2rem;
-			margin-bottom: 1.5rem;
-		}
-	}
-`
-
 const BannedContentContainer = Styled(Paper)`
 	&&
 	{
 		border-radius: 0rem;
 	}
 `
-
 
 
 export default function BanList(props)
@@ -169,7 +137,7 @@ export default function BanList(props)
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={
 					<StickyBox>
-						<BanContentParent>
+						<RightBoxPaper style={{ backgroundImage: 'linear-gradient(315deg, #fc9842 0%, #fe5f75 74%)' }} >
 
 							{(isSettingUpDates)? undefined
 								: <BanListDates
@@ -177,9 +145,8 @@ export default function BanList(props)
 								banListStartDates={banListStartDates}
 								setSelectedBanList={ (ind) => setSelectedBanList(banListStartDates[ind]) } />}
 
-						</BanContentParent>
+							<LightTranslucentDivider />
 
-						<BanContentParent>
 							<Suspense fallback={undefined} >
 								<BanListStats
 									totalCardsInSelectedList={numForbidden + numLimited + numSemiLimited}
@@ -194,7 +161,7 @@ export default function BanList(props)
 									numRemoved={numRemoved}
 								/>
 							</Suspense>
-						</BanContentParent>
+						</RightBoxPaper>
 					</StickyBox>
 				}
 				twoThirdComponent={

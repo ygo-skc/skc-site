@@ -74,7 +74,7 @@ export default function ProductInfo({match, history}) {
 				oneThirdComponent={
 					<StickyBox>
 
-						<Paper style={{padding: '1.4rem', background: '#a4508', backgroundImage: 'linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)' }} >
+						<RightBoxPaper style={{ backgroundImage: 'linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)' }} >
 
 							{(isDataLoaded)?
 								<LeftBoxHeaderTypography
@@ -114,7 +114,7 @@ export default function ProductInfo({match, history}) {
 							<LeftBoxSectionTypography variant='body1'>
 								<strong>Product Total:</strong> {productTotal}
 							</LeftBoxSectionTypography>
-						</Paper>
+						</RightBoxPaper>
 
 					</StickyBox>
 				}

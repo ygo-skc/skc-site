@@ -174,7 +174,7 @@ export default function Browse( {history} )
 				oneThirdComponent={
 
 					<StickyBox>
-						<Paper style={{padding: '1.4rem', backgroundColor: '#7f5a83', backgroundImage: 'linear-gradient(315deg, #7f5a83 0%, #0d324d 74%)' }} >
+						<RightBoxPaper style={{ backgroundImage: 'linear-gradient(315deg, #7f5a83 0%, #0d324d 74%)' }} >
 
 							<Autocomplete
 								multiple
@@ -243,7 +243,7 @@ export default function Browse( {history} )
 								Displaying: {numResultsDisplayed}
 							</LeftBoxSectionTypography>
 
-							</Paper>
+						</RightBoxPaper>
 					</StickyBox>
 				}
 				twoThirdComponent={
