@@ -37,11 +37,17 @@ const RightBoxPaper = Styled(Paper)`
 	{
 		background: #fafafa;
 		border-radius: 1.75rem;
-		padding: .95rem;
+		padding-left: .8rem;
+		padding-right: .9rem;
+		padding-top: 1.2rem;
+		padding-bottom: 1.2rem;
 
 		@media screen and (min-width: 800px)
 		{
-			padding: 1.3rem;
+			padding-left: 1rem;
+			padding-right: 1rem;
+			padding-top: 1.25rem;
+			padding-bottom: 1.25rem;
 		}
 	}
 `

@@ -2,14 +2,14 @@ import React, { useState, useEffect, Suspense, useMemo } from 'react'
 import { Chip } from '@material-ui/core'
 import {Helmet} from 'react-helmet'
 
-import { handleFetch } from '../../helper/FetchHandler'
-import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
-import { MainContentContainer } from '../MainContent'
+import { handleFetch } from '../../../helper/FetchHandler'
+import NAME_maps_ENDPOINT from '../../../helper/YgoApiEndpoints'
+import { MainContentContainer } from '../../MainContent'
 
-import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
+import OneThirdTwoThirdsGrid from '../../util/grid/OneThirdTwoThirdsGrid'
 
 
-import Breadcrumb from '../Breadcrumb'
+import Breadcrumb from '../../Breadcrumb'
 import CardData from './CardData'
 import CardInformationRelatedContent from './CardInformationRelatedContent'
 
@@ -34,10 +34,11 @@ async function populateProductChips(productInfo, cardID)
 
 const Card = ( { match, history } ) =>
 {
-	const [isLoading, setIsLoading] = useState(true)
 	let cardID = useMemo( () => {
 		return match.params.cardId
 	}, [])
+
+	const [isLoading, setIsLoading] = useState(true)
 
 	const [cardName, setCardName] = useState(undefined)
 	const [cardColor, setCardColor] = useState(undefined)
@@ -56,7 +57,7 @@ const Card = ( { match, history } ) =>
 
 	const [dynamicCrumbs, setDynamicCrumbs] = useState([...crumbs, ''])
 
-	const helmetData = useMemo( () => {
+	const helmetData = useEffect( () => {
 		handleFetch(`${NAME_maps_ENDPOINT['cardInstanceUrl']}${cardID}?allInfo=true`, history, (json) => {
 			setCardName(json.cardName)
 			setCardColor(json.cardColor)

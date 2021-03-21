@@ -1,14 +1,14 @@
-import React, { lazy } from 'react'
+import React, { lazy, memo } from 'react'
 import { Grid } from '@material-ui/core'
-import {RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from '../util/grid/OneThirdTwoThirdsGrid'
-import Footer from '../Footer'
+import {RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from '../../util/grid/OneThirdTwoThirdsGrid'
+import Footer from '../../Footer'
 
-import {DarkTranslucentDivider} from '../util/Divider'
+import {DarkTranslucentDivider} from '../../util/Divider'
 
 const CardInformationSection = lazy( () => import('./CardInformationSection') )
 
 
-const CardInformationRelatedContent = ( { cardName, isLoading, productInfo, productInfoChips, banListInfo, banListInfoChips } ) =>
+const CardInformationRelatedContent = memo( ({ cardName, isLoading, productInfo, productInfoChips, banListInfo, banListInfoChips } ) =>
 {
 	return (
 		<RightBoxPaper>
@@ -57,7 +57,13 @@ const CardInformationRelatedContent = ( { cardName, isLoading, productInfo, prod
 			</Grid>
 		</RightBoxPaper>
 	)
-}
+},  (prevProps, newProps) => {
+	if ( prevProps.productInfoChips !== newProps.productInfoChips
+		|| prevProps.banListInfoChips !== newProps.banListInfoChips )
+		return false
+
+	return true
+})
 
 
 export default CardInformationRelatedContent
