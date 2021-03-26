@@ -19,6 +19,7 @@ const ChildPaper = Styled(Paper)`
 	&&
 	{
 		background: white;
+		border-radius: 2rem;
 
 		@media screen and (min-width: 0px)
 		{

@@ -28,11 +28,11 @@ export default function CardInformationSection({ isLoading, hasInfo, infoChips, 
 		{
 			background: ${background};
 			background-image: ${backgroundImage};
-			padding-left: 1.1rem;
-			padding-right: 1.1rem;
-			padding-top: 1.6rem;
-			padding-bottom: 1.6rem;
-			border-radius: 2rem;
+			padding-left: .9rem;
+			padding-right: .9rem;
+			padding-top: 1.3rem;
+			padding-bottom: 1.3rem;
+			border-radius: 1.05rem;
 		}
 	`
 
