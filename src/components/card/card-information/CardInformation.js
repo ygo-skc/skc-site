@@ -1,5 +1,4 @@
 import React, { useState, useEffect, Suspense, useMemo } from 'react'
-import { Chip } from '@material-ui/core'
 import {Helmet} from 'react-helmet'
 
 import { handleFetch } from '../../../helper/FetchHandler'
@@ -14,22 +13,6 @@ import CardData from './CardData'
 import CardInformationRelatedContent from './CardInformationRelatedContent'
 
 const crumbs = ['Home', 'Card Browse']
-
-async function populateBanListChips(banListInfo)
-{
-	return banListInfo.map( (item, index) => <Chip key={index} label={`${item.banListDate}  •  ${item.banStatus.charAt(0)}`} />)
-}
-
-async function populateProductChips(productInfo, cardID)
-{
-	return productInfo.map( (product, index) => {
-		return product.productContent.map(item => <Chip
-				key={index}
-				label={`${product.productReleaseDate}  •  ${product.productId} #${item.productPosition}  •  ${item.rarities.join(', ')}`}
-				onClick={ () => setTimeout( () => window.location.assign(`/product/${product.productId}#${cardID}`), 250 ) }
-		/>)
-		})
-}
 
 
 const Card = ( { match, history } ) =>
@@ -51,9 +34,6 @@ const Card = ( { match, history } ) =>
 
 	const [productInfo, setPackInfo] = useState([])
 	const [banListInfo, setBanListInfo] = useState([])
-
-	const [productInfoChips, setPackInfoChips] = useState([])
-	const [banListInfoChips, setBanListInfoChips] = useState([])
 
 	const [dynamicCrumbs, setDynamicCrumbs] = useState([...crumbs, ''])
 
@@ -89,23 +69,6 @@ const Card = ( { match, history } ) =>
 	}, [])
 
 
-
-	useEffect( () => {
-		if ( productInfoChips.length === 0 )
-		{
-			populateProductChips(productInfo, cardID).then(productInfoChips => setPackInfoChips(productInfoChips))
-		}
-	}, [productInfo])
-
-
-	useEffect( () => {
-		if ( banListInfoChips.length === 0 )
-		{
-			populateBanListChips(banListInfo).then(banListInfoChips => setBanListInfoChips(banListInfoChips))
-		}
-	}, [banListInfo])
-
-
 	return (
 		<MainContentContainer >
 			{helmetData}
@@ -131,10 +94,9 @@ const Card = ( { match, history } ) =>
 				twoThirdComponent={
 					<CardInformationRelatedContent cardName={cardName}
 						isLoading={isLoading}
+						cardID={cardID}
 						productInfo={productInfo}
-						productInfoChips={productInfoChips}
-						banListInfo={banListInfo}
-						banListInfoChips={banListInfoChips} />
+						banListInfo={banListInfo} />
 					}
 				/>
 

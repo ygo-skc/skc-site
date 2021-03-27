@@ -5,10 +5,11 @@ import Footer from '../../Footer'
 
 import {DarkTranslucentDivider} from '../../util/Divider'
 
-const CardInformationSection = lazy( () => import('./CardInformationSection') )
+const CardProductInformation = lazy( () => import('./CardProductInformation') )
+const CardBanListInformation = lazy( () => import('./CardBanListInformation') )
 
 
-const CardInformationRelatedContent = memo( ({ cardName, isLoading, productInfo, productInfoChips, banListInfo, banListInfoChips } ) =>
+const CardInformationRelatedContent = memo( ({ cardName, isLoading, productInfo, banListInfo, cardID } ) =>
 {
 	return (
 		<RightBoxPaper>
@@ -26,28 +27,29 @@ const CardInformationRelatedContent = memo( ({ cardName, isLoading, productInfo,
 			<Grid container spacing={1} >
 				<Grid item xs={12} sm={12} md={12} lg={6} xl={6}  style={ { display: 'inline-grid' } } >
 					{(isLoading)? undefined
-					: <CardInformationSection
+					: <CardProductInformation
 						isLoading={isLoading}
 						hasInfo={ (productInfo.length === 0)? false : true }
-						infoChips={productInfoChips}
 						headerText={'Products'}
 						noInfoText={'Not Found In Any Product'}
 						background='#a4508b'
 						backgroundImage='linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)'
+						cardInfo={productInfo}
+						cardID={cardID}
 					/>
 					}
 				</Grid>
 
 				<Grid item xs={12} sm={12} md={12} lg={6} xl={6} style={ { display: 'inline-grid' } } >
 					{(isLoading)? undefined
-					: <CardInformationSection
+					: <CardBanListInformation
 						isLoading={isLoading}
 						hasInfo={ (banListInfo.length === 0)? false : true }
-						infoChips={banListInfoChips}
 						headerText={'Ban Lists'}
 						noInfoText={`Not Found In Any Ban List`}
 						background='#fc9842'
 						backgroundImage='linear-gradient(315deg, #fc9842 0%, #fe5f75 74%)'
+						cardInfo={banListInfo}
 					/>
 					}
 
@@ -58,8 +60,7 @@ const CardInformationRelatedContent = memo( ({ cardName, isLoading, productInfo,
 		</RightBoxPaper>
 	)
 },  (prevProps, newProps) => {
-	if ( prevProps.productInfoChips !== newProps.productInfoChips
-		|| prevProps.banListInfoChips !== newProps.banListInfoChips )
+	if ( prevProps.isLoading !== newProps.isLoading )
 		return false
 
 	return true

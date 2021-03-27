@@ -50,12 +50,12 @@ const theme = createMuiTheme({
 		}
 		, 'MuiTableCell': {
 			head: {
-				fontWeight: 600,
-				fontSize: '.93rem'
+				fontWeight: 800,
+				fontSize: '1.05rem'
 			},
 			body: {
 				fontWeight: 500,
-				fontSize: '.85rem'
+				fontSize: '1.1rem'
 			},
 			root: {
 				fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
