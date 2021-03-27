@@ -31,8 +31,8 @@ const DatabaseSearch = styled(Autocomplete)`
 
 
 const searchThrottle = throttle((searchSubject, setSearchOptions, history) => {
-	handleFetch(`${NAME_maps_ENDPOINT['search']}?limit=18&cName=${searchSubject}`, history, json => { setSearchOptions(json) })
-}, 25)
+	handleFetch(`${NAME_maps_ENDPOINT['search']}?limit=10&cName=${searchSubject}`, history, json => { setSearchOptions(json) })
+}, 15)
 
 
 export default function Home({ history }) {
@@ -145,7 +145,7 @@ export default function Home({ history }) {
 							Social
 						</RightBoxHeaderTypography>
 						<RightBoxSubHeaderTypography variant='h5'>
-							Start A Conversation On Discord
+							Start A Conversation
 						</RightBoxSubHeaderTypography>
 						<iframe src="https://discord.com/widget?id=659477868799197185&theme=dark" width="100%" height="300" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
 					</RightBoxPaper>

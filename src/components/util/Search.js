@@ -7,7 +7,7 @@ import styled from 'styled-components'
 const RenderGroup = ({group, children}) =>
 {
 	return(
-		<div style={{ paddingLeft: '.5rem', paddingTop: '.8rem' }} >
+		<div style={{ padding: '.7rem', paddingBottom: '0rem' }} >
 			<Typography
 				variant='subtitle1' style={{fontWeight: '800'}} >
 				{group}

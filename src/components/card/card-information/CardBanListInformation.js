@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import {Paper, TableContainer, Table, TableHead, TableRow, TableBody, TableCell} from '@material-ui/core'
+import {Paper, TableContainer, Table, TableHead, TableRow, TableBody, TableCell, Box} from '@material-ui/core'
 import {Skeleton} from '@material-ui/lab'
 
 import Styled from 'styled-components'
 import {LightTranslucentDivider} from '../../util/Divider'
 import { LightTypography } from '../../util/CustomTypography'
+
+import { getDateString, months } from '../../../helper/Dates'
 
 const LightTypographyOverride = Styled(LightTypography)`
 	&&
@@ -52,7 +54,7 @@ export default function CardBanListInformation({ isLoading, hasInfo, headerText,
 
 		if (cardInfo === null || cardInfo === undefined || cardInfo.length === 0) return
 
-		const productTable = <StyledTableContainer component={Paper} >
+		const productTable = <StyledTableContainer component={Box} >
 			<Table size='small' >
 				<TableHead style={{background: 'rgba(0, 0, 0, 0.3)'}}>
 					<TableRow>
@@ -64,7 +66,7 @@ export default function CardBanListInformation({ isLoading, hasInfo, headerText,
 					{
 						cardInfo.map( (banList) => (
 							<TableRow>
-								<StyledTableCell>{banList.banListDate}</StyledTableCell>
+								<StyledTableCell>{ getDateString(months, new Date(banList.banListDate)) }</StyledTableCell>
 								<StyledTableCell>{banList.banStatus}</StyledTableCell>
 							</TableRow>
 						))

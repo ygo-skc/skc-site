@@ -13,6 +13,7 @@ const AtkDef = lazy( () => import('./AtkDef') )
 
 const CardIDComponent = Styled(Typography)`
 	&& {
+		font-style: italic;
 	}
 `
 

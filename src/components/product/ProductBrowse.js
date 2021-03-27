@@ -67,7 +67,7 @@ export default function ProductBrowse({history})
 				lg={2}
 				xl={1}
 				key={item.productId}
-				style={{padding: '.2rem', display: 'inline-grid'}}
+				style={{padding: '.1rem', display: 'inline-grid'}}
 				onClick={ () => window.location.assign(`/product/${item.productId}`) }
 				>
 					<ProductCardGridItem

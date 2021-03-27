@@ -6,7 +6,7 @@ async function getImg(imgURL)
 {
 	return <img
 		src={imgURL}
-		style={{  width: '100%', objectFit: 'cover' }}
+		style={{  width: '100%', height: 'auto', objectFit: 'cover' }}
 	/>
 }
 

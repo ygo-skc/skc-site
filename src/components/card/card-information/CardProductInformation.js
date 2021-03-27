@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import {Paper, TableContainer, Table, TableHead, TableRow, TableBody, TableCell} from '@material-ui/core'
+import {Paper, TableContainer, Table, TableHead, TableRow, TableBody, TableCell, Box} from '@material-ui/core'
 import {Skeleton} from '@material-ui/lab'
 
 import Styled from 'styled-components'
 import {LightTranslucentDivider} from '../../util/Divider'
 import { LightTypography } from '../../util/CustomTypography'
+
+import { getDateString, months } from '../../../helper/Dates'
 
 const LightTypographyOverride = Styled(LightTypography)`
 	&&
@@ -63,7 +65,7 @@ export default function CardProductInformation({ isLoading, hasInfo, headerText,
 
 		if (cardInfo === null || cardInfo === undefined || cardInfo.length === 0) return
 
-		const productTable = <StyledTableContainer component={Paper} >
+		const productTable = <StyledTableContainer component={Box} >
 			<Table size='small' >
 				<TableHead style={{background: 'rgba(0, 0, 0, 0.3)'}}>
 					<TableRow>
@@ -79,7 +81,7 @@ export default function CardProductInformation({ isLoading, hasInfo, headerText,
 							product.productContent.map( (content) => (
 								<StyledTableRow onClick={ () => setTimeout( () => window.location.assign(`/product/${product.productId}#${cardID}`), 150 ) }>
 									<StyledTableCell>{product.productId}</StyledTableCell>
-									<StyledTableCell>{product.productReleaseDate}</StyledTableCell>
+									<StyledTableCell>{ getDateString(months, new Date(product.productReleaseDate)) }</StyledTableCell>
 									<StyledTableCell>{content.productPosition}</StyledTableCell>
 									<StyledTableCell>{content.rarities.join(', ')}</StyledTableCell>
 								</StyledTableRow>

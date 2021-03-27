@@ -56,6 +56,7 @@ const RightBoxPaper = Styled(Paper)`
 const RightBoxHeaderContainer = Styled(Box)`
 	&&
 	{
+		margin-bottom: .2rem;
 	}
 `
 
@@ -63,7 +64,7 @@ const RightBoxHeaderContainer = Styled(Box)`
 const RightBoxHeaderTypography = Styled(Typography)`
 	&&
 	{
-		margin-bottom: .2rem;
+		margin-bottom: .85rem;
 	}
 `
 
