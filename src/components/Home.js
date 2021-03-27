@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { throttle } from 'underscore'
 import { Helmet } from 'react-helmet'
 
-import { Typography, Link, InputBase, Paper, IconButton } from '@material-ui/core'
+import { Typography, Link, InputBase, Paper, IconButton, Avatar } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import { MainContentContainer, ChildPaper } from './MainContent'
@@ -126,13 +126,16 @@ export default function Home({ history }) {
 									const LENGTH_OF_SEARCH_TERM = UPPERCASE_SEARCH_TERM.length
 
 									return (
-										<div style={{ padding: '0rem', margin: '0rem' }} >
-											<SearchSuggestionTypography variant='body1'>
-												<strong >{CARD_NAME.slice(0, INDEX_OF_SEARCH_TERM)}</strong>
-												{CARD_NAME.slice(INDEX_OF_SEARCH_TERM, INDEX_OF_SEARCH_TERM + LENGTH_OF_SEARCH_TERM)}
-												<strong>{CARD_NAME.slice(INDEX_OF_SEARCH_TERM + LENGTH_OF_SEARCH_TERM)}</strong>
-											</SearchSuggestionTypography>
-											<SearchSuggestionTypography variant='body1' style={{ color: 'rgb(81,99,114)' }} >{option.monsterType}</SearchSuggestionTypography>
+										<div style={{display: 'flex'}} >
+											<Avatar alt={`${CARD_NAME}-Avatar`} src={`https://images.thesupremekingscastle.com/${option.cardID}.jpg`} style={{marginRight: '.5rem'}} />
+											<div style={{ padding: '0rem', margin: '0rem' }} >
+												<SearchSuggestionTypography variant='body1'>
+													{CARD_NAME.slice(0, INDEX_OF_SEARCH_TERM)}
+													<strong>{CARD_NAME.slice(INDEX_OF_SEARCH_TERM, INDEX_OF_SEARCH_TERM + LENGTH_OF_SEARCH_TERM)}</strong>
+													{CARD_NAME.slice(INDEX_OF_SEARCH_TERM + LENGTH_OF_SEARCH_TERM)}
+												</SearchSuggestionTypography>
+												<SearchSuggestionTypography variant='body1' style={{ color: 'rgb(81,99,114)' }} >{option.monsterType}</SearchSuggestionTypography>
+											</div>
 										</div>
 									)
 								}}
