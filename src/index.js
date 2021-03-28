@@ -70,6 +70,20 @@ const theme = createMuiTheme({
 			lineHeight: '1.3rem',
 			fontSize: '1.1rem',
 		},
+		h1: {
+			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
+			fontWeight: 300,
+			color: '#543fda',
+			lineHeight: '4rem',
+			fontSize: '3.5rem',
+		},
+		h2: {
+			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
+			fontWeight: 500,
+			color: '#543fda',
+			lineHeight: '3.5rem',
+			fontSize: '3rem',
+		},
 		h4: {
 			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 600,

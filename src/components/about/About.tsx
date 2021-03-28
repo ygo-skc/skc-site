@@ -79,10 +79,10 @@ const InfoContainer = styled.div`
 	{
 		max-width: 100%;
 		margin-top: 2.5rem;
-		padding-top: 7rem;
-		padding-bottom: 7rem;
-		padding-right: 1.2rem;
-		padding-left: 1.2rem;
+		padding-top: 6rem;
+		padding-bottom: 6rem;
+		padding-right: 3rem;
+		padding-left: 3rem;
 
 
 		background-image: linear-gradient(316deg, rgb(49, 14, 104) 0%, rgb(95, 15, 64) 74%);
@@ -121,10 +121,12 @@ const About: FunctionComponent = () => (
 
 
 			<InfoPaper2 style={{maxWidth: '1000px', margin: 'auto'}} >
-				<CenteredText variant='h4'>
-					About
-				</CenteredText>
-				<br />
+				<Typography variant='h1' >
+					About SKC
+				</Typography>
+				<Typography variant='h2' style={{marginBottom: '3rem'}} >
+					Why I Started The Project
+				</Typography>
 
 				<Typography variant='h6'>
 					Background
@@ -134,7 +136,7 @@ const About: FunctionComponent = () => (
 				</ParagraphTypography>
 					<br />
 				<Typography variant='h6'>
-					Purpose Of Site
+					Purpose
 				</Typography>
 				<ParagraphTypography>
 					I graduated sometime in 2018 and got a decent job in my field. Through it, I got more time and money for Yugioh again! I play HERO's and Neo Spacians primarily. Other archetypes I like are; Sacred Beasts, Cyber Dragons, and Toons. I primarily collect cards and play Duel Links. Tournaments have been on my mind as well.
@@ -153,6 +155,17 @@ const About: FunctionComponent = () => (
 			</InfoPaper2>
 
 			<InfoContainer>
+				<Typography
+					variant='h1'
+					style={{color: 'white'}}>
+					Additional Information
+				</Typography>
+				<Typography
+					variant='h2'
+					style={{color: 'white', marginBottom: '3rem'}}>
+					Learn about the SKC API, donate, find ways to contact me, and other things!
+				</Typography>
+
 				<Grid container spacing={2} >
 					<Grid
 						style={{display: 'inline-grid'}}

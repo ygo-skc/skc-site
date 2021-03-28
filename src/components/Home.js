@@ -147,13 +147,13 @@ export default function Home({ history }) {
 						<RightBoxSubHeaderTypography variant='h5'>
 							Start A Conversation
 						</RightBoxSubHeaderTypography>
-						<iframe src="https://discord.com/widget?id=659477868799197185&theme=dark" width="100%" height="300" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+						<iframe src="https://discord.com/widget?id=659477868799197185&theme=light" width="100%" height="400" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
 					</RightBoxPaper>
 				}
 				twoThirdComponent={
 					<div>
 						<ChildPaper >
-							<Typography variant='h4' align='center' >
+							<Typography variant='h4' >
 								Welcome Duelist
 							</Typography>
 
@@ -163,7 +163,7 @@ export default function Home({ history }) {
 
 							<br /><br /><br />
 
-							<Typography variant='h4' align='center' >
+							<Typography variant='h4'>
 								Content
 							</Typography>
 
@@ -178,7 +178,7 @@ export default function Home({ history }) {
 						</ChildPaper>
 
 						<ChildPaper >
-							<Typography variant='h4' align='center' >
+							<Typography variant='h4' >
 								Whats New?
 							</Typography>
 
