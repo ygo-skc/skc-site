@@ -8,9 +8,9 @@ import SearchIcon from '@material-ui/icons/Search'
 import Breadcrumb from './Breadcrumb'
 import { MainContentContainer } from './MainContent'
 
-import CardDisplayGrid from './grid/CardDisplayGrid'
+import CardDisplayGrid from './util/grid/CardDisplayGrid'
 
-import OneThirdTwoThirdsGrid from './grid/OneThirdTwoThirdsGrid'
+import OneThirdTwoThirdsGrid from './util/grid/OneThirdTwoThirdsGrid'
 
 import { handleFetch } from '../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../helper/YgoApiEndpoints'
@@ -20,7 +20,7 @@ import {StickyBox} from './util/StyledContainers'
 
 import {RenderGroup, SearchSuggestionTypography} from './util/Search'
 
-import {LeftBoxSectionTypography, LeftBoxSectionHeaderTypography, RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from './grid/OneThirdTwoThirdsGrid'
+import {LeftBoxSectionTypography, LeftBoxSectionHeaderTypography, RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from './util/grid/OneThirdTwoThirdsGrid'
 
 
 const defaultDisplayNum = 50
@@ -76,12 +76,13 @@ export default function Browse( {history} )
 		criteriaMap.set('cardColors', [])
 		criteriaMap.set('attributes', [])
 		criteriaMap.set('monsterTypes', [])
+		criteriaMap.set('monsterSubTypes', [])
 		criteriaMap.set('levels', [])
 		criteriaMap.set('ranks', [])
 		criteriaMap.set('linkRatings', [])
 
 		const selectedCriteriaChips = selectedCriteria.map(criteria => {
-			if (criteria.criteriaName === 'cardColors' || criteria.criteriaName === 'attributes' || criteria.criteriaName === 'monsterTypes')
+			if (criteria.criteriaName === 'cardColors' || criteria.criteriaName === 'attributes' || criteria.criteriaName === 'monsterTypes' || criteria.criteriaName === 'monsterSubTypes')
 				criteriaMap.get(criteria.criteriaName).push(criteria.criteriaValue)
 			else if(criteria.criteriaName === 'levels'){
 				criteriaMap.get(criteria.criteriaName).push(criteria.criteriaValue.replace('Level ', ""))
@@ -105,7 +106,7 @@ export default function Browse( {history} )
 
 
 		setIsCardBrowseDataLoaded(false)
-		handleFetch(`${NAME_maps_ENDPOINT['browse']}?cardColors=${criteriaMap.get('cardColors').join(',')}&attributes=${criteriaMap.get('attributes').join(',')}&monsterTypes=${criteriaMap.get('monsterTypes').join(',')}&levels=${criteriaMap.get('levels').join(',')}&ranks=${criteriaMap.get('ranks').join(',')}&linkRatings=${criteriaMap.get('linkRatings').join(',')}`, history, json => {
+		handleFetch(`${NAME_maps_ENDPOINT['browse']}?cardColors=${criteriaMap.get('cardColors').join(',')}&attributes=${criteriaMap.get('attributes').join(',')}&monsterTypes=${criteriaMap.get('monsterTypes').join(',')}&monsterSubTypes=${criteriaMap.get('monsterSubTypes').join(',')}&levels=${criteriaMap.get('levels').join(',')}&ranks=${criteriaMap.get('ranks').join(',')}&linkRatings=${criteriaMap.get('linkRatings').join(',')}`, history, json => {
 			setJsonResults(json.results)
 			setNumResults(json.numResults)
 
@@ -173,7 +174,7 @@ export default function Browse( {history} )
 				oneThirdComponent={
 
 					<StickyBox>
-						<Paper style={{padding: '1.4rem', backgroundColor: '#7f5a83', backgroundImage: 'linear-gradient(315deg, #7f5a83 0%, #0d324d 74%)' }} >
+						<RightBoxPaper style={{ backgroundImage: 'linear-gradient(315deg, #7f5a83 0%, #0d324d 74%)' }} >
 
 							<Autocomplete
 								multiple
@@ -242,7 +243,7 @@ export default function Browse( {history} )
 								Displaying: {numResultsDisplayed}
 							</LeftBoxSectionTypography>
 
-							</Paper>
+						</RightBoxPaper>
 					</StickyBox>
 				}
 				twoThirdComponent={
@@ -251,7 +252,7 @@ export default function Browse( {history} )
 							<RightBoxHeaderTypography variant='h4' >
 								Browse Results
 							</RightBoxHeaderTypography>
-							<RightBoxSubHeaderTypography variant='subtitle1' >
+							<RightBoxSubHeaderTypography variant='h5' >
 								Sorted Alphabetically
 							</RightBoxSubHeaderTypography>
 							<DarkTranslucentDivider />

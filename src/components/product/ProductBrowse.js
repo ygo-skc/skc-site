@@ -10,7 +10,7 @@ import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
 
 // const ProductCardGridItem = lazy( () => import('./ProductCardGridItem') )
 import ProductCardGridItem from './ProductCardGridItem'
-import {RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from '../grid/OneThirdTwoThirdsGrid'
+import {RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from '../util/grid/OneThirdTwoThirdsGrid'
 import {DarkTranslucentDivider} from '../util/Divider'
 
 const Breadcrumb = lazy( () => import('../Breadcrumb') )
@@ -67,7 +67,7 @@ export default function ProductBrowse({history})
 				lg={2}
 				xl={1}
 				key={item.productId}
-				style={{padding: '.2rem', display: 'inline-grid'}}
+				style={{padding: '.1rem', display: 'inline-grid'}}
 				onClick={ () => window.location.assign(`/product/${item.productId}`) }
 				>
 					<ProductCardGridItem
@@ -103,7 +103,7 @@ export default function ProductBrowse({history})
 					<RightBoxHeaderTypography variant='h4' >
 						Products In Database
 					</RightBoxHeaderTypography>
-					<RightBoxSubHeaderTypography variant='subtitle1' >
+					<RightBoxSubHeaderTypography variant='h5' >
 						Sorted By Release Date
 					</RightBoxSubHeaderTypography>
 

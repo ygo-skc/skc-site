@@ -5,10 +5,12 @@ import { Skeleton } from '@material-ui/lab'
 import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded';
 
 
-import CardImageRounded from '../card/CardImageRounded'
+import CardImageRounded from '../../card/CardImageRounded'
 
-import YGOCard from '../card/YGOCard'
-import Footer from '../Footer'
+import YGOCard from '../../card/YGOCard'
+import Footer from '../../Footer'
+
+import { Hint } from '../../util/Hints'
 
 import Styled from 'styled-components'
 
@@ -129,11 +131,9 @@ const CardDisplayGrid = memo( ({ cardJsonResults, numResultsDisplayed, numItemsT
 
 
 	return(
-		<Box >
-			<Grid>
-				<Grid container >
-					{(!isDataLoaded)? cardGridUISkeleton : (numResults === 0)? <Typography variant='h5' style={{margin: 'auto', paddingTop: '3rem', paddingBottom: '3rem'}} >No Content To Show</Typography> : cardGridUI}
-				</Grid>
+		<Box style={{maxWidth: '100%'}} >
+			<Grid container >
+				{(!isDataLoaded)? cardGridUISkeleton : (numResults === 0)? <Hint text='No Content To Show' textVariant='h5' />: cardGridUI}
 			</Grid>
 
 			{

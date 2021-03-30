@@ -9,7 +9,7 @@ const LeftBoxHeaderTypography = Styled(Typography)`
 	&&
 	{
 		color: rgba(255, 255, 255, .95);
-		margin-bottom: 1.75rem;
+		margin-bottom: 1rem;
 	}
 `
 
@@ -36,10 +36,19 @@ const RightBoxPaper = Styled(Paper)`
 	&&
 	{
 		background: #fafafa;
-		padding: .45rem;
 		border-radius: 1.75rem;
-		padding-top: 1.4rem;
-		padding-bottom: 1.4rem;
+		padding-left: .8rem;
+		padding-right: .9rem;
+		padding-top: 1.2rem;
+		padding-bottom: 1.2rem;
+
+		@media screen and (min-width: 800px)
+		{
+			padding-left: 1rem;
+			padding-right: 1rem;
+			padding-top: 1.25rem;
+			padding-bottom: 1.25rem;
+		}
 	}
 `
 
@@ -47,8 +56,7 @@ const RightBoxPaper = Styled(Paper)`
 const RightBoxHeaderContainer = Styled(Box)`
 	&&
 	{
-		margin-left: .5rem;
-		margin-right: .5rem;
+		margin-bottom: .2rem;
 	}
 `
 
@@ -56,8 +64,7 @@ const RightBoxHeaderContainer = Styled(Box)`
 const RightBoxHeaderTypography = Styled(Typography)`
 	&&
 	{
-		margin-bottom: .2rem;
-		text-align: center
+		margin-bottom: .85rem;
 	}
 `
 
@@ -65,7 +72,6 @@ const RightBoxHeaderTypography = Styled(Typography)`
 const RightBoxSubHeaderTypography = Styled(Typography)`
 	&&
 	{
-		text-align: center
 	}
 `
 

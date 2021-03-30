@@ -13,8 +13,7 @@ const AtkDef = lazy( () => import('./AtkDef') )
 
 const CardIDComponent = Styled(Typography)`
 	&& {
-		color: #fff;
-		margin-top: .25rem;
+		font-style: italic;
 	}
 `
 
@@ -127,19 +126,21 @@ const YGOCard = memo(( {cardName, cardColor, cardEffect, monsterType, cardAttrib
 						{ he.decode(cardEffect) }
 				</CardEffectComponent>
 
-				{
-					( cardColor === 'Spell' || cardColor === 'Trap' || cardColor === 'err' ) ?
-						undefined :
-						(fullDetails) ? <AtkDef monsterAtk={monsterAtk} monsterDef={monsterDef} cardColor={cardColor} /> : undefined
-				}
+				<div style={{display: 'flex', paddingTop: '.5rem',  alignItems: 'center'}} >
+					{
+						(fullDetails) ?
+							<CardIDComponent variant='body2' >
+								{cardID}
+							</CardIDComponent>
+							: undefined
+					}
+					{
+						( cardColor === 'Spell' || cardColor === 'Trap' || cardColor === 'err' ) ?
+							undefined :
+							(fullDetails) ? <AtkDef monsterAtk={monsterAtk} monsterDef={monsterDef} cardColor={cardColor} /> : undefined
+					}
+				</div>
 			</CardDescriptionComponent>
-			{
-				(fullDetails) ?
-					<CardIDComponent variant='body2' >
-						{cardID}
-					</CardIDComponent>
-					: undefined
-			}
 		</CardContentComponent>
 	)
 }, (prevProps, newProps) => {

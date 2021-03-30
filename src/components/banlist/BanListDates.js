@@ -5,11 +5,10 @@ import { Button, Grid, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDeta
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DateRangeRoundedIcon from '@material-ui/icons/DateRangeRounded'
-import {LeftBoxSectionHeaderTypography} from '../grid/OneThirdTwoThirdsGrid'
+import {LeftBoxSectionHeaderTypography} from '../util/grid/OneThirdTwoThirdsGrid'
 
+import { getDateString, months } from '../../helper/Dates'
 
-
-const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
 const BanDatesExpansionSummary = Styled(ExpansionPanelSummary)`
 	&&
@@ -61,7 +60,7 @@ export const BanListDates = memo( ( { banListStartDates, setSelectedBanList } ) 
 
 
 	return(
-		<div style={{padding: '.5rem'}} >
+		<div >
 			<LeftBoxSectionHeaderTypography
 				variant='h6' >
 				Date Range
@@ -71,7 +70,7 @@ export const BanListDates = memo( ( { banListStartDates, setSelectedBanList } ) 
 					expandIcon={<ExpandMoreIcon />} >
 					<Typography
 						style={{color: 'rgba(0, 0, 0, .75)'}}
-						variant='body1' >
+						variant='subtitle1' >
 						{ selectedRange }
 					</Typography>
 				</BanDatesExpansionSummary>
@@ -111,6 +110,3 @@ const getCurrentBanListDate = (months, selectedBanList, banListStartDates) =>
 				+ getDateString( months, nextDate )
 	}
 }
-
-
-const getDateString = (months, date) => `${months[date.getUTCMonth()]} ${date.getUTCDate()}, ${date.getUTCFullYear()}`

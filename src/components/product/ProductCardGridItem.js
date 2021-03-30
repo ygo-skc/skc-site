@@ -37,21 +37,21 @@ const ProductCardGridItem = ({productName, productId, productType, productSubTyp
 		<ProductInstance
 		style={{padding: '.75rem'}}>
 			<MainBrowseInfoTypography2
-				style={{marginBottom: '1rem', fontWeight: '700'}}
-				variant='subtitle2'
-				align='center' >
+				style={{marginBottom: '1rem', fontWeight: '800'}}
+				variant='subtitle1'
+				>
 				{productName}
 			</MainBrowseInfoTypography2>
 			<MainBrowseInfoTypography2
-				variant='body1' >
+				variant='subtitle2' >
 				ID: {productId}
 			</MainBrowseInfoTypography2>
 			<MainBrowseInfoTypography2
-				variant='body1' >
+				variant='subtitle2' >
 				Type: {productType}
 			</MainBrowseInfoTypography2>
 			<MainBrowseInfoTypography2
-				variant='body1' >
+				variant='subtitle2' >
 				Sub-Type: {productSubType}
 			</MainBrowseInfoTypography2>
 	</ProductInstance>

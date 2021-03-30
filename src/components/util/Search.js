@@ -7,9 +7,9 @@ import styled from 'styled-components'
 const RenderGroup = ({group, children}) =>
 {
 	return(
-		<div style={{ paddingLeft: '1.25rem', paddingTop: '1.25rem' }} >
+		<div style={{ padding: '.7rem', paddingBottom: '0rem' }} >
 			<Typography
-				variant='h6'>
+				variant='subtitle1' style={{fontWeight: '800'}} >
 				{group}
 			</Typography>
 			<Divider />
@@ -29,7 +29,7 @@ const SearchSuggestionTypography = styled(Typography)`
 		overflow: hidden;
 		padding: 0rem;
 		margin: 0rem;
-		font-weight: 400;
+		font-weight: 500;
 	}
 `
 

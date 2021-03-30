@@ -10,12 +10,37 @@ import { TabPanel } from './TabPanel'
 const SummaryBadge = styled(Badge)`
 	&& {
 		.MuiBadge-badge {
-			right: -.5rem;
-			top: -.35rem;
+			right: -.45rem;
+			top: -.65rem;
 			color: white;
 		}
 	}
 `
+
+const CustomTabs = styled(Tabs)`
+	&&
+	{
+		.MuiTabs-flexContainer
+		{
+			height: 65px;
+		}
+
+		.MuiTab-textColorPrimary.Mui-selected {
+			background: #fff6e9;
+			font-weight: 700;
+		}
+
+
+		@media screen and (min-width: 0px)
+		{
+			.MuiTab-root {
+				min-width: 0;
+			}
+		}
+
+	}
+`
+
 const TabbedView = memo( ( { numForbidden, numLimited, numSemiLimited, forbiddenContent, limitedContent, semiLimitedContent } ) =>
 {
 	const [currentTab, setCurrentTab] = useState(0)
@@ -78,35 +103,31 @@ const TabbedView = memo( ( { numForbidden, numLimited, numSemiLimited, forbidden
 
 
 		return (
-			<div style={{width: '100%'}} >
+			<div  >
 				<AppBar
 					style={{boxShadow: 'none'}}
 					position='static'
-					color='transparent'
-				>
-					<Tabs
+					color='transparent'>
+					<CustomTabs
 						textColor='primary'
 						value={currentTab}
 						onChange={(event, newValue) => { setCurrentTab(newValue)}}
-						centered
 						variant='fullWidth' >
 						{tabs}
-					</Tabs>
+					</CustomTabs>
 				</AppBar>
 
-				<div >
-					<TabPanel value={ currentTab } index={0}>
-						{ forbiddenContent }
-					</TabPanel>
+				<TabPanel value={ currentTab } index={0}>
+					{ forbiddenContent }
+				</TabPanel>
 
-					<TabPanel value={ currentTab } index={1}>
-						{ limitedContent }
-					</TabPanel>
+				<TabPanel value={ currentTab } index={1}>
+					{ limitedContent }
+				</TabPanel>
 
-					<TabPanel value={ currentTab } index={2}>
-						{ semiLimitedContent }
-					</TabPanel>
-				</div>
+				<TabPanel value={ currentTab } index={2}>
+					{ semiLimitedContent }
+				</TabPanel>
 			</div>
 		)
 }, (prevProps, nextProps) => {

@@ -1,44 +1,27 @@
-import React, { useState, useEffect, lazy, Suspense, useMemo } from 'react'
-import { Chip } from '@material-ui/core'
+import React, { useState, useEffect, Suspense, useMemo } from 'react'
 import {Helmet} from 'react-helmet'
 
-import { handleFetch } from '../../helper/FetchHandler'
-import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
-import { MainContentContainer } from '../MainContent'
+import { handleFetch } from '../../../helper/FetchHandler'
+import NAME_maps_ENDPOINT from '../../../helper/YgoApiEndpoints'
+import { MainContentContainer } from '../../MainContent'
 
-import OneThirdTwoThirdsGrid from '../grid/OneThirdTwoThirdsGrid'
+import OneThirdTwoThirdsGrid from '../../util/grid/OneThirdTwoThirdsGrid'
 
 
-import Breadcrumb from '../Breadcrumb'
+import Breadcrumb from '../../Breadcrumb'
 import CardData from './CardData'
-
-const CardInformationRelatedContent = lazy( () => import('./CardInformationRelatedContent') )
+import CardInformationRelatedContent from './CardInformationRelatedContent'
 
 const crumbs = ['Home', 'Card Browse']
-
-async function populateBanListChips(banListInfo)
-{
-	return banListInfo.map( (item, index) => <Chip key={index} label={`${item.banListDate}  •  ${item.banStatus.charAt(0)}`} />)
-}
-
-async function populateProductChips(productInfo, cardID)
-{
-	return productInfo.map( (product, index) => {
-		return product.productContent.map(item => <Chip
-				key={index}
-				label={`${product.productReleaseDate}  •  ${product.productId} #${item.productPosition}  •  ${item.rarities.join(', ')}`}
-				onClick={ () => setTimeout( () => window.location.assign(`/product/${product.productId}#${cardID}`), 250 ) }
-		/>)
-		})
-}
 
 
 const Card = ( { match, history } ) =>
 {
-	const [isLoading, setIsLoading] = useState(true)
 	let cardID = useMemo( () => {
 		return match.params.cardId
 	}, [])
+
+	const [isLoading, setIsLoading] = useState(true)
 
 	const [cardName, setCardName] = useState(undefined)
 	const [cardColor, setCardColor] = useState(undefined)
@@ -52,12 +35,9 @@ const Card = ( { match, history } ) =>
 	const [productInfo, setPackInfo] = useState([])
 	const [banListInfo, setBanListInfo] = useState([])
 
-	const [productInfoChips, setPackInfoChips] = useState([])
-	const [banListInfoChips, setBanListInfoChips] = useState([])
-
 	const [dynamicCrumbs, setDynamicCrumbs] = useState([...crumbs, ''])
 
-	const helmetData = useMemo( () => {
+	const helmetData = useEffect( () => {
 		handleFetch(`${NAME_maps_ENDPOINT['cardInstanceUrl']}${cardID}?allInfo=true`, history, (json) => {
 			setCardName(json.cardName)
 			setCardColor(json.cardColor)
@@ -89,25 +69,8 @@ const Card = ( { match, history } ) =>
 	}, [])
 
 
-
-	useEffect( () => {
-		if ( productInfoChips.length === 0 )
-		{
-			populateProductChips(productInfo, cardID).then(productInfoChips => setPackInfoChips(productInfoChips))
-		}
-	}, [productInfo])
-
-
-	useEffect( () => {
-		if ( banListInfoChips.length === 0 )
-		{
-			populateBanListChips(banListInfo).then(banListInfoChips => setBanListInfoChips(banListInfoChips))
-		}
-	}, [banListInfo])
-
-
 	return (
-		<MainContentContainer style={{ paddingLeft: '0rem', paddingRight: '0rem', paddingBottom: '0rem' }}  >
+		<MainContentContainer >
 			{helmetData}
 			<Suspense>
 				<Breadcrumb crumbs={ dynamicCrumbs } />
@@ -131,10 +94,9 @@ const Card = ( { match, history } ) =>
 				twoThirdComponent={
 					<CardInformationRelatedContent cardName={cardName}
 						isLoading={isLoading}
+						cardID={cardID}
 						productInfo={productInfo}
-						productInfoChips={productInfoChips}
-						banListInfo={banListInfo}
-						banListInfoChips={banListInfoChips} />
+						banListInfo={banListInfo} />
 					}
 				/>
 

@@ -5,7 +5,7 @@ import { List, ListItemText, Collapse, ListItem } from '@material-ui/core'
 
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import {LeftBoxSectionHeaderTypography} from '../grid/OneThirdTwoThirdsGrid'
+import {LeftBoxSectionHeaderTypography} from '../util/grid/OneThirdTwoThirdsGrid'
 
 
 const ListStatItem = Styled(ListItem)`
@@ -166,7 +166,7 @@ const BanListStats = memo( ( { totalCardsInSelectedList, selectedBanList
 
 
 	return(
-		<div style={{padding: '.5rem'}} >
+		<div >
 			<LeftBoxSectionHeaderTypography
 				variant='h6' >
 				Summary

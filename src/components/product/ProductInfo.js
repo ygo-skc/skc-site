@@ -9,18 +9,18 @@ import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
 
 import {MainContentContainer} from '../MainContent'
 
-import OneThirdTwoThirdsGrid from '../grid/OneThirdTwoThirdsGrid'
+import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 
 import {LightTranslucentDivider, DarkTranslucentDivider} from '../util/Divider'
 
 import {StickyBox} from '../util/StyledContainers'
 
-import {LeftBoxHeaderTypography, LeftBoxSectionTypography, LeftBoxSectionHeaderTypography, RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from '../grid/OneThirdTwoThirdsGrid'
+import {LeftBoxHeaderTypography, LeftBoxSectionTypography, LeftBoxSectionHeaderTypography, RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from '../util/grid/OneThirdTwoThirdsGrid'
 
 
 
 const Breadcrumb = lazy( () => import('../Breadcrumb') )
-const CardDisplayGrid = lazy( () => import('../grid/CardDisplayGrid') )
+const CardDisplayGrid = lazy( () => import('../util/grid/CardDisplayGrid') )
 
 
 export default function ProductInfo({match, history}) {
@@ -74,19 +74,18 @@ export default function ProductInfo({match, history}) {
 				oneThirdComponent={
 					<StickyBox>
 
-						<Paper style={{padding: '1.4rem', background: '#a4508', backgroundImage: 'linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)' }} >
+						<RightBoxPaper style={{ backgroundImage: 'linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)' }} >
 
 							{(isDataLoaded)?
 								<LeftBoxHeaderTypography
-									variant='h4'
-									align='center' >
+									variant='h4' >
 									{productName}
 								</LeftBoxHeaderTypography>
 								: <Skeleton
 									variant='rect'
 									height={30}
 									width={250}
-									style={{margin: 'auto', marginBottom: '.8rem'}}
+									style={{marginBottom: '.8rem'}}
 									/>
 							}
 
@@ -115,7 +114,7 @@ export default function ProductInfo({match, history}) {
 							<LeftBoxSectionTypography variant='body1'>
 								<strong>Product Total:</strong> {productTotal}
 							</LeftBoxSectionTypography>
-						</Paper>
+						</RightBoxPaper>
 
 					</StickyBox>
 				}
@@ -126,7 +125,7 @@ export default function ProductInfo({match, history}) {
 								<RightBoxHeaderTypography variant='h4' >
 									Contents
 								</RightBoxHeaderTypography>
-								<RightBoxSubHeaderTypography variant='subtitle1' >
+								<RightBoxSubHeaderTypography variant='h5' >
 									Sorted By Pack Order
 								</RightBoxSubHeaderTypography>
 

@@ -12,10 +12,10 @@ const ProductBrowse = lazy( () => import('./components/product/ProductBrowse') )
 const ProductInfo = lazy( () => import('./components/product/ProductInfo') )
 
 const Browse = lazy( () => import('./components/Browse') )
-const Card = lazy( () => import('./components/card/CardInformation') )
+const Card = lazy( () => import('./components/card/card-information/CardInformation') )
 
 const About = lazy( () => import( './components/about/About') )
-const HttpErr = lazy( () => import('./components/exception/HttpErr') )
+const HttpErr = lazy( () => import('./components/util/exception/HttpErr') )
 
 
 const NAME_maps_ROUTE : { [key: string]: string } =

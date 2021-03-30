@@ -9,7 +9,7 @@ import { MainContentContainer } from '../MainContent'
 import Footer from '../Footer'
 import {DarkTranslucentDivider} from '../util/Divider'
 
-import GenericLinkPhoto from '../photo/GenericLinkPhoto'
+import GenericLinkPhoto from '../util/photo/GenericLinkPhoto'
 
 const CustomLink = styled(Link)`
 	&&
@@ -58,19 +58,10 @@ const InfoPaper2 = styled(Paper)`
 	&&
 	{
 		max-width: 100%;
-		padding: 2.5rem;
+		padding: 1.4rem;
 		border-radius: 1.2rem;
 
 		background: #f7f7f7;
-	}
-`
-
-
-const AboutPaper = styled(Paper)`
-	&&
-	{
-		padding: 2.2rem;
-		border-radius: 0rem;
 	}
 `
 
@@ -79,16 +70,16 @@ const InfoContainer = styled.div`
 	{
 		max-width: 100%;
 		margin-top: 2.5rem;
-		padding-top: 7rem;
-		padding-bottom: 7rem;
-		padding-right: 1.2rem;
-		padding-left: 1.2rem;
+		padding-top: 6rem;
+		padding-bottom: 6rem;
+		padding-right: 2rem;
+		padding-left: 2rem;
 
 
 		background-image: linear-gradient(316deg, rgb(49, 14, 104) 0%, rgb(95, 15, 64) 74%);
 
-		border-top-left-radius: 4rem;
-		border-top-right-radius: 4rem;
+		border-top-left-radius: 2.5rem;
+		border-top-right-radius: 2.5rem;
 
 		border-bottom-left-radius: .75rem;
 		border-bottom-right-radius: .75rem;
@@ -121,10 +112,12 @@ const About: FunctionComponent = () => (
 
 
 			<InfoPaper2 style={{maxWidth: '1000px', margin: 'auto'}} >
-				<CenteredText variant='h4'>
-					About
-				</CenteredText>
-				<br />
+				<Typography variant='h1' >
+					About SKC
+				</Typography>
+				<Typography variant='h2' style={{marginBottom: '3rem'}} >
+					Why I Started The Project
+				</Typography>
 
 				<Typography variant='h6'>
 					Background
@@ -134,7 +127,7 @@ const About: FunctionComponent = () => (
 				</ParagraphTypography>
 					<br />
 				<Typography variant='h6'>
-					Purpose Of Site
+					Purpose
 				</Typography>
 				<ParagraphTypography>
 					I graduated sometime in 2018 and got a decent job in my field. Through it, I got more time and money for Yugioh again! I play HERO's and Neo Spacians primarily. Other archetypes I like are; Sacred Beasts, Cyber Dragons, and Toons. I primarily collect cards and play Duel Links. Tournaments have been on my mind as well.
@@ -153,6 +146,17 @@ const About: FunctionComponent = () => (
 			</InfoPaper2>
 
 			<InfoContainer>
+				<Typography
+					variant='h1'
+					style={{color: 'white'}}>
+					Additional Information
+				</Typography>
+				<Typography
+					variant='h2'
+					style={{color: 'white', marginBottom: '3rem'}}>
+					Learn about the SKC API, donate, find ways to contact me, and other things!
+				</Typography>
+
 				<Grid container spacing={2} >
 					<Grid
 						style={{display: 'inline-grid'}}
