@@ -58,19 +58,10 @@ const InfoPaper2 = styled(Paper)`
 	&&
 	{
 		max-width: 100%;
-		padding: 2.5rem;
+		padding: 1.4rem;
 		border-radius: 1.2rem;
 
 		background: #f7f7f7;
-	}
-`
-
-
-const AboutPaper = styled(Paper)`
-	&&
-	{
-		padding: 2.2rem;
-		border-radius: 0rem;
 	}
 `
 
@@ -81,14 +72,14 @@ const InfoContainer = styled.div`
 		margin-top: 2.5rem;
 		padding-top: 6rem;
 		padding-bottom: 6rem;
-		padding-right: 3rem;
-		padding-left: 3rem;
+		padding-right: 2rem;
+		padding-left: 2rem;
 
 
 		background-image: linear-gradient(316deg, rgb(49, 14, 104) 0%, rgb(95, 15, 64) 74%);
 
-		border-top-left-radius: 4rem;
-		border-top-right-radius: 4rem;
+		border-top-left-radius: 2.5rem;
+		border-top-right-radius: 2.5rem;
 
 		border-bottom-left-radius: .75rem;
 		border-bottom-right-radius: .75rem;
