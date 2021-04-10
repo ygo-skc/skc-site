@@ -1,6 +1,6 @@
 repository:
   # See https://developer.github.com/v3/repos/#edit for all available settings.
-  name: ygo-site
+  name: skc-site
   description: React SPA that displays data from YGO API in a clean and elegant way.
   homepage: https://www.thesupremekingscastle.com/about
   topics: ygo, skc, website
