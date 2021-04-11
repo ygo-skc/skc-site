@@ -18,8 +18,8 @@ const LightTypographyOverride = Styled(LightTypography)`
 const LightTranslucentDividerOverride = Styled(LightTranslucentDivider)`
 	&&
 	{
-		margin-bottom: 1.3rem;
-		margin-top: 1rem;
+		margin-top: 0;
+		margin-bottom: 1.5rem;
 		width: 97%;
 	}
 `
@@ -106,7 +106,6 @@ export default function CardProductInformation({ isLoading, hasInfo, headerText,
 			padding-top: 1.3rem;
 			padding-bottom: 1.3rem;
 			border-radius: 1.05rem;
-			display: inline-grid;
 		}
 	`
 

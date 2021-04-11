@@ -25,7 +25,7 @@ const CardInformationRelatedContent = memo( ({ cardName, isLoading, productInfo,
 			</RightBoxHeaderContainer>
 
 			<Grid container spacing={1} >
-				<Grid item xs={12} sm={12} md={12} lg={6} xl={6}  style={ { display: 'inline-grid' } } >
+				<Grid item xs={12} sm={12} md={12} lg={6} xl={6} >
 					{(isLoading)? undefined
 					: <CardProductInformation
 						isLoading={isLoading}
@@ -40,7 +40,7 @@ const CardInformationRelatedContent = memo( ({ cardName, isLoading, productInfo,
 					}
 				</Grid>
 
-				<Grid item xs={12} sm={12} md={12} lg={6} xl={6} style={ { display: 'inline-grid' } } >
+				<Grid item xs={12} sm={12} md={12} lg={6} xl={6} >
 					{(isLoading)? undefined
 					: <CardBanListInformation
 						isLoading={isLoading}
