@@ -49,6 +49,10 @@ const theme = createMuiTheme({
 			}
 		}
 		, 'MuiTableCell': {
+			stickyHeader: {
+				fontWeight: 800,
+				fontSize: '1.05rem'
+			},
 			head: {
 				fontWeight: 800,
 				fontSize: '1.05rem'

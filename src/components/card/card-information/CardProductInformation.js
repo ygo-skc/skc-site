@@ -18,8 +18,9 @@ const LightTypographyOverride = Styled(LightTypography)`
 const LightTranslucentDividerOverride = Styled(LightTranslucentDivider)`
 	&&
 	{
-		margin-bottom: 1rem;
-		margin-top: .8rem;
+		margin-bottom: 1.3rem;
+		margin-top: 1rem;
+		width: 97%;
 	}
 `
 
@@ -28,7 +29,6 @@ const StyledTableContainer = Styled(TableContainer)`
 	&&
 	{
 		border-radius: 1.1rem;
-		padding-bottom: 1rem;
 		background: rgba(0, 0, 0, 0.3);
 		color: rgba(255, 255, 255, .97);
 		max-width: 97%;
@@ -70,11 +70,12 @@ export default function CardProductInformation({ isLoading, hasInfo, headerText,
 				<TableHead style={{background: 'rgba(0, 0, 0, 0.3)'}}>
 					<TableRow>
 						<StyledTableCell >ID</StyledTableCell>
-						<StyledTableCell>Release Date</StyledTableCell>
+						<StyledTableCell>Release</StyledTableCell>
 						<StyledTableCell>Position</StyledTableCell>
 						<StyledTableCell>Rarities</StyledTableCell>
 					</TableRow>
 				</TableHead>
+
 				<TableBody>
 					{
 						cardInfo.map( (product) => (
@@ -105,6 +106,7 @@ export default function CardProductInformation({ isLoading, hasInfo, headerText,
 			padding-top: 1.3rem;
 			padding-bottom: 1.3rem;
 			border-radius: 1.05rem;
+			display: inline-grid;
 		}
 	`
 
@@ -117,6 +119,7 @@ export default function CardProductInformation({ isLoading, hasInfo, headerText,
 						{headerText}
 					</LightTypographyOverride>
 			}
+
 
 			<LightTranslucentDividerOverride />
 

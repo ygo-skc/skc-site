@@ -18,8 +18,9 @@ const LightTypographyOverride = Styled(LightTypography)`
 const LightTranslucentDividerOverride = Styled(LightTranslucentDivider)`
 	&&
 	{
-		margin-bottom: 1rem;
-		margin-top: .8rem;
+		margin-bottom: 1.3rem;
+		margin-top: 1rem;
+		width: 97%;
 	}
 `
 
@@ -28,7 +29,6 @@ const StyledTableContainer = Styled(TableContainer)`
 	&&
 	{
 		border-radius: 1.1rem;
-		padding-bottom: 1rem;
 		background: rgba(0, 0, 0, 0.3);
 		color: rgba(255, 255, 255, .97);
 		max-width: 97%;
@@ -58,8 +58,8 @@ export default function CardBanListInformation({ isLoading, hasInfo, headerText,
 			<Table size='small' >
 				<TableHead style={{background: 'rgba(0, 0, 0, 0.3)'}}>
 					<TableRow>
-						<StyledTableCell >Ban List Date</StyledTableCell>
-						<StyledTableCell>Status On Ban List</StyledTableCell>
+						<StyledTableCell >Date</StyledTableCell>
+						<StyledTableCell>Status</StyledTableCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>
@@ -88,6 +88,7 @@ export default function CardBanListInformation({ isLoading, hasInfo, headerText,
 			padding-top: 1.3rem;
 			padding-bottom: 1.3rem;
 			border-radius: 1.05rem;
+			display: inline-grid;
 		}
 	`
 
