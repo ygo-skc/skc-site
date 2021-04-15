@@ -133,7 +133,8 @@ const CardDisplayGrid = memo( ({ cardJsonResults, numResultsDisplayed, numItemsT
 	return(
 		<Box style={{maxWidth: '100%'}} >
 			<Grid container >
-				{(!isDataLoaded)? cardGridUISkeleton : (numResults === 0)? <Hint text='No Content To Show' textVariant='h5' />: cardGridUI}
+				{(!isDataLoaded)? cardGridUISkeleton : (numResults === 0)?
+					<Hint variant='h5' >{'No Content To Show'}</Hint>: cardGridUI}
 			</Grid>
 
 			{

@@ -33,7 +33,9 @@ const BanListSection = ( { sectionExplanation, cards, isDataLoaded } ) =>
 
 	return (
 		<ChildBox >
-			<Hint text={sectionExplanation} textVariant='subtitle1' />
+			<Hint variant='subtitle1'>
+				{sectionExplanation}
+			</Hint>
 			{cardTypeContentGrid}
 		</ChildBox>
 	)

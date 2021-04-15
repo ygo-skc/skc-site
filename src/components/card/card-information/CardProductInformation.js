@@ -7,6 +7,7 @@ import {LightTranslucentDivider} from '../../util/Divider'
 import { LightTypography } from '../../util/CustomTypography'
 
 import { getDateString, months } from '../../../helper/Dates'
+import {Hint} from '../../util/Hints'
 
 const LightTypographyOverride = Styled(LightTypography)`
 	&&
@@ -127,9 +128,9 @@ export default function CardProductInformation({ isLoading, hasInfo, headerText,
 					undefined
 					: (hasInfo)?
 						productTable
-						: <LightTypographyOverride align='center' variant='subtitle1' >
+						: <Hint text={noInfoText} variant='subtitle1' backgroundColor='rgba(0, 0, 0, 0.3)' textColor='white'>
 							{noInfoText}
-						</LightTypographyOverride>
+						</Hint>
 			}
 		</Parent>
 	)

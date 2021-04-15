@@ -147,7 +147,9 @@ export default function Home({ history }) {
 						<RightBoxSubHeaderTypography variant='h5'>
 							Start A Conversation
 						</RightBoxSubHeaderTypography>
-						<iframe src="https://discord.com/widget?id=659477868799197185&theme=light" width="100%" height="400" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+						<div style={{borderStyle: 'solid', borderColor: '#543fda', borderWidth: '.25rem', borderRadius: '1.1rem'}}>
+							<iframe style={{borderStyle: 'solid', borderRadius: '1rem'}} src="https://discord.com/widget?id=659477868799197185&theme=light" width="100%" height="400" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+						</div>
 					</RightBoxPaper>
 				}
 				twoThirdComponent={
