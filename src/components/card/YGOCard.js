@@ -8,8 +8,7 @@ import he from 'he'
 
 import CardAssociation from './CardAssociation'
 import cardStyles from './YGOCardStyles'
-
-const AtkDef = lazy( () => import('./AtkDef') )
+import AtkDef from './AtkDef'
 
 const CardIDComponent = Styled(Typography)`
 	&& {
@@ -90,7 +89,7 @@ const YGOCard = memo(( {cardName, cardColor, cardEffect, monsterType, cardAttrib
 	const MonsterTypeComponent = Styled(Typography)`
 		&&
 		{
-			font-weight: 600;
+			font-weight: 800;
 			margin-bottom: .28rem;
 			color: ${cardStyles[ `${cardColorLowerCase}SummaryColor` ]};
 		}

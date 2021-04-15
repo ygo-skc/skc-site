@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense, useMemo } from 'react'
+import React, { useState, useEffect, useMemo, lazy } from 'react'
 import {Helmet} from 'react-helmet'
 
 import { handleFetch } from '../../../helper/FetchHandler'
@@ -8,10 +8,10 @@ import { MainContentContainer } from '../../MainContent'
 import OneThirdTwoThirdsGrid from '../../util/grid/OneThirdTwoThirdsGrid'
 
 
-import Breadcrumb from '../../Breadcrumb'
 import CardData from './CardData'
 import CardInformationRelatedContent from './CardInformationRelatedContent'
 
+let Breadcrumb = lazy( () => import('../../Breadcrumb') )
 const crumbs = ['Home', 'Card Browse']
 
 
@@ -72,9 +72,8 @@ const Card = ( { match, history } ) =>
 	return (
 		<MainContentContainer >
 			{helmetData}
-			<Suspense>
+
 				<Breadcrumb crumbs={ dynamicCrumbs } />
-			</Suspense>
 
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={
