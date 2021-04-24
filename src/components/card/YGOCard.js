@@ -1,4 +1,4 @@
-import React, {memo, lazy} from 'react'
+import React, {memo} from 'react'
 
 import { Typography, Box, Paper } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
@@ -7,13 +7,56 @@ import Styled from 'styled-components'
 import he from 'he'
 
 import CardAssociation from './CardAssociation'
-import cardStyles from './YGOCardStyles'
 import AtkDef from './AtkDef'
+
 
 const CardIDComponent = Styled(Typography)`
 	&& {
 		font-style: italic;
+		color: inherit;
 	}
+`
+
+const CardContentComponent = Styled(Paper)`
+	&&
+	{
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		border-radius: 1rem;
+
+		@media screen and (min-width: 0px)
+		{
+			padding: .69rem;
+		}
+	}
+`
+
+const CardNameComponent = Styled(Typography)`
+	&& {
+		margin-bottom: .25rem;
+		text-align: center;
+		text-transform: uppercase;
+		flex: 1;
+		color: inherit;
+	},
+`
+
+const CardDescriptionComponent = Styled(Box)`
+	&&
+	{
+		padding: .445rem;
+		border-radius: .5rem;
+	}
+`
+
+const MonsterTypeComponent = Styled(Typography)`
+&&
+{
+	font-weight: 800;
+	margin-bottom: .28rem;
+	color: inherit;
+}
 `
 
 
@@ -26,51 +69,12 @@ const YGOCard = memo(( {cardName, cardColor, cardEffect, monsterType, cardAttrib
 		)
 	}
 
-	const cardColorLowerCase = cardColor.toLowerCase()
-
-	const CardContentComponent = Styled(Paper)`
-		&&
-		{
-			white-space: nowrap;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			border-radius: 1rem;
-
-			background: ${cardStyles[ `${cardColorLowerCase}Background` ]};
-
-			@media screen and (min-width: 0px)
-			{
-				padding: .69rem;
-			}
-		}
-	`
-
-	const CardNameComponent = Styled(Typography)`
-		&& {
-			font-weight: 600;
-			margin-bottom: .25rem;
-			text-align: center;
-			text-transform: uppercase;
-
-			color: ${cardStyles[ `${cardColorLowerCase}Color` ]};
-		},
-	`
-
-	const CardDescriptionComponent = Styled(Box)`
-		&&
-		{
-			padding: .445rem;
-			background: ${cardStyles[ `${cardColorLowerCase}SummaryBackground` ]};
-			border-radius: .5rem;
-		}
-	`
-
 	const CardEffectComponent = (fullDetails) ?
 		Styled(Typography)`
 			&&
 			{
 				white-space: pre-wrap;
-				color: ${cardStyles[ `${cardColorLowerCase}SummaryColor` ]};
+				color: inherit;
 			}
 		`
 		: Styled(Typography)`
@@ -81,28 +85,16 @@ const YGOCard = memo(( {cardName, cardColor, cardEffect, monsterType, cardAttrib
 				-webkit-line-clamp: ${effectMaxLineHeight};
 				-webkit-box-orient: vertical;
 				overflow: hidden;
-				color: ${cardStyles[ `${cardColorLowerCase}SummaryColor` ]};
 			}
 		`
 
-
-	const MonsterTypeComponent = Styled(Typography)`
-		&&
-		{
-			font-weight: 800;
-			margin-bottom: .28rem;
-			color: ${cardStyles[ `${cardColorLowerCase}SummaryColor` ]};
-		}
-	`
-
 	return(
-		<CardContentComponent className={className} >
+		<CardContentComponent className={[className, `${cardColor}YgoCardParent`, 'YgoCardLightText'].join(' ')} >
 
-			<div style={{ width: '100%', display: 'flex', marginBottom: '.5rem', whiteSpace: 'normal' }} >
+			<div style={{ width: '100%', display: 'flex', marginBottom: '.5rem', whiteSpace: 'normal', color: 'inherit' }} >
 				<CardNameComponent
 					variant='subtitle1'
 					noWrap={true}
-					style={{ flex: '1' }}
 					>
 						{ cardName }
 				</CardNameComponent>
@@ -111,7 +103,8 @@ const YGOCard = memo(( {cardName, cardColor, cardEffect, monsterType, cardAttrib
 			<CardAssociation monsterAssociation={monsterAssociation} attribute={cardAttribute} />
 
 
-			<CardDescriptionComponent >
+			<CardDescriptionComponent
+					className={[`${cardColor}YgoCardSummaryBox`, 'YgoCardDarkText'].join(' ')} >
 				<MonsterTypeComponent
 					variant='body1'
 					noWrap={true} >
@@ -134,7 +127,7 @@ const YGOCard = memo(( {cardName, cardColor, cardEffect, monsterType, cardAttrib
 							: undefined
 					}
 					{
-						( cardColor === 'Spell' || cardColor === 'Trap' || cardColor === 'err' ) ?
+						( cardColor === 'Spell' || cardColor === 'Trap' || cardColor === 'Err' ) ?
 							undefined :
 							(fullDetails) ? <AtkDef monsterAtk={monsterAtk} monsterDef={monsterDef} cardColor={cardColor} /> : undefined
 					}

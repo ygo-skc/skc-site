@@ -44,7 +44,7 @@ export default function HttpErr( {httpErr} )
 			<Breadcrumbs crumbs={ [ 'Home', httpErr ] } />
 				<ErrCard
 					style={{width: '400px'}}
-					cardColor='err'
+					cardColor='Err'
 					cardName={ HTTP_ERR_maps_ERR_NAME[httpErr] }
 					monsterType={ HTTP_ERR_maps_ERR_TYPE[httpErr] }
 					cardEffect={ HTTP_ERR_maps_ERR_DESCRIPTION[httpErr] }
