@@ -1,4 +1,5 @@
-import React, {memo} from 'react'
+import React, {memo, lazy} from 'react'
+import '../../css/ygo-card-styles.css'
 
 import { Typography, Box, Paper } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
@@ -6,16 +7,9 @@ import { Skeleton } from '@material-ui/lab'
 import Styled from 'styled-components'
 import he from 'he'
 
-import CardAssociation from './CardAssociation'
 import AtkDef from './AtkDef'
 
-
-const CardIDComponent = Styled(Typography)`
-	&& {
-		font-style: italic;
-		color: inherit;
-	}
-`
+const CardAssociation = lazy( () => import('./CardAssociation'))
 
 const CardContentComponent = Styled(Paper)`
 	&&
@@ -30,33 +24,6 @@ const CardContentComponent = Styled(Paper)`
 			padding: .69rem;
 		}
 	}
-`
-
-const CardNameComponent = Styled(Typography)`
-	&& {
-		margin-bottom: .25rem;
-		text-align: center;
-		text-transform: uppercase;
-		flex: 1;
-		color: inherit;
-	},
-`
-
-const CardDescriptionComponent = Styled(Box)`
-	&&
-	{
-		padding: .445rem;
-		border-radius: .5rem;
-	}
-`
-
-const MonsterTypeComponent = Styled(Typography)`
-&&
-{
-	font-weight: 800;
-	margin-bottom: .28rem;
-	color: inherit;
-}
 `
 
 
@@ -85,45 +52,46 @@ const YGOCard = memo(( {cardName, cardColor, cardEffect, monsterType, cardAttrib
 				-webkit-line-clamp: ${effectMaxLineHeight};
 				-webkit-box-orient: vertical;
 				overflow: hidden;
+				color: inherit;
 			}
 		`
 
 	return(
 		<CardContentComponent className={[className, `${cardColor}YgoCardParent`, 'YgoCardLightText'].join(' ')} >
 
-			<div style={{ width: '100%', display: 'flex', marginBottom: '.5rem', whiteSpace: 'normal', color: 'inherit' }} >
-				<CardNameComponent
-					variant='subtitle1'
-					noWrap={true}
-					>
-						{ cardName }
-				</CardNameComponent>
-			</div>
+			<Typography
+				variant='subtitle1'
+				id='CardName'
+				noWrap={true}
+				>
+					{ cardName }
+			</Typography>
 
 			<CardAssociation monsterAssociation={monsterAssociation} attribute={cardAttribute} />
 
 
-			<CardDescriptionComponent
-					className={[`${cardColor}YgoCardSummaryBox`, 'YgoCardDarkText'].join(' ')} >
-				<MonsterTypeComponent
+			<Box
+					className={[`${cardColor}YgoCardSummaryBox`, 'YgoCardDarkText'].join(' ')} id='CardDescription' >
+				<Typography
 					variant='body1'
+					id='MonsterType'
 					noWrap={true} >
 						{
 							( cardColor === 'Spell' || cardColor === 'Trap' ) ? cardColor : monsterType
 						}
-				</MonsterTypeComponent>
+				</Typography>
 
 				<CardEffectComponent
 					variant='body2' >
 						{ he.decode(cardEffect) }
 				</CardEffectComponent>
 
-				<div style={{display: 'flex', paddingTop: '.5rem',  alignItems: 'center'}} >
+				<Box style={{display: 'flex', paddingTop: '.5rem',  alignItems: 'center'}} >
 					{
 						(fullDetails) ?
-							<CardIDComponent variant='body2' >
+							<Typography variant='body2' id='CardID' >
 								{cardID}
-							</CardIDComponent>
+							</Typography>
 							: undefined
 					}
 					{
@@ -131,12 +99,12 @@ const YGOCard = memo(( {cardName, cardColor, cardEffect, monsterType, cardAttrib
 							undefined :
 							(fullDetails) ? <AtkDef monsterAtk={monsterAtk} monsterDef={monsterDef} cardColor={cardColor} /> : undefined
 					}
-				</div>
-			</CardDescriptionComponent>
+				</Box>
+			</Box>
 		</CardContentComponent>
 	)
 }, (prevProps, newProps) => {
-	if ( prevProps.cardName !== newProps.cardName || prevProps.isLoading !== newProps.isLoading )
+	if ( prevProps.cardName !== newProps.cardName )
 		return false
 
 	return true
