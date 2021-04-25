@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, lazy } from 'react'
+import React, { useState, useEffect, lazy } from 'react'
 import {Helmet} from 'react-helmet'
 
 import { handleFetch } from '../../../helper/FetchHandler'
@@ -11,15 +11,12 @@ import OneThirdTwoThirdsGrid from '../../util/grid/OneThirdTwoThirdsGrid'
 import CardData from './CardData'
 import CardInformationRelatedContent from './CardInformationRelatedContent'
 
-let Breadcrumb = lazy( () => import('../../Breadcrumb') )
-const crumbs = ['Home', 'Card Browse']
+const Breadcrumb = lazy( () => import('../../Breadcrumb') )
 
 
 const Card = ( { match, history } ) =>
 {
-	let cardID = useMemo( () => {
-		return match.params.cardId
-	}, [])
+	Card.cardID = match.params.cardId
 
 	const [isLoading, setIsLoading] = useState(true)
 
@@ -35,10 +32,12 @@ const Card = ( { match, history } ) =>
 	const [productInfo, setPackInfo] = useState([])
 	const [banListInfo, setBanListInfo] = useState([])
 
-	const [dynamicCrumbs, setDynamicCrumbs] = useState([...crumbs, ''])
+	const [dynamicCrumbs, setDynamicCrumbs] = useState([...Card.crumbs, ''])
 
 	const helmetData = useEffect( () => {
-		handleFetch(`${NAME_maps_ENDPOINT['cardInstanceUrl']}${cardID}?allInfo=true`, history, (json) => {
+		handleFetch(`${NAME_maps_ENDPOINT['cardInstanceUrl']}${Card.cardID}?allInfo=true`, history, (json) => {
+			setDynamicCrumbs([...Card.crumbs, json.cardID])
+
 			setCardName(json.cardName)
 			setCardColor(json.cardColor)
 			setCardEffect(json.cardEffect)
@@ -51,18 +50,17 @@ const Card = ( { match, history } ) =>
 			setPackInfo( (json.foundIn === undefined)? [] : json.foundIn )
 			setBanListInfo( (json.restrictedIn === undefined)? [] : json.restrictedIn )
 
-			setDynamicCrumbs([...crumbs, json.cardID])
 			setIsLoading(false)
 		})
 
 		return (
 		<Helmet>
-			<title>SKC - Card: {cardID}</title>
+			<title>SKC - Card: {Card.cardID}</title>
 			<meta
-				name={`SKC - Card: ${cardID}`}
+				name={`SKC - Card: ${Card.cardID}`}
 				content={`Information for YuGiOh card ${cardName} such as ban lists it was in, products it can be found in, effect/stats, etc.`}
 				/>
-			<meta name="keywords" content={`YuGiOh, The Supreme Kings Castle, card, ${cardName}, ${cardID}, ${cardColor}`} />
+			<meta name="keywords" content={`YuGiOh, The Supreme Kings Castle, card, ${cardName}, ${Card.cardID}, ${cardColor}`} />
 		</Helmet>
 		)
 
@@ -73,7 +71,7 @@ const Card = ( { match, history } ) =>
 		<MainContentContainer >
 			{helmetData}
 
-				<Breadcrumb crumbs={ dynamicCrumbs } />
+			<Breadcrumb crumbs={ dynamicCrumbs } />
 
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={
@@ -86,14 +84,14 @@ const Card = ( { match, history } ) =>
 						monsterAtk={monsterAtk}
 						monsterDef={monsterDef}
 						monsterAssociation={monsterAssociation}
-						cardID={cardID}
+						cardID={Card.cardID}
 						isLoading={isLoading}
 					/>
 				}
 				twoThirdComponent={
 					<CardInformationRelatedContent cardName={cardName}
 						isLoading={isLoading}
-						cardID={cardID}
+						cardID={Card.cardID}
 						productInfo={productInfo}
 						banListInfo={banListInfo} />
 					}
@@ -103,4 +101,6 @@ const Card = ( { match, history } ) =>
 	)
 }
 
+
+Card.crumbs = ['Home', 'Card Browse']
 export default Card
