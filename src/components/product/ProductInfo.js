@@ -1,8 +1,5 @@
-import React, {useState, useEffect, lazy, Suspense} from 'react'
+import React, {useState, useEffect, lazy} from 'react'
 import { Helmet } from 'react-helmet'
-
-import { Paper } from '@material-ui/core'
-import { Skeleton } from '@material-ui/lab'
 
 import {handleFetch} from '../../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
@@ -11,16 +8,14 @@ import {MainContentContainer} from '../MainContent'
 
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 
-import {LightTranslucentDivider, DarkTranslucentDivider} from '../util/Divider'
+import {DarkTranslucentDivider} from '../util/Divider'
 
-import {StickyBox} from '../util/StyledContainers'
-
-import {LeftBoxHeaderTypography, LeftBoxSectionTypography, LeftBoxSectionHeaderTypography, RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from '../util/grid/OneThirdTwoThirdsGrid'
-
+import {RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from '../util/grid/OneThirdTwoThirdsGrid'
 
 
 const Breadcrumb = lazy( () => import('../Breadcrumb') )
 const CardDisplayGrid = lazy( () => import('../util/grid/CardDisplayGrid') )
+const ProductInfoDetailsComponent = lazy( () => import('./ProductInfoDetailsComponent') )
 
 
 export default function ProductInfo({match, history}) {
@@ -66,84 +61,44 @@ export default function ProductInfo({match, history}) {
 				<meta name="keywords" content={`YuGiOh, product browse, The Supreme Kings Castle`} />
 			</Helmet>
 
-			<Suspense>
-				<Breadcrumb crumbs={dynamicBreadcrumbs} />
-			</Suspense>
+			<Breadcrumb crumbs={dynamicBreadcrumbs} />
 
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={
-					<StickyBox>
-
-						<RightBoxPaper style={{ backgroundImage: 'linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)' }} >
-
-							{(isDataLoaded)?
-								<LeftBoxHeaderTypography
-									variant='h4' >
-									{productName}
-								</LeftBoxHeaderTypography>
-								: <Skeleton
-									variant='rect'
-									height={30}
-									width={250}
-									style={{marginBottom: '.8rem'}}
-									/>
-							}
-
-							<LeftBoxSectionHeaderTypography variant='h6' >
-								Summary
-							</LeftBoxSectionHeaderTypography>
-
-							<LeftBoxSectionTypography variant='body1' >
-								<strong>Product ID:</strong> {productId}
-							</LeftBoxSectionTypography>
-							<LeftBoxSectionTypography variant='body1' >
-								<strong>Product Type:</strong> {productType}
-							</LeftBoxSectionTypography>
-							<LeftBoxSectionTypography variant='body1'>
-								<strong>Product Sub-Type:</strong> {productSubType}
-							</LeftBoxSectionTypography >
-							<LeftBoxSectionTypography variant='body1'>
-								<strong>American Release:</strong> {productReleaseDate}
-							</LeftBoxSectionTypography>
-
-							<LightTranslucentDivider  />
-
-							<LeftBoxSectionHeaderTypography variant='h6' >
-								Product Stats
-							</LeftBoxSectionHeaderTypography>
-							<LeftBoxSectionTypography variant='body1'>
-								<strong>Product Total:</strong> {productTotal}
-							</LeftBoxSectionTypography>
-						</RightBoxPaper>
-
-					</StickyBox>
-				}
+					<ProductInfoDetailsComponent
+						productName={productName}
+						productId={productId}
+						productType={productType}
+						productSubType={productSubType}
+						productReleaseDate={productReleaseDate}
+						productTotal={productTotal}
+						isDataLoaded={isDataLoaded}
+					/>
+					}
 				twoThirdComponent={
-					<Suspense>
-						<RightBoxPaper >
-							<RightBoxHeaderContainer >
-								<RightBoxHeaderTypography variant='h4' >
-									Contents
-								</RightBoxHeaderTypography>
-								<RightBoxSubHeaderTypography variant='h5' >
-									Sorted By Pack Order
-								</RightBoxSubHeaderTypography>
+					<RightBoxPaper >
+						<RightBoxHeaderContainer >
+							<RightBoxHeaderTypography variant='h4' >
+								Contents
+							</RightBoxHeaderTypography>
+							<RightBoxSubHeaderTypography variant='h5' >
+								Sorted By Pack Order
+							</RightBoxSubHeaderTypography>
 
-								<DarkTranslucentDivider />
-							</RightBoxHeaderContainer>
+							<DarkTranslucentDivider />
+						</RightBoxHeaderContainer>
 
-							<CardDisplayGrid
-								cardJsonResults={cardJsonResults}
-								numResultsDisplayed={productTotal}
-								numResultsLoaded={productTotal}
-								loadMoreCallback={undefined}
-								isLoadMoreOptionVisible={false}
-								history={history}
-								isDataLoaded={isDataLoaded}
-								target={window.location.hash.substr(1)}
-							/>
-						</RightBoxPaper>
-					</Suspense>
+						<CardDisplayGrid
+							cardJsonResults={cardJsonResults}
+							numResultsDisplayed={productTotal}
+							numResultsLoaded={productTotal}
+							loadMoreCallback={undefined}
+							isLoadMoreOptionVisible={false}
+							history={history}
+							isDataLoaded={isDataLoaded}
+							target={window.location.hash.substr(1)}
+						/>
+					</RightBoxPaper>
 				}
 			/>
 		</MainContentContainer>

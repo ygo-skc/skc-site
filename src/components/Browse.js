@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, lazy } from 'react'
 import Autocomplete from '@material-ui/lab/Autocomplete'
-import { Chip, Paper, InputBase, IconButton } from '@material-ui/core'
+import { Chip, InputBase, IconButton } from '@material-ui/core'
 import { Helmet } from 'react-helmet'
 
 import SearchIcon from '@material-ui/icons/Search'
@@ -8,7 +8,6 @@ import SearchIcon from '@material-ui/icons/Search'
 import Breadcrumb from './Breadcrumb'
 import { MainContentContainer } from './MainContent'
 
-import CardDisplayGrid from './util/grid/CardDisplayGrid'
 
 import OneThirdTwoThirdsGrid from './util/grid/OneThirdTwoThirdsGrid'
 
@@ -22,6 +21,7 @@ import {RenderGroup, SearchSuggestionTypography} from './util/Search'
 
 import {LeftBoxSectionTypography, LeftBoxSectionHeaderTypography, RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from './util/grid/OneThirdTwoThirdsGrid'
 
+const CardDisplayGrid = lazy( () => import('./util/grid/CardDisplayGrid'))
 
 const defaultDisplayNum = 50
 
