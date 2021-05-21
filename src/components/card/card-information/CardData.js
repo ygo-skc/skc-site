@@ -7,13 +7,13 @@ import CardImageRounded from '../CardImageRounded'
 const YGOCard = lazy( () => import('../YGOCard') )
 
 
-const CardData = memo( ( { cardID, cardName, cardColor, cardEffect, cardAttribute, monsterType, monsterAtk, monsterDef, monsterAssociation, isLoading } ) =>
+const CardData = memo( ( { cardID, cardName, cardColor, cardEffect, cardAttribute, monsterType, monsterAtk, monsterDef, monsterAssociation, isLoading, cardImg } ) =>
 {
+	console.log(cardImg)
 	return(<StickyBox >
 			<RightBoxPaper>
 				<CardImageRounded
-					cardID={cardID}
-					timeout={0}
+					cardImg={cardImg}
 					defaultVisibility={true}
 					/>
 

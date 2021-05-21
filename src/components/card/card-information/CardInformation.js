@@ -34,9 +34,15 @@ const Card = ( { match, history } ) =>
 
 	const [dynamicCrumbs, setDynamicCrumbs] = useState([...Card.crumbs, ''])
 
+	const [cardImg, setCardImg] = useState(new Image())
+
 	const helmetData = useEffect( () => {
 		handleFetch(`${NAME_maps_ENDPOINT['cardInstanceUrl']}${Card.cardID}?allInfo=true`, history, (json) => {
 			setDynamicCrumbs([...Card.crumbs, json.cardID])
+
+			const cardImg = new Image()
+			cardImg.src = `https://images.thesupremekingscastle.com/${Card.cardID}.jpg`
+			setCardImg(cardImg)
 
 			setCardName(json.cardName)
 			setCardColor(json.cardColor)
@@ -86,6 +92,7 @@ const Card = ( { match, history } ) =>
 						monsterAssociation={monsterAssociation}
 						cardID={Card.cardID}
 						isLoading={isLoading}
+						cardImg={cardImg}
 					/>
 				}
 				twoThirdComponent={

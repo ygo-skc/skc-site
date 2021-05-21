@@ -1,27 +1,12 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
+import { Skeleton } from '@material-ui/lab'
 import '../../css/rounded-img.css'
 import VizSensor from 'react-visibility-sensor'
 
-async function getImg(imgURL)
-{
-	return <img
-		src={imgURL}
-		id='rounded-img'
-	/>
-}
 
-
-export default function CardImageRounded({cardID, timeout=0, defaultVisibility=false})
+export default function CardImageRounded({cardImg, defaultVisibility=false})
 {
 	const [visible, setVisible] = useState(defaultVisibility)
-	const [img, setImg] = useState(undefined)
-
-	useEffect( () => {
-		getImg(`https://images.thesupremekingscastle.com/${cardID}.jpg`).then(img => {
-			setTimeout( () => setImg(img), timeout)
-	})
-	}, [])
-
 
 	return(
       <VizSensor
@@ -33,7 +18,12 @@ export default function CardImageRounded({cardID, timeout=0, defaultVisibility=f
 			}} >
 			<div id='rounded-img-outer-container' >
 				<div id='rounded-img-inner-container' >
-					{(visible)? img : undefined
+					{(visible)? <img
+							src={cardImg.src}
+							id='rounded-img'
+							width='100%'
+							height='auto'
+						/> : undefined
 					}
 				</div>
 			</div>
