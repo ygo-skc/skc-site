@@ -7,16 +7,24 @@ import { MainContentContainer } from '../../MainContent'
 
 import OneThirdTwoThirdsGrid from '../../util/grid/OneThirdTwoThirdsGrid'
 
-
 import CardData from './CardData'
-import CardInformationRelatedContent from './CardInformationRelatedContent'
 
-const Breadcrumb = lazy( () => import('../../Breadcrumb') )
+import Breadcrumb from '../../Breadcrumb'
+
+const CardInformationRelatedContent = lazy( () => import('./CardInformationRelatedContent') )
 
 
 const Card = ( { match, history } ) =>
 {
-	Card.cardID = match.params.cardId
+
+	if (Card.cardId === null || Card.cardID === undefined)
+	{
+		Card.cardID = match.params.cardId
+
+		const cardImage = new Image()
+		cardImage.src = `https://images.thesupremekingscastle.com/${Card.cardID}.jpg`
+		Card.cardImg = cardImage
+	}
 
 	const [isLoading, setIsLoading] = useState(true)
 
@@ -34,15 +42,10 @@ const Card = ( { match, history } ) =>
 
 	const [dynamicCrumbs, setDynamicCrumbs] = useState([...Card.crumbs, ''])
 
-	const [cardImg, setCardImg] = useState(new Image())
-
 	const helmetData = useEffect( () => {
+
 		handleFetch(`${NAME_maps_ENDPOINT['cardInstanceUrl']}${Card.cardID}?allInfo=true`, history, (json) => {
 			setDynamicCrumbs([...Card.crumbs, json.cardID])
-
-			const cardImg = new Image()
-			cardImg.src = `https://images.thesupremekingscastle.com/${Card.cardID}.jpg`
-			setCardImg(cardImg)
 
 			setCardName(json.cardName)
 			setCardColor(json.cardColor)
@@ -92,7 +95,7 @@ const Card = ( { match, history } ) =>
 						monsterAssociation={monsterAssociation}
 						cardID={Card.cardID}
 						isLoading={isLoading}
-						cardImg={cardImg}
+						cardImg={Card.cardImg}
 					/>
 				}
 				twoThirdComponent={

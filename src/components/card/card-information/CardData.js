@@ -9,7 +9,6 @@ const YGOCard = lazy( () => import('../YGOCard') )
 
 const CardData = memo( ( { cardID, cardName, cardColor, cardEffect, cardAttribute, monsterType, monsterAtk, monsterDef, monsterAssociation, isLoading, cardImg } ) =>
 {
-	console.log(cardImg)
 	return(<StickyBox >
 			<RightBoxPaper>
 				<CardImageRounded

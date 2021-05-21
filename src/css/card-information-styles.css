@@ -1,0 +1,30 @@
+.card-info-header {
+	margin-bottom: 0;
+}
+
+.table-head {
+	background: rgba(0, 0, 0, 0.3);
+}
+
+.table-container {
+	border-radius: 1.1rem;
+	background: rgba(0, 0, 0, 0.3);
+	color: rgba(255, 255, 255, .97);
+	max-width: 97%;
+	margin: auto;
+}
+
+.table-row:hover {
+	cursor: pointer;
+	background: rgba(0, 0, 0, 0.2);
+}
+
+.table-cell {
+	color: rgba(255, 255, 255, .97);
+}
+
+.divider {
+	margin-top: 0;
+	margin-bottom: 1.5rem;
+	width: 97%;
+}

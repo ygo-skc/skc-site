@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import '../../../css/card-information-styles.css'
 import {Paper, TableContainer, Table, TableHead, TableRow, TableBody, TableCell, Box} from '@material-ui/core'
 import {Skeleton} from '@material-ui/lab'
 
@@ -10,41 +11,6 @@ import { getDateString, months } from '../../../helper/Dates'
 import {Hint} from '../../util/Hints'
 
 
-const LightTypographyOverride = Styled(LightTypography)`
-	&&
-	{
-		margin-bottom: 0;
-	}
-`
-
-const LightTranslucentDividerOverride = Styled(LightTranslucentDivider)`
-	&&
-	{
-		margin-top: 0;
-		margin-bottom: 1.5rem;
-		width: 97%;
-	}
-`
-
-
-const StyledTableContainer = Styled(TableContainer)`
-	&&
-	{
-		border-radius: 1.1rem;
-		background: rgba(0, 0, 0, 0.3);
-		color: rgba(255, 255, 255, .97);
-		max-width: 97%;
-		margin: auto;
-	}
-`
-
-
-const StyledTableCell = Styled(TableCell)`
-	&&
-	{
-		color: rgba(255, 255, 255, .97);
-	}
-`
 
 export default function CardBanListInformation({ isLoading, hasInfo, headerText, noInfoText, background, backgroundImage, cardInfo })
 {
@@ -56,26 +22,26 @@ export default function CardBanListInformation({ isLoading, hasInfo, headerText,
 
 		if (cardInfo === null || cardInfo === undefined || cardInfo.length === 0) return
 
-		const productTable = <StyledTableContainer component={Box} >
+		const productTable = <TableContainer className={'table-container'} component={Box} >
 			<Table size='small' >
-				<TableHead style={{background: 'rgba(0, 0, 0, 0.3)'}}>
+				<TableHead className={'table-head'} >
 					<TableRow>
-						<StyledTableCell >Date</StyledTableCell>
-						<StyledTableCell>Status</StyledTableCell>
+						<TableCell className={'table-cell'} >Date</TableCell>
+						<TableCell className={'table-cell'} >Status</TableCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>
 					{
 						cardInfo.map( (banList) => (
 							<TableRow>
-								<StyledTableCell>{ getDateString(months, new Date(banList.banListDate)) }</StyledTableCell>
-								<StyledTableCell>{banList.banStatus}</StyledTableCell>
+								<TableCell className={'table-cell'} >{ getDateString(months, new Date(banList.banListDate)) }</TableCell>
+								<TableCell className={'table-cell'} >{banList.banStatus}</TableCell>
 							</TableRow>
 						))
 					}
 				</TableBody>
 			</Table>
-		</StyledTableContainer>
+		</TableContainer>
 
 		setProductTable(productTable)
 	}, [cardInfo])
@@ -98,12 +64,12 @@ export default function CardBanListInformation({ isLoading, hasInfo, headerText,
 			{
 				(isLoading)?
 					<Skeleton width={150} height={25} />
-					: <LightTypographyOverride variant='h6' >
+					: <LightTypography variant='h6' className={'card-info-header'} >
 						{headerText}
-					</LightTypographyOverride>
+					</LightTypography>
 			}
 
-			<LightTranslucentDividerOverride />
+			<LightTranslucentDivider className={'divider'} />
 
 			{
 				(isLoading)?

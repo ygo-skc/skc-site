@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import '../../../css/card-information-styles.css'
 import {Paper, TableContainer, Table, TableHead, TableRow, TableBody, TableCell, Box} from '@material-ui/core'
 import {Skeleton} from '@material-ui/lab'
 
@@ -9,53 +10,6 @@ import { LightTypography } from '../../util/CustomTypography'
 import { getDateString, months } from '../../../helper/Dates'
 import {Hint} from '../../util/Hints'
 
-const LightTypographyOverride = Styled(LightTypography)`
-	&&
-	{
-		margin-bottom: 0;
-	}
-`
-
-const LightTranslucentDividerOverride = Styled(LightTranslucentDivider)`
-	&&
-	{
-		margin-top: 0;
-		margin-bottom: 1.5rem;
-		width: 97%;
-	}
-`
-
-
-const StyledTableContainer = Styled(TableContainer)`
-	&&
-	{
-		border-radius: 1.1rem;
-		background: rgba(0, 0, 0, 0.3);
-		color: rgba(255, 255, 255, .97);
-		max-width: 97%;
-		margin: auto;
-	}
-`
-
-
-const StyledTableCell = Styled(TableCell)`
-	&&
-	{
-		color: rgba(255, 255, 255, .97);
-	}
-`
-
-
-const StyledTableRow = Styled(TableRow)`
-	&&
-	{
-		&:hover
-		{
-			cursor: pointer;
-			background: rgba(0, 0, 0, 0.2);
-		}
-	}
-`
 
 export default function CardProductInformation({ isLoading, hasInfo, headerText, noInfoText, background, backgroundImage, cardInfo, cardID })
 {
@@ -66,14 +20,14 @@ export default function CardProductInformation({ isLoading, hasInfo, headerText,
 
 		if (cardInfo === null || cardInfo === undefined || cardInfo.length === 0) return
 
-		const productTable = <StyledTableContainer component={Box} >
+		const productTable = <TableContainer className={'table-container'} component={Box} >
 			<Table size='small' >
 				<TableHead style={{background: 'rgba(0, 0, 0, 0.3)'}}>
 					<TableRow>
-						<StyledTableCell >ID</StyledTableCell>
-						<StyledTableCell>Release</StyledTableCell>
-						<StyledTableCell>Position</StyledTableCell>
-						<StyledTableCell>Rarities</StyledTableCell>
+						<TableCell className={'table-cell'} >ID</TableCell>
+						<TableCell className={'table-cell'} >Release</TableCell>
+						<TableCell className={'table-cell'} >Position</TableCell>
+						<TableCell className={'table-cell'} >Rarities</TableCell>
 					</TableRow>
 				</TableHead>
 
@@ -81,18 +35,18 @@ export default function CardProductInformation({ isLoading, hasInfo, headerText,
 					{
 						cardInfo.map( (product) => (
 							product.productContent.map( (content) => (
-								<StyledTableRow onClick={ () => setTimeout( () => window.location.assign(`/product/${product.productId}#${cardID}`), 150 ) }>
-									<StyledTableCell>{product.productId}</StyledTableCell>
-									<StyledTableCell>{ getDateString(months, new Date(product.productReleaseDate)) }</StyledTableCell>
-									<StyledTableCell>{content.productPosition}</StyledTableCell>
-									<StyledTableCell>{content.rarities.join(', ')}</StyledTableCell>
-								</StyledTableRow>
+								<TableRow className={'table-row'} onClick={ () => setTimeout( () => window.location.assign(`/product/${product.productId}#${cardID}`), 150 ) }>
+									<TableCell className={'table-cell'} >{product.productId}</TableCell>
+									<TableCell className={'table-cell'} >{ getDateString(months, new Date(product.productReleaseDate)) }</TableCell>
+									<TableCell className={'table-cell'} >{content.productPosition}</TableCell>
+									<TableCell className={'table-cell'} >{content.rarities.join(', ')}</TableCell>
+								</TableRow>
 							))
 						))
 					}
 				</TableBody>
 			</Table>
-		</StyledTableContainer>
+		</TableContainer>
 
 		setProductTable(productTable)
 	}, [cardInfo])
@@ -115,13 +69,13 @@ export default function CardProductInformation({ isLoading, hasInfo, headerText,
 			{
 				(isLoading)?
 					<Skeleton width={150} height={25} />
-					: <LightTypographyOverride variant='h6' >
+					: <LightTypography variant='h6' className={'card-info-header'} >
 						{headerText}
-					</LightTypographyOverride>
+					</LightTypography>
 			}
 
 
-			<LightTranslucentDividerOverride />
+			<LightTranslucentDivider className={'divider'} />
 
 			{
 				(isLoading)?
