@@ -20,8 +20,6 @@ const CustomLink = styled(Link)`
 
 const CenteredImage = styled.div`
 	text-align: center;
-	margin-bottom: 2rem;
-	min-height: 100px;
 `
 
 
@@ -94,14 +92,14 @@ const About: FunctionComponent = () => (
 				<ParagraphTypography variant='body1'>
 					I started playing Yugioh when I was about 8 years old. I played at some local tourneys, but I wasn't exceptional by any means. I stopped playing when I got to high school, but I still collected cards for fun. My collecting then stopped when I got to college since it was hard convincing myself a pack of cards was more important than food/gas. Also, being a CS major and a Math minor with a full time job - hobbies were not really a priority.
 				</ParagraphTypography>
-					<br />
-				<Typography variant='h6'>
-					Purpose
-				</Typography>
+				<br />
 				<ParagraphTypography>
 					I graduated sometime in 2018 and got a decent job in my field. Through it, I got more time and money for Yugioh again! I play HERO's and Neo Spacians primarily. Other archetypes I like are; Sacred Beasts, Cyber Dragons, and Toons. I primarily collect cards and play Duel Links. Tournaments have been on my mind as well.
 				</ParagraphTypography>
 					<br />
+				<Typography variant='h6'>
+					Purpose
+				</Typography>
 				<ParagraphTypography>
 					This website was created for two reasons. The first and most important was that I needed to learn technologies I wasn't exposed to (primarily Spring) that I needed to know for my job. In case you are wondering, it did help me become adept and am able to do my job faster than most and with ease. Secondly, I thought I could do a better job displaying content than Konami. This website began as a place to display info about the current and previous ban lists. However, I wanted to keep going and built a full blown Database for Yu-Gi-Oh content.
 				</ParagraphTypography>
@@ -190,7 +188,7 @@ const About: FunctionComponent = () => (
 									</Typography>
 
 
-									<CenteredImage >
+									<CenteredImage>
 										<form
 											action="https://www.paypal.com/donate" method="post" target="_top">
 											<input type="hidden" name="hosted_button_id" value="S3MFF6AVW662U" />

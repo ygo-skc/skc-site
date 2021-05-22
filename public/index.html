@@ -83,9 +83,86 @@
 				min-height: 100vh;
 				flex: 1 0 auto;
 			}
+
+
 			.content {
 				flex: 1 0 auto;
 			}
+
+
+			.footer {
+				background-color: #2b4162;
+				background-image: linear-gradient(315deg, #2b4162 0%, #12100e 74%);
+
+
+				padding: 2.25rem;
+				padding-bottom: 3rem;
+				border-top-left-radius: 2.5rem;
+				border-top-right-radius: 2.5rem;
+				margin-top: 2rem;
+			}
+
+
+			.footer-font {
+				font-weight: 680 !important;
+				color: rgba(255, 255, 255, .85) !important;
+			}
+
+
+			.app-bar {
+				background: #310e68;
+				background-image: linear-gradient(316deg, #310e68 0%, #5f0f40 74%);
+				padding-left: 0rem !important;
+			}
+
+
+			.app-bar-button {
+				font-weight: 800 !important;
+				font-size: 1.2rem !important;
+				text-transform: none !important;
+			}
+
+
+			.app-bar-button:hover
+			{
+				background: #5c5ca9 !important;
+			}
+
+
+			.nav-button {
+				font-weight: 700 !important;
+				font-size: .91rem !important;
+				text-transform: none !important;
+				min-width: 0 !important;
+			}
+
+
+			.nav-button:hover
+			{
+				background: #5c5ca9 !important;
+			}
+
+
+			.scrollable-nav {
+				white-space: nowrap;
+				overflow: auto;
+				padding-left: 16px;
+				padding-right: 16px;
+			}
+
+			@media screen and (min-width: 600px) {
+				.scrollable-nav {
+					white-space: nowrap;
+					overflow: auto;
+					padding-left: 24px;
+					padding-right: 24px;
+				}
+			}
+
+			.scrollable-nav::-webkit-scrollbar {
+				display: none;
+			}
+
 		</style>
 
 	</head>

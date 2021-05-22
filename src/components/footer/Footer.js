@@ -1,50 +1,25 @@
 import React from 'react'
 
 import {Box, Typography} from '@material-ui/core'
-import Styled from 'styled-components'
-
-
-const FooterComponent = Styled(Box)`
-	&&
-	{
-		background-color: #2b4162;
-		background-image: linear-gradient(315deg, #2b4162 0%, #12100e 74%);
-
-
-		padding: 1.5rem;
-		padding-bottom: 3rem;
-		border-top-left-radius: 2.5rem;
-		border-top-right-radius: 2.5rem;
-		margin-top: 2rem;
-	}
-`
-
-
-const FooterTypography = Styled(Typography)`
-	&&
-	{
-		font-weight: 600;
-		font-size: .86rem;
-		color: white;
-	}
-`
 
 
 export default function Footer()
 {
 	return(
-		<FooterComponent>
-			<FooterTypography
-				variant='body1'
+		<Box className='footer' >
+			<Typography
+				className='footer-font'
+				variant='body2'
 				align='center' >
 				Copyright 2021
-			</FooterTypography>
+			</Typography>
 
-			<FooterTypography
-				variant='body1'
+			<Typography
+				className='footer-font'
+				variant='body2'
 				align='center' >
 				Konami Digital Entertainment owns all rights to Yu-Gi-Oh!
-			</FooterTypography>
-		</FooterComponent>
+			</Typography>
+		</Box>
 	)
 }
