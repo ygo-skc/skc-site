@@ -177,25 +177,6 @@ export default function Home({ history }) {
 								Enjoy the website ad free with a fast and beautiful UI. There is no tracking and the only money we make is though donations. Want to become a patreon or learn more? Check out the <Link color='secondary' href='/about'><strong>About</strong></Link> section
 							</Typography>
 						</ChildPaper>
-
-						<ChildPaper >
-							<Typography variant='h4' >
-								Whats New?
-							</Typography>
-
-							<Typography variant='body1' >
-								<Typography variant='inherit' style={{ color: '#2b3239' }} ><strong>March 26, 2020:</strong></Typography> New ban list - content added for it.
-							</Typography>
-							<Typography variant='body1' >
-								<Typography variant='inherit' style={{ color: '#2b3239' }} ><strong>March 21, 2020:</strong></Typography> The Castle was cleaned up - navigating it is faster. The Database was updated to improve load times The Supreme King expects.
-							</Typography>
-							<Typography variant='body1' >
-								<Typography variant='inherit' style={{ color: '#2b3239' }} ><strong>January 20, 2020:</strong></Typography> New ban list - content added for it. The Castle got a slight change in looks.
-							</Typography>
-							<Typography variant='body1'>
-								<Typography variant='inherit' style={{ color: '#2b3239' }} ><strong>Dec 25, 2019:</strong></Typography> The Supreme King allows guests to The Castle.
-							</Typography>
-						</ChildPaper>
 					</div>
 					}
 				/>

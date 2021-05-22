@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 
-import Footer from './components/Footer'
+import Footer from './components/footer/Footer'
 import NavigationBar from './components/NavigationBar'
 import Routes from './Routes.tsx'
 

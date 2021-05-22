@@ -11,12 +11,11 @@ const FooterComponent = Styled(Paper)`
 		background-image: linear-gradient(315deg, #2b4162 0%, #12100e 74%);
 
 
-		padding: 2.5rem;
-		padding-bottom: 3.5rem;
+		padding: 1.5rem;
+		padding-bottom: 3rem;
 		border-top-left-radius: 2.5rem;
 		border-top-right-radius: 2.5rem;
-		flex-shrink: 0;
-		margin-top: 6rem;
+		margin-top: 4rem;
 	}
 `
 
