@@ -1,7 +1,6 @@
 import React, { lazy, memo } from 'react'
 import { Grid } from '@material-ui/core'
 import {RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from '../../util/grid/OneThirdTwoThirdsGrid'
-import Footer from '../../Footer'
 
 import {DarkTranslucentDivider} from '../../util/Divider'
 
@@ -46,8 +45,6 @@ const CardInformationRelatedContent = memo( ({ cardName, isLoading, productInfo,
 					}
 
 				</Grid>
-				<Footer />
-
 			</Grid>
 		</RightBoxPaper>
 	)

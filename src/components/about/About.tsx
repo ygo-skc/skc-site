@@ -6,7 +6,6 @@ import styled from 'styled-components'
 
 import Breadcrumb from '../Breadcrumb'
 import { MainContentContainer } from '../MainContent'
-import Footer from '../Footer'
 import {DarkTranslucentDivider} from '../util/Divider'
 
 import GenericLinkPhoto from '../util/photo/GenericLinkPhoto'
@@ -325,8 +324,6 @@ const About: FunctionComponent = () => (
 				</Grid>
 			</InfoContainer>
 		</div>
-
-		<Footer />
 	</MainContentContainer>
 	)
 

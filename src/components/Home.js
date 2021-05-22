@@ -11,7 +11,6 @@ import { MainContentContainer, ChildPaper } from './MainContent'
 import Breadcrumb from './Breadcrumb'
 import { handleFetch } from '../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../helper/YgoApiEndpoints'
-import Footer from './Footer'
 
 import OneThirdTwoThirdsGrid from './util/grid/OneThirdTwoThirdsGrid'
 
@@ -200,12 +199,6 @@ export default function Home({ history }) {
 					</div>
 					}
 				/>
-
-
-
-
-
-			<Footer />
 		</MainContentContainer>
 	)
 }

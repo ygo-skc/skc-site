@@ -21,7 +21,6 @@ import BreadCrumb from '../Breadcrumb'
 const TabbedView = lazy( () => import('./TabbedView') )
 const BanListSection = lazy( () => import('./BanListSection') )
 const BanListStats = lazy( () => import('./BanListStats') )
-const Footer = lazy( () => import('../Footer') )
 
 
 const BannedContentContainer = Styled(Paper)`
@@ -222,10 +221,6 @@ export default function BanList(props)
 								</Suspense>
 
 							</BannedContentContainer>
-
-							<Suspense fallback={undefined} >
-								<Footer />
-							</Suspense>
 						</Box>
 					}
 				/>

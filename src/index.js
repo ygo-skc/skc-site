@@ -2,6 +2,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 
+import Footer from './components/Footer'
 import NavigationBar from './components/NavigationBar'
 import Routes from './Routes.tsx'
 
@@ -146,7 +147,7 @@ const theme = createMuiTheme({
 })
 
 render(
-	<div style={{ display: 'flex', flexFlow: 'column', height: '100%' }} >
+	<div>
 		<ThemeProvider
 			theme={ theme } >
 			<NavigationBar />
@@ -154,4 +155,13 @@ render(
 		</ThemeProvider>
 	</div>,
 	document.getElementById('root')
+)
+
+
+render(
+	<ThemeProvider
+		theme={ theme } >
+		<Footer />
+	</ThemeProvider>,
+	document.getElementById('footer')
 )

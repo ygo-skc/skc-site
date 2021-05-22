@@ -11,6 +11,7 @@ const MainContentContainer = Styled(Box)`
 		padding-bottom: 0rem;
 
 		max-width: 100%;
+		height: 100%;
 		width: 100%;
 	}
 `

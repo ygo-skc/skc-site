@@ -1,6 +1,6 @@
 import React, {useState, useEffect, memo, useRef} from 'react'
 
-import { Grid, IconButton, Box, Typography } from '@material-ui/core'
+import { Grid, IconButton, Box } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
 import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded';
 
@@ -8,7 +8,6 @@ import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded';
 import CardImageRounded from '../../card/CardImageRounded'
 
 import YGOCard from '../../card/YGOCard'
-import Footer from '../../Footer'
 
 import { Hint } from '../../util/Hints'
 
@@ -150,8 +149,6 @@ const CardDisplayGrid = memo( ({ cardJsonResults, numResultsDisplayed, numItemsT
 					<ExpandMoreRoundedIcon />
 				</IconButton>
 			}
-
-			{ (showFooter)? <Footer /> : undefined }
 		</Box>
 	)
 }, (prevProps, newProps) => {
