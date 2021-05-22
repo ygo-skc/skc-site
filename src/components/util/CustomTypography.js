@@ -9,10 +9,10 @@ const LightTypographyStyle = Styled(Typography)`
 	}
 `
 
-const LightTypography = ({ children, variant, align }) =>
+const LightTypography = ({ className, children, variant, align }) =>
 {
 	return(
-		<LightTypographyStyle align={align} variant={variant} >
+		<LightTypographyStyle align={align} variant={variant} className={className} >
 			{children}
 		</LightTypographyStyle>
 	)

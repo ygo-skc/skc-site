@@ -43,7 +43,7 @@ export default function Home({ history }) {
 			setYearsOfBanListCoverage(json.yearsOfBanListCoverage)
 			setProductTotal(json.productTotal)
 		})
-	}, [])
+	}, [history])
 
 
 	const [cardTotal, setCardTotal] = useState(0)
@@ -62,7 +62,7 @@ export default function Home({ history }) {
 			searchThrottle(searchInput, setSearchOptions, history)
 		}
 	}
-		, [searchInput])
+		, [searchInput, history])
 
 
 	return (

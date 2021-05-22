@@ -3,7 +3,6 @@ import '../../../css/card-information-styles.css'
 import {Paper, TableContainer, Table, TableHead, TableRow, TableBody, TableCell, Box} from '@material-ui/core'
 import {Skeleton} from '@material-ui/lab'
 
-import Styled from 'styled-components'
 import {LightTranslucentDivider} from '../../util/Divider'
 import { LightTypography } from '../../util/CustomTypography'
 
@@ -11,7 +10,7 @@ import { getDateString, months } from '../../../helper/Dates'
 import {Hint} from '../../util/Hints'
 
 
-export default function CardProductInformation({ isLoading, hasInfo, headerText, noInfoText, background, backgroundImage, cardInfo, cardID })
+export default function CardProductInformation({ isLoading, hasInfo, cardInfo, cardID })
 {
 
 	const [productTable, setProductTable] = useState(undefined)
@@ -49,28 +48,16 @@ export default function CardProductInformation({ isLoading, hasInfo, headerText,
 		</TableContainer>
 
 		setProductTable(productTable)
-	}, [cardInfo])
+	}, [cardInfo, cardID])
 
-	const Parent = Styled(Paper)`
-		&&
-		{
-			background: ${background};
-			background-image: ${backgroundImage};
-			padding-left: .9rem;
-			padding-right: .9rem;
-			padding-top: 1.3rem;
-			padding-bottom: 1.3rem;
-			border-radius: 1.05rem;
-		}
-	`
 
 	return(
-		<Parent>
+		<Paper className={'products card-info-section'} >
 			{
 				(isLoading)?
 					<Skeleton width={150} height={25} />
 					: <LightTypography variant='h6' className={'card-info-header'} >
-						{headerText}
+						{'Products'}
 					</LightTypography>
 			}
 
@@ -82,10 +69,10 @@ export default function CardProductInformation({ isLoading, hasInfo, headerText,
 					undefined
 					: (hasInfo)?
 						productTable
-						: <Hint text={noInfoText} variant='subtitle1' backgroundColor='rgba(0, 0, 0, 0.3)' textColor='white'>
-							{noInfoText}
+						: <Hint text='Not Found In Any Product' variant='subtitle1' backgroundColor='rgba(0, 0, 0, 0.3)' textColor='white'>
+							{'Not Found In Any Product'}
 						</Hint>
 			}
-		</Parent>
+		</Paper>
 	)
 }

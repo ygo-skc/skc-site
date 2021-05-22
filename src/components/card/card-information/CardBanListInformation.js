@@ -3,7 +3,6 @@ import '../../../css/card-information-styles.css'
 import {Paper, TableContainer, Table, TableHead, TableRow, TableBody, TableCell, Box} from '@material-ui/core'
 import {Skeleton} from '@material-ui/lab'
 
-import Styled from 'styled-components'
 import {LightTranslucentDivider} from '../../util/Divider'
 import { LightTypography } from '../../util/CustomTypography'
 
@@ -12,14 +11,12 @@ import {Hint} from '../../util/Hints'
 
 
 
-export default function CardBanListInformation({ isLoading, hasInfo, headerText, noInfoText, background, backgroundImage, cardInfo })
+export default function CardBanListInformation({ isLoading, hasInfo, cardInfo })
 {
 
 	const [productTable, setProductTable] = useState(undefined)
 
 	useEffect(() => {
-		console.log('card info is', cardInfo)
-
 		if (cardInfo === null || cardInfo === undefined || cardInfo.length === 0) return
 
 		const productTable = <TableContainer className={'table-container'} component={Box} >
@@ -46,26 +43,14 @@ export default function CardBanListInformation({ isLoading, hasInfo, headerText,
 		setProductTable(productTable)
 	}, [cardInfo])
 
-	const Parent = Styled(Paper)`
-		&&
-		{
-			background: ${background};
-			background-image: ${backgroundImage};
-			padding-left: .9rem;
-			padding-right: .9rem;
-			padding-top: 1.3rem;
-			padding-bottom: 1.3rem;
-			border-radius: 1.05rem;
-		}
-	`
 
 	return(
-		<Parent>
+		<Paper className={'ban-lists card-info-section'} >
 			{
 				(isLoading)?
 					<Skeleton width={150} height={25} />
 					: <LightTypography variant='h6' className={'card-info-header'} >
-						{headerText}
+						{'Ban Lists'}
 					</LightTypography>
 			}
 
@@ -76,10 +61,10 @@ export default function CardBanListInformation({ isLoading, hasInfo, headerText,
 					undefined
 					: (hasInfo)?
 						productTable
-						: <Hint text={noInfoText} variant='subtitle1' backgroundColor='rgba(0, 0, 0, 0.3)' textColor='white'>
-							{noInfoText}
+						: <Hint text='Not Found In Any Ban List' variant='subtitle1' backgroundColor='rgba(0, 0, 0, 0.3)' textColor='white'>
+							{'Not Found In Any Ban List'}
 						</Hint>
 			}
-		</Parent>
+		</Paper>
 	)
 }

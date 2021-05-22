@@ -1,5 +1,4 @@
 import React, {useState} from 'react'
-import { Skeleton } from '@material-ui/lab'
 import '../../css/rounded-img.css'
 import VizSensor from 'react-visibility-sensor'
 
@@ -22,7 +21,8 @@ export default function CardImageRounded({cardImg, defaultVisibility=false})
 							src={cardImg.src}
 							id='rounded-img'
 							width='100%'
-							height='auto'
+							height='1'
+							alt={`Card`}
 						/> : undefined
 					}
 				</div>

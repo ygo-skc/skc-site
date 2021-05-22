@@ -7,11 +7,10 @@ import { MainContentContainer } from '../../MainContent'
 
 import OneThirdTwoThirdsGrid from '../../util/grid/OneThirdTwoThirdsGrid'
 
-import CardData from './CardData'
-
 import Breadcrumb from '../../Breadcrumb'
 
 const CardInformationRelatedContent = lazy( () => import('./CardInformationRelatedContent') )
+const CardData = lazy( () => import('./CardData') )
 
 
 const Card = ( { match, history } ) =>
@@ -42,7 +41,7 @@ const Card = ( { match, history } ) =>
 
 	const [dynamicCrumbs, setDynamicCrumbs] = useState([...Card.crumbs, ''])
 
-	const helmetData = useEffect( () => {
+	useEffect( () => {
 
 		handleFetch(`${NAME_maps_ENDPOINT['cardInstanceUrl']}${Card.cardID}?allInfo=true`, history, (json) => {
 			setDynamicCrumbs([...Card.crumbs, json.cardID])
@@ -58,11 +57,14 @@ const Card = ( { match, history } ) =>
 
 			setPackInfo( (json.foundIn === undefined)? [] : json.foundIn )
 			setBanListInfo( (json.restrictedIn === undefined)? [] : json.restrictedIn )
-
 			setIsLoading(false)
-		})
 
-		return (
+		})
+	}, [])
+
+
+	return (
+		<MainContentContainer >
 		<Helmet>
 			<title>SKC - Card: {Card.cardID}</title>
 			<meta
@@ -71,14 +73,6 @@ const Card = ( { match, history } ) =>
 				/>
 			<meta name="keywords" content={`YuGiOh, The Supreme Kings Castle, card, ${cardName}, ${Card.cardID}, ${cardColor}`} />
 		</Helmet>
-		)
-
-	}, [])
-
-
-	return (
-		<MainContentContainer >
-			{helmetData}
 
 			<Breadcrumb crumbs={ dynamicCrumbs } />
 

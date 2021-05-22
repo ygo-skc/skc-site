@@ -30,10 +30,6 @@ const CardInformationRelatedContent = memo( ({ cardName, isLoading, productInfo,
 					: <CardProductInformation
 						isLoading={isLoading}
 						hasInfo={ (productInfo.length === 0)? false : true }
-						headerText={'Products'}
-						noInfoText={'Not Found In Any Product'}
-						background='#a4508b'
-						backgroundImage='linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)'
 						cardInfo={productInfo}
 						cardID={cardID}
 					/>
@@ -45,10 +41,6 @@ const CardInformationRelatedContent = memo( ({ cardName, isLoading, productInfo,
 					: <CardBanListInformation
 						isLoading={isLoading}
 						hasInfo={ (banListInfo.length === 0)? false : true }
-						headerText={'Ban Lists'}
-						noInfoText={`Not Found In Any Ban List`}
-						background='#fc9842'
-						backgroundImage='linear-gradient(315deg, #fc9842 0%, #fe5f75 74%)'
 						cardInfo={banListInfo}
 					/>
 					}
