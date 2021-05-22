@@ -87,8 +87,8 @@ const LeftBox = Styled(Box)`
 		{
 			padding-left: .8rem;
 			padding-right: .8rem;
-			min-width: 29rem;
-			max-width: 29rem;
+			min-width: 25rem;
+			max-width: 25rem;
 		}
 	}
 `

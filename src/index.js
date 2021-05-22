@@ -52,15 +52,15 @@ const theme = createMuiTheme({
 		, 'MuiTableCell': {
 			stickyHeader: {
 				fontWeight: 800,
-				fontSize: '1.05rem'
+				fontSize: '.94rem'
 			},
 			head: {
 				fontWeight: 800,
-				fontSize: '1.05rem'
+				fontSize: '.94rem'
 			},
 			body: {
 				fontWeight: 600,
-				fontSize: '1.05rem'
+				fontSize: '.94rem'
 			},
 			root: {
 				fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
@@ -79,89 +79,82 @@ const theme = createMuiTheme({
 			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 300,
 			color: '#8778e5',
-			lineHeight: '3.5rem',
-			fontSize: '2.75rem',
+			lineHeight: '2.25rem',
+			fontSize: '1.8rem',
 		},
 		h2: {
 			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 500,
 			color: '#8778e5',
-			lineHeight: '3rem',
-			fontSize: '2.25rem',
+			lineHeight: '2rem',
+			fontSize: '1.65rem',
 		},
 		h4: {
 			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 600,
 			color: '#8778e5',
-			lineHeight: '2rem',
+			lineHeight: '1.75rem',
 			marginBottom: '1rem',
-			fontSize: '2rem',
+			fontSize: '1.4rem',
 		},
 		h5: {
 			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 800,
-			lineHeight: '1.52rem',
+			lineHeight: '1.45rem',
 			marginBottom: '.8rem',
 			color: '#626262',
-			fontSize: '1.4rem'
+			fontSize: '1.3rem'
 		},
 		h6: {
 			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 500,
-			lineHeight: '1.52rem',
+			lineHeight: '1.35rem',
 			marginBottom: '.8rem',
 			color: '#484848',
-			fontSize: '1.3rem',
+			fontSize: '1.2rem',
 		},
 		subtitle1: {
 			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 800,
-			lineHeight: '1.52rem',
+			lineHeight: '1.35rem',
 			marginBottom: '.25rem',
 			color: '#484848',
-			fontSize: '1.15rem',
+			fontSize: '1.1rem',
 		},
 		subtitle2: {
 			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 600,
-			lineHeight: '1.52rem',
+			lineHeight: '1.3rem',
 			marginBottom: '.25rem',
 			color: '#444',
-			fontSize: '1.1rem',
+			fontSize: '1.05rem',
 		},
 		body1: {
 			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 500,
-			lineHeight: '1.35rem',
+			lineHeight: '1.3rem',
 			color: '#444',
-			fontSize: '1rem',
+			fontSize: '.94rem',
 		},
 		body2: {
 			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 500,
-			lineHeight: '1.35rem',
+			lineHeight: '1.2rem',
 			color: '#444',
-			fontSize: '1rem',
+			fontSize: '.9rem',
 		},
 	}
 })
 
 render(
-	<div>
-		<ThemeProvider
-			theme={ theme } >
-			<NavigationBar />
-			<Routes />
-		</ThemeProvider>
-	</div>,
-	document.getElementById('root')
-)
-
-
-render(
 	<ThemeProvider
 		theme={ theme } >
+		<div class='content' >
+			<NavigationBar />
+			<Routes />
+		</div>
 		<Footer />
-	</ThemeProvider>,
-	document.getElementById('footer')
+	</ThemeProvider>
+	,
+	document.getElementById('root')
 )
