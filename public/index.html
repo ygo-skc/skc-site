@@ -77,15 +77,20 @@
 			}
 
 
+			.root {
+				display: flex;
+				flex-direction: column;
+				min-height: 100vh;
+				flex: 1 0 auto;
+			}
 			.content {
 				flex: 1 0 auto;
-				}
+			}
 		</style>
 
 	</head>
 
 	<body>
-		<div class='content' id='root'></div>
-		<div id='footer'></div>
+		<div class='root' id='root'></div>
 	</body>
 </html>

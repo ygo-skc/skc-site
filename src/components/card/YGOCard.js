@@ -18,11 +18,9 @@ const CardContentComponent = Styled(Paper)`
 		overflow: hidden;
 		text-overflow: ellipsis;
 		border-radius: 1rem;
-
-		@media screen and (min-width: 0px)
-		{
-			padding: .69rem;
-		}
+		padding: .4rem;
+		padding-top: .65rem;
+		padding-bottom: .65rem;
 	}
 `
 

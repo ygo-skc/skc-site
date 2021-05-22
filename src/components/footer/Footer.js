@@ -1,10 +1,10 @@
 import React from 'react'
 
-import {Paper, Typography} from '@material-ui/core'
+import {Box, Typography} from '@material-ui/core'
 import Styled from 'styled-components'
 
 
-const FooterComponent = Styled(Paper)`
+const FooterComponent = Styled(Box)`
 	&&
 	{
 		background-color: #2b4162;
@@ -15,7 +15,7 @@ const FooterComponent = Styled(Paper)`
 		padding-bottom: 3rem;
 		border-top-left-radius: 2.5rem;
 		border-top-right-radius: 2.5rem;
-		margin-top: 4rem;
+		margin-top: 2rem;
 	}
 `
 

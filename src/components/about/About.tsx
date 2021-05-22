@@ -84,7 +84,7 @@ const About: FunctionComponent = () => (
 				<Typography variant='h1' >
 					About SKC
 				</Typography>
-				<Typography variant='h2' style={{marginBottom: '3rem'}} >
+				<Typography variant='h2' style={{marginBottom: '1.5rem'}} >
 					Why I Started The Project
 				</Typography>
 
