@@ -148,7 +148,7 @@ export default function Home({ history }) {
 						</RightBoxSubHeaderTypography>
 
 						<Typography variant='body1' >
-							Use Discord to chat with others within the community. This is my personal server I use with my closest friends. There are chats for you fine people there too! Lets grow the community!
+							Use Discord to chat with others within the community. This is my personal server I use with friends. There are chats for you fine people there too! Lets grow the community!
 						</Typography>
 						<br />
 

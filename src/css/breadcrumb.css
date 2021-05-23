@@ -1,0 +1,10 @@
+.breadcrumb-parent {
+	padding: 1rem;
+}
+
+
+.breadcrumb {
+	display: flex;
+	font-weight: 500;
+	color: #666;
+}
