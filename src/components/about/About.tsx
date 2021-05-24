@@ -64,8 +64,8 @@ const ParagraphTypography = styled(Typography)`
 `
 
 
-const About: FunctionComponent = () => (
-	<MainContentContainer>
+const About: FunctionComponent = () => {
+	return <MainContentContainer>
 		<Helmet>
 			<title>{`SKC - About`}</title>
 			<meta
@@ -268,7 +268,7 @@ const About: FunctionComponent = () => (
 			</InfoContainer>
 		</div>
 	</MainContentContainer>
-	)
+}
 
 
 export default About

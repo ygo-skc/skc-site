@@ -1,25 +1,27 @@
 import React from 'react'
+import {Typography, Paper} from '@material-ui/core'
 
-import {Box, Typography} from '@material-ui/core'
 
-
-export default function Footer()
+const Footer = () =>
 {
 	return(
-		<Box className='footer' >
+		<div className='footer' >
 			<Typography
 				className='footer-font'
-				variant='body2'
+				variant='body1'
 				align='center' >
 				Copyright 2021
 			</Typography>
 
 			<Typography
 				className='footer-font'
-				variant='body2'
+				variant='body1'
 				align='center' >
 				Konami Digital Entertainment owns all rights to Yu-Gi-Oh!
 			</Typography>
-		</Box>
+		</div>
 	)
 }
+
+
+export default Footer

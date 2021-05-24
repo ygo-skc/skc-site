@@ -158,30 +158,28 @@ export default function Home({ history }) {
 					</RightBoxPaper>
 				}
 				twoThirdComponent={
-					<div>
-						<ChildPaper >
-							<Typography variant='h4' >
-								Yo!
-							</Typography>
+					<ChildPaper >
+						<Typography variant='h4' >
+							Yo!
+						</Typography>
 
-							<Typography variant='body1' >
-								This is the Supreme Kings Castle. A site dedicated to Yu-Gi-Oh! content.
-							</Typography>
+						<Typography variant='body1' >
+							This is the Supreme Kings Castle. A site dedicated to Yu-Gi-Oh! content.
+						</Typography>
 
-							<br />
+						<br />
 
-							<Typography variant='body1' >
-								Currently there are <strong>{cardTotal} cards</strong>, <Link color='secondary' href='/ban_list'><strong>{banListTotal} ban lists</strong></Link> from the past <strong>{yearsOfBanListCoverage}</strong> years and information about <strong>{productTotal}</strong> products.
-							</Typography>
+						<Typography variant='body1' >
+							Currently there are <strong>{cardTotal} cards</strong>, <Link color='secondary' href='/ban_list'><strong>{banListTotal} ban lists</strong></Link> from the past <strong>{yearsOfBanListCoverage}</strong> years and information about <strong>{productTotal}</strong> products.
+						</Typography>
 
-							<br />
+						<br />
 
-							<Typography variant='body1' >
-								Yugioh is ever expanding and evolving. New products are continuously released and new ban lists established. As such this website will also  be continuously updated to accommodate.
-								Enjoy the website ad free with a fast and beautiful UI. There is no tracking and the only money we make is though donations. Want to learn more? Check out the <Link color='secondary' href='/about'><strong>About</strong></Link> section
-							</Typography>
-						</ChildPaper>
-					</div>
+						<Typography variant='body1' >
+							Yugioh is ever expanding and evolving. New products are continuously released and new ban lists established. As such this website will also  be continuously updated to accommodate.
+							Enjoy the website ad free with a fast and beautiful UI. There is no tracking and the only money we make is though donations. Want to learn more? Check out the <Link color='secondary' href='/about'><strong>About</strong></Link> section
+						</Typography>
+					</ChildPaper>
 					}
 				/>
 		</MainContentContainer>
