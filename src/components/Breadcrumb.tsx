@@ -5,7 +5,6 @@ import {Breadcrumbs, Link, Box, Typography} from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
 
 import HomeIcon from '@material-ui/icons/Home'
-import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import Block from '@material-ui/icons/Block'
 import ErrorIcon from '@material-ui/icons/Error'
 import InfoIcon from '@material-ui/icons/Info';

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { AppBar, Toolbar, Button, Link } from '@material-ui/core'
+import { AppBar, Toolbar, Typography, Link } from '@material-ui/core'
 
 import { NAME_maps_ROUTE } from '../Routes.tsx'
 
@@ -13,11 +13,11 @@ export default function NavigationBar()
 					underline='none'
 					color='inherit'
 					href={NAME_maps_ROUTE.Home} >
-					<Button
+					<Typography
 						className='app-bar-button'
 						color='inherit' >
 						Supreme Kings Castle [BETA]
-					</Button>
+					</Typography>
 				</Link>
 
 			</Toolbar>
@@ -30,50 +30,52 @@ export default function NavigationBar()
 					underline='none'
 					color='inherit'
 					href={ NAME_maps_ROUTE.Home } >
-					<Button
-						className='nav-button' color='inherit' >
+					<Typography
+						className='nav-button'
+						color='inherit'
+						>
 						Home
-					</Button>
+					</Typography>
 				</Link>
 
 				<Link
 					underline='none'
 					color='inherit'
 					href={ NAME_maps_ROUTE.BanList } >
-					<Button
+					<Typography
 						className='nav-button' color='inherit' >
 						Ban List
-					</Button>
+					</Typography>
 				</Link>
 
 				<Link
 					underline='none'
 					color='inherit'
 					href={ NAME_maps_ROUTE.CardBrowse } >
-					<Button
+					<Typography
 						className='nav-button' color='inherit' >
 						Card Browse
-					</Button>
+					</Typography>
 				</Link>
 
 				<Link
 					underline='none'
 					color='inherit'
 					href={ NAME_maps_ROUTE.ProductBrowse } >
-					<Button
+					<Typography
 						className='nav-button' color='inherit' >
 						Product Browse
-					</Button>
+					</Typography>
 				</Link>
 
 				<Link
 					underline='none'
 					color='inherit'
 					href={ NAME_maps_ROUTE.About } >
-					<Button
+					<Typography
 						className='nav-button' color='inherit' >
 						About
-					</Button>
+					</Typography>
 				</Link>
 
 			</div>
