@@ -37,7 +37,7 @@ const Breadcrumb: FunctionComponent<BreadcrumbProps> = memo( ( { crumbs }  ) =>
 						key={item}
 						underline='none' >
 							{ BreadcrumbStaticFields.BREADCRUMB_maps_ICON.get(item) }
-							<Typography style={{margin: 'auto'}}>{ item }</Typography>
+							<Typography className='breadcrumb breadcrumb-text' >{ item }</Typography>
 					</Link>
 			)
 		}
@@ -50,7 +50,7 @@ const Breadcrumb: FunctionComponent<BreadcrumbProps> = memo( ( { crumbs }  ) =>
 				href={ NAME_maps_ROUTE[item.replace(' ', '')] }
 				key={item} >
 					{ BreadcrumbStaticFields.BREADCRUMB_maps_ICON.get(item) }
-					<Typography style={{margin: 'auto'}}>{ item }</Typography>
+					<Typography className='breadcrumb breadcrumb-text' >{ item }</Typography>
 			</Link>
 		)
 	})
@@ -72,15 +72,14 @@ const Breadcrumb: FunctionComponent<BreadcrumbProps> = memo( ( { crumbs }  ) =>
 })
 
 class BreadcrumbStaticFields {
-	static iconStyle = {  width: '1.7rem', height: '1.7rem', marginRight: '5', color: 'rgba(68, 68, 68, 0.68)' }
 	static BREADCRUMB_maps_ICON = BreadcrumbStaticFields.getBreadcrumbIcons()
 
 	static getBreadcrumbIcons(): Map<string, JSX.Element> {
 		const BREADCRUMB_maps_ICON = new Map()
-		BREADCRUMB_maps_ICON.set('Home', <HomeIcon className='breadcrumb' style={BreadcrumbStaticFields.iconStyle} />)
-		BREADCRUMB_maps_ICON.set('Ban List', <Block style={BreadcrumbStaticFields.iconStyle} />)
-		BREADCRUMB_maps_ICON.set('404 - Err', <ErrorIcon style={BreadcrumbStaticFields.iconStyle} />)
-		BREADCRUMB_maps_ICON.set('About', <InfoIcon style={BreadcrumbStaticFields.iconStyle} />)
+		BREADCRUMB_maps_ICON.set('Home', <HomeIcon className='breadcrumb breadcrumb-icon' />)
+		BREADCRUMB_maps_ICON.set('Ban List', <Block className='breadcrumb breadcrumb-icon' />)
+		BREADCRUMB_maps_ICON.set('404 - Err', <ErrorIcon className='breadcrumb breadcrumb-icon' />)
+		BREADCRUMB_maps_ICON.set('About', <InfoIcon className='breadcrumb breadcrumb-icon' />)
 
 		return BREADCRUMB_maps_ICON
 	}

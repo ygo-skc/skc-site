@@ -1,10 +1,37 @@
 .breadcrumb-parent {
-	padding: 1rem;
+	padding-top: .75rem;
+	padding-bottom: .75rem;
+	padding-left: 2rem;
+	padding-right: 2rem;
+	margin: auto;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+	margin-right: 3rem;
+	margin-left: 3rem;
+	border-radius: 2rem;
+
+	background-color: white;
+}
+
+.MuiBreadcrumbs-separator {
 }
 
 
 .breadcrumb {
 	display: flex;
 	font-weight: 500;
-	color: #666;
+}
+
+
+.breadcrumb-item {
+	color: white !important;
+	width: 1.7rem;
+	height: 1.7rem;
+	margin-right: 5px;
+	color: rgba(68, 68, 68, 0.68);
+}
+
+
+.breadcrumb-text {
+	margin: auto;
 }
