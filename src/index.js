@@ -67,6 +67,12 @@ const theme = createMuiTheme({
 				padding: '.4rem',
 				'border-bottom': '0rem'
 			}
+		},
+		'MuiPaper': {
+			'elevation1': {
+				boxShadow: 'rgba(0,0,0,0.12) 0px 1px 6px'
+				, border: '1px solid rgb(221, 221, 221)'
+			}
 		}
 	},
 	typography: {
