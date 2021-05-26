@@ -23,6 +23,11 @@
 }
 
 
+.breadcrumb-icon {
+	margin-right: 3px;
+}
+
+
 .breadcrumb-item {
 	color: white !important;
 	width: 1.7rem;

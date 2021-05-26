@@ -7,8 +7,7 @@ import { MainContentContainer } from '../../MainContent'
 
 import OneThirdTwoThirdsGrid from '../../util/grid/OneThirdTwoThirdsGrid'
 
-import Breadcrumb from '../../Breadcrumb'
-
+const Breadcrumb = lazy( () => import('../../Breadcrumb') )
 const CardInformationRelatedContent = lazy( () => import('./CardInformationRelatedContent') )
 const CardData = lazy( () => import('./CardData') )
 
@@ -60,7 +59,7 @@ const Card = ( { match, history } ) =>
 			setIsLoading(false)
 
 		})
-	}, [])
+	}, [history])
 
 
 	return (
@@ -74,32 +73,32 @@ const Card = ( { match, history } ) =>
 			<meta name="keywords" content={`YuGiOh, The Supreme Kings Castle, card, ${cardName}, ${Card.cardID}, ${cardColor}`} />
 		</Helmet>
 
-			<Breadcrumb crumbs={ dynamicCrumbs } />
+		<Breadcrumb crumbs={ dynamicCrumbs } />
 
-			<OneThirdTwoThirdsGrid
-				oneThirdComponent={
-					<CardData
-						cardName={cardName}
-						cardColor={cardColor}
-						cardEffect={cardEffect}
-						cardAttribute={cardAttribute}
-						monsterType={monsterType}
-						monsterAtk={monsterAtk}
-						monsterDef={monsterDef}
-						monsterAssociation={monsterAssociation}
-						cardID={Card.cardID}
-						isLoading={isLoading}
-						cardImg={Card.cardImg}
-					/>
-				}
-				twoThirdComponent={
-					<CardInformationRelatedContent cardName={cardName}
-						isLoading={isLoading}
-						cardID={Card.cardID}
-						productInfo={productInfo}
-						banListInfo={banListInfo} />
-					}
+		<OneThirdTwoThirdsGrid
+			oneThirdComponent={
+				<CardData
+					cardName={cardName}
+					cardColor={cardColor}
+					cardEffect={cardEffect}
+					cardAttribute={cardAttribute}
+					monsterType={monsterType}
+					monsterAtk={monsterAtk}
+					monsterDef={monsterDef}
+					monsterAssociation={monsterAssociation}
+					cardID={Card.cardID}
+					isLoading={isLoading}
+					cardImg={Card.cardImg}
 				/>
+			}
+			twoThirdComponent={
+				<CardInformationRelatedContent cardName={cardName}
+					isLoading={isLoading}
+					cardID={Card.cardID}
+					productInfo={productInfo}
+					banListInfo={banListInfo} />
+				}
+			/>
 
 		</MainContentContainer>
 	)
