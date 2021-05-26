@@ -1,7 +1,7 @@
 import React, {lazy, memo } from 'react'
 
 import {StickyBox} from '../../util/StyledContainers'
-import {RightBoxPaper} from '../../util/grid/OneThirdTwoThirdsGrid'
+import {LeftBoxPaper} from '../../util/grid/OneThirdTwoThirdsGrid'
 import CardImageRounded from '../CardImageRounded'
 
 const YGOCard = lazy( () => import('../YGOCard') )
@@ -10,7 +10,7 @@ const YGOCard = lazy( () => import('../YGOCard') )
 const CardData = memo( ( { cardID, cardName, cardColor, cardEffect, cardAttribute, monsterType, monsterAtk, monsterDef, monsterAssociation, isLoading, cardImg } ) =>
 {
 	return(<StickyBox >
-			<RightBoxPaper>
+			<LeftBoxPaper>
 				<CardImageRounded
 					cardImg={cardImg}
 					defaultVisibility={true}
@@ -30,7 +30,7 @@ const CardData = memo( ( { cardID, cardName, cardColor, cardEffect, cardAttribut
 					fullDetails={ true }
 					isLoading={ isLoading }
 					/>
-			</RightBoxPaper>
+			</LeftBoxPaper>
 		</StickyBox>
 	)
 },  (prevProps, newProps) => {

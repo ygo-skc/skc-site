@@ -5,7 +5,7 @@ import {LightTranslucentDivider} from '../util/Divider'
 
 import {StickyBox} from '../util/StyledContainers'
 
-import {LeftBoxHeaderTypography, LeftBoxSectionTypography, LeftBoxSectionHeaderTypography, RightBoxPaper} from '../util/grid/OneThirdTwoThirdsGrid'
+import {LeftBoxHeaderTypography, LeftBoxSectionTypography, LeftBoxSectionHeaderTypography, LeftBoxPaper} from '../util/grid/OneThirdTwoThirdsGrid'
 
 
 export default function ProductInfoDetailsComponent({productName, productId, productType, productSubType, productReleaseDate, productTotal, isDataLoaded}) {
@@ -13,7 +13,7 @@ export default function ProductInfoDetailsComponent({productName, productId, pro
 	return(
 		<StickyBox>
 
-			<RightBoxPaper style={{ backgroundImage: 'linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)' }} >
+			<LeftBoxPaper style={{ backgroundImage: 'linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)' }} >
 
 				{(isDataLoaded)?
 					<LeftBoxHeaderTypography
@@ -53,7 +53,7 @@ export default function ProductInfoDetailsComponent({productName, productId, pro
 				<LeftBoxSectionTypography variant='body1'>
 					<strong>Product Total:</strong> {productTotal}
 				</LeftBoxSectionTypography>
-			</RightBoxPaper>
+			</LeftBoxPaper>
 
 		</StickyBox>
 	)

@@ -35,12 +35,35 @@ const LeftBoxSectionTypography = Styled(Typography)`
 const RightBoxPaper = Styled(Paper)`
 	&&
 	{
-		background: #fafafa;
+		background: white;
 		border-radius: 1.75rem;
 		padding-left: .8rem;
 		padding-right: .9rem;
 		padding-top: 1.2rem;
 		padding-bottom: 1.2rem;
+
+		@media screen and (min-width: 800px)
+		{
+			padding-left: 1rem;
+			padding-right: 1rem;
+			padding-top: 1.25rem;
+			padding-bottom: 1.25rem;
+		}
+	}
+`
+
+
+const LeftBoxPaper = Styled(RightBoxPaper)`
+	&&
+	{
+		background: white;
+		border-radius: 1.75rem;
+		padding-left: .8rem;
+		padding-right: .9rem;
+		padding-top: 1.2rem;
+		padding-bottom: 1.2rem;
+		box-shadow: rgba(0, 0, 0, 0.12) 0px .5rem 1.4rem;
+		border: 1px solid rgb(221, 221, 221);
 
 		@media screen and (min-width: 800px)
 		{
@@ -144,4 +167,4 @@ function OneThirdTwoThirdsGrid( { oneThirdComponent, twoThirdComponent } )
 
 export default withWidth()(OneThirdTwoThirdsGrid)
 
-export {LeftBoxHeaderTypography, LeftBoxSectionTypography, LeftBoxSectionHeaderTypography, RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer}
+export {LeftBoxHeaderTypography, LeftBoxSectionTypography, LeftBoxSectionHeaderTypography, RightBoxPaper, LeftBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer}

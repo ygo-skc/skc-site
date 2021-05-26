@@ -14,7 +14,7 @@ import NAME_maps_ENDPOINT from '../helper/YgoApiEndpoints'
 
 import OneThirdTwoThirdsGrid from './util/grid/OneThirdTwoThirdsGrid'
 
-import { RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography } from './util/grid/OneThirdTwoThirdsGrid'
+import { LeftBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography } from './util/grid/OneThirdTwoThirdsGrid'
 
 import {RenderGroup, SearchSuggestionTypography} from './util/Search'
 
@@ -79,7 +79,7 @@ export default function Home({ history }) {
 
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={
-					<RightBoxPaper>
+					<LeftBoxPaper>
 						<Paper style={{ display: 'flex', width: '95%', maxWidth: '500px', margin: '0 auto', borderRadius: '1.5rem', marginBottom: '2rem' }} >
 							<DatabaseSearch
 								id='search'
@@ -155,7 +155,7 @@ export default function Home({ history }) {
 						<div style={{borderStyle: 'solid', borderColor: '#543fda', borderWidth: '.25rem', borderRadius: '1.1rem'}}>
 							<iframe style={{borderStyle: 'solid', borderRadius: '1rem'}} src="https://discord.com/widget?id=659477868799197185&theme=light" width="100%" height="400" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
 						</div>
-					</RightBoxPaper>
+					</LeftBoxPaper>
 				}
 				twoThirdComponent={
 					<ChildPaper >

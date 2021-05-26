@@ -19,7 +19,7 @@ import {StickyBox} from './util/StyledContainers'
 
 import {RenderGroup, SearchSuggestionTypography} from './util/Search'
 
-import {LeftBoxSectionTypography, LeftBoxSectionHeaderTypography, RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from './util/grid/OneThirdTwoThirdsGrid'
+import {LeftBoxSectionTypography, LeftBoxSectionHeaderTypography, RightBoxPaper, LeftBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from './util/grid/OneThirdTwoThirdsGrid'
 
 const CardDisplayGrid = lazy( () => import('./util/grid/CardDisplayGrid'))
 
@@ -174,7 +174,7 @@ export default function Browse( {history} )
 				oneThirdComponent={
 
 					<StickyBox>
-						<RightBoxPaper style={{ backgroundImage: 'linear-gradient(315deg, #7f5a83 0%, #0d324d 74%)' }} >
+						<LeftBoxPaper style={{ backgroundImage: 'linear-gradient(315deg, #7f5a83 0%, #0d324d 74%)' }} >
 
 							<Autocomplete
 								multiple
@@ -243,7 +243,7 @@ export default function Browse( {history} )
 								Displaying: {numResultsDisplayed}
 							</LeftBoxSectionTypography>
 
-						</RightBoxPaper>
+						</LeftBoxPaper>
 					</StickyBox>
 				}
 				twoThirdComponent={
