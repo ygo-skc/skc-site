@@ -154,11 +154,11 @@ function OneThirdTwoThirdsGrid( { oneThirdComponent, twoThirdComponent } )
 	return(
 		<Parent >
 			<LeftBox>
-			{oneThirdComponent}
+				{oneThirdComponent}
 			</LeftBox>
 
 			<RightBox >
-			{twoThirdComponent}
+				{twoThirdComponent}
 			</RightBox>
 		</Parent>
 	)

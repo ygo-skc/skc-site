@@ -1,11 +1,11 @@
-import React, { lazy, memo } from 'react'
+import React, { memo } from 'react'
 import { Grid } from '@material-ui/core'
 import {RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from '../../util/grid/OneThirdTwoThirdsGrid'
 
 import {DarkTranslucentDivider} from '../../util/Divider'
 
-const CardProductInformation = lazy( () => import('./CardProductInformation') )
-const CardBanListInformation = lazy( () => import('./CardBanListInformation') )
+import CardProductInformation from './CardProductInformation'
+import CardBanListInformation from './CardBanListInformation'
 
 
 const CardInformationRelatedContent = memo( ({ cardName, isLoading, productInfo, banListInfo, cardID } ) =>
@@ -25,25 +25,20 @@ const CardInformationRelatedContent = memo( ({ cardName, isLoading, productInfo,
 
 			<Grid container spacing={1} >
 				<Grid item xs={12} sm={12} md={12} lg={6} xl={6} >
-					{(isLoading)? undefined
-					: <CardProductInformation
+					<CardProductInformation
 						isLoading={isLoading}
 						hasInfo={ (productInfo.length === 0)? false : true }
 						cardInfo={productInfo}
 						cardID={cardID}
 					/>
-					}
 				</Grid>
 
 				<Grid item xs={12} sm={12} md={12} lg={6} xl={6} >
-					{(isLoading)? undefined
-					: <CardBanListInformation
+					<CardBanListInformation
 						isLoading={isLoading}
 						hasInfo={ (banListInfo.length === 0)? false : true }
 						cardInfo={banListInfo}
 					/>
-					}
-
 				</Grid>
 			</Grid>
 		</RightBoxPaper>

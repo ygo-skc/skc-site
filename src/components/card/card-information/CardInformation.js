@@ -1,14 +1,13 @@
-import React, { useState, useEffect, lazy } from 'react'
+import React, { useState, useEffect, lazy, Suspense } from 'react'
 import {Helmet} from 'react-helmet'
+import { Skeleton } from '@material-ui/lab'
 
 import { handleFetch } from '../../../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../../../helper/YgoApiEndpoints'
 import { MainContentContainer } from '../../MainContent'
-
 import OneThirdTwoThirdsGrid from '../../util/grid/OneThirdTwoThirdsGrid'
 
 const Breadcrumb = lazy( () => import('../../Breadcrumb') )
-const CardInformationRelatedContent = lazy( () => import('./CardInformationRelatedContent') )
 const CardData = lazy( () => import('./CardData') )
 
 
@@ -57,7 +56,6 @@ const Card = ( { match, history } ) =>
 			setPackInfo( (json.foundIn === undefined)? [] : json.foundIn )
 			setBanListInfo( (json.restrictedIn === undefined)? [] : json.restrictedIn )
 			setIsLoading(false)
-
 		})
 	}, [history])
 
@@ -91,17 +89,27 @@ const Card = ( { match, history } ) =>
 					cardImg={Card.cardImg}
 				/>
 			}
-			twoThirdComponent={
-				<CardInformationRelatedContent cardName={cardName}
-					isLoading={isLoading}
-					cardID={Card.cardID}
-					productInfo={productInfo}
-					banListInfo={banListInfo} />
+			twoThirdComponent=
+				{
+					<Suspense fallback={<Skeleton width='100%' height='20rem' />} >
+						{ loadRelatedContent(isLoading) }
+					</Suspense>
 				}
 			/>
 
 		</MainContentContainer>
 	)
+
+	function loadRelatedContent(isLoading) {
+		if (!isLoading) {
+			const CardInformationRelatedContent = lazy( () => import('./CardInformationRelatedContent') )
+			return <CardInformationRelatedContent cardName={cardName}
+				isLoading={isLoading}
+				cardID={Card.cardID}
+				productInfo={productInfo}
+				banListInfo={banListInfo} />
+		}
+	}
 }
 
 

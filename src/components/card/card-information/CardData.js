@@ -1,18 +1,19 @@
-import React, {lazy, memo } from 'react'
+import React, {memo } from 'react'
 
 import {StickyBox} from '../../util/StyledContainers'
 import {LeftBoxPaper} from '../../util/grid/OneThirdTwoThirdsGrid'
 import CardImageRounded from '../CardImageRounded'
 
-const YGOCard = lazy( () => import('../YGOCard') )
+import YGOCard from '../YGOCard'
 
 
 const CardData = memo( ( { cardID, cardName, cardColor, cardEffect, cardAttribute, monsterType, monsterAtk, monsterDef, monsterAssociation, isLoading, cardImg } ) =>
 {
-	return(<StickyBox >
+	return(
+		<StickyBox >
 			<LeftBoxPaper>
 				<CardImageRounded
-					cardImg={cardImg}
+					cardImg={cardImg.src}
 					defaultVisibility={true}
 					/>
 

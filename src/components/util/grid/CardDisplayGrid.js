@@ -66,8 +66,6 @@ const CardDisplayGrid = memo( ({ cardJsonResults, numResultsDisplayed, numItemsT
 	const renderCards = () =>
 	{
 		return cardJsonResults.slice(numResultsDisplayed - numItemsToLoadWhenNeeded, numResultsDisplayed).map( (card, index) => {
-			const cardImg = new Image()
-			cardImg.src = `https://images.thesupremekingscastle.com/${card.cardID}.jpg`
 
 			return <GridItem
 				ref={(card.cardID === target)? rrr : null}
@@ -84,7 +82,7 @@ const CardDisplayGrid = memo( ({ cardJsonResults, numResultsDisplayed, numItemsT
 
 
 				<CardImageRounded
-					cardImg={cardImg}
+					cardImg={`https://images.thesupremekingscastle.com/${card.cardID}.jpg`}
 					timeout={index % 20 * 10}
 					/>
 
