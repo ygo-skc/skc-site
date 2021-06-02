@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, lazy } from 'react'
 import styled from 'styled-components'
 import { throttle } from 'underscore'
 import { Helmet } from 'react-helmet'
@@ -10,13 +10,15 @@ import Autocomplete from '@material-ui/lab/Autocomplete'
 import { MainContentContainer, ChildPaper } from './MainContent'
 import Breadcrumb from './Breadcrumb'
 import { handleFetch } from '../helper/FetchHandler'
-import NAME_maps_ENDPOINT from '../helper/YgoApiEndpoints'
+import NAME_maps_ENDPOINT from '../helper/DownstreamServices'
 
 import OneThirdTwoThirdsGrid from './util/grid/OneThirdTwoThirdsGrid'
 
 import { LeftBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography } from './util/grid/OneThirdTwoThirdsGrid'
 
 import {RenderGroup, SearchSuggestionTypography} from './util/Search'
+
+const YouTubeUploads = lazy(() => import('./YouTubeUploads'))
 
 const DatabaseSearch = styled(Autocomplete)`
 	&&&
@@ -76,6 +78,8 @@ export default function Home({ history }) {
 			</Helmet>
 
 			<Breadcrumb crumbs={['Home']} />
+
+			<YouTubeUploads history={history} />
 
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={
