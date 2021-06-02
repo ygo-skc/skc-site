@@ -1,15 +1,12 @@
-import React, {memo, lazy} from 'react'
-import '../../css/ygo-card-styles.css'
+import React, {memo} from 'react'
 
-import { Typography, Box, Paper } from '@material-ui/core'
+import { Typography, Paper } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
 
 import Styled from 'styled-components'
-import he from 'he'
 
-import AtkDef from './AtkDef'
-
-const CardAssociation = lazy( () => import('./CardAssociation'))
+import CardAssociation from './CardAssociation'
+import YGOCardStats from './YGOCardStats'
 
 const CardContentComponent = Styled(Paper)`
 	&&
@@ -34,29 +31,8 @@ const YGOCard = memo(( {cardName, cardColor, cardEffect, monsterType, cardAttrib
 		)
 	}
 
-	const CardEffectComponent = (fullDetails) ?
-		Styled(Typography)`
-			&&
-			{
-				white-space: pre-wrap;
-				color: inherit;
-			}
-		`
-		: Styled(Typography)`
-			&&
-			{
-				white-space: pre-wrap;
-				display: -webkit-box;
-				-webkit-line-clamp: ${effectMaxLineHeight};
-				-webkit-box-orient: vertical;
-				overflow: hidden;
-				color: inherit;
-			}
-		`
-
 	return(
 		<CardContentComponent className={[className, `${cardColor}YgoCardParent`, 'YgoCardLightText'].join(' ')} >
-
 			<Typography
 				variant='subtitle1'
 				id='CardName'
@@ -67,38 +43,16 @@ const YGOCard = memo(( {cardName, cardColor, cardEffect, monsterType, cardAttrib
 
 			<CardAssociation monsterAssociation={monsterAssociation} attribute={cardAttribute} />
 
-
-			<Box
-					className={[`${cardColor}YgoCardSummaryBox`, 'YgoCardDarkText'].join(' ')} id='CardDescription' >
-				<Typography
-					variant='body1'
-					id='MonsterType'
-					noWrap={true} >
-						{
-							( cardColor === 'Spell' || cardColor === 'Trap' ) ? cardColor : monsterType
-						}
-				</Typography>
-
-				<CardEffectComponent
-					variant='body2' >
-						{ he.decode(cardEffect) }
-				</CardEffectComponent>
-
-				<Box style={{display: 'flex', paddingTop: '.5rem',  alignItems: 'center'}} >
-					{
-						(fullDetails) ?
-							<Typography variant='body2' id='CardID' >
-								{cardID}
-							</Typography>
-							: undefined
-					}
-					{
-						( cardColor === 'Spell' || cardColor === 'Trap' || cardColor === 'Err' ) ?
-							undefined :
-							(fullDetails) ? <AtkDef monsterAtk={monsterAtk} monsterDef={monsterDef} cardColor={cardColor} /> : undefined
-					}
-				</Box>
-			</Box>
+			<YGOCardStats
+				cardColor={cardColor}
+				cardEffect={cardEffect}
+				monsterType={monsterType}
+				monsterAtk={monsterAtk}
+				monsterDef={monsterDef}
+				cardID={cardID}
+				fullDetails={fullDetails}
+				effectMaxLineHeight={effectMaxLineHeight}
+			/>
 		</CardContentComponent>
 	)
 }, (prevProps, newProps) => {

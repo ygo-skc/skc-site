@@ -18,10 +18,10 @@ export default function CardImageRounded({cardImg, defaultVisibility=false})
 			<div id='rounded-img-outer-container' >
 				<div id='rounded-img-inner-container' >
 					{(visible)? <img
-							src={cardImg.src}
+							src={cardImg}
 							id='rounded-img'
 							width='100%'
-							height='1'
+							height='100%'
 							alt={`Card`}
 						/> : undefined
 					}
