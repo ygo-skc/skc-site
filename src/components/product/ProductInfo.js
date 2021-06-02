@@ -2,7 +2,7 @@ import React, {useState, useEffect, lazy} from 'react'
 import { Helmet } from 'react-helmet'
 
 import {handleFetch} from '../../helper/FetchHandler'
-import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
+import NAME_maps_ENDPOINT from '../../helper/DownstreamServices'
 
 import {MainContentContainer} from '../MainContent'
 

@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet'
 import { MainContentContainer } from '../MainContent'
 import { handleFetch } from '../../helper/FetchHandler'
 import { BanListDates } from './BanListDates'
-import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
+import NAME_maps_ENDPOINT from '../../helper/DownstreamServices'
 
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 import { RightBoxPaper, LeftBoxPaper } from '../util/grid/OneThirdTwoThirdsGrid'

@@ -3,7 +3,7 @@ import {Helmet} from 'react-helmet'
 import { Skeleton } from '@material-ui/lab'
 
 import { handleFetch } from '../../../helper/FetchHandler'
-import NAME_maps_ENDPOINT from '../../../helper/YgoApiEndpoints'
+import NAME_maps_ENDPOINT from '../../../helper/DownstreamServices'
 import { MainContentContainer } from '../../MainContent'
 import OneThirdTwoThirdsGrid from '../../util/grid/OneThirdTwoThirdsGrid'
 

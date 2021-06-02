@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet'
 import { MainContentContainer } from '../MainContent'
 
 import {handleFetch} from '../../helper/FetchHandler'
-import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
+import NAME_maps_ENDPOINT from '../../helper/DownstreamServices'
 
 // const ProductCardGridItem = lazy( () => import('./ProductCardGridItem') )
 import ProductCardGridItem from './ProductCardGridItem'
