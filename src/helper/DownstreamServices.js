@@ -12,4 +12,9 @@ const NAME_maps_ENDPOINT = {
 
 }
 
+
+const HEART_API_HOST_NAME = process.env.REACT_APP_HEART_API_HOST
+
 export default NAME_maps_ENDPOINT
+
+export {HEART_API_HOST_NAME}
