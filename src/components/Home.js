@@ -19,6 +19,7 @@ import { LeftBoxPaper, RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeade
 import {RenderGroup, SearchSuggestionTypography} from './util/Search'
 
 import Parent from './Parent'
+import {HEART_API_HOST_NAME} from '../helper/DownstreamServices'
 const YouTubeUploads = lazy(() => import('./YouTubeUploads'))
 
 const DatabaseSearch = styled(Autocomplete)`
@@ -38,16 +39,6 @@ const searchThrottle = throttle((searchSubject, setSearchOptions, history) => {
 
 
 export default function Home({ history }) {
-	useEffect(() => {
-		handleFetch(NAME_maps_ENDPOINT['databaseStats'], history, (json) => {
-			setCardTotal(json.cardTotal)
-			setBanListTotal(json.banListTotal)
-			setYearsOfBanListCoverage(json.yearsOfBanListCoverage)
-			setProductTotal(json.productTotal)
-		})
-	}, [history])
-
-
 	const [cardTotal, setCardTotal] = useState(0)
 	const [banListTotal, setBanListTotal] = useState(0)
 	const [yearsOfBanListCoverage, setYearsOfBanListCoverage] = useState(0)
@@ -56,6 +47,22 @@ export default function Home({ history }) {
 
 	const [searchInput, setSearchInput] = useState('')
 	const [searchOptions, setSearchOptions] = useState([])
+
+	const [youtubeData, setYoutubeData] = useState(undefined)
+
+	useEffect(() => {
+		handleFetch(NAME_maps_ENDPOINT['databaseStats'], history, (json) => {
+			setCardTotal(json.cardTotal)
+			setBanListTotal(json.banListTotal)
+			setYearsOfBanListCoverage(json.yearsOfBanListCoverage)
+			setProductTotal(json.productTotal)
+		})
+
+
+		handleFetch(`${HEART_API_HOST_NAME}/v1/yt/channel/uploads?channelId=UCBZ_1wWyLQI3SV9IgLbyiNQ`, history, json => {
+			setYoutubeData(json)
+		})
+	}, [history])
 
 
 
@@ -143,7 +150,7 @@ export default function Home({ history }) {
 			</Paper>
 
 			<Suspense>
-				<YouTubeUploads history={history} />
+				<YouTubeUploads history={history} youtubeData={youtubeData} />
 			</Suspense>
 
 			<OneThirdTwoThirdsGrid

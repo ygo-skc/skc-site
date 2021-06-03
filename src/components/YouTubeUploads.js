@@ -3,33 +3,31 @@ import { RightBoxHeaderTypography, RightBoxSubHeaderTypography } from './util/gr
 
 import VideoInfoContainer from './VideoInfoContainer'
 
-import { handleFetch } from '../helper/FetchHandler'
-import {HEART_API_HOST_NAME} from '../helper/DownstreamServices'
 import {LeftBoxPaper} from './util/grid/OneThirdTwoThirdsGrid'
 import { Skeleton } from '@material-ui/lab'
 
 
-export default function YouTubeUploads({ history })
+export default function YouTubeUploads({ history, youtubeData })
 {
 	const [videos, setVideos] = useState([])
 	const [isLoading, setIsLoading] = useState(true)
 
 	useEffect(() => {
-		handleFetch(`${HEART_API_HOST_NAME}/v1/yt/channel/uploads?channelId=UCBZ_1wWyLQI3SV9IgLbyiNQ`, history, json => {
-			setVideos(json.videos.map(item => {
-				return(
-					<VideoInfoContainer
-						thumbnailUrl={item.thumbnailUrl}
-						title={item.title}
-						description={item.description}
-						url={item.url}
-					/>
-				)
-			}))
-
-			setIsLoading(false)
-		})
-	}, [])
+			if (youtubeData !== undefined)
+			{
+				setVideos(youtubeData.videos.map(item => {
+					return(
+						<VideoInfoContainer
+							thumbnailUrl={item.thumbnailUrl}
+							title={item.title}
+							description={item.description}
+							url={item.url}
+						/>
+					)
+				}))
+				setIsLoading(false)
+			}
+	}, [youtubeData])
 
 
 	return(

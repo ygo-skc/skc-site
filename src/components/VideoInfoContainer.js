@@ -44,7 +44,7 @@ export default function YouTubeUploads({ thumbnailUrl, title, description, url }
 			<div style={{display: 'flex'}}>
 				<div style={{flex: '1'}} >
 				</div>
-				<Button style={{background: 'rgba(255, 255, 255, .8)', color: 'black', textTransform: 'none'}} onClick={() => window.open(url)} >
+				<Button style={{background: 'rgba(255, 255, 255, .9)', color: 'black', textTransform: 'none'}} onClick={() => window.open(url)} >
 					Watch
 				</Button>
 			</div>
