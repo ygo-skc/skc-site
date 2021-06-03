@@ -132,6 +132,7 @@ const Parent = Styled(Box)`
 	&&
 	{
 		width: 100%;
+		max-width: 100%;
 
 		@media screen and (min-width: 0px)
 		{

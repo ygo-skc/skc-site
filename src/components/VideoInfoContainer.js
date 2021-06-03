@@ -11,8 +11,8 @@ const Title = Styled(Typography)`
 		-webkit-box-orient: vertical;
 		overflow: hidden;
 
-		color: rgba(255, 255, 255, .97);
-		fontWeight: 700;
+		color: rgb(255, 255, 255);
+		font-weight: 800;
 	}
 `
 
