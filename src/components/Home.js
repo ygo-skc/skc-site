@@ -7,17 +7,18 @@ import { Helmet } from 'react-helmet'
 import { Typography, Link, InputBase, Paper, IconButton, Avatar } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete'
-import { MainContentContainer, ChildPaper } from './MainContent'
+import { MainContentContainer } from './MainContent'
 import Breadcrumb from './Breadcrumb'
 import { handleFetch } from '../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../helper/DownstreamServices'
 
 import OneThirdTwoThirdsGrid from './util/grid/OneThirdTwoThirdsGrid'
 
-import { LeftBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography } from './util/grid/OneThirdTwoThirdsGrid'
+import { LeftBoxPaper, RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography } from './util/grid/OneThirdTwoThirdsGrid'
 
 import {RenderGroup, SearchSuggestionTypography} from './util/Search'
 
+import Parent from './Parent'
 const YouTubeUploads = lazy(() => import('./YouTubeUploads'))
 
 const DatabaseSearch = styled(Autocomplete)`
@@ -166,7 +167,7 @@ export default function Home({ history }) {
 					</LeftBoxPaper>
 				}
 				twoThirdComponent={
-					<ChildPaper >
+					<RightBoxPaper >
 						<Typography variant='h4' >
 							Yo!
 						</Typography>
@@ -187,7 +188,7 @@ export default function Home({ history }) {
 							Yugioh is ever expanding and evolving. New products are continuously released and new ban lists established. As such this website will also  be continuously updated to accommodate.
 							Enjoy the website ad free with a fast and beautiful UI. There is no tracking and the only money we make is though donations. Want to learn more? Check out the <Link color='secondary' href='/about'><strong>About</strong></Link> section
 						</Typography>
-					</ChildPaper>
+					</RightBoxPaper>
 					}
 				/>
 		</MainContentContainer>

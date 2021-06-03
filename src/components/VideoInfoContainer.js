@@ -24,7 +24,7 @@ const Parent = Styled.div`
 		flex: 0 0 25rem;
 		padding: 1rem;
 		margin-right: 1.5rem;
-		border-radius: .5rem;
+		border-radius: .65rem;
 	}
 `
 

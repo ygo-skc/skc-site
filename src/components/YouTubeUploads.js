@@ -33,7 +33,7 @@ export default function YouTubeUploads({ history })
 
 
 	return(
-		<LeftBoxPaper style={{marginBottom: '2.5rem', padding: '1.5rem', marginLeft: '1rem', marginRight: '1rem'}} >
+		<LeftBoxPaper style={{marginBottom: '2.5rem'}} >
 			<RightBoxHeaderTypography variant='h4'>
 				YouTube
 			</RightBoxHeaderTypography>
