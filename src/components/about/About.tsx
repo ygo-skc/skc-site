@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet'
 import { Typography, Link, Grid, Paper } from '@material-ui/core'
 import styled from 'styled-components'
 
-import Breadcrumb from '../Breadcrumb'
+import Breadcrumb from '../util/Breadcrumb'
 import { MainContentContainer } from '../MainContent'
 
 const AboutInfoCard = lazy( () => import('./AboutInfoCard') )

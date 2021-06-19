@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Typography } from '@material-ui/core'
 
-import { RightBoxHeaderTypography, RightBoxSubHeaderTypography } from './util/grid/OneThirdTwoThirdsGrid'
+import { RightBoxHeaderTypography, RightBoxSubHeaderTypography } from './grid/OneThirdTwoThirdsGrid'
 
 export default function()
 {

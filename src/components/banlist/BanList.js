@@ -14,7 +14,7 @@ import {LightTranslucentDivider} from '../util/Divider'
 import {StickyBox} from '../util/StyledContainers'
 
 
-import BreadCrumb from '../Breadcrumb'
+import BreadCrumb from '../util/Breadcrumb'
 const TabbedView = lazy( () => import('./TabbedView') )
 const BanListSection = lazy( () => import('./BanListSection') )
 const BanListStats = lazy( () => import('./BanListStats') )

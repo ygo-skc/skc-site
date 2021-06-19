@@ -13,10 +13,10 @@ import { LeftBoxPaper, RightBoxPaper } from './util/grid/OneThirdTwoThirdsGrid'
 
 import {HEART_API_HOST_NAME} from '../helper/DownstreamServices'
 
-const Breadcrumb = lazy(() => import('./Breadcrumb'))
-const DatabaseSearch = lazy(() => import('./DatabaseSearch'))
-const YouTubeUploads = lazy(() => import('./YouTubeUploads'))
-const SocialMedia = lazy(() => import('./SocialMedia'))
+const Breadcrumb = lazy(() => import('./util/Breadcrumb'))
+const DatabaseSearch = lazy(() => import('./util/DatabaseSearch'))
+const YouTubeUploads = lazy(() => import('./util/YouTubeUploads'))
+const SocialMedia = lazy(() => import('./util/SocialMedia'))
 
 
 export default function Home({ history }) {

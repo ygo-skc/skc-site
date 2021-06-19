@@ -6,10 +6,10 @@ import { throttle } from 'underscore'
 import { InputBase, Paper, IconButton, Avatar } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete'
-import { handleFetch } from '../helper/FetchHandler'
-import NAME_maps_ENDPOINT from '../helper/DownstreamServices'
+import { handleFetch } from '../../helper/FetchHandler'
+import NAME_maps_ENDPOINT from '../../helper/DownstreamServices'
 
-import {RenderGroup, SearchSuggestionTypography} from './util/Search'
+import {RenderGroup, SearchSuggestionTypography} from './Search'
 
 const DBSearch = styled(Autocomplete)`
 	&&&

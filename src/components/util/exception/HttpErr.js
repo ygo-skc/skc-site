@@ -2,7 +2,7 @@ import React from 'react'
 import Styled from 'styled-components'
 
 import { MainContentContainer } from '../../MainContent'
-import Breadcrumbs from '../../Breadcrumb'
+import Breadcrumbs from '../../util/Breadcrumb'
 import YGOCard from '../../card/YGOCard'
 
 const ErrCard = Styled(YGOCard)`

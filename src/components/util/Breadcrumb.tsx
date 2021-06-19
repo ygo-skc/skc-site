@@ -1,5 +1,5 @@
 import React, { FunctionComponent, memo } from 'react'
-import '../css/breadcrumb.css'
+import '../../css/breadcrumb.css'
 
 import {Breadcrumbs, Link, Box, Typography} from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
@@ -9,7 +9,7 @@ import Block from '@material-ui/icons/Block'
 import ErrorIcon from '@material-ui/icons/Error'
 import InfoIcon from '@material-ui/icons/Info';
 
-import { NAME_maps_ROUTE } from '../Routes'
+import { NAME_maps_ROUTE } from '../../Routes'
 
 
 type BreadcrumbProps = {

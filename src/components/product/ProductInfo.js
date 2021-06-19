@@ -13,7 +13,7 @@ import {DarkTranslucentDivider} from '../util/Divider'
 import {RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from '../util/grid/OneThirdTwoThirdsGrid'
 
 
-const Breadcrumb = lazy( () => import('../Breadcrumb') )
+const Breadcrumb = lazy( () => import('../util/Breadcrumb') )
 const CardDisplayGrid = lazy( () => import('../util/grid/CardDisplayGrid') )
 const ProductInfoDetailsComponent = lazy( () => import('./ProductInfoDetailsComponent') )
 

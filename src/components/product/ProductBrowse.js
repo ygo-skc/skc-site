@@ -13,7 +13,7 @@ import ProductCardGridItem from './ProductCardGridItem'
 import {RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from '../util/grid/OneThirdTwoThirdsGrid'
 import {DarkTranslucentDivider} from '../util/Divider'
 
-const Breadcrumb = lazy( () => import('../Breadcrumb') )
+const Breadcrumb = lazy( () => import('../util/Breadcrumb') )
 
 function getPlaceholderCardComponent()
 {

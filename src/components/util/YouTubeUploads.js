@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react'
-import { RightBoxHeaderTypography, RightBoxSubHeaderTypography } from './util/grid/OneThirdTwoThirdsGrid'
+import { RightBoxHeaderTypography, RightBoxSubHeaderTypography } from './grid/OneThirdTwoThirdsGrid'
 
 import VideoInfoContainer from './VideoInfoContainer'
 
-import {LeftBoxPaper} from './util/grid/OneThirdTwoThirdsGrid'
+import {LeftBoxPaper} from './grid/OneThirdTwoThirdsGrid'
 import { Skeleton } from '@material-ui/lab'
 
 

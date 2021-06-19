@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet'
 
 import SearchIcon from '@material-ui/icons/Search'
 
-import Breadcrumb from './Breadcrumb'
+import Breadcrumb from './util/Breadcrumb'
 import { MainContentContainer } from './MainContent'
 
 

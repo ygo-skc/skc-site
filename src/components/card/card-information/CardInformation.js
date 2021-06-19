@@ -7,7 +7,7 @@ import NAME_maps_ENDPOINT from '../../../helper/DownstreamServices'
 import { MainContentContainer } from '../../MainContent'
 import OneThirdTwoThirdsGrid from '../../util/grid/OneThirdTwoThirdsGrid'
 
-const Breadcrumb = lazy( () => import('../../Breadcrumb') )
+const Breadcrumb = lazy( () => import('../../util/Breadcrumb') )
 const CardData = lazy( () => import('./CardData') )
 
 
