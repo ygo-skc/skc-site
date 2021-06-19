@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react'
+import React from 'react'
 import { Typography, Box } from '@material-ui/core'
 import Styled from 'styled-components'
 

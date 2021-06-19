@@ -2,7 +2,7 @@ import React from 'react'
 import Styled from 'styled-components'
 
 import { MainContentContainer } from '../../MainContent'
-import Breadcrumbs from '../../Breadcrumb'
+import Breadcrumbs from '../../util/Breadcrumb'
 import YGOCard from '../../card/YGOCard'
 
 const ErrCard = Styled(YGOCard)`
@@ -44,7 +44,7 @@ export default function HttpErr( {httpErr} )
 			<Breadcrumbs crumbs={ [ 'Home', httpErr ] } />
 				<ErrCard
 					style={{width: '400px'}}
-					cardColor='err'
+					cardColor='Err'
 					cardName={ HTTP_ERR_maps_ERR_NAME[httpErr] }
 					monsterType={ HTTP_ERR_maps_ERR_TYPE[httpErr] }
 					cardEffect={ HTTP_ERR_maps_ERR_DESCRIPTION[httpErr] }

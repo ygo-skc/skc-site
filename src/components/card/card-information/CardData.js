@@ -1,37 +1,38 @@
-import React, {lazy, memo } from 'react'
+import React, {memo } from 'react'
 
 import {StickyBox} from '../../util/StyledContainers'
-import {RightBoxPaper} from '../../util/grid/OneThirdTwoThirdsGrid'
+import {LeftBoxPaper} from '../../util/grid/OneThirdTwoThirdsGrid'
+import CardImageRounded from '../CardImageRounded'
 
-const YGOCard = lazy( () => import('../YGOCard') )
-const CardImageRounded = lazy( () => import('../CardImageRounded') )
+import YGOCard from '../YGOCard'
 
-const CardData = memo( ( { cardID, cardName, cardColor, cardEffect, cardAttribute, monsterType, monsterAtk, monsterDef, monsterAssociation, isLoading } ) =>
+
+const CardData = memo( ( { cardID, cardName, cardColor, cardEffect, cardAttribute, monsterType, monsterAtk, monsterDef, monsterAssociation, isLoading, cardImg } ) =>
 {
-	return(<StickyBox >
-		<RightBoxPaper>
-			<CardImageRounded
-				cardID={cardID}
-				timeout={0}
-				defaultVisibility={true}
-				/>
+	return(
+		<StickyBox >
+			<LeftBoxPaper>
+				<CardImageRounded
+					cardImg={cardImg.src}
+					defaultVisibility={true}
+					/>
 
-			<YGOCard
-				isNew={ false }
-				cardName={cardName}
-				cardColor={cardColor}
-				cardEffect={cardEffect}
-				cardAttribute={cardAttribute}
-				monsterType={monsterType}
-				monsterAtk={monsterAtk}
-				monsterDef={monsterDef}
-				monsterAssociation={monsterAssociation}
-				cardID={cardID}
-				fullDetails={ true }
-				isLoading={ isLoading }
-				/>
-		</RightBoxPaper>
-	</StickyBox>
+				<YGOCard
+					isNew={ false }
+					cardName={cardName}
+					cardColor={cardColor}
+					cardEffect={cardEffect}
+					cardAttribute={cardAttribute}
+					monsterType={monsterType}
+					monsterAtk={monsterAtk}
+					monsterDef={monsterDef}
+					monsterAssociation={monsterAssociation}
+					cardID={cardID}
+					fullDetails={ true }
+					isLoading={ isLoading }
+					/>
+			</LeftBoxPaper>
+		</StickyBox>
 	)
 },  (prevProps, newProps) => {
 	if ( prevProps.isLoading !== newProps.isLoading )

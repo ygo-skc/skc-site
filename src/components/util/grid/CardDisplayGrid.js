@@ -1,6 +1,6 @@
 import React, {useState, useEffect, memo, useRef} from 'react'
 
-import { Grid, IconButton, Box, Typography } from '@material-ui/core'
+import { Grid, IconButton, Box } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
 import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded';
 
@@ -8,7 +8,6 @@ import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded';
 import CardImageRounded from '../../card/CardImageRounded'
 
 import YGOCard from '../../card/YGOCard'
-import Footer from '../../Footer'
 
 import { Hint } from '../../util/Hints'
 
@@ -67,6 +66,7 @@ const CardDisplayGrid = memo( ({ cardJsonResults, numResultsDisplayed, numItemsT
 	const renderCards = () =>
 	{
 		return cardJsonResults.slice(numResultsDisplayed - numItemsToLoadWhenNeeded, numResultsDisplayed).map( (card, index) => {
+
 			return <GridItem
 				ref={(card.cardID === target)? rrr : null}
 				id={card.cardID}
@@ -80,8 +80,9 @@ const CardDisplayGrid = memo( ({ cardJsonResults, numResultsDisplayed, numItemsT
 				style={{  }}
 				onClick={ () => window.location.assign(`/card/${card.cardID}`) } >
 
+
 				<CardImageRounded
-					cardID={card.cardID}
+					cardImg={`https://images.thesupremekingscastle.com/${card.cardID}.jpg`}
 					timeout={index % 20 * 10}
 					/>
 
@@ -133,7 +134,8 @@ const CardDisplayGrid = memo( ({ cardJsonResults, numResultsDisplayed, numItemsT
 	return(
 		<Box style={{maxWidth: '100%'}} >
 			<Grid container >
-				{(!isDataLoaded)? cardGridUISkeleton : (numResults === 0)? <Hint text='No Content To Show' textVariant='h5' />: cardGridUI}
+				{(!isDataLoaded)? cardGridUISkeleton : (numResults === 0)?
+					<Hint variant='h5' >{'No Content To Show'}</Hint>: cardGridUI}
 			</Grid>
 
 			{
@@ -145,8 +147,6 @@ const CardDisplayGrid = memo( ({ cardJsonResults, numResultsDisplayed, numItemsT
 					<ExpandMoreRoundedIcon />
 				</IconButton>
 			}
-
-			{ (showFooter)? <Footer /> : undefined }
 		</Box>
 	)
 }, (prevProps, newProps) => {

@@ -1,35 +1,24 @@
 import React, { lazy, useState, useEffect, Suspense } from 'react'
-import Styled from 'styled-components'
 import { Helmet } from 'react-helmet'
-
-import { Paper, Box } from '@material-ui/core'
 
 
 import { MainContentContainer } from '../MainContent'
 import { handleFetch } from '../../helper/FetchHandler'
 import { BanListDates } from './BanListDates'
-import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
+import NAME_maps_ENDPOINT from '../../helper/DownstreamServices'
 
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
-import { RightBoxPaper} from '../util/grid/OneThirdTwoThirdsGrid'
+import { RightBoxPaper, LeftBoxPaper } from '../util/grid/OneThirdTwoThirdsGrid'
 import {LightTranslucentDivider} from '../util/Divider'
 
 import {StickyBox} from '../util/StyledContainers'
 
 
-import BreadCrumb from '../Breadcrumb'
+import BreadCrumb from '../util/Breadcrumb'
 const TabbedView = lazy( () => import('./TabbedView') )
 const BanListSection = lazy( () => import('./BanListSection') )
 const BanListStats = lazy( () => import('./BanListStats') )
-const Footer = lazy( () => import('../Footer') )
 
-
-const BannedContentContainer = Styled(Paper)`
-	&&
-	{
-		border-radius: 0rem;
-	}
-`
 
 
 export default function BanList(props)
@@ -137,7 +126,7 @@ export default function BanList(props)
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={
 					<StickyBox>
-						<RightBoxPaper style={{ backgroundImage: 'linear-gradient(315deg, #fc9842 0%, #fe5f75 74%)' }} >
+						<LeftBoxPaper style={{ backgroundImage: 'linear-gradient(315deg, #fc9842 0%, #fe5f75 74%)' }} >
 
 							{(isSettingUpDates)? undefined
 								: <BanListDates
@@ -161,14 +150,11 @@ export default function BanList(props)
 									numRemoved={numRemoved}
 								/>
 							</Suspense>
-						</RightBoxPaper>
+						</LeftBoxPaper>
 					</StickyBox>
 				}
 				twoThirdComponent={
-					<Box>
-
-						<BannedContentContainer  >
-							<Suspense fallback={undefined} >
+					<RightBoxPaper>
 								<TabbedView
 									numForbidden={numForbidden}
 									numLimited={numLimited}
@@ -219,14 +205,7 @@ export default function BanList(props)
 									</Suspense>
 								}
 								/>
-								</Suspense>
-
-							</BannedContentContainer>
-
-							<Suspense fallback={undefined} >
-								<Footer />
-							</Suspense>
-						</Box>
+						</RightBoxPaper>
 					}
 				/>
 

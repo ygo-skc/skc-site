@@ -2,6 +2,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 
+import Footer from './components/footer/Footer'
 import NavigationBar from './components/NavigationBar'
 import Routes from './Routes.tsx'
 
@@ -49,18 +50,28 @@ const theme = createMuiTheme({
 			}
 		}
 		, 'MuiTableCell': {
+			stickyHeader: {
+				fontWeight: 800,
+				fontSize: '.94rem'
+			},
 			head: {
 				fontWeight: 800,
-				fontSize: '1.05rem'
+				fontSize: '.94rem'
 			},
 			body: {
 				fontWeight: 600,
-				fontSize: '1.05rem'
+				fontSize: '.94rem'
 			},
 			root: {
 				fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 				padding: '.4rem',
 				'border-bottom': '0rem'
+			}
+		},
+		'MuiPaper': {
+			'elevation1': {
+				boxShadow: 'rgba(0,0,0,0.12) 0px 1px 6px'
+				, border: '1px solid rgb(221, 221, 221)'
 			}
 		}
 	},
@@ -73,81 +84,90 @@ const theme = createMuiTheme({
 		h1: {
 			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 300,
-			color: '#543fda',
-			lineHeight: '3.5rem',
-			fontSize: '3rem',
+			color: '#8778e5',
+			lineHeight: '2.25rem',
+			fontSize: '1.8rem',
 		},
 		h2: {
 			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 500,
-			color: '#543fda',
-			lineHeight: '3rem',
-			fontSize: '2.5rem',
+			color: '#8778e5',
+			lineHeight: '2rem',
+			fontSize: '1.65rem',
+		},
+		h3: {
+			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
+			fontWeight: 500,
+			color: '#8778e5',
+			lineHeight: '2rem',
+			fontSize: '1.5rem',
 		},
 		h4: {
 			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 600,
-			color: '#543fda',
-			lineHeight: '2rem',
+			color: '#8778e5',
+			lineHeight: '1.75rem',
 			marginBottom: '1rem',
-			fontSize: '1.85rem',
+			fontSize: '1.4rem',
 		},
 		h5: {
 			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 800,
-			lineHeight: '1.52rem',
+			lineHeight: '1.45rem',
 			marginBottom: '.8rem',
-			color: '#404040',
-			fontSize: '1.5rem'
+			color: '#626262',
+			fontSize: '1.3rem'
 		},
 		h6: {
 			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 500,
-			lineHeight: '1.52rem',
+			lineHeight: '1.35rem',
 			marginBottom: '.8rem',
-			color: '#383838',
-			fontSize: '1.45rem',
+			color: '#484848',
+			fontSize: '1.2rem',
 		},
 		subtitle1: {
 			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
-			fontWeight: 600,
-			lineHeight: '1.52rem',
+			fontWeight: 800,
+			lineHeight: '1.35rem',
 			marginBottom: '.25rem',
-			color: '#444',
-			fontSize: '1.25rem',
+			color: '#484848',
+			fontSize: '1.1rem',
 		},
 		subtitle2: {
 			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
-			fontWeight: 500,
-			lineHeight: '1.52rem',
+			fontWeight: 600,
+			lineHeight: '1.3rem',
 			marginBottom: '.25rem',
 			color: '#444',
-			fontSize: '1.2rem',
+			fontSize: '1.05rem',
 		},
 		body1: {
 			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 500,
-			lineHeight: '1.35rem',
+			lineHeight: '1.2rem',
 			color: '#444',
-			fontSize: '1rem',
+			fontSize: '.94rem',
 		},
 		body2: {
 			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 500,
-			lineHeight: '1.35rem',
+			lineHeight: '1.2rem',
 			color: '#444',
-			fontSize: '1rem',
+			fontSize: '.9rem',
 		},
 	}
 })
 
 render(
-	<div style={{ display: 'flex', flexFlow: 'column', height: '100%' }} >
-		<ThemeProvider
-			theme={ theme } >
+	<ThemeProvider
+		theme={ theme } >
+		<div class='content' >
 			<NavigationBar />
 			<Routes />
-		</ThemeProvider>
-	</div>,
+		</div>
+		<Footer />
+	</ThemeProvider>
+	,
 	document.getElementById('root')
 )

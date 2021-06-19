@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, lazy, Suspense } from 'react'
+import React, { useState, useEffect, useMemo, lazy } from 'react'
 import { Grid } from '@material-ui/core'
 import {Skeleton} from '@material-ui/lab'
 import { Helmet } from 'react-helmet'
@@ -6,15 +6,14 @@ import { Helmet } from 'react-helmet'
 import { MainContentContainer } from '../MainContent'
 
 import {handleFetch} from '../../helper/FetchHandler'
-import NAME_maps_ENDPOINT from '../../helper/YgoApiEndpoints'
+import NAME_maps_ENDPOINT from '../../helper/DownstreamServices'
 
 // const ProductCardGridItem = lazy( () => import('./ProductCardGridItem') )
 import ProductCardGridItem from './ProductCardGridItem'
 import {RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from '../util/grid/OneThirdTwoThirdsGrid'
 import {DarkTranslucentDivider} from '../util/Divider'
 
-const Breadcrumb = lazy( () => import('../Breadcrumb') )
-const Footer = lazy( () => import('../Footer') )
+const Breadcrumb = lazy( () => import('../util/Breadcrumb') )
 
 function getPlaceholderCardComponent()
 {
@@ -113,9 +112,6 @@ export default function ProductBrowse({history})
 				<Grid style={{width: '100%', gridAutoRows: '1fr'}} container >
 					{(isDataLoaded)? productGridItems : getPlaceholderCardComponentMemoized}
 				</Grid>
-
-				<Footer />
-
 			</RightBoxPaper>
 
 		</MainContentContainer>

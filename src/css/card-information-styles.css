@@ -1,0 +1,51 @@
+.card-info-header {
+	margin-bottom: 0;
+	font-weight: 700;
+}
+
+.table-head {
+	background: rgba(0, 0, 0, 0.3);
+}
+
+.table-container {
+	border-radius: 1.1rem;
+	background: rgba(0, 0, 0, 0.3);
+	color: rgba(255, 255, 255, .97);
+	max-width: 97%;
+	margin: auto;
+}
+
+.table-row:hover {
+	cursor: pointer;
+	background: rgba(0, 0, 0, 0.2);
+}
+
+.table-cell {
+	color: rgba(255, 255, 255, .97);
+}
+
+.divider {
+	margin-top: 0;
+	margin-bottom: 1.5rem;
+	width: 97%;
+}
+
+.card-info-section {
+	padding-left: .9rem;
+	padding-right: .9rem;
+	padding-top: 1.3rem;
+	padding-bottom: 1.3rem;
+	border-radius: 1.05rem;
+}
+
+
+.products {
+	background: #a4508b;
+	background-image: linear-gradient(326deg, #a4508b 0%, #5f0a87 74%);
+}
+
+
+.ban-lists {
+	background: #fc9842;
+	background-image: linear-gradient(315deg, #fc9842 0%, #fe5f75 74%);
+}

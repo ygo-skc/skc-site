@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, lazy } from 'react'
 import Autocomplete from '@material-ui/lab/Autocomplete'
-import { Chip, Paper, InputBase, IconButton } from '@material-ui/core'
+import { Chip, InputBase, IconButton } from '@material-ui/core'
 import { Helmet } from 'react-helmet'
 
 import SearchIcon from '@material-ui/icons/Search'
 
-import Breadcrumb from './Breadcrumb'
+import Breadcrumb from './util/Breadcrumb'
 import { MainContentContainer } from './MainContent'
 
-import CardDisplayGrid from './util/grid/CardDisplayGrid'
 
 import OneThirdTwoThirdsGrid from './util/grid/OneThirdTwoThirdsGrid'
 
 import { handleFetch } from '../helper/FetchHandler'
-import NAME_maps_ENDPOINT from '../helper/YgoApiEndpoints'
+import NAME_maps_ENDPOINT from '../helper/DownstreamServices'
 
 import {LightTranslucentDivider, DarkTranslucentDivider} from './util/Divider'
 import {StickyBox} from './util/StyledContainers'
 
 import {RenderGroup, SearchSuggestionTypography} from './util/Search'
 
-import {LeftBoxSectionTypography, LeftBoxSectionHeaderTypography, RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from './util/grid/OneThirdTwoThirdsGrid'
+import {LeftBoxSectionTypography, LeftBoxSectionHeaderTypography, RightBoxPaper, LeftBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from './util/grid/OneThirdTwoThirdsGrid'
 
+const CardDisplayGrid = lazy( () => import('./util/grid/CardDisplayGrid'))
 
 const defaultDisplayNum = 50
 
@@ -174,7 +174,7 @@ export default function Browse( {history} )
 				oneThirdComponent={
 
 					<StickyBox>
-						<RightBoxPaper style={{ backgroundImage: 'linear-gradient(315deg, #7f5a83 0%, #0d324d 74%)' }} >
+						<LeftBoxPaper style={{ backgroundImage: 'linear-gradient(315deg, #7f5a83 0%, #0d324d 74%)' }} >
 
 							<Autocomplete
 								multiple
@@ -243,7 +243,7 @@ export default function Browse( {history} )
 								Displaying: {numResultsDisplayed}
 							</LeftBoxSectionTypography>
 
-						</RightBoxPaper>
+						</LeftBoxPaper>
 					</StickyBox>
 				}
 				twoThirdComponent={

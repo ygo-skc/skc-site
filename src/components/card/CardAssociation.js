@@ -13,11 +13,16 @@ const rankImage = <img
 	alt='Card Rank'
 	style={{ width: '34px', height: '34px', display: 'inline-block', marginRight: '.35rem', verticalAlign: 'middle' }} />
 
+const pendulumScaleImage = <img
+	src={`${process.env.PUBLIC_URL}/Img/card_pendulum_scale.svg`}
+	alt='Card Rank'
+	style={{ width: '34px', height: '34px', display: 'inline-block', marginRight: '.35rem', marginLeft: '.5rem', verticalAlign: 'middle' }} />
+
 
 const CardAssociation = ( { monsterAssociation, attribute } ) =>
 {
 	if (monsterAssociation === undefined)	return (null)
-	if (monsterAssociation.level === undefined && monsterAssociation.rank === undefined)	return (null)
+	if (monsterAssociation.level === undefined && monsterAssociation.rank === undefined && monsterAssociation.linkRating === undefined)	return (null)
 
 
 	return(
@@ -42,6 +47,26 @@ const CardAssociation = ( { monsterAssociation, attribute } ) =>
 					: <ImageWithNumber
 						imageComponent={rankImage}
 						text={`x${monsterAssociation.rank}`}
+						/>
+				}
+
+				{(monsterAssociation.scaleRating === undefined)?
+					undefined
+					: <ImageWithNumber
+						imageComponent={pendulumScaleImage}
+						text={`x${monsterAssociation.scaleRating}`}
+						/>
+				}
+
+				{(monsterAssociation.linkRating === undefined)?
+					undefined
+					: <ImageWithNumber
+						imageComponent={<img
+								src={`${process.env.PUBLIC_URL}/Img/links.svg`}
+								alt='Card Rank'
+								style={{ width: '34px', height: '34px', display: 'inline-block', marginRight: '.35rem', verticalAlign: 'middle' }} />
+						}
+						text={`x${monsterAssociation.linkRating} (${monsterAssociation.linkArrows.join(' ').replaceAll('-', '')})`}
 						/>
 				}
 			</div>

@@ -4,6 +4,7 @@ import { Typography, Box, Paper } from '@material-ui/core'
 import Styled from 'styled-components'
 import withWidth from '@material-ui/core/withWidth'
 
+import Parent from '../../Parent'
 
 const LeftBoxHeaderTypography = Styled(Typography)`
 	&&
@@ -35,12 +36,35 @@ const LeftBoxSectionTypography = Styled(Typography)`
 const RightBoxPaper = Styled(Paper)`
 	&&
 	{
-		background: #fafafa;
+		background: white;
 		border-radius: 1.75rem;
 		padding-left: .8rem;
 		padding-right: .9rem;
 		padding-top: 1.2rem;
 		padding-bottom: 1.2rem;
+
+		@media screen and (min-width: 800px)
+		{
+			padding-left: 1rem;
+			padding-right: 1rem;
+			padding-top: 1.25rem;
+			padding-bottom: 1.25rem;
+		}
+	}
+`
+
+
+const LeftBoxPaper = Styled(RightBoxPaper)`
+	&&
+	{
+		background: white;
+		border-radius: 1.75rem;
+		padding-left: .8rem;
+		padding-right: .9rem;
+		padding-top: 1.2rem;
+		padding-bottom: 1.2rem;
+		box-shadow: rgba(0, 0, 0, 0.12) 0px .5rem 1.4rem;
+		border: 1px solid rgb(221, 221, 221);
 
 		@media screen and (min-width: 800px)
 		{
@@ -80,15 +104,12 @@ const LeftBox = Styled(Box)`
 	&&
 	{
 		margin-bottom: 2.5rem;
-		padding-left: .2rem;
-		padding-right: .2rem;
 
 		@media screen and (min-width: 800px)
 		{
-			padding-left: .8rem;
 			padding-right: .8rem;
-			min-width: 29rem;
-			max-width: 29rem;
+			min-width: 25rem;
+			max-width: 25rem;
 		}
 	}
 `
@@ -99,27 +120,7 @@ const RightBox = Styled(Box)`
 	{
 		@media screen and (min-width: 800px)
 		{
-			padding-right: .8rem;
 			flex-grow: 1;
-		}
-	}
-`
-
-const Parent = Styled(Box)`
-	&&
-	{
-		width: 100%;
-
-		@media screen and (min-width: 0px)
-		{
-			margin-bottom: 2.75rem;
-			display: block;
-		}
-
-		@media screen and (min-width: 800px)
-		{
-			margin-bottom: 1rem;
-			display: inline-flex;
 		}
 	}
 `
@@ -129,13 +130,13 @@ function OneThirdTwoThirdsGrid( { oneThirdComponent, twoThirdComponent } )
 {
 
 	return(
-		<Parent >
+		<Parent>
 			<LeftBox>
-			{oneThirdComponent}
+				{oneThirdComponent}
 			</LeftBox>
 
 			<RightBox >
-			{twoThirdComponent}
+				{twoThirdComponent}
 			</RightBox>
 		</Parent>
 	)
@@ -144,4 +145,4 @@ function OneThirdTwoThirdsGrid( { oneThirdComponent, twoThirdComponent } )
 
 export default withWidth()(OneThirdTwoThirdsGrid)
 
-export {LeftBoxHeaderTypography, LeftBoxSectionTypography, LeftBoxSectionHeaderTypography, RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer}
+export {LeftBoxHeaderTypography, LeftBoxSectionTypography, LeftBoxSectionHeaderTypography, RightBoxPaper, LeftBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer}
