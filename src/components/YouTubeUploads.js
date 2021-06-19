@@ -7,7 +7,7 @@ import {LeftBoxPaper} from './util/grid/OneThirdTwoThirdsGrid'
 import { Skeleton } from '@material-ui/lab'
 
 
-export default function YouTubeUploads({ history, youtubeData })
+export default function YouTubeUploads({ youtubeData })
 {
 	const [videos, setVideos] = useState([])
 	const [isLoading, setIsLoading] = useState(true)
@@ -16,9 +16,11 @@ export default function YouTubeUploads({ history, youtubeData })
 			if (youtubeData !== undefined)
 			{
 				setVideos(youtubeData.videos.map(item => {
+					const img = new Image()
+					img.src = item.thumbnailUrl
 					return(
 						<VideoInfoContainer
-							thumbnailUrl={item.thumbnailUrl}
+							thumbnailImg={img}
 							title={item.title}
 							description={item.description}
 							url={item.url}
@@ -40,7 +42,7 @@ export default function YouTubeUploads({ history, youtubeData })
 			</RightBoxSubHeaderTypography>
 
 			{(isLoading === true)
-				? <Skeleton width='100%' height='30rem' />:
+				? <Skeleton width='100%' height='28rem' style={{transform: 'none', borderRadius: '2rem'}} />:
 				<div style={{display: 'flex', maxWidth: '100%', overflowX: 'scroll', paddingBottom: '.75rem'}}>
 					{videos}
 				</div>

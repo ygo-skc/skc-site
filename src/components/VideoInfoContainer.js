@@ -29,12 +29,12 @@ const Parent = Styled.div`
 `
 
 
-export default function YouTubeUploads({ thumbnailUrl, title, description, url })
+export default function YouTubeUploads({ thumbnailImg, title, url })
 {
 	return(
 		<Parent>
-			<div style={{marginBottom: '1rem', borderRadius: '3rem', borderStyle: 'solid', borderColor: 'rgba(255, 255, 255, .5)', borderWidth: '1rem'}}>
-				<img src={thumbnailUrl} width='100%' style={{borderRadius: '2rem'}} />
+			<div style={{marginBottom: '1rem', borderRadius: '3rem', borderStyle: 'solid', borderColor: 'rgba(255, 255, 255, .5)', borderWidth: '.4rem'}}>
+				<img src={thumbnailImg.src} width='100%' style={{borderRadius: '2.6rem'}} />
 			</div>
 
 			<Title variant='h6' >

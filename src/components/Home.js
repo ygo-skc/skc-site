@@ -4,18 +4,19 @@ import { Helmet } from 'react-helmet'
 
 import { Typography, Link } from '@material-ui/core'
 import { MainContentContainer } from './MainContent'
-import Breadcrumb from './Breadcrumb'
 import { handleFetch } from '../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../helper/DownstreamServices'
 
 import OneThirdTwoThirdsGrid from './util/grid/OneThirdTwoThirdsGrid'
 
-import { LeftBoxPaper, RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography } from './util/grid/OneThirdTwoThirdsGrid'
+import { LeftBoxPaper, RightBoxPaper } from './util/grid/OneThirdTwoThirdsGrid'
 
 import {HEART_API_HOST_NAME} from '../helper/DownstreamServices'
 
-const YouTubeUploads = lazy(() => import('./YouTubeUploads'))
+const Breadcrumb = lazy(() => import('./Breadcrumb'))
 const DatabaseSearch = lazy(() => import('./DatabaseSearch'))
+const YouTubeUploads = lazy(() => import('./YouTubeUploads'))
+const SocialMedia = lazy(() => import('./SocialMedia'))
 
 
 export default function Home({ history }) {
@@ -52,9 +53,8 @@ export default function Home({ history }) {
 				<meta name="keywords" content={`YuGiOh, ban list, card info, The Supreme Kings Castle`} />
 			</Helmet>
 
-			<Breadcrumb crumbs={['Home']} />
-
 			<Suspense>
+				<Breadcrumb crumbs={['Home']} />
 				<DatabaseSearch history={history} />
 				<YouTubeUploads history={history} youtubeData={youtubeData} />
 			</Suspense>
@@ -62,21 +62,7 @@ export default function Home({ history }) {
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={
 					<LeftBoxPaper>
-						<RightBoxHeaderTypography variant='h4' >
-							Social
-						</RightBoxHeaderTypography>
-						<RightBoxSubHeaderTypography variant='h5'>
-							Join The Discord
-						</RightBoxSubHeaderTypography>
-
-						<Typography variant='body1' >
-							Use Discord to chat with others within the community. This is my personal server I use with friends. There are chats for you fine people there too! Lets grow the community!
-						</Typography>
-						<br />
-
-						<div style={{borderStyle: 'solid', borderColor: '#543fda', borderWidth: '.25rem', borderRadius: '1.1rem'}}>
-							<iframe style={{borderStyle: 'solid', borderRadius: '1rem'}} src="https://discord.com/widget?id=659477868799197185&theme=light" width="100%" height="400" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
-						</div>
+						<SocialMedia />
 					</LeftBoxPaper>
 				}
 				twoThirdComponent={
