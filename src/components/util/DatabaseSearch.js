@@ -40,7 +40,7 @@ export default function DatabaseSearch({ history }) {
 
 
 	return (
-		<Paper style={{ display: 'flex', width: '95%', maxWidth: '500px', margin: '0 auto', borderRadius: '1.5rem', marginBottom: '4rem' }} >
+		<Paper style={{ display: 'flex', width: '95%', maxWidth: '500px', margin: '0 auto', borderRadius: '2.5rem', marginBottom: '4rem' }} >
 			<DBSearch
 				id='search'
 				clearOnEscape
@@ -72,7 +72,7 @@ export default function DatabaseSearch({ history }) {
 							onChange={event => { setSearchInput(event.target.value) }}
 						/>
 						<IconButton >
-							<SearchIcon />
+							<SearchIcon style={{fontSize: '2.1rem'}} />
 						</IconButton>
 					</div>
 				)}
