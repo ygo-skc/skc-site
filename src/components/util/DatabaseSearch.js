@@ -40,7 +40,7 @@ export default function DatabaseSearch({ history }) {
 
 
 	return (
-		<Paper style={{ display: 'flex', width: '95%', maxWidth: '500px', margin: '0 auto', borderRadius: '1.5rem', marginBottom: '2rem' }} >
+		<Paper style={{ display: 'flex', width: '95%', maxWidth: '500px', margin: '0 auto', borderRadius: '1.5rem', marginBottom: '4rem' }} >
 			<DBSearch
 				id='search'
 				clearOnEscape

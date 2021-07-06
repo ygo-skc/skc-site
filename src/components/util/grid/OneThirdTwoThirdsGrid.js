@@ -11,6 +11,7 @@ const LeftBoxHeaderTypography = Styled(Typography)`
 	{
 		color: rgba(255, 255, 255, .95);
 		margin-bottom: 1rem;
+		max-width: 100%;
 	}
 `
 
@@ -42,6 +43,8 @@ const RightBoxPaper = Styled(Paper)`
 		padding-right: .9rem;
 		padding-top: 1.2rem;
 		padding-bottom: 1.2rem;
+
+		max-width: 100%;
 
 		@media screen and (min-width: 800px)
 		{

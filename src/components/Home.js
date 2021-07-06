@@ -9,7 +9,7 @@ import NAME_maps_ENDPOINT from '../helper/DownstreamServices'
 
 import OneThirdTwoThirdsGrid from './util/grid/OneThirdTwoThirdsGrid'
 
-import { LeftBoxPaper, RightBoxPaper } from './util/grid/OneThirdTwoThirdsGrid'
+import { LeftBoxPaper, RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography } from './util/grid/OneThirdTwoThirdsGrid'
 
 import {HEART_API_HOST_NAME} from '../helper/DownstreamServices'
 
@@ -56,7 +56,6 @@ export default function Home({ history }) {
 			<Suspense>
 				<Breadcrumb crumbs={['Home']} />
 				<DatabaseSearch history={history} />
-				<YouTubeUploads history={history} youtubeData={youtubeData} />
 			</Suspense>
 
 			<OneThirdTwoThirdsGrid
@@ -71,8 +70,12 @@ export default function Home({ history }) {
 							Yo!
 						</Typography>
 
+						<RightBoxSubHeaderTypography variant='h5'>
+							Welcome To The BEST Yu-Gi-Oh! Site
+						</RightBoxSubHeaderTypography>
+
 						<Typography variant='body1' >
-							This is the Supreme Kings Castle. A site dedicated to Yu-Gi-Oh! content.
+							This is a site dedicated to Yu-Gi-Oh! content. The main differences between this site and others is that this site is incredibly fast and intuitive and has no Ads or trackers.
 						</Typography>
 
 						<br />
@@ -85,11 +88,17 @@ export default function Home({ history }) {
 
 						<Typography variant='body1' >
 							Yugioh is ever expanding and evolving. New products are continuously released and new ban lists established. As such this website will also  be continuously updated to accommodate.
-							Enjoy the website ad free with a fast and beautiful UI. There is no tracking and the only money we make is though donations. Want to learn more? Check out the <Link color='secondary' href='/about'><strong>About</strong></Link> section
+							Want to learn more? Check out the <Link color='secondary' href='/about'><strong>About</strong></Link> section
 						</Typography>
 					</RightBoxPaper>
 					}
 				/>
+
+
+				<RightBoxPaper style={{maxWidth: '98%', width: '98%', margin: 'auto'}}>
+					<YouTubeUploads history={history} youtubeData={youtubeData} />
+				</RightBoxPaper>
+
 		</MainContentContainer>
 	)
 }
