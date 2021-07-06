@@ -17,6 +17,7 @@ const Breadcrumb = lazy(() => import('./util/Breadcrumb'))
 const DatabaseSearch = lazy(() => import('./util/DatabaseSearch'))
 const YouTubeUploads = lazy(() => import('./util/YouTubeUploads'))
 const SocialMedia = lazy(() => import('./util/SocialMedia'))
+const DatabaseInfo = lazy(() => import('./util/database-info/DatabaseInfo'))
 
 
 export default function Home({ history }) {
@@ -65,32 +66,30 @@ export default function Home({ history }) {
 					</LeftBoxPaper>
 				}
 				twoThirdComponent={
-					<RightBoxPaper >
-						<Typography variant='h4' >
-							Yo!
-						</Typography>
+					<div>
+						<RightBoxPaper >
+							<RightBoxHeaderTypography variant='h4' >
+								Yo!
+							</RightBoxHeaderTypography>
 
-						<RightBoxSubHeaderTypography variant='h5'>
-							Welcome To The BEST Yu-Gi-Oh! Site
-						</RightBoxSubHeaderTypography>
+							<RightBoxSubHeaderTypography variant='h5'>
+								Welcome To The BEST Yu-Gi-Oh! Site
+							</RightBoxSubHeaderTypography>
 
-						<Typography variant='body1' >
-							This is a site dedicated to Yu-Gi-Oh! content. The main differences between this site and others is that this site is incredibly fast and intuitive and has no Ads or trackers.
-						</Typography>
+							<Typography variant='body1' >
+								This is a site dedicated to Yu-Gi-Oh! content. The main differences between this site and others is that this site is incredibly fast and intuitive and has no Ads or trackers.
+							</Typography>
 
-						<br />
+							<br />
 
-						<Typography variant='body1' >
-							Currently there are <strong>{cardTotal} cards</strong>, <Link color='secondary' href='/ban_list'><strong>{banListTotal} ban lists</strong></Link> from the past <strong>{yearsOfBanListCoverage}</strong> years and information about <strong>{productTotal}</strong> products.
-						</Typography>
+							<Typography variant='body1' >
+								Yugioh is ever expanding and evolving. New products are continuously released and new ban lists established. As such this website will also  be continuously updated to accommodate.
+								Want to learn more? Check out the <Link color='secondary' href='/about'><strong>About</strong></Link> section
+							</Typography>
+						</RightBoxPaper>
 
-						<br />
-
-						<Typography variant='body1' >
-							Yugioh is ever expanding and evolving. New products are continuously released and new ban lists established. As such this website will also  be continuously updated to accommodate.
-							Want to learn more? Check out the <Link color='secondary' href='/about'><strong>About</strong></Link> section
-						</Typography>
-					</RightBoxPaper>
+						<DatabaseInfo cardTotal={cardTotal} banListTotal={banListTotal} productTotal={productTotal} />
+					</div>
 					}
 				/>
 
