@@ -60,6 +60,7 @@ export default function Home({ history }) {
 			</Suspense>
 
 			<OneThirdTwoThirdsGrid
+				mirrored={true}
 				oneThirdComponent={
 					<LeftBoxPaper>
 						<SocialMedia />

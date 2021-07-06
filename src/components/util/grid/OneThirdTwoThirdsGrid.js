@@ -74,7 +74,6 @@ const LeftBoxPaper = Styled(RightBoxPaper)`
 			padding-left: 1rem;
 			padding-right: 1rem;
 			padding-top: 1.25rem;
-			padding-bottom: 1.25rem;
 		}
 	}
 `
@@ -103,7 +102,7 @@ const RightBoxSubHeaderTypography = Styled(Typography)`
 `
 
 
-const LeftBox = Styled(Box)`
+const OneThirdComponent = Styled(Box)`
 	&&
 	{
 		margin-bottom: 2.5rem;
@@ -118,7 +117,18 @@ const LeftBox = Styled(Box)`
 `
 
 
-const RightBox = Styled(Box)`
+const MirroredOneThirdComponent = Styled(OneThirdComponent)`
+	&&
+	{
+		@media screen and (min-width: 800px)
+		{
+			padding-left: 0rem;
+		}
+	}
+`
+
+
+const TwoThirdComponent = Styled(Box)`
 	&&
 	{
 		@media screen and (min-width: 800px)
@@ -129,18 +139,24 @@ const RightBox = Styled(Box)`
 `
 
 
-function OneThirdTwoThirdsGrid( { oneThirdComponent, twoThirdComponent } )
+const MirroredTwoThirdComponent = Styled(TwoThirdComponent)`
+	&&
+	{
+		@media screen and (min-width: 800px)
+		{
+			padding-right: .8rem;
+		}
+	}
+`
+
+
+function OneThirdTwoThirdsGrid( { oneThirdComponent, twoThirdComponent, mirrored=false } )
 {
 
 	return(
 		<Parent>
-			<LeftBox>
-				{oneThirdComponent}
-			</LeftBox>
-
-			<RightBox >
-				{twoThirdComponent}
-			</RightBox>
+			{(mirrored)? <MirroredTwoThirdComponent>{twoThirdComponent}</MirroredTwoThirdComponent> : <MirroredOneThirdComponent>{oneThirdComponent}</MirroredOneThirdComponent>}
+			{(mirrored)? <OneThirdComponent>{oneThirdComponent}</OneThirdComponent> : <TwoThirdComponent>{twoThirdComponent}</TwoThirdComponent>}
 		</Parent>
 	)
 }
