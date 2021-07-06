@@ -1,12 +1,16 @@
 import React from 'react'
-import { Typography, Paper } from '@material-ui/core'
+import { Typography, Box } from '@material-ui/core'
 import styled from 'styled-components'
 
-const Container = styled(Paper)`
+const Container = styled(Box)`
 	&& {
 		padding: 2rem;
 		border-radius: 1.5rem;
 		flex: 1;
+		background: white;
+		border-color: #ABC0A3;
+		border-style: solid;
+
 
 		:hover {
 			cursor: pointer;
