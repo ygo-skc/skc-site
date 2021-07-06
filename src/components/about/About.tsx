@@ -82,7 +82,7 @@ const About: FunctionComponent = () => {
 				<Typography variant='h1' >
 					About SKC
 				</Typography>
-				<Typography variant='h2' style={{marginBottom: '1.5rem'}} >
+				<Typography variant='h3' style={{marginBottom: '1.5rem'}} >
 					Why I Started The Project
 				</Typography>
 
@@ -119,7 +119,7 @@ const About: FunctionComponent = () => {
 					Additional Information
 				</Typography>
 				<Typography
-					variant='h2'
+					variant='h3'
 					style={{color: 'white', marginBottom: '3rem'}}>
 					Learn about the SKC API, donate, find ways to contact me, and other things!
 				</Typography>

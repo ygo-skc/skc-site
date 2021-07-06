@@ -7,7 +7,7 @@ import Glance from './Glance'
 export default function DatabaseInfo({ cardTotal, banListTotal, productTotal })
 {
 	return(
-		<Paper style={{background: '#fffde7', paddingTop: '1.5rem', paddingBottom: '1.5rem', marginTop: '2.25rem', marginBottom: '4rem', borderRadius: '1rem', paddingLeft: '1rem', paddingRight: '1rem'}} >
+		<Paper style={{background: '#fffde7', paddingTop: '1.5rem', paddingBottom: '1.5rem', marginTop: '2.25rem', marginBottom: '4rem', borderRadius: '1.75rem', paddingLeft: '1rem', paddingRight: '1rem'}} >
 			<Typography variant='h2' style={{color: '#196A5F'}} >
 				Contents
 			</Typography>

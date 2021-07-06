@@ -72,12 +72,9 @@ const AboutInfoCard: FunctionComponent<AboutInfoCardProps> = ({title, subtitle, 
 			{title}
 		</HeaderWithSubheader>
 		<CenteredText
-			style={{color: '#c6694b'}}
-			variant='h6'>
+			variant='h5'>
 			{subtitle}
 		</CenteredText>
-
-		<DarkTranslucentDivider />
 
 		<Typography variant='body1'>
 			{body}

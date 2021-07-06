@@ -86,7 +86,7 @@ const theme = createMuiTheme({
 			fontWeight: 300,
 			color: '#8778e5',
 			lineHeight: '3.25rem',
-			fontSize: '2.25rem',
+			fontSize: '2rem',
 		},
 		h2: {
 			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
