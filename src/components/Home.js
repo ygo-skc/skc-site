@@ -88,15 +88,20 @@ export default function Home({ history }) {
 							</Typography>
 						</RightBoxPaper>
 
+						<div>
+
+						</div>
 						<DatabaseInfo cardTotal={cardTotal} banListTotal={banListTotal} productTotal={productTotal} />
 					</div>
 					}
 				/>
 
 
-				<RightBoxPaper style={{maxWidth: '98%', width: '98%', margin: 'auto'}}>
-					<YouTubeUploads history={history} youtubeData={youtubeData} />
-				</RightBoxPaper>
+				<div style={{maxWidth: '98%', width: '98%', margin: 'auto'}} >
+					<RightBoxPaper>
+						<YouTubeUploads history={history} youtubeData={youtubeData} />
+					</RightBoxPaper>
+				</div>
 
 		</MainContentContainer>
 	)
