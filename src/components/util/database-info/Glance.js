@@ -23,7 +23,7 @@ const Container = styled(Box)`
 export default function DatabaseInfo({ total, subject, color, action })
 {
 	return(
-		<Container onClick={()=> action()} >
+		<Container item onClick={()=> action()} >
 			<Typography variant='h1' align='center' style={{color: color}} >
 				{total}
 			</Typography>

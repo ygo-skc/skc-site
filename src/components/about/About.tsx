@@ -247,7 +247,7 @@ const About: FunctionComponent = () => {
 						lg={4}
 						xl={4} >
 							<AboutInfoCard
-								title='Subscribe On YouTube'
+								title='Watch Yu-Gi-Oh! Related Content'
 								subtitle='Subscribe On YouTube'
 								body={
 									<Typography variant='body1'>
