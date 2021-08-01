@@ -2,12 +2,28 @@ import React from 'react'
 
 import { Paper, Typography, Grid } from '@material-ui/core'
 import Glance from './Glance'
+import styled from 'styled-components'
+
+const DatabaseInfoPaper = styled(Paper)`
+	&& {
+		background: #fffde7;
+		paddingTop: 1.5rem;
+		padding-bottom: 1.5rem;
+		margin: auto;
+		margin-top: 2.25rem;
+		margin-bottom: 4rem;
+		border-radius: 1.75rem;
+		padding-left: 1rem;
+		padding-right: 1rem;
+		max-width: 800px;
+	}
+`
 
 
 export default function DatabaseInfo({ cardTotal, banListTotal, productTotal })
 {
 	return(
-		<Paper style={{background: '#fffde7', paddingTop: '1.5rem', paddingBottom: '1.5rem', marginTop: '2.25rem', marginBottom: '4rem', borderRadius: '1.75rem', paddingLeft: '1rem', paddingRight: '1rem'}} >
+		<DatabaseInfoPaper style={{background: '#fffde7', paddingTop: '1.5rem', paddingBottom: '1.5rem', margin: 'auto', marginTop: '2.25rem', marginBottom: '4rem', borderRadius: '1.75rem', paddingLeft: '1rem', paddingRight: '1rem', maxWidth: '800px'}} >
 			<Typography variant='h2' style={{color: '#196A5F'}} >
 				Content
 			</Typography>
@@ -43,6 +59,6 @@ export default function DatabaseInfo({ cardTotal, banListTotal, productTotal })
 					<Glance total={productTotal} subject='Products' color='rgb(95, 10, 135)' action={() => window.location.assign(`/browse/product`)}  />
 				</Grid>
 			</Grid>
-		</Paper>
+		</DatabaseInfoPaper>
 	)
 }

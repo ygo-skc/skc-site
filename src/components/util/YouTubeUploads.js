@@ -41,7 +41,7 @@ export default function YouTubeUploads({ youtubeData })
 			</RightBoxSubHeaderTypography>
 
 			{(isLoading === true)
-				? <Skeleton width='100%' height='28rem' style={{transform: 'none', borderRadius: '2rem'}} />:
+				? <Skeleton width='100%' height='24rem' style={{transform: 'none', borderRadius: '2rem'}} />:
 				<div style={{display: 'grid', gridAutoFlow: 'column', gridTemplateRows: 'auto auto', overflowX: 'scroll', paddingBottom: '.75rem', maxWidth: '100%'}}>
 					{videos}
 				</div>

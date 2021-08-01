@@ -7,8 +7,9 @@ import { NAME_maps_ROUTE } from '../Routes.tsx'
 export default function NavigationBar()
 {
 	return (
-		<AppBar position='static' className='app-bar' >
-			<Toolbar >
+		<AppBar position='static' className='app-bar-container' >
+			<Toolbar
+				className='app-bar' >
 				<Link
 					underline='none'
 					color='inherit'
