@@ -26,7 +26,6 @@ export default function NavigationBar()
 
 			<div
 				className='scrollable-nav' >
-
 				<Link
 					underline='none'
 					color='inherit'

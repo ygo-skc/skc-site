@@ -109,9 +109,14 @@ const OneThirdComponent = Styled(Box)`
 
 		@media screen and (min-width: 800px)
 		{
-			padding-right: .8rem;
 			min-width: 25rem;
 			max-width: 25rem;
+		}
+
+		@media screen and (min-width: 1500px)
+		{
+			min-width: 30rem;
+			max-width: 30rem;
 		}
 	}
 `
@@ -134,16 +139,18 @@ const TwoThirdComponent = Styled(Box)`
 		@media screen and (min-width: 800px)
 		{
 			flex-grow: 1;
+			padding-left: .8rem;
 		}
 	}
 `
 
 
-const MirroredTwoThirdComponent = Styled(TwoThirdComponent)`
+const MirroredTwoThirdComponent = Styled(Box)`
 	&&
 	{
 		@media screen and (min-width: 800px)
 		{
+			flex-grow: 1;
 			padding-right: .8rem;
 		}
 	}

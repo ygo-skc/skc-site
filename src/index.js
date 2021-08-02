@@ -165,7 +165,9 @@ render(
 		<div className='content' >
 			<NavigationBar />
 			<div className='routes' >
-				<Routes />
+				<div className='routes-wrapper' >
+					<Routes />
+				</div>
 			</div>
 		</div>
 		<Footer />

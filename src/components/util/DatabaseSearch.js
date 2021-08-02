@@ -40,7 +40,7 @@ export default function DatabaseSearch({ history }) {
 
 
 	return (
-		<Paper style={{ display: 'flex', width: '95%', maxWidth: '500px', margin: '0 auto', borderRadius: '2.5rem', marginBottom: '4rem' }} >
+		<Paper style={{ display: 'flex', width: '95%', maxWidth: '500px', margin: '0 auto', borderRadius: '2.5rem', marginBottom: '2rem' }} >
 			<DBSearch
 				id='search'
 				clearOnEscape
@@ -63,7 +63,7 @@ export default function DatabaseSearch({ history }) {
 					)
 				}}
 				renderInput={(params) => (
-					<div style={{ width: '100%', display: 'flex', padding: '.25rem' }} >
+					<div style={{ display: 'flex', padding: '.2rem', paddingLeft: '1rem', paddingRight: '1rem' }} >
 						<InputBase
 							ref={params.InputProps.ref}
 							inputProps={params.inputProps}

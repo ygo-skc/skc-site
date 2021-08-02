@@ -98,7 +98,7 @@ export default function Home({ history }) {
 				/>
 
 
-				<div style={{maxWidth: '98%', width: '98%', margin: 'auto'}} >
+				<div >
 					<RightBoxPaper>
 						<YouTubeUploads history={history} youtubeData={youtubeData} />
 					</RightBoxPaper>
