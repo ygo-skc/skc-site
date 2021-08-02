@@ -61,9 +61,6 @@ export default function CardProductInformation({ isLoading, hasInfo, cardInfo, c
 					</LightTypography>
 			}
 
-
-			<LightTranslucentDivider className={'divider'} />
-
 			{
 				(isLoading)?
 					undefined

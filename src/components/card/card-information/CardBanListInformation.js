@@ -54,8 +54,6 @@ export default function CardBanListInformation({ isLoading, hasInfo, cardInfo })
 					</LightTypography>
 			}
 
-			<LightTranslucentDivider className={'divider'} />
-
 			{
 				(isLoading)?
 					undefined
