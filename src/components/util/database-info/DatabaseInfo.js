@@ -23,12 +23,14 @@ const DatabaseInfoPaper = styled(Paper)`
 export default function DatabaseInfo({ cardTotal, banListTotal, productTotal })
 {
 	return(
-		<DatabaseInfoPaper style={{background: '#fffde7', paddingTop: '1.5rem', paddingBottom: '1.5rem', margin: 'auto', marginTop: '2.25rem', marginBottom: '4rem', borderRadius: '1.75rem', paddingLeft: '1rem', paddingRight: '1rem', maxWidth: '800px'}} >
-			<Typography variant='h2' style={{color: '#196A5F'}} >
-				Content
-			</Typography>
+		<DatabaseInfoPaper style={{background: '#fffde7', margin: 'auto', marginTop: '2.25rem', marginBottom: '4rem', borderRadius: '1.75rem', maxWidth: '800px', padding: '0'}} >
+			<div style={{background: '#26a190', color: 'white', borderTopLeftRadius: '1.75rem', borderTopRightRadius: '1.75rem'}}>
+				<Typography variant='h2' style={{color: 'white', paddingLeft: '1rem', paddingRight: '1rem', paddingTop: '1.5rem', paddingBottom: '1.5rem'}} >
+					Content
+				</Typography>
+			</div>
 
-			<Grid container spacing={2} style={{maxWidth: '95%', margin: 'auto', marginTop: '2rem', marginBottom: '2rem'}} >
+			<Grid container spacing={2} style={{maxWidth: '95%', margin: 'auto', marginTop: '2rem', marginBottom: '2rem', paddingLeft: '1rem', paddingRight: '1rem', paddingTop: '1.5rem', paddingBottom: '1.5rem'}} >
 				<Grid
 					item
 					xs={6}

@@ -86,7 +86,7 @@ export default function DatabaseSearch({ history }) {
 
 					return (
 						<div style={{display: 'flex'}} >
-							<Avatar alt={`${CARD_NAME}-Avatar`} src={`https://images.thesupremekingscastle.com/${option.cardID}.jpg`} style={{marginRight: '.5rem'}} />
+							<Avatar alt={`${CARD_NAME}-Avatar`} src={`https://images.thesupremekingscastle.com/${option.cardID}.jpg`} style={{marginRight: '.75rem'}} />
 							<div style={{ padding: '0rem', margin: '0rem' }} >
 								<SearchSuggestionTypography variant='body1'>
 									{CARD_NAME.slice(0, INDEX_OF_SEARCH_TERM)}
