@@ -33,7 +33,7 @@ const CardInformationRelatedContent = memo( ({ cardName, isLoading, productInfo,
 					<CardBanListInformation
 						isLoading={isLoading}
 						hasInfo={ (banListInfo.length === 0)? false : true }
-						cardInfo={banListInfo}
+						banListInfo={banListInfo}
 					/>
 				</Grid>
 			</Grid>

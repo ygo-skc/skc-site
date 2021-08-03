@@ -3,7 +3,6 @@ import '../../../css/card-information-styles.css'
 import {Paper, TableContainer, Table, TableHead, TableRow, TableBody, TableCell, Box} from '@material-ui/core'
 import {Skeleton} from '@material-ui/lab'
 
-import {LightTranslucentDivider} from '../../util/Divider'
 import { LightTypography } from '../../util/CustomTypography'
 
 import { getDateString, months } from '../../../helper/Dates'
@@ -21,7 +20,7 @@ export default function CardProductInformation({ isLoading, hasInfo, cardInfo, c
 
 		const productTable = <TableContainer className={'table-container'} component={Box} >
 			<Table size='small' >
-				<TableHead style={{background: 'rgba(0, 0, 0, 0.3)'}}>
+				<TableHead className={'table-head'} >
 					<TableRow>
 						<TableCell className={'table-cell'} >ID</TableCell>
 						<TableCell className={'table-cell'} >Release</TableCell>
