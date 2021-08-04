@@ -10,7 +10,7 @@
     "@material-ui/icons": "4.11.1",
     "@material-ui/lab": "4.0.0-alpha.58",
     "@material-ui/styles": "4.11.1",
-    "@types/react-helmet": "6.1.1",
+    "@types/react-helmet": "6.1.2",
     "env-cmd": "10.1.0",
     "he": "1.2.0",
     "lodash": "4.17.21",
