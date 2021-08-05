@@ -129,12 +129,12 @@ const About: FunctionComponent = () => {
 					<Typography
 						variant='h1'
 						style={{color: 'white'}}>
-						Additional Information
+						Information
 					</Typography>
 					<Typography
 						variant='h3'
 						style={{color: 'white'}}>
-						Learn about the SKC API, donate, find ways to contact me, and other things!
+						SKC API, Donate, Contact Info, And More!
 					</Typography>
 				</InfoContainerHeader>
 
