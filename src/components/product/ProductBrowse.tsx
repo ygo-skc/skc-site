@@ -1,4 +1,4 @@
-import React, { useState, useEffect, lazy } from 'react'
+import { useState, useEffect, lazy, FunctionComponent } from 'react'
 import { Helmet } from 'react-helmet'
 
 import { MainContentContainer } from '../MainContent'
@@ -9,11 +9,15 @@ import {RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, Ri
 
 import createTable from '../../helper/TableHelpers'
 import { getDateString, months } from '../../helper/Dates'
+import { History } from 'history'
 
 const Breadcrumb = lazy( () => import('../util/Breadcrumb') )
 
+type args = {
+	history: History
+}
 
-export default function ProductBrowse({history})
+const ProductBrowse:FunctionComponent<args> = ({history}) =>
 {
 	const [productJson, setProductJson] = useState([])
 	const [productGridItems, setProductGridItems] = useState<JSX.Element | undefined>(undefined)
@@ -73,3 +77,5 @@ export default function ProductBrowse({history})
 		</MainContentContainer>
 	)
 }
+
+export default ProductBrowse

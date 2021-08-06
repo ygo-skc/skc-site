@@ -1,4 +1,4 @@
-import React, { FunctionComponent, lazy } from 'react'
+import { FunctionComponent, lazy } from 'react'
 import { Helmet } from 'react-helmet'
 
 import { Typography, Link, Grid, Paper } from '@material-ui/core'

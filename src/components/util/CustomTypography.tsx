@@ -1,4 +1,4 @@
-import React, {FunctionComponent, ReactNode} from 'react'
+import {FunctionComponent, ReactNode} from 'react'
 import { Typography } from '@material-ui/core'
 import Styled from 'styled-components'
 import { PropTypes } from '@material-ui/core'

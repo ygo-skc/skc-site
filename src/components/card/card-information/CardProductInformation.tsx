@@ -1,4 +1,4 @@
-import React, { useEffect, useState, FunctionComponent } from 'react'
+import { useEffect, useState, FunctionComponent } from 'react'
 import '../../../css/card-information-styles.css'
 import {Paper} from '@material-ui/core'
 import {Skeleton} from '@material-ui/lab'

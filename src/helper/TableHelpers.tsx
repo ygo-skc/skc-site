@@ -1,4 +1,3 @@
-import React from 'react'
 import {Table, TableHead, TableRow, TableBody, TableCell, TableContainer, Box} from '@material-ui/core'
 import '../css/card-information-styles.css'
 

@@ -1,6 +1,6 @@
-import React, { FunctionComponent } from 'react'
+import { FunctionComponent } from 'react'
 
-import { Typography, Link, Paper } from '@material-ui/core'
+import { Typography, Paper } from '@material-ui/core'
 import styled from 'styled-components'
 
 import GenericLinkPhoto from '../util/photo/GenericLinkPhoto'
