@@ -10,14 +10,19 @@ function createHeaderRow(headerNames: string[]) {
 }
 
 
-function createRows(rowValues: string[][]): JSX.Element[] {
-	return rowValues.map( (row: string[]) => {
+function createRows(rowValues: string[][], rowOnClick: { (): void }[] = [] ): JSX.Element[] {
+	return rowValues.map( (row: string[], index: number) => {
 		const columns: JSX.Element[] = row.map( (value: string) => {
 			return <TableCell className={'table-cell'} >{value}</TableCell>
 		})
 
 		return (
-			<TableRow >
+			(rowOnClick.length === 0)?
+			<TableRow>
+				{columns}
+			</TableRow>
+			:
+			<TableRow className={'table-row'} onClick={rowOnClick[index]} >
 				{columns}
 			</TableRow>
 		)
@@ -25,14 +30,14 @@ function createRows(rowValues: string[][]): JSX.Element[] {
 }
 
 
-export default function createTable(headerNames: string[], rowValues: string[][]): JSX.Element {
+export default function createTable(headerNames: string[], rowValues: string[][], rowOnClick: { (): void }[] = []): JSX.Element {
 	return <TableContainer className={'table-container'} component={Box} >
 			<Table size='small' >
 				<TableHead className={'table-head'} >
 					{createHeaderRow(headerNames)}
 				</TableHead>
 				<TableBody>
-					{createRows(rowValues)}
+					{createRows(rowValues, rowOnClick)}
 				</TableBody>
 			</Table>
 		</TableContainer>

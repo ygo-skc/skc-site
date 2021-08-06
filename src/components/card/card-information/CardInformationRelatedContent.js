@@ -24,6 +24,7 @@ const CardInformationRelatedContent = memo( ({ cardName, isLoading, productInfo,
 					<CardProductInformation
 						isLoading={isLoading}
 						hasInfo={ (productInfo.length === 0)? false : true }
+						cardID={cardID}
 						productInfo={productInfo}
 					/>
 				</Grid>

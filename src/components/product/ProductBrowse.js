@@ -10,6 +10,7 @@ import NAME_maps_ENDPOINT from '../../helper/DownstreamServices'
 import {RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from '../util/grid/OneThirdTwoThirdsGrid'
 
 import createTable from '../../helper/TableHelpers'
+import { getDateString, months } from '../../helper/Dates'
 
 const Breadcrumb = lazy( () => import('../util/Breadcrumb') )
 
@@ -56,10 +57,14 @@ export default function ProductBrowse({history})
 
 
 	useEffect( () => {
-		const headers = ['Product Name', 'Product ID', 'Product Type', 'Product Sub-Type']
-		const productRows =  productJson.map( product => [product.productName, product.productId, product.productType, product.productSubType])
+		const headers = ['Name', 'ID', 'Type', 'Sub-Type', 'Release']
+		const rowOnClick = []
+		const productRows =  productJson.map( product => {
+			rowOnClick.push( () => window.location.assign(`/product/${product.productId}`) )
+			return [product.productName, product.productId, product.productType, product.productSubType, getDateString(months, new Date(product.productReleaseDate))]
+		})
 
-		setProductGridItems(createTable(headers, productRows))
+		setProductGridItems(createTable(headers, productRows, rowOnClick))
 
 	}, [productJson])
 
@@ -88,7 +93,7 @@ export default function ProductBrowse({history})
 					</RightBoxSubHeaderTypography>
 				</ RightBoxHeaderContainer>
 
-				<div style={{ backgroundImage: 'linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)', paddingTop: '2rem', paddingBottom: '2rem' }} >
+				<div style={{ backgroundImage: 'linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)', paddingTop: '2rem', paddingBottom: '2rem', borderRadius: '2rem' }} >
 					{(isDataLoaded)? productGridItems : getPlaceholderCardComponentMemoized}
 				</div>
 			</RightBoxPaper>
