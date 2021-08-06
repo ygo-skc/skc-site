@@ -23,7 +23,7 @@ type BanListInfo = {
 const CardBanListInformation: FunctionComponent<args> = ({ isLoading, hasInfo, banListInfo } ) =>
 {
 
-	const [productTable, setProductTable] = useState<JSX.Element | undefined>(undefined)
+	const [banListTable, setBanListTable] = useState<JSX.Element | undefined>(undefined)
 
 	useEffect(() => {
 		if (banListInfo === null || banListInfo === undefined || banListInfo.length === 0) return
@@ -31,9 +31,9 @@ const CardBanListInformation: FunctionComponent<args> = ({ isLoading, hasInfo, b
 		const headerNames: string[] = ['Date', 'Status']
 		const rowValues: string[][] = banListInfo.map( (banList: BanListInfo) => [getDateString(months, new Date(banList.banListDate)), banList.banStatus])
 
-		const productTable: JSX.Element = createTable(headerNames, rowValues)
+		const banListTable: JSX.Element = createTable(headerNames, rowValues)
 
-		setProductTable(productTable)
+		setBanListTable(banListTable)
 	}, [banListInfo])
 
 
@@ -51,7 +51,7 @@ const CardBanListInformation: FunctionComponent<args> = ({ isLoading, hasInfo, b
 				(isLoading)?
 					undefined
 					: (hasInfo)?
-						productTable
+						banListTable
 						: <Hint variant='subtitle1' backgroundColor='rgba(0, 0, 0, 0.3)' textColor='white'>
 							{'Not Found In Any Ban List'}
 						</Hint>
