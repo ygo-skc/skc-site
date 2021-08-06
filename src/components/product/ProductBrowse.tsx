@@ -1,6 +1,4 @@
-import React, { useState, useEffect, useMemo, lazy } from 'react'
-import { Grid } from '@material-ui/core'
-import {Skeleton} from '@material-ui/lab'
+import React, { useState, useEffect, lazy } from 'react'
 import { Helmet } from 'react-helmet'
 
 import { MainContentContainer } from '../MainContent'
@@ -15,37 +13,11 @@ import { getDateString, months } from '../../helper/Dates'
 const Breadcrumb = lazy( () => import('../util/Breadcrumb') )
 
 
-function getPlaceholderCardComponent()
-{
-	const placeHolder = []
-
-	var i = 0;
-	for (i = 0; i < 50; i++)
-	{
-		placeHolder.push(<Grid
-			key={`skeleton-${i}`}
-			item
-			xs={6}
-			sm={4}
-			md={3}
-			lg={2}
-			xl={1}
-			style={{ padding: '.5rem' }} >
-				<Skeleton variant='rect' width='100%' height='130' />
-		</Grid>)
-	}
-
-	return placeHolder
-}
-
-
 export default function ProductBrowse({history})
 {
 	const [productJson, setProductJson] = useState([])
-	const [productGridItems, setProductGridItems] = useState([])
+	const [productGridItems, setProductGridItems] = useState<JSX.Element | undefined>(undefined)
 	const [isDataLoaded, setIsDataLoaded] = useState(false)
-
-	const getPlaceholderCardComponentMemoized = useMemo(() => getPlaceholderCardComponent(), [])
 
 
 	useEffect( () => {
@@ -57,11 +29,11 @@ export default function ProductBrowse({history})
 
 
 	useEffect( () => {
-		const headers = ['Name', 'ID', 'Type', 'Sub-Type', 'Release']
-		const rowOnClick = []
-		const productRows =  productJson.map( product => {
+		const headers: string[] = ['Name', 'ID', 'Type', 'Sub-Type', 'Release']
+		const rowOnClick: {(): void}[] = []
+		const productRows: string[][] =  productJson.map( (product: ProductInfo): string[] => {
 			rowOnClick.push( () => window.location.assign(`/product/${product.productId}`) )
-			return [product.productName, product.productId, product.productType, product.productSubType, getDateString(months, new Date(product.productReleaseDate))]
+			return [product.productName!, product.productId, product.productType!, product.productSubType!, getDateString(months, new Date(product.productReleaseDate))]
 		})
 
 		setProductGridItems(createTable(headers, productRows, rowOnClick))
@@ -94,7 +66,7 @@ export default function ProductBrowse({history})
 				</ RightBoxHeaderContainer>
 
 				<div style={{ backgroundImage: 'linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)', paddingTop: '2rem', paddingBottom: '2rem', borderRadius: '2rem' }} >
-					{(isDataLoaded)? productGridItems : getPlaceholderCardComponentMemoized}
+					{(isDataLoaded)? productGridItems : undefined}
 				</div>
 			</RightBoxPaper>
 

@@ -7,7 +7,6 @@ import { LightTypography } from '../../util/CustomTypography'
 
 import { getDateString, months } from '../../../helper/Dates'
 import {Hint} from '../../util/Hints'
-import ProductInfo from '../../product/ProductInfo'
 import createTable from '../../../helper/TableHelpers'
 
 type args = {
@@ -17,16 +16,6 @@ type args = {
 	productInfo: ProductInfo[]
 }
 
-type ProductInfo = {
-	productId: string,
-	productReleaseDate: string,
-	productContent: ProductContent[]
-}
-
-type ProductContent = {
-	productPosition: string,
-	rarities: string[]
-}
 
 const CardProductInformation: FunctionComponent<args> = ({ isLoading, hasInfo, productInfo, cardID }) =>
 {
