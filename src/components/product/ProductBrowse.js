@@ -7,13 +7,12 @@ import { MainContentContainer } from '../MainContent'
 
 import {handleFetch} from '../../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../../helper/DownstreamServices'
-
-// const ProductCardGridItem = lazy( () => import('./ProductCardGridItem') )
-import ProductCardGridItem from './ProductCardGridItem'
 import {RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from '../util/grid/OneThirdTwoThirdsGrid'
-import {DarkTranslucentDivider} from '../util/Divider'
+
+import createTable from '../../helper/TableHelpers'
 
 const Breadcrumb = lazy( () => import('../util/Breadcrumb') )
+
 
 function getPlaceholderCardComponent()
 {
@@ -57,28 +56,10 @@ export default function ProductBrowse({history})
 
 
 	useEffect( () => {
-		const productGridItems =  productJson.map( item => {
-			return <Grid
-				item
-				xs={6}
-				sm={4}
-				md={3}
-				lg={2}
-				xl={1}
-				key={item.productId}
-				style={{padding: '.1rem', display: 'inline-grid'}}
-				onClick={ () => window.location.assign(`/product/${item.productId}`) }
-				>
-					<ProductCardGridItem
-						productName={item.productName}
-						productId={item.productId}
-						productType={item.productType}
-						productSubType={item.productSubType}
-					/>
-				</Grid>
-		})
+		const headers = ['Product Name', 'Product ID', 'Product Type', 'Product Sub-Type']
+		const productRows =  productJson.map( product => [product.productName, product.productId, product.productType, product.productSubType])
 
-		setProductGridItems(productGridItems)
+		setProductGridItems(createTable(headers, productRows))
 
 	}, [productJson])
 
@@ -105,13 +86,11 @@ export default function ProductBrowse({history})
 					<RightBoxSubHeaderTypography variant='h5' >
 						Sorted By Release Date
 					</RightBoxSubHeaderTypography>
-
-					<DarkTranslucentDivider />
 				</ RightBoxHeaderContainer>
 
-				<Grid style={{width: '100%', gridAutoRows: '1fr'}} container >
+				<div style={{ backgroundImage: 'linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)', paddingTop: '2rem', paddingBottom: '2rem' }} >
 					{(isDataLoaded)? productGridItems : getPlaceholderCardComponentMemoized}
-				</Grid>
+				</div>
 			</RightBoxPaper>
 
 		</MainContentContainer>

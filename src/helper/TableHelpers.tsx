@@ -1,5 +1,6 @@
 import React from 'react'
 import {Table, TableHead, TableRow, TableBody, TableCell, TableContainer, Box} from '@material-ui/core'
+import '../css/card-information-styles.css'
 
 
 function createHeaderRow(headerNames: string[]) {
@@ -16,7 +17,7 @@ function createRows(rowValues: string[][]): JSX.Element[] {
 		})
 
 		return (
-			<TableRow>
+			<TableRow >
 				{columns}
 			</TableRow>
 		)
@@ -28,9 +29,7 @@ export default function createTable(headerNames: string[], rowValues: string[][]
 	return <TableContainer className={'table-container'} component={Box} >
 			<Table size='small' >
 				<TableHead className={'table-head'} >
-					<TableRow>
-						{createHeaderRow(headerNames)}
-					</TableRow>
+					{createHeaderRow(headerNames)}
 				</TableHead>
 				<TableBody>
 					{createRows(rowValues)}
