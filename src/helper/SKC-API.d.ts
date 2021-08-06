@@ -1,4 +1,4 @@
-type ProductInfo = {
+declare type ProductInfo = {
 	productId: string,
 	productLocale?: string,
 	productName?: string,
@@ -10,12 +10,12 @@ type ProductInfo = {
 	productContent: ProductContent[]
 }
 
-type ProductContent = {
+declare type ProductContent = {
 	productPosition: string,
 	rarities: string[]
 	card?: Card
 }
 
-type Card = {
+declare type Card = {
 
 }
