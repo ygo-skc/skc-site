@@ -20,6 +20,7 @@ const SocialMedia: FunctionComponent = () =>
 			<br />
 
 			<iframe
+				title='Discord Widget'
 				style={{borderStyle: 'solid', borderRadius: '1rem'}}
 				src="https://discord.com/widget?id=659477868799197185&theme=light"
 				width="100%"

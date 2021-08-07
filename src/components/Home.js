@@ -23,7 +23,6 @@ const DatabaseInfo = lazy(() => import('./util/database-info/DatabaseInfo'))
 export default function Home({ history }) {
 	const [cardTotal, setCardTotal] = useState(0)
 	const [banListTotal, setBanListTotal] = useState(0)
-	const [yearsOfBanListCoverage, setYearsOfBanListCoverage] = useState(0)
 	const [productTotal, setProductTotal] = useState(0)
 
 	const [youtubeData, setYoutubeData] = useState(undefined)
@@ -32,7 +31,6 @@ export default function Home({ history }) {
 		handleFetch(NAME_maps_ENDPOINT['databaseStats'], history, (json) => {
 			setCardTotal(json.cardTotal)
 			setBanListTotal(json.banListTotal)
-			setYearsOfBanListCoverage(json.yearsOfBanListCoverage)
 			setProductTotal(json.productTotal)
 		})
 

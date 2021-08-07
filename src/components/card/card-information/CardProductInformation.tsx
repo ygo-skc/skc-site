@@ -38,7 +38,7 @@ const CardProductInformation: FunctionComponent<args> = ({ isLoading, hasInfo, p
 		})
 
 		setProductTable(createTable(headerNames, rowValues, rowOnClick))
-	}, [productInfo])
+	}, [productInfo, cardID])
 
 
 	return(

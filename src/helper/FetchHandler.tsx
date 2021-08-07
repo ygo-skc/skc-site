@@ -12,7 +12,7 @@ function handleFetch(endPoint: string, history: History, onJsonReceived: {(res: 
 			}
 		})
 		.then((res: AxiosResponse) => {
-			if (res.status == 200) return res.data
+			if (res.status === 200) return res.data
 			else
 			{
 				const err = new Error(res.statusText)

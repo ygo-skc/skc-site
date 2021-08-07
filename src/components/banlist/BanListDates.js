@@ -55,7 +55,7 @@ export const BanListDates = memo( ( { banListStartDates, setSelectedBanList } ) 
 
 		setSelectedRange( getCurrentBanListDate( months, banListStartDates[selectedBanListIndex], banListStartDates ) )
 		setBanListGrid(banListGrid)
-	}, [selectedBanListIndex])
+	}, [selectedBanListIndex, banListStartDates, setSelectedBanList])
 
 
 

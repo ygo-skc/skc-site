@@ -37,7 +37,7 @@ export default function YouTubeUploads({ thumbnailImg, title, url })
 	return(
 		<Parent>
 			<div style={{marginBottom: '1rem', borderRadius: '3rem', borderStyle: 'solid', borderColor: 'rgba(255, 255, 255, .5)', borderWidth: '.4rem'}}>
-				<img src={thumbnailImg.src} width='100%' style={{borderRadius: '2.6rem' }} />
+				<img src={thumbnailImg.src} alt='YouTube Video Thumbnail For Channel: Supreme King' width='100%' style={{borderRadius: '2.6rem' }} />
 			</div>
 
 
