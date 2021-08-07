@@ -1,8 +1,8 @@
-import React from 'react'
-import {Typography, Paper} from '@material-ui/core'
+import {FunctionComponent} from 'react'
+import {Typography} from '@material-ui/core'
 
 
-const Footer = () =>
+const Footer: FunctionComponent = () =>
 {
 	return(
 		<div className='footer' >
