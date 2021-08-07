@@ -1,13 +1,13 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
+import { createTheme, ThemeProvider } from '@material-ui/core/styles'
 
 import Footer from './components/footer/Footer'
 import NavigationBar from './components/NavigationBar'
 import Routes from './Routes.tsx'
 
 
-const theme = createMuiTheme({
+const theme = createTheme({
 	palette: {
 		primary: {
 			main: '#53539e',

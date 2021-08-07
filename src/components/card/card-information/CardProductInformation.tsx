@@ -23,7 +23,6 @@ const CardProductInformation: FunctionComponent<args> = ({ isLoading, hasInfo, p
 
 	useEffect(() => {
 		if (productInfo === null || productInfo === undefined || productInfo.length === 0) return
-		console.log(productInfo)
 
 		const headerNames: string[] = ['ID', 'Release', 'Position', 'Rarities']
 		const rowValues: string[][] = [];
