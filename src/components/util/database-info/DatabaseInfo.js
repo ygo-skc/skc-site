@@ -8,10 +8,9 @@ const DatabaseInfoPaper = styled(Paper)`
 	&& {
 		background: #fffde7;
 		paddingTop: 1.5rem;
-		padding-bottom: 1.5rem;
 		margin: auto;
 		margin-top: 2.25rem;
-		margin-bottom: 4rem;
+		margin-bottom: 2.25rem;
 		border-radius: 1.75rem;
 		padding-left: 1rem;
 		padding-right: 1rem;

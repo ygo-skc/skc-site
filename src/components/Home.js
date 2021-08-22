@@ -65,7 +65,7 @@ export default function Home({ history }) {
 					</LeftBoxPaper>
 				}
 				twoThirdComponent={
-					<div>
+					<div style={{maxWidth: '100%'}}>
 						<RightBoxPaper >
 							<RightBoxHeaderTypography variant='h4' >
 								Yo!
@@ -87,20 +87,15 @@ export default function Home({ history }) {
 							</Typography>
 						</RightBoxPaper>
 
-						<div>
-
-						</div>
 						<DatabaseInfo cardTotal={cardTotal} banListTotal={banListTotal} productTotal={productTotal} />
+						<div style={{maxWidth: '100%', marginBottom: '4rem'}} >
+							<RightBoxPaper >
+								<YouTubeUploads history={history} youtubeData={youtubeData} />
+							</RightBoxPaper>
+						</div>
 					</div>
 					}
 				/>
-
-
-				<div >
-					<RightBoxPaper>
-						<YouTubeUploads history={history} youtubeData={youtubeData} />
-					</RightBoxPaper>
-				</div>
 
 		</MainContentContainer>
 	)

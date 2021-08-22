@@ -140,6 +140,7 @@ const TwoThirdComponent = Styled(Box)`
 		{
 			flex-grow: 1;
 			padding-left: .8rem;
+			width: 1;
 		}
 	}
 `
@@ -152,6 +153,7 @@ const MirroredTwoThirdComponent = Styled(Box)`
 		{
 			flex-grow: 1;
 			padding-right: .8rem;
+			width: 1;
 		}
 	}
 `

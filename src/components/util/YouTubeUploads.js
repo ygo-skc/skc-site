@@ -32,7 +32,7 @@ export default function YouTubeUploads({ youtubeData })
 
 
 	return(
-		<div style={{maxWidth: '100%'}} >
+		<div >
 			<RightBoxHeaderTypography variant='h4'>
 				YouTube
 			</RightBoxHeaderTypography>
