@@ -6,6 +6,7 @@ import { Typography, Link } from '@material-ui/core'
 import { MainContentContainer } from './MainContent'
 import { handleFetch } from '../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../helper/DownstreamServices'
+import {StickyBox} from './util/StyledContainers'
 
 import OneThirdTwoThirdsGrid from './util/grid/OneThirdTwoThirdsGrid'
 
@@ -60,9 +61,11 @@ export default function Home({ history }) {
 			<OneThirdTwoThirdsGrid
 				mirrored={true}
 				oneThirdComponent={
-					<LeftBoxPaper>
-						<SocialMedia />
-					</LeftBoxPaper>
+					<StickyBox >
+						<LeftBoxPaper>
+							<SocialMedia />
+						</LeftBoxPaper>
+					</StickyBox>
 				}
 				twoThirdComponent={
 					<div style={{maxWidth: '100%'}}>
