@@ -24,13 +24,13 @@ const CardProductInformation: FunctionComponent<args> = ({ isLoading, hasInfo, p
 	useEffect(() => {
 		if (productInfo === null || productInfo === undefined || productInfo.length === 0) return
 
-		const headerNames: string[] = ['ID', 'Release', 'Position', 'Rarities']
+		const headerNames: string[] = ['ID', 'Pos', 'Release', 'Rarities']
 		const rowValues: string[][] = [];
 		const rowOnClick: { (): void }[] = []
 
 		productInfo.forEach( (product: ProductInfo) => {
 			product.productContent.forEach( (productContent: ProductContent ) => {
-				const row: [string, string, string ,string] = [ product.productId, getDateString(months, new Date(product.productReleaseDate)), productContent.productPosition, productContent.rarities.join(', ') ]
+				const row: [string, string, string ,string] = [ product.productId, productContent.productPosition, getDateString(months, new Date(product.productReleaseDate)), productContent.rarities.join(', ') ]
 				rowValues.push(row)
 				rowOnClick.push(() => setTimeout( () => window.location.assign(`/product/${product.productId}#${cardID}`), 150 ))
 			})
