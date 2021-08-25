@@ -6,8 +6,7 @@ import styled from 'styled-components'
 
 const DatabaseInfoPaper = styled(Paper)`
 	&& {
-		background: #fffde7;
-		paddingTop: 1.5rem;
+		background: #fffef8;
 		margin: auto;
 		margin-top: 2.25rem;
 		margin-bottom: 2.25rem;

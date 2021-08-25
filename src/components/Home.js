@@ -56,6 +56,7 @@ export default function Home({ history }) {
 			<Suspense>
 				<Breadcrumb crumbs={['Home']} />
 				<DatabaseSearch history={history} />
+				<DatabaseInfo cardTotal={cardTotal} banListTotal={banListTotal} productTotal={productTotal} />
 			</Suspense>
 
 			<OneThirdTwoThirdsGrid
@@ -89,9 +90,7 @@ export default function Home({ history }) {
 								Want to learn more? Check out the <Link color='secondary' href='/about'><strong>About</strong></Link> section
 							</Typography>
 						</RightBoxPaper>
-
-						<DatabaseInfo cardTotal={cardTotal} banListTotal={banListTotal} productTotal={productTotal} />
-						<div style={{maxWidth: '100%', marginBottom: '4rem'}} >
+						<div style={{maxWidth: '100%', marginTop: '2.25rem', marginBottom: '2.25rem' }} >
 							<RightBoxPaper >
 								<YouTubeUploads history={history} youtubeData={youtubeData} />
 							</RightBoxPaper>
