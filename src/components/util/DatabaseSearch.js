@@ -50,7 +50,7 @@ export default function DatabaseSearch({ history }) {
 
 
 	return (
-		<Paper style={{ display: 'flex', maxWidth: '500px', margin: '0 auto', borderRadius: '2.5rem', marginBottom: '2rem' }} >
+		<Paper style={{ maxWidth: '550px', margin: '0 auto', borderRadius: '2.5rem', marginBottom: '2rem', borderColor: '#8778e5', borderWidth: '3px' }} >
 			<DBSearch
 				id='search'
 				clearOnEscape
@@ -77,12 +77,12 @@ export default function DatabaseSearch({ history }) {
 						<InputBase
 							ref={params.InputProps.ref}
 							inputProps={params.inputProps}
-							style={{ color: 'rgba(0,0,0,.90)', flex: '1', margin: '.65rem', fontSize: '1.1rem' }}
+							style={{ color: 'rgba(0,0,0,.80)', flex: '1', margin: '.65rem', fontSize: '1.15rem' }}
 							placeholder='Search database for specific card...'
 							onChange={event => { setSearchInput(event.target.value) }}
 						/>
 						<IconButton >
-							<SearchIcon style={{fontSize: '2.1rem'}} />
+							<SearchIcon style={{fontSize: '2rem'}} />
 						</IconButton>
 					</div>
 				)}
