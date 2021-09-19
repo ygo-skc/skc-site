@@ -10,11 +10,24 @@ const Container = styled(Box)`
 		background: white;
 		border-color: #ABC0A3;
 		border-style: solid;
+		animation: pulse-animation 3s infinite;
 
 
 		:hover {
 			cursor: pointer;
 			transform: scale(1.02);
+		}
+
+		@keyframes pulse-animation {
+			0% {
+				box-shadow: 0 0 0 0rem rgba(0, 0, 0, 0.4);
+			}
+			25% {
+				box-shadow: 0 0 0 .2rem rgba(0, 0, 0, .2);
+			}
+			50% {
+				box-shadow: 0 0 0 .25rem rgba(0, 0, 0, 0);
+			}
 		}
 	}
 `
