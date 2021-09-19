@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { lazy } from 'react'
 
 import { Paper, Typography, Grid } from '@material-ui/core'
 import Glance from './Glance'
 import styled from 'styled-components'
+const DatabaseSearch = lazy(() => import('../DatabaseSearch'))
 
 const DatabaseInfoPaper = styled(Paper)`
 	&& {
@@ -14,18 +15,23 @@ const DatabaseInfoPaper = styled(Paper)`
 		padding-left: 1rem;
 		padding-right: 1rem;
 		max-width: 800px;
+		padding: 0rem;
 	}
 `
 
 
-export default function DatabaseInfo({ cardTotal, banListTotal, productTotal })
+export default function DatabaseInfo({ history, cardTotal, banListTotal, productTotal })
 {
 	return(
-		<DatabaseInfoPaper style={{background: '#fffde7', margin: 'auto', marginTop: '2.25rem', marginBottom: '4rem', borderRadius: '1.75rem', maxWidth: '800px', padding: '0'}} >
+		<DatabaseInfoPaper  >
 			<div style={{background: '#26a190', color: 'white', borderTopLeftRadius: '1.75rem', borderTopRightRadius: '1.75rem'}}>
 				<Typography variant='h2' style={{color: 'white', paddingLeft: '1rem', paddingRight: '1rem', paddingTop: '1.5rem', paddingBottom: '1.5rem'}} >
 					Content
 				</Typography>
+			</div>
+
+			<div style={{marginTop: '2rem', marginBottom: '2rem', paddingLeft: '1rem', paddingRight: '1rem'}}>
+				<DatabaseSearch history={history} />
 			</div>
 
 			<Grid container spacing={2} style={{maxWidth: '95%', margin: 'auto', marginTop: '2rem', marginBottom: '2rem', paddingLeft: '1rem', paddingRight: '1rem', paddingTop: '1.5rem', paddingBottom: '1.5rem'}} >

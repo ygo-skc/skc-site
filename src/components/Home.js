@@ -15,7 +15,6 @@ import { LeftBoxPaper, RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeade
 import {HEART_API_HOST_NAME} from '../helper/DownstreamServices'
 
 const Breadcrumb = lazy(() => import('./util/Breadcrumb'))
-const DatabaseSearch = lazy(() => import('./util/DatabaseSearch'))
 const YouTubeUploads = lazy(() => import('./util/YouTubeUploads'))
 const SocialMedia = lazy(() => import('./util/SocialMedia'))
 const DatabaseInfo = lazy(() => import('./util/database-info/DatabaseInfo'))
@@ -55,8 +54,7 @@ export default function Home({ history }) {
 
 			<Suspense>
 				<Breadcrumb crumbs={['Home']} />
-				<DatabaseSearch history={history} />
-				<DatabaseInfo cardTotal={cardTotal} banListTotal={banListTotal} productTotal={productTotal} />
+				<DatabaseInfo history={history} cardTotal={cardTotal} banListTotal={banListTotal} productTotal={productTotal} />
 			</Suspense>
 
 			<OneThirdTwoThirdsGrid
