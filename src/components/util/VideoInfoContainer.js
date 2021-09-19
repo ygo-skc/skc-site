@@ -13,7 +13,7 @@ const Title = Styled(Typography)`
 
 		color: rgb(255, 255, 255);
 		font-weight: 800;
-
+		line-height: 1.65rem;
 	}
 `
 
@@ -22,12 +22,11 @@ const Parent = Styled.div`
 	&&
 	{
 		background: linear-gradient(120deg, #FF4D4B, #DC4240);
-		// flex: 0 0 25rem;
 		padding: 1rem;
 		margin-right: .5rem;
 		margin-bottom: .5rem;
 		border-radius: .85rem;
-		width: 24rem;
+		width: 26rem;
 	}
 `
 
@@ -36,20 +35,19 @@ export default function YouTubeUploads({ thumbnailImg, title, url })
 {
 	return(
 		<Parent>
-			<div style={{marginBottom: '1rem', borderRadius: '3rem', borderStyle: 'solid', borderColor: 'rgba(255, 255, 255, .5)', borderWidth: '.4rem'}}>
-				<img src={thumbnailImg.src} alt='YouTube Video Thumbnail For Channel: Supreme King' width='100%' style={{borderRadius: '2.6rem' }} />
+			<div style={{marginBottom: '.5rem', borderRadius: '3rem', borderStyle: 'solid', borderColor: 'rgba(255, 255, 255, .5)', borderWidth: '.4rem'}}>
+				<a href={url}>
+					<img src={thumbnailImg.src} alt='YouTube Video Thumbnail For Channel: Supreme King' width='100%' style={{clipPath: 'inset(2.4rem 0rem 2.4rem 0rem round 2.6rem)', marginTop: '-2.4rem', marginBottom: '-2.4rem'}} />
+				</a>
 			</div>
 
 
 			<div style={{display: 'flex'}}>
-				<div style={{flex: '1'}} >
-					<Title variant='h6' >
+				<a href={url} style={{textDecoration: 'none'}}>
+					<Title href={url} variant='h6' >
 						{title}
 					</Title>
-				</div>
-				<Button style={{marginLeft: '1rem', background: 'rgba(255, 255, 255, .9)', color: 'black', textTransform: 'none'}} onClick={() => window.open(url)} >
-					Watch
-				</Button>
+				</a>
 			</div>
 		</Parent>
 	)
