@@ -8,9 +8,9 @@ const Container = styled(Box)`
 		border-radius: 1.5rem;
 		flex: 1;
 		background: white;
-		border-color: #ABC0A3;
+		border-color: #ffb888;
 		border-style: solid;
-		animation: pulse-animation 3s infinite;
+		animation: pulse-animation 2s infinite;
 
 
 		:hover {
@@ -20,13 +20,13 @@ const Container = styled(Box)`
 
 		@keyframes pulse-animation {
 			0% {
-				box-shadow: 0 0 0 0rem rgba(0, 0, 0, 0.4);
+				box-shadow: 0 0 0 0rem rgba(255, 184, 136, 0.4);
 			}
 			25% {
-				box-shadow: 0 0 0 .2rem rgba(0, 0, 0, .2);
+				box-shadow: 0 0 0 .4rem rgba(255, 184, 136, .2);
 			}
 			50% {
-				box-shadow: 0 0 0 .25rem rgba(0, 0, 0, 0);
+				box-shadow: 0 0 0 .75rem rgba(255, 184, 136, 0);
 			}
 		}
 	}

@@ -40,7 +40,7 @@ const InfoPaper2Header = styled.div`
 	&&
 	{
 		padding: 1.4rem;
-		background: #8778e5;
+		background: #ffa366;
 		border-top-left-radius: 1.2rem;
 		border-top-right-radius: 1.2rem;
 	}
@@ -50,7 +50,8 @@ const InfoContainer = styled(InfoPaper2)`
 	&&
 	{
 		max-width: 100%;
-		background-image: linear-gradient(316deg, rgb(49, 14, 104) 0%, rgb(95, 15, 64) 74%);
+		background-color: #3f1286;
+		background: radial-gradient(89.53% 145.96% at 60% 100.79%,#461495 0,#5418b3 17.58%,#461495 50.31%,#3f1286 97.03%);
 		margin-top: 2rem;
 	}
 `
