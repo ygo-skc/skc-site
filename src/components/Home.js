@@ -35,7 +35,7 @@ export default function Home({ history }) {
 		})
 
 
-		handleFetch(`${HEART_API_HOST_NAME}/v1/yt/channel/uploads?channelId=UCBZ_1wWyLQI3SV9IgLbyiNQ`, history, json => {
+		handleFetch(`${HEART_API_HOST_NAME}/api/v1/yt/channel/uploads?channelId=UCBZ_1wWyLQI3SV9IgLbyiNQ`, history, json => {
 			setYoutubeData(json)
 		})
 	}, [history])

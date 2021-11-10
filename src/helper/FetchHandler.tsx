@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosResponse } from 'axios'
 import { NAME_maps_ROUTE } from '../Routes'
 import { History } from 'history'
 
-const CLIENT_ID = process.env.REACT_APP_CLIENT_ID
+const CLIENT_ID = process.env.REACT_APP_CLIENT_ID as string
 
 function handleFetch(endPoint: string, history: History, onJsonReceived: {(res: any): void}) {
 	axios
