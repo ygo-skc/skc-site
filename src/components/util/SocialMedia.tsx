@@ -28,7 +28,6 @@ const SocialMedia: FunctionComponent = () =>
 			<RightBoxSubHeaderTypography variant='h5' style={{marginTop: '2rem'}}>
 				Join The Discord
 			</RightBoxSubHeaderTypography>
-
 			<Typography variant='body1' >
 				Use Discord to chat with others within the community. This is my personal server I use with friends. There are chats for you fine people there too! Lets grow the community!
 			</Typography>

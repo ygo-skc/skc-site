@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
-import { ChildBox } from '../MainContent'
-
 import CardDisplayGrid from '../util/grid/CardDisplayGrid'
 
 import { Hint } from '../util/Hints'
@@ -32,12 +30,12 @@ const BanListSection = ( { sectionExplanation, cards, isDataLoaded } ) =>
 
 
 	return (
-		<ChildBox >
+		<div >
 			<Hint variant='subtitle1'>
 				{sectionExplanation}
 			</Hint>
 			{cardTypeContentGrid}
-		</ChildBox>
+		</div>
 	)
 }
 
