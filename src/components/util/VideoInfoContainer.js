@@ -22,7 +22,7 @@ const Parent = Styled.div`
 	&&
 	{
 		background: linear-gradient(120deg, #FF4D4B, #DC4240);
-		padding: 1rem;
+
 		margin-right: .5rem;
 		margin-bottom: .5rem;
 		border-radius: .85rem;
@@ -35,14 +35,17 @@ export default function YouTubeUploads({ thumbnailImg, title, url })
 {
 	return(
 		<Parent>
-			<div style={{marginBottom: '.5rem', borderRadius: '3rem', borderStyle: 'solid', borderColor: 'rgba(255, 255, 255, .5)', borderWidth: '.4rem'}}>
+			<div style={{borderRadius: '.8rem', borderStyle: 'solid', borderColor: 'rgba(255, 255, 255, .5)', borderWidth: '.6rem'}}>
 				<a href={url}>
-					<img src={thumbnailImg.src} alt='YouTube Video Thumbnail For Channel: Supreme King' width='100%' style={{clipPath: 'inset(2.4rem 0rem 2.4rem 0rem round 2.6rem)', marginTop: '-2.4rem', marginBottom: '-2.4rem'}} />
+					<img src={thumbnailImg.src}
+						alt='YouTube Video Thumbnail For Channel: Supreme King'
+						width='100%'
+						style={{clipPath: 'inset(2.4rem 0rem 2.4rem 0rem round .2rem)', marginTop: '-2.4rem', marginBottom: '-2.4rem'}} />
 				</a>
 			</div>
 
 
-			<div style={{display: 'flex'}}>
+			<div style={{display: 'flex', padding: '1rem'}}>
 				<a href={url} style={{textDecoration: 'none'}}>
 					<Title href={url} variant='h6' >
 						{title}
