@@ -1,0 +1,28 @@
+import { Typography, Link } from '@material-ui/core'
+
+import { RightBoxHeaderTypography, RightBoxSubHeaderTypography } from '../util/grid/OneThirdTwoThirdsGrid'
+
+export default function Welcome() {
+	return(
+		<div style={{paddingLeft: '.8rem', paddingRight: '.8rem', paddingTop: '1.5rem', paddingBottom: '1.5rem'}} >
+			<RightBoxHeaderTypography variant='h4' >
+				Yo!
+			</RightBoxHeaderTypography>
+
+			<RightBoxSubHeaderTypography variant='h5'>
+				Welcome To The BEST Yu-Gi-Oh! Site
+			</RightBoxSubHeaderTypography>
+
+			<Typography variant='body1' >
+				This is a site dedicated to Yu-Gi-Oh! content. The main differences between this site and others is that this site is incredibly fast and intuitive and has no Ads or trackers.
+			</Typography>
+
+			<br />
+
+			<Typography variant='body1' >
+				Yugioh is ever expanding and evolving. New products are continuously released and new ban lists established. As such this website will also  be continuously updated to accommodate.
+				Want to learn more? Check out the <Link color='secondary' href='/about'><strong>About</strong></Link> section
+			</Typography>
+		</div>
+	)
+}

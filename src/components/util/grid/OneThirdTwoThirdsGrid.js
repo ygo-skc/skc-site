@@ -40,7 +40,7 @@ const RightBoxPaper = Styled(Paper)`
 		background: white;
 		border-radius: 1.75rem;
 		padding-left: .8rem;
-		padding-right: .9rem;
+		padding-right: .8rem;
 		padding-top: 1.2rem;
 		padding-bottom: 1.2rem;
 
