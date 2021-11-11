@@ -76,6 +76,7 @@ export default function SKCSiteRoutes()
 						path={NAME_maps_ROUTE[503]}
 						element={ <HttpErr httpErr={503}/> } />
 					<Route
+						path={'/*'}
 						element={ <HttpErr httpErr={404}/> } />
 				</Routes>
 			</Suspense>
