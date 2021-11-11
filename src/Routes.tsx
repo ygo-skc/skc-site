@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
 import SuspenseFallback from './SuspenseFallback'
 
@@ -34,60 +34,50 @@ const NAME_maps_ROUTE : { [key: string]: string } =
 }
 
 
-export default function Routes()
+export default function SKCSiteRoutes()
 {
 	return (
 		<Router >
 			<Suspense
 				fallback={ <SuspenseFallback /> } >
-				<Switch>
+				<Routes>
 					<Route
 						path={NAME_maps_ROUTE.Home}
-						exact
-						component={Home} />
+						element={ <Home/> } />
 					<Route
 						path={NAME_maps_ROUTE.BanList}
-						exact
-						component={BanList} />
+						element={ <BanList/> } />
 					<Route
 						path={NAME_maps_ROUTE.Card}
-						exact
-						component={Card} />
+						element={ <Card/> } />
 					<Route
 						path={NAME_maps_ROUTE.CardBrowse}
-						exact
-						component={Browse} />
+						element={ <Browse/> } />
 
 					<Route
 						path={NAME_maps_ROUTE.ProductBrowse}
-						exact
-						component={ProductBrowse} />
+						element={ <ProductBrowse/> } />
 					<Route
 						path={NAME_maps_ROUTE.ProductInformation}
-						exact
-						component={ProductInfo} />
+						element={ <ProductInfo/> } />
 
 					<Route
 						path={NAME_maps_ROUTE.About}
-						exact
-						component={About} />
+						element={ <About/> } />
 
 					{ /* Routes specifically for errs */ }
 					<Route
 						path={NAME_maps_ROUTE[400]}
-						exact
-						component={() => <HttpErr httpErr={400} />} />
+						element={ <HttpErr httpErr={400}/> } />
 					<Route
 						path={NAME_maps_ROUTE[500]}
-						exact
-						component={() => <HttpErr httpErr={500} />} />
+						element={ <HttpErr httpErr={500}/> } />
 					<Route
 						path={NAME_maps_ROUTE[503]}
-						exact
-						component={() => <HttpErr httpErr={503} />} />
+						element={ <HttpErr httpErr={503}/> } />
 					<Route
-						component={() => <HttpErr httpErr={404} />} />
-				</Switch>
+						element={ <HttpErr httpErr={404}/> } />
+				</Routes>
 			</Suspense>
 		</Router>
 	)

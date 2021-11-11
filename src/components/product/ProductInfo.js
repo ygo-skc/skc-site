@@ -1,4 +1,5 @@
 import React, {useState, useEffect, lazy} from 'react'
+import { useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 
 import {handleFetch} from '../../helper/FetchHandler'
@@ -18,11 +19,13 @@ const CardDisplayGrid = lazy( () => import('../util/grid/CardDisplayGrid') )
 const ProductInfoDetailsComponent = lazy( () => import('./ProductInfoDetailsComponent') )
 
 
-export default function ProductInfo({match, history}) {
+export default function ProductInfo() {
+	const {productId} = useParams()
+
 	const [dynamicBreadcrumbs, setDynamicBreadcrumbs] = useState(['Home', 'Product Browse', ''])
 
 	const [productName, setProductName] = useState('')
-	const [productId, setProductId] = useState('')
+
 	const [productType, setProductType] = useState('')
 	const [productSubType, setProductSubType] = useState('')
 	const [productReleaseDate, setProductReleaseDate] = useState('')
@@ -34,11 +37,10 @@ export default function ProductInfo({match, history}) {
 
 
 	useEffect( () => {
-		handleFetch(`${NAME_maps_ENDPOINT['productDetails']}/${match.params.productId}/en`, history, json => {
+		handleFetch(`${NAME_maps_ENDPOINT['productDetails']}/${productId}/en`, json => {
 			setDynamicBreadcrumbs(['Home', 'Product Browse', `${json.productId}`])
 
 			setProductName(json.productName)
-			setProductId(json.productId)
 			setProductType(json.productType)
 			setProductSubType(json.productSubType)
 			setProductReleaseDate(json.productReleaseDate)
@@ -94,7 +96,6 @@ export default function ProductInfo({match, history}) {
 							numResultsLoaded={productTotal}
 							loadMoreCallback={undefined}
 							isLoadMoreOptionVisible={false}
-							history={history}
 							isDataLoaded={isDataLoaded}
 							target={window.location.hash.substr(1)}
 						/>

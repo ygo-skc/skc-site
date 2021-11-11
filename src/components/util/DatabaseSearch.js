@@ -32,8 +32,8 @@ const CardAvatar = styled(Avatar)`
 `
 
 
-const searchThrottle = throttle((searchSubject, setSearchOptions, history) => {
-	handleFetch(`${NAME_maps_ENDPOINT['search']}?limit=10&cName=${searchSubject}`, history, json => { setSearchOptions(json) })
+const searchThrottle = throttle((searchSubject, setSearchOptions) => {
+	handleFetch(`${NAME_maps_ENDPOINT['search']}?limit=10&cName=${searchSubject}`, json => { setSearchOptions(json) })
 }, 15)
 
 
@@ -44,9 +44,9 @@ export default function DatabaseSearch({ history }) {
 
 	useEffect(() => {
 		if (searchInput !== '') {
-			searchThrottle(searchInput, setSearchOptions, history)
+			searchThrottle(searchInput, setSearchOptions)
 		}
-	} , [searchInput, history])
+	} , [searchInput])
 
 
 	return (

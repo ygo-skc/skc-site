@@ -9,15 +9,10 @@ import {RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, Ri
 
 import createTable from '../../helper/TableHelpers'
 import { getDateString, months } from '../../helper/Dates'
-import { History } from 'history'
 
 const Breadcrumb = lazy( () => import('../util/Breadcrumb') )
 
-type args = {
-	history: History
-}
-
-const ProductBrowse:FunctionComponent<args> = ({history}) =>
+const ProductBrowse:FunctionComponent = () =>
 {
 	const [productJson, setProductJson] = useState([])
 	const [productGridItems, setProductGridItems] = useState<JSX.Element | undefined>(undefined)
@@ -25,7 +20,7 @@ const ProductBrowse:FunctionComponent<args> = ({history}) =>
 
 
 	useEffect( () => {
-		handleFetch(NAME_maps_ENDPOINT['productBrowse'], history, json => {
+		handleFetch(NAME_maps_ENDPOINT['productBrowse'], json => {
 			setProductJson(json.products)
 			setIsDataLoaded(true)
 		})

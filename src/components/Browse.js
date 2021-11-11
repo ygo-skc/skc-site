@@ -1,4 +1,5 @@
 import React, { useState, useEffect, lazy } from 'react'
+import startCase from 'lodash.startcase'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import { Chip, InputBase, IconButton } from '@material-ui/core'
 import { Helmet } from 'react-helmet'
@@ -26,7 +27,7 @@ const CardDisplayGrid = lazy( () => import('./util/grid/CardDisplayGrid'))
 const defaultDisplayNum = 50
 
 
-export default function Browse( {history} )
+export default function Browse()
 {
 	const [browseCriteria, setBrowseCriteria] = useState([])
 	const [selectedCriteria, setSelectedCriteria] = useState(undefined)
@@ -43,7 +44,7 @@ export default function Browse( {history} )
 
 
 	useEffect( () => {
-		handleFetch(NAME_maps_ENDPOINT['browseCriteria'], history, (json) => {
+		handleFetch(NAME_maps_ENDPOINT['browseCriteria'], (json) => {
 			const browseCriteria = []
 			for (const criteria of Object.keys(json))
 			{
@@ -106,7 +107,7 @@ export default function Browse( {history} )
 
 
 		setIsCardBrowseDataLoaded(false)
-		handleFetch(`${NAME_maps_ENDPOINT['browse']}?cardColors=${criteriaMap.get('cardColors').join(',')}&attributes=${criteriaMap.get('attributes').join(',')}&monsterTypes=${criteriaMap.get('monsterTypes').join(',')}&monsterSubTypes=${criteriaMap.get('monsterSubTypes').join(',')}&levels=${criteriaMap.get('levels').join(',')}&ranks=${criteriaMap.get('ranks').join(',')}&linkRatings=${criteriaMap.get('linkRatings').join(',')}`, history, json => {
+		handleFetch(`${NAME_maps_ENDPOINT['browse']}?cardColors=${criteriaMap.get('cardColors').join(',')}&attributes=${criteriaMap.get('attributes').join(',')}&monsterTypes=${criteriaMap.get('monsterTypes').join(',')}&monsterSubTypes=${criteriaMap.get('monsterSubTypes').join(',')}&levels=${criteriaMap.get('levels').join(',')}&ranks=${criteriaMap.get('ranks').join(',')}&linkRatings=${criteriaMap.get('linkRatings').join(',')}`, json => {
 			setJsonResults(json.results)
 			setNumResults(json.numResults)
 
@@ -198,7 +199,7 @@ export default function Browse( {history} )
 								renderGroup={option => {
 									return (
 										<RenderGroup
-											group={option.group}
+											group={startCase(option.group)}
 											children={option.children}
 										/>
 									)

@@ -20,7 +20,7 @@ const SocialMedia = lazy(() => import('./util/SocialMedia'))
 const DatabaseInfo = lazy(() => import('./util/database-info/DatabaseInfo'))
 
 
-export default function Home({ history }) {
+export default function Home() {
 	const [cardTotal, setCardTotal] = useState(0)
 	const [banListTotal, setBanListTotal] = useState(0)
 	const [productTotal, setProductTotal] = useState(0)
@@ -28,17 +28,17 @@ export default function Home({ history }) {
 	const [youtubeData, setYoutubeData] = useState(undefined)
 
 	useEffect(() => {
-		handleFetch(NAME_maps_ENDPOINT['databaseStats'], history, (json) => {
+		handleFetch(NAME_maps_ENDPOINT['databaseStats'], (json) => {
 			setCardTotal(json.cardTotal)
 			setBanListTotal(json.banListTotal)
 			setProductTotal(json.productTotal)
 		})
 
 
-		handleFetch(`${HEART_API_HOST_NAME}/api/v1/yt/channel/uploads?channelId=UCBZ_1wWyLQI3SV9IgLbyiNQ`, history, json => {
+		handleFetch(`${HEART_API_HOST_NAME}/api/v1/yt/channel/uploads?channelId=UCBZ_1wWyLQI3SV9IgLbyiNQ`, json => {
 			setYoutubeData(json)
 		})
-	}, [history])
+	}, [])
 
 
 	return (
@@ -54,7 +54,7 @@ export default function Home({ history }) {
 
 			<Suspense>
 				<Breadcrumb crumbs={['Home']} />
-				<DatabaseInfo history={history} cardTotal={cardTotal} banListTotal={banListTotal} productTotal={productTotal} />
+				<DatabaseInfo cardTotal={cardTotal} banListTotal={banListTotal} productTotal={productTotal} />
 			</Suspense>
 
 			<OneThirdTwoThirdsGrid
@@ -90,7 +90,7 @@ export default function Home({ history }) {
 						</RightBoxPaper>
 						<div style={{maxWidth: '100%', marginTop: '2.25rem', marginBottom: '2.25rem' }} >
 							<RightBoxPaper >
-								<YouTubeUploads history={history} youtubeData={youtubeData} />
+								<YouTubeUploads youtubeData={youtubeData} />
 							</RightBoxPaper>
 						</div>
 					</div>

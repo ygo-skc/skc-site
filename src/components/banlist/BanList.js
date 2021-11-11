@@ -52,7 +52,7 @@ export default function BanList(props)
 
 
 	useEffect(() => {
-		handleFetch(NAME_maps_ENDPOINT['banListsUrl'], props.history, (json) => {
+		handleFetch(NAME_maps_ENDPOINT['banListsUrl'], (json) => {
 			setBanListInstanceLinks(json.banListDates.map(item => item._links['Ban List Content'].href))
 			setBanListStartDates(json.banListDates.map(item => item.effectiveDate))
 			setIsSettingUpDates(false)
@@ -78,7 +78,7 @@ export default function BanList(props)
 		{
 			setIsFetchingBanList(true)
 
-			handleFetch(banListInstanceLinks[banListStartDates.indexOf(selectedBanList)], props.history, (json) => {
+			handleFetch(banListInstanceLinks[banListStartDates.indexOf(selectedBanList)], (json) => {
 				setForbidden( json.banListInstance.forbidden )
 				setLimited( json.banListInstance.limited )
 				setSemiLimited( json.banListInstance.semiLimited )

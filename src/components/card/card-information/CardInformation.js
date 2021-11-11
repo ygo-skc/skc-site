@@ -1,4 +1,5 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react'
+import { useParams } from 'react-router-dom'
 import {Helmet} from 'react-helmet'
 import { Skeleton } from '@material-ui/lab'
 
@@ -11,12 +12,12 @@ const Breadcrumb = lazy( () => import('../../util/Breadcrumb') )
 const CardData = lazy( () => import('./CardData') )
 
 
-const Card = ( { match, history } ) =>
+const Card = () =>
 {
-
+	const {cardId} = useParams()
 	if (Card.cardId === null || Card.cardID === undefined)
 	{
-		Card.cardID = match.params.cardId
+		Card.cardID = cardId
 
 		const cardImage = new Image()
 		cardImage.src = `https://images.thesupremekingscastle.com/cards/lg/${Card.cardID}.jpg`
@@ -41,7 +42,7 @@ const Card = ( { match, history } ) =>
 
 	useEffect( () => {
 
-		handleFetch(`${NAME_maps_ENDPOINT['cardInstanceUrl']}${Card.cardID}?allInfo=true`, history, (json) => {
+		handleFetch(`${NAME_maps_ENDPOINT['cardInstanceUrl']}${Card.cardID}?allInfo=true`, (json) => {
 			setDynamicCrumbs([...Card.crumbs, json.cardID])
 
 			setCardName(json.cardName)
@@ -57,7 +58,7 @@ const Card = ( { match, history } ) =>
 			setBanListInfo( (json.restrictedIn === undefined)? [] : json.restrictedIn )
 			setIsLoading(false)
 		})
-	}, [history])
+	}, [])
 
 
 	return (
