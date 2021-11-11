@@ -15,8 +15,8 @@ import { LeftBoxPaper, RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeade
 import {HEART_API_HOST_NAME} from '../helper/DownstreamServices'
 
 const Breadcrumb = lazy(() => import('./util/Breadcrumb'))
-const YouTubeUploads = lazy(() => import('./util/YouTubeUploads'))
-const SocialMedia = lazy(() => import('./util/SocialMedia'))
+const YouTubeUploads = lazy(() => import('./util/social/YouTubeUploads'))
+const SocialMedia = lazy(() => import('./util/social/SocialMedia'))
 const DatabaseInfo = lazy(() => import('./util/database-info/DatabaseInfo'))
 
 

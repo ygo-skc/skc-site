@@ -6,7 +6,6 @@ declare type ProductInfo = {
 	productSubType?: string,
 	productReleaseDate: string,
 	productTotal?: number,
-	// productRarityStats? {
 	productContent: ProductContent[]
 }
 

@@ -1,8 +1,8 @@
 import {FunctionComponent} from 'react'
 import { Typography } from '@material-ui/core'
 
-import { RightBoxHeaderTypography, RightBoxSubHeaderTypography } from './grid/OneThirdTwoThirdsGrid'
-import {DarkTranslucentDivider} from '../util/Divider'
+import { RightBoxHeaderTypography, RightBoxSubHeaderTypography } from '../grid/OneThirdTwoThirdsGrid'
+import {DarkTranslucentDivider} from '../Divider'
 
 const SocialMedia: FunctionComponent = () =>
 {

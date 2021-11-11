@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import { RightBoxHeaderTypography, RightBoxSubHeaderTypography } from './grid/OneThirdTwoThirdsGrid'
+import { RightBoxHeaderTypography, RightBoxSubHeaderTypography } from '../grid/OneThirdTwoThirdsGrid'
 
 import VideoInfoContainer from './VideoInfoContainer'
 
