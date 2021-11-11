@@ -61,12 +61,8 @@ const CardAssociation = ( { monsterAssociation, attribute } ) =>
 				{(monsterAssociation.linkRating === undefined)?
 					undefined
 					: <ImageWithNumber
-						imageComponent={<img
-								src={`${process.env.PUBLIC_URL}/Img/links.svg`}
-								alt='Card Rank'
-								style={{ width: '34px', height: '34px', display: 'inline-block', marginRight: '.35rem', verticalAlign: 'middle' }} />
-						}
-						text={`x${monsterAssociation.linkRating} (${monsterAssociation.linkArrows.join(' ').replaceAll('-', '')})`}
+						imageComponent={null}
+						text={`Link ${monsterAssociation.linkRating}: ${monsterAssociation.linkArrows.join(' ')}`}
 						/>
 				}
 			</div>
