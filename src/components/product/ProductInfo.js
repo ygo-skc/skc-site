@@ -9,8 +9,6 @@ import {MainContentContainer} from '../MainContent'
 
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 
-import {DarkTranslucentDivider} from '../util/Divider'
-
 import {RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from '../util/grid/OneThirdTwoThirdsGrid'
 
 
@@ -30,6 +28,7 @@ export default function ProductInfo() {
 	const [productSubType, setProductSubType] = useState('')
 	const [productReleaseDate, setProductReleaseDate] = useState('')
 	const [productTotal, setProductTotal] = useState('')
+	const [productRarityStats, setProductRarityStats] = useState('')
 
 	const [isDataLoaded, setIsDataLoaded] = useState(false)
 
@@ -47,6 +46,7 @@ export default function ProductInfo() {
 
 			setCardJsonResults(json.productContent.map(item => item.card))
 			setProductTotal(json.productTotal)
+			setProductRarityStats(json.productRarityStats)
 			setIsDataLoaded(true)
 		})
 	}, [])
@@ -75,6 +75,7 @@ export default function ProductInfo() {
 						productReleaseDate={productReleaseDate}
 						productTotal={productTotal}
 						isDataLoaded={isDataLoaded}
+						productRarityStats={productRarityStats}
 					/>
 					}
 				twoThirdComponent={
@@ -87,7 +88,6 @@ export default function ProductInfo() {
 								Sorted By Pack Order
 							</RightBoxSubHeaderTypography>
 
-							<DarkTranslucentDivider />
 						</RightBoxHeaderContainer>
 
 						<CardDisplayGrid
