@@ -23,7 +23,7 @@ export default function DatabaseInfo({ history, cardTotal, banListTotal, product
 {
 	return(
 		<DatabaseInfoPaper  >
-			<div style={{background: '#ffa366', color: 'white', borderTopLeftRadius: '1.75rem', borderTopRightRadius: '1.75rem'}}>
+			<div style={{background: '#5D5A6B', color: 'white', borderTopLeftRadius: '1.75rem', borderTopRightRadius: '1.75rem'}}>
 				<Typography variant='h2' style={{color: 'white', paddingLeft: '1rem', paddingRight: '1rem', paddingTop: '1.5rem', paddingBottom: '1.5rem'}} >
 					Content
 				</Typography>
