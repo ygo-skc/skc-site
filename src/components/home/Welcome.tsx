@@ -1,6 +1,7 @@
-import { Typography, Link } from '@material-ui/core'
+import { Typography } from '@material-ui/core'
 
 import { RightBoxSubHeaderTypography } from '../util/grid/OneThirdTwoThirdsGrid'
+import Link from '../util/Link'
 
 export default function Welcome() {
 	return(
@@ -8,6 +9,12 @@ export default function Welcome() {
 			<RightBoxSubHeaderTypography variant='h5'>
 				The BEST Yu-Gi-Oh! Site?
 			</RightBoxSubHeaderTypography>
+
+			<Typography variant='body1' >
+				Maybe one day!
+			</Typography>
+
+			<br />
 
 			<Typography variant='body1' >
 				This is a site dedicated to Yu-Gi-Oh! content. The main differences between this site and others is that this site is incredibly fast and intuitive and has no Ads or trackers.
