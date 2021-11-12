@@ -33,9 +33,6 @@ export default function YouTubeUploads({ youtubeData })
 
 	return(
 		<div >
-			<RightBoxHeaderTypography variant='h4'>
-				YouTube
-			</RightBoxHeaderTypography>
 			<RightBoxSubHeaderTypography variant='h5'>
 				Catch Up On Previous Uploads
 			</RightBoxSubHeaderTypography>

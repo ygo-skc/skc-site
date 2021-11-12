@@ -14,7 +14,7 @@ export default function YouTubeData() {
 	}, [])
 
 	return(
-		<div style={{maxWidth: '100%', background: '#F8F8F8', paddingLeft: '.8rem', paddingRight: '.8rem', paddingTop: '1.5rem', paddingBottom: '1.5rem', borderBottomLeftRadius: '2rem', borderBottomRightRadius: '2rem' }} >
+		<div style={{maxWidth: '100%', background: '#FAFAFA', paddingLeft: '.8rem', paddingRight: '.8rem', paddingTop: '1.5rem', paddingBottom: '1.5rem', borderBottomLeftRadius: '2rem', borderBottomRightRadius: '2rem' }} >
 			<div >
 				<YouTubeUploads youtubeData={youtubeData} />
 			</div>

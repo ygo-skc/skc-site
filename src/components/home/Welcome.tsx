@@ -1,16 +1,12 @@
 import { Typography, Link } from '@material-ui/core'
 
-import { RightBoxHeaderTypography, RightBoxSubHeaderTypography } from '../util/grid/OneThirdTwoThirdsGrid'
+import { RightBoxSubHeaderTypography } from '../util/grid/OneThirdTwoThirdsGrid'
 
 export default function Welcome() {
 	return(
-		<div style={{paddingLeft: '.8rem', paddingRight: '.8rem', paddingTop: '1.5rem', paddingBottom: '1.5rem'}} >
-			<RightBoxHeaderTypography variant='h4' >
-				Yo!
-			</RightBoxHeaderTypography>
-
+		<div style={{paddingLeft: '.8rem', paddingRight: '.8rem', paddingTop: '1.5rem', paddingBottom: '1.5rem', background: '#fff', borderTopLeftRadius: '2rem', borderTopRightRadius: '2rem'}} >
 			<RightBoxSubHeaderTypography variant='h5'>
-				Welcome To The BEST Yu-Gi-Oh! Site
+				The BEST Yu-Gi-Oh! Site?
 			</RightBoxSubHeaderTypography>
 
 			<Typography variant='body1' >

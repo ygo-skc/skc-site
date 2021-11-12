@@ -17,7 +17,7 @@ const SocialMedia: FunctionComponent = () =>
 			</RightBoxSubHeaderTypography>
 			<a
 				className='twitter-timeline'
-				data-height='600'
+				data-height='300'
 				data-theme='dark'
 				href='https://twitter.com/SupremeKing93?ref_src=twsrc%5Etfw'>
 					Tweets by SupremeKing93
@@ -38,7 +38,7 @@ const SocialMedia: FunctionComponent = () =>
 				style={{borderStyle: 'solid', borderRadius: '1rem'}}
 				src='https://discord.com/widget?id=659477868799197185&theme=light'
 				width='100%'
-				height='400'
+				height='250'
 				allowTransparency={true}
 				frameBorder='1'
 				sandbox='allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts' />
