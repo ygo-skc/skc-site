@@ -27,6 +27,12 @@ const Parent = Styled.div`
 		margin-bottom: .5rem;
 		border-radius: .85rem;
 		width: 26rem;
+
+
+		:hover {
+			cursor: pointer;
+			transform: scale(1.01);
+		}
 	}
 `
 

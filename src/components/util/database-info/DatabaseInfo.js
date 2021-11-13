@@ -33,7 +33,7 @@ export default function DatabaseInfo({ history, cardTotal, banListTotal, product
 				<DatabaseSearch history={history} />
 			</div>
 
-			<Grid container spacing={2} style={{maxWidth: '95%', margin: 'auto', marginTop: '1,5rem', marginBottom: '1.5rem', paddingLeft: '1rem', paddingRight: '1rem', paddingTop: '1.5rem', paddingBottom: '1.5rem'}} >
+			<Grid container spacing={2} style={{maxWidth: '95%', margin: 'auto', paddingLeft: '1rem', paddingRight: '1rem', paddingTop: '1.5rem', paddingBottom: '1.5rem'}} >
 				<Grid
 					item
 					xs={6}

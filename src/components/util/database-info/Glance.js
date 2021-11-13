@@ -4,13 +4,13 @@ import styled from 'styled-components'
 
 const Container = styled(Box)`
 	&& {
-		padding: 2rem;
+		padding: 1rem;
 		border-radius: 1.5rem;
 		flex: 1;
 		background: white;
-		border-color: rgb(135, 120, 229);
+		border-color: rgb(93, 90, 107);
 		border-style: solid;
-		animation: pulse-animation 2s infinite;
+		animation: pulse-animation 1.8s infinite;
 
 
 		:hover {
