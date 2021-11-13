@@ -10,8 +10,8 @@ const Container = styled(Box)`
 		background: white;
 		border-color: rgb(93, 90, 107);
 		border-style: solid;
+		border-width: 1px;
 		animation: pulse-animation 1.8s infinite;
-
 
 		:hover {
 			cursor: pointer;
