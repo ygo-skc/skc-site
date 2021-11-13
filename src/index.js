@@ -49,6 +49,14 @@ const theme = createTheme({
 				, paddingBottom: '.4rem'
 			}
 		},
+		'MuiAutocomplete': {
+			paper: {
+				padding: '.5rem',
+				borderRadius: '1.5rem',
+				border: '3px solid rgba(135, 120, 229, .7)',
+				boxShadow: 'rgba(0,0,0,0.12) 0px 1px 6px'
+			}
+		},
 		'MuiTooltip': {
 			tooltip: {
 				fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
