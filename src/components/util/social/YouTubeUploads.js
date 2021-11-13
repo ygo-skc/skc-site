@@ -39,11 +39,9 @@ export default function YouTubeUploads({ youtubeData })
 				Catch Up On Previous Uploads
 			</RightBoxSubHeaderTypography>
 
-
 			<Typography variant='subtitle2' >
 				Most recent uploads for <Link color='secondary' href='https://www.youtube.com/channel/UCBZ_1wWyLQI3SV9IgLbyiNQ'>Supreme King YT</Link>
 			</Typography>
-
 			<br />
 
 			{(isLoading === true)

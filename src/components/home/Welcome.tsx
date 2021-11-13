@@ -10,10 +10,9 @@ export default function Welcome() {
 				The BEST Yu-Gi-Oh! Site?
 			</RightBoxSubHeaderTypography>
 
-			<Typography variant='body1' >
+			<Typography variant='subtitle2' >
 				Maybe one day!
 			</Typography>
-
 			<br />
 
 			<Typography variant='body1' >
