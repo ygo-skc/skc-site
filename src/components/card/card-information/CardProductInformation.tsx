@@ -5,7 +5,7 @@ import {Skeleton} from '@material-ui/lab'
 
 import { LightTypography } from '../../util/CustomTypography'
 
-import { getDateString, months } from '../../../helper/Dates'
+import { getDateString } from '../../../helper/Dates'
 import {Hint} from '../../util/Hints'
 import createTable from '../../../helper/TableHelpers'
 
@@ -30,7 +30,7 @@ const CardProductInformation: FunctionComponent<args> = ({ isLoading, hasInfo, p
 
 		productInfo.forEach( (product: ProductInfo) => {
 			product.productContent.forEach( (productContent: ProductContent ) => {
-				const row: [string, string, string ,string] = [ product.productId, productContent.productPosition, getDateString(months, new Date(product.productReleaseDate)), productContent.rarities.join(', ') ]
+				const row: [string, string, string ,string] = [ product.productId, productContent.productPosition, getDateString(new Date(product.productReleaseDate)), productContent.rarities.join(', ') ]
 				rowValues.push(row)
 				rowOnClick.push(() => setTimeout( () => window.location.assign(`/product/${product.productId}#${cardID}`), 150 ))
 			})

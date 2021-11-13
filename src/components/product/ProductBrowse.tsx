@@ -8,7 +8,7 @@ import NAME_maps_ENDPOINT from '../../helper/DownstreamServices'
 import {RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from '../util/grid/OneThirdTwoThirdsGrid'
 
 import createTable from '../../helper/TableHelpers'
-import { getDateString, months } from '../../helper/Dates'
+import { getDateString } from '../../helper/Dates'
 
 const Breadcrumb = lazy( () => import('../util/Breadcrumb') )
 
@@ -32,7 +32,7 @@ const ProductBrowse:FunctionComponent = () =>
 		const rowOnClick: {(): void}[] = []
 		const productRows: string[][] =  productJson.map( (product: ProductInfo): string[] => {
 			rowOnClick.push( () => window.location.assign(`/product/${product.productId}`) )
-			return [product.productName!, product.productId, product.productType!, product.productSubType!, getDateString(months, new Date(product.productReleaseDate))]
+			return [product.productName!, product.productId, product.productType!, product.productSubType!, getDateString(new Date(product.productReleaseDate))]
 		})
 
 		setProductGridItems(createTable(headers, productRows, rowOnClick))

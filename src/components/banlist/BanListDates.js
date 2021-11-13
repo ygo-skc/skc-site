@@ -7,7 +7,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DateRangeRoundedIcon from '@material-ui/icons/DateRangeRounded'
 import {LeftBoxSectionHeaderTypography} from '../util/grid/OneThirdTwoThirdsGrid'
 
-import { getDateString, months } from '../../helper/Dates'
+import { getDateString } from '../../helper/Dates'
 
 
 const BanDatesExpansionSummary = Styled(AccordionSummary)`
@@ -33,7 +33,7 @@ export const BanListDates = memo( ( { banListStartDates, setSelectedBanList } ) 
 
 	useEffect( () => {
 		let banListGrid = banListStartDates.map((item, ind) => {
-			return(<Grid key={getDateString(months, new Date(item))} item xs={6} sm={6} md={6} lg={12} xl={6} >
+			return(<Grid key={getDateString(new Date(item))} item xs={6} sm={6} md={6} lg={12} xl={6} >
 				<Button
 					style={{color: '#fff', width: '99%'}}
 					color={ (ind === selectedBanListIndex)? 'primary': 'secondary' }
@@ -47,13 +47,13 @@ export const BanListDates = memo( ( { banListStartDates, setSelectedBanList } ) 
 						setSelectedBanListIndex(ind)
 						}
 					} >
-					{ getDateString(months, new Date(item)) }
+					{ getDateString(new Date(item)) }
 				</Button>
 			</Grid>
 			)
 		})
 
-		setSelectedRange( getCurrentBanListDate( months, banListStartDates[selectedBanListIndex], banListStartDates ) )
+		setSelectedRange( getCurrentBanListDate( banListStartDates[selectedBanListIndex], banListStartDates ) )
 		setBanListGrid(banListGrid)
 	}, [selectedBanListIndex, banListStartDates, setSelectedBanList])
 
@@ -89,7 +89,7 @@ export const BanListDates = memo( ( { banListStartDates, setSelectedBanList } ) 
 })
 
 
-const getCurrentBanListDate = (months, selectedBanList, banListStartDates) =>
+const getCurrentBanListDate = (selectedBanList, banListStartDates) =>
 {
 	if (banListStartDates === undefined)	return
 	const banListPos = banListStartDates.findIndex(item => {
@@ -100,13 +100,13 @@ const getCurrentBanListDate = (months, selectedBanList, banListStartDates) =>
 
 	switch (banListPos) {
 		case 0:
-			return getDateString(months, new Date(selectedBanList)) + " - Present"
+			return getDateString(new Date(selectedBanList)) + " - Present"
 		default:
 			let offset = (24*60*60*1000) * 1; //5 days
 			let nextDate = new Date( banListStartDates[banListPos - 1] )
 			nextDate.setTime( nextDate.getTime() - offset )
 
-			return getDateString(months, new Date(selectedBanList)) + " - "
-				+ getDateString( months, nextDate )
+			return getDateString(new Date(selectedBanList)) + " - "
+				+ getDateString( nextDate )
 	}
 }

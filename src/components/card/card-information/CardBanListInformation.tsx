@@ -4,7 +4,7 @@ import {Paper,} from '@material-ui/core'
 import {Skeleton} from '@material-ui/lab'
 import { LightTypography } from '../../util/CustomTypography'
 
-import { getDateString, months } from '../../../helper/Dates'
+import { getDateString } from '../../../helper/Dates'
 import {Hint} from '../../util/Hints'
 
 import createTable from '../../../helper/TableHelpers'
@@ -29,7 +29,7 @@ const CardBanListInformation: FunctionComponent<args> = ({ isLoading, hasInfo, b
 		if (banListInfo === null || banListInfo === undefined || banListInfo.length === 0) return
 
 		const headerNames: string[] = ['Date', 'Status']
-		const rowValues: string[][] = banListInfo.map( (banList: BanListInfo) => [getDateString(months, new Date(banList.banListDate)), banList.banStatus])
+		const rowValues: string[][] = banListInfo.map( (banList: BanListInfo) => [getDateString(new Date(banList.banListDate)), banList.banStatus])
 
 		const banListTable: JSX.Element = createTable(headerNames, rowValues)
 

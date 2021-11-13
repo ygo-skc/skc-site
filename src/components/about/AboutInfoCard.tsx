@@ -36,7 +36,7 @@ const InfoPaper2 = styled(Paper)`
 		// padding: 1.4rem;
 		border-radius: 1.2rem;
 
-		background: white;
+		background: rgba(255, 255, 255, .97);
 	}
 `
 
