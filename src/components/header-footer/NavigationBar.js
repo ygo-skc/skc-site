@@ -2,7 +2,7 @@ import React from 'react'
 
 import { AppBar, Toolbar, Typography, Link } from '@material-ui/core'
 
-import { NAME_maps_ROUTE } from '../Routes.tsx'
+import { NAME_maps_ROUTE } from '../../Routes'
 
 export default function NavigationBar()
 {
