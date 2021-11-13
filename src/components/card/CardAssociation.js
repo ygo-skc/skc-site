@@ -27,7 +27,7 @@ const CardAssociation = ( { monsterAssociation, attribute } ) =>
 
 	return(
 		<div style={{ width: '100%', marginBottom: '.35rem', textAlign: 'center'}} >
-			<div style={{ background: 'rgba(255, 255, 255, .75)', display: 'inline-block', paddingTop: '.2rem', paddingBottom: '.2rem', paddingLeft: '.7rem', paddingRight: '.7rem', borderRadius: '4rem', textAlign: 'center'}} >
+			<div style={{ background: 'rgba(255, 255, 255, .82)', display: 'inline-block', paddingTop: '.2rem', paddingBottom: '.2rem', paddingLeft: '.7rem', paddingRight: '.7rem', borderRadius: '4rem', textAlign: 'center'}} >
 				<img
 					alt='Card Attribute'
 					style={{ width: '34px', height: '34px', display: 'inline-block', marginRight: '.85rem', verticalAlign: 'middle' }}

@@ -73,7 +73,7 @@ export default function DatabaseSearch({ history }) {
 					)
 				}}
 				renderInput={(params) => (
-					<div style={{ display: 'flex', padding: '.2rem', paddingLeft: '1rem', paddingRight: '1rem' }} >
+					<div style={{ display: 'flex', padding: '.2rem', paddingLeft: '1rem'}} >
 						<InputBase
 							ref={params.InputProps.ref}
 							inputProps={params.inputProps}
@@ -95,10 +95,10 @@ export default function DatabaseSearch({ history }) {
 					const LENGTH_OF_SEARCH_TERM = UPPERCASE_SEARCH_TERM.length
 
 					return (
-						<div style={{display: 'flex', width: '100%'}} >
+						<div style={{display: 'flex', width: '100%', padding: '0rem'}} >
 							<CardAvatar alt={`${CARD_NAME}-Avatar`} src={`https://images.thesupremekingscastle.com/cards/tn/${option.cardID}.jpg`} />
 							<div style={{ padding: '0rem', margin: '0rem' }} >
-								<SearchSuggestionTypography variant='body1'>
+								<SearchSuggestionTypography variant='subtitle1'>
 									{CARD_NAME.slice(0, INDEX_OF_SEARCH_TERM)}
 									<strong>{CARD_NAME.slice(INDEX_OF_SEARCH_TERM, INDEX_OF_SEARCH_TERM + LENGTH_OF_SEARCH_TERM)}</strong>
 									{CARD_NAME.slice(INDEX_OF_SEARCH_TERM + LENGTH_OF_SEARCH_TERM)}
