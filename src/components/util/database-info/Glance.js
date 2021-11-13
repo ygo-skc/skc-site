@@ -8,7 +8,7 @@ const Container = styled(Box)`
 		border-radius: 1.5rem;
 		flex: 1;
 		background: white;
-		border-color: #ffb888;
+		border-color: rgb(135, 120, 229);
 		border-style: solid;
 		animation: pulse-animation 2s infinite;
 
@@ -37,10 +37,10 @@ export default function DatabaseInfo({ total, subject, color, action })
 {
 	return(
 		<Container item onClick={()=> action()} >
-			<Typography variant='h1' align='center' style={{color: color}} >
+			<Typography variant='h1' align='center' style={{color: '#626262'}} >
 				{total}
 			</Typography>
-			<Typography variant='h5' align='center' >
+			<Typography variant='h5' align='center' style={{color: color}} >
 				{subject}
 			</Typography>
 		</Container>

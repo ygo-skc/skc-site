@@ -41,7 +41,7 @@ export default function DatabaseInfo({ history, cardTotal, banListTotal, product
 					md={4}
 					lg={4}
 					xl={4} >
-					<Glance total={cardTotal} subject='Cards' color='rgb(13, 50, 77)' action={() => window.location.assign(`/browse/card`)} />
+					<Glance total={cardTotal} subject='Cards' color='#6C537A' action={() => window.location.assign(`/browse/card`)} />
 				</Grid>
 
 				<Grid
@@ -51,7 +51,7 @@ export default function DatabaseInfo({ history, cardTotal, banListTotal, product
 					md={4}
 					lg={4}
 					xl={4} >
-					<Glance total={banListTotal} subject='Ban Lists' color='rgb(254, 95, 117)' action={() => window.location.assign(`/ban_list`)}  />
+					<Glance total={banListTotal} subject='Ban Lists' color='#FE6D6B' action={() => window.location.assign(`/ban_list`)}  />
 				</Grid>
 
 				<Grid
@@ -61,7 +61,7 @@ export default function DatabaseInfo({ history, cardTotal, banListTotal, product
 					md={4}
 					lg={4}
 					xl={4} >
-					<Glance total={productTotal} subject='Products' color='rgb(95, 10, 135)' action={() => window.location.assign(`/browse/product`)}  />
+					<Glance total={productTotal} subject='Products' color='#A3508A' action={() => window.location.assign(`/browse/product`)}  />
 				</Grid>
 			</Grid>
 		</DatabaseInfoPaper>
