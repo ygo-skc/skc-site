@@ -1,7 +1,7 @@
 import React from 'react'
 import '../../css/ygo-card-styles.css'
 
-import { Typography, Box } from '@material-ui/core'
+import { Typography, Box , Tooltip} from '@material-ui/core'
 
 import Styled from 'styled-components'
 
@@ -43,10 +43,20 @@ const YGOCardStats = ({ cardColor, cardEffect, monsterType, monsterAtk, monsterD
 					}
 			</Typography>
 
-			<CardEffectComponent
-				variant='body2' >
-					{ he.decode(cardEffect) }
-			</CardEffectComponent>
+			{
+				(!fullDetails)?
+				<Tooltip title={ he.decode(cardEffect) } followCursor >
+					<CardEffectComponent
+						variant='body2' >
+							{ he.decode(cardEffect) }
+					</CardEffectComponent>
+				</Tooltip>
+				:
+				<CardEffectComponent
+					variant='body2' >
+						{ he.decode(cardEffect) }
+				</CardEffectComponent>
+			}
 
 			<Box style={{display: 'flex', paddingTop: '.5rem',  alignItems: 'center'}} >
 				{

@@ -2,8 +2,8 @@ import React from 'react'
 import { render } from 'react-dom'
 import { createTheme, ThemeProvider } from '@material-ui/core/styles'
 
-import Footer from './components/footer/Footer'
-import NavigationBar from './components/NavigationBar'
+import Footer from './components/header-footer/Footer'
+import NavigationBar from './components/header-footer/NavigationBar'
 import Routes from './Routes.tsx'
 
 
@@ -47,6 +47,20 @@ const theme = createTheme({
 				, paddingRight: '.8rem'
 				, paddingTop: '.4rem'
 				, paddingBottom: '.4rem'
+			}
+		},
+		'MuiTooltip': {
+			tooltip: {
+				fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
+				fontWeight: 500,
+				lineHeight: '1.3rem',
+				fontSize: '.88rem',
+				backgroundColor: 'black',
+				padding: '.75rem'
+			},
+			arrow: {
+				backgroundColor: 'black',
+				color: '#ddd'
 			}
 		}
 		, 'MuiTableCell': {
