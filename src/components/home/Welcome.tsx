@@ -24,7 +24,7 @@ export default function Welcome() {
 
 			<Typography variant='body1' >
 				Yugioh is ever expanding and evolving. New products are continuously released and new ban lists established. As such this website will also  be continuously updated to accommodate.
-				Want to learn more? Check out the <Link color='secondary' href='/about'><strong>About</strong></Link> section
+				Want to learn more? Check out the <Link color='secondary' href='/about'>About</Link> section
 			</Typography>
 		</div>
 	)

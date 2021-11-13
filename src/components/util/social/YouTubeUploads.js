@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react'
+import { Typography } from '@material-ui/core'
+import { Skeleton } from '@material-ui/lab'
+
 import { RightBoxHeaderTypography, RightBoxSubHeaderTypography } from '../grid/OneThirdTwoThirdsGrid'
 
 import VideoInfoContainer from './VideoInfoContainer'
-
-import { Skeleton } from '@material-ui/lab'
+import Link from '../Link'
 
 
 export default function YouTubeUploads({ youtubeData })
@@ -36,6 +38,13 @@ export default function YouTubeUploads({ youtubeData })
 			<RightBoxSubHeaderTypography variant='h5'>
 				Catch Up On Previous Uploads
 			</RightBoxSubHeaderTypography>
+
+
+			<Typography variant='subtitle2' >
+				Most recent uploads for <Link color='secondary' href='https://www.youtube.com/channel/UCBZ_1wWyLQI3SV9IgLbyiNQ'>Supreme King YT</Link>
+			</Typography>
+
+			<br />
 
 			{(isLoading === true)
 				? <Skeleton width='100%' height='24rem' style={{transform: 'none', borderRadius: '2rem'}} />:

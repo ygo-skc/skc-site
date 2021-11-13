@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
+
 import YouTubeUploads from '../util/social/YouTubeUploads'
 
-import { handleFetch } from '../../helper/FetchHandler'
 import {HEART_API_HOST_NAME} from '../../helper/DownstreamServices'
+import { handleFetch } from '../../helper/FetchHandler'
 
 export default function YouTubeData() {
 	const [youtubeData, setYoutubeData] = useState(undefined)

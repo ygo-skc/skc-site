@@ -264,7 +264,7 @@ const About: FunctionComponent = () => {
 
 											<br /><br />
 
-											The channel is pretty laid back and I won't be screaming/freaking out every time I get a rare card. In other words, It is an alternative to the fake or over the top reaction based Yugioh openings. Feel free to <Link color='secondary' href={`https://www.youtube.com/channel/UCBZ_1wWyLQI3SV9IgLbyiNQ/videos`}>watch/subscribe</Link>!
+											The channel is pretty laid back and I won't be screaming/freaking out every time I get a rare card. In other words, It is an alternative to the fake or over the top reaction based Yugioh openings. Feel free to <Link color='secondary' href='https://www.youtube.com/channel/UCBZ_1wWyLQI3SV9IgLbyiNQ/videos'>watch/subscribe</Link>!
 										</Typography>
 									}
 									imgPath='yt_channel_icon.jpeg'
