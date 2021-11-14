@@ -1,6 +1,6 @@
 import { AppBar, Toolbar, Typography, Link, Box } from '@material-ui/core'
 
-import Communication from './Communication'
+import Messages from './Messages'
 import { NAME_maps_ROUTE } from '../../Routes'
 import Styled from 'styled-components'
 import SubNav from './SubNav'
@@ -29,7 +29,7 @@ export default function NavigationBar()
 				</Link>
 
 				<EmptySpace />
-				<Communication />
+				<Messages />
 			</Toolbar>
 			<SubNav />
 		</AppBar>

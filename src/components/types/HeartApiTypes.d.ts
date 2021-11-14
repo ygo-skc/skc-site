@@ -1,9 +1,9 @@
-export type AllCommunication = {
+export type MessageOutput = {
 	service: string,
-	communications: CommunicationItem[]
+	message: MessageItem[]
 }
 
-export type CommunicationItem = {
+export type MessageItem = {
 	title: string,
 	content: string,
 	tags: string[],
