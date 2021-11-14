@@ -44,6 +44,7 @@ const Breadcrumb: FunctionComponent<BreadcrumbProps> = memo( ( { crumbs }  ) =>
 
 		return(
 			<Link
+				underline='none'
 				className='breadcrumb'
 				variant='subtitle2'
 				color='inherit'

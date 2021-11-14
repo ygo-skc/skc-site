@@ -222,9 +222,9 @@ export default function Browse()
 									</div>
 								)}
 
-							renderOption={option => {
+							renderOption={(props, option) => {
 								return (
-									<div style={{ padding: '0rem', margin: '0rem' }} >
+									<div style={{ paddingTop: '.3rem', paddingBottom: '.3rem', margin: '0rem' }} >
 										<SearchSuggestionTypography variant='body1'>{option.criteriaValue}</SearchSuggestionTypography>
 									</div>
 								)

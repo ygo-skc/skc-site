@@ -95,7 +95,7 @@ export default function DatabaseSearch({ history }) {
 					const LENGTH_OF_SEARCH_TERM = UPPERCASE_SEARCH_TERM.length
 
 					return (
-						<div style={{display: 'flex', width: '100%', padding: '0rem'}} >
+						<div style={{display: 'flex', width: '100%', paddingTop: '.3rem', paddingBottom: '.3rem' }} >
 							<CardAvatar alt={`${CARD_NAME}-Avatar`} src={`https://images.thesupremekingscastle.com/cards/tn/${option.cardID}.jpg`} />
 							<div style={{ padding: '0rem', margin: '0rem' }} >
 								<SearchSuggestionTypography variant='subtitle1'>
