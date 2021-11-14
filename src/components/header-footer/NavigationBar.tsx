@@ -24,7 +24,7 @@ export default function NavigationBar()
 					<Typography
 						className='app-bar-button'
 						color='inherit' >
-						Supreme Kings Castle [BETA]
+						SKC (BETA)
 					</Typography>
 				</Link>
 

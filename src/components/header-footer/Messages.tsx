@@ -30,16 +30,28 @@ const CommunicationMessageTag = Styled(Chip)`
 	}
 `
 
-const CommunicationIcon = Styled(IconButton)`
-	&& {
+const Icon = Styled(NotificationsIcon)`
+	&&& {
+		font-size: 1.7rem;
+	}
+`
 
+const IconButtonStyled = Styled(IconButton)`
+	&&& {
+		border-radius: 100rem;
+		background: rgb(0, 0, 0, .6);
+
+		:hover
+			{
+				background: rgb(255, 255, 255, .4);
+				backdrop-filter: blur(60px)
+			}
 	}
 `
 
 const CommunicationPopperContainer = Styled.div`
 	&& {
 		padding: 1rem;
-		width: 400px;
 		max-width: 400px;
 		max-height: 500px;
 		background: rgb(255, 255, 255, .4);
@@ -88,12 +100,12 @@ export default function Messages() {
 
 	return(
 		<div>
-			<CommunicationIcon
+			<IconButtonStyled
 				onClick={(event: React.MouseEvent<HTMLButtonElement>) => {setCommunicationAnchor(event.currentTarget)}}
 				aria-label="show 17 new notifications"
 				color="inherit">
-					<NotificationsIcon />
-			</CommunicationIcon>
+					<Icon />
+			</IconButtonStyled>
 
 			<Popover
 				id={(isDisplayingNotifications)? 'notification-popover' : undefined}
