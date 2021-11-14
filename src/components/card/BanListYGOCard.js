@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Badge } from '@material-ui/core'
+import { Badge } from '@mui/material'
 
 import styled from 'styled-components'
 

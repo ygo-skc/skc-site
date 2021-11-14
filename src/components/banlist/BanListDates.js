@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from 'react'
 import Styled from 'styled-components'
 
-import { Button, Grid, Accordion, AccordionSummary, AccordionDetails, Typography } from '@material-ui/core'
+import { Button, Grid, Accordion, AccordionSummary, AccordionDetails, Typography } from '@mui/material'
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DateRangeRoundedIcon from '@material-ui/icons/DateRangeRounded'

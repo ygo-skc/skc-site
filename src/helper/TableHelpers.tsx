@@ -1,4 +1,4 @@
-import {Table, TableHead, TableRow, TableBody, TableCell, TableContainer, Box} from '@material-ui/core'
+import {Table, TableHead, TableRow, TableBody, TableCell, TableContainer, Box} from '@mui/material'
 import '../css/card-information-styles.css'
 
 

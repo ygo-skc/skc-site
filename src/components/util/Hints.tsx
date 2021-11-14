@@ -1,7 +1,7 @@
 import {FunctionComponent, ReactNode} from 'react'
-import { Box, Typography } from '@material-ui/core'
+import { Box, Typography } from '@mui/material'
 import styled from 'styled-components'
-import { Variant } from '@material-ui/core/styles/createTypography'
+import { Variant } from '@mui/material/styles/createTypography'
 
 type args = {
 	children: ReactNode,

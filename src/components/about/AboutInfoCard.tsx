@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react'
 
-import { Typography, Paper } from '@material-ui/core'
+import { Typography, Paper } from '@mui/material'
 import styled from 'styled-components'
 
 import GenericLinkPhoto from '../util/photo/GenericLinkPhoto'

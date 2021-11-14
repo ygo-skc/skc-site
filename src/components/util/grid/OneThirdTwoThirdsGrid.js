@@ -1,8 +1,7 @@
 import React from 'react'
-import { Typography, Box, Paper } from '@material-ui/core'
+import { Typography, Box, Paper } from '@mui/material'
 
 import Styled from 'styled-components'
-import withWidth from '@material-ui/core/withWidth'
 
 import Parent from '../../Parent'
 
@@ -171,6 +170,6 @@ function OneThirdTwoThirdsGrid( { oneThirdComponent, twoThirdComponent, mirrored
 }
 
 
-export default withWidth()(OneThirdTwoThirdsGrid)
+export default OneThirdTwoThirdsGrid
 
 export {LeftBoxHeaderTypography, LeftBoxSectionTypography, LeftBoxSectionHeaderTypography, RightBoxPaper, LeftBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer}

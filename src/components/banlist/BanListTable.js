@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { withStyles } from '@material-ui/core/styles'
-import { Table, TableHead, TableContainer, Paper, TableCell, TableBody, Typography } from '@material-ui/core'
-import TableRow from '@material-ui/core/TableRow'
+import { withStyles } from '@mui/material/styles'
+import { Table, TableHead, TableContainer, Paper, TableCell, TableBody, Typography } from '@mui/material'
+import TableRow from '@mui/material/TableRow'
 
 
 const StyledTableHeadCell = withStyles(theme => ({

@@ -1,4 +1,4 @@
-import { Box } from '@material-ui/core'
+import { Box } from '@mui/material'
 import Styled from 'styled-components'
 
 const StickyBox = Styled(Box)`

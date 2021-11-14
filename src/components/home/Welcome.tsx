@@ -1,4 +1,4 @@
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 
 import { RightBoxSubHeaderTypography } from '../util/grid/OneThirdTwoThirdsGrid'
 import Link from '../util/Link'

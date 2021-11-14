@@ -1,7 +1,7 @@
 import React, { useState, useEffect, lazy } from 'react'
 import startCase from 'lodash.startcase'
-import Autocomplete from '@material-ui/lab/Autocomplete'
-import { Chip, InputBase, IconButton } from '@material-ui/core'
+import Autocomplete from '@mui/material/Autocomplete'
+import { Chip, InputBase, IconButton } from '@mui/material'
 import { Helmet } from 'react-helmet'
 
 import SearchIcon from '@material-ui/icons/Search'

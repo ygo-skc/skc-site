@@ -30,6 +30,10 @@
 	color: rgba(255, 255, 255, .97);
 }
 
+td {
+	border-bottom: none !important;
+}
+
 .divider {
 	margin-top: 0;
 	margin-bottom: 1.5rem;

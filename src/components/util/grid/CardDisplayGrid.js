@@ -1,7 +1,7 @@
 import React, {useState, useEffect, memo, useRef} from 'react'
 
-import { Grid, IconButton, Box } from '@material-ui/core'
-import { Skeleton } from '@material-ui/lab'
+import { Grid, IconButton, Box } from '@mui/material'
+import { Skeleton } from '@mui/material'
 import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded';
 
 

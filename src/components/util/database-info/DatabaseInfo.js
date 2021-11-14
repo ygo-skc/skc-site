@@ -1,6 +1,6 @@
 import React, { lazy } from 'react'
 
-import { Paper, Typography, Grid } from '@material-ui/core'
+import { Paper, Typography, Grid } from '@mui/material'
 import Glance from './Glance'
 import styled from 'styled-components'
 const DatabaseSearch = lazy(() => import('../DatabaseSearch'))

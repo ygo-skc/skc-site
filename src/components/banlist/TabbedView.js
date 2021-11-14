@@ -1,7 +1,7 @@
 import React, { useState, useEffect, memo } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { AppBar, Tabs, Tab, Badge } from '@material-ui/core'
+import { AppBar, Tabs, Tab, Badge } from '@mui/material'
 
 import { TabPanel } from './TabPanel'
 

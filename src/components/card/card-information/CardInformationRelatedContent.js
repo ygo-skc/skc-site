@@ -1,5 +1,5 @@
 import React, { memo } from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import {RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from '../../util/grid/OneThirdTwoThirdsGrid'
 
 import CardProductInformation from './CardProductInformation'

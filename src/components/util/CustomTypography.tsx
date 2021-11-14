@@ -1,14 +1,13 @@
 import {FunctionComponent, ReactNode} from 'react'
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 import Styled from 'styled-components'
-import { PropTypes } from '@material-ui/core'
-import { Variant } from '@material-ui/core/styles/createTypography'
+import { Variant } from '@mui/material/styles/createTypography'
 
 type args = {
 	className: string,
 	children: ReactNode,
 	variant: Variant | 'inherit',
-	align?: PropTypes.Alignment
+	align?: 'inherit' | 'left' | 'center' | 'right' | 'justify'
 }
 
 const LightTypographyStyle = Styled(Typography)`

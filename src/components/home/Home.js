@@ -1,7 +1,7 @@
 import React, { useEffect, useState, lazy, Suspense } from 'react'
 import { Helmet } from 'react-helmet'
 
-import { Typography, Link } from '@material-ui/core'
+import { Typography, Link } from '@mui/material'
 import { MainContentContainer } from '../MainContent'
 import { handleFetch } from '../../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../../helper/DownstreamServices'

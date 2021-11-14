@@ -1,7 +1,7 @@
 import { useEffect, useState, FunctionComponent } from 'react'
 import '../../../css/card-information-styles.css'
-import {Paper} from '@material-ui/core'
-import {Skeleton} from '@material-ui/lab'
+import {Paper} from '@mui/material'
+import {Skeleton} from '@mui/material'
 
 import { LightTypography } from '../../util/CustomTypography'
 

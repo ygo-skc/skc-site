@@ -1,7 +1,7 @@
 import { FunctionComponent, lazy } from 'react'
 import { Helmet } from 'react-helmet'
 
-import { Typography, Paper, Grid } from '@material-ui/core'
+import { Typography, Paper, Grid } from '@mui/material'
 import styled from 'styled-components'
 
 import Breadcrumb from '../util/Breadcrumb'

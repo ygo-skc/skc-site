@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, Typography, Link, Box } from '@material-ui/core'
+import { AppBar, Toolbar, Typography, Link, Box } from '@mui/material'
 
 import Messages from './Messages'
 import { NAME_maps_ROUTE } from '../../Routes'

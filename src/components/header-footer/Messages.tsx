@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Typography, IconButton, Popover, Chip, Divider } from '@material-ui/core'
+import { Typography, IconButton, Popover, Chip, Divider } from '@mui/material'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 
 import Styled from 'styled-components'

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react'
 import { useParams } from 'react-router-dom'
 import {Helmet} from 'react-helmet'
-import { Skeleton } from '@material-ui/lab'
+import { Skeleton } from '@mui/material'
 
 import { handleFetch } from '../../../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../../../helper/DownstreamServices'

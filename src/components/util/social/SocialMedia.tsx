@@ -1,5 +1,5 @@
 import {FunctionComponent} from 'react'
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 
 import { RightBoxHeaderTypography, RightBoxSubHeaderTypography } from '../grid/OneThirdTwoThirdsGrid'
 import {DarkTranslucentDivider} from '../Divider'

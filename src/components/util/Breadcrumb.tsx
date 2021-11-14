@@ -1,8 +1,8 @@
 import { FunctionComponent, memo } from 'react'
 import '../../css/breadcrumb.css'
 
-import {Breadcrumbs, Link, Box, Typography} from '@material-ui/core'
-import { Skeleton } from '@material-ui/lab'
+import {Breadcrumbs, Link, Box, Typography} from '@mui/material'
+import { Skeleton } from '@mui/material'
 
 import HomeIcon from '@material-ui/icons/Home'
 import Block from '@material-ui/icons/Block'

@@ -1,14 +1,16 @@
 {
-  "name": "website",
+  "name": "skc-site",
   "version": "1.2.6",
-  "description": "Website to help duelists. ",
+  "description": "Website to help duelists.",
   "main": "index.js",
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@material-ui/core": "4.12.3",
     "@material-ui/icons": "4.11.2",
     "@material-ui/lab": "4.0.0-alpha.60",
+    "@mui/material": "^5.1.0",
+    "@mui/styled-engine-sc": "^5.1.0",
+    "@mui/styles": "^5.1.0",
     "axios": "0.24.0",
     "he": "1.2.0",
     "lodash.startcase": "^4.4.0",
@@ -20,7 +22,7 @@
     "react-router-dom": "6.0.2",
     "react-visibility-sensor": "5.1.1",
     "set-value": "^4.1.0",
-    "styled-components": "5.3.3",
+    "styled-components": "^5.3.3",
     "underscore": "1.13.1"
   },
   "scripts": {

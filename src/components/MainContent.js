@@ -1,6 +1,6 @@
 import Styled from 'styled-components'
 
-import { Box, Paper } from '@material-ui/core'
+import { Box, Paper } from '@mui/material'
 
 
 const MainContentContainer = Styled(Box)`

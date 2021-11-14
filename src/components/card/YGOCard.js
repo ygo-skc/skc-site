@@ -1,7 +1,7 @@
 import React, {memo} from 'react'
 
-import { Typography, Paper } from '@material-ui/core'
-import { Skeleton } from '@material-ui/lab'
+import { Typography, Paper } from '@mui/material'
+import { Skeleton } from '@mui/material'
 
 import Styled from 'styled-components'
 

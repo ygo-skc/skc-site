@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
-import { Typography } from '@material-ui/core'
-import { Skeleton } from '@material-ui/lab'
+import { Typography } from '@mui/material'
+import { Skeleton } from '@mui/material'
 
 import { RightBoxHeaderTypography, RightBoxSubHeaderTypography } from '../grid/OneThirdTwoThirdsGrid'
 

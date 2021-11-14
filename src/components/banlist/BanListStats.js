@@ -1,7 +1,7 @@
 import React, { memo, useState, useEffect, useCallback } from 'react'
 import Styled from 'styled-components'
 
-import { List, ListItemText, Collapse, ListItem } from '@material-ui/core'
+import { List, ListItemText, Collapse, ListItem } from '@mui/material'
 
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';

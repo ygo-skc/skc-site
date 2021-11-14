@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Styled from 'styled-components'
 
-import { Typography, Box } from '@material-ui/core'
+import { Typography, Box } from '@mui/material'
 
 const Container = Styled(Box)`
 	&&

@@ -3,9 +3,9 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { throttle } from 'underscore'
 
-import { InputBase, Paper, IconButton, Avatar } from '@material-ui/core'
+import { InputBase, Paper, IconButton, Avatar } from '@mui/material'
 import SearchIcon from '@material-ui/icons/Search';
-import Autocomplete from '@material-ui/lab/Autocomplete'
+import Autocomplete from '@mui/material/Autocomplete'
 import { handleFetch } from '../../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../../helper/DownstreamServices'
 
@@ -50,7 +50,7 @@ export default function DatabaseSearch({ history }) {
 
 
 	return (
-		<Paper style={{ maxWidth: '550px', margin: '0 auto', borderRadius: '2.5rem', marginBottom: '2rem', borderColor: 'rgb(93, 90, 107)', borderWidth: '3px' }} >
+		<Paper style={{ maxWidth: '550px', margin: '0 auto', borderRadius: '2.5rem', marginBottom: '2rem', borderColor: 'rgb(93, 90, 107)', borderWidth: '3px', borderStyle: 'solid' }} >
 			<DBSearch
 				id='search'
 				clearOnEscape
@@ -86,7 +86,7 @@ export default function DatabaseSearch({ history }) {
 						</IconButton>
 					</div>
 				)}
-				renderOption={option => {
+				renderOption={(props, option) => {
 					const CARD_NAME = option.cardName
 					const UPPERCASE_CARD_NAME = CARD_NAME.toUpperCase()
 					const UPPERCASE_SEARCH_TERM = searchInput.toUpperCase()

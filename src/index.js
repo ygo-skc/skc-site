@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { createTheme, ThemeProvider } from '@material-ui/core/styles'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 
 import Footer from './components/header-footer/Footer'
 import NavigationBar from './components/header-footer/NavigationBar'
@@ -18,92 +18,108 @@ const theme = createTheme({
 			contrastDefaultColor: 'light'
 		}
 	},
-	overrides: {
-		'MuiChip': {
-			root: {
-				fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
-				marginRight: '.55rem',
-				marginTop: '.5rem',
-				backgroundColor: 'rgba(0, 0, 0, .23)',
-				color: 'white'
-			}
-			, label: {
-				fontWeight: 600,
-				fontSize: '.98rem'
-			}
-			, clickable: {
-				'&:hover': {
-					backgroundColor: 'rgba(0, 0, 0, .5)'
+	components: {
+		MuiChip: {
+			styleOverrides: {
+				root: {
+					fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
+					marginRight: '.55rem',
+					marginTop: '.5rem',
+					backgroundColor: 'rgba(0, 0, 0, .23)',
+					color: 'white'
 				}
-				, '&:focus': {
-					backgroundColor: 'rgba(0, 0, 0, .6)'
+				, label: {
+					fontWeight: 600,
+					fontSize: '.98rem'
+				}
+				, clickable: {
+					'&:hover': {
+						backgroundColor: 'rgba(0, 0, 0, .5)'
+					}
+					, '&:focus': {
+						backgroundColor: 'rgba(0, 0, 0, .6)'
+					}
 				}
 			}
 		},
-		'MuiBadge': {
-			badge: {
-				fontSize: '1.05rem'
-				, paddingLeft: '.8rem'
-				, paddingRight: '.8rem'
-				, paddingTop: '.4rem'
-				, paddingBottom: '.4rem'
+		MuiBadge: {
+			styleOverrides: {
+				badge: {
+					fontSize: '1.05rem'
+					, paddingLeft: '.8rem'
+					, paddingRight: '.8rem'
+					, paddingTop: '.4rem'
+					, paddingBottom: '.4rem'
+				}
 			}
 		},
-		'MuiPopover': {
-			paper: {
-				background: 'rgba(255, 255, 255, .6)'
-				, backdropFilter: 'blur(60px)'
+		MuiPopover: {
+			styleOverrides: {
+				paper: {
+					background: 'rgba(255, 255, 255, .6)'
+					, backdropFilter: 'blur(60px)'
+				}
 			}
 		},
-		'MuiAutocomplete': {
-			paper: {
-				padding: '.5rem',
-				borderRadius: '1.5rem',
-				border: '3px solid rgba(135, 120, 229, .7)',
-				boxShadow: 'rgba(0,0,0,0.12) 0px 1px 6px'
-			},
-			option: {
-				paddingLeft: '0rem',
-				paddingReft: '0rem'
+		MuiAutocomplete: {
+			styleOverrides: {
+				paper: {
+					padding: '.5rem',
+					borderRadius: '1.5rem',
+					border: '3px rgba(135, 120, 229, .7)',
+					borderStyle: 'solid',
+					boxShadow: 'rgba(0,0,0,0.12) 0px 1px 6px'
+				},
+				option: {
+					paddingLeft: '0rem',
+					paddingReft: '0rem',
+					paddingBottom: '.4rem'
+				}
 			}
 		},
-		'MuiTooltip': {
-			tooltip: {
-				fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
-				fontWeight: 500,
-				lineHeight: '1.3rem',
-				fontSize: '.88rem',
-				backgroundColor: 'black',
-				padding: '.75rem'
-			},
-			arrow: {
-				backgroundColor: 'black',
-				color: '#ddd'
+		MuiTooltip: {
+			styleOverrides: {
+				tooltip: {
+					fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
+					fontWeight: 500,
+					lineHeight: '1.3rem',
+					fontSize: '.88rem',
+					backgroundColor: 'black',
+					padding: '.75rem'
+				},
+				arrow: {
+					backgroundColor: 'black',
+					color: '#ddd'
+				}
 			}
 		}
-		, 'MuiTableCell': {
-			stickyHeader: {
-				fontWeight: 800,
-				fontSize: '.94rem'
-			},
-			head: {
-				fontWeight: 800,
-				fontSize: '.94rem'
-			},
-			body: {
-				fontWeight: 600,
-				fontSize: '.94rem'
-			},
-			root: {
-				fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
-				padding: '.4rem',
-				'border-bottom': '0rem'
+		, MuiTableCell: {
+			styleOverrides: {
+				stickyHeader: {
+					fontWeight: 800,
+					fontSize: '.94rem'
+				},
+				head: {
+					fontWeight: 800,
+					fontSize: '.94rem'
+				},
+				body: {
+					fontWeight: 600,
+					fontSize: '.94rem'
+				},
+				root: {
+					fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
+					padding: '.4rem',
+					'border-bottom': '0rem'
+				}
 			}
 		},
-		'MuiPaper': {
-			'elevation1': {
-				boxShadow: 'rgba(0,0,0,0.12) 0px 1px 6px'
-				, border: '1px solid rgb(221, 221, 221)'
+		MuiPaper: {
+			styleOverrides: {
+				elevation1: {
+					boxShadow: 'rgba(0,0,0,0.12) 0px 1px 6px'
+					, border: '1px solid rgb(221, 221, 221)'
+				}
 			}
 		}
 	},
