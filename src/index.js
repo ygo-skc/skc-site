@@ -49,6 +49,12 @@ const theme = createTheme({
 				, paddingBottom: '.4rem'
 			}
 		},
+		'MuiPopover': {
+			paper: {
+				background: 'rgba(255, 255, 255, .6)'
+				, backdropFilter: 'blur(60px)'
+			}
+		},
 		'MuiAutocomplete': {
 			paper: {
 				padding: '.5rem',
