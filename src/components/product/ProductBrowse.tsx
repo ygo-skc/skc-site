@@ -8,16 +8,11 @@ import NAME_maps_ENDPOINT from '../../helper/DownstreamServices'
 import {RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from '../util/grid/OneThirdTwoThirdsGrid'
 
 import createTable from '../../helper/TableHelpers'
-import { getDateString, months } from '../../helper/Dates'
-import { History } from 'history'
+import { getDateString } from '../../helper/Dates'
 
 const Breadcrumb = lazy( () => import('../util/Breadcrumb') )
 
-type args = {
-	history: History
-}
-
-const ProductBrowse:FunctionComponent<args> = ({history}) =>
+const ProductBrowse:FunctionComponent = () =>
 {
 	const [productJson, setProductJson] = useState([])
 	const [productGridItems, setProductGridItems] = useState<JSX.Element | undefined>(undefined)
@@ -25,7 +20,7 @@ const ProductBrowse:FunctionComponent<args> = ({history}) =>
 
 
 	useEffect( () => {
-		handleFetch(NAME_maps_ENDPOINT['productBrowse'], history, json => {
+		handleFetch(NAME_maps_ENDPOINT['productBrowse'], json => {
 			setProductJson(json.products)
 			setIsDataLoaded(true)
 		})
@@ -37,7 +32,7 @@ const ProductBrowse:FunctionComponent<args> = ({history}) =>
 		const rowOnClick: {(): void}[] = []
 		const productRows: string[][] =  productJson.map( (product: ProductInfo): string[] => {
 			rowOnClick.push( () => window.location.assign(`/product/${product.productId}`) )
-			return [product.productName!, product.productId, product.productType!, product.productSubType!, getDateString(months, new Date(product.productReleaseDate))]
+			return [product.productName!, product.productId, product.productType!, product.productSubType!, getDateString(new Date(product.productReleaseDate))]
 		})
 
 		setProductGridItems(createTable(headers, productRows, rowOnClick))

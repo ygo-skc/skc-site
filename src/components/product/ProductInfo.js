@@ -1,4 +1,5 @@
 import React, {useState, useEffect, lazy} from 'react'
+import { useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 
 import {handleFetch} from '../../helper/FetchHandler'
@@ -8,8 +9,6 @@ import {MainContentContainer} from '../MainContent'
 
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 
-import {DarkTranslucentDivider} from '../util/Divider'
-
 import {RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from '../util/grid/OneThirdTwoThirdsGrid'
 
 
@@ -18,15 +17,18 @@ const CardDisplayGrid = lazy( () => import('../util/grid/CardDisplayGrid') )
 const ProductInfoDetailsComponent = lazy( () => import('./ProductInfoDetailsComponent') )
 
 
-export default function ProductInfo({match, history}) {
+export default function ProductInfo() {
+	const {productId} = useParams()
+
 	const [dynamicBreadcrumbs, setDynamicBreadcrumbs] = useState(['Home', 'Product Browse', ''])
 
 	const [productName, setProductName] = useState('')
-	const [productId, setProductId] = useState('')
+
 	const [productType, setProductType] = useState('')
 	const [productSubType, setProductSubType] = useState('')
 	const [productReleaseDate, setProductReleaseDate] = useState('')
 	const [productTotal, setProductTotal] = useState('')
+	const [productRarityStats, setProductRarityStats] = useState('')
 
 	const [isDataLoaded, setIsDataLoaded] = useState(false)
 
@@ -34,17 +36,17 @@ export default function ProductInfo({match, history}) {
 
 
 	useEffect( () => {
-		handleFetch(`${NAME_maps_ENDPOINT['productDetails']}/${match.params.productId}/en`, history, json => {
+		handleFetch(`${NAME_maps_ENDPOINT['productDetails']}/${productId}/en`, json => {
 			setDynamicBreadcrumbs(['Home', 'Product Browse', `${json.productId}`])
 
 			setProductName(json.productName)
-			setProductId(json.productId)
 			setProductType(json.productType)
 			setProductSubType(json.productSubType)
 			setProductReleaseDate(json.productReleaseDate)
 
 			setCardJsonResults(json.productContent.map(item => item.card))
 			setProductTotal(json.productTotal)
+			setProductRarityStats(json.productRarityStats)
 			setIsDataLoaded(true)
 		})
 	}, [])
@@ -73,6 +75,7 @@ export default function ProductInfo({match, history}) {
 						productReleaseDate={productReleaseDate}
 						productTotal={productTotal}
 						isDataLoaded={isDataLoaded}
+						productRarityStats={productRarityStats}
 					/>
 					}
 				twoThirdComponent={
@@ -85,7 +88,6 @@ export default function ProductInfo({match, history}) {
 								Sorted By Pack Order
 							</RightBoxSubHeaderTypography>
 
-							<DarkTranslucentDivider />
 						</RightBoxHeaderContainer>
 
 						<CardDisplayGrid
@@ -94,7 +96,6 @@ export default function ProductInfo({match, history}) {
 							numResultsLoaded={productTotal}
 							loadMoreCallback={undefined}
 							isLoadMoreOptionVisible={false}
-							history={history}
 							isDataLoaded={isDataLoaded}
 							target={window.location.hash.substr(1)}
 						/>

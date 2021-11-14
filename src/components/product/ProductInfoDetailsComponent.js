@@ -1,5 +1,6 @@
 import React from 'react'
 import { Skeleton } from '@material-ui/lab'
+import createTable from '../../helper/TableHelpers'
 
 import {LightTranslucentDivider} from '../util/Divider'
 
@@ -8,7 +9,19 @@ import {StickyBox} from '../util/StyledContainers'
 import {LeftBoxHeaderTypography, LeftBoxSectionTypography, LeftBoxSectionHeaderTypography, LeftBoxPaper} from '../util/grid/OneThirdTwoThirdsGrid'
 
 
-export default function ProductInfoDetailsComponent({productName, productId, productType, productSubType, productReleaseDate, productTotal, isDataLoaded}) {
+export default function ProductInfoDetailsComponent({productName, productId, productType, productSubType, productReleaseDate, productTotal, productRarityStats, isDataLoaded}) {
+
+	const summaryRows = []
+	summaryRows.push(['Product ID', productId])
+	summaryRows.push(['Product Type', productType])
+	summaryRows.push(['Product Sub-Type', productSubType])
+	summaryRows.push(['American Release', productReleaseDate])
+
+	const statRows = []
+	statRows.push(['Product Total', productTotal])
+		Object.keys(productRarityStats).forEach((key, value) => {
+			statRows.push([key, productRarityStats[key]])
+		})
 
 	return(
 		<StickyBox>
@@ -28,31 +41,18 @@ export default function ProductInfoDetailsComponent({productName, productId, pro
 						/>
 				}
 
+
 				<LeftBoxSectionHeaderTypography variant='h6' >
 					Summary
 				</LeftBoxSectionHeaderTypography>
-
-				<LeftBoxSectionTypography variant='body1' >
-					<strong>Product ID:</strong> {productId}
-				</LeftBoxSectionTypography>
-				<LeftBoxSectionTypography variant='body1' >
-					<strong>Product Type:</strong> {productType}
-				</LeftBoxSectionTypography>
-				<LeftBoxSectionTypography variant='body1'>
-					<strong>Product Sub-Type:</strong> {productSubType}
-				</LeftBoxSectionTypography >
-				<LeftBoxSectionTypography variant='body1'>
-					<strong>American Release:</strong> {productReleaseDate}
-				</LeftBoxSectionTypography>
+				{createTable([], summaryRows, () => console.log('yoo'))}
 
 				<LightTranslucentDivider  />
 
 				<LeftBoxSectionHeaderTypography variant='h6' >
 					Product Stats
 				</LeftBoxSectionHeaderTypography>
-				<LeftBoxSectionTypography variant='body1'>
-					<strong>Product Total:</strong> {productTotal}
-				</LeftBoxSectionTypography>
+				{createTable([], statRows, () => console.log('yoo'))}
 			</LeftBoxPaper>
 
 		</StickyBox>

@@ -1,10 +1,10 @@
 import axios, { AxiosError, AxiosResponse } from 'axios'
-import { NAME_maps_ROUTE } from '../Routes'
-import { History } from 'history'
+// import { NAME_maps_ROUTE } from '../Routes'
+// import { useNavigate } from 'react-router-dom'
 
-const CLIENT_ID = process.env.REACT_APP_CLIENT_ID
+const CLIENT_ID = process.env.REACT_APP_CLIENT_ID as string
 
-function handleFetch(endPoint: string, history: History, onJsonReceived: {(res: any): void}) {
+function handleFetch(endPoint: string, onJsonReceived: {(res: any): void}) {
 	axios
 		.get(endPoint, {
 			headers: {
@@ -21,17 +21,19 @@ function handleFetch(endPoint: string, history: History, onJsonReceived: {(res: 
 			}
 		})
 		.then(onJsonReceived)
-		.catch((err) => handleRedirect(err, history) )
+		.catch((err) => handleRedirect(err) )
 }
 
 
-function handleRedirect(err: AxiosError, history: History)
+function handleRedirect(err: AxiosError)
 {
+	// const navigate = useNavigate()
+
 	if ( err.name === 'TypeError' )
 	{
-		history.push(NAME_maps_ROUTE[503])
+		// navigate(NAME_maps_ROUTE[503])
 	}
-	history.push(NAME_maps_ROUTE[err.name])
+	// navigate(NAME_maps_ROUTE[err.name])
 }
 
 

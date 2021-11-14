@@ -5,12 +5,16 @@
 		<meta charset="UTF-8" />
 		<meta name="author" content="Javi Gomez" />
 
+		<meta name="theme-color" content="#3f1286">
+
 		<meta http-equiv='x-dns-prefetch-control' content='on'>
 
 		<link rel="preconnect" href="%REACT_APP_API_HOST%" crossorigin >
 
 		<link rel="dns-prefetch" href="https://images.thesupremekingscastle.com">
 		<link rel="dns-prefetch" href="%REACT_APP_API_HOST%">
+
+		<script async src="https://platform.twitter.com/widgets.js"></script>
 		<style>
 			html
 			{
@@ -38,7 +42,7 @@
 
 				text-rendering: optimizeLegibility;
 
-				font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+				font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji !important;
 
 				display: flex;
 				flex-direction: column;
@@ -108,11 +112,11 @@
 				max-width: 1850px;
 				margin: 0 auto !important;
 
-				background-color: #2b4162;
-				background-image: linear-gradient(315deg, #12100e 0%, #2b4162 74%);
 
-				border-top-left-radius: 1rem;
-				border-top-right-radius: 1rem;
+				background-color: #282666;
+
+				border-top-left-radius: .5rem;
+				border-top-right-radius: .5rem;
 				margin-top: 2rem !important;
 			}
 
@@ -129,8 +133,8 @@
 
 
 			.app-bar-container {
-				background: #310e68;
-				background-image: linear-gradient(316deg, #310e68 0%, #5f0f40 74%);
+				background-color: #3f1286;
+				background: radial-gradient(89.53% 145.96% at 60% 100.79%,#461495 0,#5418b3 17.58%,#461495 50.31%,#3f1286 97.03%);
 				padding-left: .8rem;
 				padding-right: .8rem;
 				box-shadow: none !important;
@@ -150,8 +154,8 @@
 
 
 			.app-bar-button {
-				font-weight: 800 !important;
-				font-size: 1.2rem !important;
+				font-weight: 700 !important;
+				font-size: 1.4rem !important;
 				text-transform: none !important;
 				padding: .7rem;
 				border-radius: 1rem;
@@ -160,21 +164,24 @@
 
 			.app-bar-button:hover
 			{
-				background: #5c5ca9 !important;
+				background: rgb(255, 255, 255, .4);
+				backdrop-filter: blur(60px)
 			}
 
 
 			.nav-button {
-				font-weight: 700 !important;
-				font-size: .95rem !important;
+				font-weight: 500 !important;
+				font-size: 1.05rem !important;
 				padding: .7rem;
 				border-radius: 1rem;
+				color: rgba(255, 255, 255, .85) !important
 			}
 
 
 			.nav-button:hover
 			{
-				background: #5c5ca9 !important;
+				background: rgb(255, 255, 255, .4);
+				backdrop-filter: blur(60px)
 			}
 
 

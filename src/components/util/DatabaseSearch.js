@@ -32,8 +32,8 @@ const CardAvatar = styled(Avatar)`
 `
 
 
-const searchThrottle = throttle((searchSubject, setSearchOptions, history) => {
-	handleFetch(`${NAME_maps_ENDPOINT['search']}?limit=10&cName=${searchSubject}`, history, json => { setSearchOptions(json) })
+const searchThrottle = throttle((searchSubject, setSearchOptions) => {
+	handleFetch(`${NAME_maps_ENDPOINT['search']}?limit=10&cName=${searchSubject}`, json => { setSearchOptions(json) })
 }, 15)
 
 
@@ -44,13 +44,13 @@ export default function DatabaseSearch({ history }) {
 
 	useEffect(() => {
 		if (searchInput !== '') {
-			searchThrottle(searchInput, setSearchOptions, history)
+			searchThrottle(searchInput, setSearchOptions)
 		}
-	} , [searchInput, history])
+	} , [searchInput])
 
 
 	return (
-		<Paper style={{ maxWidth: '550px', margin: '0 auto', borderRadius: '2.5rem', marginBottom: '2rem', borderColor: '#8778e5', borderWidth: '3px' }} >
+		<Paper style={{ maxWidth: '550px', margin: '0 auto', borderRadius: '2.5rem', marginBottom: '2rem', borderColor: 'rgb(93, 90, 107)', borderWidth: '3px' }} >
 			<DBSearch
 				id='search'
 				clearOnEscape
@@ -73,7 +73,7 @@ export default function DatabaseSearch({ history }) {
 					)
 				}}
 				renderInput={(params) => (
-					<div style={{ display: 'flex', padding: '.2rem', paddingLeft: '1rem', paddingRight: '1rem' }} >
+					<div style={{ display: 'flex', padding: '.2rem', paddingLeft: '1rem'}} >
 						<InputBase
 							ref={params.InputProps.ref}
 							inputProps={params.inputProps}
@@ -82,7 +82,7 @@ export default function DatabaseSearch({ history }) {
 							onChange={event => { setSearchInput(event.target.value) }}
 						/>
 						<IconButton >
-							<SearchIcon style={{fontSize: '2rem'}} />
+							<SearchIcon style={{fontSize: '2rem', color: 'rgba(255, 143, 68, .75)'}} />
 						</IconButton>
 					</div>
 				)}
@@ -95,10 +95,10 @@ export default function DatabaseSearch({ history }) {
 					const LENGTH_OF_SEARCH_TERM = UPPERCASE_SEARCH_TERM.length
 
 					return (
-						<div style={{display: 'flex', width: '100%'}} >
+						<div style={{display: 'flex', width: '100%', padding: '0rem'}} >
 							<CardAvatar alt={`${CARD_NAME}-Avatar`} src={`https://images.thesupremekingscastle.com/cards/tn/${option.cardID}.jpg`} />
 							<div style={{ padding: '0rem', margin: '0rem' }} >
-								<SearchSuggestionTypography variant='body1'>
+								<SearchSuggestionTypography variant='subtitle1'>
 									{CARD_NAME.slice(0, INDEX_OF_SEARCH_TERM)}
 									<strong>{CARD_NAME.slice(INDEX_OF_SEARCH_TERM, INDEX_OF_SEARCH_TERM + LENGTH_OF_SEARCH_TERM)}</strong>
 									{CARD_NAME.slice(INDEX_OF_SEARCH_TERM + LENGTH_OF_SEARCH_TERM)}

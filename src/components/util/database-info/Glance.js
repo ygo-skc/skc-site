@@ -4,14 +4,14 @@ import styled from 'styled-components'
 
 const Container = styled(Box)`
 	&& {
-		padding: 2rem;
+		padding: 1rem;
 		border-radius: 1.5rem;
 		flex: 1;
 		background: white;
-		border-color: #ffb888;
+		border-color: rgb(93, 90, 107);
 		border-style: solid;
-		animation: pulse-animation 2s infinite;
-
+		border-width: 1px;
+		animation: pulse-animation 1.8s infinite;
 
 		:hover {
 			cursor: pointer;
@@ -37,10 +37,10 @@ export default function DatabaseInfo({ total, subject, color, action })
 {
 	return(
 		<Container item onClick={()=> action()} >
-			<Typography variant='h1' align='center' style={{color: color}} >
+			<Typography variant='h1' align='center' style={{color: '#626262'}} >
 				{total}
 			</Typography>
-			<Typography variant='h5' align='center' >
+			<Typography variant='h5' align='center' style={{color: color}} >
 				{subject}
 			</Typography>
 		</Container>

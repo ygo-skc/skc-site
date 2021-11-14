@@ -20,6 +20,15 @@ const Footer: FunctionComponent = () =>
 					align='center' >
 					Konami Digital Entertainment owns all rights to Yu-Gi-Oh!
 				</Typography>
+
+				<br />
+
+				<Typography
+					className='footer-font'
+					variant='body1'
+					align='center' >
+					SKC Web Version: <strong>v{ process.env.REACT_APP_VERSION }</strong>
+				</Typography>
 			</div>
 		</div>
 	)
