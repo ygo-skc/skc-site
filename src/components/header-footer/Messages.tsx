@@ -38,8 +38,9 @@ const Icon = Styled(NotificationsIcon)`
 
 const IconButtonStyled = Styled(IconButton)`
 	&&& {
-		border-radius: 100rem;
+		border-radius: 50rem;
 		background: rgb(0, 0, 0, .6);
+		padding: 8px;
 
 		:hover
 			{
