@@ -1,4 +1,7 @@
-import { AppBar, Toolbar, Typography, Link, Box } from '@material-ui/core'
+import '../../css/nav/navigation-icon.css'
+
+import { AppBar, Toolbar, Typography, Link, Box, IconButton } from '@material-ui/core'
+import GitHubIcon from '@material-ui/icons/GitHub'
 
 import Messages from './Messages'
 import { NAME_maps_ROUTE } from '../../Routes'
@@ -29,6 +32,14 @@ export default function NavigationBar()
 				</Link>
 
 				<EmptySpace />
+
+				<IconButton
+					className='styled-icon-button'
+					onClick={(_event: React.MouseEvent<HTMLButtonElement>) => { window.open('https://github.com/YGO-SKC/skc-site') }}
+					color="inherit">
+						<GitHubIcon />
+				</IconButton>
+
 				<Messages />
 			</Toolbar>
 			<SubNav />
