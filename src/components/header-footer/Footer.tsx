@@ -27,7 +27,7 @@ const Footer: FunctionComponent = () =>
 					className='footer-font'
 					variant='body1'
 					align='center' >
-					SKC Web Version: <strong>v{ process.env.REACT_APP_VERSION }</strong>
+					<strong>SKC Web Version:</strong> v{ process.env.REACT_APP_VERSION }
 				</Typography>
 			</div>
 		</div>

@@ -1,0 +1,15 @@
+.styled-icon-button.MuiIconButton-root {
+	border-radius: 100rem;
+	background: rgb(0, 0, 0, .6);
+	padding: 8px;
+	margin-left: .8rem;
+}
+
+.styled-icon-button.MuiIconButton-root:hover {
+	background: rgb(255, 255, 255, .4);
+	backdrop-filter: blur(60px);
+}
+
+.styled-icon-button .MuiSvgIcon-root {
+	font-size: 1.7rem;
+}

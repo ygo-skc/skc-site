@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react'
-import { Typography, IconButton, Popover, Chip, Divider } from '@mui/material'
-import NotificationsIcon from '@material-ui/icons/Notifications'
+import '../../css/nav/navigation-icon.css'
+import '../../css/nav/messages.css'
 
-import Styled from 'styled-components'
+import { useState, useEffect } from 'react'
+import { Typography, IconButton, Popover, Chip, Divider, Badge } from '@material-ui/core'
+import NotificationsIcon from '@material-ui/icons/Notifications'
+import ReactMarkdown from 'react-markdown'
 
 import {HEART_API_HOST_NAME} from '../../helper/DownstreamServices'
 import { handleFetch } from '../../helper/FetchHandler'
@@ -10,86 +12,32 @@ import { getDateString } from '../../helper/Dates'
 import { MessageItem } from '../types/HeartApiTypes'
 
 
-const CommunicationMessageHeader = Styled(Typography)`
-	&& {
-		margin-bottom: 1rem;
-		color: black;
-	}
-`
-
-const CommunicationMessageBody = Styled(Typography)`
-	&& {
-		color: #555;
-	}
-`
-
-const CommunicationMessageTag = Styled(Chip)`
-	&& {
-		background: rgba(135, 120, 229, .8);
-		backdrop-filter: blur(60px);
-	}
-`
-
-const Icon = Styled(NotificationsIcon)`
-	&&& {
-		font-size: 1.7rem;
-	}
-`
-
-const IconButtonStyled = Styled(IconButton)`
-	&&& {
-		border-radius: 50rem;
-		background: rgb(0, 0, 0, .6);
-		padding: 8px;
-
-		:hover
-			{
-				background: rgb(255, 255, 255, .4);
-				backdrop-filter: blur(60px)
-			}
-	}
-`
-
-const CommunicationPopperContainer = Styled.div`
-	&& {
-		padding: 1rem;
-		max-width: 400px;
-		max-height: 500px;
-		background: rgb(255, 255, 255, .4);
-		backdrop-filter: blur(60px)
-	}
-`
-
-const CommunicationDivider = Styled(Divider)`
-	&& {
-		margin-top: .75rem;
-		margin-bottom: 1rem;
-	}
-`
-
-
 export default function Messages() {
 	const [communicationAnchor, setCommunicationAnchor] = useState<HTMLButtonElement | undefined>(undefined)
 	const [communicationList, setCommunicationList] = useState([])
+	const [communicationListSize, setCommunicationListSize] = useState(0)
 
 	const isDisplayingNotifications = Boolean(communicationAnchor)
 
 	useEffect(() => {
 		handleFetch(`${HEART_API_HOST_NAME}/api/v1/message?service=skc&tags=general`, json => {
 			const totalCommunicationItems = json.messages.length
+			setCommunicationListSize(totalCommunicationItems)
 
 			setCommunicationList(
 				json.messages.map((message: MessageItem, index: number) => {
 					return(
 						<div>
-							<CommunicationMessageHeader variant='h5'>{message.title}</CommunicationMessageHeader>
-							<CommunicationMessageHeader variant='subtitle2' >{getDateString(new Date(message.createdAt))}</CommunicationMessageHeader>
-							<CommunicationMessageBody variant='body1' >{message.content}</CommunicationMessageBody>
+							<Typography className='communication-message-header' variant='h5'>{message.title}</Typography>
+							<Typography className='communication-message-sub-header' variant='subtitle2' >{getDateString(new Date(message.createdAt))}</Typography>
+							<Typography className='communication-message-body' variant='body1' >
+								<ReactMarkdown children={`${message.content}`} />
+							</Typography>
 							{
-								message.tags.map((tag: string) => <CommunicationMessageTag label={tag} />)
+								message.tags.map((tag: string) => <Chip className='communication-message-tag' label={tag} />)
 							}
 							{
-								(index === totalCommunicationItems - 1)? undefined: <CommunicationDivider />
+								(index === totalCommunicationItems - 1)? undefined: <Divider className='communication-divider' />
 							}
 						</div>
 					)
@@ -101,12 +49,19 @@ export default function Messages() {
 
 	return(
 		<div>
-			<IconButtonStyled
-				onClick={(event: React.MouseEvent<HTMLButtonElement>) => {setCommunicationAnchor(event.currentTarget)}}
-				aria-label="show 17 new notifications"
-				color="inherit">
-					<Icon />
-			</IconButtonStyled>
+			<Badge
+				badgeContent={communicationListSize}
+				variant='standard'
+				overlap='rectangular'
+				color='error' >
+				<IconButton
+					className='styled-icon-button'
+					onClick={(event: React.MouseEvent<HTMLButtonElement>) => {setCommunicationAnchor(event.currentTarget)}}
+					aria-label="show 17 new notifications"
+					color="inherit">
+						<NotificationsIcon />
+				</IconButton>
+			</Badge>
 
 			<Popover
 				id={(isDisplayingNotifications)? 'notification-popover' : undefined}
@@ -117,12 +72,13 @@ export default function Messages() {
 					vertical: 'bottom',
 					horizontal: 'left',
 				}}>
-				<CommunicationPopperContainer >
-					<CommunicationMessageBody variant='h4' >
+				<div className='communication-popper-container' >
+					<Typography className='communication-message-body' variant='h4' >
 						Messages
-					</CommunicationMessageBody>
+					</Typography>
+
 					{communicationList}
-				</CommunicationPopperContainer>
+				</div>
 			</Popover>
 		</div>
 	)

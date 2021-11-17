@@ -1,5 +1,5 @@
 import { FunctionComponent, memo } from 'react'
-import '../../css/breadcrumb.css'
+import '../../css/nav/breadcrumb.css'
 
 import {Breadcrumbs, Link, Box, Typography} from '@mui/material'
 import { Skeleton } from '@mui/material'
