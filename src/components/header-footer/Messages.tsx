@@ -2,7 +2,7 @@ import '../../css/nav/navigation-icon.css'
 import '../../css/nav/messages.css'
 
 import { useState, useEffect } from 'react'
-import { Typography, IconButton, Popover, Chip, Divider, Badge } from '@material-ui/core'
+import { Typography, IconButton, Popover, Chip, Divider, Badge } from '@mui/material'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import ReactMarkdown from 'react-markdown'
 

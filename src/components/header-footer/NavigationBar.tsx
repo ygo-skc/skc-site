@@ -1,6 +1,6 @@
 import '../../css/nav/navigation-icon.css'
 
-import { AppBar, Toolbar, Typography, Link, Box, IconButton } from '@material-ui/core'
+import { AppBar, Toolbar, Typography, Link, Box, IconButton } from '@mui/material'
 import GitHubIcon from '@material-ui/icons/GitHub'
 
 import Messages from './Messages'
