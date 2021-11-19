@@ -1,7 +1,14 @@
-.MuiBadge-badge {
-	padding: 0rem !important;
-	top: 5 !important;
-	right: 5 !important;
+.communication-message-badge span.MuiBadge-badge {
+	padding: .9rem;
+	padding-right: .9rem;
+	padding-bottom: .9rem;
+	padding-left: .9rem;
+	height: 0px;
+	width: 0px;
+	top: 3;
+	right: 3;
+	border-radius: 50rem;
+	color: white;
 }
 
 .communication-message-header.MuiTypography-root {
