@@ -16,6 +16,9 @@ const theme = createTheme({
 		secondary: {
 			main: '#ff8f44',
 			contrastDefaultColor: 'light'
+		},
+		error: {
+			main: '#f50057',
 		}
 	},
 	overrides: {
