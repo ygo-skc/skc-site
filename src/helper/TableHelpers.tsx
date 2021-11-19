@@ -29,8 +29,8 @@ function createRows(rowValues: string[][], rowOnClick: { (): void }[] = [] ): JS
 }
 
 
-export default function createTable(headerNames: string[], rowValues: string[][], rowOnClick: { (): void }[] = []): JSX.Element {
-	return <TableContainer className={'table-container'} component={Box} >
+export default function createTable(headerNames: string[], rowValues: string[][], rowOnClick: { (): void }[] = [], fullWidth: boolean = false): JSX.Element {
+	return <TableContainer className={'table-container'} style={ (fullWidth)? {maxWidth: '100%', margin: '0'}: undefined } component={Box} >
 			<Table size='small' >
 				<TableHead className={'table-head'} >
 					{createHeaderRow(headerNames)}
