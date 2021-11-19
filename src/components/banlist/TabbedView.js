@@ -1,45 +1,32 @@
 import React, { useState, useEffect, memo } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { AppBar, Tabs, Tab, Badge } from '@mui/material'
+import { AppBar, Tabs, Tab, Badge } from '@material-ui/core'
+import BlockIcon from '@material-ui/icons/Block'
+import LooksOneTwoToneIcon from '@material-ui/icons/LooksOneTwoTone'
+import LooksTwoTwoToneIcon from '@material-ui/icons/LooksTwoTwoTone';
 
 import { TabPanel } from './TabPanel'
 
 
-
-const SummaryBadge = styled(Badge)`
-	&& {
-		.MuiBadge-badge {
-			right: -.45rem;
-			top: -.65rem;
-			color: white;
-		}
-	}
-`
-
 const CustomTabs = styled(Tabs)`
 	&&
 	{
-		.MuiTabs-flexContainer
-		{
-			height: 65px;
-		}
-
+		margin: auto;
 		.MuiTab-textColorPrimary.Mui-selected {
-			background: #fff6e9;
-			font-weight: 700;
+			font-weight: 900;
+			color: black;
 		}
-
-
-		@media screen and (min-width: 0px)
-		{
-			.MuiTab-root {
-				min-width: 0;
-			}
-		}
-
 	}
 `
+
+const StyledAppBar = styled(AppBar)`
+	&& {
+			background-color: rgba(255, 255, 255, .7) !important;
+			backdrop-filter: blur(60px);
+	}
+`
+
 
 const TabbedView = memo( ( { numForbidden, numLimited, numSemiLimited, forbiddenContent, limitedContent, semiLimitedContent } ) =>
 {
@@ -52,15 +39,8 @@ const TabbedView = memo( ( { numForbidden, numLimited, numSemiLimited, forbidden
 			<Tab
 				key='forbidden'
 				style={{'textTransform': 'none'}}
-				label={
-					<SummaryBadge
-						badgeContent={ numForbidden }
-						variant='standard'
-						color='secondary'
-						overlap='rectangular' >
-						Forbidden
-					</SummaryBadge>
-				}
+				icon={ <BlockIcon color='error' style={{ fontSize: '1.8rem' }} /> }
+				label={ `Forbidden (${numForbidden})`  }
 				{...allyProps(0) }
 			/>
 		)
@@ -69,15 +49,8 @@ const TabbedView = memo( ( { numForbidden, numLimited, numSemiLimited, forbidden
 			<Tab
 				key='limited'
 				style={{ 'textTransform': 'none' }}
-				label={
-					<SummaryBadge
-						badgeContent={ numLimited }
-						variant='standard'
-						color='secondary'
-						overlap='rectangular' >
-						Limited
-					</SummaryBadge>
-				}
+				icon={ <LooksOneTwoToneIcon style={{ color: '#ff9100', fontSize: '1.8rem' }} /> }
+				label={ `Limited (${numLimited})`  }
 				{...allyProps(1) }
 			/>
 		)
@@ -86,15 +59,8 @@ const TabbedView = memo( ( { numForbidden, numLimited, numSemiLimited, forbidden
 			<Tab
 				key='semiLimited'
 				style={{ 'textTransform': 'none' }}
-				label={
-					<SummaryBadge
-						badgeContent={ numSemiLimited }
-						variant='standard'
-						color='secondary'
-						overlap='rectangular' >
-						Semi-Limited
-					</SummaryBadge>
-				}
+				icon={ <LooksTwoTwoToneIcon style={{ color: '#4caf50', fontSize: '1.8rem' }}  /> }
+				label={ `Semi-Limited (${numSemiLimited})`  }
 				{...allyProps(2) }
 			/>)
 
@@ -104,18 +70,17 @@ const TabbedView = memo( ( { numForbidden, numLimited, numSemiLimited, forbidden
 
 		return (
 			<div  >
-				<AppBar
+				<StyledAppBar
 					style={{boxShadow: 'none'}}
-					position='static'
-					color='transparent'>
+					position='sticky' >
 					<CustomTabs
 						textColor='primary'
 						value={currentTab}
 						onChange={(event, newValue) => { setCurrentTab(newValue)}}
-						variant='fullWidth' >
+						variant='standard' >
 						{tabs}
 					</CustomTabs>
-				</AppBar>
+				</StyledAppBar>
 
 				<TabPanel value={ currentTab } index={0}>
 					{ forbiddenContent }
@@ -143,13 +108,11 @@ function allyProps(index)
 	}
 }
 
-
 TabbedView.propTypes =
 {
 	numForbidden: PropTypes.number.isRequired,
 	numLimited: PropTypes.number.isRequired,
 	numSemiLimited: PropTypes.number
 }
-
 
 export default TabbedView

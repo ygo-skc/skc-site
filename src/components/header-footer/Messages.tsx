@@ -50,9 +50,9 @@ export default function Messages() {
 	return(
 		<div>
 			<Badge
+				className='communication-message-badge'
 				badgeContent={communicationListSize}
 				variant='standard'
-				overlap='rectangular'
 				color='error' >
 				<IconButton
 					className='styled-icon-button'
@@ -74,7 +74,7 @@ export default function Messages() {
 				}}>
 				<div className='communication-popper-container' >
 					<Typography className='communication-message-body' variant='h4' >
-						Messages
+						Messages ({communicationListSize})
 					</Typography>
 
 					{communicationList}
