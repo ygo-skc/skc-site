@@ -56,7 +56,7 @@
     "@types/react-router-dom": "5.3.2",
     "@types/styled-components": "5.1.15",
     "env-cmd": "10.1.0",
-    "immer": "9.0.6",
+    "immer": "9.0.7",
     "react-scripts": "4.0.3",
     "typescript": "4.5.2"
   }
