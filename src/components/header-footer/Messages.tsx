@@ -25,7 +25,7 @@ export default function Messages() {
 
 
 	useEffect(() => {
-		handleFetch(`${HEART_API_HOST_NAME}/api/v1/message?service=skc&tags=general`, json => {
+		handleFetch(`${HEART_API_HOST_NAME}/api/v1/message?service=skc&tags=skc-site`, json => {
 			const totalMessages = json.messages.length
 			setNumMessages(totalMessages)
 
@@ -69,7 +69,7 @@ export default function Messages() {
 								message.tags.map((tag: string) => <Chip className='communication-message-tag' label={tag} />)
 							}
 							{
-								(index === totalMessages - 1)? undefined: <Divider className='communication-divider' />
+								(index === totalMessages - 1)? <div> <br /> </div>: <Divider className='communication-divider' />
 							}
 						</div>
 					)
