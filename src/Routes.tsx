@@ -28,6 +28,7 @@ const NAME_maps_ROUTE : { [key: string]: string } =
 	'ProductInformation': '/product/:productId',
 
 	'400': '/bad_request',
+	'404': '/not_found',
 	'500': '/server_err',
 	'503': '/service_unavailable'
 }

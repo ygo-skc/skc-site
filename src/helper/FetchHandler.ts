@@ -1,6 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from 'axios'
-// import { NAME_maps_ROUTE } from '../Routes'
-// import { useNavigate } from 'react-router-dom'
+import { NAME_maps_ROUTE } from '../Routes'
 
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID as string
 
@@ -13,28 +12,24 @@ function handleFetch(endPoint: string, onJsonReceived: {(res: any): void}) {
 		})
 		.then((res: AxiosResponse) => {
 			if (res.status === 200) return res.data
-			else
-			{
+			else {
 				const err = new Error(res.statusText)
 				err.name = res.status.toString()
 				throw err
 			}
 		})
 		.then(onJsonReceived)
-		.catch((err) => handleRedirect(err) )
+		.catch(handleRedirect)
 }
 
 
-function handleRedirect(err: AxiosError)
-{
-	// const navigate = useNavigate()
-
-	if ( err.name === 'TypeError' )
-	{
-		// navigate(NAME_maps_ROUTE[503])
+function handleRedirect(err: AxiosError) {
+	if ( err.name === 'TypeError' || err.message === 'Network Error' ) {
+		window.location.href = NAME_maps_ROUTE[503]
+	} else {
+		window.location.href = NAME_maps_ROUTE[err.name]
 	}
-	// navigate(NAME_maps_ROUTE[err.name])
 }
 
 
-export { handleFetch }
+export { handleFetch, handleRedirect }
