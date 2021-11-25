@@ -8,17 +8,13 @@ function handleFetch(endPoint: string, onJsonReceived: {(res: any): void}) {
 		.get(endPoint, {
 			headers: {
 				'CLIENT_ID': CLIENT_ID
-			}
+			}, timeout: 1200
 		})
 		.then((res: AxiosResponse) => {
-			if (res.status === 200) return res.data
-			else {
-				const err = new Error(res.statusText)
-				err.name = res.status.toString()
-				throw err
+			if (res.status === 200) {
+				onJsonReceived(res.data)
 			}
 		})
-		.then(onJsonReceived)
 		.catch(handleRedirect)
 }
 
@@ -26,8 +22,12 @@ function handleFetch(endPoint: string, onJsonReceived: {(res: any): void}) {
 function handleRedirect(err: AxiosError) {
 	if ( err.name === 'TypeError' || err.message === 'Network Error' ) {
 		window.location.href = NAME_maps_ROUTE[503]
-	} else {
-		window.location.href = NAME_maps_ROUTE[err.name]
+	} else if (err.response) {
+		if (err.response.status === 404) {
+			window.location.href = NAME_maps_ROUTE['404-Server']
+		} else {
+			window.location.href = NAME_maps_ROUTE[err.response.status]
+		}
 	}
 }
 

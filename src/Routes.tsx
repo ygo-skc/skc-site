@@ -27,10 +27,11 @@ const NAME_maps_ROUTE : { [key: string]: string } =
 	'ProductBrowse': '/browse/product',
 	'ProductInformation': '/product/:productId',
 
-	'400': '/bad_request',
-	'404': '/not_found',
-	'500': '/server_err',
-	'503': '/service_unavailable'
+	'400': '/bad-request',
+	'422': '/unprocessable-entity',
+	'404-Server': '/not-found',
+	'500': '/server-err',
+	'503': '/service-unavailable'
 }
 
 
@@ -70,14 +71,20 @@ export default function SKCSiteRoutes()
 						path={NAME_maps_ROUTE[400]}
 						element={ <HttpErr httpErr={400}/> } />
 					<Route
+						path={NAME_maps_ROUTE[422]}
+						element={ <HttpErr httpErr={422}/> } />
+					<Route
 						path={NAME_maps_ROUTE[500]}
 						element={ <HttpErr httpErr={500}/> } />
 					<Route
 						path={NAME_maps_ROUTE[503]}
 						element={ <HttpErr httpErr={503}/> } />
 					<Route
+						path={NAME_maps_ROUTE['404-Server']}
+						element={ <HttpErr httpErr={'404-Server'}/> } />
+					<Route
 						path={'/*'}
-						element={ <HttpErr httpErr={404}/> } />
+						element={ <HttpErr httpErr={'404-Client'}/> } />
 				</Routes>
 			</Suspense>
 		</Router>
