@@ -1,19 +1,18 @@
 import '../../css/nav/navigation-icon.css'
 import '../../css/nav/messages.css'
 
-import { useState, useEffect, lazy, Suspense } from 'react'
+import { useState, useEffect } from 'react'
 import { Typography, IconButton, Popover, Badge } from '@material-ui/core'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 
 import {HEART_API_HOST_NAME} from '../../helper/DownstreamServices'
 import { handleFetch } from '../../helper/FetchHandler'
 import { MessageItem } from '../types/HeartApiTypes'
+import MessageFetchingError from './MessageFetchingError'
+import MessageItemComponent from './MessageItemComponent'
 
-const MessageItemComponent = lazy(() => import('./MessageItemComponent'))
-const MessageFetchingError = lazy(() => import('./MessageFetchingError'))
 
-
-export default function Messages() {
+function Messages() {
 	const [messagesAnchor, setMessagesAnchor] = useState<HTMLButtonElement | undefined>(undefined)
 	const [messagesList, setMessagesList] = useState([])
 
@@ -95,6 +94,7 @@ export default function Messages() {
 			</Badge>
 
 			<Popover
+				style={{overflowX: 'hidden', overflowY: 'hidden'}}
 				id={(isDisplayingNotifications)? 'notification-popover' : undefined}
 				open={isDisplayingNotifications}
 				anchorEl={messagesAnchor}
@@ -113,9 +113,12 @@ export default function Messages() {
 						Messages ({numMessages})
 					</Typography>
 
-					{(errorFetchingMessages)? <Suspense fallback={<br />}> <MessageFetchingError /> </Suspense> : messagesList}
+					{(errorFetchingMessages)? <MessageFetchingError /> : messagesList}
 				</div>
 			</Popover>
 		</div>
 	)
 }
+
+
+export default Messages

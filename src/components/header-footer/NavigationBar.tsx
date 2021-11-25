@@ -1,13 +1,17 @@
 import '../../css/nav/navigation-icon.css'
 
+import { lazy, Suspense } from 'react'
 import { AppBar, Toolbar, Typography, Link, Box, IconButton } from '@material-ui/core'
 import GitHubIcon from '@material-ui/icons/GitHub'
 import YouTube from '@material-ui/icons/YouTube'
+import NotificationsIcon from '@material-ui/icons/Notifications'
 
-import Messages from './Messages'
 import { NAME_maps_ROUTE } from '../../Routes'
 import Styled from 'styled-components'
 import SubNav from './SubNav'
+// import Messages from './Messages'
+
+const Messages = lazy(() => import('./Messages'))
 
 const EmptySpace = Styled(Box)`
 	&& {
@@ -48,7 +52,15 @@ export default function NavigationBar()
 						<GitHubIcon />
 				</IconButton>
 
-				<Messages />
+				<Suspense fallback={
+					<IconButton
+						className='styled-icon-button'
+						color="inherit">
+							<NotificationsIcon />
+					</IconButton>
+				} >
+					<Messages />
+				</Suspense>
 			</Toolbar>
 			<SubNav />
 		</AppBar>
