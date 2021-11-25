@@ -44,6 +44,7 @@
 .communication-message-tag.MuiChip-root {
 	background: rgba(135, 120, 229, .95);
 	backdrop-filter: blur(60px);
+	height: auto;
 }
 
 .communication-message-tag span.MuiChip-label {
@@ -51,8 +52,8 @@
 	font-size: .78rem;
 	padding-left: .75rem;
 	padding-right: .75rem;
-	padding-top: 0rem;
-	padding-bottom: 0rem;
+	padding-top: .35rem;
+	padding-bottom: .35rem;
 }
 
 .communication-popper-container {
