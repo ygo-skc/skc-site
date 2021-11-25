@@ -1,15 +1,16 @@
 import '../../css/nav/navigation-icon.css'
 import '../../css/nav/messages.css'
 
-import { useState, useEffect } from 'react'
-import { Typography, IconButton, Popover, Chip, Divider, Badge } from '@material-ui/core'
+import { useState, useEffect, lazy, Suspense } from 'react'
+import { Typography, IconButton, Popover, Badge } from '@material-ui/core'
 import NotificationsIcon from '@material-ui/icons/Notifications'
-import ReactMarkdown from 'react-markdown'
 
 import {HEART_API_HOST_NAME} from '../../helper/DownstreamServices'
 import { handleFetch } from '../../helper/FetchHandler'
-import { getDateString, getTimeString } from '../../helper/Dates'
 import { MessageItem } from '../types/HeartApiTypes'
+
+const MessageItemComponent = lazy(() => import('./MessageItemComponent'))
+const MessageFetchingError = lazy(() => import('./MessageFetchingError'))
 
 
 export default function Messages() {
@@ -20,6 +21,7 @@ export default function Messages() {
 	const [numNewMessages, setNumNewMessages] = useState(0)
 
 	const [newestMessageSeen, setNewestMessageSeen] = useState<string>('')
+	const [errorFetchingMessages, setErrorFetchingMessages] = useState(false)
 
 	const isDisplayingNotifications = Boolean(messagesAnchor)
 
@@ -55,29 +57,23 @@ export default function Messages() {
 						}
 					}
 
-
 					return(
-						<div>
-							<Typography className='communication-message-header' variant='h5'>{message.title}</Typography>
-							<Typography className='communication-message-sub-header' variant='subtitle2' >
-								{getDateString(creationDate)} {getTimeString(creationDate)}
-							</Typography>
-							<Typography className='communication-message-body' variant='body1' >
-								<ReactMarkdown children={`${message.content}`} />
-							</Typography>
-							{
-								message.tags.map((tag: string) => <Chip className='communication-message-tag' label={tag} />)
-							}
-							{
-								(index === totalMessages - 1)? <div> <br /> </div>: <Divider className='communication-divider' />
-							}
-						</div>
+						<MessageItemComponent
+							creationDate={creationDate}
+							messageTitle={message.title}
+							messageContent={message.content}
+							messageTags={message.tags}
+							isLastMessage={index === totalMessages - 1}
+						/>
 					)
 				})
 			)
 
 
 			setNumNewMessages(_numNewMessages)
+		}, false)
+		?.catch(_err => {
+			setErrorFetchingMessages(true)
 		})
 	}, [])
 
@@ -117,7 +113,7 @@ export default function Messages() {
 						Messages ({numMessages})
 					</Typography>
 
-					{messagesList}
+					{(errorFetchingMessages)? <Suspense fallback={<br />}> <MessageFetchingError /> </Suspense> : messagesList}
 				</div>
 			</Popover>
 		</div>
