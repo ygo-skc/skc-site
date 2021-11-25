@@ -42,8 +42,17 @@
 }
 
 .communication-message-tag.MuiChip-root {
-	background: rgba(135, 120, 229, .8);
+	background: rgba(135, 120, 229, .95);
 	backdrop-filter: blur(60px);
+}
+
+.communication-message-tag span.MuiChip-label {
+	font-weight: 500;
+	font-size: .78rem;
+	padding-left: .75rem;
+	padding-right: .75rem;
+	padding-top: 0rem;
+	padding-bottom: 0rem;
 }
 
 .communication-popper-container {
@@ -51,7 +60,8 @@
 	max-width: 400px;
 	max-height: 500px;
 	background: rgb(255, 255, 255, .4);
-	backdrop-filter: blur(60px)
+	backdrop-filter: blur(60px);
+	overflow-x: hidden;
 }
 
 .communication-divider.MuiDivider-root {
