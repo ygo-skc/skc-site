@@ -25,6 +25,16 @@ const BanDatesExpansionDetail = Styled(AccordionDetails)`
 	}
 `
 
+const DatesAccordion = Styled(Accordion)`
+	&& {
+		background-color: rgba(255, 255, 255, .7) !important;
+		backdrop-filter: blur(60px);
+		padding: .5rem;
+		border-radius: 1rem;
+	}
+`
+
+
 export const BanListDates = memo( ( { banListStartDates, setSelectedBanList } ) =>
 {
 	const [banListGrid, setBanListGrid] = useState([])
@@ -65,11 +75,11 @@ export const BanListDates = memo( ( { banListStartDates, setSelectedBanList } ) 
 				variant='h6' >
 				Date Range
 			</LeftBoxSectionHeaderTypography>
-			<Accordion elevation={0} style={ { padding: '.5rem', background: 'rgba(255, 255, 255, .85)', borderRadius: '1rem' } }  >
+			<DatesAccordion elevation={0} >
 				<BanDatesExpansionSummary
 					expandIcon={<ExpandMoreIcon />} >
 					<Typography
-						style={{color: 'rgba(0, 0, 0, .75)'}}
+						style={{color: 'rgba(0, 0, 0, .95)'}}
 						variant='subtitle1' >
 						{ selectedRange }
 					</Typography>
@@ -80,7 +90,7 @@ export const BanListDates = memo( ( { banListStartDates, setSelectedBanList } ) 
 						{ banListGrid }
 					</Grid>
 				</BanDatesExpansionDetail>
-			</Accordion>
+			</DatesAccordion>
 		</div>
 	)
 }, (prevProps, nextProps) => {

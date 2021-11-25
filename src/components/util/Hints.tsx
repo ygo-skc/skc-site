@@ -10,7 +10,7 @@ type args = {
 	textColor: string
 }
 
-const Hint:FunctionComponent<args> = ( { children, variant, backgroundColor='#f6f2fb', textColor='#5e6d7d' } ) =>
+const Hint:FunctionComponent<args> = ( { children, variant, backgroundColor='#f6f2fb', textColor='#4f5c6a' } ) =>
 {
 
 	const HintBox = styled(Box)`
@@ -18,11 +18,11 @@ const Hint:FunctionComponent<args> = ( { children, variant, backgroundColor='#f6
 		{
 			background-color: ${backgroundColor};
 			padding: 1.4rem;
-			max-width: 85%;
+			max-width: 70%;
 			width: 85%;
 			border-radius: 1.25rem;
 			margin: auto;
-			margin-top: 2rem;
+			margin-top: 1rem;
 			margin-bottom: 2rem;
 		}
 	`

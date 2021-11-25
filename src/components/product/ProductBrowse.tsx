@@ -35,7 +35,7 @@ const ProductBrowse:FunctionComponent = () =>
 			return [product.productName!, product.productId, product.productType!, product.productSubType!, getDateString(new Date(product.productReleaseDate))]
 		})
 
-		setProductGridItems(createTable(headers, productRows, rowOnClick))
+		setProductGridItems(createTable(headers, productRows, rowOnClick, true))
 
 	}, [productJson])
 
@@ -64,7 +64,9 @@ const ProductBrowse:FunctionComponent = () =>
 					</RightBoxSubHeaderTypography>
 				</ RightBoxHeaderContainer>
 
-				<div style={{ backgroundImage: 'linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)', paddingTop: '2rem', paddingBottom: '2rem', borderRadius: '2rem' }} >
+				<div
+				style={{ backgroundImage: 'linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)'
+					, paddingTop: '0rem', paddingBottom: '0rem', paddingLeft: '0rem', paddingRight: '0rem', borderRadius: '1.1rem' }} >
 					{(isDataLoaded)? productGridItems : undefined}
 				</div>
 			</RightBoxPaper>

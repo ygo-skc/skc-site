@@ -1,0 +1,62 @@
+.communication-message-badge span.MuiBadge-badge {
+	padding: .9rem;
+	padding-right: .9rem;
+	padding-bottom: .9rem;
+	padding-left: .9rem;
+	height: 0px;
+	width: 0px;
+	top: 3;
+	right: 3;
+	border-radius: 50rem;
+	color: white;
+}
+
+.communication-message-header.MuiTypography-root {
+	margin-bottom: 1rem;
+	color: black;
+}
+
+.communication-message-sub-header.MuiTypography-root {
+	margin-bottom: .5rem;
+	color: black;
+}
+
+.communication-message-body.MuiTypography-root {
+	color: #555;
+}
+
+.communication-message-body p {
+	margin-block-start: 0rem;
+	margin-block-end: .2rem;
+}
+
+.communication-message-body a {
+	background: rgba(253, 237, 221, 1);
+	padding: .15rem;
+	color: #ff8f44;
+	text-decoration: none;
+}
+
+.communication-message-body a:hover {
+	text-decoration: underline;
+}
+
+.communication-message-tag.MuiChip-root {
+	background: rgba(135, 120, 229, .8);
+	backdrop-filter: blur(60px);
+}
+
+.communication-popper-container {
+	padding: 1rem;
+	max-width: 400px;
+	max-height: 500px;
+	background: rgb(255, 255, 255, .4);
+	backdrop-filter: blur(60px)
+}
+
+.communication-divider.MuiDivider-root {
+	margin-top: .75rem;
+	margin-bottom: 1rem;
+	background: rgba(93, 90, 107, .2);
+	backdrop-filter: blur(60px);
+}

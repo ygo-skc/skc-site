@@ -16,6 +16,9 @@ const theme = createTheme({
 		secondary: {
 			main: '#ff8f44',
 			contrastDefaultColor: 'light'
+		},
+		error: {
+			main: '#f50057',
 		}
 	},
 	overrides: {
@@ -47,6 +50,7 @@ const theme = createTheme({
 				, paddingRight: '.8rem'
 				, paddingTop: '.4rem'
 				, paddingBottom: '.4rem'
+				, fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			}
 		},
 		'MuiPopover': {
