@@ -49,7 +49,7 @@
 
 .communication-message-tag span.MuiChip-label {
 	font-weight: 500;
-	font-size: .78rem;
+	font-size: .8rem;
 	padding-left: .75rem;
 	padding-right: .75rem;
 	padding-top: .35rem;
@@ -58,6 +58,7 @@
 
 .communication-popper-container {
 	padding: 1rem;
+	width: 400px;
 	max-width: 400px;
 	max-height: 500px;
 	background: rgb(255, 255, 255, .4);
