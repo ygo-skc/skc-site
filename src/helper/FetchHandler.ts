@@ -1,25 +1,34 @@
 import axios, { AxiosError, AxiosResponse } from 'axios'
 import { NAME_maps_ROUTE } from '../Routes'
 
-const CLIENT_ID = process.env.REACT_APP_CLIENT_ID as string
-
-function handleFetch(endPoint: string, onJsonReceived: {(res: any): void}) {
-	axios
-		.get(endPoint, {
-			headers: {
-				'CLIENT_ID': CLIENT_ID
-			}, timeout: 1200
-		})
-		.then((res: AxiosResponse) => {
-			if (res.status === 200) {
-				onJsonReceived(res.data)
-			}
-		})
-		.catch(handleRedirect)
+class Fetch {
+	static readonly CLIENT_ID = process.env.REACT_APP_CLIENT_ID as string
+	static readonly DEFAULT_TIMEOUT = 1200
 }
 
 
-function handleRedirect(err: AxiosError) {
+function handleFetch(endPoint: string, onJsonReceived: {(res: any): void}, useDefaultErrorHandler = true): Promise<void> | void {
+	const request = axios
+		.get(endPoint, {
+			headers: {
+				'CLIENT_ID': Fetch.CLIENT_ID
+			},
+			timeout: Fetch.DEFAULT_TIMEOUT
+		})
+		.then((res: AxiosResponse) => {
+			onJsonReceived(res.data)
+		})
+
+	if (useDefaultErrorHandler) {
+		request
+			.catch(handleError)
+	} else {
+		return request
+	}
+}
+
+
+function handleError(err: AxiosError) {
 	if ( err.name === 'TypeError' || err.message === 'Network Error' ) {
 		window.location.href = NAME_maps_ROUTE[503]
 	} else if (err.response) {
@@ -31,5 +40,4 @@ function handleRedirect(err: AxiosError) {
 	}
 }
 
-
-export { handleFetch, handleRedirect }
+export { handleFetch, handleError }
