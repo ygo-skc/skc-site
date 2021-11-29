@@ -8,7 +8,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications'
 import {HEART_API_HOST_NAME} from '../../helper/DownstreamServices'
 import { handleFetch } from '../../helper/FetchHandler'
 import { MessageItem } from '../types/HeartApiTypes'
-import MessageFetchingError from './MessageFetchingError'
+import GenericNonBreakingErr from '../util/exception/GenericNonBreakingErr'
 import MessageItemComponent from './MessageItemComponent'
 
 
@@ -110,10 +110,11 @@ function Messages() {
 				}}>
 				<div className='communication-popper-container' >
 					<Typography className='communication-message-body' variant='h4' >
-						Messages ({numMessages})
+						Messages {(errorFetchingMessages)? '⁉️' : `(${numMessages})`}
 					</Typography>
 
-					{(errorFetchingMessages)? <MessageFetchingError /> : messagesList}
+					{(errorFetchingMessages)? <GenericNonBreakingErr
+						errExplanation='No meaningful impact to the site functionality expected.' /> : messagesList}
 				</div>
 			</Popover>
 		</div>

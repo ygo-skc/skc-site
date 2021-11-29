@@ -1,7 +1,7 @@
 
 import '../../css/nav/messages.css'
 
-import { FC} from 'react'
+import { FC, ReactElement} from 'react'
 import { Typography, Chip, Divider } from '@material-ui/core'
 import ReactMarkdown from 'react-markdown'
 
@@ -15,7 +15,7 @@ type MessageItemComponentArgs = {
 	isLastMessage: boolean
 }
 
-const MessageItemComponent:FC<MessageItemComponentArgs> = ({creationDate, messageTitle, messageContent, messageTags, isLastMessage}) => {
+const MessageItemComponent:FC<MessageItemComponentArgs> = ({creationDate, messageTitle, messageContent, messageTags, isLastMessage}): ReactElement => {
 	return(
 		<div>
 			<Typography className='communication-message-header' variant='h5'>{messageTitle}</Typography>
