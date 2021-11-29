@@ -1,15 +1,18 @@
-import React from 'react'
 import { Typography, Divider } from '@material-ui/core'
+import { FC, ReactNode } from 'react'
 
 import styled from 'styled-components'
 
+type RenderGroupTest = {
+	group: string,
+	children: ReactNode
+}
 
-const RenderGroup = ({group, children}) =>
-{
+const RenderGroup:FC<RenderGroupTest> = ({group, children}) => {
 	return(
 		<div style={{ padding: '0rem', paddingLeft: '.5rem' }} >
 			<Typography
-				variant='subtitle1' style={{fontWeight: '800'}} >
+				variant='subtitle1' >
 				{group}
 			</Typography>
 			<Divider />
@@ -33,4 +36,5 @@ const SearchSuggestionTypography = styled(Typography)`
 	}
 `
 
-export {RenderGroup, SearchSuggestionTypography}
+export {SearchSuggestionTypography}
+export default RenderGroup

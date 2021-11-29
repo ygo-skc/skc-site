@@ -1,4 +1,4 @@
-import '../../css/suggestion-box/database-search-styles.css'
+import '../../../css/suggestion-box/database-search-styles.css'
 
 import { useEffect, useState } from 'react'
 import { throttle } from 'underscore'
@@ -6,10 +6,10 @@ import { throttle } from 'underscore'
 import { InputBase, IconButton, Avatar } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete'
-import { handleFetch } from '../../helper/FetchHandler'
-import NAME_maps_ENDPOINT from '../../helper/DownstreamServices'
+import { handleFetch } from '../../../helper/FetchHandler'
+import NAME_maps_ENDPOINT from '../../../helper/DownstreamServices'
 
-import {RenderGroup, SearchSuggestionTypography} from './Search'
+import RenderGroup, {SearchSuggestionTypography} from './Search'
 
 
 class _DatabaseSearch {
@@ -76,7 +76,6 @@ export default function DatabaseSearch() {
 					const INDEX_OF_SEARCH_TERM = UPPERCASE_CARD_NAME.indexOf(UPPERCASE_SEARCH_TERM)
 					const LENGTH_OF_SEARCH_TERM = UPPERCASE_SEARCH_TERM.length
 
-					console.log(option)
 					return (
 						<div
 							className='search-suggestions-parent' >

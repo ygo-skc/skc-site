@@ -3,7 +3,7 @@ import React, { lazy } from 'react'
 import { Paper, Typography, Grid } from '@material-ui/core'
 import Glance from './Glance'
 import styled from 'styled-components'
-const DatabaseSearch = lazy(() => import('../DatabaseSearch'))
+const DatabaseSearch = lazy(() => import('../search/DatabaseSearch'))
 
 const DatabaseInfoPaper = styled(Paper)`
 	&& {
