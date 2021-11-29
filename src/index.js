@@ -22,6 +22,11 @@ const theme = createTheme({
 		}
 	},
 	overrides: {
+		'MuiDivider': {
+			root: {
+				marginBottom: '.5rem',
+			}
+		},
 		'MuiChip': {
 			root: {
 				fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
