@@ -2,7 +2,6 @@ import {FunctionComponent} from 'react'
 import { Typography } from '@mui/material'
 
 import { RightBoxHeaderTypography, RightBoxSubHeaderTypography } from '../grid/OneThirdTwoThirdsGrid'
-import {DarkTranslucentDivider} from '../Divider'
 
 const SocialMedia: FunctionComponent = () =>
 {
@@ -11,19 +10,6 @@ const SocialMedia: FunctionComponent = () =>
 			<RightBoxHeaderTypography variant='h4' >
 				Social
 			</RightBoxHeaderTypography>
-
-			<RightBoxSubHeaderTypography variant='h5' >
-				Follow On Twitter
-			</RightBoxSubHeaderTypography>
-			<a
-				className='twitter-timeline'
-				data-height='300'
-				data-theme='dark'
-				href='https://twitter.com/SupremeKing93?ref_src=twsrc%5Etfw'>
-					Tweets by SupremeKing93
-			</a>
-
-			<DarkTranslucentDivider />
 
 			<RightBoxSubHeaderTypography variant='h5' style={{marginTop: '2rem'}}>
 				Join The Discord
