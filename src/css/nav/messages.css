@@ -58,7 +58,6 @@
 
 .communication-popper-container {
 	padding: 1rem;
-	width: 400px;
 	max-width: 400px;
 	max-height: 500px;
 	background: rgb(255, 255, 255, .4);
@@ -69,6 +68,6 @@
 .communication-divider.MuiDivider-root {
 	margin-top: .75rem;
 	margin-bottom: 1rem;
-	background: rgba(93, 90, 107, .2);
+	background: rgba(93, 90, 107, .15);
 	backdrop-filter: blur(60px);
 }

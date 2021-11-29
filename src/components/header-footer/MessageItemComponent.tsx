@@ -1,3 +1,6 @@
+
+import '../../css/nav/messages.css'
+
 import { FC} from 'react'
 import { Typography, Chip, Divider } from '@material-ui/core'
 import ReactMarkdown from 'react-markdown'
@@ -26,7 +29,7 @@ const MessageItemComponent:FC<MessageItemComponentArgs> = ({creationDate, messag
 				messageTags.map((tag: string) => <Chip className='communication-message-tag' label={tag} />)
 			}
 			{
-				(isLastMessage)? <div> <br /> </div>: <Divider className='communication-divider' />
+				(isLastMessage)? <div />: <Divider className='communication-divider' />
 			}
 		</div>
 	)
