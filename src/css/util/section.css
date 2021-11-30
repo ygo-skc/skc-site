@@ -6,6 +6,21 @@
 	max-width: 100%;
 }
 
+.section-header-container {
+	background: #5D5A6B;
+	color: white;
+	border-top-left-radius: 1.75rem;
+	border-top-right-radius: 1.75rem;
+}
+
+.section-header-text {
+	color: white;
+	padding-left: 1rem;
+	padding-right: 1rem;
+	padding-top: 1.5rem;
+	padding-bottom: 1.5rem;
+}
+
 .section-content {
 	padding-left: .8rem;
 	padding-right: .8rem;
@@ -15,4 +30,3 @@
 	border-bottom-left-radius: 2rem;
 	border-bottom-right-radius: 2rem;
 }
-/* style={{paddingLeft: '.8rem', paddingRight: '.8rem', paddingTop: '1.5rem', paddingBottom: '1.5rem', background: '#fff', borderTopLeftRadius: '2rem', borderTopRightRadius: '2rem'}} */
