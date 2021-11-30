@@ -1,10 +1,10 @@
-import React from 'react'
 import { Typography, Box, Paper } from '@material-ui/core'
 
 import Styled from 'styled-components'
 import withWidth from '@material-ui/core/withWidth'
 
 import Parent from '../../Parent'
+import { FC, ReactNode } from 'react'
 
 const LeftBoxHeaderTypography = Styled(Typography)`
 	&&
@@ -158,9 +158,14 @@ const MirroredTwoThirdComponent = Styled(Box)`
 	}
 `
 
+type OneThirdTwoThirdsGridType = {
+	oneThirdComponent: ReactNode,
+	twoThirdComponent: ReactNode,
+	mirrored: boolean
+}
 
-function OneThirdTwoThirdsGrid( { oneThirdComponent, twoThirdComponent, mirrored=false } )
-{
+
+const OneThirdTwoThirdsGrid:FC<OneThirdTwoThirdsGridType> = ( { oneThirdComponent, twoThirdComponent, mirrored=false } ) => {
 
 	return(
 		<Parent>

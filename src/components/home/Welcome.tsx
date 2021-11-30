@@ -5,7 +5,7 @@ import Link from '../util/Link'
 
 export default function Welcome() {
 	return(
-		<div style={{paddingLeft: '.8rem', paddingRight: '.8rem', paddingTop: '1.5rem', paddingBottom: '1.5rem', background: '#fff', borderTopLeftRadius: '2rem', borderTopRightRadius: '2rem'}} >
+		<div >
 			<RightBoxSubHeaderTypography variant='h5'>
 				The BEST Yu-Gi-Oh! Site?
 			</RightBoxSubHeaderTypography>
