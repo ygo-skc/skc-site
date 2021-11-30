@@ -46,7 +46,7 @@ export default function YouTubeUploads({ youtubeData })
 
 			{(isLoading === true)
 				? <Skeleton width='100%' height='24rem' style={{transform: 'none', borderRadius: '2rem'}} />:
-				<div style={{display: 'grid', gridAutoFlow: 'column', gridTemplateRows: 'auto', overflowX: 'scroll', paddingBottom: '.75rem', maxWidth: '100%'}}>
+				<div style={{display: 'grid', gridAutoFlow: 'column', gridTemplateRows: 'auto', overflowX: 'scroll', maxWidth: '100%'}}>
 					{videos}
 				</div>
 			}

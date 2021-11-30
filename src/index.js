@@ -22,6 +22,11 @@ const theme = createTheme({
 		}
 	},
 	components: {
+		MuiDivider: {
+			root: {
+				marginBottom: '.5rem',
+			}
+		},
 		MuiChip: {
 			styleOverrides: {
 				root: {

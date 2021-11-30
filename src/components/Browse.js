@@ -18,7 +18,7 @@ import NAME_maps_ENDPOINT from '../helper/DownstreamServices'
 import {LightTranslucentDivider, DarkTranslucentDivider} from './util/Divider'
 import {StickyBox} from './util/StyledContainers'
 
-import {RenderGroup, SearchSuggestionTypography} from './util/Search'
+import RenderGroup, {SearchSuggestionTypography} from './util/search/Search'
 
 import {LeftBoxSectionTypography, LeftBoxSectionHeaderTypography, RightBoxPaper, LeftBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from './util/grid/OneThirdTwoThirdsGrid'
 
