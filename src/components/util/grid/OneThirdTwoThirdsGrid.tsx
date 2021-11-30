@@ -6,23 +6,6 @@ import withWidth from '@material-ui/core/withWidth'
 import Parent from '../../Parent'
 import { FC, ReactNode } from 'react'
 
-const LeftBoxHeaderTypography = Styled(Typography)`
-	&&
-	{
-		color: rgba(255, 255, 255, .95);
-		margin-bottom: 1rem;
-		max-width: 100%;
-	}
-`
-
-const LeftBoxSectionHeaderTypography = Styled(Typography)`
-	&&
-	{
-		color: rgba(255, 255, 255, .95);
-		font-weight: 700;
-	}
-`
-
 
 const LeftBoxSectionTypography = Styled(Typography)`
 	&&
@@ -178,4 +161,4 @@ const OneThirdTwoThirdsGrid:FC<OneThirdTwoThirdsGridType> = ( { oneThirdComponen
 
 export default withWidth()(OneThirdTwoThirdsGrid)
 
-export {LeftBoxHeaderTypography, LeftBoxSectionTypography, LeftBoxSectionHeaderTypography, RightBoxPaper, LeftBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer}
+export {LeftBoxSectionTypography, RightBoxPaper, LeftBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer}

@@ -155,7 +155,7 @@ const theme = createTheme({
 			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 800,
 			lineHeight: '1.45rem',
-			marginBottom: '.8rem',
+			marginBottom: '1rem',
 			color: '#626262',
 			fontSize: '1.3rem'
 		},
