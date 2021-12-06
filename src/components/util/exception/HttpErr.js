@@ -16,6 +16,7 @@ const ErrCard = Styled(YGOCard)`
 
 const HTTP_ERR_maps_ERR_NAME = {
 	400: '400 - Bad Request',
+	408: '408 - Request Timeout',
 	422: '422 - Unprocessable Entity',
 	'404-Client': '404 - Not Found (Client)',
 	'404-Server': '404 - Not Found (Server)',
@@ -24,6 +25,7 @@ const HTTP_ERR_maps_ERR_NAME = {
 }
 
 const HTTP_ERR_maps_ERR_TYPE = {
+	400: 'Client Error',
 	400: 'Client Error',
 	422: 'Client Error',
 	'404-Client': 'Client Error',
@@ -34,6 +36,7 @@ const HTTP_ERR_maps_ERR_TYPE = {
 
 const HTTP_ERR_maps_ERR_DESCRIPTION = {
 	400: 'The requested resource does not conform to the expected format.',
+	408: 'The request was not completed in the allowed time frame. This could be due to higher than expected traffic or bad internet connection. Please try again later.',
 	422: 'API could not process the request as it is not formatted the way the API was programmed. Are you trying to manipulate data in the browser?',
 	'404-Client': `Requested webpage "${ window.location.href }" does not exist.
 	\nUse the navigation to get back to an existing page.`,

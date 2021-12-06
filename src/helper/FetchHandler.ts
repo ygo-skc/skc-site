@@ -29,8 +29,10 @@ function handleFetch(endPoint: string, onJsonReceived: {(res: any): void}, useDe
 
 
 function handleError(err: AxiosError) {
-	if ( err.name === 'TypeError' || err.message === 'Network Error' ) {
+	if ( err.name === 'TypeError' || err.message === 'Network Error') {
 		window.location.href = NAME_maps_ROUTE[503]
+	} else if(err.code === 'ECONNABORTED') {	// request timeout
+		window.location.href = NAME_maps_ROUTE[408]
 	} else if (err.response) {
 		if (err.response.status === 404) {
 			window.location.href = NAME_maps_ROUTE['404-Server']

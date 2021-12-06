@@ -28,6 +28,7 @@ const NAME_maps_ROUTE : { [key: string]: string } =
 	'ProductInformation': '/product/:productId',
 
 	'400': '/bad-request',
+	'408': '/request-timeout',
 	'422': '/unprocessable-entity',
 	'404-Server': '/not-found',
 	'500': '/server-err',
@@ -70,6 +71,9 @@ export default function SKCSiteRoutes()
 					<Route
 						path={NAME_maps_ROUTE[400]}
 						element={ <HttpErr httpErr={400}/> } />
+					<Route
+						path={NAME_maps_ROUTE[408]}
+						element={ <HttpErr httpErr={408}/> } />
 					<Route
 						path={NAME_maps_ROUTE[422]}
 						element={ <HttpErr httpErr={422}/> } />
