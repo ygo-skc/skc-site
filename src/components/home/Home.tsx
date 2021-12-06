@@ -58,7 +58,7 @@ export default function Home() {
 				}
 				twoThirdComponent={
 					<Section sectionName='Welcome' sectionContent={
-						<div className='section-content' >
+						<div>
 							<Welcome />
 							<YouTubeData />
 						</div>
