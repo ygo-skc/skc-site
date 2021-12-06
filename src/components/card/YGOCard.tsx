@@ -1,4 +1,4 @@
-import React, {memo} from 'react'
+import { FC, memo } from 'react'
 
 import { Typography, Paper } from '@material-ui/core'
 import { Skeleton } from '@material-ui/lab'
@@ -21,8 +21,24 @@ const CardContentComponent = Styled(Paper)`
 	}
 `
 
+type YGOCardType = {
+	cardName: string,
+	cardColor: string,
+	cardEffect: string,
+	monsterType: string,
+	cardAttribute?: string,
+	monsterAtk?: string,
+	monsterDef?: string,
+	monsterAssociation?: string,
+	cardID: string,
+	fullDetails: boolean,
+	effectMaxLineHeight?: number,
+	isLoading?: boolean,
+	className?: string
+}
 
-const YGOCard = memo(( {cardName, cardColor, cardEffect, monsterType, cardAttribute, monsterAtk, monsterDef, monsterAssociation, cardID, fullDetails, effectMaxLineHeight, isLoading, className }) =>
+
+const YGOCard:FC<YGOCardType> = memo(( {cardName, cardColor, cardEffect, monsterType, cardAttribute, monsterAtk, monsterDef, monsterAssociation, cardID, fullDetails, effectMaxLineHeight, isLoading, className }) =>
 {
 	if (isLoading)
 	{
