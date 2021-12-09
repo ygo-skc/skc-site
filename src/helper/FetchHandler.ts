@@ -3,7 +3,7 @@ import { NAME_maps_ROUTE } from '../Routes'
 
 class Fetch {
 	static readonly CLIENT_ID = process.env.REACT_APP_CLIENT_ID as string
-	static readonly DEFAULT_TIMEOUT = 1200
+	static readonly DEFAULT_TIMEOUT = 2500
 }
 
 
