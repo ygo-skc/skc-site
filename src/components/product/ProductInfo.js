@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet'
 
 import {handleFetch} from '../../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../../helper/DownstreamServices'
+import Section from '../util/Section'
 
 import {MainContentContainer} from '../MainContent'
 
@@ -79,27 +80,27 @@ export default function ProductInfo() {
 					/>
 					}
 				twoThirdComponent={
-					<RightBoxPaper >
-						<RightBoxHeaderContainer >
-							<RightBoxHeaderTypography variant='h4' >
-								Contents
-							</RightBoxHeaderTypography>
-							<RightBoxSubHeaderTypography variant='h5' >
-								Sorted By Pack Order
-							</RightBoxSubHeaderTypography>
+					<Section
+						sectionName='Product Content'
+						sectionContent={
+							<div
+								className='section-content' >
+								<RightBoxSubHeaderTypography variant='h5' >
+									Sorted By Pack Order
+								</RightBoxSubHeaderTypography>
 
-						</RightBoxHeaderContainer>
-
-						<CardDisplayGrid
-							cardJsonResults={cardJsonResults}
-							numResultsDisplayed={productTotal}
-							numResultsLoaded={productTotal}
-							loadMoreCallback={undefined}
-							isLoadMoreOptionVisible={false}
-							isDataLoaded={isDataLoaded}
-							target={window.location.hash.substr(1)}
-						/>
-					</RightBoxPaper>
+								<CardDisplayGrid
+									cardJsonResults={cardJsonResults}
+									numResultsDisplayed={productTotal}
+									numResultsLoaded={productTotal}
+									loadMoreCallback={undefined}
+									isLoadMoreOptionVisible={false}
+									isDataLoaded={isDataLoaded}
+									target={window.location.hash.substr(1)}
+								/>
+							</div>
+						}>
+					</Section>
 				}
 			/>
 		</MainContentContainer>

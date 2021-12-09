@@ -5,6 +5,7 @@ import { Chip, InputBase, IconButton, Typography } from '@material-ui/core'
 import { Helmet } from 'react-helmet'
 
 import SearchIcon from '@material-ui/icons/Search'
+import Section from './util/Section'
 
 import Breadcrumb from './util/Breadcrumb'
 import { MainContentContainer } from './MainContent'
@@ -255,27 +256,27 @@ export default function Browse()
 					</StickyBox>
 				}
 				twoThirdComponent={
-					<RightBoxPaper>
-						<RightBoxHeaderContainer >
-							<RightBoxHeaderTypography variant='h4' >
-								Browse Results
-							</RightBoxHeaderTypography>
-							<RightBoxSubHeaderTypography variant='h5' >
-								Sorted Alphabetically
-							</RightBoxSubHeaderTypography>
-							<DarkTranslucentDivider />
-						</RightBoxHeaderContainer>
+					<Section
+						sectionName='Browse Results'
+						sectionContent={
+							<div
+								className='section-content' >
+								<RightBoxSubHeaderTypography variant='h5' >
+									Results Are Sorted Alphabetically
+								</RightBoxSubHeaderTypography>
 
-						<CardDisplayGrid
-							cardJsonResults={jsonResults}
-							numResultsDisplayed={numResultsDisplayed}
-							numItemsToLoadWhenNeeded={numItemsToLoadWhenNeeded}
-							loadMoreCallback={loadMore}
-							isLoadMoreOptionVisible={isLoadMoreVisible}
-							numResults={numResults}
-							isDataLoaded={isCardBrowseDataLoaded}
-							/>
-					</RightBoxPaper>
+								<CardDisplayGrid
+									cardJsonResults={jsonResults}
+									numResultsDisplayed={numResultsDisplayed}
+									numItemsToLoadWhenNeeded={numItemsToLoadWhenNeeded}
+									loadMoreCallback={loadMore}
+									isLoadMoreOptionVisible={isLoadMoreVisible}
+									numResults={numResults}
+									isDataLoaded={isCardBrowseDataLoaded}
+								/>
+							</div>
+						}>
+					</Section>
 				}
 			/>
 		</MainContentContainer>
