@@ -109,9 +109,10 @@ function Messages() {
 					horizontal: 'left',
 				}}>
 				<div className='communication-popper-container' >
-					<Typography className='communication-message-body' variant='h4' >
+					<Typography className='communication-message-body' variant='h2' >
 						Messages {(errorFetchingMessages)? '⁉️' : `(${numMessages})`}
 					</Typography>
+					<br />
 
 					{(errorFetchingMessages)? <GenericNonBreakingErr
 						errExplanation='No meaningful impact to the site functionality expected.' /> : messagesList}
