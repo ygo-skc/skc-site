@@ -30,8 +30,8 @@ async function getPlaceholderCardComponent()
 			lg={3}
 			xl={2}
 			style={{ padding: '.3rem' }} >
-				<Skeleton variant='rect' height='170' width='100%'  style={{borderRadius: '4rem', marginBottom: '1rem'}} />
-				<Skeleton variant='rect' width='100%' height='100' />
+				<Skeleton variant='rectangular' height='170' width='100%'  style={{borderRadius: '4rem', marginBottom: '1rem'}} />
+				<Skeleton variant='rectangular' width='100%' height='100' />
 		</Grid>)
 	}
 
