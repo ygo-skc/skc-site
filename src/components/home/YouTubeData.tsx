@@ -22,7 +22,7 @@ export default function YouTubeData() {
 	}, [])
 
 	return(
-		<div style={{maxWidth: '100%', background: '#FAFAFA', paddingTop: '2rem', borderBottomLeftRadius: '2rem', borderBottomRightRadius: '2rem' }} >
+		<div className='section-content section-content-dark' style={{maxWidth: '100%', background: '#FAFAFA', paddingTop: '2rem', borderBottomLeftRadius: '2rem', borderBottomRightRadius: '2rem' }} >
 			{
 				(errFetchingData)?
 					<GenericNonBreakingErr

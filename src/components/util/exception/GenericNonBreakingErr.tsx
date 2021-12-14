@@ -8,9 +8,10 @@ type GenericNonBreakingErrArgs = {
 
 const GenericNonBreakingErr:FC<GenericNonBreakingErrArgs> = ({ errExplanation }) : ReactElement => {
 	return(
-		<div style={{width: '100%', marginTop: '3rem', marginBottom: '3rem'}} >
+		<div style={{width: '100%'}} >
 			<Typography align='center' variant='h5' >
-				⚠️ There Was An Error Fetching Required Data ⚠️
+				⚠️<br /><br />
+				There Was An Error Fetching Required Data
 			</Typography>
 			<Typography align='center' variant='h6' >
 				{errExplanation}

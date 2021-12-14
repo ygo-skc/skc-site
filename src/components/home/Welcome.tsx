@@ -5,12 +5,12 @@ import Link from '../util/Link'
 
 export default function Welcome() {
 	return(
-		<div >
+		<div className='section-content' >
 			<RightBoxSubHeaderTypography variant='h5'>
 				The BEST Yu-Gi-Oh! Site?
 			</RightBoxSubHeaderTypography>
 
-			<Typography variant='subtitle2' >
+			<Typography variant='h6' >
 				Maybe one day!
 			</Typography>
 			<br />

@@ -5,7 +5,6 @@ import { Button, Grid, Accordion, AccordionSummary, AccordionDetails, Typography
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DateRangeRoundedIcon from '@material-ui/icons/DateRangeRounded'
-import {LeftBoxSectionHeaderTypography} from '../util/grid/OneThirdTwoThirdsGrid'
 
 import { getDateString } from '../../helper/Dates'
 
@@ -71,10 +70,11 @@ export const BanListDates = memo( ( { banListStartDates, setSelectedBanList } ) 
 
 	return(
 		<div >
-			<LeftBoxSectionHeaderTypography
-				variant='h6' >
+			<Typography
+				style={{color: 'white'}}
+				variant='h4' >
 				Date Range
-			</LeftBoxSectionHeaderTypography>
+			</Typography>
 			<DatesAccordion elevation={0} >
 				<BanDatesExpansionSummary
 					expandIcon={<ExpandMoreIcon />} >

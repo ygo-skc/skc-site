@@ -6,7 +6,7 @@ import {LightTranslucentDivider} from '../util/Divider'
 
 import {StickyBox} from '../util/StyledContainers'
 
-import {LeftBoxHeaderTypography, LeftBoxSectionTypography, LeftBoxSectionHeaderTypography, LeftBoxPaper} from '../util/grid/OneThirdTwoThirdsGrid'
+import {LeftBoxPaper} from '../util/grid/OneThirdTwoThirdsGrid'
 
 
 export default function ProductInfoDetailsComponent({productName, productId, productType, productSubType, productReleaseDate, productTotal, productRarityStats, isDataLoaded}) {
@@ -29,12 +29,13 @@ export default function ProductInfoDetailsComponent({productName, productId, pro
 			<LeftBoxPaper style={{ backgroundImage: 'linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)' }} >
 
 				{(isDataLoaded)?
-					<LeftBoxHeaderTypography
+					<Typography
+						style={{color: 'white'}}
 						variant='h4' >
 						{productName}
-					</LeftBoxHeaderTypography>
+					</Typography>
 					: <Skeleton
-						variant='rect'
+						variant='rectangular'
 						height={30}
 						width={250}
 						style={{marginBottom: '.8rem'}}
@@ -42,17 +43,21 @@ export default function ProductInfoDetailsComponent({productName, productId, pro
 				}
 
 
-				<LeftBoxSectionHeaderTypography variant='h6' >
+				<Typography
+					style={{color: 'white'}}
+					variant='h5' >
 					Summary
-				</LeftBoxSectionHeaderTypography>
-				{createTable([], summaryRows, () => console.log('yoo'))}
+				</Typography>
+				{createTable([], summaryRows, () => console.log('No Action'))}
 
-				<LightTranslucentDivider  />
+				<br />
 
-				<LeftBoxSectionHeaderTypography variant='h6' >
+				<Typography
+					style={{color: 'white'}}
+					variant='h5' >
 					Product Stats
-				</LeftBoxSectionHeaderTypography>
-				{createTable([], statRows, () => console.log('yoo'))}
+				</Typography>
+				{createTable([], statRows, () => console.log('No Action'))}
 			</LeftBoxPaper>
 
 		</StickyBox>

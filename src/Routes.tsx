@@ -17,8 +17,7 @@ const About = lazy( () => import( './components/about/About') )
 const HttpErr = lazy( () => import('./components/util/exception/HttpErr') )
 
 
-const NAME_maps_ROUTE : { [key: string]: string } =
-{
+const NAME_maps_ROUTE : { [key: string]: string } = {
 	'Home': '/',
 	'BanList': '/ban_list',
 	'About': '/about',
@@ -28,6 +27,7 @@ const NAME_maps_ROUTE : { [key: string]: string } =
 	'ProductInformation': '/product/:productId',
 
 	'400': '/bad-request',
+	'408': '/request-timeout',
 	'422': '/unprocessable-entity',
 	'404-Server': '/not-found',
 	'500': '/server-err',
@@ -69,16 +69,19 @@ export default function SKCSiteRoutes()
 					{ /* Routes specifically for errs */ }
 					<Route
 						path={NAME_maps_ROUTE[400]}
-						element={ <HttpErr httpErr={400}/> } />
+						element={ <HttpErr httpErr={'400'}/> } />
+					<Route
+						path={NAME_maps_ROUTE[408]}
+						element={ <HttpErr httpErr={'408'}/> } />
 					<Route
 						path={NAME_maps_ROUTE[422]}
-						element={ <HttpErr httpErr={422}/> } />
+						element={ <HttpErr httpErr={'422'}/> } />
 					<Route
 						path={NAME_maps_ROUTE[500]}
-						element={ <HttpErr httpErr={500}/> } />
+						element={ <HttpErr httpErr={'500'}/> } />
 					<Route
 						path={NAME_maps_ROUTE[503]}
-						element={ <HttpErr httpErr={503}/> } />
+						element={ <HttpErr httpErr={'503'}/> } />
 					<Route
 						path={NAME_maps_ROUTE['404-Server']}
 						element={ <HttpErr httpErr={'404-Server'}/> } />
