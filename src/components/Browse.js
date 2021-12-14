@@ -1,10 +1,10 @@
 import React, { useState, useEffect, lazy } from 'react'
 import startCase from 'lodash.startcase'
 import Autocomplete from '@mui/material/Autocomplete'
-import { Chip, InputBase, IconButton } from '@mui/material'
+import { Chip, InputBase, IconButton, Typography } from '@mui/material'
 import { Helmet } from 'react-helmet'
 
-import SearchIcon from '@material-ui/icons/Search'
+import SearchIcon from '@mui/icons-material/Search'
 import Section from './util/Section'
 
 import Breadcrumb from './util/Breadcrumb'

@@ -2,7 +2,7 @@ import React, {useState, useEffect, memo, useRef} from 'react'
 
 import { Grid, IconButton, Box } from '@mui/material'
 import { Skeleton } from '@mui/material'
-import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded';
+import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 
 
 import CardImageRounded from '../../card/CardImageRounded'

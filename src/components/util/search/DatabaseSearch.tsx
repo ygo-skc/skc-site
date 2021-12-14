@@ -2,9 +2,8 @@ import '../../../css/suggestion-box/database-search-styles.css'
 
 import { useEffect, useState } from 'react'
 
-import { InputBase, IconButton, Avatar } from '@material-ui/core'
-import SearchIcon from '@material-ui/icons/Search'
-import Autocomplete from '@material-ui/lab/Autocomplete'
+import { InputBase, IconButton, Avatar, Autocomplete } from '@mui/material'
+import SearchIcon from '@mui/icons-material/Search'
 import { handleFetch } from '../../../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../../../helper/DownstreamServices'
 
@@ -12,12 +11,7 @@ import RenderGroup, { SearchSuggestionTypography } from './Search'
 import axios, { CancelTokenSource } from 'axios'
 
 class _DatabaseSearch {
-	static readonly search = (
-		searchSubject: string,
-		setSearchOptions: React.Dispatch<React.SetStateAction<never[]>>,
-		fetchToken: CancelTokenSource,
-		setIsFetching: React.Dispatch<React.SetStateAction<boolean>>
-	) => {
+	static readonly search = (searchSubject: string, setSearchOptions: any, fetchToken: CancelTokenSource, setIsFetching: React.Dispatch<React.SetStateAction<boolean>>) => {
 		handleFetch(
 			`${NAME_maps_ENDPOINT['search']}?limit=10&cName=${searchSubject}`,
 			(json) => {
@@ -61,10 +55,10 @@ export default function DatabaseSearch() {
 			clearOnEscape
 			selectOnFocus
 			noOptionsText={searchInput === '' ? 'Type For Suggestions' : 'No Results'}
-			getOptionLabel={(option) => option.cardName}
+			getOptionLabel={(option: any) => option.cardName}
 			options={searchOptions}
 			groupBy={(option) => option.cardColor}
-			onChange={(_event, value, reason) => {
+			onChange={(_event, value, reason: string) => {
 				if (reason === 'select-option') {
 					window.location.assign(`/card/${value.cardID}`)
 				}

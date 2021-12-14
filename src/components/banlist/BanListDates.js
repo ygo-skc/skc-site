@@ -3,8 +3,8 @@ import Styled from 'styled-components'
 
 import { Button, Grid, Accordion, AccordionSummary, AccordionDetails, Typography } from '@mui/material'
 
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import DateRangeRoundedIcon from '@material-ui/icons/DateRangeRounded'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import DateRangeRoundedIcon from '@mui/icons-material/DateRangeRounded'
 
 import { getDateString } from '../../helper/Dates'
 

@@ -1,10 +1,9 @@
-import { Typography, Box, Paper } from '@material-ui/core'
+import { Typography, Box, Paper } from '@mui/material'
 
 import Styled from 'styled-components'
 
 import Parent from '../../Parent'
 import { FC, ReactNode } from 'react'
-
 
 const LeftBoxSectionTypography = Styled(Typography)`
 	&&
@@ -14,7 +13,6 @@ const LeftBoxSectionTypography = Styled(Typography)`
 		margin-bottom: .2rem;
 	}
 `
-
 
 const RightBoxPaper = Styled(Paper)`
 	&&
@@ -38,7 +36,6 @@ const RightBoxPaper = Styled(Paper)`
 	}
 `
 
-
 const LeftBoxPaper = Styled(RightBoxPaper)`
 	&&
 	{
@@ -60,14 +57,12 @@ const LeftBoxPaper = Styled(RightBoxPaper)`
 	}
 `
 
-
 const RightBoxHeaderContainer = Styled(Box)`
 	&&
 	{
 		margin-bottom: .2rem;
 	}
 `
-
 
 const RightBoxHeaderTypography = Styled(Typography)`
 	&&
@@ -76,13 +71,11 @@ const RightBoxHeaderTypography = Styled(Typography)`
 	}
 `
 
-
 const RightBoxSubHeaderTypography = Styled(Typography)`
 	&&
 	{
 	}
 `
-
 
 const OneThirdComponent = Styled(Box)`
 	&&
@@ -103,7 +96,6 @@ const OneThirdComponent = Styled(Box)`
 	}
 `
 
-
 const MirroredOneThirdComponent = Styled(OneThirdComponent)`
 	&&
 	{
@@ -113,7 +105,6 @@ const MirroredOneThirdComponent = Styled(OneThirdComponent)`
 		}
 	}
 `
-
 
 const TwoThirdComponent = Styled(Box)`
 	&&
@@ -126,7 +117,6 @@ const TwoThirdComponent = Styled(Box)`
 		}
 	}
 `
-
 
 const MirroredTwoThirdComponent = Styled(Box)`
 	&&
@@ -141,23 +131,20 @@ const MirroredTwoThirdComponent = Styled(Box)`
 `
 
 type OneThirdTwoThirdsGridType = {
-	oneThirdComponent: ReactNode,
-	twoThirdComponent: ReactNode,
+	oneThirdComponent: ReactNode
+	twoThirdComponent: ReactNode
 	mirrored: boolean
 }
 
-
-const OneThirdTwoThirdsGrid:FC<OneThirdTwoThirdsGridType> = ( { oneThirdComponent, twoThirdComponent, mirrored=false } ) => {
-
-	return(
+const OneThirdTwoThirdsGrid: FC<OneThirdTwoThirdsGridType> = ({ oneThirdComponent, twoThirdComponent, mirrored = false }) => {
+	return (
 		<Parent>
-			{(mirrored)? <MirroredTwoThirdComponent>{twoThirdComponent}</MirroredTwoThirdComponent> : <MirroredOneThirdComponent>{oneThirdComponent}</MirroredOneThirdComponent>}
-			{(mirrored)? <OneThirdComponent>{oneThirdComponent}</OneThirdComponent> : <TwoThirdComponent>{twoThirdComponent}</TwoThirdComponent>}
+			{mirrored ? <MirroredTwoThirdComponent>{twoThirdComponent}</MirroredTwoThirdComponent> : <MirroredOneThirdComponent>{oneThirdComponent}</MirroredOneThirdComponent>}
+			{mirrored ? <OneThirdComponent>{oneThirdComponent}</OneThirdComponent> : <TwoThirdComponent>{twoThirdComponent}</TwoThirdComponent>}
 		</Parent>
 	)
 }
 
-
 export default OneThirdTwoThirdsGrid
 
-export {LeftBoxSectionTypography, RightBoxPaper, LeftBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer}
+export { LeftBoxSectionTypography, RightBoxPaper, LeftBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer }

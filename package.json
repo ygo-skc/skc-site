@@ -6,8 +6,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@material-ui/icons": "4.11.2",
-    "@material-ui/lab": "4.0.0-alpha.60",
+    "@mui/icons-material": "^5.2.4",
     "@mui/material": "^5.1.0",
     "@mui/styled-engine-sc": "^5.1.0",
     "@mui/styles": "^5.1.0",
@@ -35,7 +34,7 @@
     "build:production": "env-cmd -f ./.env.production react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-	 "checkAWS:cloudfrontSKC": "aws cloudfront list-distributions | jq '.DistributionList.Items[] | select(.Aliases.Items | contains([\"thesupremekingscastle.com\"])) |  {id: .Id, aliases: .Aliases}'",
+    "checkAWS:cloudfrontSKC": "aws cloudfront list-distributions | jq '.DistributionList.Items[] | select(.Aliases.Items | contains([\"thesupremekingscastle.com\"])) |  {id: .Id, aliases: .Aliases}'",
     "uploadAWS:production": "npm run build:production; aws s3 rm s3://yugiohsite/ --recursive; aws s3 sync build s3://yugiohsite/ --cache-control max-age=3600; aws cloudfront create-invalidation --distribution-id ${YGO_CLOUDFRONT_PROD} --paths '/*'",
     "uploadAWS:development": "npm run build:development_remote; aws s3 rm s3://yugiohsitedev/ --recursive; aws s3 sync build s3://yugiohsitedev/ --cache-control max-age=3600; aws cloudfront create-invalidation --distribution-id ${YGO_CLOUDFRONT_DEV} --paths '/*'"
   },
@@ -58,6 +57,7 @@
     "@types/styled-components": "5.1.18",
     "@types/underscore": "1.11.4",
     "env-cmd": "10.1.0",
+    "eslint-config-react-app": "^7.0.0",
     "immer": "9.0.7",
     "react-scripts": "5.0.0",
     "typescript": "4.5.4"

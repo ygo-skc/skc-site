@@ -1,5 +1,5 @@
-import React from 'react'
 import { Typography, Box } from '@mui/material'
+import { FC } from 'react'
 import styled from 'styled-components'
 
 const Container = styled(Box)`
@@ -23,26 +23,33 @@ const Container = styled(Box)`
 				box-shadow: 0 0 0 0rem rgba(255, 184, 136, 0.4);
 			}
 			25% {
-				box-shadow: 0 0 0 .4rem rgba(255, 184, 136, .2);
+				box-shadow: 0 0 0 0.4rem rgba(255, 184, 136, 0.2);
 			}
 			50% {
-				box-shadow: 0 0 0 .75rem rgba(255, 184, 136, 0);
+				box-shadow: 0 0 0 0.75rem rgba(255, 184, 136, 0);
 			}
 		}
 	}
 `
 
+type _DatabaseInfo = {
+	total: number
+	subject: string
+	color: string
+	action: any
+}
 
-export default function DatabaseInfo({ total, subject, color, action })
-{
-	return(
-		<Container item onClick={()=> action()} >
-			<Typography variant='h1' align='center' style={{color: '#626262'}} >
+const DatabaseInfo: FC<_DatabaseInfo> = ({ total, subject, color, action }) => {
+	return (
+		<Container onClick={() => action()}>
+			<Typography variant='h1' align='center' style={{ color: '#626262' }}>
 				{total}
 			</Typography>
-			<Typography variant='h5' align='center' style={{color: color}} >
+			<Typography variant='h5' align='center' style={{ color: color }}>
 				{subject}
 			</Typography>
 		</Container>
 	)
 }
+
+export default DatabaseInfo

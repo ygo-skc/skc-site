@@ -1,76 +1,56 @@
 import { FunctionComponent, memo } from 'react'
 import '../../css/nav/breadcrumb.css'
 
-import {Breadcrumbs, Link, Box, Typography} from '@mui/material'
+import { Breadcrumbs, Link, Box, Typography } from '@mui/material'
 import { Skeleton } from '@mui/material'
 
-import HomeIcon from '@material-ui/icons/Home'
-import Block from '@material-ui/icons/Block'
-import ErrorIcon from '@material-ui/icons/Error'
-import InfoIcon from '@material-ui/icons/Info';
+import HomeIcon from '@mui/icons-material/Home'
+import Block from '@mui/icons-material/Block'
+import ErrorIcon from '@mui/icons-material/Error'
+import InfoIcon from '@mui/icons-material/Info'
 
 import { NAME_maps_ROUTE } from '../../Routes'
-
 
 type BreadcrumbProps = {
 	crumbs: string[]
 }
 
-
-const Breadcrumb: FunctionComponent<BreadcrumbProps> = memo( ( { crumbs }  ) =>
-{
-	var Crumbs: JSX.Element[] = crumbs.map((item: string, ind: number) =>
-	{
-		if ((ind === crumbs.length - 1))
-		{
-			return(
-				(item === '') ?
-					<Skeleton
-						key={item}
-						variant='text'
-						width={ 50 }
-					/>
-					: <Link
-						className='breadcrumb'
-						variant='subtitle2'
-						color='inherit'
-						key={item}
-						underline='none' >
-							{ BreadcrumbStaticFields.BREADCRUMB_maps_ICON.get(item) }
-							<Typography className='breadcrumb breadcrumb-text' >{ item }</Typography>
+const Breadcrumb: FunctionComponent<BreadcrumbProps> = memo(
+	({ crumbs }) => {
+		var Crumbs: JSX.Element[] = crumbs.map((item: string, ind: number) => {
+			if (ind === crumbs.length - 1) {
+				return item === '' ? (
+					<Skeleton key={item} variant='text' width={50} />
+				) : (
+					<Link className='breadcrumb' variant='subtitle2' color='inherit' key={item} underline='none'>
+						{BreadcrumbStaticFields.BREADCRUMB_maps_ICON.get(item)}
+						<Typography className='breadcrumb breadcrumb-text'>{item}</Typography>
 					</Link>
+				)
+			}
+
+			return (
+				<Link underline='none' className='breadcrumb' variant='subtitle2' color='inherit' href={NAME_maps_ROUTE[item.replace(' ', '')]} key={item}>
+					{BreadcrumbStaticFields.BREADCRUMB_maps_ICON.get(item)}
+					<Typography className='breadcrumb breadcrumb-text'>{item}</Typography>
+				</Link>
 			)
-		}
+		})
 
-		return(
-			<Link
-				underline='none'
-				className='breadcrumb'
-				variant='subtitle2'
-				color='inherit'
-				href={ NAME_maps_ROUTE[item.replace(' ', '')] }
-				key={item} >
-					{ BreadcrumbStaticFields.BREADCRUMB_maps_ICON.get(item) }
-					<Typography className='breadcrumb breadcrumb-text' >{ item }</Typography>
-			</Link>
+		return (
+			<Box className='breadcrumb-parent'>
+				<Breadcrumbs separator={'/'} aria-label='breadcrumb'>
+					{Crumbs}
+				</Breadcrumbs>
+			</Box>
 		)
-	})
+	},
+	(prevProps, newProps) => {
+		if (prevProps.crumbs[prevProps.crumbs.length - 1] !== newProps.crumbs[newProps.crumbs.length - 1]) return false
 
-	return(
-		<Box className='breadcrumb-parent' >
-			<Breadcrumbs
-				separator={'/'}
-				aria-label='breadcrumb' >
-					{ Crumbs }
-			</Breadcrumbs>
-		</Box>
-	)
-}, (prevProps, newProps) => {
-	if ( prevProps.crumbs[prevProps.crumbs.length - 1] !== newProps.crumbs[newProps.crumbs.length - 1] )
-		return false
-
-	return true
-})
+		return true
+	}
+)
 
 class BreadcrumbStaticFields {
 	static BREADCRUMB_maps_ICON = BreadcrumbStaticFields.getBreadcrumbIcons()
@@ -85,6 +65,5 @@ class BreadcrumbStaticFields {
 		return BREADCRUMB_maps_ICON
 	}
 }
-
 
 export default Breadcrumb
