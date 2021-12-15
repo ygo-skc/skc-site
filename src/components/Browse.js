@@ -16,12 +16,12 @@ import OneThirdTwoThirdsGrid from './util/grid/OneThirdTwoThirdsGrid'
 import { handleFetch } from '../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../helper/DownstreamServices'
 
-import {LightTranslucentDivider, DarkTranslucentDivider} from './util/Divider'
+import {LightTranslucentDivider} from './util/Divider'
 import {StickyBox} from './util/StyledContainers'
 
 import RenderGroup, {SearchSuggestionTypography} from './util/search/Search'
 
-import {RightBoxPaper, LeftBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from './util/grid/OneThirdTwoThirdsGrid'
+import {LeftBoxPaper, RightBoxSubHeaderTypography} from './util/grid/OneThirdTwoThirdsGrid'
 
 const CardDisplayGrid = lazy( () => import('./util/grid/CardDisplayGrid'))
 

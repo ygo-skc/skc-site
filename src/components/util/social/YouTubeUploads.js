@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import { Typography } from '@mui/material'
 import { Skeleton } from '@mui/material'
 
-import { RightBoxHeaderTypography, RightBoxSubHeaderTypography } from '../grid/OneThirdTwoThirdsGrid'
+import { RightBoxSubHeaderTypography } from '../grid/OneThirdTwoThirdsGrid'
 
 import VideoInfoContainer from './VideoInfoContainer'
 import Link from '../Link'

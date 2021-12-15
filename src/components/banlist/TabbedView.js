@@ -1,7 +1,7 @@
 import React, { useState, useEffect, memo } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { AppBar, Tabs, Tab, Badge } from '@mui/material'
+import { AppBar, Tabs, Tab } from '@mui/material'
 import BlockIcon from '@mui/icons-material/Block'
 import LooksOneTwoToneIcon from '@mui/icons-material/LooksOneTwoTone'
 import LooksTwoTwoToneIcon from '@mui/icons-material/LooksTwoTwoTone';

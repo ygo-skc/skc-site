@@ -10,7 +10,7 @@ import {MainContentContainer} from '../MainContent'
 
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 
-import {RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from '../util/grid/OneThirdTwoThirdsGrid'
+import {RightBoxSubHeaderTypography} from '../util/grid/OneThirdTwoThirdsGrid'
 
 
 const Breadcrumb = lazy( () => import('../util/Breadcrumb') )
