@@ -28,10 +28,10 @@ class _DatabaseSearch {
 }
 
 export default function DatabaseSearch() {
-	const [searchInput, setSearchInput] = useState('')
+	const [searchInput, setSearchInput] = useState<string>('')
 	const [searchOptions, setSearchOptions] = useState([])
 	const [fetchToken, setFetchToken] = useState<CancelTokenSource>(axios.CancelToken.source())
-	const [isFetching, setIsFetching] = useState(false)
+	const [isFetching, setIsFetching] = useState<boolean>(false)
 
 	useEffect(() => {
 		if (searchInput !== '') {
@@ -52,7 +52,6 @@ export default function DatabaseSearch() {
 		<Autocomplete
 			className='search-bar'
 			id='search'
-			clearOnEscape
 			selectOnFocus
 			noOptionsText={searchInput === '' ? 'Type For Suggestions' : 'No Results'}
 			getOptionLabel={(option: any) => option.cardName}
