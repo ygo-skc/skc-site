@@ -2,7 +2,7 @@ import React, { lazy, useState, useEffect, Suspense } from 'react'
 import { Helmet } from 'react-helmet'
 
 
-import { MainContentContainer } from '../MainContent'
+import { MainContentContainer } from '../util/MainContent'
 import { handleFetch } from '../../helper/FetchHandler'
 import { BanListDates } from './BanListDates'
 import NAME_maps_ENDPOINT from '../../helper/DownstreamServices'
@@ -14,7 +14,7 @@ import {LightTranslucentDivider} from '../util/Divider'
 import {StickyBox} from '../util/StyledContainers'
 
 
-import BreadCrumb from '../util/Breadcrumb'
+import BreadCrumb from '../header-footer/Breadcrumb'
 const TabbedView = lazy( () => import('./TabbedView') )
 const BanListSection = lazy( () => import('./BanListSection') )
 const BanListStats = lazy( () => import('./BanListStats') )

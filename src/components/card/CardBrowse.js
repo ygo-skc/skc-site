@@ -5,25 +5,25 @@ import { Chip, InputBase, IconButton, Typography } from '@mui/material'
 import { Helmet } from 'react-helmet'
 
 import SearchIcon from '@mui/icons-material/Search'
-import Section from './util/Section'
+import Section from '../util/Section'
 
-import Breadcrumb from './util/Breadcrumb'
-import { MainContentContainer } from './MainContent'
+import Breadcrumb from '../header-footer/Breadcrumb'
+import { MainContentContainer } from '../util/MainContent'
 
 
-import OneThirdTwoThirdsGrid from './util/grid/OneThirdTwoThirdsGrid'
+import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 
-import { handleFetch } from '../helper/FetchHandler'
-import NAME_maps_ENDPOINT from '../helper/DownstreamServices'
+import { handleFetch } from '../../helper/FetchHandler'
+import NAME_maps_ENDPOINT from '../../helper/DownstreamServices'
 
-import {LightTranslucentDivider} from './util/Divider'
-import {StickyBox} from './util/StyledContainers'
+import {LightTranslucentDivider} from '../util/Divider'
+import {StickyBox} from '../util/StyledContainers'
 
-import RenderGroup, {SearchSuggestionTypography} from './util/search/Search'
+import RenderGroup, {SearchSuggestionTypography} from '../util/search/Search'
 
-import {LeftBoxPaper, RightBoxSubHeaderTypography} from './util/grid/OneThirdTwoThirdsGrid'
+import {LeftBoxPaper, RightBoxSubHeaderTypography} from '../util/grid/OneThirdTwoThirdsGrid'
 
-const CardDisplayGrid = lazy( () => import('./util/grid/CardDisplayGrid'))
+const CardDisplayGrid = lazy( () => import('../util/grid/CardDisplayGrid'))
 
 const defaultDisplayNum = 50
 

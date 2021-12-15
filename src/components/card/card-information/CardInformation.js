@@ -5,10 +5,10 @@ import { Skeleton } from '@mui/material'
 
 import { handleFetch } from '../../../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../../../helper/DownstreamServices'
-import { MainContentContainer } from '../../MainContent'
+import { MainContentContainer } from '../../util/MainContent'
 import OneThirdTwoThirdsGrid from '../../util/grid/OneThirdTwoThirdsGrid'
 
-const Breadcrumb = lazy( () => import('../../util/Breadcrumb') )
+const Breadcrumb = lazy( () => import('../../header-footer/Breadcrumb') )
 const CardData = lazy( () => import('./CardData') )
 
 

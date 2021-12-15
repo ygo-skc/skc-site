@@ -1,6 +1,6 @@
 import React from 'react'
 import { Skeleton, Typography } from '@mui/material'
-import createTable from '../../helper/TableHelpers'
+import createTable from '../util/TableHelpers'
 
 import {LightTranslucentDivider} from '../util/Divider'
 

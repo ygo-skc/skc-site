@@ -2,7 +2,7 @@ import { Typography, Box, Paper } from '@mui/material'
 
 import Styled from 'styled-components'
 
-import Parent from '../../Parent'
+import Parent from '../Parent'
 import { FC, ReactNode } from 'react'
 
 const LeftBoxSectionTypography = Styled(Typography)`

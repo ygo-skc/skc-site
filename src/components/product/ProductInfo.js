@@ -6,14 +6,14 @@ import {handleFetch} from '../../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../../helper/DownstreamServices'
 import Section from '../util/Section'
 
-import {MainContentContainer} from '../MainContent'
+import {MainContentContainer} from '../util/MainContent'
 
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 
 import {RightBoxSubHeaderTypography} from '../util/grid/OneThirdTwoThirdsGrid'
 
 
-const Breadcrumb = lazy( () => import('../util/Breadcrumb') )
+const Breadcrumb = lazy( () => import('../header-footer/Breadcrumb') )
 const CardDisplayGrid = lazy( () => import('../util/grid/CardDisplayGrid') )
 const ProductInfoDetailsComponent = lazy( () => import('./ProductInfoDetailsComponent') )
 
