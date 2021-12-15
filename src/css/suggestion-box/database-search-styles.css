@@ -7,24 +7,24 @@
 }
 
 .card-image-avatar.MuiAvatar-root {
-	margin-right: .75rem;
+	margin-right: 0.75rem;
 	width: 50px;
 	height: 50px;
 }
 
 .search-icon {
 	font-size: 1.85rem;
-	color: rgba(255, 143, 68, .85)
+	color: rgba(255, 143, 68, 0.85);
 }
 
 .search-input-parent {
 	display: flex;
-	padding: .2rem;
+	padding: 0.2rem;
 	padding-left: 1rem;
 }
 
 .search-input-field {
-	color: rgba(0,0,0,.80);
+	color: rgba(0, 0, 0, 0.8);
 	flex: 1;
 	font-size: 1.05rem;
 }
@@ -33,6 +33,7 @@
 	display: flex;
 	width: 100%;
 	padding: 0rem;
+	padding-top: 0.5rem;
 }
 
 .search-suggestions-info-parent {
@@ -41,9 +42,9 @@
 }
 
 .search-suggestion-substring-match {
-	color: rgba(255, 143, 68, .85);
+	color: rgba(255, 143, 68, 0.85);
 }
 
 .search-suggestion-subheader {
-	color: rgba(81, 99, 114, .8);
+	color: rgba(81, 99, 114, 0.8);
 }

@@ -51,6 +51,7 @@ export default function DatabaseSearch() {
 	return (
 		<Autocomplete
 			className='search-bar'
+			loading={isFetching}
 			id='search'
 			selectOnFocus
 			noOptionsText={searchInput === '' ? 'Type For Suggestions' : 'No Results'}
@@ -58,7 +59,7 @@ export default function DatabaseSearch() {
 			options={searchOptions}
 			groupBy={(option) => option.cardColor}
 			onChange={(_event, value, reason: string) => {
-				if (reason === 'select-option') {
+				if (reason === 'selectOption') {
 					window.location.assign(`/card/${value.cardID}`)
 				}
 			}}
@@ -66,7 +67,7 @@ export default function DatabaseSearch() {
 				return <RenderGroup group={option.group} children={option.children} />
 			}}
 			renderInput={(params) => (
-				<div className='search-input-parent'>
+				<div {...params} className='search-input-parent'>
 					<InputBase
 						className='search-input-field'
 						ref={params.InputProps.ref}
@@ -81,7 +82,7 @@ export default function DatabaseSearch() {
 					</IconButton>
 				</div>
 			)}
-			renderOption={(option: any) => {
+			renderOption={(props: React.HTMLAttributes<HTMLLIElement>, option: any) => {
 				const CARD_NAME = option.cardName
 				const UPPERCASE_CARD_NAME = CARD_NAME.toUpperCase()
 				const UPPERCASE_SEARCH_TERM = searchInput.toUpperCase()
@@ -90,7 +91,7 @@ export default function DatabaseSearch() {
 				const LENGTH_OF_SEARCH_TERM = UPPERCASE_SEARCH_TERM.length
 
 				return (
-					<div className='search-suggestions-parent'>
+					<li {...props} className='search-suggestions-parent'>
 						<Avatar className='card-image-avatar' alt={`${CARD_NAME}-Avatar`} src={`https://images.thesupremekingscastle.com/cards/tn/${option.cardID}.jpg`} />
 						<div className='search-suggestions-info-parent'>
 							<SearchSuggestionTypography variant='subtitle1'>
@@ -102,7 +103,7 @@ export default function DatabaseSearch() {
 								{option.monsterType}
 							</SearchSuggestionTypography>
 						</div>
-					</div>
+					</li>
 				)
 			}}
 		/>
