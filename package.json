@@ -24,7 +24,7 @@
     "react-visibility-sensor": "5.1.1",
     "set-value": "^4.1.0",
     "styled-components": "^5.3.3",
-    "underscore": "1.13.1"
+    "underscore": "1.13.2"
   },
   "scripts": {
     "start": "env-cmd -e dev react-scripts start",
