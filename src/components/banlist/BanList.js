@@ -2,6 +2,7 @@ import React, { lazy, useState, useEffect, Suspense } from 'react'
 import { Helmet } from 'react-helmet'
 
 
+import { Box } from '@mui/material'
 import { MainContentContainer } from '../util/MainContent'
 import { handleFetch } from '../../helper/FetchHandler'
 import { BanListDates } from './BanListDates'
@@ -10,9 +11,6 @@ import NAME_maps_ENDPOINT from '../../helper/DownstreamServices'
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 import { RightBoxPaper, LeftBoxPaper } from '../util/grid/OneThirdTwoThirdsGrid'
 import {LightTranslucentDivider} from '../util/Divider'
-
-import {StickyBox} from '../util/StyledContainers'
-
 
 import BreadCrumb from '../header-footer/Breadcrumb'
 const TabbedView = lazy( () => import('./TabbedView') )
@@ -124,7 +122,7 @@ export default function BanList(props)
 
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={
-					<StickyBox>
+					<Box className='sticky' >
 						<LeftBoxPaper style={{ backgroundImage: 'linear-gradient(315deg, #fc9842 0%, #fe5f75 74%)' }} >
 
 							{(isSettingUpDates)? undefined
@@ -150,7 +148,7 @@ export default function BanList(props)
 								/>
 							</Suspense>
 						</LeftBoxPaper>
-					</StickyBox>
+					</Box>
 				}
 				twoThirdComponent={
 					<RightBoxPaper>

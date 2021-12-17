@@ -1,10 +1,8 @@
 import React from 'react'
-import { Skeleton, Typography } from '@mui/material'
+import { Skeleton, Typography, Box } from '@mui/material'
 import createTable from '../util/TableHelpers'
 
 import {LightTranslucentDivider} from '../util/Divider'
-
-import {StickyBox} from '../util/StyledContainers'
 
 import {LeftBoxPaper} from '../util/grid/OneThirdTwoThirdsGrid'
 
@@ -24,8 +22,7 @@ export default function ProductInfoDetailsComponent({productName, productId, pro
 		})
 
 	return(
-		<StickyBox>
-
+		<Box className='sticky' >
 			<LeftBoxPaper style={{ backgroundImage: 'linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)' }} >
 
 				{(isDataLoaded)?
@@ -60,6 +57,6 @@ export default function ProductInfoDetailsComponent({productName, productId, pro
 				{createTable([], statRows, () => console.log('No Action'))}
 			</LeftBoxPaper>
 
-		</StickyBox>
+		</Box>
 	)
 }

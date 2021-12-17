@@ -1,10 +1,10 @@
 import { useEffect, useState, lazy, Suspense } from 'react'
 import { Helmet } from 'react-helmet'
 
+import { Box } from '@mui/material'
 import { MainContentContainer } from '../util/MainContent'
 import { handleFetch } from '../../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../../helper/DownstreamServices'
-import { StickyBox } from '../util/StyledContainers'
 
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 import Section from '../util/Section'
@@ -45,9 +45,9 @@ export default function Home() {
 			<OneThirdTwoThirdsGrid
 				mirrored={true}
 				oneThirdComponent={
-					<StickyBox>
+					<Box className='sticky'>
 						<Section sectionName='Social' sectionContent={<SocialMedia />} />
-					</StickyBox>
+					</Box>
 				}
 				twoThirdComponent={
 					<Section

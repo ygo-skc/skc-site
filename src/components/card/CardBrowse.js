@@ -1,7 +1,7 @@
 import React, { useState, useEffect, lazy } from 'react'
 import startCase from 'lodash.startcase'
 import Autocomplete from '@mui/material/Autocomplete'
-import { Chip, InputBase, IconButton, Typography } from '@mui/material'
+import { Chip, InputBase, IconButton, Typography, Box } from '@mui/material'
 import { Helmet } from 'react-helmet'
 
 import SearchIcon from '@mui/icons-material/Search'
@@ -17,7 +17,6 @@ import { handleFetch } from '../../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../../helper/DownstreamServices'
 
 import {LightTranslucentDivider} from '../util/Divider'
-import {StickyBox} from '../util/StyledContainers'
 
 import RenderGroup, {SearchSuggestionTypography} from '../util/search/Search'
 
@@ -175,7 +174,7 @@ export default function Browse()
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={
 
-					<StickyBox>
+					<Box className='sticky' >
 						<LeftBoxPaper style={{ backgroundImage: 'linear-gradient(315deg, #7f5a83 0%, #0d324d 74%)' }} >
 
 							<Typography
@@ -253,7 +252,7 @@ export default function Browse()
 							</Typography>
 
 						</LeftBoxPaper>
-					</StickyBox>
+					</Box>
 				}
 				twoThirdComponent={
 					<Section
