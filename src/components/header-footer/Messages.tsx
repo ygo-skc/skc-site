@@ -7,7 +7,6 @@ import NotificationsIcon from '@mui/icons-material/Notifications'
 
 import { HEART_API_HOST_NAME } from '../../helper/DownstreamServices'
 import { handleFetch } from '../../helper/FetchHandler'
-import { MessageItem } from '../types/HeartApiTypes'
 import GenericNonBreakingErr from '../util/exception/GenericNonBreakingErr'
 import MessageItemComponent from './MessageItemComponent'
 
