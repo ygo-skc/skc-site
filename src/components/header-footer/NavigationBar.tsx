@@ -6,7 +6,7 @@ import GitHubIcon from '@mui/icons-material/GitHub'
 import YouTube from '@mui/icons-material/YouTube'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 
-import { NAME_maps_ROUTE } from '../../Routes'
+import { NAME_maps_ROUTE } from '../Routes'
 import Styled from 'styled-components'
 import SubNav from './SubNav'
 // import Messages from './Messages'

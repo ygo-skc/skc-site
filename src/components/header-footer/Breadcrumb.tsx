@@ -9,7 +9,7 @@ import Block from '@mui/icons-material/Block'
 import ErrorIcon from '@mui/icons-material/Error'
 import InfoIcon from '@mui/icons-material/Info'
 
-import { NAME_maps_ROUTE } from '../../Routes'
+import { NAME_maps_ROUTE } from '../Routes'
 
 type BreadcrumbProps = {
 	crumbs: string[]
