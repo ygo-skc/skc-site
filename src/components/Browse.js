@@ -1,10 +1,11 @@
 import React, { useState, useEffect, lazy } from 'react'
 import startCase from 'lodash.startcase'
 import Autocomplete from '@material-ui/lab/Autocomplete'
-import { Chip, InputBase, IconButton } from '@material-ui/core'
+import { Chip, InputBase, IconButton, Typography } from '@material-ui/core'
 import { Helmet } from 'react-helmet'
 
 import SearchIcon from '@material-ui/icons/Search'
+import Section from './util/Section'
 
 import Breadcrumb from './util/Breadcrumb'
 import { MainContentContainer } from './MainContent'
@@ -18,9 +19,9 @@ import NAME_maps_ENDPOINT from '../helper/DownstreamServices'
 import {LightTranslucentDivider, DarkTranslucentDivider} from './util/Divider'
 import {StickyBox} from './util/StyledContainers'
 
-import {RenderGroup, SearchSuggestionTypography} from './util/Search'
+import RenderGroup, {SearchSuggestionTypography} from './util/search/Search'
 
-import {LeftBoxSectionTypography, LeftBoxSectionHeaderTypography, RightBoxPaper, LeftBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from './util/grid/OneThirdTwoThirdsGrid'
+import {RightBoxPaper, LeftBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from './util/grid/OneThirdTwoThirdsGrid'
 
 const CardDisplayGrid = lazy( () => import('./util/grid/CardDisplayGrid'))
 
@@ -177,9 +178,11 @@ export default function Browse()
 					<StickyBox>
 						<LeftBoxPaper style={{ backgroundImage: 'linear-gradient(315deg, #7f5a83 0%, #0d324d 74%)' }} >
 
-							<LeftBoxSectionHeaderTypography variant='h6' >
+							<Typography
+								style={{color: 'white'}}
+								variant='h4' >
 								Current Criteria
-							</LeftBoxSectionHeaderTypography>
+							</Typography>
 
 							<div style={{minHeight: '1.5rem', marginBottom: '1rem'}} >
 								{selectedCriteriaChips}
@@ -233,41 +236,47 @@ export default function Browse()
 
 							<LightTranslucentDivider />
 
-							<LeftBoxSectionHeaderTypography variant='h6' >
+							<Typography
+								style={{color: 'white'}}
+								variant='h5' >
 								Results
-							</LeftBoxSectionHeaderTypography>
-							<LeftBoxSectionTypography variant='body1' >
+							</Typography>
+							<Typography
+								style={{color: 'white'}}
+								variant='body1' >
 								Total: {numResults}
-							</LeftBoxSectionTypography>
-							<LeftBoxSectionTypography variant='body1' >
+							</Typography>
+							<Typography
+								style={{color: 'white'}}
+								variant='body1' >
 								Displaying: {numResultsDisplayed}
-							</LeftBoxSectionTypography>
+							</Typography>
 
 						</LeftBoxPaper>
 					</StickyBox>
 				}
 				twoThirdComponent={
-					<RightBoxPaper>
-						<RightBoxHeaderContainer >
-							<RightBoxHeaderTypography variant='h4' >
-								Browse Results
-							</RightBoxHeaderTypography>
-							<RightBoxSubHeaderTypography variant='h5' >
-								Sorted Alphabetically
-							</RightBoxSubHeaderTypography>
-							<DarkTranslucentDivider />
-						</RightBoxHeaderContainer>
+					<Section
+						sectionName='Browse Results'
+						sectionContent={
+							<div
+								className='section-content' >
+								<RightBoxSubHeaderTypography variant='h5' >
+									Results Are Sorted Alphabetically
+								</RightBoxSubHeaderTypography>
 
-						<CardDisplayGrid
-							cardJsonResults={jsonResults}
-							numResultsDisplayed={numResultsDisplayed}
-							numItemsToLoadWhenNeeded={numItemsToLoadWhenNeeded}
-							loadMoreCallback={loadMore}
-							isLoadMoreOptionVisible={isLoadMoreVisible}
-							numResults={numResults}
-							isDataLoaded={isCardBrowseDataLoaded}
-							/>
-					</RightBoxPaper>
+								<CardDisplayGrid
+									cardJsonResults={jsonResults}
+									numResultsDisplayed={numResultsDisplayed}
+									numItemsToLoadWhenNeeded={numItemsToLoadWhenNeeded}
+									loadMoreCallback={loadMore}
+									isLoadMoreOptionVisible={isLoadMoreVisible}
+									numResults={numResults}
+									isDataLoaded={isCardBrowseDataLoaded}
+								/>
+							</div>
+						}>
+					</Section>
 				}
 			/>
 		</MainContentContainer>

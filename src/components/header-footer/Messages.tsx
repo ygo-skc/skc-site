@@ -2,17 +2,17 @@ import '../../css/nav/navigation-icon.css'
 import '../../css/nav/messages.css'
 
 import { useState, useEffect } from 'react'
-import { Typography, IconButton, Popover, Chip, Divider, Badge } from '@material-ui/core'
+import { Typography, IconButton, Popover, Badge } from '@material-ui/core'
 import NotificationsIcon from '@material-ui/icons/Notifications'
-import ReactMarkdown from 'react-markdown'
 
 import {HEART_API_HOST_NAME} from '../../helper/DownstreamServices'
 import { handleFetch } from '../../helper/FetchHandler'
-import { getDateString, getTimeString } from '../../helper/Dates'
 import { MessageItem } from '../types/HeartApiTypes'
+import GenericNonBreakingErr from '../util/exception/GenericNonBreakingErr'
+import MessageItemComponent from './MessageItemComponent'
 
 
-export default function Messages() {
+function Messages() {
 	const [messagesAnchor, setMessagesAnchor] = useState<HTMLButtonElement | undefined>(undefined)
 	const [messagesList, setMessagesList] = useState([])
 
@@ -20,12 +20,13 @@ export default function Messages() {
 	const [numNewMessages, setNumNewMessages] = useState(0)
 
 	const [newestMessageSeen, setNewestMessageSeen] = useState<string>('')
+	const [errorFetchingMessages, setErrorFetchingMessages] = useState(false)
 
 	const isDisplayingNotifications = Boolean(messagesAnchor)
 
 
 	useEffect(() => {
-		handleFetch(`${HEART_API_HOST_NAME}/api/v1/message?service=skc&tags=general`, json => {
+		handleFetch(`${HEART_API_HOST_NAME}/api/v1/message?service=skc&tags=skc-site`, json => {
 			const totalMessages = json.messages.length
 			setNumMessages(totalMessages)
 
@@ -55,29 +56,23 @@ export default function Messages() {
 						}
 					}
 
-
 					return(
-						<div>
-							<Typography className='communication-message-header' variant='h5'>{message.title}</Typography>
-							<Typography className='communication-message-sub-header' variant='subtitle2' >
-								{getDateString(creationDate)} {getTimeString(creationDate)}
-							</Typography>
-							<Typography className='communication-message-body' variant='body1' >
-								<ReactMarkdown children={`${message.content}`} />
-							</Typography>
-							{
-								message.tags.map((tag: string) => <Chip className='communication-message-tag' label={tag} />)
-							}
-							{
-								(index === totalMessages - 1)? undefined: <Divider className='communication-divider' />
-							}
-						</div>
+						<MessageItemComponent
+							creationDate={creationDate}
+							messageTitle={message.title}
+							messageContent={message.content}
+							messageTags={message.tags}
+							isLastMessage={index === totalMessages - 1}
+						/>
 					)
 				})
 			)
 
 
 			setNumNewMessages(_numNewMessages)
+		}, false)
+		?.catch(_err => {
+			setErrorFetchingMessages(true)
 		})
 	}, [])
 
@@ -99,6 +94,7 @@ export default function Messages() {
 			</Badge>
 
 			<Popover
+				style={{overflowX: 'hidden', overflowY: 'hidden'}}
 				id={(isDisplayingNotifications)? 'notification-popover' : undefined}
 				open={isDisplayingNotifications}
 				anchorEl={messagesAnchor}
@@ -113,13 +109,18 @@ export default function Messages() {
 					horizontal: 'left',
 				}}>
 				<div className='communication-popper-container' >
-					<Typography className='communication-message-body' variant='h4' >
-						Messages ({numMessages})
+					<Typography className='communication-message-body' variant='h2' >
+						Messages {(errorFetchingMessages)? '⁉️' : `(${numMessages})`}
 					</Typography>
+					<br />
 
-					{messagesList}
+					{(errorFetchingMessages)? <GenericNonBreakingErr
+						errExplanation='No meaningful impact to the site functionality expected.' /> : messagesList}
 				</div>
 			</Popover>
 		</div>
 	)
 }
+
+
+export default Messages

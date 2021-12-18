@@ -5,10 +5,11 @@ import { MainContentContainer } from '../MainContent'
 
 import {handleFetch} from '../../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../../helper/DownstreamServices'
-import {RightBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer} from '../util/grid/OneThirdTwoThirdsGrid'
 
 import createTable from '../../helper/TableHelpers'
 import { getDateString } from '../../helper/Dates'
+import Section from '../util/Section'
+import { RightBoxSubHeaderTypography } from '../util/grid/OneThirdTwoThirdsGrid'
 
 const Breadcrumb = lazy( () => import('../util/Breadcrumb') )
 
@@ -54,22 +55,22 @@ const ProductBrowse:FunctionComponent = () =>
 
 			<Breadcrumb crumbs={ ['Home', 'Product Browse'] } />
 
-			<RightBoxPaper>
-				<RightBoxHeaderContainer >
-					<RightBoxHeaderTypography variant='h4' >
-						Products In Database
-					</RightBoxHeaderTypography>
-					<RightBoxSubHeaderTypography variant='h5' >
-						Sorted By Release Date
-					</RightBoxSubHeaderTypography>
-				</ RightBoxHeaderContainer>
-
-				<div
-				style={{ backgroundImage: 'linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)'
-					, paddingTop: '0rem', paddingBottom: '0rem', paddingLeft: '0rem', paddingRight: '0rem', borderRadius: '1.1rem' }} >
-					{(isDataLoaded)? productGridItems : undefined}
-				</div>
-			</RightBoxPaper>
+			<Section
+				sectionName='Products In Database'
+				sectionContent={
+					<div
+						className='section-content'>
+						<RightBoxSubHeaderTypography variant='h5'>
+							Sorted By Release Date
+						</RightBoxSubHeaderTypography>
+						<div
+							style={{ backgroundImage: 'linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)'
+								, paddingTop: '0rem', paddingBottom: '0rem', paddingLeft: '0rem', paddingRight: '0rem', borderRadius: '1.1rem' }} >
+							{(isDataLoaded)? productGridItems : undefined}
+						</div>
+					</div>
+				} >
+			</Section>
 
 		</MainContentContainer>
 	)

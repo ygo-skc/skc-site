@@ -1,6 +1,6 @@
 {
   "name": "website",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "description": "Website to help duelists. ",
   "main": "index.js",
   "author": "",
@@ -33,6 +33,7 @@
     "build:production": "env-cmd -f ./.env.production react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "checkAWS:cloudfrontSKC": "aws cloudfront list-distributions | jq '.DistributionList.Items[] | select(.Aliases.Items | contains([\"thesupremekingscastle.com\"])) |  {id: .Id, aliases: .Aliases}'",
     "uploadAWS:production": "npm run build:production; aws s3 rm s3://yugiohsite/ --recursive; aws s3 sync build s3://yugiohsite/ --cache-control max-age=3600; aws cloudfront create-invalidation --distribution-id ${YGO_CLOUDFRONT_PROD} --paths '/*'",
     "uploadAWS:development": "npm run build:development_remote; aws s3 rm s3://yugiohsitedev/ --recursive; aws s3 sync build s3://yugiohsitedev/ --cache-control max-age=3600; aws cloudfront create-invalidation --distribution-id ${YGO_CLOUDFRONT_DEV} --paths '/*'"
   },
@@ -53,6 +54,7 @@
     "@types/react-helmet": "6.1.4",
     "@types/react-router-dom": "5.3.2",
     "@types/styled-components": "5.1.15",
+    "@types/underscore": "^1.11.3",
     "env-cmd": "10.1.0",
     "immer": "9.0.6",
     "react-scripts": "4.0.3",

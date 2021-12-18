@@ -1,27 +1,10 @@
-import React from 'react'
 import { Typography, Box, Paper } from '@material-ui/core'
 
 import Styled from 'styled-components'
 import withWidth from '@material-ui/core/withWidth'
 
 import Parent from '../../Parent'
-
-const LeftBoxHeaderTypography = Styled(Typography)`
-	&&
-	{
-		color: rgba(255, 255, 255, .95);
-		margin-bottom: 1rem;
-		max-width: 100%;
-	}
-`
-
-const LeftBoxSectionHeaderTypography = Styled(Typography)`
-	&&
-	{
-		color: rgba(255, 255, 255, .95);
-		font-weight: 700;
-	}
-`
+import { FC, ReactNode } from 'react'
 
 
 const LeftBoxSectionTypography = Styled(Typography)`
@@ -158,9 +141,14 @@ const MirroredTwoThirdComponent = Styled(Box)`
 	}
 `
 
+type OneThirdTwoThirdsGridType = {
+	oneThirdComponent: ReactNode,
+	twoThirdComponent: ReactNode,
+	mirrored: boolean
+}
 
-function OneThirdTwoThirdsGrid( { oneThirdComponent, twoThirdComponent, mirrored=false } )
-{
+
+const OneThirdTwoThirdsGrid:FC<OneThirdTwoThirdsGridType> = ( { oneThirdComponent, twoThirdComponent, mirrored=false } ) => {
 
 	return(
 		<Parent>
@@ -173,4 +161,4 @@ function OneThirdTwoThirdsGrid( { oneThirdComponent, twoThirdComponent, mirrored
 
 export default withWidth()(OneThirdTwoThirdsGrid)
 
-export {LeftBoxHeaderTypography, LeftBoxSectionTypography, LeftBoxSectionHeaderTypography, RightBoxPaper, LeftBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer}
+export {LeftBoxSectionTypography, RightBoxPaper, LeftBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer}
