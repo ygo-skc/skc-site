@@ -1,8 +1,8 @@
 .communication-message-badge span.MuiBadge-badge {
-	padding: .9rem;
-	padding-right: .9rem;
-	padding-bottom: .9rem;
-	padding-left: .9rem;
+	padding: 0.9rem;
+	padding-right: 0.9rem;
+	padding-bottom: 0.9rem;
+	padding-left: 0.9rem;
 	height: 0px;
 	width: 0px;
 	top: 3;
@@ -12,12 +12,12 @@
 }
 
 .communication-message-header.MuiTypography-root {
-	margin-bottom: .85rem;
+	margin-bottom: 0.85rem;
 	color: black;
 }
 
 .communication-message-sub-header.MuiTypography-root {
-	margin-bottom: .5rem;
+	margin-bottom: 0.5rem;
 	color: black;
 }
 
@@ -27,47 +27,47 @@
 
 .communication-message-body p {
 	margin-block-start: 0rem;
-	margin-block-end: .2rem;
+	margin-block-end: 0.2rem;
 }
 
 .communication-message-body a {
 	background: rgba(253, 237, 221, 1);
-	padding: .15rem;
+	padding: 0.15rem;
 	color: #ff8f44;
 	text-decoration: none;
 }
 
 .communication-message-body a:hover {
-	text-decoration: underline;
+	text-decoration: none;
 }
 
 .communication-message-tag.MuiChip-root {
-	background: rgba(135, 120, 229, .95);
+	background: rgba(135, 120, 229, 0.95);
 	backdrop-filter: blur(60px);
 	height: auto;
 }
 
 .communication-message-tag span.MuiChip-label {
 	font-weight: 500;
-	font-size: .8rem;
-	padding-left: .75rem;
-	padding-right: .75rem;
-	padding-top: .35rem;
-	padding-bottom: .35rem;
+	font-size: 0.8rem;
+	padding-left: 0.75rem;
+	padding-right: 0.75rem;
+	padding-top: 0.35rem;
+	padding-bottom: 0.35rem;
 }
 
 .communication-popper-container {
 	padding: 1rem;
 	max-width: 400px;
 	max-height: 500px;
-	background: rgb(255, 255, 255, .4);
+	background: rgb(255, 255, 255, 0.4);
 	backdrop-filter: blur(60px);
 	overflow-x: hidden;
 }
 
 .communication-divider.MuiDivider-root {
-	margin-top: .75rem;
+	margin-top: 0.75rem;
 	margin-bottom: 1rem;
-	background: rgba(93, 90, 107, .15);
+	background: rgba(93, 90, 107, 0.15);
 	backdrop-filter: blur(60px);
 }

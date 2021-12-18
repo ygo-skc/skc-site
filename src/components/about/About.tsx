@@ -1,12 +1,13 @@
 import { FunctionComponent, lazy } from 'react'
 import { Helmet } from 'react-helmet'
 
-import { Typography, Paper, Grid } from '@mui/material'
+import { Typography, Paper, Grid, Link } from '@mui/material'
 import styled from 'styled-components'
 
 import Breadcrumb from '../header-footer/Breadcrumb'
 import { MainContentContainer } from '../util/MainContent'
-import Link from '../util/Link'
+
+import '../../css/util/link.css'
 
 const AboutInfoCard = lazy(() => import('./AboutInfoCard'))
 
@@ -135,7 +136,7 @@ const About: FunctionComponent = () => {
 											<br />
 											<Typography variant='body1'>
 												You can start using it by looking at the{' '}
-												<Link color='secondary' href={`${process.env.REACT_APP_API_HOST}/api/v1/swagger-ui/index.html`}>
+												<Link className='link' color='secondary' href={`${process.env.REACT_APP_API_HOST}/api/v1/swagger-ui/index.html`}>
 													documentation
 												</Link>
 												. As of right now, the only permissible uses are for education (learning about REST, needing data for a consumer, etc). If you have question on usage please
@@ -172,7 +173,7 @@ const About: FunctionComponent = () => {
 														<strong>ZEC (Zcash) Wallet:</strong> t1UdXZkAUUNY35Kh2FiRoRk29Xu8SEYsXxS
 													</li>
 													<li>
-														<Link color='secondary' href='https://www.paypal.com/donate?hosted_button_id=S3MFF6AVW662U'>
+														<Link className='link' color='secondary' href='https://www.paypal.com/donate?hosted_button_id=S3MFF6AVW662U'>
 															PayPal
 														</Link>
 													</li>
@@ -208,11 +209,11 @@ const About: FunctionComponent = () => {
 											<Typography variant='h6'>Contact</Typography>
 											<ParagraphTypography variant='body1'>
 												If you have questions or want to submit a bug/feature request you can always{' '}
-												<Link color='secondary' href='mailto:thesupremeking25@gmail.com'>
+												<Link className='link' color='secondary' href='mailto:thesupremeking25@gmail.com'>
 													email me
 												</Link>
 												. Otherwise, feel free to follow me on{' '}
-												<Link color='secondary' href='https://twitter.com/SupremeKing93'>
+												<Link className='link' color='secondary' href='https://twitter.com/SupremeKing93'>
 													twitter
 												</Link>
 												. Though I don't really do social media, I will try my best to post updates there.
@@ -243,7 +244,7 @@ const About: FunctionComponent = () => {
 											<br />
 											The channel is pretty laid back and I won't be screaming/freaking out every time I get a rare card. In other words, It is an alternative to the fake or over
 											the top reaction based Yugioh openings. Feel free to{' '}
-											<Link color='secondary' href='https://www.youtube.com/channel/UCBZ_1wWyLQI3SV9IgLbyiNQ/videos'>
+											<Link className='link' color='secondary' href='https://www.youtube.com/channel/UCBZ_1wWyLQI3SV9IgLbyiNQ/videos'>
 												watch/subscribe
 											</Link>
 											!

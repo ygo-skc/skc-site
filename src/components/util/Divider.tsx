@@ -1,6 +1,5 @@
-import {Divider} from '@mui/material'
+import { Divider } from '@mui/material'
 import Styled from 'styled-components'
-
 
 const BaseDivider = Styled(Divider)`
 	&&
@@ -14,7 +13,6 @@ const BaseDivider = Styled(Divider)`
 	}
 `
 
-
 const LightTranslucentDivider = Styled(BaseDivider)`
 	&&
 	{
@@ -22,14 +20,4 @@ const LightTranslucentDivider = Styled(BaseDivider)`
 	}
 `
 
-
-const DarkTranslucentDivider = Styled(BaseDivider)`
-	&&
-	{
-		background-color: #ECBD0B;
-		background-image: linear-gradient(315deg, #ECBD0B 0%, #DC5010 44%);
-	}
-`
-
-
-export {LightTranslucentDivider, DarkTranslucentDivider}
+export { LightTranslucentDivider }

@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react'
-import { Typography } from '@mui/material'
+import { Typography, Link } from '@mui/material'
 import { Skeleton } from '@mui/material'
 
 import { RightBoxSubHeaderTypography } from '../grid/OneThirdTwoThirdsGrid'
 
 import VideoInfoContainer from './VideoInfoContainer'
-import Link from '../Link'
+
+import '../../../css/util/link.css'
 
 
 export default function YouTubeUploads({ youtubeData })
@@ -40,7 +41,7 @@ export default function YouTubeUploads({ youtubeData })
 			</RightBoxSubHeaderTypography>
 
 			<Typography variant='subtitle2' >
-				Most recent uploads for <Link color='secondary' href='https://www.youtube.com/channel/UCBZ_1wWyLQI3SV9IgLbyiNQ'>Supreme King YT</Link>
+				Most recent uploads for <Link className='link' color='secondary' href='https://www.youtube.com/channel/UCBZ_1wWyLQI3SV9IgLbyiNQ'>Supreme King YT</Link>
 			</Typography>
 			<br />
 
