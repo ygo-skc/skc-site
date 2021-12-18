@@ -4,7 +4,6 @@ import { Grid, IconButton, Box } from '@mui/material'
 import { Skeleton } from '@mui/material'
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 
-
 import CardImageRounded from '../../card/CardImageRounded'
 
 import YGOCard from '../../card/YGOCard'
