@@ -94,6 +94,8 @@ const CardDisplayGrid = memo( ({ cardJsonResults, numResultsDisplayed, numItemsT
 					cardID={card.cardID}
 					fullDetails={ false }
 					effectMaxLineHeight={3}
+					monsterAssociation={card.monsterAssociation}
+					cardAttribute={card.cardAttribute}
 				/>
 			</GridItem>
 		})
