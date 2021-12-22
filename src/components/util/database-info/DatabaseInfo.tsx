@@ -21,7 +21,7 @@ const DatabaseInfo: FC<DatabaseInfoType> = ({ cardTotal, banListTotal, productTo
 						<DatabaseSearch />
 
 						<div style={{ margin: 'auto', maxWidth: '600px' }}>
-							<Grid container spacing={5}>
+							<Grid container spacing={3}>
 								<Grid item xs={6} sm={6} md={4} lg={4} xl={4}>
 									<Glance total={cardTotal} subject='Cards' color='#6C537A' action={() => window.location.assign(`/browse/card`)} />
 								</Grid>
