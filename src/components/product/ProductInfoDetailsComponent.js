@@ -2,8 +2,6 @@ import React from 'react'
 import { Skeleton, Typography, Box } from '@mui/material'
 import createTable from '../util/TableHelpers'
 
-import {LightTranslucentDivider} from '../util/Divider'
-
 import {LeftBoxPaper} from '../util/grid/OneThirdTwoThirdsGrid'
 
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, lazy } from 'react'
 import startCase from 'lodash.startcase'
 import Autocomplete from '@mui/material/Autocomplete'
-import { Chip, InputBase, IconButton, Typography, Box } from '@mui/material'
+import { Chip, InputBase, IconButton, Typography, Box, Divider } from '@mui/material'
 import { Helmet } from 'react-helmet'
 
 import SearchIcon from '@mui/icons-material/Search'
@@ -16,11 +16,11 @@ import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 import { handleFetch } from '../../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../../helper/DownstreamServices'
 
-import {LightTranslucentDivider} from '../util/Divider'
-
 import RenderGroup, {SearchSuggestionTypography} from '../util/search/Search'
 
 import {LeftBoxPaper, RightBoxSubHeaderTypography} from '../util/grid/OneThirdTwoThirdsGrid'
+
+import '../../css/util/divider.css'
 
 const CardDisplayGrid = lazy( () => import('../util/grid/CardDisplayGrid'))
 
@@ -233,7 +233,7 @@ export default function Browse()
 							}}
 							/>
 
-							<LightTranslucentDivider />
+							<Divider className='light-translucent-divider' />
 
 							<Typography
 								style={{color: 'white'}}

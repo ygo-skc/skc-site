@@ -2,7 +2,7 @@ import React, { lazy, useState, useEffect, Suspense } from 'react'
 import { Helmet } from 'react-helmet'
 
 
-import { Box } from '@mui/material'
+import { Box, Divider } from '@mui/material'
 import { MainContentContainer } from '../util/MainContent'
 import { handleFetch } from '../../helper/FetchHandler'
 import { BanListDates } from './BanListDates'
@@ -10,9 +10,11 @@ import NAME_maps_ENDPOINT from '../../helper/DownstreamServices'
 
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 import { RightBoxPaper, LeftBoxPaper } from '../util/grid/OneThirdTwoThirdsGrid'
-import {LightTranslucentDivider} from '../util/Divider'
 
 import BreadCrumb from '../header-footer/Breadcrumb'
+
+import '../../css/util/divider.css'
+
 const TabbedView = lazy( () => import('./TabbedView') )
 const BanListSection = lazy( () => import('./BanListSection') )
 const BanListStats = lazy( () => import('./BanListStats') )
@@ -131,7 +133,7 @@ export default function BanList(props)
 								banListStartDates={banListStartDates}
 								setSelectedBanList={ (ind) => setSelectedBanList(banListStartDates[ind]) } />}
 
-							<LightTranslucentDivider />
+							<Divider className='light-translucent-divider' />
 
 							<Suspense fallback={undefined} >
 								<BanListStats
