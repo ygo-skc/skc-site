@@ -51,6 +51,12 @@ declare type _YGOCard = {
 	className?: string
 }
 
+declare type _YouTubeUploads = {
+	thumbnailImg: HTMLImageElement
+	title: string
+	url: string
+}
+
 declare type SKCCard = {
 	cardID: string
 	cardName: string
@@ -77,3 +83,13 @@ declare type SKCProductContent = {
 	rarities: string[]
 	card: SKCCard
 }
+
+declare type HeartApiYouTubeUpload = {
+	id: string
+	title: string
+	description: string
+	publishedAt: Date
+	thumbnailUrl: string
+	url: string
+}
+// declare type HeartApiYouTubeUploads = {}

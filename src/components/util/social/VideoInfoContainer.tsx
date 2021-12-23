@@ -1,7 +1,6 @@
-import React from 'react'
-import {Typography, Button} from '@mui/material'
+import { Typography } from '@mui/material'
+import { FC } from 'react'
 import Styled from 'styled-components'
-
 
 const Title = Styled(Typography)`
 	&& {
@@ -16,7 +15,6 @@ const Title = Styled(Typography)`
 		line-height: 1.65rem;
 	}
 `
-
 
 const Parent = Styled.div`
 	&&
@@ -36,28 +34,27 @@ const Parent = Styled.div`
 	}
 `
 
-
-export default function YouTubeUploads({ thumbnailImg, title, url })
-{
-	return(
+const VideoInfoContainer: FC<_YouTubeUploads> = ({ thumbnailImg, title, url }) => {
+	return (
 		<Parent>
-			<div style={{borderRadius: '.8rem', borderStyle: 'solid', borderColor: 'rgba(255, 255, 255, .5)', borderWidth: '.6rem'}}>
+			<div style={{ borderRadius: '.8rem', borderStyle: 'solid', borderColor: 'rgba(255, 255, 255, .5)', borderWidth: '.6rem' }}>
 				<a href={url}>
-					<img src={thumbnailImg.src}
+					<img
+						src={thumbnailImg.src}
 						alt='YouTube Video Thumbnail For Channel: Supreme King'
 						width='100%'
-						style={{clipPath: 'inset(2.4rem 0rem 2.4rem 0rem round .2rem)', marginTop: '-2.4rem', marginBottom: '-2.4rem'}} />
+						style={{ clipPath: 'inset(2.4rem 0rem 2.4rem 0rem round .2rem)', marginTop: '-2.4rem', marginBottom: '-2.4rem' }}
+					/>
 				</a>
 			</div>
 
-
-			<div style={{display: 'flex', padding: '1rem'}}>
-				<a href={url} style={{textDecoration: 'none'}}>
-					<Title href={url} variant='h6' >
-						{title}
-					</Title>
+			<div style={{ display: 'flex', padding: '1rem' }}>
+				<a href={url} style={{ textDecoration: 'none' }}>
+					<Title variant='h6'>{title}</Title>
 				</a>
 			</div>
 		</Parent>
 	)
 }
+
+export default VideoInfoContainer
