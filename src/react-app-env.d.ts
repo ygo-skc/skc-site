@@ -57,6 +57,20 @@ declare type _YouTubeUploads = {
 	url: string
 }
 
+declare type _CardData = {
+	cardID
+	cardName
+	cardColor
+	cardEffect
+	cardAttribute
+	monsterType
+	monsterAtk
+	monsterDef
+	monsterAssociation
+	isLoading
+	cardImg
+}
+
 declare type SKCCard = {
 	cardID: string
 	cardName: string
