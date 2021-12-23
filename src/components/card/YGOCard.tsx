@@ -21,23 +21,7 @@ const CardContentComponent = Styled(Paper)`
 	}
 `
 
-type YGOCardType = {
-	cardName: string
-	cardColor: string
-	cardEffect: string
-	monsterType: string
-	cardAttribute?: string
-	monsterAtk?: string
-	monsterDef?: string
-	monsterAssociation?: string
-	cardID: string
-	fullDetails: boolean
-	effectMaxLineHeight?: number
-	isLoading?: boolean
-	className?: string
-}
-
-const YGOCard: FC<YGOCardType> = memo(
+const YGOCard: FC<_YGOCard> = memo(
 	({ cardName, cardColor, cardEffect, monsterType, cardAttribute, monsterAtk, monsterDef, monsterAssociation, cardID, fullDetails, effectMaxLineHeight, isLoading, className }) => {
 		if (isLoading) {
 			return <Skeleton variant='rectangular' height='150' style={{ borderRadius: '.5rem' }} />

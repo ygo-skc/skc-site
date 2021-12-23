@@ -27,7 +27,7 @@ const CardProductInformation: FunctionComponent<args> = ({ isLoading, hasInfo, p
 		const rowOnClick: { (): void }[] = []
 
 		productInfo.forEach((product: ProductInfo) => {
-			product.productContent.forEach((productContent: ProductContent) => {
+			product.productContent.forEach((productContent: SKCProductContent) => {
 				const row: [string, string, string, string] = [
 					product.productId,
 					productContent.productPosition,

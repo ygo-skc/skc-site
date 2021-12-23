@@ -1,25 +1,23 @@
-import React, {useState, useEffect, lazy} from 'react'
+import { useState, useEffect, lazy } from 'react'
 import { useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 
-import {handleFetch} from '../../helper/FetchHandler'
+import { handleFetch } from '../../helper/FetchHandler'
 import NAME_maps_ENDPOINT from '../../helper/DownstreamServices'
 import Section from '../util/Section'
 
-import {MainContentContainer} from '../util/MainContent'
+import { MainContentContainer } from '../util/MainContent'
 
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 
-import {RightBoxSubHeaderTypography} from '../util/grid/OneThirdTwoThirdsGrid'
+import { RightBoxSubHeaderTypography } from '../util/grid/OneThirdTwoThirdsGrid'
 
-
-const Breadcrumb = lazy( () => import('../header-footer/Breadcrumb') )
-const CardDisplayGrid = lazy( () => import('../util/grid/CardDisplayGrid') )
-const ProductInfoDetailsComponent = lazy( () => import('./ProductInfoDetailsComponent') )
-
+const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
+const CardDisplayGrid = lazy(() => import('../util/grid/CardDisplayGrid'))
+const ProductInfoDetailsComponent = lazy(() => import('./ProductInfoDetailsComponent'))
 
 export default function ProductInfo() {
-	const {productId} = useParams()
+	const { productId } = useParams()
 
 	const [dynamicBreadcrumbs, setDynamicBreadcrumbs] = useState(['Home', 'Product Browse', ''])
 
@@ -28,16 +26,15 @@ export default function ProductInfo() {
 	const [productType, setProductType] = useState('')
 	const [productSubType, setProductSubType] = useState('')
 	const [productReleaseDate, setProductReleaseDate] = useState('')
-	const [productTotal, setProductTotal] = useState('')
-	const [productRarityStats, setProductRarityStats] = useState('')
+	const [productTotal, setProductTotal] = useState(0)
+	const [productRarityStats, setProductRarityStats] = useState<{ [key: string]: string }>({})
 
 	const [isDataLoaded, setIsDataLoaded] = useState(false)
 
 	const [cardJsonResults, setCardJsonResults] = useState([])
 
-
-	useEffect( () => {
-		handleFetch(`${NAME_maps_ENDPOINT['productDetails']}/${productId}/en`, json => {
+	useEffect(() => {
+		handleFetch(`${NAME_maps_ENDPOINT['productDetails']}/${productId}/en`, (json) => {
 			setDynamicBreadcrumbs(['Home', 'Product Browse', `${json.productId}`])
 
 			setProductName(json.productName)
@@ -45,62 +42,56 @@ export default function ProductInfo() {
 			setProductSubType(json.productSubType)
 			setProductReleaseDate(json.productReleaseDate)
 
-			setCardJsonResults(json.productContent.map(item => item.card))
+			setCardJsonResults(json.productContent.map((item: SKCProductContent) => item.card))
 			setProductTotal(json.productTotal)
 			setProductRarityStats(json.productRarityStats)
 			setIsDataLoaded(true)
 		})
 	}, [])
 
-
-	return(
+	return (
 		<MainContentContainer>
 			<Helmet>
 				<title>{`SKC - Product: ${productName}`}</title>
-				<meta
-					name={`SKC - Product: ${productName}`}
-					content={`Contents, info, dates, etc for ${productName}`}
-					/>
-				<meta name="keywords" content={`YuGiOh, product browse, The Supreme Kings Castle`} />
+				<meta name={`SKC - Product: ${productName}`} content={`Contents, info, dates, etc for ${productName}`} />
+				<meta name='keywords' content={`YuGiOh, product browse, The Supreme Kings Castle`} />
 			</Helmet>
 
 			<Breadcrumb crumbs={dynamicBreadcrumbs} />
 
 			<OneThirdTwoThirdsGrid
+				mirrored={false}
 				oneThirdComponent={
 					<ProductInfoDetailsComponent
 						productName={productName}
-						productId={productId}
+						productId={productId as string}
 						productType={productType}
 						productSubType={productSubType}
 						productReleaseDate={productReleaseDate}
-						productTotal={productTotal}
+						productTotal={+productTotal}
 						isDataLoaded={isDataLoaded}
 						productRarityStats={productRarityStats}
 					/>
-					}
+				}
 				twoThirdComponent={
 					<Section
 						sectionName='Product Content'
 						sectionContent={
-							<div
-								className='section-content' >
-								<RightBoxSubHeaderTypography variant='h5' >
-									Sorted By Pack Order
-								</RightBoxSubHeaderTypography>
+							<div className='section-content'>
+								<RightBoxSubHeaderTypography variant='h5'>Sorted By Pack Order</RightBoxSubHeaderTypography>
 
 								<CardDisplayGrid
-									cardJsonResults={cardJsonResults}
+									cardJsonResults={cardJsonResults as any}
 									numResultsDisplayed={productTotal}
-									numResultsLoaded={productTotal}
+									numItemsToLoadWhenNeeded={productTotal}
+									numResults={productTotal}
 									loadMoreCallback={undefined}
 									isLoadMoreOptionVisible={false}
 									isDataLoaded={isDataLoaded}
-									target={window.location.hash.substr(1)}
 								/>
 							</div>
-						}>
-					</Section>
+						}
+					></Section>
 				}
 			/>
 		</MainContentContainer>
