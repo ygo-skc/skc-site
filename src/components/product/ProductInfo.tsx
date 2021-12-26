@@ -81,7 +81,7 @@ export default function ProductInfo() {
 								<RightBoxSubHeaderTypography variant='h5'>Sorted By Pack Order</RightBoxSubHeaderTypography>
 
 								<CardDisplayGrid
-									cardJsonResults={cardJsonResults as any}
+									cardJsonResults={cardJsonResults}
 									numResultsDisplayed={productTotal}
 									numItemsToLoadWhenNeeded={productTotal}
 									numResults={productTotal}

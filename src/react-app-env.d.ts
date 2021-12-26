@@ -43,7 +43,7 @@ declare type _YGOCard = {
 	cardAttribute?: string
 	monsterAtk?: string
 	monsterDef?: string
-	monsterAssociation?: string
+	monsterAssociation?: SKCMonsterAssociation
 	cardID: string
 	fullDetails: boolean
 	effectMaxLineHeight?: number
