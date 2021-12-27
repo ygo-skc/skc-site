@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import Styled from 'styled-components'
 
-import { MainContentContainer } from '../MainContent'
 import Breadcrumbs from '../../header-footer/Breadcrumb'
 import YGOCard from '../../card/YGOCard'
 
@@ -48,7 +47,7 @@ const ErrCard = Styled(YGOCard)`
 
 const HttpErr: FC<{ httpErr: string }> = ({ httpErr }) => {
 	return (
-		<MainContentContainer>
+		<div className='generic-container'>
 			<Breadcrumbs crumbs={['Home', httpErr]} />
 			<ErrCard
 				cardColor='Err'
@@ -58,7 +57,7 @@ const HttpErr: FC<{ httpErr: string }> = ({ httpErr }) => {
 				cardID={`00000${httpErr}`}
 				fullDetails={true}
 			/>
-		</MainContentContainer>
+		</div>
 	)
 }
 

@@ -5,7 +5,7 @@ import { Skeleton } from '@mui/material'
 
 import { LightTypography } from '../../util/CustomTypography'
 
-import { getDateString } from '../../../helper/Dates'
+import { Dates } from '../../../helper/Dates'
 import { Hint } from '../../util/Hints'
 import createTable from '../../util/TableHelpers'
 
@@ -31,7 +31,7 @@ const CardProductInformation: FunctionComponent<args> = ({ isLoading, hasInfo, p
 				const row: [string, string, string, string] = [
 					product.productId,
 					productContent.productPosition,
-					getDateString(new Date(product.productReleaseDate)),
+					Dates.getDateString(new Date(product.productReleaseDate)),
 					productContent.rarities.join(', '),
 				]
 				rowValues.push(row)

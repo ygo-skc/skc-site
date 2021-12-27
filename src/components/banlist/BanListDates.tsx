@@ -6,7 +6,7 @@ import { Button, Grid, Accordion, AccordionSummary, AccordionDetails, Typography
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import DateRangeRoundedIcon from '@mui/icons-material/DateRangeRounded'
 
-import { getDateString } from '../../helper/Dates'
+import { Dates } from '../../helper/Dates'
 
 const BanDatesExpansionSummary = Styled(AccordionSummary)`
 	&&
@@ -46,7 +46,7 @@ const BanListDates: FC<_BanListDates> = memo(
 		useEffect(() => {
 			let banListGrid = banListStartDates.map((item, ind) => {
 				return (
-					<Grid key={getDateString(new Date(item))} item xs={6} sm={6} md={6} lg={12} xl={6}>
+					<Grid key={Dates.getDateString(new Date(item))} item xs={6} sm={6} md={6} lg={12} xl={6}>
 						<Button
 							style={{ color: '#fff', width: '99%' }}
 							color={ind === selectedBanListIndex ? 'primary' : 'secondary'}
@@ -59,13 +59,13 @@ const BanListDates: FC<_BanListDates> = memo(
 								setSelectedBanListIndex(ind)
 							}}
 						>
-							{getDateString(new Date(item))}
+							{Dates.getDateString(new Date(item))}
 						</Button>
 					</Grid>
 				)
 			})
 
-			setSelectedRange(getCurrentBanListDate(banListStartDates[selectedBanListIndex], banListStartDates))
+			setSelectedRange(Dates.getCurrentBanListDate(banListStartDates[selectedBanListIndex], banListStartDates))
 			setBanListGrid(banListGrid)
 		}, [selectedBanListIndex, banListStartDates, setSelectedBanList])
 
@@ -95,24 +95,5 @@ const BanListDates: FC<_BanListDates> = memo(
 		return true
 	}
 )
-
-const getCurrentBanListDate = (selectedBanList: string, banListStartDates: string[]): string => {
-	const banListPos = banListStartDates.findIndex((item) => {
-		if (item === selectedBanList) return true
-
-		return false
-	})
-
-	switch (banListPos) {
-		case 0:
-			return getDateString(new Date(selectedBanList)) + ' - Present'
-		default:
-			let offset = 24 * 60 * 60 * 1000 * 1 //5 days
-			let nextDate = new Date(banListStartDates[banListPos - 1])
-			nextDate.setTime(nextDate.getTime() - offset)
-
-			return getDateString(new Date(selectedBanList)) + ' - ' + getDateString(nextDate)
-	}
-}
 
 export default BanListDates

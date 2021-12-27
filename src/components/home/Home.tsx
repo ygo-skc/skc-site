@@ -2,9 +2,8 @@ import { useEffect, useState, lazy, Suspense } from 'react'
 import { Helmet } from 'react-helmet'
 
 import { Box } from '@mui/material'
-import { MainContentContainer } from '../util/MainContent'
-import { handleFetch } from '../../helper/FetchHandler'
-import NAME_maps_ENDPOINT from '../../helper/DownstreamServices'
+import Fetch from '../../helper/FetchHandler'
+import DownstreamServices from '../../helper/DownstreamServices'
 
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 import Section from '../util/Section'
@@ -22,7 +21,7 @@ export default function Home() {
 	const [productTotal, setProductTotal] = useState(0)
 
 	useEffect(() => {
-		handleFetch(NAME_maps_ENDPOINT['databaseStats'], (json) => {
+		Fetch.handleFetch(DownstreamServices.NAME_maps_ENDPOINT['databaseStats'], (json) => {
 			setCardTotal(json.cardTotal)
 			setBanListTotal(json.banListTotal)
 			setProductTotal(json.productTotal)
@@ -30,7 +29,7 @@ export default function Home() {
 	}, [])
 
 	return (
-		<MainContentContainer>
+		<div className='generic-container'>
 			<Helmet>
 				<title>The Supreme Kings Castle</title>
 				<meta name={`The Supreme Kings Castle`} content={`YuGiOh Site for checking; card information, current and past ban lists, search cards, and browse cards.`} />
@@ -61,6 +60,6 @@ export default function Home() {
 					/>
 				}
 			/>
-		</MainContentContainer>
+		</div>
 	)
 }

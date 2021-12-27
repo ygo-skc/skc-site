@@ -2,9 +2,8 @@ import { lazy, useState, useEffect, Suspense } from 'react'
 import { Helmet } from 'react-helmet'
 
 import { Box, Divider, Skeleton } from '@mui/material'
-import { MainContentContainer } from '../util/MainContent'
-import { handleFetch } from '../../helper/FetchHandler'
-import NAME_maps_ENDPOINT from '../../helper/DownstreamServices'
+import Fetch from '../../helper/FetchHandler'
+import DownstreamServices from '../../helper/DownstreamServices'
 
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 
@@ -45,7 +44,7 @@ export default function BanList() {
 	const [numRemoved, setNumRemoved] = useState(0)
 
 	useEffect(() => {
-		handleFetch(NAME_maps_ENDPOINT['banListsUrl'], (json) => {
+		Fetch.handleFetch(DownstreamServices.NAME_maps_ENDPOINT['banListsUrl'], (json) => {
 			setBanListInstanceLinks(json.banListDates.map((item: SKCBanListDate) => item._links['Ban List Content'].href))
 			setBanListStartDates(json.banListDates.map((item: SKCBanListDate) => item.effectiveDate))
 		})
@@ -59,7 +58,7 @@ export default function BanList() {
 		if (selectedBanList && selectedBanList.length !== 0) {
 			setIsFetchingBanList(true)
 
-			handleFetch(banListInstanceLinks[banListStartDates.indexOf(selectedBanList)], (json) => {
+			Fetch.handleFetch(banListInstanceLinks[banListStartDates.indexOf(selectedBanList)], (json) => {
 				setForbidden(json.banListInstance.forbidden)
 				setLimited(json.banListInstance.limited)
 				setSemiLimited(json.banListInstance.semiLimited)
@@ -87,7 +86,7 @@ export default function BanList() {
 	}, [selectedBanList])
 
 	return (
-		<MainContentContainer>
+		<div className='generic-container'>
 			<Helmet>
 				<title>{`SKC - Ban List: ${selectedBanList}`}</title>
 				<meta name={`SKC - Ban List: ${selectedBanList}`} content={`Ban list content/info for list effective ${selectedBanList}`} />
@@ -144,6 +143,6 @@ export default function BanList() {
 					</Suspense>
 				}
 			/>
-		</MainContentContainer>
+		</div>
 	)
 }

@@ -3,9 +3,8 @@ import { useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { Skeleton } from '@mui/material'
 
-import { handleFetch } from '../../../helper/FetchHandler'
-import NAME_maps_ENDPOINT from '../../../helper/DownstreamServices'
-import { MainContentContainer } from '../../util/MainContent'
+import Fetch from '../../../helper/FetchHandler'
+import DownstreamServices from '../../../helper/DownstreamServices'
 import OneThirdTwoThirdsGrid from '../../util/grid/OneThirdTwoThirdsGrid'
 
 const Breadcrumb = lazy(() => import('../../header-footer/Breadcrumb'))
@@ -15,6 +14,13 @@ class _Card {
 	static cardId: string | null = null
 	static cardImg: HTMLImageElement
 	static readonly crumbs = ['Home', 'Card Browse']
+
+	static readonly loadRelatedContent = (isLoading: boolean, cardName: string, productInfo: any, banListInfo: any) => {
+		if (!isLoading) {
+			const CardInformationRelatedContent = lazy(() => import('./CardInformationRelatedContent'))
+			return <CardInformationRelatedContent cardName={cardName!} isLoading={isLoading} cardID={_Card.cardId!} productInfo={productInfo} banListInfo={banListInfo} />
+		}
+	}
 }
 
 const Card = () => {
@@ -30,7 +36,7 @@ const Card = () => {
 
 	const [isLoading, setIsLoading] = useState(true)
 
-	const [cardName, setCardName] = useState(undefined)
+	const [cardName, setCardName] = useState('')
 	const [cardColor, setCardColor] = useState(undefined)
 	const [cardEffect, setCardEffect] = useState(undefined)
 	const [cardAttribute, setCardAttribute] = useState(undefined)
@@ -45,7 +51,7 @@ const Card = () => {
 	const [dynamicCrumbs, setDynamicCrumbs] = useState([..._Card.crumbs, ''])
 
 	useEffect(() => {
-		handleFetch(`${NAME_maps_ENDPOINT['cardInstanceUrl']}${_Card.cardId}?allInfo=true`, (json) => {
+		Fetch.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT['cardInstanceUrl']}${_Card.cardId}?allInfo=true`, (json) => {
 			setDynamicCrumbs([..._Card.crumbs, json.cardID])
 
 			setCardName(json.cardName)
@@ -64,7 +70,7 @@ const Card = () => {
 	}, [])
 
 	return (
-		<MainContentContainer>
+		<div className='generic-container'>
 			<Helmet>
 				<title>SKC - Card: {_Card.cardId}</title>
 				<meta
@@ -93,17 +99,10 @@ const Card = () => {
 						cardImg={_Card.cardImg}
 					/>
 				}
-				twoThirdComponent={<Suspense fallback={<Skeleton width='100%' height='20rem' />}>{loadRelatedContent(isLoading)}</Suspense>}
+				twoThirdComponent={<Suspense fallback={<Skeleton width='100%' height='20rem' />}>{_Card.loadRelatedContent(isLoading, cardName, productInfo, banListInfo)}</Suspense>}
 			/>
-		</MainContentContainer>
+		</div>
 	)
-
-	function loadRelatedContent(isLoading: boolean) {
-		if (!isLoading) {
-			const CardInformationRelatedContent = lazy(() => import('./CardInformationRelatedContent'))
-			return <CardInformationRelatedContent cardName={cardName!} isLoading={isLoading} cardID={_Card.cardId!} productInfo={productInfo} banListInfo={banListInfo} />
-		}
-	}
 }
 
 export default Card

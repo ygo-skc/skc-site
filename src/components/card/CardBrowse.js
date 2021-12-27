@@ -8,13 +8,11 @@ import SearchIcon from '@mui/icons-material/Search'
 import Section from '../util/Section'
 
 import Breadcrumb from '../header-footer/Breadcrumb'
-import { MainContentContainer } from '../util/MainContent'
-
 
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 
-import { handleFetch } from '../../helper/FetchHandler'
-import NAME_maps_ENDPOINT from '../../helper/DownstreamServices'
+import Fetch from '../../helper/FetchHandler'
+import DownstreamServices from '../../helper/DownstreamServices'
 
 import RenderGroup, {SearchSuggestionTypography} from '../util/search/Search'
 
@@ -42,7 +40,7 @@ export default function Browse()
 
 
 	useEffect( () => {
-		handleFetch(NAME_maps_ENDPOINT['browseCriteria'], (json) => {
+		Fetch.handleFetch(DownstreamServices.NAME_maps_ENDPOINT['browseCriteria'], (json) => {
 			const browseCriteria = []
 			for (const criteria of Object.keys(json))
 			{
@@ -105,7 +103,7 @@ export default function Browse()
 
 
 		setIsCardBrowseDataLoaded(false)
-		handleFetch(`${NAME_maps_ENDPOINT['browse']}?cardColors=${criteriaMap.get('cardColors').join(',')}&attributes=${criteriaMap.get('attributes').join(',')}&monsterTypes=${criteriaMap.get('monsterTypes').join(',')}&monsterSubTypes=${criteriaMap.get('monsterSubTypes').join(',')}&levels=${criteriaMap.get('levels').join(',')}&ranks=${criteriaMap.get('ranks').join(',')}&linkRatings=${criteriaMap.get('linkRatings').join(',')}`, json => {
+		Fetch.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT['browse']}?cardColors=${criteriaMap.get('cardColors').join(',')}&attributes=${criteriaMap.get('attributes').join(',')}&monsterTypes=${criteriaMap.get('monsterTypes').join(',')}&monsterSubTypes=${criteriaMap.get('monsterSubTypes').join(',')}&levels=${criteriaMap.get('levels').join(',')}&ranks=${criteriaMap.get('ranks').join(',')}&linkRatings=${criteriaMap.get('linkRatings').join(',')}`, json => {
 			setJsonResults(json.results)
 			setNumResults(json.numResults)
 
@@ -157,7 +155,7 @@ export default function Browse()
 
 
 	return(
-		<MainContentContainer  >
+		<div className='generic-container'  >
 			<Helmet>
 				<title>{`SKC - Card Browser`}</title>
 				<meta
@@ -276,6 +274,6 @@ export default function Browse()
 					</Section>
 				}
 			/>
-		</MainContentContainer>
+		</div>
 	)
 }

@@ -4,7 +4,7 @@ import { Paper } from '@mui/material'
 import { Skeleton } from '@mui/material'
 import { LightTypography } from '../../util/CustomTypography'
 
-import { getDateString } from '../../../helper/Dates'
+import { Dates } from '../../../helper/Dates'
 import { Hint } from '../../util/Hints'
 
 import createTable from '../../util/TableHelpers'
@@ -27,7 +27,7 @@ const CardBanListInformation: FunctionComponent<args> = ({ isLoading, hasInfo, b
 		if (banListInfo === null || banListInfo === undefined || banListInfo.length === 0) return
 
 		const headerNames: string[] = ['Date', 'Status']
-		const rowValues: string[][] = banListInfo.map((banList: BanListInfo) => [getDateString(new Date(banList.banListDate)), banList.banStatus])
+		const rowValues: string[][] = banListInfo.map((banList: BanListInfo) => [Dates.getDateString(new Date(banList.banListDate)), banList.banStatus])
 
 		const banListTable: JSX.Element = createTable(headerNames, rowValues)
 

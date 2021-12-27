@@ -5,7 +5,6 @@ import { Typography, Paper, Grid, Link } from '@mui/material'
 import styled from 'styled-components'
 
 import Breadcrumb from '../header-footer/Breadcrumb'
-import { MainContentContainer } from '../util/MainContent'
 
 import '../../css/util/link.css'
 
@@ -58,7 +57,7 @@ const ParagraphTypography = styled(Typography)`
 
 const About: FunctionComponent = () => {
 	return (
-		<MainContentContainer>
+		<div className='generic-container'>
 			<Helmet>
 				<title>{`SKC - About`}</title>
 				<meta name={`SKC - About`} content={`Find how to use API backed by site, how to support, etc.`} />
@@ -258,7 +257,7 @@ const About: FunctionComponent = () => {
 					</div>
 				</InfoContainer>
 			</div>
-		</MainContentContainer>
+		</div>
 	)
 }
 

@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
 import SuspenseFallback from './SuspenseFallback'
 
-import '../css/util/grid.css'
+import '../css/util/grids-and-containers.css'
 
 const Home = lazy(() => import('./home/Home'))
 

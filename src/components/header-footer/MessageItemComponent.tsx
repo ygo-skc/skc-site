@@ -4,7 +4,7 @@ import { FC, ReactElement } from 'react'
 import { Typography, Chip, Divider } from '@mui/material'
 import ReactMarkdown from 'react-markdown'
 
-import { getDateString, getTimeString } from '../../helper/Dates'
+import { Dates } from '../../helper/Dates'
 
 type MessageItemComponentArgs = {
 	creationDate: Date
@@ -21,7 +21,7 @@ const MessageItemComponent: FC<MessageItemComponentArgs> = ({ creationDate, mess
 				{messageTitle}
 			</Typography>
 			<Typography className='communication-message-sub-header' variant='subtitle2'>
-				{getDateString(creationDate)} {getTimeString(creationDate)}
+				{Dates.getDateString(creationDate)} {Dates.getTimeString(creationDate)}
 			</Typography>
 			<Typography className='communication-message-body' variant='body1'>
 				<ReactMarkdown children={`${messageContent}`} />

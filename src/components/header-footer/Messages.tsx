@@ -5,8 +5,8 @@ import { useState, useEffect } from 'react'
 import { Typography, IconButton, Popover, Badge } from '@mui/material'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 
-import { HEART_API_HOST_NAME } from '../../helper/DownstreamServices'
-import { handleFetch } from '../../helper/FetchHandler'
+import DownstreamServices from '../../helper/DownstreamServices'
+import Fetch from '../../helper/FetchHandler'
 import GenericNonBreakingErr from '../util/exception/GenericNonBreakingErr'
 import MessageItemComponent from './MessageItemComponent'
 
@@ -23,8 +23,8 @@ function Messages() {
 	const isDisplayingNotifications = Boolean(messagesAnchor)
 
 	useEffect(() => {
-		handleFetch(
-			`${HEART_API_HOST_NAME}/api/v1/message?service=skc&tags=skc-site`,
+		Fetch.handleFetch(
+			`${DownstreamServices.HEART_API_HOST_NAME}/api/v1/message?service=skc&tags=skc-site`,
 			(json) => {
 				const totalMessages = json.messages.length
 				setNumMessages(totalMessages)

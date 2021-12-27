@@ -2,11 +2,9 @@ import { useState, useEffect, lazy } from 'react'
 import { useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 
-import { handleFetch } from '../../helper/FetchHandler'
-import NAME_maps_ENDPOINT from '../../helper/DownstreamServices'
+import Fetch from '../../helper/FetchHandler'
+import DownstreamServices from '../../helper/DownstreamServices'
 import Section from '../util/Section'
-
-import { MainContentContainer } from '../util/MainContent'
 
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 import { Typography } from '@mui/material'
@@ -33,7 +31,7 @@ export default function ProductInfo() {
 	const [cardJsonResults, setCardJsonResults] = useState([])
 
 	useEffect(() => {
-		handleFetch(`${NAME_maps_ENDPOINT['productDetails']}/${productId}/en`, (json) => {
+		Fetch.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT['productDetails']}/${productId}/en`, (json) => {
 			setDynamicBreadcrumbs(['Home', 'Product Browse', `${json.productId}`])
 
 			setProductName(json.productName)
@@ -49,7 +47,7 @@ export default function ProductInfo() {
 	}, [])
 
 	return (
-		<MainContentContainer>
+		<div className='generic-container'>
 			<Helmet>
 				<title>{`SKC - Product: ${productName}`}</title>
 				<meta name={`SKC - Product: ${productName}`} content={`Contents, info, dates, etc for ${productName}`} />
@@ -93,6 +91,6 @@ export default function ProductInfo() {
 					></Section>
 				}
 			/>
-		</MainContentContainer>
+		</div>
 	)
 }

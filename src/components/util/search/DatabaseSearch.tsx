@@ -4,16 +4,16 @@ import { useEffect, useState } from 'react'
 
 import { InputBase, IconButton, Avatar, Autocomplete } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
-import { handleFetch } from '../../../helper/FetchHandler'
-import NAME_maps_ENDPOINT from '../../../helper/DownstreamServices'
+import Fetch from '../../../helper/FetchHandler'
+import DownstreamServices from '../../../helper/DownstreamServices'
 
 import RenderGroup, { SearchSuggestionTypography } from './Search'
 import axios, { CancelTokenSource } from 'axios'
 
 class _DatabaseSearch {
 	static readonly search = (searchSubject: string, setSearchOptions: any, fetchToken: CancelTokenSource, setIsFetching: React.Dispatch<React.SetStateAction<boolean>>) => {
-		handleFetch(
-			`${NAME_maps_ENDPOINT['search']}?limit=10&cName=${searchSubject}`,
+		Fetch.handleFetch(
+			`${DownstreamServices.NAME_maps_ENDPOINT['search']}?limit=10&cName=${searchSubject}`,
 			(json) => {
 				setSearchOptions(json)
 				setIsFetching(false)

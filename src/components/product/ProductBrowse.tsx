@@ -1,13 +1,11 @@
 import { useState, useEffect, lazy, FunctionComponent } from 'react'
 import { Helmet } from 'react-helmet'
 
-import { MainContentContainer } from '../util/MainContent'
-
-import { handleFetch } from '../../helper/FetchHandler'
-import NAME_maps_ENDPOINT from '../../helper/DownstreamServices'
+import Fetch from '../../helper/FetchHandler'
+import DownstreamServices from '../../helper/DownstreamServices'
 
 import createTable from '../util/TableHelpers'
-import { getDateString } from '../../helper/Dates'
+import { Dates } from '../../helper/Dates'
 import Section from '../util/Section'
 import { Typography } from '@mui/material'
 
@@ -19,7 +17,7 @@ const ProductBrowse: FunctionComponent = () => {
 	const [isDataLoaded, setIsDataLoaded] = useState(false)
 
 	useEffect(() => {
-		handleFetch(NAME_maps_ENDPOINT['productBrowse'], (json) => {
+		Fetch.handleFetch(DownstreamServices.NAME_maps_ENDPOINT['productBrowse'], (json) => {
 			setProductJson(json.products)
 			setIsDataLoaded(true)
 		})
@@ -30,14 +28,14 @@ const ProductBrowse: FunctionComponent = () => {
 		const rowOnClick: { (): void }[] = []
 		const productRows: string[][] = productJson.map((product: ProductInfo): string[] => {
 			rowOnClick.push(() => window.location.assign(`/product/${product.productId}`))
-			return [product.productName!, product.productId, product.productType!, product.productSubType!, getDateString(new Date(product.productReleaseDate))]
+			return [product.productName!, product.productId, product.productType!, product.productSubType!, Dates.getDateString(new Date(product.productReleaseDate))]
 		})
 
 		setProductGridItems(createTable(headers, productRows, rowOnClick, true))
 	}, [productJson])
 
 	return (
-		<MainContentContainer style={{}}>
+		<div className='generic-container'>
 			<Helmet>
 				<title>{`SKC - Product Browser`}</title>
 				<meta name={`SKC - Product Browser`} content={`Browse all products in database to check the progression of YuGiOh.`} />
@@ -66,7 +64,7 @@ const ProductBrowse: FunctionComponent = () => {
 					</div>
 				}
 			></Section>
-		</MainContentContainer>
+		</div>
 	)
 }
 
