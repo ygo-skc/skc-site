@@ -71,6 +71,23 @@ declare type _CardData = {
 	cardImg
 }
 
+declare type HATEOAS = {
+	href: string
+}
+
+declare type SKCBanListDate = {
+	effectiveDate: Date
+	_links: {
+		'Ban List Content': HATEOAS
+		'Ban List New Content': HATEOAS
+		'Ban List New Content': HATEOAS
+	}
+}
+
+declare type SKCBanListDates = {
+	banListDates: SKCBanListDate[]
+}
+
 declare type SKCCard = {
 	cardID: string
 	cardName: string
@@ -82,6 +99,12 @@ declare type SKCCard = {
 	monsterDefense: number
 	cardEffect: string
 	monsterType: string
+}
+
+declare type SKCCardsPreviousBanListStatus = {
+	cardName: string
+	cardId: string
+	previousBanStatus: string
 }
 
 declare type SKCMonsterAssociation = {

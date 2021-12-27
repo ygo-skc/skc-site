@@ -133,7 +133,7 @@ const MirroredTwoThirdComponent = Styled(Box)`
 type OneThirdTwoThirdsGridType = {
 	oneThirdComponent: ReactNode
 	twoThirdComponent: ReactNode
-	mirrored: boolean
+	mirrored?: boolean
 }
 
 const OneThirdTwoThirdsGrid: FC<OneThirdTwoThirdsGridType> = ({ oneThirdComponent, twoThirdComponent, mirrored = false }) => {
