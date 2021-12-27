@@ -56,6 +56,7 @@ function Messages() {
 
 						return (
 							<MessageItemComponent
+								key={creationDate.toString()}
 								creationDate={creationDate}
 								messageTitle={message.title}
 								messageContent={message.content}
