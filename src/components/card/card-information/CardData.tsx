@@ -1,7 +1,6 @@
 import { FC, memo } from 'react'
 
 import { Box } from '@mui/material'
-import { LeftBoxPaper } from '../../util/grid/OneThirdTwoThirdsGrid'
 import CardImageRounded from '../CardImageRounded'
 
 import YGOCard from '../YGOCard'
@@ -10,7 +9,7 @@ const CardData: FC<_CardData> = memo(
 	({ cardID, cardName, cardColor, cardEffect, cardAttribute, monsterType, monsterAtk, monsterDef, monsterAssociation, isLoading, cardImg }) => {
 		return (
 			<Box className='sticky'>
-				<LeftBoxPaper>
+				<div className='one-third-two-thirds-container'>
 					<CardImageRounded cardImg={cardImg.src} defaultVisibility={true} />
 
 					<YGOCard
@@ -26,7 +25,7 @@ const CardData: FC<_CardData> = memo(
 						fullDetails={true}
 						isLoading={isLoading}
 					/>
-				</LeftBoxPaper>
+				</div>
 			</Box>
 		)
 	},

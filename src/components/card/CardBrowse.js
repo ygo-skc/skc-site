@@ -18,7 +18,7 @@ import NAME_maps_ENDPOINT from '../../helper/DownstreamServices'
 
 import RenderGroup, {SearchSuggestionTypography} from '../util/search/Search'
 
-import {LeftBoxPaper, RightBoxSubHeaderTypography} from '../util/grid/OneThirdTwoThirdsGrid'
+import {RightBoxSubHeaderTypography} from '../util/grid/OneThirdTwoThirdsGrid'
 
 import '../../css/util/divider.css'
 
@@ -175,7 +175,7 @@ export default function Browse()
 				oneThirdComponent={
 
 					<Box className='sticky' >
-						<LeftBoxPaper style={{ backgroundImage: 'linear-gradient(315deg, #7f5a83 0%, #0d324d 74%)' }} >
+						<div className='one-third-two-thirds-container' style={{ backgroundImage: 'linear-gradient(315deg, #7f5a83 0%, #0d324d 74%)' }} >
 
 							<Typography
 								style={{color: 'white'}}
@@ -251,7 +251,7 @@ export default function Browse()
 								Displaying: {numResultsDisplayed}
 							</Typography>
 
-						</LeftBoxPaper>
+						</div>
 					</Box>
 				}
 				twoThirdComponent={

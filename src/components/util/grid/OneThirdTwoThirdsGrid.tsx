@@ -1,4 +1,4 @@
-import { Typography, Box, Paper } from '@mui/material'
+import { Typography, Box } from '@mui/material'
 
 import Styled from 'styled-components'
 
@@ -11,49 +11,6 @@ const LeftBoxSectionTypography = Styled(Typography)`
 		color: rgba(255, 255, 255, .95);
 		margin-left: .5rem;
 		margin-bottom: .2rem;
-	}
-`
-
-const RightBoxPaper = Styled(Paper)`
-	&&
-	{
-		background: white;
-		border-radius: 1.75rem;
-		padding-left: .8rem;
-		padding-right: .8rem;
-		padding-top: 1.2rem;
-		padding-bottom: 1.2rem;
-
-		max-width: 100%;
-
-		@media screen and (min-width: 800px)
-		{
-			padding-left: 1rem;
-			padding-right: 1rem;
-			padding-top: 1.25rem;
-			padding-bottom: 1.25rem;
-		}
-	}
-`
-
-const LeftBoxPaper = Styled(RightBoxPaper)`
-	&&
-	{
-		background: white;
-		border-radius: 1.75rem;
-		padding-left: .8rem;
-		padding-right: .9rem;
-		padding-top: 1.2rem;
-		padding-bottom: 1.2rem;
-		box-shadow: rgba(0, 0, 0, 0.12) 0px .5rem 1.4rem;
-		border: 1px solid rgb(221, 221, 221);
-
-		@media screen and (min-width: 800px)
-		{
-			padding-left: 1rem;
-			padding-right: 1rem;
-			padding-top: 1.25rem;
-		}
 	}
 `
 
@@ -147,4 +104,4 @@ const OneThirdTwoThirdsGrid: FC<OneThirdTwoThirdsGridType> = ({ oneThirdComponen
 
 export default OneThirdTwoThirdsGrid
 
-export { LeftBoxSectionTypography, RightBoxPaper, LeftBoxPaper, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer }
+export { LeftBoxSectionTypography, RightBoxHeaderTypography, RightBoxSubHeaderTypography, RightBoxHeaderContainer }

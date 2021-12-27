@@ -1,7 +1,5 @@
 import { Skeleton, Typography, Box } from '@mui/material'
 import createTable from '../util/TableHelpers'
-
-import { LeftBoxPaper } from '../util/grid/OneThirdTwoThirdsGrid'
 import { FC } from 'react'
 
 const ProductInfoDetailsComponent: FC<ProductDetails> = ({
@@ -26,7 +24,7 @@ const ProductInfoDetailsComponent: FC<ProductDetails> = ({
 
 	return (
 		<Box className='sticky'>
-			<LeftBoxPaper style={{ backgroundImage: 'linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)' }}>
+			<div className='one-third-two-thirds-container' style={{ backgroundImage: 'linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)' }}>
 				{isDataLoaded ? (
 					<Typography style={{ color: 'white' }} variant='h4'>
 						{productName}
@@ -46,7 +44,7 @@ const ProductInfoDetailsComponent: FC<ProductDetails> = ({
 					Product Stats
 				</Typography>
 				{createTable([], statRows)}
-			</LeftBoxPaper>
+			</div>
 		</Box>
 	)
 }

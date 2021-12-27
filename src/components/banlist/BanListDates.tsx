@@ -37,7 +37,7 @@ type _BanListDates = {
 	setSelectedBanList: { (ind: number): void }
 }
 
-export const BanListDates: FC<_BanListDates> = memo(
+const BanListDates: FC<_BanListDates> = memo(
 	({ banListStartDates, setSelectedBanList }) => {
 		const [banListGrid, setBanListGrid] = useState<JSX.Element[]>([])
 		const [selectedBanListIndex, setSelectedBanListIndex] = useState(0)
@@ -114,3 +114,5 @@ const getCurrentBanListDate = (selectedBanList: string, banListStartDates: strin
 			return getDateString(new Date(selectedBanList)) + ' - ' + getDateString(nextDate)
 	}
 }
+
+export default BanListDates

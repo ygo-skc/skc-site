@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
 import SuspenseFallback from './SuspenseFallback'
 
+import '../css/util/grid.css'
+
 const Home = lazy(() => import('./home/Home'))
 
 const BanList = lazy(() => import('./banlist/BanList'))
