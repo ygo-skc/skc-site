@@ -1,13 +1,11 @@
 import { Link, Typography } from '@mui/material'
 
-import { RightBoxSubHeaderTypography } from '../util/grid/OneThirdTwoThirdsGrid'
-
 import '../../css/util/link.css'
 
 export default function Welcome() {
 	return (
 		<div className='section-content'>
-			<RightBoxSubHeaderTypography variant='h5'>The BEST Yu-Gi-Oh! Site?</RightBoxSubHeaderTypography>
+			<Typography variant='h5'>The BEST Yu-Gi-Oh! Site?</Typography>
 
 			<Typography variant='h6'>Maybe one day!</Typography>
 

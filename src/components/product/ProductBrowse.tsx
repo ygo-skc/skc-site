@@ -9,7 +9,7 @@ import NAME_maps_ENDPOINT from '../../helper/DownstreamServices'
 import createTable from '../util/TableHelpers'
 import { getDateString } from '../../helper/Dates'
 import Section from '../util/Section'
-import { RightBoxSubHeaderTypography } from '../util/grid/OneThirdTwoThirdsGrid'
+import { Typography } from '@mui/material'
 
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 
@@ -50,7 +50,7 @@ const ProductBrowse: FunctionComponent = () => {
 				sectionName='Products In Database'
 				sectionContent={
 					<div className='section-content'>
-						<RightBoxSubHeaderTypography variant='h5'>Sorted By Release Date</RightBoxSubHeaderTypography>
+						<Typography variant='h5'>Sorted By Release Date</Typography>
 						<div
 							style={{
 								backgroundImage: 'linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)',

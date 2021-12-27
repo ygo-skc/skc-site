@@ -18,8 +18,6 @@ import NAME_maps_ENDPOINT from '../../helper/DownstreamServices'
 
 import RenderGroup, {SearchSuggestionTypography} from '../util/search/Search'
 
-import {RightBoxSubHeaderTypography} from '../util/grid/OneThirdTwoThirdsGrid'
-
 import '../../css/util/divider.css'
 
 const CardDisplayGrid = lazy( () => import('../util/grid/CardDisplayGrid'))
@@ -260,9 +258,9 @@ export default function Browse()
 						sectionContent={
 							<div
 								className='section-content' >
-								<RightBoxSubHeaderTypography variant='h5' >
+								<Typography variant='h5' >
 									Results Are Sorted Alphabetically
-								</RightBoxSubHeaderTypography>
+								</Typography>
 
 								<CardDisplayGrid
 									cardJsonResults={jsonResults}

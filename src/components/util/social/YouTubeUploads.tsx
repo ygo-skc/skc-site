@@ -2,8 +2,6 @@ import { FC, useEffect, useState } from 'react'
 import { Typography, Link } from '@mui/material'
 import { Skeleton } from '@mui/material'
 
-import { RightBoxSubHeaderTypography } from '../grid/OneThirdTwoThirdsGrid'
-
 import VideoInfoContainer from './VideoInfoContainer'
 
 import '../../../css/util/link.css'
@@ -27,7 +25,7 @@ const YouTubeUploads: FC<{ youtubeData: HeartApiYouTubeUpload[] }> = ({ youtubeD
 
 	return (
 		<div>
-			<RightBoxSubHeaderTypography variant='h5'>Catch Up On Previous Uploads</RightBoxSubHeaderTypography>
+			<Typography variant='h5'>Catch Up On Previous Uploads</Typography>
 
 			<Typography variant='subtitle2'>
 				Most recent uploads for{' '}

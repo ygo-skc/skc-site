@@ -9,8 +9,7 @@ import Section from '../util/Section'
 import { MainContentContainer } from '../util/MainContent'
 
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
-
-import { RightBoxSubHeaderTypography } from '../util/grid/OneThirdTwoThirdsGrid'
+import { Typography } from '@mui/material'
 
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 const CardDisplayGrid = lazy(() => import('../util/grid/CardDisplayGrid'))
@@ -78,7 +77,7 @@ export default function ProductInfo() {
 						sectionName='Product Content'
 						sectionContent={
 							<div className='section-content'>
-								<RightBoxSubHeaderTypography variant='h5'>Sorted By Pack Order</RightBoxSubHeaderTypography>
+								<Typography variant='h5'>Sorted By Pack Order</Typography>
 
 								<CardDisplayGrid
 									cardJsonResults={cardJsonResults}
