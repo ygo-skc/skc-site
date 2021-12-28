@@ -36,17 +36,19 @@ export default function DatabaseSearch() {
 	useEffect(() => {
 		if (searchInput !== '') {
 			// cancel previous request
-			if (isFetching) {
-				fetchToken.cancel()
-				setFetchToken(axios.CancelToken.source())
-			}
-
-			setIsFetching(true)
-			_DatabaseSearch.search(searchInput, setSearchOptions, fetchToken, setIsFetching)
+			fetchToken.cancel()
+			setFetchToken(axios.CancelToken.source())
 		} else {
 			setSearchOptions([])
 		}
 	}, [searchInput])
+
+	useEffect(() => {
+		if (searchInput !== '') {
+			setIsFetching(true)
+			_DatabaseSearch.search(searchInput, setSearchOptions, fetchToken, setIsFetching)
+		}
+	}, [fetchToken])
 
 	return (
 		<Autocomplete

@@ -1,8 +1,6 @@
 import { useEffect, useState, FunctionComponent } from 'react'
 import '../../../css/card-information-styles.css'
-import { Paper } from '@mui/material'
-import { Skeleton } from '@mui/material'
-import { LightTypography } from '../../util/CustomTypography'
+import { Paper, Skeleton, Typography } from '@mui/material'
 
 import { Dates } from '../../../helper/Dates'
 import { Hint } from '../../util/Hints'
@@ -39,9 +37,9 @@ const CardBanListInformation: FunctionComponent<args> = ({ isLoading, hasInfo, b
 			{isLoading ? (
 				<Skeleton width={150} height={25} />
 			) : (
-				<LightTypography variant='h6' className={'card-info-header'}>
+				<Typography variant='h6' className={'card-info-header'}>
 					{'Ban Lists'}
-				</LightTypography>
+				</Typography>
 			)}
 
 			{isLoading ? undefined : hasInfo ? (
