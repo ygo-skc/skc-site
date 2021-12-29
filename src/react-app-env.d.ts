@@ -30,9 +30,13 @@ declare type ProductDetails = {
 	productType: string
 	productSubType: string
 	productReleaseDate: string
-	productTotal: number
-	productRarityStats: { [key: string]: string }
 	isDataLoaded: boolean
+}
+
+declare type ProductStats = {
+	productTotal: number
+	productRarityStats: { [key: string]: number }
+	cards: SKCCard[]
 }
 
 declare type _YGOCard = {

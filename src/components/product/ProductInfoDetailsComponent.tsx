@@ -2,25 +2,12 @@ import { Skeleton, Typography, Box } from '@mui/material'
 import createTable from '../util/TableHelpers'
 import { FC } from 'react'
 
-const ProductInfoDetailsComponent: FC<ProductDetails> = ({
-	productName,
-	productId,
-	productType,
-	productSubType,
-	productReleaseDate,
-	productTotal,
-	productRarityStats,
-	isDataLoaded,
-}) => {
+const ProductInfoDetailsComponent: FC<ProductDetails> = ({ productName, productId, productType, productSubType, productReleaseDate, isDataLoaded }) => {
 	const summaryRows = []
 	summaryRows.push(['Product ID', productId])
 	summaryRows.push(['Product Type', productType])
 	summaryRows.push(['Product Sub-Type', productSubType])
 	summaryRows.push(['American Release', productReleaseDate])
-
-	const statRows = [] as string[][]
-	statRows.push(['Product Total', productTotal.toString()])
-	Object.keys(productRarityStats).forEach((key) => statRows.push([key, productRarityStats[key]]))
 
 	return (
 		<Box className='sticky'>
@@ -37,13 +24,6 @@ const ProductInfoDetailsComponent: FC<ProductDetails> = ({
 					Summary
 				</Typography>
 				{createTable([], summaryRows)}
-
-				<br />
-
-				<Typography style={{ color: 'white' }} variant='h5'>
-					Product Stats
-				</Typography>
-				{createTable([], statRows)}
 			</div>
 		</Box>
 	)

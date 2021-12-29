@@ -10,6 +10,7 @@
     "@mui/material": "^5.1.0",
     "@mui/styled-engine-sc": "^5.1.0",
     "@mui/styles": "^5.1.0",
+    "@nivo/pie": "^0.75.0",
     "axios": "0.24.0",
     "he": "1.2.0",
     "lodash.startcase": "^4.4.0",

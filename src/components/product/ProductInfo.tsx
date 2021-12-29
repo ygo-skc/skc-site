@@ -8,6 +8,7 @@ import Section from '../util/Section'
 
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 import { Typography } from '@mui/material'
+import ProductStats from './ProductStats'
 
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 const CardDisplayGrid = lazy(() => import('../util/grid/CardDisplayGrid'))
@@ -24,7 +25,7 @@ export default function ProductInfo() {
 	const [productSubType, setProductSubType] = useState('')
 	const [productReleaseDate, setProductReleaseDate] = useState('')
 	const [productTotal, setProductTotal] = useState(0)
-	const [productRarityStats, setProductRarityStats] = useState<{ [key: string]: string }>({})
+	const [productRarityStats, setProductRarityStats] = useState<{ [key: string]: number }>({})
 
 	const [isDataLoaded, setIsDataLoaded] = useState(false)
 
@@ -65,30 +66,31 @@ export default function ProductInfo() {
 						productType={productType}
 						productSubType={productSubType}
 						productReleaseDate={productReleaseDate}
-						productTotal={+productTotal}
 						isDataLoaded={isDataLoaded}
-						productRarityStats={productRarityStats}
 					/>
 				}
 				twoThirdComponent={
-					<Section
-						sectionName='Product Content'
-						sectionContent={
-							<div className='section-content'>
-								<Typography variant='h5'>Sorted By Pack Order</Typography>
+					<div>
+						<ProductStats cards={cardJsonResults} productTotal={+productTotal} productRarityStats={productRarityStats} />
+						<Section
+							sectionName='Product Content'
+							sectionContent={
+								<div className='section-content'>
+									<Typography variant='h5'>Sorted By Pack Order</Typography>
 
-								<CardDisplayGrid
-									cardJsonResults={cardJsonResults}
-									numResultsDisplayed={productTotal}
-									numItemsToLoadWhenNeeded={productTotal}
-									numResults={productTotal}
-									loadMoreCallback={undefined}
-									isLoadMoreOptionVisible={false}
-									isDataLoaded={isDataLoaded}
-								/>
-							</div>
-						}
-					></Section>
+									<CardDisplayGrid
+										cardJsonResults={cardJsonResults}
+										numResultsDisplayed={productTotal}
+										numItemsToLoadWhenNeeded={productTotal}
+										numResults={productTotal}
+										loadMoreCallback={undefined}
+										isLoadMoreOptionVisible={false}
+										isDataLoaded={isDataLoaded}
+									/>
+								</div>
+							}
+						></Section>
+					</div>
 				}
 			/>
 		</div>
