@@ -12,29 +12,17 @@
 }
 
 .communication-message-header.MuiTypography-root {
-	margin-bottom: 0.85rem;
-	color: black;
+	margin-bottom: 0.4rem;
 }
 
 .communication-message-sub-header.MuiTypography-root {
 	margin-bottom: 0.5rem;
-	color: black;
-}
-
-.communication-message-body.MuiTypography-root {
-	color: #555;
+	color: #666;
 }
 
 .communication-message-body p {
 	margin-block-start: 0rem;
 	margin-block-end: 0.2rem;
-}
-
-.communication-message-body a {
-	background: rgba(253, 237, 221, 1);
-	padding: 0.15rem;
-	color: #ff8f44;
-	text-decoration: none;
 }
 
 .communication-message-body a:hover {
@@ -66,8 +54,8 @@
 }
 
 .communication-divider.MuiDivider-root {
-	margin-top: 0.75rem;
-	margin-bottom: 1rem;
+	margin-top: 1rem;
+	margin-bottom: 1.5rem;
 	background: rgba(93, 90, 107, 0.15);
 	backdrop-filter: blur(60px);
 }

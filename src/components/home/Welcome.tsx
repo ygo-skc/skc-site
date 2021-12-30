@@ -1,7 +1,5 @@
 import { Link, Typography } from '@mui/material'
 
-import '../../css/util/link.css'
-
 export default function Welcome() {
 	return (
 		<div className='section-content'>

@@ -6,8 +6,6 @@ import styled from 'styled-components'
 
 import Breadcrumb from '../header-footer/Breadcrumb'
 
-import '../../css/util/link.css'
-
 const AboutInfoCard = lazy(() => import('./AboutInfoCard'))
 
 const CenteredImage = styled.div`
