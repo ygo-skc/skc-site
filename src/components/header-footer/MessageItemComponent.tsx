@@ -17,13 +17,13 @@ type MessageItemComponentArgs = {
 const MessageItemComponent: FC<MessageItemComponentArgs> = ({ creationDate, messageTitle, messageContent, messageTags, isLastMessage }): ReactElement => {
 	return (
 		<div>
-			<Typography className='communication-message-header' variant='h5'>
+			<Typography className='communication-message-header' variant='h6'>
 				{messageTitle}
 			</Typography>
-			<Typography className='communication-message-sub-header' variant='subtitle2'>
+			<Typography className='communication-message-sub-header' variant='subtitle1'>
 				{Dates.getDateString(creationDate)} {Dates.getTimeString(creationDate)}
 			</Typography>
-			<Typography className='communication-message-body' variant='body1'>
+			<Typography className='communication-message-body link-container' variant='body1'>
 				<ReactMarkdown children={`${messageContent}`} />
 			</Typography>
 			{messageTags.map((tag: string) => (

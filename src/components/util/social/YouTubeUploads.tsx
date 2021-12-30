@@ -4,8 +4,6 @@ import { Skeleton } from '@mui/material'
 
 import VideoInfoContainer from './VideoInfoContainer'
 
-import '../../../css/util/link.css'
-
 const YouTubeUploads: FC<{ youtubeData: HeartApiYouTubeUpload[] }> = ({ youtubeData }) => {
 	const [videos, setVideos] = useState<JSX.Element[]>([])
 	const [isLoading, setIsLoading] = useState(true)
@@ -27,7 +25,7 @@ const YouTubeUploads: FC<{ youtubeData: HeartApiYouTubeUpload[] }> = ({ youtubeD
 		<div>
 			<Typography variant='h5'>Catch Up On Previous Uploads</Typography>
 
-			<Typography variant='subtitle2'>
+			<Typography variant='h6'>
 				Most recent uploads for{' '}
 				<Link className='link' color='secondary' href='https://www.youtube.com/channel/UCBZ_1wWyLQI3SV9IgLbyiNQ'>
 					Supreme King YT
