@@ -1,0 +1,13 @@
+.hint {
+	padding: 1.8rem;
+	max-width: 70%;
+	width: 80%;
+	border-radius: 1.25rem;
+	margin: auto;
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+}
+
+.hint-text {
+	margin: 0rem;
+}

@@ -1,6 +1,7 @@
 import { FunctionComponent, ReactNode } from 'react'
-import { Box, Typography } from '@mui/material'
-import styled from 'styled-components'
+import { Typography } from '@mui/material'
+
+import '../../css/util/hint.css'
 
 type _Hint = {
 	children?: ReactNode
@@ -9,32 +10,12 @@ type _Hint = {
 }
 
 const Hint: FunctionComponent<_Hint> = ({ children, backgroundColor = '#f6f2fb', textColor = 'black' }) => {
-	const HintBox = styled(Box)`
-		&& {
-			background-color: ${backgroundColor};
-			padding: 1.8rem;
-			max-width: 70%;
-			width: 80%;
-			border-radius: 1.25rem;
-			margin: auto;
-			margin-top: 2rem;
-			margin-bottom: 2rem;
-		}
-	`
-
-	const HintText = styled(Typography)`
-		&& {
-			color: ${textColor};
-			margin: 0rem;
-		}
-	`
-
 	return (
-		<HintBox>
-			<HintText variant='h6' align='center'>
+		<div className='hint' style={{ backgroundColor: backgroundColor }}>
+			<Typography className='hint-text' style={{ color: textColor }} variant='h6' align='center'>
 				{children}
-			</HintText>
-		</HintBox>
+			</Typography>
+		</div>
 	)
 }
 
