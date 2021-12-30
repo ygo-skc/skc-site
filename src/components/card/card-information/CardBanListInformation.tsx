@@ -45,7 +45,7 @@ const CardBanListInformation: FunctionComponent<args> = ({ isLoading, hasInfo, b
 			{isLoading ? undefined : hasInfo ? (
 				banListTable
 			) : (
-				<Hint variant='subtitle1' backgroundColor='rgba(0, 0, 0, 0.3)' textColor='white'>
+				<Hint backgroundColor='rgba(0, 0, 0, 0.3)' textColor='white'>
 					{'Not Found In Any Ban List'}
 				</Hint>
 			)}

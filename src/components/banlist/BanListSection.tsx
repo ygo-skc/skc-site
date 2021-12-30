@@ -29,7 +29,7 @@ const BanListSection: FC<_BanListSection> = ({ sectionExplanation, cards, isData
 
 	return (
 		<div>
-			<Hint variant='subtitle1'>{sectionExplanation}</Hint>
+			<Hint>{sectionExplanation}</Hint>
 			{cardTypeContentGrid}
 		</div>
 	)

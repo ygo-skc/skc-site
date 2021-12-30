@@ -104,7 +104,7 @@ const CardDisplayGrid: FC<_CardDisplayGrid> = memo(
 
 		return (
 			<Box style={{ maxWidth: '100%' }}>
-				<Grid container>{!isDataLoaded ? cardGridUISkeleton : numResults === 0 ? <Hint variant='h5'>{'No Content To Show'}</Hint> : cardGridUI}</Grid>
+				<Grid container>{!isDataLoaded ? cardGridUISkeleton : numResults === 0 ? <Hint>{'No Content To Show'}</Hint> : cardGridUI}</Grid>
 
 				{!isDataLoaded ? undefined : (
 					<IconButton

@@ -52,7 +52,7 @@ const CardProductInformation: FunctionComponent<args> = ({ isLoading, hasInfo, p
 			{isLoading ? undefined : hasInfo ? (
 				productTable
 			) : (
-				<Hint variant='subtitle1' backgroundColor='rgba(0, 0, 0, 0.3)' textColor='white'>
+				<Hint backgroundColor='rgba(0, 0, 0, 0.3)' textColor='white'>
 					{'Not Found In Any Product'}
 				</Hint>
 			)}
