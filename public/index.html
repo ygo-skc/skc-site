@@ -9,10 +9,15 @@
 
 		<meta http-equiv="x-dns-prefetch-control" content="on" />
 
+		<link rel="preconnect" href="https://thesupremekingscastle.com" />
+		<link rel="preconnect" href="https://images.thesupremekingscastle.com" />
 		<link rel="preconnect" href="%REACT_APP_API_HOST%" crossorigin />
+		<link rel="preconnect" href="%REACT_APP_HEART_API_HOST%" crossorigin />
+		<link rel="preconnect" href="https://i.ytimg.com" crossorigin />
 
 		<link rel="dns-prefetch" href="https://images.thesupremekingscastle.com" />
 		<link rel="dns-prefetch" href="%REACT_APP_API_HOST%" />
+		<link rel="dns-prefetch" href="%REACT_APP_HEART_API_HOST%" />
 
 		<style>
 			html {
@@ -27,6 +32,8 @@
 				-moz-osx-font-smoothing: grayscale;
 
 				-webkit-text-size-adjust: 100%;
+
+				font-size: 12.85px;
 			}
 
 			body {
@@ -52,27 +59,6 @@
 
 			.MuiAppBar-colorPrimary {
 				background-color: #3b4968 !important;
-			}
-
-			@media screen and (min-width: 0px) {
-				html {
-					font-size: 12.3px;
-				}
-			}
-			@media screen and (min-width: 600px) {
-				html {
-					font-size: 12.85px;
-				}
-			}
-			@media screen and (min-width: 1200px) {
-				html {
-					font-size: 13.5px;
-				}
-			}
-			@media screen and (min-width: 1850px) {
-				html {
-					font-size: 14px;
-				}
 			}
 
 			.root {
@@ -192,6 +178,10 @@
 				padding: 0.2rem;
 				color: #ff6600;
 				text-decoration: none !important;
+			}
+
+			.empty-space {
+				flex-grow: 1;
 			}
 		</style>
 	</head>

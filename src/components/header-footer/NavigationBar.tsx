@@ -1,25 +1,17 @@
 import '../../css/nav/navigation-icon.css'
 
-import { lazy, Suspense } from 'react'
-import { AppBar, Toolbar, Typography, Link, Box, IconButton } from '@mui/material'
+import { lazy, memo, Suspense } from 'react'
+import { AppBar, Toolbar, Typography, Link, IconButton } from '@mui/material'
 import GitHubIcon from '@mui/icons-material/GitHub'
 import YouTube from '@mui/icons-material/YouTube'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 
 import { NAME_maps_ROUTE } from '../Routes'
-import Styled from 'styled-components'
 import SubNav from './SubNav'
-// import Messages from './Messages'
 
 const Messages = lazy(() => import('./Messages'))
 
-const EmptySpace = Styled(Box)`
-	&& {
-		flex-grow: 1;
-	}
-`
-
-export default function NavigationBar() {
+const NavigationBar = memo(() => {
 	return (
 		<AppBar position='static' className='app-bar-container'>
 			<Toolbar className='app-bar'>
@@ -29,7 +21,7 @@ export default function NavigationBar() {
 					</Typography>
 				</Link>
 
-				<EmptySpace />
+				<div className='empty-space' />
 
 				<IconButton
 					className='styled-icon-button'
@@ -64,4 +56,6 @@ export default function NavigationBar() {
 			<SubNav />
 		</AppBar>
 	)
-}
+})
+
+export default NavigationBar
