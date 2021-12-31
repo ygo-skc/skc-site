@@ -1,6 +1,6 @@
 import '../../css/nav/navigation-icon.css'
 
-import { lazy, memo, Suspense } from 'react'
+import { lazy, Suspense } from 'react'
 import { AppBar, Toolbar, Typography, Link, IconButton } from '@mui/material'
 import GitHubIcon from '@mui/icons-material/GitHub'
 import YouTube from '@mui/icons-material/YouTube'
@@ -11,7 +11,7 @@ import SubNav from './SubNav'
 
 const Messages = lazy(() => import('./Messages'))
 
-const NavigationBar = memo(() => {
+const NavigationBar = () => {
 	return (
 		<AppBar position='static' className='app-bar-container'>
 			<Toolbar className='app-bar'>
@@ -56,6 +56,6 @@ const NavigationBar = memo(() => {
 			<SubNav />
 		</AppBar>
 	)
-})
+}
 
 export default NavigationBar
