@@ -1,15 +1,14 @@
 import { FC } from 'react'
 
-import { AutocompleteRenderInputParams, IconButton, InputBase } from '@mui/material'
+import { AutocompleteRenderInputParams, IconButton, TextField } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 
 const DBSearchInput: FC<{ searchParams: AutocompleteRenderInputParams; setSearchInput: React.Dispatch<React.SetStateAction<string>> }> = ({ searchParams, setSearchInput }) => {
 	return (
-		<div {...searchParams} className='search-input-parent'>
-			<InputBase
+		<div className='search-input-parent'>
+			<TextField
+				{...searchParams}
 				className='search-input-field'
-				ref={searchParams.InputProps.ref}
-				inputProps={searchParams.inputProps}
 				placeholder='Search database for specific card...'
 				onChange={(event) => {
 					setSearchInput(event.target.value)

@@ -33,12 +33,19 @@
 	flex: 1;
 	font-size: 1.05rem;
 }
+.search-input-field fieldset {
+	border: none;
+}
 
 .search-suggestions-parent {
 	display: flex;
 	width: 100%;
-	padding: 0rem;
-	padding-top: 0.5rem;
+	padding: 0.5rem;
+}
+
+.search-suggestions-parent.Mui-focused {
+	background: rgba(135, 120, 229, 0.08);
+	cursor: pointer;
 }
 
 .search-suggestions-info-parent {
