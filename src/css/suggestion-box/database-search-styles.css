@@ -29,7 +29,7 @@
 }
 
 .search-input-field {
-	color: rgba(0, 0, 0, 0.8);
+	color: black;
 	flex: 1;
 	font-size: 1.05rem;
 }

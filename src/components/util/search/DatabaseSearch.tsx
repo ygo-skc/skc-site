@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
 
-import { InputBase, IconButton, Avatar, Autocomplete } from '@mui/material'
-import SearchIcon from '@mui/icons-material/Search'
+import { Autocomplete } from '@mui/material'
 import Fetch from '../../../helper/FetchHandler'
 import DownstreamServices from '../../../helper/DownstreamServices'
 
-import RenderGroup, { SearchSuggestionTypography } from './Search'
+import RenderGroup from './Search'
 import axios, { CancelTokenSource } from 'axios'
+import DBSearchInput from './DBSearchInput'
+import DBSearchOptions from './DBSearchOptions'
 
 class _DatabaseSearch {
 	static readonly search = (searchSubject: string, setSearchOptions: any, fetchToken: CancelTokenSource, setIsFetching: React.Dispatch<React.SetStateAction<boolean>>) => {
@@ -66,46 +67,10 @@ export default function DatabaseSearch() {
 			renderGroup={(option) => {
 				return <RenderGroup group={option.group} children={option.children} />
 			}}
-			renderInput={(params) => (
-				<div {...params} className='search-input-parent'>
-					<InputBase
-						className='search-input-field'
-						ref={params.InputProps.ref}
-						inputProps={params.inputProps}
-						placeholder='Search database for specific card...'
-						onChange={(event) => {
-							setSearchInput(event.target.value)
-						}}
-					/>
-					<IconButton>
-						<SearchIcon className='search-icon' />
-					</IconButton>
-				</div>
+			renderInput={(searchParams) => <DBSearchInput searchParams={searchParams} setSearchInput={setSearchInput} />}
+			renderOption={(props: React.HTMLAttributes<HTMLLIElement>, option: any) => (
+				<DBSearchOptions props={props} searchSubject={searchInput} cardNameOption={option.cardName} cardIdOption={option.cardID} monsterTypeOption={option.monsterType} />
 			)}
-			renderOption={(props: React.HTMLAttributes<HTMLLIElement>, option: any) => {
-				const CARD_NAME = option.cardName
-				const UPPERCASE_CARD_NAME = CARD_NAME.toUpperCase()
-				const UPPERCASE_SEARCH_TERM = searchInput.toUpperCase()
-
-				const INDEX_OF_SEARCH_TERM = UPPERCASE_CARD_NAME.indexOf(UPPERCASE_SEARCH_TERM)
-				const LENGTH_OF_SEARCH_TERM = UPPERCASE_SEARCH_TERM.length
-
-				return (
-					<li {...props} className='search-suggestions-parent'>
-						<Avatar className='card-image-avatar' alt={`${CARD_NAME}-Avatar`} src={`https://images.thesupremekingscastle.com/cards/tn/${option.cardID}.jpg`} />
-						<div className='search-suggestions-info-parent'>
-							<SearchSuggestionTypography variant='subtitle1'>
-								{CARD_NAME.slice(0, INDEX_OF_SEARCH_TERM)}
-								<strong className='search-suggestion-substring-match'>{CARD_NAME.slice(INDEX_OF_SEARCH_TERM, INDEX_OF_SEARCH_TERM + LENGTH_OF_SEARCH_TERM)}</strong>
-								{CARD_NAME.slice(INDEX_OF_SEARCH_TERM + LENGTH_OF_SEARCH_TERM)}
-							</SearchSuggestionTypography>
-							<SearchSuggestionTypography variant='body1' className='search-suggestion-subheader'>
-								{option.monsterType}
-							</SearchSuggestionTypography>
-						</div>
-					</li>
-				)
-			}}
 		/>
 	)
 }
