@@ -1,5 +1,3 @@
-import '../../../css/suggestion-box/database-search-styles.css'
-
 import { useEffect, useState } from 'react'
 
 import { InputBase, IconButton, Avatar, Autocomplete } from '@mui/material'
