@@ -26,7 +26,7 @@ export default function YouTubeData() {
 	return (
 		<div
 			className='section-content section-content-dark'
-			style={{ maxWidth: '100%', background: '#FAFAFA', paddingTop: '2rem', borderBottomLeftRadius: '2rem', borderBottomRightRadius: '2rem' }}
+			style={{ maxWidth: '100%', background: '#f7f7f7', paddingTop: '2rem', borderBottomLeftRadius: '2rem', borderBottomRightRadius: '2rem' }}
 		>
 			{errFetchingData ? (
 				<GenericNonBreakingErr errExplanation='No meaningful impact to the site functionality expected. Come back at a different time to see recent YouTube uploads 🎥!' />
