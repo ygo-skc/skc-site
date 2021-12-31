@@ -44,7 +44,7 @@ const CardProductInformation: FunctionComponent<args> = ({ isLoading, hasInfo, p
 			{isLoading ? (
 				<Skeleton width={150} height={25} />
 			) : (
-				<Typography variant='h6' className={'card-info-header'}>
+				<Typography variant='h4' className={'card-info-header'}>
 					{'Products'}
 				</Typography>
 			)}
