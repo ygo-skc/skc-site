@@ -62,6 +62,7 @@ const MuiTheme = createTheme({
 				paper: {
 					background: 'rgba(255, 255, 255, .6)',
 					backdropFilter: 'blur(60px)',
+					borderRadius: '2rem',
 				},
 			},
 		},
