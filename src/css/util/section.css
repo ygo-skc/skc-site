@@ -7,7 +7,7 @@
 }
 
 .section-header-container {
-	background: #5D5A6B;
+	background: #5d5a6b;
 	color: white;
 	border-top-left-radius: 1.75rem;
 	border-top-right-radius: 1.75rem;
@@ -21,9 +21,10 @@
 	padding-bottom: 1.5rem;
 }
 
-.section-content, .section-content-dark {
-	padding-left: .8rem;
-	padding-right: .8rem;
+.section-content,
+.section-content-dark {
+	padding-left: 0.8rem;
+	padding-right: 0.8rem;
 	padding-top: 2rem;
 	padding-bottom: 2rem;
 	background: #fff;
@@ -31,7 +32,6 @@
 	border-bottom-right-radius: 2rem;
 }
 
-
 .section-content-dark {
-	background: rgb(250, 250, 250)
+	background: rgb(250, 250, 250);
 }

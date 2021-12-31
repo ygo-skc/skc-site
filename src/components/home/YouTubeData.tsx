@@ -2,7 +2,6 @@ import { useEffect, useState, lazy } from 'react'
 
 import YouTubeUploads from '../util/social/YouTubeUploads'
 import DownstreamServices from '../../helper/DownstreamServices'
-
 import Fetch from '../../helper/FetchHandler'
 
 const GenericNonBreakingErr = lazy(() => import('../util/exception/GenericNonBreakingErr'))
@@ -24,10 +23,7 @@ export default function YouTubeData() {
 	}, [])
 
 	return (
-		<div
-			className='section-content section-content-dark'
-			style={{ maxWidth: '100%', background: '#f7f7f7', paddingTop: '2rem', borderBottomLeftRadius: '2rem', borderBottomRightRadius: '2rem' }}
-		>
+		<div className='section-content section-content-dark'>
 			{errFetchingData ? (
 				<GenericNonBreakingErr errExplanation='No meaningful impact to the site functionality expected. Come back at a different time to see recent YouTube uploads 🎥!' />
 			) : (
