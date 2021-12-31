@@ -14,7 +14,7 @@ import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 import Fetch from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 
-import RenderGroup, {SearchSuggestionTypography} from '../util/search/Search'
+import RenderGroup from '../util/search/DBSearchGrouping'
 
 import '../../css/util/divider.css'
 
@@ -223,7 +223,7 @@ export default function Browse()
 							renderOption={(props, option) => {
 								return (
 									<div style={{ paddingTop: '.3rem', paddingBottom: '.3rem', margin: '0rem' }} >
-										<SearchSuggestionTypography variant='body1'>{option.criteriaValue}</SearchSuggestionTypography>
+										<Typography className='search-suggestion-text search-suggestion-subheader' variant='body1'>{option.criteriaValue}</Typography>
 									</div>
 								)
 							}}

@@ -53,3 +53,14 @@
 .search-suggestion-subheader {
 	color: rgba(81, 99, 114, 0.8);
 }
+
+.search-suggestion-text {
+	white-space: pre-wrap;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	padding: 0rem;
+	margin: 0rem;
+	font-weight: 500;
+}

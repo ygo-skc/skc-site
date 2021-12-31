@@ -4,7 +4,7 @@ import { Autocomplete } from '@mui/material'
 import Fetch from '../../../helper/FetchHandler'
 import DownstreamServices from '../../../helper/DownstreamServices'
 
-import RenderGroup from './Search'
+import DBSearchGrouping from './DBSearchGrouping'
 import axios, { CancelTokenSource } from 'axios'
 import DBSearchInput from './DBSearchInput'
 import DBSearchOptions from './DBSearchOptions'
@@ -60,12 +60,13 @@ export default function DatabaseSearch() {
 			options={searchOptions}
 			groupBy={(option) => option.cardColor}
 			onChange={(_event, value, reason: string) => {
+				setSearchInput(value.cardName)
 				if (reason === 'selectOption') {
 					window.location.assign(`/card/${value.cardID}`)
 				}
 			}}
 			renderGroup={(option) => {
-				return <RenderGroup group={option.group} children={option.children} />
+				return <DBSearchGrouping group={option.group} children={option.children} />
 			}}
 			renderInput={(searchParams) => <DBSearchInput searchParams={searchParams} setSearchInput={setSearchInput} />}
 			renderOption={(props: React.HTMLAttributes<HTMLLIElement>, option: any) => (

@@ -6,7 +6,7 @@ import Section from '../Section'
 
 import '../../../css/suggestion-box/database-search-styles.css'
 
-const DatabaseSearch = lazy(() => import('../search/DatabaseSearch'))
+const DatabaseSearch = lazy(() => import('../search/DBSearch'))
 
 type DatabaseInfoType = {
 	cardTotal: number
