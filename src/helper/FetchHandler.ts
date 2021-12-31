@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosResponse, CancelTokenSource } from 'axios'
-import { NAME_maps_ROUTE } from '../components/Routes'
+import { _SKCSiteRoutes } from '../components/Routes'
 
 class Fetch {
 	static readonly CLIENT_ID = process.env.REACT_APP_CLIENT_ID as string
@@ -32,15 +32,15 @@ class Fetch {
 
 	static readonly handleError = (err: AxiosError) => {
 		if (err.name === 'TypeError' || err.message === 'Network Error') {
-			window.location.href = NAME_maps_ROUTE[503]
+			window.location.href = _SKCSiteRoutes.NAME_maps_ROUTE[503]
 		} else if (err.code === 'ECONNABORTED') {
 			// request timeout
-			window.location.href = NAME_maps_ROUTE[408]
+			window.location.href = _SKCSiteRoutes.NAME_maps_ROUTE[408]
 		} else if (err.response) {
 			if (err.response.status === 404) {
-				window.location.href = NAME_maps_ROUTE['404-Server']
+				window.location.href = _SKCSiteRoutes.NAME_maps_ROUTE['404-Server']
 			} else {
-				window.location.href = NAME_maps_ROUTE[err.response.status]
+				window.location.href = _SKCSiteRoutes.NAME_maps_ROUTE[err.response.status]
 			}
 		} else if (axios.isCancel(err)) {
 			console.log('Request cancelled')

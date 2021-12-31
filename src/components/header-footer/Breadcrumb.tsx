@@ -1,5 +1,4 @@
 import { FunctionComponent, memo } from 'react'
-import '../../css/nav/breadcrumb.css'
 
 import { Breadcrumbs, Link, Box, Typography } from '@mui/material'
 import { Skeleton } from '@mui/material'
@@ -9,7 +8,9 @@ import Block from '@mui/icons-material/Block'
 import ErrorIcon from '@mui/icons-material/Error'
 import InfoIcon from '@mui/icons-material/Info'
 
-import { NAME_maps_ROUTE } from '../Routes'
+import { _SKCSiteRoutes } from '../Routes'
+
+import '../../css/nav/breadcrumb.css'
 
 type BreadcrumbProps = {
 	crumbs: string[]
@@ -30,7 +31,7 @@ const Breadcrumb: FunctionComponent<BreadcrumbProps> = memo(
 			}
 
 			return (
-				<Link underline='none' className='breadcrumb' variant='subtitle2' color='inherit' href={NAME_maps_ROUTE[item.replace(' ', '')]} key={item}>
+				<Link underline='none' className='breadcrumb' variant='subtitle2' color='inherit' href={_SKCSiteRoutes.NAME_maps_ROUTE[item.replace(' ', '')]} key={item}>
 					{BreadcrumbStaticFields.BREADCRUMB_maps_ICON.get(item)}
 					<Typography className='breadcrumb breadcrumb-text'>{item}</Typography>
 				</Link>
