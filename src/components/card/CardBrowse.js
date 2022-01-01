@@ -17,6 +17,7 @@ import DownstreamServices from '../../helper/DownstreamServices'
 import RenderGroup from '../util/search/DBSearchGrouping'
 
 import '../../css/util/divider.css'
+import '../../css/suggestion-box/database-search-styles.css'
 
 const CardDisplayGrid = lazy( () => import('../util/grid/CardDisplayGrid'))
 
@@ -222,9 +223,9 @@ export default function Browse()
 
 							renderOption={(props, option) => {
 								return (
-									<div style={{ paddingTop: '.3rem', paddingBottom: '.3rem', margin: '0rem' }} >
-										<Typography className='search-suggestion-text search-suggestion-subheader' variant='body1'>{option.criteriaValue}</Typography>
-									</div>
+		<Box component='li' {...props} className='search-suggestions-parent'>
+										<Typography className='search-suggestion-text search-suggestion-header' variant='body1'>{option.criteriaValue}</Typography>
+									</Box>
 								)
 							}}
 							/>
