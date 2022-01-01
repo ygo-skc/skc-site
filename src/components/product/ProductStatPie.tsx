@@ -15,10 +15,9 @@ const ProductStatPie: FC<{ data: any[]; statName: string }> = ({ data, statName 
 				<ResponsivePie
 					margin={{ top: margin, right: margin * 5, bottom: margin, left: margin }}
 					data={data}
-					padAngle={1}
 					animate={true}
 					activeOuterRadiusOffset={4}
-					innerRadius={0.25}
+					innerRadius={0}
 					arcLabelsRadiusOffset={0.6}
 					activeInnerRadiusOffset={0}
 					// arcLinkLabelsDiagonalLength={30}
