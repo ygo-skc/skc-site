@@ -108,7 +108,7 @@ function Messages() {
 			>
 				<div className='communication-popper-container'>
 					<Typography className='communication-message-body' variant='h2'>
-						Messages {errorFetchingMessages ? '⁉️' : `(${numMessages})`}
+						🚨 Messages {errorFetchingMessages ? '⁉️' : `(${numMessages})`}
 					</Typography>
 					<br />
 

@@ -20,15 +20,21 @@ const MessageItemComponent: FC<MessageItemComponentArgs> = ({ creationDate, mess
 			<Typography className='communication-message-header' variant='h6'>
 				{messageTitle}
 			</Typography>
-			<Typography className='communication-message-sub-header' variant='subtitle1'>
-				{Dates.getDateString(creationDate)} {Dates.getTimeString(creationDate)}
-			</Typography>
-			<Typography className='communication-message-body link-container' variant='body1'>
-				<ReactMarkdown children={`${messageContent}`} />
-			</Typography>
-			{messageTags.map((tag: string) => (
-				<Chip className='communication-message-tag' label={tag} />
-			))}
+
+			<div className='communication-message-content'>
+				<Typography className='communication-message-sub-header' variant='subtitle1'>
+					{Dates.getDateString(creationDate)} {Dates.getTimeString(creationDate)}
+				</Typography>
+				<Typography className='communication-message-body link-container' variant='body1'>
+					<ReactMarkdown children={`${messageContent}`} />
+				</Typography>
+
+				<div className='communication-message-tag-container'>
+					{messageTags.map((tag: string) => (
+						<Chip className='communication-message-tag' label={tag} />
+					))}
+				</div>
+			</div>
 			{isLastMessage ? <div /> : <Divider className='communication-divider' />}
 		</div>
 	)
