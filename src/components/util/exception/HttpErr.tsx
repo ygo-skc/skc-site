@@ -1,13 +1,11 @@
 import { FC } from 'react'
 import Styled from 'styled-components'
 
-import { MainContentContainer } from '../../MainContent'
-import Breadcrumbs from '../Breadcrumb'
+import Breadcrumbs from '../../header-footer/Breadcrumb'
 import YGOCard from '../../card/YGOCard'
 
-
 class _HttpErr {
-	static readonly HTTP_ERR_maps_ERR_NAME: { [ key : string ]: string } = {
+	static readonly HTTP_ERR_maps_ERR_NAME: { [key: string]: string } = {
 		400: '400 - Bad Request',
 		408: '408 - Request Timeout',
 		422: '422 - Unprocessable Entity',
@@ -17,7 +15,7 @@ class _HttpErr {
 		503: '503 - API is offline or Busy',
 	}
 
-	static readonly HTTP_ERR_maps_ERR_TYPE: { [ key : string ]: string } = {
+	static readonly HTTP_ERR_maps_ERR_TYPE: { [key: string]: string } = {
 		400: 'Client Error',
 		408: 'Client Error',
 		422: 'Client Error',
@@ -27,11 +25,11 @@ class _HttpErr {
 		503: 'Server Err',
 	}
 
-	static readonly HTTP_ERR_maps_ERR_DESCRIPTION: { [ key : string ]: string } = {
+	static readonly HTTP_ERR_maps_ERR_DESCRIPTION: { [key: string]: string } = {
 		400: 'The requested resource does not conform to the expected format.',
 		408: 'The request was not completed in the allowed time frame. This could be due to higher than expected traffic or bad internet connection. Please try again later.',
 		422: 'API could not process the request as it is not formatted the way the API was programmed. Are you trying to manipulate data in the browser?',
-		'404-Client': `Requested webpage "${ window.location.href }" does not exist.
+		'404-Client': `Requested webpage "${window.location.href}" does not exist.
 		\nUse the navigation to get back to an existing page.`,
 		'404-Server': `Resource was not found in Database. Did you use the correct identifier?`,
 		500: 'There was an error connecting to the server. Please come back at a different time.',
@@ -47,20 +45,19 @@ const ErrCard = Styled(YGOCard)`
 	}
 `
 
-
-const HttpErr:FC<{ httpErr: string }> = ( {httpErr} ) => {
-	return(
-		<MainContentContainer >
-			<Breadcrumbs
-				crumbs={ [ 'Home', httpErr ] } />
-				<ErrCard
-					cardColor='Err'
-					cardName={ _HttpErr.HTTP_ERR_maps_ERR_NAME[httpErr] }
-					monsterType={ _HttpErr.HTTP_ERR_maps_ERR_TYPE[httpErr] }
-					cardEffect={ _HttpErr.HTTP_ERR_maps_ERR_DESCRIPTION[httpErr] }
-					cardID={ `00000${httpErr}` }
-					fullDetails={true} />
-		</MainContentContainer>
+const HttpErr: FC<{ httpErr: string }> = ({ httpErr }) => {
+	return (
+		<div className='generic-container'>
+			<Breadcrumbs crumbs={['Home', httpErr]} />
+			<ErrCard
+				cardColor='Err'
+				cardName={_HttpErr.HTTP_ERR_maps_ERR_NAME[httpErr]}
+				monsterType={_HttpErr.HTTP_ERR_maps_ERR_TYPE[httpErr]}
+				cardEffect={_HttpErr.HTTP_ERR_maps_ERR_DESCRIPTION[httpErr]}
+				cardID={`00000${httpErr}`}
+				fullDetails={true}
+			/>
+		</div>
 	)
 }
 

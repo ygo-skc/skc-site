@@ -1,7 +1,7 @@
 import { FC, memo } from 'react'
 
-import { Typography, Paper } from '@material-ui/core'
-import { Skeleton } from '@material-ui/lab'
+import { Typography, Paper } from '@mui/material'
+import { Skeleton } from '@mui/material'
 
 import Styled from 'styled-components'
 
@@ -21,62 +21,38 @@ const CardContentComponent = Styled(Paper)`
 	}
 `
 
-type YGOCardType = {
-	cardName: string,
-	cardColor: string,
-	cardEffect: string,
-	monsterType: string,
-	cardAttribute?: string,
-	monsterAtk?: string,
-	monsterDef?: string,
-	monsterAssociation?: string,
-	cardID: string,
-	fullDetails: boolean,
-	effectMaxLineHeight?: number,
-	isLoading?: boolean,
-	className?: string
-}
+const YGOCard: FC<_YGOCard> = memo(
+	({ cardName, cardColor, cardEffect, monsterType, cardAttribute, monsterAtk, monsterDef, monsterAssociation, cardID, fullDetails, effectMaxLineHeight, isLoading, className }) => {
+		if (isLoading) {
+			return <Skeleton variant='rectangular' height='150' style={{ borderRadius: '.5rem' }} />
+		}
 
+		return (
+			<CardContentComponent className={[className, `${cardColor}YgoCardParent`, 'YgoCardLightText'].join(' ')}>
+				<Typography variant='subtitle1' id='CardName' noWrap={true}>
+					{cardName}
+				</Typography>
 
-const YGOCard:FC<YGOCardType> = memo(( {cardName, cardColor, cardEffect, monsterType, cardAttribute, monsterAtk, monsterDef, monsterAssociation, cardID, fullDetails, effectMaxLineHeight, isLoading, className }) =>
-{
-	if (isLoading)
-	{
-		return(
-			<Skeleton variant='rect' height='150' style={{ borderRadius: '.5rem' }} />
+				<CardAssociation monsterAssociation={monsterAssociation} attribute={cardAttribute} />
+
+				<YGOCardStats
+					cardColor={cardColor}
+					cardEffect={cardEffect}
+					monsterType={monsterType}
+					monsterAtk={monsterAtk}
+					monsterDef={monsterDef}
+					cardID={cardID}
+					fullDetails={fullDetails}
+					effectMaxLineHeight={effectMaxLineHeight}
+				/>
+			</CardContentComponent>
 		)
+	},
+	(prevProps, newProps) => {
+		if (prevProps.cardName !== newProps.cardName) return false
+
+		return true
 	}
-
-	return(
-		<CardContentComponent className={[className, `${cardColor}YgoCardParent`, 'YgoCardLightText'].join(' ')} >
-			<Typography
-				variant='subtitle1'
-				id='CardName'
-				noWrap={true}
-				>
-					{ cardName }
-			</Typography>
-
-			<CardAssociation monsterAssociation={monsterAssociation} attribute={cardAttribute} />
-
-			<YGOCardStats
-				cardColor={cardColor}
-				cardEffect={cardEffect}
-				monsterType={monsterType}
-				monsterAtk={monsterAtk}
-				monsterDef={monsterDef}
-				cardID={cardID}
-				fullDetails={fullDetails}
-				effectMaxLineHeight={effectMaxLineHeight}
-			/>
-		</CardContentComponent>
-	)
-}, (prevProps, newProps) => {
-	if ( prevProps.cardName !== newProps.cardName )
-		return false
-
-	return true
-})
-
+)
 
 export default YGOCard

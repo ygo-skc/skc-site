@@ -1,11 +1,10 @@
 #rounded-img-outer-container {
 	margin: auto;
-	margin-bottom: .5rem;
+	margin-bottom: 0.5rem;
 	width: 96%;
 }
 
-
-#rounded-img-inner-container{
+#rounded-img-inner-container {
 	border-radius: 4rem;
 	overflow: hidden;
 	width: 100%;
@@ -13,9 +12,7 @@
 	padding-bottom: 100%;
 }
 
-
-#rounded-img{
-	width: 100%;
+#rounded-img {
 	height: auto;
 	object-fit: cover;
 }

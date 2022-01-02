@@ -1,22 +1,26 @@
 <html>
 	<head>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
 		<meta name="robots" content="index, follow" />
 		<meta charset="UTF-8" />
 		<meta name="author" content="Javi Gomez" />
 
-		<meta name="theme-color" content="#3f1286">
+		<meta name="theme-color" content="#3f1286" />
 
-		<meta http-equiv='x-dns-prefetch-control' content='on'>
+		<meta http-equiv="x-dns-prefetch-control" content="on" />
 
-		<link rel="preconnect" href="%REACT_APP_API_HOST%" crossorigin >
+		<link rel="preconnect" href="https://thesupremekingscastle.com" />
+		<link rel="preconnect" href="https://images.thesupremekingscastle.com" />
+		<link rel="preconnect" href="%REACT_APP_API_HOST%" crossorigin />
+		<link rel="preconnect" href="%REACT_APP_HEART_API_HOST%" crossorigin />
+		<link rel="preconnect" href="https://i.ytimg.com" crossorigin />
 
-		<link rel="dns-prefetch" href="https://images.thesupremekingscastle.com">
-		<link rel="dns-prefetch" href="%REACT_APP_API_HOST%">
+		<link rel="dns-prefetch" href="https://images.thesupremekingscastle.com" />
+		<link rel="dns-prefetch" href="%REACT_APP_API_HOST%" />
+		<link rel="dns-prefetch" href="%REACT_APP_HEART_API_HOST%" />
 
 		<style>
-			html
-			{
+			html {
 				top: 0;
 				bottom: 0;
 				left: 0;
@@ -30,8 +34,7 @@
 				-webkit-text-size-adjust: 100%;
 			}
 
-			body
-			{
+			body {
 				top: 0;
 				bottom: 0;
 				left: 0;
@@ -41,7 +44,7 @@
 
 				text-rendering: optimizeLegibility;
 
-				font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji !important;
+				font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji !important;
 
 				display: flex;
 				flex-direction: column;
@@ -52,33 +55,25 @@
 				height: 0px !important;
 			}
 
-
 			.MuiAppBar-colorPrimary {
-				background-color: #3B4968 !important;
+				background-color: #3b4968 !important;
 			}
-
 
 			@media screen and (min-width: 0px) {
 				html {
 					font-size: 12.3px;
 				}
 			}
-			@media screen and (min-width: 600px) {
+			@media screen and (min-width: 601px) {
 				html {
-					font-size: 12.85px;
+					font-size: 12.5px;
 				}
 			}
-			@media screen and (min-width: 1200px) {
+			@media screen and (min-width: 1201px) {
 				html {
-					font-size: 13.5px;
+					font-size: 13px;
 				}
 			}
-			@media screen and (min-width: 1850px) {
-				html {
-					font-size: 14px;
-				}
-			}
-
 
 			.root {
 				display: flex;
@@ -87,11 +82,9 @@
 				flex: 1 0 auto;
 			}
 
-
 			.content {
 				flex: 1 0 auto;
 			}
-
 
 			.routes {
 				width: 100%;
@@ -99,51 +92,44 @@
 				margin: 0 auto !important;
 			}
 
-
 			.routes-wrapper {
-				padding-left: .8rem;
-				padding-right: .8rem;
+				padding-left: 0.8rem;
+				padding-right: 0.8rem;
 			}
-
 
 			.footer {
 				width: 100%;
 				max-width: 1850px;
 				margin: 0 auto !important;
 
-
 				background-color: #282666;
 
-				border-top-left-radius: .5rem;
-				border-top-right-radius: .5rem;
+				border-top-left-radius: 0.5rem;
+				border-top-right-radius: 0.5rem;
 				margin-top: 2rem !important;
 			}
-
 
 			.footer-wrapper {
 				padding: 2.5rem;
 			}
 
-
 			.footer-font {
 				font-weight: 500;
-				color: rgba(255, 255, 255, .95) !important;
+				color: rgba(255, 255, 255, 0.95) !important;
 			}
-
 
 			.app-bar-container {
 				background-color: #3f1286;
-				background: radial-gradient(89.53% 145.96% at 60% 100.79%,#461495 0,#5418b3 17.58%,#461495 50.31%,#3f1286 97.03%);
-				padding-left: .8rem;
-				padding-right: .8rem;
+				background: radial-gradient(89.53% 145.96% at 60% 100.79%, #461495 0, #5418b3 17.58%, #461495 50.31%, #3f1286 97.03%);
+				padding-left: 0.8rem;
+				padding-right: 0.8rem;
 				box-shadow: none !important;
 			}
-
 
 			.app-bar {
 				width: 100%;
 				max-width: 1850px;
-				margin: auto
+				margin: auto;
 			}
 
 			.MuiToolbar-gutters {
@@ -151,38 +137,31 @@
 				padding-right: 0rem !important;
 			}
 
-
 			.app-bar-button {
 				font-weight: 700 !important;
 				font-size: 1.4rem !important;
 				text-transform: none !important;
-				padding: .7rem;
+				padding: 0.7rem;
 				border-radius: 1rem;
 			}
 
-
-			.app-bar-button:hover
-			{
-				background: rgb(255, 255, 255, .4);
+			.app-bar-button:hover {
+				background: rgb(255, 255, 255, 0.4);
 				backdrop-filter: blur(60px);
 			}
-
 
 			.nav-button {
 				font-weight: 500 !important;
 				font-size: 1.05rem !important;
-				padding: .7rem;
+				padding: 0.7rem;
 				border-radius: 1rem;
-				color: rgba(255, 255, 255, .85) !important
+				color: rgba(255, 255, 255, 0.85) !important;
 			}
 
-
-			.nav-button:hover
-			{
-				background: rgb(255, 255, 255, .4);
+			.nav-button:hover {
+				background: rgb(255, 255, 255, 0.4);
 				backdrop-filter: blur(60px);
 			}
-
 
 			.scrollable-nav {
 				white-space: nowrap;
@@ -193,7 +172,7 @@
 				width: 100%;
 				max-width: 1850px;
 				margin: auto;
-				margin-bottom: .25rem;
+				margin-bottom: 0.25rem;
 				padding: 0rem !important;
 			}
 
@@ -201,11 +180,27 @@
 				display: none;
 			}
 
-		</style>
+			.sticky {
+				position: -webkit-sticky;
+				position: sticky;
+				top: 20;
+			}
 
+			.link-container a,
+			.link {
+				background: rgba(253, 237, 221, 0.6);
+				padding: 0.2rem;
+				color: #ff6600;
+				text-decoration: none !important;
+			}
+
+			.empty-space {
+				flex-grow: 1;
+			}
+		</style>
 	</head>
 
 	<body>
-		<div class='root' id='root' />
+		<div class="root" id="root" />
 	</body>
 </html>

@@ -1,0 +1,65 @@
+.generic-container {
+	padding-left: 0rem;
+	padding-right: 0rem;
+	padding-bottom: 0rem;
+
+	max-width: 100%;
+	height: 100%;
+	width: 100%;
+}
+
+.one-third-two-thirds-container {
+	background: white;
+	border-radius: 1.75rem;
+	padding-left: 0.8rem;
+	padding-right: 0.9rem;
+	padding-top: 1.2rem;
+	padding-bottom: 1.2rem;
+	box-shadow: rgba(0, 0, 0, 0.12) 0px 0.5rem 1.4rem;
+	border: 1px solid rgb(221, 221, 221);
+}
+
+.one-third-section,
+.one-third-section-mirrored {
+	margin-bottom: 2.5rem;
+}
+
+@media screen and (min-width: 800px) {
+	.one-third-section-mirrored {
+		padding-left: 0rem;
+	}
+
+	.one-third-two-thirds-container {
+		padding-left: 1rem;
+		padding-right: 1rem;
+		padding-top: 1.25rem;
+	}
+
+	.one-third-section,
+	.one-third-section-mirrored {
+		min-width: 25rem;
+		max-width: 25rem;
+	}
+
+	.two-third-section,
+	.two-third-section-mirrored {
+		flex-grow: 1;
+		width: 1;
+	}
+
+	.two-third-section {
+		padding-left: 0.8rem;
+	}
+
+	.two-third-section-mirrored {
+		padding-right: 0.8rem;
+	}
+}
+
+@media screen and (min-width: 1500px) {
+	.one-third-section,
+	.one-third-section-mirrored {
+		min-width: 30rem;
+		max-width: 30rem;
+	}
+}

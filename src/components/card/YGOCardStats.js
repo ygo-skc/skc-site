@@ -1,7 +1,7 @@
 import React from 'react'
 import '../../css/ygo-card-styles.css'
 
-import { Typography, Box , Tooltip} from '@material-ui/core'
+import { Typography, Box , Tooltip} from '@mui/material'
 
 import Styled from 'styled-components'
 

@@ -1,75 +1,56 @@
 import React, { useState, useEffect } from 'react'
-import { withStyles } from '@material-ui/core/styles'
-import { Table, TableHead, TableContainer, Paper, TableCell, TableBody, Typography } from '@material-ui/core'
-import TableRow from '@material-ui/core/TableRow'
+import { withStyles } from '@mui/material/styles'
+import { Table, TableHead, TableContainer, Paper, TableCell, TableBody, Typography } from '@mui/material'
+import TableRow from '@mui/material/TableRow'
 
-
-const StyledTableHeadCell = withStyles(theme => ({
+const StyledTableHeadCell = withStyles((theme) => ({
 	body: {
-		color: '#fff'
-	}
+		color: '#fff',
+	},
 }))(TableCell)
 
-
-const BanListTable = ( {isDataLoaded, bannedContent, contentTitle, contentExplanation, contentColor, cardClicked} ) => {
+const BanListTable = ({ isDataLoaded, bannedContent, contentTitle, contentExplanation, contentColor, cardClicked }) => {
 	const [tableContent, setTableContent] = useState([])
 
-
 	useEffect(() => {
-		if (isDataLoaded === true)
-		{
+		if (isDataLoaded === true) {
 			const tableContent = []
-			bannedContent.forEach(forbiddenCard => {
-
+			bannedContent.forEach((forbiddenCard) => {
 				const StyledTableRow = withStyles({
-					'hover': {
-						background: cardStyles[ `${forbiddenCard.cardColor.toLowerCase()}TableBackground` ]
-						, cursor: 'pointer'
-						, '&&:hover': {
-							backgroundColor: '#456'
-						}
-					}
+					hover: {
+						background: cardStyles[`${forbiddenCard.cardColor.toLowerCase()}TableBackground`],
+						cursor: 'pointer',
+						'&&:hover': {
+							backgroundColor: '#456',
+						},
+					},
 				})(TableRow)
 
 				tableContent.push(
-					<StyledTableRow
-						hover
-						onClick={ () => cardClicked(forbiddenCard.cardID) }
-						>
-						<StyledTableHeadCell>{ forbiddenCard.cardName }</StyledTableHeadCell>
-						<StyledTableHeadCell>{ forbiddenCard.cardID }</StyledTableHeadCell>
-						<StyledTableHeadCell>{ forbiddenCard.monsterType }</StyledTableHeadCell>
+					<StyledTableRow hover onClick={() => cardClicked(forbiddenCard.cardID)}>
+						<StyledTableHeadCell>{forbiddenCard.cardName}</StyledTableHeadCell>
+						<StyledTableHeadCell>{forbiddenCard.cardID}</StyledTableHeadCell>
+						<StyledTableHeadCell>{forbiddenCard.monsterType}</StyledTableHeadCell>
 					</StyledTableRow>
 				)
 			})
 
 			setTableContent(tableContent)
 		}
-	}, [ isDataLoaded ])
+	}, [isDataLoaded])
 
 	return (
-		<TableContainer
-			component={ Paper }
-			style={{paddingTop: '.75rem'}}
-			>
-			<Typography
-				variant='h5'
-				style={{ paddingLeft: '.4rem', color: contentColor, textAlign: 'center' }}
-				>
-				{ contentTitle }
+		<TableContainer component={Paper} style={{ paddingTop: '.75rem' }}>
+			<Typography variant='h5' style={{ paddingLeft: '.4rem', color: contentColor, textAlign: 'center' }}>
+				{contentTitle}
 			</Typography>
-			<Typography
-				variant='subtitle1'
-				style={{ paddingLeft: '.4rem', textAlign: 'center'  }}
-				>
-				{ contentExplanation }
+			<Typography variant='subtitle1' style={{ paddingLeft: '.4rem', textAlign: 'center' }}>
+				{contentExplanation}
 			</Typography>
 
 			<br />
 
-			<Table
-				stickyHeader={true}
-				>
+			<Table stickyHeader={true}>
 				<TableHead>
 					<TableRow>
 						<TableCell>Card Name</TableCell>
@@ -78,9 +59,7 @@ const BanListTable = ( {isDataLoaded, bannedContent, contentTitle, contentExplan
 					</TableRow>
 				</TableHead>
 
-				<TableBody>
-					{ tableContent }
-				</TableBody>
+				<TableBody>{tableContent}</TableBody>
 			</Table>
 		</TableContainer>
 	)
