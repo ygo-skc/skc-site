@@ -80,6 +80,9 @@ const MuiTheme = createTheme({
 					paddingReft: '0rem',
 					paddingBottom: '.4rem',
 				},
+				listbox: {
+					overflowX: 'hidden',
+				},
 			},
 		},
 		MuiTooltip: {
