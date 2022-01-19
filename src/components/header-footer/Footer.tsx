@@ -6,7 +6,7 @@ const Footer: FunctionComponent = () => {
 		<div className='footer'>
 			<div className='footer-wrapper'>
 				<Typography className='footer-font' variant='body1' align='center'>
-					Copyright 2021
+					Copyright 2022
 				</Typography>
 
 				<Typography className='footer-font' variant='body1' align='center'>
