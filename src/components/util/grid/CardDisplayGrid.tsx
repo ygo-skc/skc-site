@@ -119,6 +119,7 @@ const CardDisplayGrid: FC<_CardDisplayGrid> = memo(
 										color: 'rgba(255, 255, 255, .95)',
 										marginTop: '1.5rem',
 										marginBottom: '1.5rem',
+										fontSize: '2rem',
 								  }
 								: { display: 'none' }
 						}
