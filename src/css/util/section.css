@@ -1,7 +1,8 @@
-.section-parent.MuiPaper-root {
+.section-parent {
 	margin-bottom: 2.25rem;
 	border-radius: 1.75rem;
 	padding: 0rem;
+	background: white;
 
 	max-width: 100%;
 }

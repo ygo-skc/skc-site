@@ -1,7 +1,7 @@
 import '../../css/util/section.css'
 
 import { FC, ReactNode } from 'react'
-import { Paper, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 
 type SectionType = {
 	sectionName: string
@@ -10,7 +10,7 @@ type SectionType = {
 
 const Section: FC<SectionType> = ({ sectionName, sectionContent }) => {
 	return (
-		<Paper className='section-parent'>
+		<div className='section-parent heavy-shadow'>
 			<div className='section-header-container'>
 				<Typography variant='h1' className='section-header-text'>
 					{sectionName}
@@ -18,7 +18,7 @@ const Section: FC<SectionType> = ({ sectionName, sectionContent }) => {
 			</div>
 
 			{sectionContent}
-		</Paper>
+		</div>
 	)
 }
 

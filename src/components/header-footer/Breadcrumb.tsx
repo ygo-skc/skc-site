@@ -39,7 +39,7 @@ const Breadcrumb: FunctionComponent<BreadcrumbProps> = memo(
 		})
 
 		return (
-			<Box className='breadcrumb-parent'>
+			<Box className='breadcrumb-parent light-shadow'>
 				<Breadcrumbs separator={'/'} aria-label='breadcrumb'>
 					{Crumbs}
 				</Breadcrumbs>
