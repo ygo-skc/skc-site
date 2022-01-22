@@ -28,8 +28,8 @@ const YGOCard: FC<_YGOCard> = memo(
 		}
 
 		return (
-			<CardContentComponent className={[className, `${cardColor}YgoCardParent`, 'YgoCardLightText'].join(' ')}>
-				<Typography variant='subtitle1' id='CardName' noWrap={true}>
+			<CardContentComponent className={[className, `${cardColor}-ygo-card-style`.toLowerCase(), 'YgoCardLightText'].join(' ')}>
+				<Typography variant='subtitle1' id='card-name' noWrap={true}>
 					{cardName}
 				</Typography>
 

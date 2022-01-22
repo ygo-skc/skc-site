@@ -33,10 +33,10 @@ const YGOCardStats = ({ cardColor, cardEffect, monsterType, monsterAtk, monsterD
 
 	return(
 		<Box
-			className={[`${cardColor}YgoCardSummaryBox`, 'YgoCardDarkText'].join(' ')} id='CardDescription' >
+			className={[`${cardColor}-ygo-card-style-light`.toLowerCase(), 'YgoCardDarkText'].join(' ')} id='card-description' >
 			<Typography
 				variant='body1'
-				id='MonsterType'
+				id='monster-type'
 				noWrap={true} >
 					{
 						( cardColor === 'Spell' || cardColor === 'Trap' ) ? cardColor : monsterType
@@ -61,7 +61,7 @@ const YGOCardStats = ({ cardColor, cardEffect, monsterType, monsterAtk, monsterD
 			<Box style={{display: 'flex', paddingTop: '.5rem',  alignItems: 'center'}} >
 				{
 					(fullDetails) ?
-						<Typography variant='body2' id='CardID' >
+						<Typography variant='body2' id='card-id' >
 							{cardID}
 						</Typography>
 						: undefined
