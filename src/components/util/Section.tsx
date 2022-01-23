@@ -18,6 +18,8 @@ const Section: FC<SectionType> = ({ sectionName, sectionContent, sectionHeaderBa
 		sectionHeaderBackgroundClass = sectionHeaderBackground === 'default' ? 'default-section-header-container' : `${sectionHeaderBackground}-ygo-card-style`
 	}
 
+	console.log(sectionHeaderBackground)
+
 	return (
 		<div className='section-parent heavy-shadow '>
 			<div className={`section-header-container ${sectionHeaderBackgroundClass}`}>
