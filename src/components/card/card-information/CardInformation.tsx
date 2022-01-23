@@ -19,7 +19,14 @@ class _Card {
 		if (!isLoading) {
 			const CardInformationRelatedContent = lazy(() => import('./CardInformationRelatedContent'))
 			return (
-				<CardInformationRelatedContent cardName={cardName} cardColor={cardColor} isLoading={isLoading} cardID={_Card.cardId!} productInfo={productInfo} banListInfo={banListInfo} />
+				<CardInformationRelatedContent
+					cardName={cardName}
+					cardColor={cardColor?.replace(/Pendulum-/gi, '') as cardColor}
+					isLoading={isLoading}
+					cardID={_Card.cardId!}
+					productInfo={productInfo}
+					banListInfo={banListInfo}
+				/>
 			)
 		}
 	}
@@ -89,7 +96,7 @@ const Card = () => {
 				oneThirdComponent={
 					<CardData
 						cardName={cardName}
-						cardColor={cardColor}
+						cardColor={cardColor?.replace(/Pendulum-/gi, '') as cardColor}
 						cardEffect={cardEffect}
 						cardAttribute={cardAttribute}
 						monsterType={monsterType}
