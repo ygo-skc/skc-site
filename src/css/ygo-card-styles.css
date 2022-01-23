@@ -85,7 +85,7 @@
 	color: #fffbeb !important;
 	/* ritualTableBackground: `#56b1fa`*/
 }
-.pendulum-effect-ygo-card-style-light {
+.pendulum-fusion-ygo-card-style-light {
 	background: rgba(238, 248, 247, 0.72);
 	color: #484848 !important;
 }
@@ -152,12 +152,12 @@
 	color: #fffbeb !important;
 }
 
-.ErrYgoCardParent {
+.err-ygo-card-style {
 	background: linear-gradient(315deg, #feae96 0%, #fe0944 74%);
 	color: #fffbeb !important;
 	/* ritualTableBackground: `#56b1fa`*/
 }
-.ErrCardSummaryBox {
+.err-ygo-card-style-light {
 	background: #ffcdd2;
 	color: #fffbeb !important;
 }

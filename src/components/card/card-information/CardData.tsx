@@ -9,6 +9,7 @@ const CardData: FC<_CardData> = memo(
 	({ cardID, cardName, cardColor, cardEffect, cardAttribute, monsterType, monsterAtk, monsterDef, monsterAssociation, isLoading, cardImg }) => {
 		return (
 			<Section
+				sectionHeaderBackground={cardColor.toLowerCase() as cardColor}
 				sectionName='Information'
 				sectionContent={
 					<div className='sticky section-content'>

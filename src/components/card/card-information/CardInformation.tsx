@@ -15,10 +15,12 @@ class _Card {
 	static cardImg: HTMLImageElement
 	static readonly crumbs = ['Home', 'Card Browse']
 
-	static readonly loadRelatedContent = (isLoading: boolean, cardName: string, productInfo: any, banListInfo: any) => {
+	static readonly loadRelatedContent = (isLoading: boolean, cardName: string, cardColor: cardColor, productInfo: any, banListInfo: any) => {
 		if (!isLoading) {
 			const CardInformationRelatedContent = lazy(() => import('./CardInformationRelatedContent'))
-			return <CardInformationRelatedContent cardName={cardName!} isLoading={isLoading} cardID={_Card.cardId!} productInfo={productInfo} banListInfo={banListInfo} />
+			return (
+				<CardInformationRelatedContent cardName={cardName} cardColor={cardColor} isLoading={isLoading} cardID={_Card.cardId!} productInfo={productInfo} banListInfo={banListInfo} />
+			)
 		}
 	}
 }
@@ -37,12 +39,12 @@ const Card = () => {
 	const [isLoading, setIsLoading] = useState(true)
 
 	const [cardName, setCardName] = useState('')
-	const [cardColor, setCardColor] = useState(undefined)
-	const [cardEffect, setCardEffect] = useState(undefined)
-	const [cardAttribute, setCardAttribute] = useState(undefined)
-	const [monsterType, setMonsterType] = useState(undefined)
-	const [monsterAtk, setMonsterAtk] = useState(undefined)
-	const [monsterDef, setMonsterDef] = useState(undefined)
+	const [cardColor, setCardColor] = useState<cardColor>('effect')
+	const [cardEffect, setCardEffect] = useState('')
+	const [cardAttribute, setCardAttribute] = useState('')
+	const [monsterType, setMonsterType] = useState('')
+	const [monsterAtk, setMonsterAtk] = useState('')
+	const [monsterDef, setMonsterDef] = useState('')
 	const [monsterAssociation, setMonsterAssociation] = useState(undefined)
 
 	const [productInfo, setPackInfo] = useState([])
@@ -99,7 +101,9 @@ const Card = () => {
 						cardImg={_Card.cardImg}
 					/>
 				}
-				twoThirdComponent={<Suspense fallback={<Skeleton width='100%' height='20rem' />}>{_Card.loadRelatedContent(isLoading, cardName, productInfo, banListInfo)}</Suspense>}
+				twoThirdComponent={
+					<Suspense fallback={<Skeleton width='100%' height='20rem' />}>{_Card.loadRelatedContent(isLoading, cardName, cardColor, productInfo, banListInfo)}</Suspense>
+				}
 			/>
 		</div>
 	)

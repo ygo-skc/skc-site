@@ -12,12 +12,14 @@ type CardInformationRelatedContentType = {
 	productInfo: any
 	banListInfo: any
 	cardID: string
+	cardColor: cardColor
 }
 
 const CardInformationRelatedContent: FC<CardInformationRelatedContentType> = memo(
-	({ cardName, isLoading, productInfo, banListInfo, cardID }) => {
+	({ cardName, cardColor, isLoading, productInfo, banListInfo, cardID }) => {
 		return (
 			<Section
+				sectionHeaderBackground={cardColor}
 				sectionName='Explore'
 				sectionContent={
 					<div className='section-content'>
