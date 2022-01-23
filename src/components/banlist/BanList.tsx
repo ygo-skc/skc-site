@@ -1,7 +1,7 @@
 import { lazy, useState, useEffect, Suspense } from 'react'
 import { Helmet } from 'react-helmet'
 
-import { Box, Divider, Skeleton } from '@mui/material'
+import { Skeleton } from '@mui/material'
 import Fetch from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 
@@ -9,8 +9,8 @@ import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 
 import BreadCrumb from '../header-footer/Breadcrumb'
 
-import '../../css/util/divider.css'
 import '../../css/main-pages/ban-list.css'
+import Section from '../util/Section'
 
 const BanListDates = lazy(() => import('./BanListDates'))
 const TabbedView = lazy(() => import('./TabbedView'))
@@ -98,48 +98,59 @@ export default function BanList() {
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={
 					<Suspense fallback={<Skeleton width='100%' height='470px' />}>
-						<Box className='sticky'>
-							<div className='ban-list-gradient one-third-two-thirds-container'>
-								<BanListDates banListStartDates={banListStartDates} setSelectedBanList={(ind: number) => setSelectedBanList(banListStartDates[ind])} />
+						<Section
+							sticky
+							sectionHeaderBackground={'ban-list'}
+							sectionName='Overview'
+							sectionContent={
+								<div className='section-content'>
+									<BanListDates banListStartDates={banListStartDates} setSelectedBanList={(ind: number) => setSelectedBanList(banListStartDates[ind])} />
 
-								<Divider className='light-translucent-divider' />
-
-								<BanListStats
-									totalCardsInSelectedList={numForbidden + numLimited + numSemiLimited}
-									selectedBanList={selectedBanList}
-									newForbiddenCards={newForbiddenCards}
-									newLimitedCards={newLimitedCards}
-									newSemiLimitedCards={newSemiLimitedCards}
-									numNewForbidden={numNewForbidden}
-									numNewLimited={numNewLimited}
-									numNewSemiLimited={numNewSemiLimited}
-									removedCards={removedCards}
-									numRemoved={numRemoved}
-								/>
-							</div>
-						</Box>
+									<BanListStats
+										totalCardsInSelectedList={numForbidden + numLimited + numSemiLimited}
+										selectedBanList={selectedBanList}
+										newForbiddenCards={newForbiddenCards}
+										newLimitedCards={newLimitedCards}
+										newSemiLimitedCards={newSemiLimitedCards}
+										numNewForbidden={numNewForbidden}
+										numNewLimited={numNewLimited}
+										numNewSemiLimited={numNewSemiLimited}
+										removedCards={removedCards}
+										numRemoved={numRemoved}
+									/>
+								</div>
+							}
+						/>
 					</Suspense>
 				}
 				twoThirdComponent={
 					<Suspense fallback={<div />}>
-						<div className='one-third-two-thirds-container'>
-							<TabbedView
-								numForbidden={numForbidden}
-								numLimited={numLimited}
-								numSemiLimited={numSemiLimited}
-								forbiddenContent={
-									<BanListSection
-										sectionExplanation='Forbidden cards cannot be used in Deck/Side Deck in the Advanced Format'
-										cards={forbidden}
-										isDataLoaded={!isFetchingBanList}
+						<Section
+							sectionHeaderBackground={'ban-list'}
+							sectionName='Content'
+							sectionContent={
+								<div className='sticky section-content'>
+									<TabbedView
+										numForbidden={numForbidden}
+										numLimited={numLimited}
+										numSemiLimited={numSemiLimited}
+										forbiddenContent={
+											<BanListSection
+												sectionExplanation='Forbidden cards cannot be used in Deck/Side Deck in the Advanced Format'
+												cards={forbidden}
+												isDataLoaded={!isFetchingBanList}
+											/>
+										}
+										limitedContent={
+											<BanListSection sectionExplanation='Limited cards can be included in Deck/Side deck - max 1' cards={limited} isDataLoaded={!isFetchingBanList} />
+										}
+										semiLimitedContent={
+											<BanListSection sectionExplanation='Semi-Limited cards can be included in Deck/Side deck - max 2' cards={semiLimited} isDataLoaded={!isFetchingBanList} />
+										}
 									/>
-								}
-								limitedContent={<BanListSection sectionExplanation='Limited cards can be included in Deck/Side deck - max 1' cards={limited} isDataLoaded={!isFetchingBanList} />}
-								semiLimitedContent={
-									<BanListSection sectionExplanation='Semi-Limited cards can be included in Deck/Side deck - max 2' cards={semiLimited} isDataLoaded={!isFetchingBanList} />
-								}
-							/>
-						</div>
+								</div>
+							}
+						/>
 					</Suspense>
 				}
 			/>

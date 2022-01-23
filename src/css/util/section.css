@@ -17,6 +17,10 @@
 	background: #5d5a6b;
 }
 
+.ban-list-section-header-container {
+	background: linear-gradient(315deg, #fc9842, #fe5f75 74%);
+}
+
 .section-header-text {
 	color: inherit;
 	padding-left: 1rem;

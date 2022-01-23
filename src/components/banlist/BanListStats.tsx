@@ -14,14 +14,12 @@ const ListStatItem = Styled(ListItemButton)`
 		.MuiListItemText-secondary
 		{
 			font-size: 1.15rem;
-			color: rgba(255, 255, 255, .95);
 		}
 
 		.MuiListItemText-primary
 		{
 			font-weight: 700;
 			font-size: 1.15rem;
-			color: rgba(255, 255, 255, .95);
 		}
 	}
 `
@@ -154,9 +152,7 @@ const BanListStats: FC<_BanListStats> = memo(
 
 		return (
 			<div>
-				<Typography style={{ color: 'white' }} variant='h4'>
-					Summary
-				</Typography>
+				<Typography variant='h4'>Summary</Typography>
 
 				<StatList style={{ width: '100%', maxWidth: '400px' }} aria-labelledby='nested-StatList-subheader'>
 					<ListStatItem>

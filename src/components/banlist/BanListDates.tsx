@@ -8,13 +8,6 @@ import DateRangeRoundedIcon from '@mui/icons-material/DateRangeRounded'
 
 import { Dates } from '../../helper/Dates'
 
-const BanDatesExpansionSummary = Styled(AccordionSummary)`
-	&&
-	{
-		padding: 0rem;
-	}
-`
-
 const BanDatesExpansionDetail = Styled(AccordionDetails)`
 	&&
 	{
@@ -26,9 +19,6 @@ const BanDatesExpansionDetail = Styled(AccordionDetails)`
 const DatesAccordion = Styled(Accordion)`
 	&& {
 		background-color: rgba(255, 255, 255, .7) !important;
-		backdrop-filter: blur(60px);
-		padding: .5rem;
-		border-radius: 1rem;
 	}
 `
 
@@ -48,7 +38,7 @@ const BanListDates: FC<_BanListDates> = memo(
 				return (
 					<Grid key={Dates.getDateString(new Date(item))} item xs={6} sm={6} md={6} lg={12} xl={6}>
 						<Button
-							style={{ color: '#fff', width: '99%' }}
+							style={{ color: '#fff', width: '95%' }}
 							color={ind === selectedBanListIndex ? 'primary' : 'secondary'}
 							size='small'
 							disableElevation={true}
@@ -71,15 +61,11 @@ const BanListDates: FC<_BanListDates> = memo(
 
 		return (
 			<div>
-				<Typography style={{ color: 'white' }} variant='h4'>
-					Date Range
-				</Typography>
+				<Typography variant='h4'>Date Range</Typography>
 				<DatesAccordion elevation={0}>
-					<BanDatesExpansionSummary expandIcon={<ExpandMoreIcon />}>
-						<Typography style={{ color: 'rgba(0, 0, 0, .95)' }} variant='subtitle1'>
-							{selectedRange}
-						</Typography>
-					</BanDatesExpansionSummary>
+					<AccordionSummary expandIcon={<ExpandMoreIcon />}>
+						<Typography variant='h6'>{selectedRange}</Typography>
+					</AccordionSummary>
 
 					<BanDatesExpansionDetail>
 						<Grid container spacing={1}>
