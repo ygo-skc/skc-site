@@ -18,7 +18,7 @@ const About: FunctionComponent = () => {
 			<Breadcrumb crumbs={['Home', 'About']} />
 
 			<Section maxWidth='80%' sectionName='About SKC' sectionContent={<AboutSKC />} />
-			<Section sectionName='Information' sectionContent={<Overview />} />
+			<Section sectionName='Everything You Might Want To Know' sectionContent={<Overview />} />
 		</div>
 	)
 }
