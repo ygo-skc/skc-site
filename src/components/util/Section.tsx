@@ -8,11 +8,15 @@ import '../../css/ygo-card-styles.css'
 type SectionType = {
 	sectionName: string
 	sectionContent: ReactNode
-	sectionHeaderBackground?: cardColor | '' | undefined
+	sectionHeaderBackground?: cardColor | 'default' | ''
 }
 
-const Section: FC<SectionType> = ({ sectionName, sectionContent, sectionHeaderBackground = '' }) => {
-	const sectionHeaderBackgroundClass = sectionHeaderBackground === '' ? 'default-section-header-container' : `${sectionHeaderBackground}-ygo-card-style`
+const Section: FC<SectionType> = ({ sectionName, sectionContent, sectionHeaderBackground = 'default' }) => {
+	let sectionHeaderBackgroundClass = ''
+
+	if (sectionHeaderBackground !== undefined && sectionHeaderBackground !== '') {
+		sectionHeaderBackgroundClass = sectionHeaderBackground === 'default' ? 'default-section-header-container' : `${sectionHeaderBackground}-ygo-card-style`
+	}
 
 	return (
 		<div className='section-parent heavy-shadow '>

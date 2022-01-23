@@ -56,6 +56,7 @@ declare type cardColor =
 	| 'spell'
 	| 'trap'
 	| 'err'
+	| undefined
 
 declare type _YGOCard = {
 	cardID: string

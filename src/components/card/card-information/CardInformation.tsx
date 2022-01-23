@@ -39,7 +39,7 @@ const Card = () => {
 	const [isLoading, setIsLoading] = useState(true)
 
 	const [cardName, setCardName] = useState('')
-	const [cardColor, setCardColor] = useState<cardColor>('effect')
+	const [cardColor, setCardColor] = useState<cardColor>(undefined)
 	const [cardEffect, setCardEffect] = useState('')
 	const [cardAttribute, setCardAttribute] = useState('')
 	const [monsterType, setMonsterType] = useState('')
