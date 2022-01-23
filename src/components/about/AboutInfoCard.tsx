@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react'
 
-import { Typography, Paper } from '@mui/material'
+import { Typography } from '@mui/material'
 import styled from 'styled-components'
 
 import GenericLinkPhoto from '../util/photo/GenericLinkPhoto'
@@ -23,13 +23,14 @@ const CenteredImage = styled.div`
 	min-height: 100px;
 `
 
-const InfoPaper2 = styled(Paper)`
+const InfoPaper2 = styled.div`
 	&& {
 		max-width: 100%;
-		// padding: 1.4rem;
 		border-radius: 1.2rem;
 
 		background: rgba(255, 255, 255, 0.97);
+		border: 3px rgba(135, 120, 229, 0.7);
+		border-style: solid;
 	}
 `
 
@@ -42,7 +43,7 @@ type AboutInfoCardProps = {
 }
 
 const AboutInfoCard: FunctionComponent<AboutInfoCardProps> = ({ title, subtitle, body, imgPath, imgLink }) => (
-	<InfoPaper2 style={{ maxWidth: '100%' }}>
+	<InfoPaper2>
 		<div style={{ background: 'rgba(135, 120, 229, .2)', paddingTop: '1.5rem', paddingBottom: '1.5rem', borderTopLeftRadius: '1.2rem', borderTopRightRadius: '1.2rem' }}>
 			<CenteredImage>
 				<GenericLinkPhoto imageName={imgPath} link={imgLink} />
