@@ -50,7 +50,7 @@ const HttpErr: FC<{ httpErr: string }> = ({ httpErr }) => {
 		<div className='generic-container'>
 			<Breadcrumbs crumbs={['Home', httpErr]} />
 			<ErrCard
-				cardColor='Err'
+				cardColor='err'
 				cardName={_HttpErr.HTTP_ERR_maps_ERR_NAME[httpErr]}
 				monsterType={_HttpErr.HTTP_ERR_maps_ERR_TYPE[httpErr]}
 				cardEffect={_HttpErr.HTTP_ERR_maps_ERR_DESCRIPTION[httpErr]}

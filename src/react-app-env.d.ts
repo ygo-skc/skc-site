@@ -39,16 +39,35 @@ declare type ProductStats = {
 	cards: SKCCard[]
 }
 
+declare type cardColor =
+	| 'normal'
+	| 'effect'
+	| 'ritual'
+	| 'fusion'
+	| 'synchro'
+	| 'xyz'
+	| 'pendulum-normal'
+	| 'pendulum-effect'
+	| 'pendulum-fusion'
+	| 'pendulum-xyz'
+	| 'pendulum-synchro'
+	| 'token'
+	| 'link'
+	| 'spell'
+	| 'trap'
+	| 'err'
+	| undefined
+
 declare type _YGOCard = {
+	cardID: string
 	cardName: string
-	cardColor: string
+	cardColor: cardColor
 	cardEffect: string
-	monsterType: string
+	monsterType?: string
 	cardAttribute?: string
 	monsterAtk?: string
 	monsterDef?: string
 	monsterAssociation?: SKCMonsterAssociation
-	cardID: string
 	fullDetails: boolean
 	effectMaxLineHeight?: number
 	isLoading?: boolean
@@ -62,16 +81,16 @@ declare type _YouTubeUploads = {
 }
 
 declare type _CardData = {
-	cardID
-	cardName
-	cardColor
-	cardEffect
-	cardAttribute
-	monsterType
-	monsterAtk
-	monsterDef
-	monsterAssociation
-	isLoading
+	cardID: string
+	cardName: string
+	cardColor: cardColor
+	cardEffect: string
+	monsterType?: string
+	cardAttribute?: string
+	monsterAtk?: string
+	monsterDef?: string
+	monsterAssociation?: SKCMonsterAssociation
+	isLoading: boolean
 	cardImg
 }
 

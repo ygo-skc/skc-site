@@ -1,20 +1,27 @@
-.section-parent.MuiPaper-root {
+.section-parent {
+	margin: auto;
 	margin-bottom: 2.25rem;
 	border-radius: 1.75rem;
 	padding: 0rem;
-
-	max-width: 100%;
+	background: white;
 }
 
 .section-header-container {
-	background: #5d5a6b;
 	color: white;
 	border-top-left-radius: 1.75rem;
 	border-top-right-radius: 1.75rem;
 }
 
+.default-section-header-container {
+	background: #5d5a6b;
+}
+
+.ban-list-section-header-container {
+	background: linear-gradient(315deg, #fc9842, #fe5f75 74%);
+}
+
 .section-header-text {
-	color: white;
+	color: inherit;
 	padding-left: 1rem;
 	padding-right: 1rem;
 	padding-top: 1.5rem;

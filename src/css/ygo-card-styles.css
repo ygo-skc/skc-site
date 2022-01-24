@@ -1,171 +1,173 @@
-.NormalYgoCardParent {
+.normal-ygo-card-style {
 	background: linear-gradient(185deg, #f9a825, #fbc02d);
 	color: #484848 !important;
 	/* normalTableBackground: `#fbc02d`, */
 }
-.NormalYgoCardSummaryBox {
+.normal-ygo-card-style-light {
 	background: #fff1b2;
 	color: #484848 !important;
 }
 
-.EffectYgoCardParent {
+.effect-ygo-card-style {
 	background: linear-gradient(185deg, #e65100 25%, #fb8c00 85%);
 	color: #fffbeb !important;
 	/* effectTableBackground: `#ea8300`, */
 }
-.EffectYgoCardSummaryBox {
+.effect-ygo-card-style-light {
 	background: rgba(255, 205, 132, 0.9);
 	backdrop-filter: blur(60px);
 	color: #484848 !important;
 }
 
-.RitualYgoCardParent {
+.ritual-ygo-card-style {
 	background: linear-gradient(185deg, #56b1fa 25%, #4e9fee 85%);
 	color: #fffbeb !important;
 	/* fusionTableBackground: `#7e57c2`,*/
 }
-.RitualYgoCardSummaryBox {
+.ritual-ygo-card-style-light {
 	background: #dbeefd;
 	color: #484848 !important;
 }
 
-.FusionYgoCardParent {
+.fusion-ygo-card-style {
 	background: linear-gradient(185deg, #7e57c2 25%, #9575cd 85%);
 	color: #fffbeb !important;
 	/* ritualTableBackground: `#56b1fa`*/
 }
-.FusionYgoCardSummaryBox {
+.fusion-ygo-card-style-light {
 	background: #ede7f6;
 	color: #484848 !important;
 }
 
-.SynchroYgoCardParent {
+.synchro-ygo-card-style {
 	background: linear-gradient(180deg, #e0e0e0 10%, #bdbdbd 90%);
 	color: #484848 !important;
 	/* synchroTableBackground: `${grey[300]}`*/
 }
-.SynchroYgoCardSummaryBox {
+.synchro-ygo-card-style-light {
 	background: #f5f5f5;
 	color: #484848 !important;
 }
 
-.XyzYgoCardParent {
+.xyz-ygo-card-style {
 	background: linear-gradient(180deg, #424242 30%, #212121 90%);
 	color: #fffbeb !important;
 	/* xyzTableBackground: `${grey[900]}`, */
 }
-.XyzYgoCardSummaryBox {
+.xyz-ygo-card-style-light {
 	background: rgba(224, 224, 224, 0.95);
 	backdrop-filter: blur(100px);
 	color: #484848 !important;
 }
 
-.Pendulum-NormalYgoCardParent {
+.pendulum-normal-ygo-card-style {
 	background: linear-gradient(#f9c414 40%, #00cdb1 55%);
 	color: #484848 !important;
 	/* ritualTableBackground: `#56b1fa`*/
 }
-.Pendulum-NormalYgoCardSummaryBox {
+.pendulum-normal-ygo-card-style-light {
 	background: rgba(238, 248, 247, 0.72);
 	color: #484848 !important;
 }
 
-.Pendulum-EffectYgoCardParent {
+.pendulum-effect-ygo-card-style {
 	background: linear-gradient(#ff6410 40%, #00cdb1 55%);
 	color: #fffbeb !important;
 	/* ritualTableBackground: `#56b1fa`*/
 }
-.Pendulum-EffectYgoCardSummaryBox {
+.pendulum-effect-ygo-card-style-light {
 	background: rgba(238, 248, 247, 0.72);
 	color: #484848 !important;
 }
 
-.Pendulum-FusionYgoCardParent {
+.pendulum-fusion-ygo-card-style {
 	background: linear-gradient(#7e57c2 40%, #00cdb1 55%);
 	color: #fffbeb !important;
 	/* ritualTableBackground: `#56b1fa`*/
 }
-.Pendulum-FusionYgoCardSummaryBox {
+.pendulum-fusion-ygo-card-style-light {
 	background: rgba(238, 248, 247, 0.72);
 	color: #484848 !important;
 }
 
-.Pendulum-XYZYgoCardParent {
+.pendulum-xyz-ygo-card-style {
 	background: linear-gradient(#424242 40%, #00cdb1 55%);
 	color: #fffbeb !important;
 	/* ritualTableBackground: `#56b1fa`*/
 }
-.Pendulum-XYZYgoCardSummaryBox {
+.pendulum-xyz-ygo-card-style-light {
 	background: rgba(238, 248, 247, 0.72);
 	color: #484848 !important;
 }
 
-.Pendulum-SynchroYgoCardParent {
+.pendulum-synchro-ygo-card-style {
 	background: linear-gradient(#e0e0e0 40%, #00cdb1 55%);
 	color: #484848 !important;
 	/* ritualTableBackground: `#56b1fa`*/
 }
-.Pendulum-SynchroYgoCardSummaryBox {
+.pendulum-synchro-ygo-card-style-light {
 	background: rgba(238, 248, 247, 0.72);
 	color: #484848 !important;
 }
 
-.TokenYgoCardParent {
+.token-ygo-card-style {
 	background: linear-gradient(180deg, #757575 30%, #616161 90%);
 	color: #fffbeb !important;
 	/* ritualTableBackground: `#56b1fa`*/
 }
-.TokenYgoCardSummaryBox {
+.token-ygo-card-style-light {
 	background: #bdbdbd;
 	color: #484848 !important;
 }
 
-.LinkYgoCardParent {
+.link-ygo-card-style {
 	background: linear-gradient(45deg, #1976d2 30%, #1565c0 90%);
 	color: #fffbeb !important;
 	/* ritualTableBackground: `#56b1fa`*/
 }
-.LinkYgoCardSummaryBox {
+.link-ygo-card-style-light {
 	background: #b3e5fc;
 	color: #484848 !important;
 }
 
-.SpellYgoCardParent {
+.spell-ygo-card-style {
 	background: linear-gradient(45deg, #00bfa5 30%, #00ae96 90%);
 	color: #fffbeb !important;
 	/* ritualTableBackground: `#56b1fa`*/
 }
-.SpellYgoCardSummaryBox {
+
+.spell-ygo-card-style-light {
 	background: #e0f2f1;
 	color: #484848 !important;
 }
 
-.TrapYgoCardParent {
+.trap-ygo-card-style {
 	background: linear-gradient(185deg, #ad1457 25%, #d81b60 85%);
 	color: #fffbeb !important;
 	/* ritualTableBackground: `#56b1fa`*/
 }
-.TrapYgoCardSummaryBox {
+
+.trap-ygo-card-style-light {
 	background: #f06292;
 	color: #fffbeb !important;
 }
 
-.ErrYgoCardParent {
+.err-ygo-card-style {
 	background: linear-gradient(315deg, #feae96 0%, #fe0944 74%);
 	color: #fffbeb !important;
 	/* ritualTableBackground: `#56b1fa`*/
 }
-.ErrCardSummaryBox {
+.err-ygo-card-style-light {
 	background: #ffcdd2;
 	color: #fffbeb !important;
 }
 
-#CardID {
+#card-id {
 	font-style: italic;
 	color: inherit;
 }
 
-#CardName {
+#card-name {
 	margin-bottom: 0.25rem;
 	text-align: center;
 	text-transform: uppercase;
@@ -173,12 +175,12 @@
 	color: inherit;
 }
 
-#CardDescription {
+#card-description {
 	padding: 0.445rem;
 	border-radius: 0.5rem;
 }
 
-#MonsterType {
+#monster-type {
 	font-weight: 800;
 	margin-bottom: 0.28rem;
 	color: inherit;
