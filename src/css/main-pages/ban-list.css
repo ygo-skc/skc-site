@@ -1,0 +1,14 @@
+.tab-container {
+	background-color: rgba(255, 255, 255, 0.7) !important;
+	backdrop-filter: blur(60px);
+	box-shadow: none;
+}
+
+.tabs .MuiTab-textColorPrimary.Mui-selected {
+	font-weight: 900;
+	color: black;
+}
+
+.tab {
+	text-transform: none;
+}

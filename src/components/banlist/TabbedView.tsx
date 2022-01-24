@@ -1,28 +1,22 @@
-import { useState, useEffect, memo, FC } from 'react'
-import styled from 'styled-components'
-import { AppBar, Tabs, Tab } from '@mui/material'
+import { useState, memo, FC, ReactElement } from 'react'
+import { AppBar, Tabs, Tab, Typography } from '@mui/material'
 import BlockIcon from '@mui/icons-material/Block'
 import LooksOneTwoToneIcon from '@mui/icons-material/LooksOneTwoTone'
 import LooksTwoTwoToneIcon from '@mui/icons-material/LooksTwoTwoTone'
 
-import { TabPanel } from './TabPanel'
+type _TabPanel = {
+	children: ReactElement
+	value: number
+	index: number
+}
 
-const CustomTabs = styled(Tabs)`
-	&& {
-		margin: auto;
-		.MuiTab-textColorPrimary.Mui-selected {
-			font-weight: 900;
-			color: black;
-		}
-	}
-`
-
-const StyledAppBar = styled(AppBar)`
-	&& {
-		background-color: rgba(255, 255, 255, 0.7) !important;
-		backdrop-filter: blur(60px);
-	}
-`
+const TabPanel: FC<_TabPanel> = ({ children, value, index }) => {
+	return (
+		<Typography component='div' role='tabpanel' hidden={value !== index} id={`full-width-tabpanel-${index}`} aria-labelledby={`full-width-tab-${index}`}>
+			{children}
+		</Typography>
+	)
+}
 
 type _TabbedView = {
 	numForbidden: number
@@ -36,57 +30,26 @@ type _TabbedView = {
 const TabbedView: FC<_TabbedView> = memo(
 	({ numForbidden, numLimited, numSemiLimited, forbiddenContent, limitedContent, semiLimitedContent }) => {
 		const [currentTab, setCurrentTab] = useState(0)
-		const [tabs, setTabs] = useState<JSX.Element[]>([])
-
-		useEffect(() => {
-			const tabs = []
-			tabs.push(
-				<Tab
-					key='forbidden'
-					style={{ textTransform: 'none' }}
-					icon={<BlockIcon color='error' style={{ fontSize: '1.8rem' }} />}
-					label={`Forbidden (${numForbidden})`}
-					{...allyProps(0)}
-				/>
-			)
-
-			tabs.push(
-				<Tab
-					key='limited'
-					style={{ textTransform: 'none' }}
-					icon={<LooksOneTwoToneIcon style={{ color: '#ff9100', fontSize: '1.8rem' }} />}
-					label={`Limited (${numLimited})`}
-					{...allyProps(1)}
-				/>
-			)
-
-			tabs.push(
-				<Tab
-					key='semiLimited'
-					style={{ textTransform: 'none' }}
-					icon={<LooksTwoTwoToneIcon style={{ color: '#4caf50', fontSize: '1.8rem' }} />}
-					label={`Semi-Limited (${numSemiLimited})`}
-					{...allyProps(2)}
-				/>
-			)
-
-			setTabs(tabs)
-		}, [numForbidden, numLimited, numSemiLimited])
 
 		return (
 			<div>
-				<StyledAppBar style={{ boxShadow: 'none' }} position='sticky'>
-					<CustomTabs
+				<AppBar className='tab-container' position='sticky'>
+					<Tabs
+						className='tabs'
 						textColor='primary'
 						value={currentTab}
 						onChange={(_event, newValue: number) => {
 							setCurrentTab(newValue)
 						}}
-						variant='standard'
+						variant='fullWidth'
 					>
-						{tabs}
-					</CustomTabs>
-				</StyledAppBar>
+						{[
+							<Tab key='forbidden' className='tab' icon={<BlockIcon color='error' style={{ fontSize: '1.8rem' }} />} label={numForbidden} {...allyProps(0)} />,
+							<Tab key='limited' className='tab' icon={<LooksOneTwoToneIcon style={{ color: '#ff9100', fontSize: '1.8rem' }} />} label={numLimited} {...allyProps(1)} />,
+							<Tab key='semiLimited' className='tab' icon={<LooksTwoTwoToneIcon style={{ color: '#4caf50', fontSize: '1.8rem' }} />} label={numSemiLimited} {...allyProps(2)} />,
+						]}
+					</Tabs>
+				</AppBar>
 
 				<TabPanel value={currentTab} index={0}>
 					{forbiddenContent}
