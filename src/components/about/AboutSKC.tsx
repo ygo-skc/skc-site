@@ -12,7 +12,7 @@ export default function AboutSKC() {
 		<div className='section-content'>
 			<Typography variant='h4'>Why I Started The Project</Typography>
 
-			<div style={{ padding: '1.4rem' }}>
+			<div>
 				<Typography variant='h6'>My Background</Typography>
 				<ParagraphTypography variant='body1'>
 					I started playing Yu-Gi-Oh! when I was about 8 years old. I would do some tournaments when I was in middle school and always found it fun to open packs. Starting high
