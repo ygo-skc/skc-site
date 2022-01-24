@@ -17,6 +17,7 @@ type DatabaseInfoType = {
 const DatabaseInfo: FC<DatabaseInfoType> = ({ cardTotal, banListTotal, productTotal }) => {
 	return (
 		<Section
+			maxWidth='1000px'
 			sectionName='Content'
 			sectionContent={
 				<div className='section-content search-container'>
