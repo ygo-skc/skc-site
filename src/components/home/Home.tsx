@@ -1,7 +1,6 @@
 import { useEffect, useState, lazy, Suspense } from 'react'
 import { Helmet } from 'react-helmet'
 
-import { Box } from '@mui/material'
 import Fetch from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 
@@ -43,11 +42,7 @@ export default function Home() {
 
 			<OneThirdTwoThirdsGrid
 				mirrored={true}
-				oneThirdComponent={
-					<Box className='sticky'>
-						<Section sectionName='Social' sectionContent={<SocialMedia />} />
-					</Box>
-				}
+				oneThirdComponent={<Section sticky sectionName='Social' sectionContent={<SocialMedia />} />}
 				twoThirdComponent={
 					<Section
 						sectionName='Welcome'
