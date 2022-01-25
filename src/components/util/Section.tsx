@@ -8,7 +8,7 @@ import '../../css/ygo-card-styles.css'
 type SectionType = {
 	sectionName: string
 	sectionContent: ReactNode
-	sectionHeaderBackground?: cardColor | 'default' | 'ban-list' | ''
+	sectionHeaderBackground?: cardColor | 'default' | 'ban-list' | 'product' | ''
 	sticky?: boolean
 	maxWidth?: string
 }
@@ -18,7 +18,7 @@ const Section: FC<SectionType> = ({ sectionName, sectionContent, sectionHeaderBa
 
 	if (sectionHeaderBackground !== undefined && sectionHeaderBackground !== '') {
 		sectionHeaderBackgroundClass =
-			sectionHeaderBackground === 'default' || sectionHeaderBackground === 'ban-list'
+			sectionHeaderBackground === 'default' || sectionHeaderBackground === 'ban-list' || sectionHeaderBackground === 'product'
 				? `${sectionHeaderBackground}-section-header-container`
 				: `${sectionHeaderBackground}-ygo-card-style`
 	}

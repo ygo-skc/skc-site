@@ -21,6 +21,10 @@
 	background: linear-gradient(315deg, #fc9842, #fe5f75 74%);
 }
 
+.product-section-header-container {
+	background: linear-gradient(326deg, #a4508b 0%, #5f0a87 74%);
+}
+
 .section-header-text {
 	color: inherit;
 	padding-left: 1rem;
