@@ -39,7 +39,7 @@ const CardBanListInformation: FunctionComponent<args> = ({ isLoading, hasInfo, b
 			sectionName='Ban Lists'
 			sectionContent={
 				<div className={'section-content'}>
-					{isLoading ? undefined : hasInfo ? (
+					{!isLoading && hasInfo ? (
 						banListTable
 					) : (
 						<Hint backgroundColor='rgba(0, 0, 0, 0.7)' textColor='white'>

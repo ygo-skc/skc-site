@@ -46,7 +46,7 @@ const CardProductInformation: FunctionComponent<args> = ({ isLoading, hasInfo, p
 			sectionName='Products'
 			sectionContent={
 				<div className={'section-content'}>
-					{isLoading ? undefined : hasInfo ? (
+					{!isLoading && hasInfo ? (
 						productTable
 					) : (
 						<Hint backgroundColor='rgba(0, 0, 0, 0.7)' textColor='white'>
