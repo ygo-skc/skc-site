@@ -34,6 +34,7 @@ const CardBanListInformation: FunctionComponent<args> = ({ isLoading, hasInfo, b
 
 	return (
 		<Section
+			shadow={'light-shadow'}
 			sectionHeaderBackground='ban-list'
 			sectionName='Ban Lists'
 			sectionContent={
