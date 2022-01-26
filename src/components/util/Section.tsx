@@ -11,10 +11,19 @@ type SectionType = {
 	sectionHeaderBackground?: cardColor | 'default' | 'ban-list' | 'product' | ''
 	sticky?: boolean
 	maxWidth?: string
-	shadow?: 'heavy-shadow' | 'light-shadow'
+	shadow?: 'heavy-shadow' | 'light-shadow' | ''
+	border?: 'default-border'
 }
 
-const Section: FC<SectionType> = ({ sectionName, sectionContent, sectionHeaderBackground = 'default', sticky = false, maxWidth = '100%', shadow = 'heavy-shadow' }) => {
+const Section: FC<SectionType> = ({
+	sectionName,
+	sectionContent,
+	sectionHeaderBackground = 'default',
+	sticky = false,
+	maxWidth = '100%',
+	shadow = 'heavy-shadow',
+	border = '',
+}) => {
 	let sectionHeaderBackgroundClass = ''
 
 	if (sectionHeaderBackground !== undefined && sectionHeaderBackground !== '') {
@@ -27,8 +36,8 @@ const Section: FC<SectionType> = ({ sectionName, sectionContent, sectionHeaderBa
 	const stickyClass = sticky ? 'sticky' : ''
 
 	return (
-		<div style={{ maxWidth: maxWidth }} className={`section-parent ${shadow} ${stickyClass}`}>
-			<div className={`section-header-container ${sectionHeaderBackgroundClass}`}>
+		<div style={{ maxWidth: maxWidth }} className={`section-parent ${shadow} ${border} ${stickyClass}`}>
+			<div className={`section-header-container heavy-shadow ${sectionHeaderBackgroundClass}`}>
 				<Typography variant='h1' align='center' className='section-header-text'>
 					{sectionName}
 				</Typography>

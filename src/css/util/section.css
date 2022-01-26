@@ -9,8 +9,8 @@
 
 .section-header-container {
 	color: white;
-	border-top-left-radius: 1.75rem;
-	border-top-right-radius: 1.75rem;
+	border-top-left-radius: 1.5rem;
+	border-top-right-radius: 1.5rem;
 }
 
 .default-section-header-container {
@@ -46,4 +46,9 @@
 
 .section-content-dark {
 	background: rgb(250, 250, 250);
+}
+
+.default-border {
+	border: 2px rgba(0, 0, 0, 0.3);
+	border-style: solid;
 }

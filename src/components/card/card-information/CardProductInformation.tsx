@@ -41,7 +41,8 @@ const CardProductInformation: FunctionComponent<args> = ({ isLoading, hasInfo, p
 
 	return (
 		<Section
-			shadow={'light-shadow'}
+			border='default-border'
+			shadow=''
 			sectionHeaderBackground='product'
 			sectionName='Products'
 			sectionContent={
