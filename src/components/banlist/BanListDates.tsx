@@ -34,9 +34,11 @@ const BanListDates: FC<_BanListDates> = memo(
 		const [selectedRange, setSelectedRange] = useState('')
 
 		useEffect(() => {
-			let banListGrid = banListStartDates.map((item, ind) => {
+			let banListGridItems = banListStartDates.map((date: string, ind) => {
+				const displayDate = Dates.banListDate(date)
+
 				return (
-					<Grid key={Dates.getDateString(new Date(item))} item xs={6} sm={6} md={6} lg={12} xl={6}>
+					<Grid key={displayDate} item xs={6} sm={6} md={6} lg={12} xl={6}>
 						<Button
 							style={{ color: '#fff', width: '95%' }}
 							color={ind === selectedBanListIndex ? 'primary' : 'secondary'}
@@ -49,14 +51,14 @@ const BanListDates: FC<_BanListDates> = memo(
 								setSelectedBanListIndex(ind)
 							}}
 						>
-							{Dates.getDateString(new Date(item))}
+							{displayDate}
 						</Button>
 					</Grid>
 				)
 			})
 
 			setSelectedRange(Dates.getCurrentBanListDate(banListStartDates[selectedBanListIndex], banListStartDates))
-			setBanListGrid(banListGrid)
+			setBanListGrid(banListGridItems)
 		}, [selectedBanListIndex, banListStartDates, setSelectedBanList])
 
 		return (
