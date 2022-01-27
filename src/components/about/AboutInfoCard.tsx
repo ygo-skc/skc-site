@@ -26,10 +26,10 @@ const CenteredImage = styled.div`
 const InfoPaper2 = styled.div`
 	&& {
 		max-width: 100%;
-		border-radius: 1.2rem;
+		border-radius: 1.4rem;
 
 		background: rgba(255, 255, 255, 0.97);
-		border: 3px rgba(135, 120, 229, 0.7);
+		border: 3px rgba(135, 120, 229, 0.3);
 		border-style: solid;
 	}
 `

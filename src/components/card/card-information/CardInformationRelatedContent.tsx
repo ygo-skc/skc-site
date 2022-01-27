@@ -27,7 +27,7 @@ const CardInformationRelatedContent: FC<CardInformationRelatedContentType> = mem
 							Related Content For <i>{cardName}</i>
 						</Typography>
 
-						<Grid container spacing={1}>
+						<Grid container spacing={3}>
 							<Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
 								<CardProductInformation isLoading={isLoading} hasInfo={productInfo.length === 0 ? false : true} cardID={cardID} productInfo={productInfo} />
 							</Grid>
