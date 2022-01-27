@@ -8,7 +8,11 @@ class Dates {
 		return Dates.getDateString(new Date(+year, +month - 1, +day))
 	}
 
-	static readonly getCurrentBanListDate = (selectedBanList: string, banListStartDates: string[]): string => {
+	static readonly getCurrentBanListDate = (selectedBanList?: string, banListStartDates?: string[]): string => {
+		if (selectedBanList === undefined || banListStartDates === undefined) {
+			return ''
+		}
+
 		const banListPos = banListStartDates.findIndex((item) => {
 			if (item === selectedBanList) return true
 
