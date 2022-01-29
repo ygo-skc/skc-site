@@ -1,8 +1,18 @@
 class Dates {
+	static readonly getNonLocalizedDateString = (date: Date) => date.toDateString()
 	static readonly getDateString = (date: Date) => date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
 	static readonly getTimeString = (date: Date) => date.toLocaleTimeString('en-US', { hour12: true, hour: 'numeric', minute: 'numeric' })
 
-	static readonly getCurrentBanListDate = (selectedBanList: string, banListStartDates: string[]): string => {
+	static readonly banListDate = (banListDate: string) => {
+		const [year, month, day] = banListDate.split('-')
+		return Dates.getDateString(new Date(+year, +month - 1, +day))
+	}
+
+	static readonly getCurrentBanListDate = (selectedBanList?: string, banListStartDates?: string[]): string => {
+		if (selectedBanList === undefined || banListStartDates === undefined) {
+			return ''
+		}
+
 		const banListPos = banListStartDates.findIndex((item) => {
 			if (item === selectedBanList) return true
 
@@ -11,13 +21,9 @@ class Dates {
 
 		switch (banListPos) {
 			case 0:
-				return Dates.getDateString(new Date(selectedBanList)) + ' - Present'
+				return Dates.banListDate(selectedBanList) + ' - Present'
 			default:
-				let offset = 24 * 60 * 60 * 1000 * 1 //5 days
-				let nextDate = new Date(banListStartDates[banListPos - 1])
-				nextDate.setTime(nextDate.getTime() - offset)
-
-				return Dates.getDateString(new Date(selectedBanList)) + ' - ' + Dates.getDateString(nextDate)
+				return Dates.banListDate(selectedBanList) + ' - ' + Dates.banListDate(banListStartDates[banListPos - 1])
 		}
 	}
 }

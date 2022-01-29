@@ -54,7 +54,6 @@ type _CardDisplayGrid = {
 
 const CardDisplayGrid: FC<_CardDisplayGrid> = memo(
 	({ cardJsonResults, numResultsDisplayed, numItemsToLoadWhenNeeded, loadMoreCallback, isLoadMoreOptionVisible, numResults, isDataLoaded }) => {
-		console.log(cardJsonResults)
 		const [cardGridUI, setCardGridUI] = useState<JSX.Element[]>([])
 
 		const [cardGridUISkeleton, setCardGridUISkeleton] = useState<JSX.Element[]>([])

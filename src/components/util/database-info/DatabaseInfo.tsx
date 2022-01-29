@@ -20,23 +20,25 @@ const DatabaseInfo: FC<DatabaseInfoType> = ({ cardTotal, banListTotal, productTo
 			maxWidth='1000px'
 			sectionName='Content'
 			sectionContent={
-				<div className='section-content search-container'>
-					<DatabaseSearch />
+				<div className='section-content'>
+					<div className='search-container'>
+						<DatabaseSearch />
 
-					<div>
-						<Grid container spacing={3}>
-							<Grid item xs={6} sm={6} md={4} lg={4} xl={4}>
-								<Glance total={cardTotal} subject='Cards' color='rgb(144, 13, 218)' action={() => window.location.assign(`/browse/card`)} />
-							</Grid>
+						<div>
+							<Grid container spacing={3}>
+								<Grid item xs={6} sm={6} md={4} lg={4} xl={4}>
+									<Glance total={cardTotal} subject='Cards' color='rgb(144, 13, 218)' action={() => window.location.assign(`/browse/card`)} />
+								</Grid>
 
-							<Grid item xs={6} sm={6} md={4} lg={4} xl={4}>
-								<Glance total={banListTotal} subject='Ban Lists' color='#FE6D6B' action={() => window.location.assign(`/ban_list`)} />
-							</Grid>
+								<Grid item xs={6} sm={6} md={4} lg={4} xl={4}>
+									<Glance total={banListTotal} subject='Ban Lists' color='#FE6D6B' action={() => window.location.assign(`/ban_list`)} />
+								</Grid>
 
-							<Grid item xs={6} sm={6} md={4} lg={4} xl={4}>
-								<Glance total={productTotal} subject='Products' color='rgb(195, 47, 150)' action={() => window.location.assign(`/browse/product`)} />
+								<Grid item xs={6} sm={6} md={4} lg={4} xl={4}>
+									<Glance total={productTotal} subject='Products' color='rgb(195, 47, 150)' action={() => window.location.assign(`/browse/product`)} />
+								</Grid>
 							</Grid>
-						</Grid>
+						</div>
 					</div>
 				</div>
 			}

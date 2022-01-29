@@ -96,7 +96,7 @@ const Card = () => {
 				oneThirdComponent={
 					<CardData
 						cardName={cardName}
-						cardColor={cardColor?.replace(/Pendulum-/gi, '') as cardColor}
+						cardColor={cardColor}
 						cardEffect={cardEffect}
 						cardAttribute={cardAttribute}
 						monsterType={monsterType}

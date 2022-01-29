@@ -160,7 +160,10 @@ const BanListStats: FC<_BanListStats> = memo(
 					</ListStatItem>
 
 					<ListStatItem disabled={numNewForbidden + numNewLimited + numNewSemiLimited === 0 ? true : false} onClick={showNewCards}>
-						<ListItemText primary='Newly Added' secondary={isNaN(numNewForbidden + numNewLimited + numNewSemiLimited) ? '' : numNewForbidden + numNewLimited + numNewSemiLimited} />
+						<ListItemText
+							primary='Newly & Updated'
+							secondary={isNaN(numNewForbidden + numNewLimited + numNewSemiLimited) ? '' : numNewForbidden + numNewLimited + numNewSemiLimited}
+						/>
 						{isShowingNewCards ? <ExpandLess /> : <ExpandMore />}
 					</ListStatItem>
 

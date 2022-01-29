@@ -1,10 +1,10 @@
 import { useEffect, useState, FunctionComponent } from 'react'
 import '../../../css/card-information-styles.css'
-import { Paper, Skeleton, Typography } from '@mui/material'
 
 import { Dates } from '../../../helper/Dates'
 import { Hint } from '../../util/Hints'
 import createTable from '../../util/TableHelpers'
+import Section from '../../util/Section'
 
 type args = {
 	isLoading: boolean
@@ -40,23 +40,23 @@ const CardProductInformation: FunctionComponent<args> = ({ isLoading, hasInfo, p
 	}, [productInfo, cardID])
 
 	return (
-		<Paper className={'products card-info-section'}>
-			{isLoading ? (
-				<Skeleton width={150} height={25} />
-			) : (
-				<Typography variant='h4' className={'card-info-header'}>
-					{'Products'}
-				</Typography>
-			)}
-
-			{isLoading ? undefined : hasInfo ? (
-				productTable
-			) : (
-				<Hint backgroundColor='rgba(0, 0, 0, 0.3)' textColor='white'>
-					{'Not Found In Any Product'}
-				</Hint>
-			)}
-		</Paper>
+		<Section
+			border='default-border'
+			shadow=''
+			sectionHeaderBackground='product'
+			sectionName='Products'
+			sectionContent={
+				<div className={'section-content'}>
+					{!isLoading && hasInfo ? (
+						productTable
+					) : (
+						<Hint backgroundColor='rgba(0, 0, 0, 0.7)' textColor='white'>
+							{'Not Found In Any Product'}
+						</Hint>
+					)}
+				</div>
+			}
+		/>
 	)
 }
 
