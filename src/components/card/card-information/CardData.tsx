@@ -5,8 +5,13 @@ import CardImageRounded from '../CardImageRounded'
 import YGOCard from '../YGOCard'
 import Section from '../../util/Section'
 
+type _CardData = SKCCard & {
+	isLoading: boolean
+	cardImg: HTMLImageElement
+}
+
 const CardData: FC<_CardData> = memo(
-	({ cardID, cardName, cardColor, cardEffect, cardAttribute, monsterType, monsterAtk, monsterDef, monsterAssociation, isLoading, cardImg }) => {
+	({ cardID, cardName, cardColor, cardEffect, cardAttribute, monsterType, monsterAttack, monsterDefense, monsterAssociation, isLoading, cardImg }) => {
 		return (
 			<Section
 				sectionHeaderBackground={cardColor !== undefined ? (cardColor?.replace(/Pendulum-/gi, '') as cardColor) : ''}
@@ -21,8 +26,8 @@ const CardData: FC<_CardData> = memo(
 							cardEffect={cardEffect}
 							cardAttribute={cardAttribute}
 							monsterType={monsterType}
-							monsterAtk={monsterAtk}
-							monsterDef={monsterDef}
+							monsterAttack={monsterAttack}
+							monsterDefense={monsterDefense}
 							monsterAssociation={monsterAssociation}
 							cardID={cardID}
 							fullDetails={true}

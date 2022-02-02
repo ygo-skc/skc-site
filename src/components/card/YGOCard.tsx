@@ -1,7 +1,6 @@
 import { FC, memo } from 'react'
 
-import { Typography, Paper } from '@mui/material'
-import { Skeleton } from '@mui/material'
+import { Typography, Paper, Skeleton } from '@mui/material'
 
 import Styled from 'styled-components'
 
@@ -21,8 +20,29 @@ const CardContentComponent = Styled(Paper)`
 	}
 `
 
+type _YGOCard = SKCCard & {
+	fullDetails: boolean
+	effectMaxLineHeight?: number
+	isLoading?: boolean
+	className?: string
+}
+
 const YGOCard: FC<_YGOCard> = memo(
-	({ cardName, cardColor, cardEffect, monsterType, cardAttribute, monsterAtk, monsterDef, monsterAssociation, cardID, fullDetails, effectMaxLineHeight, isLoading, className }) => {
+	({
+		cardName,
+		cardColor,
+		cardEffect,
+		monsterType,
+		cardAttribute,
+		monsterAttack,
+		monsterDefense,
+		monsterAssociation,
+		cardID,
+		fullDetails,
+		effectMaxLineHeight,
+		isLoading,
+		className,
+	}) => {
 		if (isLoading) {
 			return <Skeleton variant='rectangular' height='150' style={{ borderRadius: '.5rem' }} />
 		}
@@ -39,8 +59,8 @@ const YGOCard: FC<_YGOCard> = memo(
 					cardColor={cardColor}
 					cardEffect={cardEffect}
 					monsterType={monsterType}
-					monsterAtk={monsterAtk}
-					monsterDef={monsterDef}
+					monsterAtk={monsterAttack}
+					monsterDef={monsterDefense}
 					cardID={cardID}
 					fullDetails={fullDetails}
 					effectMaxLineHeight={effectMaxLineHeight}

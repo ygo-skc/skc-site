@@ -60,7 +60,7 @@ const CardDisplayGrid: FC<_CardDisplayGrid> = memo(
 		const [clearGrid, setClearGrid] = useState(false)
 
 		const renderCards = () => {
-			return cardJsonResults.slice(numResultsDisplayed - numItemsToLoadWhenNeeded, numResultsDisplayed).map((card: _YGOCard) => {
+			return cardJsonResults.slice(numResultsDisplayed - numItemsToLoadWhenNeeded, numResultsDisplayed).map((card: SKCCard) => {
 				return (
 					<GridItem id={card.cardID} key={card.cardID} item xs={6} sm={4} md={4} lg={3} xl={2} style={{}} onClick={() => window.location.assign(`/card/${card.cardID}`)}>
 						<CardImageRounded cardImg={`https://images.thesupremekingscastle.com/cards/x-sm/${card.cardID}.jpg`} />

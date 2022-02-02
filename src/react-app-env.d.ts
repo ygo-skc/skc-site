@@ -58,40 +58,10 @@ declare type cardColor =
 	| 'err'
 	| undefined
 
-declare type _YGOCard = {
-	cardID: string
-	cardName: string
-	cardColor: cardColor
-	cardEffect: string
-	monsterType?: string
-	cardAttribute?: string
-	monsterAtk?: string
-	monsterDef?: string
-	monsterAssociation?: SKCMonsterAssociation
-	fullDetails: boolean
-	effectMaxLineHeight?: number
-	isLoading?: boolean
-	className?: string
-}
-
 declare type _YouTubeUploads = {
 	thumbnailImg: HTMLImageElement
 	title: string
 	url: string
-}
-
-declare type _CardData = {
-	cardID: string
-	cardName: string
-	cardColor: cardColor
-	cardEffect: string
-	monsterType?: string
-	cardAttribute?: string
-	monsterAtk?: string
-	monsterDef?: string
-	monsterAssociation?: SKCMonsterAssociation
-	isLoading: boolean
-	cardImg
 }
 
 declare type HATEOAS = {
@@ -114,14 +84,13 @@ declare type SKCBanListDates = {
 declare type SKCCard = {
 	cardID: string
 	cardName: string
-	cardColor: string
-	cardAttribute: string
-	monsterType: string
-	monsterAssociation: SKCMonsterAssociation
-	monsterAttack: number
-	monsterDefense: number
+	cardColor: cardColor
+	cardAttribute?: string
+	monsterType?: string
+	monsterAssociation?: SKCMonsterAssociation
+	monsterAttack?: string
+	monsterDefense?: string
 	cardEffect: string
-	monsterType: string
 }
 
 declare type SKCCardsPreviousBanListStatus = {

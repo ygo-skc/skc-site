@@ -100,8 +100,8 @@ const Card = () => {
 						cardEffect={cardEffect}
 						cardAttribute={cardAttribute}
 						monsterType={monsterType}
-						monsterAtk={monsterAtk}
-						monsterDef={monsterDef}
+						monsterAttack={monsterAtk}
+						monsterDefense={monsterDef}
 						monsterAssociation={monsterAssociation}
 						cardID={_Card.cardId}
 						isLoading={isLoading}
