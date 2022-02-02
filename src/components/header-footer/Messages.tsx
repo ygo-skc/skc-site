@@ -54,16 +54,7 @@ function Messages() {
 							}
 						}
 
-						return (
-							<MessageItemComponent
-								key={creationDate.toString()}
-								creationDate={creationDate}
-								messageTitle={message.title}
-								messageContent={message.content}
-								messageTags={message.tags}
-								isLastMessage={index === totalMessages - 1}
-							/>
-						)
+						return <MessageItemComponent key={creationDate.toString()} creationDate={creationDate} message={message} isLastMessage={index === totalMessages - 1} />
 					})
 				)
 

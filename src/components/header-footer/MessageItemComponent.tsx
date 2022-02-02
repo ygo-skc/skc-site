@@ -8,17 +8,15 @@ import { Dates } from '../../helper/Dates'
 
 type MessageItemComponentArgs = {
 	creationDate: Date
-	messageTitle: string
-	messageContent: string
-	messageTags: string[]
+	message: MessageItem
 	isLastMessage: boolean
 }
 
-const MessageItemComponent: FC<MessageItemComponentArgs> = ({ creationDate, messageTitle, messageContent, messageTags, isLastMessage }): ReactElement => {
+const MessageItemComponent: FC<MessageItemComponentArgs> = ({ creationDate, message, isLastMessage }): ReactElement => {
 	return (
 		<div>
 			<Typography className='communication-message-header' variant='h6'>
-				{messageTitle}
+				{message.title}
 			</Typography>
 
 			<div className='communication-message-content'>
@@ -26,11 +24,11 @@ const MessageItemComponent: FC<MessageItemComponentArgs> = ({ creationDate, mess
 					{Dates.getDateString(creationDate)} {Dates.getTimeString(creationDate)}
 				</Typography>
 				<Typography className='communication-message-body link-container' variant='body1'>
-					<ReactMarkdown children={`${messageContent}`} />
+					<ReactMarkdown children={`${message.content}`} />
 				</Typography>
 
 				<div className='communication-message-tag-container'>
-					{messageTags.map((tag: string) => (
+					{message.tags.map((tag: string) => (
 						<Chip className='communication-message-tag' label={tag} />
 					))}
 				</div>
