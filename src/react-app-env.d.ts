@@ -1,18 +1,5 @@
 /// <reference types="react-scripts" />
 
-declare type MessageOutput = {
-	service: string
-	message: MessageItem[]
-}
-
-declare type MessageItem = {
-	title: string
-	content: string
-	tags: string[]
-	createdAt: string
-	updatedAt: string
-}
-
 declare type ProductInfo = {
 	productId: string
 	productLocale?: string
@@ -68,6 +55,8 @@ declare type HATEOAS = {
 	href: string
 }
 
+// SKC API related type declarations
+
 declare type SKCBanListDate = {
 	effectiveDate: Date
 	_links: {
@@ -113,6 +102,8 @@ declare type SKCProductContent = {
 	card: SKCCard
 }
 
+// Heart API related type declarations
+
 declare type HeartApiYouTubeUpload = {
 	id: string
 	title: string
@@ -121,4 +112,16 @@ declare type HeartApiYouTubeUpload = {
 	thumbnailUrl: string
 	url: string
 }
-// declare type HeartApiYouTubeUploads = {}
+
+declare type HeartApiMessageOutput = {
+	service: string
+	messages: HeartApiMessageItem[]
+}
+
+declare type HeartApiMessageItem = {
+	title: string
+	content: string
+	tags: string[]
+	createdAt: string
+	updatedAt: string
+}

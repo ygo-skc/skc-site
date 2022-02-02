@@ -12,7 +12,7 @@ import MessageItemComponent from './MessageItemComponent'
 
 function Messages() {
 	const [messagesAnchor, setMessagesAnchor] = useState<HTMLButtonElement | undefined>(undefined)
-	const [messagesList, setMessagesList] = useState([])
+	const [messagesList, setMessagesList] = useState<JSX.Element[]>([])
 
 	const [numMessages, setNumMessages] = useState(0)
 	const [numNewMessages, setNumNewMessages] = useState(0)
@@ -25,8 +25,8 @@ function Messages() {
 	useEffect(() => {
 		Fetch.handleFetch(
 			`${DownstreamServices.HEART_API_HOST_NAME}/api/v1/message?service=skc&tags=skc-site,skc-api`,
-			(json) => {
-				const totalMessages = json.messages.length
+			(messageData: HeartApiMessageOutput) => {
+				const totalMessages = messageData.messages.length
 				setNumMessages(totalMessages)
 
 				let findNumNewMessages = false
@@ -35,15 +35,15 @@ function Messages() {
 				const previousNewestMessageDate = new Date(previousNewestMessageTimeStamp)
 
 				if (totalMessages > 0) {
-					setNewestMessageSeen(json.messages[0].createdAt)
+					setNewestMessageSeen(messageData.messages[0].createdAt)
 
-					if (previousNewestMessageTimeStamp !== json.messages[0].createdAt) {
+					if (previousNewestMessageTimeStamp !== messageData.messages[0].createdAt) {
 						findNumNewMessages = true
 					}
 				}
 
 				setMessagesList(
-					json.messages.map((message: MessageItem, index: number) => {
+					messageData.messages.map((message: HeartApiMessageItem, index: number) => {
 						const creationDate = new Date(message.createdAt)
 
 						if (findNumNewMessages) {
