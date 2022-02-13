@@ -17,15 +17,8 @@ const TabbedView = lazy(() => import('./TabbedView'))
 const BanListSection = lazy(() => import('./BanListSection'))
 const BanListStats = lazy(() => import('./BanListStats'))
 
-function dateReducer(state: any, action: any) {
-	switch (action.type) {
-		case 'UPDATE_BAN_LIST_DATES':
-			return { ...state, banListStartDates: action.banListStartDates }
-		case 'UPDATE_BAN_LIST_HATEOAS_LINKS':
-			return { ...state, banListInstanceLinks: action.banListInstanceLinks }
-		default:
-			return state
-	}
+function dateReducer(_: any, action: any) {
+	return { banListStartDates: action.banListStartDates, banListInstanceLinks: action.banListInstanceLinks }
 }
 
 function determineListSize(size: number | undefined): number {
@@ -44,11 +37,11 @@ function currentlySelectedBanListReducer(state: any, action: any) {
 				numLimited: action.numLimited,
 				numSemiLimited: action.numSemiLimited,
 			}
-		case 'UPDATE_REMOVED':
-			return { ...state, removedCards: action.removedCards, numRemoved: action.numRemoved }
-		case 'UPDATE_NEWLY_ADDED':
+		case 'UPDATE_DIFF':
 			return {
 				...state,
+				removedCards: action.removedCards,
+				numRemoved: action.numRemoved,
 				newForbiddenCards: action.newForbiddenCards,
 				newLimitedCards: action.newLimitedCards,
 				newSemiLimitedCards: action.newSemiLimitedCards,
@@ -104,8 +97,11 @@ export default function BanList() {
 
 	useEffect(() => {
 		Fetch.handleFetch(DownstreamServices.NAME_maps_ENDPOINT['banListsUrl'], (json) => {
-			dateDispatch({ type: 'UPDATE_BAN_LIST_HATEOAS_LINKS', banListInstanceLinks: json.banListDates.map((item: SKCBanListDate) => item._links['Ban List Content'].href) })
-			dateDispatch({ type: 'UPDATE_BAN_LIST_DATES', banListStartDates: json.banListDates.map((item: SKCBanListDate) => item.effectiveDate) })
+			dateDispatch({
+				type: 'UPDATE_BAN_LIST',
+				banListInstanceLinks: json.banListDates.map((item: SKCBanListDate) => item._links['Ban List Content'].href),
+				banListStartDates: json.banListDates.map((item: SKCBanListDate) => item.effectiveDate),
+			})
 		})
 	}, [])
 
@@ -128,16 +124,10 @@ export default function BanList() {
 					numSemiLimited: determineListSize(json.banListInstance.numSemiLimited),
 				})
 
-				// Removed cards compared to previous ban list
 				selectedBanListDispatch({
-					type: 'UPDATE_REMOVED',
+					type: 'UPDATE_DIFF',
 					removedCards: json.banListInstance.removedContent.removedCards,
 					numRemoved: determineListSize(json.banListInstance.removedContent.numRemoved),
-				})
-
-				// Newly added cads compared to previous ban list
-				selectedBanListDispatch({
-					type: 'UPDATE_NEWLY_ADDED',
 					newForbiddenCards: json.banListInstance.newContent.newForbidden,
 					newLimitedCards: json.banListInstance.newContent.newLimited,
 					newSemiLimitedCards: json.banListInstance.newContent.newSemiLimited,
