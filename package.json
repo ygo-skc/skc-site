@@ -51,7 +51,6 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@types/axios": "0.14.0",
     "@types/lodash.startcase": "4.4.6",
     "@types/react": "17.0.39",
     "@types/react-dom": "17.0.11",
