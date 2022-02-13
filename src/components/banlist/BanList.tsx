@@ -28,36 +28,84 @@ function dateReducer(state: any, action: any) {
 	}
 }
 
+function determineListSize(size: number | undefined): number {
+	return size === undefined ? 0 : size
+}
+
+function currentlySelectedBanListReducer(state: any, action: any) {
+	switch (action.type) {
+		case 'UPDATE_LIST':
+			return {
+				...state,
+				forbidden: action.forbidden,
+				limited: action.limited,
+				semiLimited: action.semiLimited,
+				numForbidden: action.numForbidden,
+				numLimited: action.numLimited,
+				numSemiLimited: action.numSemiLimited,
+			}
+		case 'UPDATE_REMOVED':
+			return { ...state, removedCards: action.removedCards, numRemoved: action.numRemoved }
+		case 'UPDATE_NEWLY_ADDED':
+			return {
+				...state,
+				newForbiddenCards: action.newForbiddenCards,
+				newLimitedCards: action.newLimitedCards,
+				newSemiLimitedCards: action.newSemiLimitedCards,
+				numNewForbidden: action.numNewForbidden,
+				numNewLimited: action.numNewLimited,
+				numNewSemiLimited: action.numNewSemiLimited,
+			}
+		default:
+			return state
+	}
+}
+
 export default function BanList() {
-	const [{ banListStartDates, banListInstanceLinks }, dispatch] = useReducer(dateReducer, { banListStartDates: [], banListInstanceLinks: [] })
+	const [{ banListStartDates, banListInstanceLinks }, dateDispatch] = useReducer(dateReducer, { banListStartDates: [], banListInstanceLinks: [] })
+	const [
+		{
+			forbidden,
+			limited,
+			semiLimited,
+			numForbidden,
+			numLimited,
+			numSemiLimited,
+			removedCards,
+			numRemoved,
+			newForbiddenCards,
+			newLimitedCards,
+			newSemiLimitedCards,
+			numNewForbidden,
+			numNewLimited,
+			numNewSemiLimited,
+		},
+		selectedBanListDispatch,
+	] = useReducer(currentlySelectedBanListReducer, {
+		forbidden: [],
+		limited: [],
+		semiLimited: [],
+		numForbidden: 0,
+		numLimited: 0,
+		numSemiLimited: 0,
+		removedCards: [],
+		numRemoved: 0,
+		newForbiddenCards: [],
+		newLimitedCards: [],
+		newSemiLimitedCards: [],
+		numNewForbidden: 0,
+		numNewLimited: 0,
+		numNewSemiLimited: 0,
+	})
 
 	const [selectedBanList, setSelectedBanList] = useState<string>('')
 
-	const [forbidden, setForbidden] = useState([])
-	const [limited, setLimited] = useState([])
-	const [semiLimited, setSemiLimited] = useState([])
-
-	const [numForbidden, setNumForbidden] = useState(0)
-	const [numLimited, setNumLimited] = useState(0)
-	const [numSemiLimited, setNumSemiLimited] = useState(0)
-
 	const [isFetchingBanList, setIsFetchingBanList] = useState(true)
-
-	const [newForbiddenCards, setNewForbiddenCards] = useState([])
-	const [newLimitedCards, setNewLimitedCards] = useState([])
-	const [newSemiLimitedCards, setNewSemiLimitedCards] = useState([])
-
-	const [numNewForbidden, setNumNewForbidden] = useState(0)
-	const [numNewLimited, setNumNewLimited] = useState(0)
-	const [numNewSemiLimited, setNumNewSemiLimited] = useState(0)
-
-	const [removedCards, setRemovedCards] = useState([])
-	const [numRemoved, setNumRemoved] = useState(0)
 
 	useEffect(() => {
 		Fetch.handleFetch(DownstreamServices.NAME_maps_ENDPOINT['banListsUrl'], (json) => {
-			dispatch({ type: 'UPDATE_BAN_LIST_HATEOAS_LINKS', banListInstanceLinks: json.banListDates.map((item: SKCBanListDate) => item._links['Ban List Content'].href) })
-			dispatch({ type: 'UPDATE_BAN_LIST_DATES', banListStartDates: json.banListDates.map((item: SKCBanListDate) => item.effectiveDate) })
+			dateDispatch({ type: 'UPDATE_BAN_LIST_HATEOAS_LINKS', banListInstanceLinks: json.banListDates.map((item: SKCBanListDate) => item._links['Ban List Content'].href) })
+			dateDispatch({ type: 'UPDATE_BAN_LIST_DATES', banListStartDates: json.banListDates.map((item: SKCBanListDate) => item.effectiveDate) })
 		})
 	}, [])
 
@@ -70,26 +118,33 @@ export default function BanList() {
 			setIsFetchingBanList(true)
 
 			Fetch.handleFetch(banListInstanceLinks[banListStartDates.indexOf(selectedBanList)], (json) => {
-				setForbidden(json.banListInstance.forbidden)
-				setLimited(json.banListInstance.limited)
-				setSemiLimited(json.banListInstance.semiLimited)
-
-				setNumForbidden(json.banListInstance.numForbidden === undefined ? 0 : json.banListInstance.numForbidden)
-				setNumLimited(json.banListInstance.numLimited === undefined ? 0 : json.banListInstance.numLimited)
-				setNumSemiLimited(json.banListInstance.numSemiLimited === undefined ? 0 : json.banListInstance.numSemiLimited)
+				selectedBanListDispatch({
+					type: 'UPDATE_LIST',
+					forbidden: json.banListInstance.forbidden,
+					limited: json.banListInstance.limited,
+					semiLimited: json.banListInstance.semiLimited,
+					numForbidden: determineListSize(json.banListInstance.numForbidden),
+					numLimited: determineListSize(json.banListInstance.numLimited),
+					numSemiLimited: determineListSize(json.banListInstance.numSemiLimited),
+				})
 
 				// Removed cards compared to previous ban list
-				setRemovedCards(json.banListInstance.removedContent.removedCards)
-				setNumRemoved(json.banListInstance.removedContent.numRemoved)
+				selectedBanListDispatch({
+					type: 'UPDATE_REMOVED',
+					removedCards: json.banListInstance.removedContent.removedCards,
+					numRemoved: determineListSize(json.banListInstance.removedContent.numRemoved),
+				})
 
 				// Newly added cads compared to previous ban list
-				setNewForbiddenCards(json.banListInstance.newContent.newForbidden)
-				setNewLimitedCards(json.banListInstance.newContent.newLimited)
-				setNewSemiLimitedCards(json.banListInstance.newContent.newSemiLimited)
-
-				setNumNewForbidden(json.banListInstance.newContent.numNewForbidden)
-				setNumNewLimited(json.banListInstance.newContent.numNewLimited)
-				setNumNewSemiLimited(json.banListInstance.newContent.numNewSemiLimited)
+				selectedBanListDispatch({
+					type: 'UPDATE_NEWLY_ADDED',
+					newForbiddenCards: json.banListInstance.newContent.newForbidden,
+					newLimitedCards: json.banListInstance.newContent.newLimited,
+					newSemiLimitedCards: json.banListInstance.newContent.newSemiLimited,
+					numNewForbidden: json.banListInstance.newContent.numNewForbidden,
+					numNewLimited: json.banListInstance.newContent.numNewLimited,
+					numNewSemiLimited: json.banListInstance.newContent.numNewSemiLimited,
+				})
 
 				setIsFetchingBanList(false)
 			})
