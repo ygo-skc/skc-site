@@ -1,4 +1,4 @@
-import { lazy, useState, useEffect, Suspense } from 'react'
+import { lazy, useState, useEffect, Suspense, useReducer } from 'react'
 import { Helmet } from 'react-helmet'
 
 import { Skeleton } from '@mui/material'
@@ -17,10 +17,21 @@ const TabbedView = lazy(() => import('./TabbedView'))
 const BanListSection = lazy(() => import('./BanListSection'))
 const BanListStats = lazy(() => import('./BanListStats'))
 
+function dateReducer(state: any, action: any) {
+	switch (action.type) {
+		case 'UPDATE_BAN_LIST_DATES':
+			return { ...state, banListStartDates: action.banListStartDates }
+		case 'UPDATE_BAN_LIST_HATEOAS_LINKS':
+			return { ...state, banListInstanceLinks: action.banListInstanceLinks }
+		default:
+			return state
+	}
+}
+
 export default function BanList() {
-	const [banListStartDates, setBanListStartDates] = useState<string[]>([])
+	const [{ banListStartDates, banListInstanceLinks }, dispatch] = useReducer(dateReducer, { banListStartDates: [], banListInstanceLinks: [] })
+
 	const [selectedBanList, setSelectedBanList] = useState<string>('')
-	const [banListInstanceLinks, setBanListInstanceLinks] = useState([])
 
 	const [forbidden, setForbidden] = useState([])
 	const [limited, setLimited] = useState([])
@@ -45,8 +56,8 @@ export default function BanList() {
 
 	useEffect(() => {
 		Fetch.handleFetch(DownstreamServices.NAME_maps_ENDPOINT['banListsUrl'], (json) => {
-			setBanListInstanceLinks(json.banListDates.map((item: SKCBanListDate) => item._links['Ban List Content'].href))
-			setBanListStartDates(json.banListDates.map((item: SKCBanListDate) => item.effectiveDate))
+			dispatch({ type: 'UPDATE_BAN_LIST_HATEOAS_LINKS', banListInstanceLinks: json.banListDates.map((item: SKCBanListDate) => item._links['Ban List Content'].href) })
+			dispatch({ type: 'UPDATE_BAN_LIST_DATES', banListStartDates: json.banListDates.map((item: SKCBanListDate) => item.effectiveDate) })
 		})
 	}, [])
 
