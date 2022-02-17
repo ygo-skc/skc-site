@@ -9,7 +9,7 @@
 }
 
 .effect-ygo-card-style {
-	background: linear-gradient(185deg, #e65100 25%, #fb8c00 85%);
+	background: linear-gradient(185deg, #e65100 25%, #ff762b 85%);
 	color: #fffbeb !important;
 	/* effectTableBackground: `#ea8300`, */
 }
@@ -30,7 +30,7 @@
 }
 
 .fusion-ygo-card-style {
-	background: linear-gradient(185deg, #7e57c2 25%, #9575cd 85%);
+	background: linear-gradient(185deg, #6c42b5 25%, #7e57c2 85%);
 	color: #fffbeb !important;
 	/* ritualTableBackground: `#56b1fa`*/
 }
