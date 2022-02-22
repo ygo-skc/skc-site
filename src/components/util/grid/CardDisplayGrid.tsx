@@ -14,8 +14,7 @@ import Styled from 'styled-components'
 async function getPlaceholderCardComponent() {
 	const placeHolder = []
 
-	var i = 0
-	for (i = 0; i < 20; i++) {
+	for (let i = 0; i < 20; i++) {
 		placeHolder.push(
 			<Grid key={`skeleton-${i}`} item xs={6} sm={4} md={4} lg={3} xl={2} style={{ padding: '.3rem' }}>
 				<Skeleton variant='rectangular' height='170' width='100%' style={{ borderRadius: '4rem', marginBottom: '1rem' }} />
