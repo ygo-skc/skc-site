@@ -11,10 +11,10 @@ import BreadCrumb from '../header-footer/Breadcrumb'
 
 import '../../css/main-pages/ban-list.css'
 import Section from '../util/Section'
+import TabbedView from './TabbedView'
+import BanListSection from './BanListSection'
 
 const BanListDates = lazy(() => import('./BanListDates'))
-const TabbedView = lazy(() => import('./TabbedView'))
-const BanListSection = lazy(() => import('./BanListSection'))
 const BanListStats = lazy(() => import('./BanListStats'))
 
 function dateReducer(_: any, action: any) {

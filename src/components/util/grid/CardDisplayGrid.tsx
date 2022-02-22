@@ -1,7 +1,6 @@
 import { useState, useEffect, memo, FC } from 'react'
 
-import { Grid, IconButton, Box } from '@mui/material'
-import { Skeleton } from '@mui/material'
+import { Grid, IconButton, Box, Skeleton } from '@mui/material'
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded'
 
 import CardImageRounded from '../../card/CardImageRounded'
