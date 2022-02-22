@@ -2,14 +2,9 @@ import { useState, useEffect, memo, FC } from 'react'
 
 import { Grid, IconButton, Box, Skeleton } from '@mui/material'
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded'
-
 import CardImageRounded from '../../card/CardImageRounded'
-
 import YGOCard from '../../card/YGOCard'
-
 import { Hint } from '../Hints'
-
-import Styled from 'styled-components'
 
 async function getPlaceholderCardComponent() {
 	const placeHolder = []
@@ -25,20 +20,6 @@ async function getPlaceholderCardComponent() {
 
 	return placeHolder
 }
-
-const GridItem = Styled(Grid)`
-	&&
-	{
-		border-radius: 1.2rem;
-		padding: .3rem;
-		cursor: pointer;
-
-		:hover
-		{
-			background: #eee;
-		}
-	}
-`
 
 type _CardDisplayGrid = {
 	cardJsonResults: any
@@ -60,7 +41,19 @@ const CardDisplayGrid: FC<_CardDisplayGrid> = memo(
 		const renderCards = () => {
 			return cardJsonResults.slice(numResultsDisplayed - numItemsToLoadWhenNeeded, numResultsDisplayed).map((card: SKCCard) => {
 				return (
-					<GridItem id={card.cardID} key={card.cardID} item xs={6} sm={4} md={4} lg={3} xl={2} style={{}} onClick={() => window.location.assign(`/card/${card.cardID}`)}>
+					<Grid
+						className='ygo-card-grid-item'
+						id={card.cardID}
+						key={card.cardID}
+						item
+						xs={6}
+						sm={4}
+						md={4}
+						lg={3}
+						xl={2}
+						style={{}}
+						onClick={() => window.location.assign(`/card/${card.cardID}`)}
+					>
 						<CardImageRounded cardImg={`https://images.thesupremekingscastle.com/cards/x-sm/${card.cardID}.jpg`} />
 
 						<YGOCard
@@ -74,7 +67,7 @@ const CardDisplayGrid: FC<_CardDisplayGrid> = memo(
 							monsterAssociation={card.monsterAssociation}
 							cardAttribute={card.cardAttribute}
 						/>
-					</GridItem>
+					</Grid>
 				)
 			})
 		}

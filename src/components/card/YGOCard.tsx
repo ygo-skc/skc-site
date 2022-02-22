@@ -1,24 +1,8 @@
 import { FC, memo } from 'react'
 
-import { Typography, Paper, Skeleton } from '@mui/material'
-
-import Styled from 'styled-components'
-
+import { Typography, Skeleton } from '@mui/material'
 import CardAssociation from './CardAssociation'
 import YGOCardStats from './YGOCardStats'
-
-const CardContentComponent = Styled(Paper)`
-	&&
-	{
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		border-radius: 1rem;
-		padding: .4rem;
-		padding-top: .65rem;
-		padding-bottom: .65rem;
-	}
-`
 
 type _YGOCard = SKCCard & {
 	fullDetails: boolean
@@ -48,7 +32,7 @@ const YGOCard: FC<_YGOCard> = memo(
 		}
 
 		return (
-			<CardContentComponent className={[className, `${cardColor}-ygo-card-style`.toLowerCase(), 'YgoCardLightText'].join(' ')}>
+			<div className={[className, 'ygo-card-style-base', `${cardColor}-ygo-card-style`.toLowerCase(), 'YgoCardLightText'].join(' ')}>
 				<Typography variant='subtitle1' id='card-name' noWrap={true}>
 					{cardName}
 				</Typography>
@@ -65,7 +49,7 @@ const YGOCard: FC<_YGOCard> = memo(
 					fullDetails={fullDetails}
 					effectMaxLineHeight={effectMaxLineHeight}
 				/>
-			</CardContentComponent>
+			</div>
 		)
 	},
 	(prevProps, newProps) => {

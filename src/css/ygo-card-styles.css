@@ -1,3 +1,13 @@
+.ygo-card-style-base {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	border-radius: 1rem;
+	padding: 0.4rem;
+	padding-top: 0.65rem;
+	padding-bottom: 0.65rem;
+}
+
 .normal-ygo-card-style {
 	background: linear-gradient(185deg, #f9a825, #fbc02d);
 	color: #484848 !important;
@@ -213,4 +223,14 @@
 .monster-defense-stat {
 	margin-left: 0.6rem;
 	color: rgba(77, 166, 255, 0.9);
+}
+
+.ygo-card-grid-item {
+	border-radius: 1.2rem;
+	padding: 0.3rem;
+	cursor: pointer;
+}
+
+.ygo-card-grid-item:hover {
+	background: #eee;
 }
