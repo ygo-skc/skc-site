@@ -63,7 +63,6 @@ const CardDisplayGrid: FC<_CardDisplayGrid> = memo(
 							monsterType={card.monsterType}
 							cardID={card.cardID}
 							fullDetails={false}
-							effectMaxLineHeight={3}
 							monsterAssociation={card.monsterAssociation}
 							cardAttribute={card.cardAttribute}
 						/>

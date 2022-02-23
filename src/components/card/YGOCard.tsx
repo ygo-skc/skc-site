@@ -6,27 +6,12 @@ import YGOCardStats from './YGOCardStats'
 
 type _YGOCard = SKCCard & {
 	fullDetails: boolean
-	effectMaxLineHeight?: number
 	isLoading?: boolean
 	className?: string
 }
 
 const YGOCard: FC<_YGOCard> = memo(
-	({
-		cardName,
-		cardColor,
-		cardEffect,
-		monsterType,
-		cardAttribute,
-		monsterAttack,
-		monsterDefense,
-		monsterAssociation,
-		cardID,
-		fullDetails,
-		effectMaxLineHeight,
-		isLoading,
-		className,
-	}) => {
+	({ cardName, cardColor, cardEffect, monsterType, cardAttribute, monsterAttack, monsterDefense, monsterAssociation, cardID, fullDetails, isLoading, className }) => {
 		if (isLoading) {
 			return <Skeleton variant='rectangular' height='150' style={{ borderRadius: '.5rem' }} />
 		}
@@ -47,7 +32,6 @@ const YGOCard: FC<_YGOCard> = memo(
 					monsterDef={monsterDefense}
 					cardID={cardID}
 					fullDetails={fullDetails}
-					effectMaxLineHeight={effectMaxLineHeight}
 				/>
 			</div>
 		)

@@ -216,3 +216,17 @@
 .ygo-card-grid-item:hover {
 	background: #eee;
 }
+
+.ygo-card-effect-component-some-details {
+	white-space: pre-wrap;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	color: inherit;
+}
+
+.ygo-card-effect-component-full-details {
+	white-space: pre-wrap;
+	color: inherit;
+}
