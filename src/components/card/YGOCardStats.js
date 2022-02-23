@@ -30,7 +30,7 @@ const YGOCardStats = ({ cardColor, cardEffect, monsterType, monsterAtk, monsterD
 		`
 
 	return (
-		<Box className={[`${cardColor}-ygo-card-style-light`.toLowerCase(), 'YgoCardDarkText'].join(' ')} id='card-description'>
+		<Box className={`YgoCardDarkText ${cardColor.toLowerCase()}-ygo-card-style-light`} id='card-description'>
 			<Typography variant='body1' id='monster-type' noWrap={true}>
 				{cardColor === 'Spell' || cardColor === 'Trap' ? cardColor : monsterType}
 			</Typography>
