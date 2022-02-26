@@ -1,26 +1,6 @@
 import { FC, memo, useEffect, useState } from 'react'
-import Styled from 'styled-components'
-
-import { Button, Grid, Accordion, AccordionSummary, AccordionDetails, Typography } from '@mui/material'
-
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import DateRangeRoundedIcon from '@mui/icons-material/DateRangeRounded'
-
+import { MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material'
 import { Dates } from '../../helper/Dates'
-
-const BanDatesExpansionDetail = Styled(AccordionDetails)`
-	&&
-	{
-		padding: 0rem;
-		margin-bottom: .7rem;
-	}
-`
-
-const DatesAccordion = Styled(Accordion)`
-	&& {
-		background-color: rgba(255, 255, 255, .7) !important;
-	}
-`
 
 type _BanListDates = {
 	banListStartDates: string[]
@@ -30,51 +10,31 @@ type _BanListDates = {
 const BanListDates: FC<_BanListDates> = memo(
 	({ banListStartDates, setSelectedBanList }) => {
 		const [banListGrid, setBanListGrid] = useState<JSX.Element[]>([])
-		const [selectedBanListIndex, setSelectedBanListIndex] = useState(0)
-		const [selectedRange, setSelectedRange] = useState('')
 
 		useEffect(() => {
-			let banListGridItems = banListStartDates.map((date: string, ind) => {
-				const displayDate = Dates.banListDate(date)
-
+			let banListGridItems = banListStartDates.map((_: string, ind: number) => {
 				return (
-					<Grid key={displayDate} item xs={6} sm={6} md={6} lg={12} xl={6}>
-						<Button
-							style={{ color: '#fff', width: '95%' }}
-							color={ind === selectedBanListIndex ? 'primary' : 'secondary'}
-							size='small'
-							disableElevation={true}
-							variant='contained'
-							startIcon={<DateRangeRoundedIcon />}
-							onClick={() => {
-								setSelectedBanList(ind)
-								setSelectedBanListIndex(ind)
-							}}
-						>
-							{displayDate}
-						</Button>
-					</Grid>
+					<MenuItem style={{ padding: '1rem' }} value={ind}>
+						{Dates.getCurrentBanListDate(banListStartDates[ind], banListStartDates)}
+					</MenuItem>
 				)
 			})
 
-			setSelectedRange(Dates.getCurrentBanListDate(banListStartDates[selectedBanListIndex], banListStartDates))
 			setBanListGrid(banListGridItems)
-		}, [selectedBanListIndex, banListStartDates, setSelectedBanList])
+			setSelectedBanList(0)
+		}, [banListStartDates, setSelectedBanList])
 
 		return (
 			<div>
 				<Typography variant='h4'>Date Range</Typography>
-				<DatesAccordion elevation={0}>
-					<AccordionSummary expandIcon={<ExpandMoreIcon />}>
-						<Typography variant='h6'>{selectedRange}</Typography>
-					</AccordionSummary>
-
-					<BanDatesExpansionDetail>
-						<Grid container spacing={1}>
-							{banListGrid}
-						</Grid>
-					</BanDatesExpansionDetail>
-				</DatesAccordion>
+				<Select
+					style={{ width: '95%', margin: 'auto' }}
+					onChange={(event: SelectChangeEvent) => {
+						setSelectedBanList(+event.target.value)
+					}}
+				>
+					{banListGrid}
+				</Select>
 			</div>
 		)
 	},

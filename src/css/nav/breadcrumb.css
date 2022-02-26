@@ -3,33 +3,30 @@ a {
 }
 
 .breadcrumb-parent {
-	padding-top: .75rem;
-	padding-bottom: .75rem;
+	padding-top: 0.75rem;
+	padding-bottom: 0.75rem;
 	padding-left: 1rem;
 	padding-right: 1rem;
 	margin: auto;
 	margin-top: 1rem;
-	margin-bottom: 1rem;
+	margin-bottom: 2.25rem;
 	border-radius: 2rem;
 
 	background-color: white;
 }
 
 .MuiBreadcrumbs-separator {
-	padding-bottom: .3rem;
+	padding-bottom: 0.3rem;
 }
-
 
 .breadcrumb {
 	display: flex;
 	font-weight: 500;
 }
 
-
 .breadcrumb-icon {
 	margin-right: 3px;
 }
-
 
 .breadcrumb-item {
 	color: white !important;
@@ -38,7 +35,6 @@ a {
 	margin-right: 5px;
 	color: rgba(68, 68, 68, 0.68);
 }
-
 
 .breadcrumb-text {
 	margin: auto;

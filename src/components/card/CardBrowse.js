@@ -19,13 +19,11 @@ import RenderGroup from '../util/search/DBSearchGrouping'
 import '../../css/util/divider.css'
 import '../../css/suggestion-box/database-search-styles.css'
 
-const CardDisplayGrid = lazy( () => import('../util/grid/CardDisplayGrid'))
+const CardDisplayGrid = lazy(() => import('../util/grid/CardDisplayGrid'))
 
 const defaultDisplayNum = 50
 
-
-export default function Browse()
-{
+export default function Browse() {
 	const [browseCriteria, setBrowseCriteria] = useState([])
 	const [selectedCriteria, setSelectedCriteria] = useState(undefined)
 
@@ -39,21 +37,19 @@ export default function Browse()
 	const [isLoadMoreVisible, setIsLoadMoreVisible] = useState(false)
 	const [isCardBrowseDataLoaded, setIsCardBrowseDataLoaded] = useState(true)
 
-
-	useEffect( () => {
+	useEffect(() => {
 		Fetch.handleFetch(DownstreamServices.NAME_maps_ENDPOINT['browseCriteria'], (json) => {
 			const browseCriteria = []
-			for (const criteria of Object.keys(json))
-			{
-				if (criteria === '_links')	continue
-				json[criteria].forEach(criteriaValue => {
+			for (const criteria of Object.keys(json)) {
+				if (criteria === '_links') continue
+				json[criteria].forEach((criteriaValue) => {
 					if (criteria === 'levels') criteriaValue = `Level ${criteriaValue}`
 					else if (criteria === 'ranks') criteriaValue = `Rank ${criteriaValue}`
 					else if (criteria === 'linkRatings') criteriaValue = `Link Rating ${criteriaValue}`
 
 					browseCriteria.push({
-						'criteriaName': criteria
-						, 'criteriaValue': criteriaValue
+						criteriaName: criteria,
+						criteriaValue: criteriaValue,
 					})
 				})
 			}
@@ -61,14 +57,12 @@ export default function Browse()
 		})
 	}, [])
 
-	useEffect( () => {
-		if (selectedCriteria === undefined)	return
-		if (selectedCriteria.length === 0)
-		{
+	useEffect(() => {
+		if (selectedCriteria === undefined) return
+		if (selectedCriteria.length === 0) {
 			reset(true)
 			return
 		}
-
 
 		const criteriaMap = new Map()
 		criteriaMap.set('cardColors', [])
@@ -79,44 +73,48 @@ export default function Browse()
 		criteriaMap.set('ranks', [])
 		criteriaMap.set('linkRatings', [])
 
-		const selectedCriteriaChips = selectedCriteria.map(criteria => {
-			if (criteria.criteriaName === 'cardColors' || criteria.criteriaName === 'attributes' || criteria.criteriaName === 'monsterTypes' || criteria.criteriaName === 'monsterSubTypes')
+		const selectedCriteriaChips = selectedCriteria.map((criteria) => {
+			if (
+				criteria.criteriaName === 'cardColors' ||
+				criteria.criteriaName === 'attributes' ||
+				criteria.criteriaName === 'monsterTypes' ||
+				criteria.criteriaName === 'monsterSubTypes'
+			)
 				criteriaMap.get(criteria.criteriaName).push(criteria.criteriaValue)
-			else if(criteria.criteriaName === 'levels'){
-				criteriaMap.get(criteria.criteriaName).push(criteria.criteriaValue.replace('Level ', ""))
-			}
-			else if(criteria.criteriaName === 'ranks'){
-				criteriaMap.get(criteria.criteriaName).push(criteria.criteriaValue.replace('Rank ', ""))
-			}
-			else if(criteria.criteriaName === 'linkRatings'){
+			else if (criteria.criteriaName === 'levels') {
+				criteriaMap.get(criteria.criteriaName).push(criteria.criteriaValue.replace('Level ', ''))
+			} else if (criteria.criteriaName === 'ranks') {
+				criteriaMap.get(criteria.criteriaName).push(criteria.criteriaValue.replace('Rank ', ''))
+			} else if (criteria.criteriaName === 'linkRatings') {
 				console.log('yo')
-				criteriaMap.get(criteria.criteriaName).push(criteria.criteriaValue.replace('Link Rating ', ""))
+				criteriaMap.get(criteria.criteriaName).push(criteria.criteriaValue.replace('Link Rating ', ''))
 			}
 
-			return <Chip
-				key={criteria.criteriaValue}
-				label={criteria.criteriaValue}
-				style={{backgroundColor: 'rgba(0, 0, 0, .37)'}} />
+			return <Chip key={criteria.criteriaValue} label={criteria.criteriaValue} style={{ background: 'rgba(107, 52, 91, .7)' }} />
 		})
 
 		setSelectedCriteriaChips(selectedCriteriaChips)
 		reset()
 
-
 		setIsCardBrowseDataLoaded(false)
-		Fetch.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT['browse']}?cardColors=${criteriaMap.get('cardColors').join(',')}&attributes=${criteriaMap.get('attributes').join(',')}&monsterTypes=${criteriaMap.get('monsterTypes').join(',')}&monsterSubTypes=${criteriaMap.get('monsterSubTypes').join(',')}&levels=${criteriaMap.get('levels').join(',')}&ranks=${criteriaMap.get('ranks').join(',')}&linkRatings=${criteriaMap.get('linkRatings').join(',')}`, json => {
-			setJsonResults(json.results)
-			setNumResults(json.numResults)
+		Fetch.handleFetch(
+			`${DownstreamServices.NAME_maps_ENDPOINT['browse']}?cardColors=${criteriaMap.get('cardColors').join(',')}&attributes=${criteriaMap
+				.get('attributes')
+				.join(',')}&monsterTypes=${criteriaMap.get('monsterTypes').join(',')}&monsterSubTypes=${criteriaMap.get('monsterSubTypes').join(',')}&levels=${criteriaMap
+				.get('levels')
+				.join(',')}&ranks=${criteriaMap.get('ranks').join(',')}&linkRatings=${criteriaMap.get('linkRatings').join(',')}`,
+			(json) => {
+				setJsonResults(json.results)
+				setNumResults(json.numResults)
 
-			setIsCardBrowseDataLoaded(true)
-		})
+				setIsCardBrowseDataLoaded(true)
+			}
+		)
 	}, [selectedCriteria])
 
-
-	useEffect( () => {
+	useEffect(() => {
 		incrementNumResultsDisplayed(defaultDisplayNum)
 	}, [numResults])
-
 
 	const loadMore = () => {
 		const newCap = numResultsDisplayed + defaultDisplayNum
@@ -124,142 +122,103 @@ export default function Browse()
 		incrementNumResultsDisplayed(newCap)
 	}
 
-
-	const incrementNumResultsDisplayed = (newCap) =>
-	{
-		if (numResults < newCap)
-		{
+	const incrementNumResultsDisplayed = (newCap) => {
+		if (numResults < newCap) {
 			setnumItemsToLoadWhenNeeded(numResults - numResultsDisplayed)
 			setNumResultsDisplayed(numResults)
 			setIsLoadMoreVisible(false)
-		}
-		else
-		{
+		} else {
 			setnumItemsToLoadWhenNeeded(defaultDisplayNum)
 			setNumResultsDisplayed(newCap)
 			setIsLoadMoreVisible(true)
 		}
 	}
 
-
-	const reset = (fullReset = false) =>
-	{
+	const reset = (fullReset = false) => {
 		setIsLoadMoreVisible(false)
 		setNumResults(0)
 		setJsonResults([])
-		if (fullReset)
-		{
+		if (fullReset) {
 			setSelectedCriteriaChips([])
 		}
 	}
 
-
-
-	return(
-		<div className='generic-container'  >
+	return (
+		<div className='generic-container'>
 			<Helmet>
 				<title>{`SKC - Card Browser`}</title>
-				<meta
-					name={`SKC - Card Browser`}
-					content={`Browse all cards in database to find the right card you want.`}
-					/>
-				<meta name="keywords" content={`YuGiOh, card browse, The Supreme Kings Castle`} />
+				<meta name={`SKC - Card Browser`} content={`Browse all cards in database to find the right card you want.`} />
+				<meta name='keywords' content={`YuGiOh, card browse, The Supreme Kings Castle`} />
 			</Helmet>
 
-			<Breadcrumb crumbs={ ['Home', 'Card Browse Tool'] } />
+			<Breadcrumb crumbs={['Home', 'Card Browse Tool']} />
 
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={
+					<Section
+						sectionHeaderBackground='product'
+						sectionName='Current Criteria'
+						sticky={true}
+						sectionContent={
+							<div className='section-content'>
+								<div style={{ minHeight: '1.5rem', marginBottom: '1rem' }}>{selectedCriteriaChips}</div>
 
-					<Box className='sticky' >
-						<div className='one-third-two-thirds-container' style={{ backgroundImage: 'linear-gradient(315deg, #7f5a83 0%, #0d324d 74%)' }} >
-
-							<Typography
-								style={{color: 'white'}}
-								variant='h4' >
-								Current Criteria
-							</Typography>
-
-							<div style={{minHeight: '1.5rem', marginBottom: '1rem'}} >
-								{selectedCriteriaChips}
-							</div>
-
-							<Autocomplete
-								multiple
-								id='browseCriteriaFilter'
-								options={browseCriteria}
-								getOptionLabel={option => option.criteriaValue}
-								groupBy={option => option.criteriaName}
-								autoHighlight
-								onChange={ (event, val)  => {
-									setSelectedCriteria(val)
-								}}
-								renderTags={ () => null }
-								renderGroup={option => {
-									return (
-										<RenderGroup
-											group={startCase(option.group)}
-											children={option.children}
-										/>
-									)
-								}}
-								disableCloseOnSelect
-								onClose={ (event, reason) => {
-									// setSelectedCriteria(intermediateSelectedCriteria)
-								}}
-								renderInput={(params) => (
-									<div style={{ width: '100%', display: 'flex', backgroundColor: 'rgba(0, 0, 0, .37)', borderRadius: '1.25rem', marginBottom: '2.75rem' }} >
-										<InputBase
-											ref={params.InputProps.ref}
-											inputProps={params.inputProps}
-											style={{ color: 'white', flex: '1', margin: '.8rem', fontSize: '1.23rem' }}
-											placeholder='Search...'
+								<Autocomplete
+									multiple
+									id='browseCriteriaFilter'
+									options={browseCriteria}
+									getOptionLabel={(option) => option.criteriaValue}
+									groupBy={(option) => option.criteriaName}
+									autoHighlight
+									onChange={(event, val) => {
+										setSelectedCriteria(val)
+									}}
+									renderTags={() => null}
+									renderGroup={(option) => {
+										return <RenderGroup group={startCase(option.group)} children={option.children} />
+									}}
+									disableCloseOnSelect
+									onClose={(event, reason) => {
+										// setSelectedCriteria(intermediateSelectedCriteria)
+									}}
+									renderInput={(params) => (
+										<div style={{ width: '100%', display: 'flex', backgroundColor: 'rgba(107, 52, 91, .9)', borderRadius: '1.25rem', marginBottom: '2.75rem' }}>
+											<InputBase
+												ref={params.InputProps.ref}
+												inputProps={params.inputProps}
+												style={{ color: 'white', flex: '1', margin: '.8rem', fontSize: '1.23rem' }}
+												placeholder='Search...'
 											/>
-										<IconButton>
-											<SearchIcon style={{ color: 'rgba(255, 255, 255, .56)' }} />
-										</IconButton>
-									</div>
-								)}
+											<IconButton>
+												<SearchIcon style={{ color: 'rgba(255, 255, 255, .7)' }} />
+											</IconButton>
+										</div>
+									)}
+									renderOption={(props, option) => {
+										return (
+											<Box component='li' {...props} className='search-suggestions-parent'>
+												<Typography className='search-suggestion-text search-suggestion-header' variant='body1'>
+													{option.criteriaValue}
+												</Typography>
+											</Box>
+										)
+									}}
+								/>
 
-							renderOption={(props, option) => {
-								return (
-		<Box component='li' {...props} className='search-suggestions-parent'>
-										<Typography className='search-suggestion-text search-suggestion-header' variant='body1'>{option.criteriaValue}</Typography>
-									</Box>
-								)
-							}}
-							/>
-
-							<Divider className='light-translucent-divider' />
-
-							<Typography
-								style={{color: 'white'}}
-								variant='h5' >
-								Results
-							</Typography>
-							<Typography
-								style={{color: 'white'}}
-								variant='body1' >
-								Total: {numResults}
-							</Typography>
-							<Typography
-								style={{color: 'white'}}
-								variant='body1' >
-								Displaying: {numResultsDisplayed}
-							</Typography>
-
-						</div>
-					</Box>
+								<Typography variant='h5'>Results</Typography>
+								<Typography variant='body1'>Total: {numResults}</Typography>
+								<Typography variant='body1'>Displaying: {numResultsDisplayed}</Typography>
+							</div>
+						}
+					/>
 				}
 				twoThirdComponent={
 					<Section
+						sectionHeaderBackground='product'
 						sectionName='Browse Results'
 						sectionContent={
-							<div
-								className='section-content' >
-								<Typography variant='h5' >
-									Results Are Sorted Alphabetically
-								</Typography>
+							<div className='section-content'>
+								<Typography variant='h5'>Results Are Sorted Alphabetically</Typography>
 
 								<CardDisplayGrid
 									cardJsonResults={jsonResults}
@@ -271,8 +230,8 @@ export default function Browse()
 									isDataLoaded={isCardBrowseDataLoaded}
 								/>
 							</div>
-						}>
-					</Section>
+						}
+					></Section>
 				}
 			/>
 		</div>

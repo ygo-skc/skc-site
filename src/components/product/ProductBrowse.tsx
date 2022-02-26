@@ -45,6 +45,7 @@ const ProductBrowse: FunctionComponent = () => {
 			<Breadcrumb crumbs={['Home', 'Product Browse']} />
 
 			<Section
+				sectionHeaderBackground='product'
 				sectionName='Products In Database'
 				sectionContent={
 					<div className='section-content'>
