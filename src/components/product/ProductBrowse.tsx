@@ -52,7 +52,6 @@ const ProductBrowse: FunctionComponent = () => {
 						<Typography variant='h5'>Sorted By Release Date</Typography>
 						<div
 							style={{
-								backgroundImage: 'linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)',
 								paddingTop: '0rem',
 								paddingBottom: '0rem',
 								paddingLeft: '0rem',

@@ -15,6 +15,7 @@ import Fetch from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 
 import RenderGroup from '../util/search/DBSearchGrouping'
+import createTable from '../util/TableHelpers'
 
 import '../../css/util/divider.css'
 import '../../css/suggestion-box/database-search-styles.css'
@@ -36,6 +37,10 @@ export default function Browse() {
 
 	const [isLoadMoreVisible, setIsLoadMoreVisible] = useState(false)
 	const [isCardBrowseDataLoaded, setIsCardBrowseDataLoaded] = useState(true)
+
+	const browseSummaryStats = []
+	browseSummaryStats.push(['Total', numResults])
+	browseSummaryStats.push(['Displaying', numResultsDisplayed])
 
 	useEffect(() => {
 		Fetch.handleFetch(DownstreamServices.NAME_maps_ENDPOINT['browseCriteria'], (json) => {
@@ -90,7 +95,7 @@ export default function Browse() {
 				criteriaMap.get(criteria.criteriaName).push(criteria.criteriaValue.replace('Link Rating ', ''))
 			}
 
-			return <Chip key={criteria.criteriaValue} label={criteria.criteriaValue} style={{ background: 'rgba(107, 52, 91, .7)' }} />
+			return <Chip key={criteria.criteriaValue} label={criteria.criteriaValue} style={{ background: 'rgba(107, 52, 91, .8)' }} />
 		})
 
 		setSelectedCriteriaChips(selectedCriteriaChips)
@@ -161,7 +166,15 @@ export default function Browse() {
 						sticky={true}
 						sectionContent={
 							<div className='section-content'>
-								<div style={{ minHeight: '1.5rem', marginBottom: '1rem' }}>{selectedCriteriaChips}</div>
+								<div style={{ minHeight: '1.5rem', marginBottom: '1rem' }}>
+									{selectedCriteriaChips.length === 0 ? (
+										<Typography variant='h5' align='center'>
+											No Criteria Specified
+										</Typography>
+									) : (
+										selectedCriteriaChips
+									)}
+								</div>
 
 								<Autocomplete
 									multiple
@@ -187,7 +200,7 @@ export default function Browse() {
 												ref={params.InputProps.ref}
 												inputProps={params.inputProps}
 												style={{ color: 'white', flex: '1', margin: '.8rem', fontSize: '1.23rem' }}
-												placeholder='Search...'
+												placeholder='Search Select Criteria...'
 											/>
 											<IconButton>
 												<SearchIcon style={{ color: 'rgba(255, 255, 255, .7)' }} />
@@ -206,8 +219,7 @@ export default function Browse() {
 								/>
 
 								<Typography variant='h5'>Results</Typography>
-								<Typography variant='body1'>Total: {numResults}</Typography>
-								<Typography variant='body1'>Displaying: {numResultsDisplayed}</Typography>
+								{createTable([], browseSummaryStats)}
 							</div>
 						}
 					/>

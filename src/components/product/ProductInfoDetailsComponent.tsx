@@ -11,18 +11,10 @@ const ProductInfoDetailsComponent: FC<ProductDetails> = ({ productName, productI
 
 	return (
 		<Box className='sticky'>
-			<div className='one-third-two-thirds-container' style={{ backgroundImage: 'linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)' }}>
-				{isDataLoaded ? (
-					<Typography style={{ color: 'white' }} variant='h4'>
-						{productName}
-					</Typography>
-				) : (
-					<Skeleton variant='rectangular' height={30} width={250} style={{ marginBottom: '.8rem' }} />
-				)}
+			<div className='section-content'>
+				{isDataLoaded ? <Typography variant='h4'>{productName}</Typography> : <Skeleton variant='rectangular' height={30} width={250} style={{ marginBottom: '.8rem' }} />}
 
-				<Typography style={{ color: 'white' }} variant='h5'>
-					Summary
-				</Typography>
+				<Typography variant='h5'>Summary</Typography>
 				{createTable([], summaryRows)}
 			</div>
 		</Box>
