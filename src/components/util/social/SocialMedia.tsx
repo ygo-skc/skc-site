@@ -16,7 +16,6 @@ const SocialMedia: FunctionComponent = () => {
 				src='https://discord.com/widget?id=659477868799197185&theme=light'
 				width='100%'
 				height='250'
-				allowTransparency={true}
 				frameBorder='1'
 				sandbox='allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts'
 			/>
