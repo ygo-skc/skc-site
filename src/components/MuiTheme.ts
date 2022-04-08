@@ -118,7 +118,7 @@ const MuiTheme = createTheme({
 				root: {
 					fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 					padding: '.4rem',
-					'border-bottom': '0rem',
+					borderBottom: '0rem',
 				},
 			},
 		},
