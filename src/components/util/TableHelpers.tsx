@@ -9,14 +9,18 @@ function createHeaderRow(headerNames: string[]) {
 
 function createRows(rowValues: string[][], rowOnClick: { (): void }[] = []): JSX.Element[] {
 	return rowValues.map((row: string[], index: number) => {
-		const columns: JSX.Element[] = row.map((value: string) => {
-			return <TableCell className={'table-cell'}>{value}</TableCell>
+		const columns: JSX.Element[] = row.map((columnValue: string) => {
+			return (
+				<TableCell key={columnValue} className={'table-cell'}>
+					{columnValue}
+				</TableCell>
+			)
 		})
 
 		return rowOnClick.length === 0 ? (
-			<TableRow>{columns}</TableRow>
+			<TableRow key={index}>{columns}</TableRow>
 		) : (
-			<TableRow className={'table-row'} onClick={rowOnClick[index]}>
+			<TableRow key={index} className={'table-row'} onClick={rowOnClick[index]}>
 				{columns}
 			</TableRow>
 		)
