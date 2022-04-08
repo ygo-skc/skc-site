@@ -1,7 +1,7 @@
 import React, { useState, useEffect, lazy } from 'react'
 import startCase from 'lodash.startcase'
 import Autocomplete from '@mui/material/Autocomplete'
-import { Chip, InputBase, IconButton, Typography, Box, Divider } from '@mui/material'
+import { Chip, InputBase, IconButton, Typography, Box } from '@mui/material'
 import { Helmet } from 'react-helmet'
 
 import SearchIcon from '@mui/icons-material/Search'
@@ -24,7 +24,7 @@ const CardDisplayGrid = lazy(() => import('../util/grid/CardDisplayGrid'))
 
 const defaultDisplayNum = 50
 
-export default function Browse() {
+export default function CardBrowse() {
 	const [browseCriteria, setBrowseCriteria] = useState([])
 	const [selectedCriteria, setSelectedCriteria] = useState(undefined)
 
