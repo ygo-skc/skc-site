@@ -20,7 +20,7 @@ const DatabaseInfo: FC<DatabaseInfoType> = ({ cardTotal, banListTotal, productTo
 			maxWidth='1000px'
 			sectionName='Content'
 			sectionContent={
-				<div className='section-content section-rounded-end'>
+				<div className='section-content'>
 					<div className='search-container'>
 						<DatabaseSearch />
 

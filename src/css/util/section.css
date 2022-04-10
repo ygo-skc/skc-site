@@ -14,7 +14,7 @@
 }
 
 .default-section-header-container {
-	background: #5d5a6b;
+	background: #4d4a59;
 }
 
 .ban-list-section-header-container {
@@ -33,17 +33,22 @@
 	padding-bottom: 1.5rem;
 }
 
-.section-content,
-.section-content-dark {
+.section-content {
 	padding-left: 0.8rem;
 	padding-right: 0.8rem;
 	padding-top: 2rem;
 	padding-bottom: 2rem;
-	background: #fff;
+	background: white;
+	border-bottom-left-radius: 2rem;
+	border-bottom-right-radius: 2rem;
 }
 
-.section-content-dark {
-	background: rgb(250, 250, 250);
+.section-dark-background {
+	background: rgb(246, 246, 246);
+	margin-left: -0.8rem;
+	margin-right: -0.8rem;
+	padding-left: 0.8rem;
+	padding-right: 0.8rem;
 }
 
 .default-border {
@@ -51,7 +56,15 @@
 	border-style: solid;
 }
 
-.section-rounded-end {
-	border-bottom-left-radius: 2rem;
-	border-bottom-right-radius: 2rem;
+.multi-section-start {
+	padding-bottom: 2rem;
+}
+
+.multi-section-middle {
+	padding-top: 2rem;
+	padding-bottom: 2rem;
+}
+
+.multi-section-end {
+	padding-top: 2rem;
 }
