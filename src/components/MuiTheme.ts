@@ -55,6 +55,9 @@ const MuiTheme = createTheme({
 					paddingBottom: '.4rem',
 					fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 				},
+				root: {
+					minHeight: '0rem',
+				},
 			},
 		},
 		MuiPopover: {

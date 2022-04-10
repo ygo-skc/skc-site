@@ -3,8 +3,7 @@ import { FC } from 'react'
 import Section from '../util/Section'
 import ProductStatPie from './ProductStatPie'
 
-const ProductInfoDetailsComponent: FC<ProductStats> = ({ productTotal, productRarityStats, cards }) => {
-	console.log(productTotal)
+const ProductStats: FC<ProductStats> = ({ productRarityStats, cards }) => {
 	const data: any[] = Object.keys(productRarityStats).map((key: string) => {
 		return {
 			id: key,
@@ -52,4 +51,4 @@ const ProductInfoDetailsComponent: FC<ProductStats> = ({ productTotal, productRa
 	)
 }
 
-export default ProductInfoDetailsComponent
+export default ProductStats
