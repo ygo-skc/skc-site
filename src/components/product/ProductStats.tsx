@@ -3,10 +3,7 @@ import { FC } from 'react'
 import Section from '../util/Section'
 import ProductStatPie from './ProductStatPie'
 
-const ProductInfoDetailsComponent: FC<ProductStats> = ({ productTotal, productRarityStats, cards }) => {
-	const xxx = productTotal
-	console.log(xxx)
-
+const ProductStats: FC<ProductStats> = ({ productRarityStats, cards }) => {
 	const data: any[] = Object.keys(productRarityStats).map((key: string) => {
 		return {
 			id: key,
@@ -18,11 +15,8 @@ const ProductInfoDetailsComponent: FC<ProductStats> = ({ productTotal, productRa
 	const cardColors = new Map<string, number>()
 
 	cards.forEach((card: SKCCard) => {
-		let cardColor = card.cardColor
+		let cardColor = card.cardColor!
 
-		// if (cardColor.toLowerCase() !== 'spell' && cardColor.toLowerCase() !== 'trap') {
-		// 	cardColor = 'Monster'
-		// }
 		const value = cardColors.get(cardColor)
 
 		if (value) {
@@ -57,4 +51,4 @@ const ProductInfoDetailsComponent: FC<ProductStats> = ({ productTotal, productRa
 	)
 }
 
-export default ProductInfoDetailsComponent
+export default ProductStats

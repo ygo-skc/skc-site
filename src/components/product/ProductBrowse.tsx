@@ -45,13 +45,13 @@ const ProductBrowse: FunctionComponent = () => {
 			<Breadcrumb crumbs={['Home', 'Product Browse']} />
 
 			<Section
+				sectionHeaderBackground='product'
 				sectionName='Products In Database'
 				sectionContent={
 					<div className='section-content'>
 						<Typography variant='h5'>Sorted By Release Date</Typography>
 						<div
 							style={{
-								backgroundImage: 'linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)',
 								paddingTop: '0rem',
 								paddingBottom: '0rem',
 								paddingLeft: '0rem',

@@ -60,13 +60,20 @@ export default function ProductInfo() {
 			<OneThirdTwoThirdsGrid
 				mirrored={false}
 				oneThirdComponent={
-					<ProductInfoDetailsComponent
-						productName={productName}
-						productId={productId as string}
-						productType={productType}
-						productSubType={productSubType}
-						productReleaseDate={productReleaseDate}
-						isDataLoaded={isDataLoaded}
+					<Section
+						sectionHeaderBackground='product'
+						sectionName='Product'
+						sticky={true}
+						sectionContent={
+							<ProductInfoDetailsComponent
+								productName={productName}
+								productId={productId as string}
+								productType={productType}
+								productSubType={productSubType}
+								productReleaseDate={productReleaseDate}
+								isDataLoaded={isDataLoaded}
+							/>
+						}
 					/>
 				}
 				twoThirdComponent={

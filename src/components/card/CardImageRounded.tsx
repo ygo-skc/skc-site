@@ -14,7 +14,7 @@ const CardImageRounded: FC<_CardImageRounded> = ({ cardImg, defaultVisibility = 
 		<VizSensor
 			partialVisibility
 			offset={{ bottom: -350, top: -200 }}
-			onChange={(isVisible) => {
+			onChange={(isVisible: boolean) => {
 				if (isVisible !== false) setVisible(isVisible)
 			}}
 		>

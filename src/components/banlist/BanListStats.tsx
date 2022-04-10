@@ -71,7 +71,7 @@ const BanListStats: FC<_BanListStats> = memo(
 		const [isShowingNewLimitedCards, setIsShowingNewLimitedCards] = useState(false)
 		const [isShowingNewSemiLimitedCards, setIsShowingNewSemiLimitedCards] = useState(false)
 
-		const [removedCardsList, setRemovedCardsList] = useState({})
+		const [removedCardsList, setRemovedCardsList] = useState<JSX.Element[]>([])
 
 		const [isShowingRemovedCards, setIsShowingRemovedCards] = useState(false)
 

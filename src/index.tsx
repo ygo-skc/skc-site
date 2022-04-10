@@ -6,6 +6,8 @@ import NavigationBar from './components/header-footer/NavigationBar'
 import Routes from './components/Routes'
 import MuiTheme from './components/MuiTheme'
 
+// const root = createRoot(document.getElementById('root') as Element)
+
 render(
 	<ThemeProvider theme={MuiTheme}>
 		<div className='content'>

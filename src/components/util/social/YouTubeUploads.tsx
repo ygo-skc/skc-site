@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from 'react'
-import { Typography, Link } from '@mui/material'
-import { Skeleton } from '@mui/material'
+import { Typography, Link, Skeleton } from '@mui/material'
 
 import VideoInfoContainer from './VideoInfoContainer'
 
@@ -14,7 +13,7 @@ const YouTubeUploads: FC<{ youtubeData: HeartApiYouTubeUpload[] }> = ({ youtubeD
 				youtubeData.map((item: HeartApiYouTubeUpload) => {
 					const img = new Image()
 					img.src = item.thumbnailUrl
-					return <VideoInfoContainer thumbnailImg={img} title={item.title} url={item.url} />
+					return <VideoInfoContainer key={item.title} thumbnailImg={img} title={item.title} url={item.url} />
 				})
 			)
 			setIsLoading(false)

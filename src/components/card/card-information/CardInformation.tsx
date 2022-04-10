@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, Suspense } from 'react'
+import { useState, useEffect, lazy, Suspense, useReducer } from 'react'
 import { useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { Skeleton } from '@mui/material'
@@ -32,6 +32,22 @@ class _Card {
 	}
 }
 
+function cardDataReducer(state: any, action: any) {
+	return {
+		...state,
+		cardName: action.cardName,
+		cardColor: action.cardColor,
+		cardEffect: action.cardEffect,
+		cardAttribute: action.cardAttribute,
+		monsterType: action.monsterType,
+		monsterAtk: action.monsterAtk,
+		monsterDef: action.monsterDef,
+		monsterAssociation: action.monsterAssociation,
+		productInfo: action.productInfo,
+		banListInfo: action.banListInfo,
+	}
+}
+
 const Card = () => {
 	const { cardId } = useParams()
 
@@ -45,17 +61,21 @@ const Card = () => {
 
 	const [isLoading, setIsLoading] = useState(true)
 
-	const [cardName, setCardName] = useState('')
-	const [cardColor, setCardColor] = useState<cardColor>(undefined)
-	const [cardEffect, setCardEffect] = useState('')
-	const [cardAttribute, setCardAttribute] = useState('')
-	const [monsterType, setMonsterType] = useState('')
-	const [monsterAtk, setMonsterAtk] = useState('')
-	const [monsterDef, setMonsterDef] = useState('')
-	const [monsterAssociation, setMonsterAssociation] = useState(undefined)
-
-	const [productInfo, setPackInfo] = useState([])
-	const [banListInfo, setBanListInfo] = useState([])
+	const [{ cardName, cardColor, cardEffect, cardAttribute, monsterType, monsterAtk, monsterDef, monsterAssociation, productInfo, banListInfo }, cardDispatch] = useReducer(
+		cardDataReducer,
+		{
+			cardName: '',
+			cardColor: '',
+			cardEffect: '',
+			cardAttribute: '',
+			monsterType: '',
+			monsterAtk: '',
+			monsterDef: '',
+			monsterAssociation: undefined,
+			productInfo: [],
+			banListInfo: [],
+		}
+	)
 
 	const [dynamicCrumbs, setDynamicCrumbs] = useState([..._Card.crumbs, ''])
 
@@ -63,17 +83,18 @@ const Card = () => {
 		Fetch.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT['cardInstanceUrl']}${_Card.cardId}?allInfo=true`, (json) => {
 			setDynamicCrumbs([..._Card.crumbs, json.cardID])
 
-			setCardName(json.cardName)
-			setCardColor(json.cardColor)
-			setCardEffect(json.cardEffect)
-			setCardAttribute(json.cardAttribute)
-			setMonsterType(json.monsterType)
-			setMonsterAtk(json.monsterAttack)
-			setMonsterDef(json.monsterDefense)
-			setMonsterAssociation(json.monsterAssociation)
-
-			setPackInfo(json.foundIn === undefined ? [] : json.foundIn)
-			setBanListInfo(json.restrictedIn === undefined ? [] : json.restrictedIn)
+			cardDispatch({
+				cardName: json.cardName,
+				cardColor: json.cardColor,
+				cardEffect: json.cardEffect,
+				cardAttribute: json.cardAttribute,
+				monsterType: json.monsterType,
+				monsterAtk: json.monsterAttack,
+				monsterDef: json.monsterDefense,
+				monsterAssociation: json.monsterAssociation,
+				productInfo: json.foundIn === undefined ? [] : json.foundIn,
+				banListInfo: json.restrictedIn === undefined ? [] : json.restrictedIn,
+			})
 			setIsLoading(false)
 		})
 	}, [])
@@ -100,8 +121,8 @@ const Card = () => {
 						cardEffect={cardEffect}
 						cardAttribute={cardAttribute}
 						monsterType={monsterType}
-						monsterAtk={monsterAtk}
-						monsterDef={monsterDef}
+						monsterAttack={monsterAtk}
+						monsterDefense={monsterDef}
 						monsterAssociation={monsterAssociation}
 						cardID={_Card.cardId}
 						isLoading={isLoading}
