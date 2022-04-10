@@ -40,8 +40,6 @@
 	padding-top: 2rem;
 	padding-bottom: 2rem;
 	background: #fff;
-	border-bottom-left-radius: 2rem;
-	border-bottom-right-radius: 2rem;
 }
 
 .section-content-dark {
@@ -51,4 +49,9 @@
 .default-border {
 	border: 2px rgba(0, 0, 0, 0.3);
 	border-style: solid;
+}
+
+.section-rounded-end {
+	border-bottom-left-radius: 2rem;
+	border-bottom-right-radius: 2rem;
 }
