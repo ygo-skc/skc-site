@@ -13,7 +13,13 @@ const ProductInfoDetailsComponent: FC<ProductDetails> = ({ productName, productI
 	return (
 		<Box className='sticky'>
 			<div className='section-content'>
-				{isDataLoaded ? <Typography variant='h4'>{productName}</Typography> : <Skeleton variant='rectangular' height={30} width={250} style={{ marginBottom: '.8rem' }} />}
+				{isDataLoaded ? (
+					<Typography variant='h4'>
+						{productName} • ({productId})
+					</Typography>
+				) : (
+					<Skeleton variant='rectangular' height={30} width={250} style={{ marginBottom: '.8rem' }} />
+				)}
 
 				<Typography variant='h5'>Summary</Typography>
 				{createTable([], summaryRows)}
