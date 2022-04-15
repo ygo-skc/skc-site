@@ -38,6 +38,7 @@ const CardBanListInformation: FunctionComponent<args> = ({ isLoading, hasInfo, b
 			shadow=''
 			sectionHeaderBackground='ban-list'
 			sectionName='Ban Lists'
+			margin='no'
 			sectionContent={
 				<div className={'section-content'}>
 					{!isLoading && hasInfo ? (

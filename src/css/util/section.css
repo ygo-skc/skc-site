@@ -68,3 +68,11 @@
 .multi-section-end {
 	padding-top: 2rem;
 }
+
+.tight-margin {
+	margin-bottom: 1rem;
+}
+
+.no-margin {
+	margin-bottom: 0rem;
+}
