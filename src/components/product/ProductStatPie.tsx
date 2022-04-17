@@ -5,7 +5,7 @@ import { FC } from 'react'
 const ProductStatPie: FC<{ data: any[]; statName: string }> = ({ data, statName }) => {
 	const margin = 10
 	return (
-		<div style={{ backgroundColor: 'rgba(0, 0, 0, 0.55)', width: '90%', margin: 'auto', padding: '1rem', borderRadius: '2rem', marginBottom: '1rem' }}>
+		<div style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)', width: '90%', margin: 'auto', padding: '1rem', borderRadius: '2rem', marginBottom: '1rem' }}>
 			<Typography style={{ color: 'white' }} variant='h2' align='center'>
 				{statName}
 			</Typography>

@@ -13,6 +13,7 @@ type SectionType = {
 	maxWidth?: string
 	shadow?: 'heavy-shadow' | 'light-shadow' | ''
 	border?: 'default-border'
+	margin?: 'tight' | 'no' | ''
 }
 
 const Section: FC<SectionType> = ({
@@ -23,6 +24,7 @@ const Section: FC<SectionType> = ({
 	maxWidth = '100%',
 	shadow = 'heavy-shadow',
 	border = '',
+	margin = '',
 }) => {
 	let sectionHeaderBackgroundClass = ''
 
@@ -36,7 +38,7 @@ const Section: FC<SectionType> = ({
 	const stickyClass = sticky ? 'sticky' : ''
 
 	return (
-		<div style={{ maxWidth: maxWidth }} className={`section-parent ${shadow} ${border} ${stickyClass}`}>
+		<div style={{ maxWidth: maxWidth }} className={`section-parent ${margin}-margin ${shadow} ${border} ${stickyClass}`}>
 			<div className={`section-header-container heavy-shadow ${sectionHeaderBackgroundClass}`}>
 				<Typography variant='h1' align='center' className='section-header-text'>
 					{sectionName}

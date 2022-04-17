@@ -2,7 +2,7 @@ import { Link, Typography } from '@mui/material'
 
 export default function Welcome() {
 	return (
-		<div className='section-content'>
+		<div className='multi-section-start'>
 			<Typography variant='h5'>The BEST Yu-Gi-Oh! Site?</Typography>
 
 			<Typography variant='h6'>Maybe one day!</Typography>
