@@ -47,9 +47,10 @@ export default function Home() {
 					<Section
 						sectionName='Welcome'
 						sectionContent={
-							<div>
+							<div className='section-content'>
 								<Welcome />
-								<YouTubeData />
+								<YouTubeData channel='skc' hasDarkBackground={true} />
+								<YouTubeData channel='btsc' hasDarkBackground={false} />
 							</div>
 						}
 					/>

@@ -45,6 +45,7 @@ const CardProductInformation: FunctionComponent<args> = ({ isLoading, hasInfo, p
 			shadow=''
 			sectionHeaderBackground='product'
 			sectionName='Products'
+			margin='tight'
 			sectionContent={
 				<div className={'section-content'}>
 					{!isLoading && hasInfo ? (

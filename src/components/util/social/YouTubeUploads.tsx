@@ -3,7 +3,7 @@ import { Typography, Link, Skeleton } from '@mui/material'
 
 import VideoInfoContainer from './VideoInfoContainer'
 
-const YouTubeUploads: FC<{ youtubeData: HeartApiYouTubeUpload[] }> = ({ youtubeData }) => {
+const YouTubeUploads: FC<{ youtubeData: HeartApiYouTubeUpload[]; channelName: string; channelId: string }> = ({ youtubeData, channelName, channelId }) => {
 	const [videos, setVideos] = useState<JSX.Element[]>([])
 	const [isLoading, setIsLoading] = useState(true)
 
@@ -26,8 +26,8 @@ const YouTubeUploads: FC<{ youtubeData: HeartApiYouTubeUpload[] }> = ({ youtubeD
 
 			<Typography variant='h6'>
 				Most recent uploads for{' '}
-				<Link className='link' color='secondary' href='https://www.youtube.com/channel/UCBZ_1wWyLQI3SV9IgLbyiNQ'>
-					Supreme King YT
+				<Link className='link' color='secondary' href={`https://www.youtube.com/channel/${channelId}`}>
+					{channelName}
 				</Link>
 			</Typography>
 			<br />

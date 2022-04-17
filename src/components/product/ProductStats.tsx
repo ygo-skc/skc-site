@@ -38,7 +38,7 @@ const ProductStats: FC<ProductStats> = ({ productRarityStats, cards }) => {
 		<Section
 			sectionName='Product Stats'
 			sectionContent={
-				<Grid className='section-content' container style={{ width: '100%', backgroundColor: 'rgb(95, 10, 135)' }}>
+				<Grid className='section-content' container style={{ width: '100%' }}>
 					<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
 						<ProductStatPie statName='Rarities' data={data} />
 					</Grid>

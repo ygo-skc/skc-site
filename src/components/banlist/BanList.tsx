@@ -116,24 +116,24 @@ export default function BanList() {
 			Fetch.handleFetch(banListInstanceLinks[banListStartDates.indexOf(selectedBanList)], (json) => {
 				selectedBanListDispatch({
 					type: 'UPDATE_LIST',
-					forbidden: json.banListInstance.forbidden,
-					limited: json.banListInstance.limited,
-					semiLimited: json.banListInstance.semiLimited,
-					numForbidden: determineListSize(json.banListInstance.numForbidden),
-					numLimited: determineListSize(json.banListInstance.numLimited),
-					numSemiLimited: determineListSize(json.banListInstance.numSemiLimited),
+					forbidden: json.forbidden,
+					limited: json.limited,
+					semiLimited: json.semiLimited,
+					numForbidden: determineListSize(json.numForbidden),
+					numLimited: determineListSize(json.numLimited),
+					numSemiLimited: determineListSize(json.numSemiLimited),
 				})
 
 				selectedBanListDispatch({
 					type: 'UPDATE_DIFF',
-					removedCards: json.banListInstance.removedContent.removedCards,
-					numRemoved: determineListSize(json.banListInstance.removedContent.numRemoved),
-					newForbiddenCards: json.banListInstance.newContent.newForbidden,
-					newLimitedCards: json.banListInstance.newContent.newLimited,
-					newSemiLimitedCards: json.banListInstance.newContent.newSemiLimited,
-					numNewForbidden: json.banListInstance.newContent.numNewForbidden,
-					numNewLimited: json.banListInstance.newContent.numNewLimited,
-					numNewSemiLimited: json.banListInstance.newContent.numNewSemiLimited,
+					removedCards: json.removedContent.removedCards,
+					numRemoved: determineListSize(json.removedContent.numRemoved),
+					newForbiddenCards: json.newContent.newForbidden,
+					newLimitedCards: json.newContent.newLimited,
+					newSemiLimitedCards: json.newContent.newSemiLimited,
+					numNewForbidden: json.newContent.numNewForbidden,
+					numNewLimited: json.newContent.numNewLimited,
+					numNewSemiLimited: json.newContent.numNewSemiLimited,
 				})
 
 				setIsFetchingBanList(false)
