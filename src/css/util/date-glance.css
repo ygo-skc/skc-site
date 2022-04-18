@@ -1,0 +1,28 @@
+.date-parent {
+	margin: auto;
+	margin-bottom: 1.4rem;
+	border-radius: 1rem;
+	padding: 0rem;
+	background: white;
+	width: 50%;
+	max-width: 10rem;
+}
+
+.month-container {
+	color: white;
+	border-top-left-radius: 1rem;
+	border-top-right-radius: 1rem;
+	background: #e42364;
+}
+
+.month-text {
+	color: inherit;
+	padding-left: 0.25rem;
+	padding-right: 0.25rem;
+	padding-top: 0.5rem;
+	margin-bottom: 0rem;
+}
+
+.day-text {
+	font-weight: 800;
+}
