@@ -38,8 +38,8 @@ export default function Home() {
 
 			<Suspense fallback={null}>
 				<Breadcrumb crumbs={['Home']} />
-				<Event />
 				<DatabaseInfo cardTotal={cardTotal} banListTotal={banListTotal} productTotal={productTotal} />
+				<Event />
 			</Suspense>
 
 			<OneThirdTwoThirdsGrid

@@ -21,7 +21,7 @@ const EventItem: FC<{ event: HeartApiEventItem }> = ({ event }) => {
 			<Typography style={{ maxLines: '2', height: '3rem', fontWeight: '800', marginBottom: '0' }} align='center' variant='h5'>
 				{event.name}
 			</Typography>
-			<Typography style={{ height: '10rem', overflowY: 'auto' }} variant='body1'>
+			<Typography style={{ height: '10rem', overflowY: 'auto' }} variant='body2'>
 				<ReactMarkdown children={`${event.notes}`} />
 			</Typography>
 			<Typography style={{ marginBottom: '.25rem', marginRight: '.25rem' }} variant='subtitle1' align='right'>

@@ -1,11 +1,11 @@
 .date-parent {
 	margin: auto;
-	margin-bottom: 1rem;
+	margin-bottom: 0.75rem;
 	border-radius: 1rem;
 	padding: 0rem;
 	background: white;
 	width: 50%;
-	max-width: 10rem;
+	max-width: 8rem;
 }
 
 .month-container {
@@ -19,8 +19,8 @@
 	color: inherit;
 	padding-left: 0.25rem;
 	padding-right: 0.25rem;
-	padding-top: 0.5rem;
-	margin-bottom: 0rem;
+	padding-top: 0.2rem;
+	margin-bottom: 0.05rem;
 }
 
 .day-text {
