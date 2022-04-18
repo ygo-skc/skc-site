@@ -1,6 +1,6 @@
 .date-parent {
 	margin: auto;
-	margin-bottom: 1.4rem;
+	margin-bottom: 1rem;
 	border-radius: 1rem;
 	padding: 0rem;
 	background: white;
@@ -25,4 +25,5 @@
 
 .day-text {
 	font-weight: 800;
+	margin-bottom: 0rem;
 }
