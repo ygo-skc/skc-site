@@ -13,7 +13,7 @@ const EventItem: FC<{ event: HeartApiEventItem }> = ({ event }) => {
 				background: 'white',
 				marginRight: '1rem',
 				marginBottom: '1rem',
-				border: '3px solid #eb608f',
+				border: '3px solid #ef7ea4',
 			}}
 		>
 			<DateGlance date={new Date(event.eventDate)} />
@@ -24,7 +24,7 @@ const EventItem: FC<{ event: HeartApiEventItem }> = ({ event }) => {
 			<Typography style={{ height: '10rem', overflowY: 'auto' }} variant='body1'>
 				<ReactMarkdown children={`${event.notes}`} />
 			</Typography>
-			<Typography style={{ marginBottom: '0' }} variant='subtitle1' align='right'>
+			<Typography style={{ marginBottom: '.25rem', marginRight: '.25rem' }} variant='subtitle1' align='right'>
 				<Link color='secondary' className='link' href={event.url}>
 					{'More Info >'}
 				</Link>
