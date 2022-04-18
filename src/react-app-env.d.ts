@@ -125,3 +125,19 @@ declare type HeartApiMessageItem = {
 	createdAt: string
 	updatedAt: string
 }
+
+declare type HeartApiEventOutput = {
+	service: string
+	events: HeartApiEventItem[]
+}
+
+declare type HeartApiEventItem = {
+	name: string
+	notes: string
+	location: string
+	eventDate: string
+	url: string
+	tags: string[]
+	createdAt: string
+	updatedAt: string
+}

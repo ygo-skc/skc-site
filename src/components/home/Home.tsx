@@ -11,6 +11,7 @@ import DatabaseInfo from '../util/database-info/DatabaseInfo'
 
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 const Welcome = lazy(() => import('./Welcome'))
+const Event = lazy(() => import('../util/event/Event'))
 const YouTubeData = lazy(() => import('./YouTubeData'))
 const SocialMedia = lazy(() => import('../util/social/SocialMedia'))
 
@@ -37,6 +38,7 @@ export default function Home() {
 
 			<Suspense fallback={null}>
 				<Breadcrumb crumbs={['Home']} />
+				<Event />
 				<DatabaseInfo cardTotal={cardTotal} banListTotal={banListTotal} productTotal={productTotal} />
 			</Suspense>
 
