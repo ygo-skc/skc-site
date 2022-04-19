@@ -1,21 +1,20 @@
+import '../../../css/util/event.css'
 import { Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import DownstreamServices from '../../../helper/DownstreamServices'
 import Fetch from '../../../helper/FetchHandler'
 import EventItem from './EventItem'
 
-const Event = () => {
+const UpcomingTCGProducts = () => {
 	const [events, setEvents] = useState<HeartApiEventItem[]>([])
 	const [eventsUI, setEventsUI] = useState<JSX.Element[]>([])
 
+	const upcomingTCGProductsCB = (eventOutput: HeartApiEventOutput) => {
+		setEvents(eventOutput.events)
+	}
+
 	useEffect(() => {
-		Fetch.handleFetch(
-			`${DownstreamServices.HEART_API_HOST_NAME}/api/v1/events?service=skc&tags=product-release`,
-			(eventOutput: HeartApiEventOutput) => {
-				setEvents(eventOutput.events)
-			},
-			false
-		)?.catch((_err) => {
+		Fetch.handleFetch(`${DownstreamServices.HEART_API_HOST_NAME}/api/v1/events?service=skc&tags=product-release`, upcomingTCGProductsCB, false)?.catch((_err) => {
 			// setErrorFetchingMessages(true)
 		})
 	}, [])
@@ -29,12 +28,12 @@ const Event = () => {
 	}, [events])
 
 	return (
-		<div style={{ marginBottom: '2rem' }}>
-			<Typography variant='h4'>Upcoming Yu-Gi-Oh! Products</Typography>
+		<div style={{ marginBottom: '5rem' }}>
+			<Typography variant='h4'>Upcoming Yu-Gi-Oh! TCG Products</Typography>
 
 			<div style={{ display: 'grid', gridAutoFlow: 'column', gridTemplateRows: 'auto', overflowX: 'auto' }}>{eventsUI}</div>
 		</div>
 	)
 }
 
-export default Event
+export default UpcomingTCGProducts

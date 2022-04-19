@@ -5,27 +5,17 @@ import DateGlance from '../DateGlance'
 
 const EventItem: FC<{ event: HeartApiEventItem }> = ({ event }) => {
 	return (
-		<div
-			style={{
-				padding: '.5rem',
-				width: '24rem',
-				borderRadius: '1.5rem',
-				background: 'white',
-				marginRight: '1rem',
-				marginBottom: '1rem',
-				border: '3px solid #ef7ea4',
-			}}
-		>
+		<div className='event-parent'>
 			<DateGlance date={new Date(event.eventDate)} />
 
-			<Typography style={{ maxLines: '2', height: '3rem', fontWeight: '800', marginBottom: '0' }} align='center' variant='h5'>
+			<Typography className='event-name' align='center' variant='h5'>
 				{event.name}
 			</Typography>
-			<Typography style={{ height: '10rem', overflowY: 'auto' }} variant='body2'>
+			<Typography className='event-notes' variant='body2'>
 				<ReactMarkdown children={`${event.notes}`} />
 			</Typography>
-			<Typography style={{ marginBottom: '.25rem', marginRight: '.25rem' }} variant='subtitle1' align='right'>
-				<Link color='secondary' className='link' href={event.url}>
+			<Typography className='event-url' variant='subtitle1' align='right'>
+				<Link color='secondary' className='link' href={event.url} target='_blank'>
 					{'More Info >'}
 				</Link>
 			</Typography>

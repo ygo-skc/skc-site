@@ -1,0 +1,26 @@
+.event-parent {
+	padding: 0.5rem;
+	width: 24rem;
+	border-radius: 1.5rem;
+	background: white;
+	margin-right: 1rem;
+	margin-bottom: 1rem;
+	border: 3px solid #ef7ea4;
+}
+
+.event-name {
+	max-lines: 2;
+	height: 3rem;
+	font-weight: 800;
+	margin-bottom: 0;
+}
+
+.event-notes {
+	height: 10rem;
+	overflow-y: auto;
+}
+
+.event-url {
+	margin-bottom: 0.25rem;
+	margin-right: 0.25rem;
+}
