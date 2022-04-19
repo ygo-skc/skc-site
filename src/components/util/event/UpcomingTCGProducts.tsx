@@ -26,7 +26,7 @@ const UpcomingTCGProducts = () => {
 	}, [events])
 
 	return (
-		<div style={{ marginBottom: '5rem' }}>
+		<div className='event-container-end'>
 			<Typography variant='h4'>Upcoming Yu-Gi-Oh! TCG Products</Typography>
 
 			<div className='event-container'>{eventsUI}</div>
