@@ -5,7 +5,7 @@ import DateGlance from '../DateGlance'
 
 const EventItem: FC<{ event: HeartApiEventItem }> = ({ event }) => {
 	return (
-		<div className='event-parent'>
+		<div className='event-item'>
 			<DateGlance date={new Date(event.eventDate)} />
 
 			<Typography className='event-name' align='center' variant='h5'>

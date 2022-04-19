@@ -20,9 +20,7 @@ const UpcomingTCGProducts = () => {
 	}, [])
 
 	useEffect(() => {
-		const eUI = events.map((event: HeartApiEventItem) => {
-			return <EventItem event={event} />
-		})
+		const eUI = events.map((event: HeartApiEventItem) => <EventItem event={event} />)
 
 		setEventsUI(eUI)
 	}, [events])
@@ -31,7 +29,7 @@ const UpcomingTCGProducts = () => {
 		<div style={{ marginBottom: '5rem' }}>
 			<Typography variant='h4'>Upcoming Yu-Gi-Oh! TCG Products</Typography>
 
-			<div style={{ display: 'grid', gridAutoFlow: 'column', gridTemplateRows: 'auto', overflowX: 'auto' }}>{eventsUI}</div>
+			<div className='event-container'>{eventsUI}</div>
 		</div>
 	)
 }

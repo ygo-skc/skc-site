@@ -1,4 +1,11 @@
-.event-parent {
+.event-container {
+	display: grid;
+	grid-auto-flow: column;
+	grid-template-rows: auto;
+	overflow-x: auto;
+}
+
+.event-item {
 	padding: 0.5rem;
 	width: 24rem;
 	border-radius: 1.5rem;
