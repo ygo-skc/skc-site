@@ -14,7 +14,7 @@ const DateGlance: FC<_Date> = ({ date }) => {
 	return (
 		<div className='date-parent light-shadow'>
 			<div className='month-container'>
-				<Typography variant='subtitle1' align='center' className='month-text'>
+				<Typography variant='h5' align='center' className='month-text'>
 					{Dates.getMonth(date)}
 				</Typography>
 			</div>
@@ -22,7 +22,7 @@ const DateGlance: FC<_Date> = ({ date }) => {
 				<Typography align='center' variant='h6' className='day-text'>
 					{Dates.getDay(date)}
 				</Typography>
-				<Typography align='center' variant='subtitle2'>
+				<Typography align='center' variant='subtitle2' className='year-text'>
 					{Dates.getYear(date)}
 				</Typography>
 			</div>

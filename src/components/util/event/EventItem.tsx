@@ -6,11 +6,13 @@ import DateGlance from '../DateGlance'
 const EventItem: FC<{ event: HeartApiEventItem }> = ({ event }) => {
 	return (
 		<div className='event-item'>
-			<DateGlance date={new Date(event.eventDate)} />
+			<div className='event-item-header'>
+				<Typography className='event-name' variant='h5'>
+					{event.name}
+				</Typography>
+				<DateGlance date={new Date(event.eventDate)} />
+			</div>
 
-			<Typography className='event-name' align='center' variant='h5'>
-				{event.name}
-			</Typography>
 			<Typography className='event-notes' variant='body2'>
 				<ReactMarkdown children={`${event.notes}`} />
 			</Typography>

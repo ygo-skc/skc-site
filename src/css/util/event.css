@@ -10,7 +10,7 @@
 }
 
 .event-item {
-	padding: 0.5rem;
+	padding: 0.75rem;
 	width: 24rem;
 	border-radius: 1.5rem;
 	background: white;
@@ -19,11 +19,16 @@
 	border: 3px solid #ef7ea4;
 }
 
+.event-item-header {
+	display: flex;
+}
+
 .event-name {
 	max-lines: 2;
-	height: 3rem;
 	font-weight: 800;
-	margin-bottom: 0;
+	flex-grow: 1;
+	margin-right: 0.5rem;
+	margin-bottom: 0rem;
 }
 
 .event-notes {

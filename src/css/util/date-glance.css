@@ -1,11 +1,10 @@
 .date-parent {
+	margin-bottom: 0rem;
 	margin: auto;
-	margin-bottom: 0.75rem;
 	border-radius: 1rem;
 	padding: 0rem;
 	background: white;
-	width: 50%;
-	max-width: 8rem;
+	min-width: 8rem;
 }
 
 .month-container {
@@ -25,5 +24,9 @@
 
 .day-text {
 	font-weight: 800;
+	margin-bottom: 0rem;
+}
+
+.year-text {
 	margin-bottom: 0rem;
 }
