@@ -7,16 +7,16 @@ const EventItem: FC<{ event: HeartApiEventItem }> = ({ event }) => {
 	return (
 		<div className='event-item'>
 			<div className='event-item-header'>
-				<Typography className='event-name' variant='h6'>
+				<DateGlance date={new Date(event.eventDate)} />
+				<Typography className='event-name' variant='h6' align='right'>
 					{event.name}
 				</Typography>
-				<DateGlance date={new Date(event.eventDate)} />
 			</div>
 
+			<Typography className='event-notes-header' variant='subtitle1'>
+				Notes
+			</Typography>
 			<Typography className='event-notes' variant='body2'>
-				<Typography className='event-notes-header' variant='subtitle1'>
-					Notes
-				</Typography>
 				<ReactMarkdown children={`${event.notes}`} />
 			</Typography>
 			<Typography className='event-url' variant='body1' align='right'>

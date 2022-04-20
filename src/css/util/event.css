@@ -21,10 +21,10 @@
 
 .event-item-header {
 	display: flex;
+	margin-bottom: 1.5rem;
 }
 
 .event-name {
-	max-lines: 2;
 	font-weight: 800;
 	flex-grow: 1;
 	margin-bottom: 0rem;
@@ -33,14 +33,13 @@
 }
 
 .event-notes-header {
-	margin-bottom: 0rem;
 	font-weight: 800;
 	color: #666;
 	text-transform: uppercase;
 }
 
 .event-notes {
-	height: 10rem;
+	height: 7rem;
 	overflow-y: auto;
 }
 
