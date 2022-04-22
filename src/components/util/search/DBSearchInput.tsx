@@ -14,9 +14,11 @@ const DBSearchInput: FC<{ searchParams: AutocompleteRenderInputParams; setSearch
 					setSearchInput(event.target.value)
 				}}
 			/>
-			<IconButton>
-				<SearchIcon className='search-icon' />
-			</IconButton>
+			<div className='search-icon-container'>
+				<IconButton className='search-icon'>
+					<SearchIcon className='search-icon' />
+				</IconButton>
+			</div>
 		</div>
 	)
 }
