@@ -3,6 +3,10 @@ class Dates {
 	static readonly getDateString = (date: Date) => date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
 	static readonly getTimeString = (date: Date) => date.toLocaleTimeString('en-US', { hour12: true, hour: 'numeric', minute: 'numeric' })
 
+	static readonly getMonth = (date: Date) => date.toLocaleDateString('en-US', { month: 'short' })
+	static readonly getDay = (date: Date) => date.toLocaleDateString('en-US', { day: 'numeric' })
+	static readonly getYear = (date: Date) => date.toLocaleDateString('en-US', { year: 'numeric' })
+
 	static readonly banListDate = (banListDate: string) => {
 		const [year, month, day] = banListDate.split('-')
 		return Dates.getDateString(new Date(+year, +month - 1, +day))

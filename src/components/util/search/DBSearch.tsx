@@ -52,15 +52,15 @@ export default function DatabaseSearch() {
 	return (
 		<Autocomplete
 			className='search-bar'
+			inputValue={searchInput}
+			disableCloseOnSelect
 			loading={isFetching}
 			id='search'
-			selectOnFocus
 			noOptionsText={searchInput === '' ? 'Type For Suggestions' : 'No Results'}
 			getOptionLabel={(option: any) => option.cardName}
 			options={searchOptions}
 			groupBy={(option) => option.cardColor}
 			onChange={(_event, value, reason: string) => {
-				setSearchInput(value.cardName)
 				if (reason === 'selectOption') {
 					window.location.assign(`/card/${value.cardID}`)
 				}
@@ -68,7 +68,7 @@ export default function DatabaseSearch() {
 			renderGroup={(option) => {
 				return <DBSearchGrouping group={option.group} children={option.children} />
 			}}
-			renderInput={(searchParams) => <DBSearchInput searchParams={searchParams} setSearchInput={setSearchInput} />}
+			renderInput={(params) => <DBSearchInput searchParams={params} setSearchInput={setSearchInput} />}
 			renderOption={(props: React.HTMLAttributes<HTMLLIElement>, option: any) => (
 				<DBSearchOptions props={props} searchSubject={searchInput} cardNameOption={option.cardName} cardIdOption={option.cardID} monsterTypeOption={option.monsterType} />
 			)}

@@ -13,10 +13,7 @@
 
 .communication-message-header.MuiTypography-root {
 	margin-bottom: 0.7rem;
-	background: rgba(135, 120, 229, 0.15);
-	backdrop-filter: blur(60px);
-	padding: 1rem;
-	border-radius: 1rem;
+	font-weight: 700;
 }
 
 .communication-message-sub-header.MuiTypography-root {

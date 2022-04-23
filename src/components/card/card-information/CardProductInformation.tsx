@@ -41,13 +41,12 @@ const CardProductInformation: FunctionComponent<args> = ({ isLoading, hasInfo, p
 
 	return (
 		<Section
-			border='default-border'
 			shadow=''
 			sectionHeaderBackground='product'
 			sectionName='Products'
 			margin='tight'
 			sectionContent={
-				<div className={'section-content'}>
+				<div className={'section-content card-info-container'}>
 					{!isLoading && hasInfo ? (
 						productTable
 					) : (

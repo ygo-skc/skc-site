@@ -39,7 +39,7 @@ const Section: FC<SectionType> = ({
 
 	return (
 		<div style={{ maxWidth: maxWidth }} className={`section-parent ${margin}-margin ${shadow} ${border} ${stickyClass}`}>
-			<div className={`section-header-container heavy-shadow ${sectionHeaderBackgroundClass}`}>
+			<div className={`section-header-container ${shadow} ${sectionHeaderBackgroundClass}`}>
 				<Typography variant='h1' align='center' className='section-header-text'>
 					{sectionName}
 				</Typography>

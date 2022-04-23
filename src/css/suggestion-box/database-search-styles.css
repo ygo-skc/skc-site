@@ -1,7 +1,13 @@
 .search-container {
 	margin: auto;
+	width: 98%;
+	max-width: 750px;
+}
+
+.database-summary-container {
 	width: 85%;
 	max-width: 600px;
+	margin: auto;
 }
 
 .search-bar {
@@ -19,13 +25,14 @@
 
 .search-icon {
 	font-size: 1.85rem;
-	color: rgba(255, 143, 68, 0.5);
+	color: black;
 }
 
 .search-input-parent {
 	display: flex;
 	padding: 0.2rem;
-	padding-left: 1rem;
+	padding-left: 0.75rem;
+	padding-right: 0.75rem;
 }
 
 .search-input-field {
@@ -70,4 +77,12 @@
 	padding: 0rem;
 	margin: 0rem;
 	font-weight: 500;
+}
+
+.search-icon-container {
+	margin: auto;
+}
+
+.search-icon {
+	background: #eee;
 }
