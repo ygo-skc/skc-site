@@ -15,6 +15,14 @@ const MuiTheme = createTheme({
 		},
 	},
 	components: {
+		MuiIconButton: {
+			styleOverrides: {
+				root: {
+					background: '#eee',
+					color: 'black',
+				},
+			},
+		},
 		MuiDivider: {
 			styleOverrides: {
 				root: {
