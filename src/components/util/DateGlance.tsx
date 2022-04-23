@@ -12,7 +12,7 @@ type _Date = {
 
 const DateGlance: FC<_Date> = ({ date }) => {
 	return (
-		<div className='date-parent light-shadow'>
+		<div className='date-parent'>
 			<div className='month-container'>
 				<Typography variant='h5' align='center' className='month-text'>
 					{Dates.getMonth(date)}

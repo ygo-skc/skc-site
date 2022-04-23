@@ -27,20 +27,19 @@ const CardBanListInformation: FunctionComponent<args> = ({ isLoading, hasInfo, b
 		const headerNames: string[] = ['Date', 'Status']
 		const rowValues: string[][] = banListInfo.map((banList: BanListInfo) => [Dates.getDateString(new Date(banList.banListDate)), banList.banStatus])
 
-		const banListTable: JSX.Element = createTable(headerNames, rowValues)
+		const table: JSX.Element = createTable(headerNames, rowValues)
 
-		setBanListTable(banListTable)
+		setBanListTable(table)
 	}, [banListInfo])
 
 	return (
 		<Section
-			border='default-border'
 			shadow=''
 			sectionHeaderBackground='ban-list'
 			sectionName='Ban Lists'
 			margin='no'
 			sectionContent={
-				<div className={'section-content'}>
+				<div className={'section-content card-info-container'}>
 					{!isLoading && hasInfo ? (
 						banListTable
 					) : (

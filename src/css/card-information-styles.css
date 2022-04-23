@@ -3,6 +3,10 @@
 	margin-bottom: 1.5rem;
 }
 
+.card-info-container {
+	background: #f0f0f0;
+}
+
 .table-head {
 	background: rgba(0, 0, 0, 0.6);
 	backdrop-filter: blur(50px);
