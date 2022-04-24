@@ -1,4 +1,4 @@
-import { useState, useEffect, memo, FC } from 'react'
+import { useEffect, memo, FC, useReducer } from 'react'
 
 import { Grid, IconButton, Box, Skeleton } from '@mui/material'
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded'
@@ -6,10 +6,10 @@ import CardImageRounded from '../../card/CardImageRounded'
 import YGOCard from '../../card/YGOCard'
 import { Hint } from '../Hints'
 
-async function getPlaceholderCardComponent() {
+function getPlaceholderCardComponent() {
 	const placeHolder = []
 
-	for (let i = 0; i < 20; i++) {
+	for (let i = 0; i < 10; i++) {
 		placeHolder.push(
 			<Grid key={`skeleton-${i}`} item xs={6} sm={4} md={4} lg={3} xl={2} style={{ padding: '.3rem' }}>
 				<Skeleton variant='rectangular' height='170' width='100%' style={{ borderRadius: '4rem', marginBottom: '1rem' }} />
@@ -33,63 +33,70 @@ type _CardDisplayGrid = {
 
 const CardDisplayGrid: FC<_CardDisplayGrid> = memo(
 	({ cardJsonResults, numResultsDisplayed, numItemsToLoadWhenNeeded, loadMoreCallback, isLoadMoreOptionVisible, numResults, isDataLoaded }) => {
-		const [cardGridUI, setCardGridUI] = useState<JSX.Element[]>([])
+		const [{ cardGridUI, updateGrid, cardGridUISkeleton }, cardGridDispatch] = useReducer(cardGridReducer, {
+			cardGridUI: [],
+			updateGrid: false,
+			cardGridUISkeleton: getPlaceholderCardComponent(),
+		})
 
-		const [cardGridUISkeleton, setCardGridUISkeleton] = useState<JSX.Element[]>([])
-		const [clearGrid, setClearGrid] = useState(false)
+		function cardGridReducer(state: { cardGridUI: JSX.Element[]; updateGrid: boolean; cardGridUISkeleton: JSX.Element[] }, action: any) {
+			const renderCards = () => {
+				return cardJsonResults.slice(numResultsDisplayed - numItemsToLoadWhenNeeded, numResultsDisplayed).map((card: SKCCard) => {
+					return (
+						<Grid
+							className='ygo-card-grid-item'
+							id={card.cardID}
+							key={card.cardID}
+							item
+							xs={6}
+							sm={4}
+							md={4}
+							lg={3}
+							xl={2}
+							style={{}}
+							onClick={() => window.location.assign(`/card/${card.cardID}`)}
+						>
+							<CardImageRounded cardImg={`https://images.thesupremekingscastle.com/cards/x-sm/${card.cardID}.jpg`} />
 
-		const renderCards = () => {
-			return cardJsonResults.slice(numResultsDisplayed - numItemsToLoadWhenNeeded, numResultsDisplayed).map((card: SKCCard) => {
-				return (
-					<Grid
-						className='ygo-card-grid-item'
-						id={card.cardID}
-						key={card.cardID}
-						item
-						xs={6}
-						sm={4}
-						md={4}
-						lg={3}
-						xl={2}
-						style={{}}
-						onClick={() => window.location.assign(`/card/${card.cardID}`)}
-					>
-						<CardImageRounded cardImg={`https://images.thesupremekingscastle.com/cards/x-sm/${card.cardID}.jpg`} />
-
-						<YGOCard
-							cardName={card.cardName}
-							cardColor={card.cardColor}
-							cardEffect={card.cardEffect}
-							monsterType={card.monsterType}
-							cardID={card.cardID}
-							fullDetails={false}
-							monsterAssociation={card.monsterAssociation}
-							cardAttribute={card.cardAttribute}
-						/>
-					</Grid>
-				)
-			})
+							<YGOCard
+								cardName={card.cardName}
+								cardColor={card.cardColor}
+								cardEffect={card.cardEffect}
+								monsterType={card.monsterType}
+								cardID={card.cardID}
+								fullDetails={false}
+								monsterAssociation={card.monsterAssociation}
+								cardAttribute={card.cardAttribute}
+							/>
+						</Grid>
+					)
+				})
+			}
+			switch (action.type) {
+				case 'CLEAR_GRID':
+					return {
+						...state,
+						cardGridUI: [],
+						updateGrid: true,
+					}
+				case 'RENDER_GRID':
+					return {
+						...state,
+						cardGridUI: [...renderCards()],
+						updateGrid: false,
+					}
+				default:
+					return state
+			}
 		}
 
 		useEffect(() => {
-			if (isDataLoaded === false) getPlaceholderCardComponent().then((placeholders) => setCardGridUISkeleton(placeholders))
-		}, [isDataLoaded])
+			cardGridDispatch({ type: 'RENDER_GRID' })
+		}, [updateGrid])
 
 		useEffect(() => {
-			if (numResults === 0) {
-				setClearGrid(true)
-				return
-			}
-
-			setCardGridUI([...cardGridUI, ...renderCards()])
-		}, [numResultsDisplayed, cardJsonResults, numResults])
-
-		useEffect(() => {
-			if (clearGrid === true) {
-				setCardGridUI([])
-				setClearGrid(false)
-			}
-		}, [clearGrid])
+			cardGridDispatch({ type: 'CLEAR_GRID' })
+		}, [numResults])
 
 		return (
 			<Box style={{ maxWidth: '100%' }}>
