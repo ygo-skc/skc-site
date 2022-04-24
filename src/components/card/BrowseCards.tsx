@@ -65,6 +65,18 @@ export default function BrowseCards() {
 		criteriaMap.set('ranks', [])
 		criteriaMap.set('linkRatings', [])
 
+		selectedCriteria.forEach((criteria: BrowseCriteria) => {
+			if (criteria.name === 'cardColors' || criteria.name === 'attributes' || criteria.name === 'monsterTypes' || criteria.name === 'monsterSubTypes')
+				criteriaMap.get(criteria.name).push(criteria.value)
+			else if (criteria.name === 'levels') {
+				criteriaMap.get(criteria.name).push(criteria.value.replace('Level ', ''))
+			} else if (criteria.name === 'ranks') {
+				criteriaMap.get(criteria.name).push(criteria.value.replace('Rank ', ''))
+			} else if (criteria.name === 'linkRatings') {
+				criteriaMap.get(criteria.name).push(criteria.value.replace('Link Rating ', ''))
+			}
+		})
+
 		Fetch.handleFetch(
 			`${DownstreamServices.NAME_maps_ENDPOINT['browse']}?cardColors=${criteriaMap.get('cardColors').join(',')}&attributes=${criteriaMap
 				.get('attributes')
