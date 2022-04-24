@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useRef } from 'react'
 
 import { AutocompleteRenderInputParams, IconButton, TextField } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
@@ -9,11 +9,17 @@ const SearchInput: FC<{
 	setInput?: React.Dispatch<{ type: string; browseInput: string }>
 	placeholder: string
 }> = ({ searchParams, setSearchInput, placeholder, setInput }) => {
+	const inputRef = useRef<HTMLDivElement>(null)
+	const parentRef = useRef<HTMLDivElement>(null)
+
 	return (
 		<div className='search-input-parent'>
 			<TextField
 				{...searchParams}
 				className='search-input-field'
+				autoFocus
+				inputRef={inputRef}
+				ref={parentRef}
 				placeholder={placeholder}
 				onChange={(event) => {
 					// TODO: update to have one method
@@ -25,7 +31,15 @@ const SearchInput: FC<{
 				}}
 			/>
 			<div className='search-icon-container'>
-				<IconButton className='search-icon'>
+				<IconButton
+					onClick={() => {
+						if (inputRef.current !== null && parentRef.current !== null) {
+							parentRef.current.focus()
+							inputRef.current.focus()
+						}
+					}}
+					className='search-icon'
+				>
 					<SearchIcon className='search-icon' />
 				</IconButton>
 			</div>

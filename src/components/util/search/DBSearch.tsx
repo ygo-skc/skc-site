@@ -52,6 +52,7 @@ export default function DBSearch() {
 	return (
 		<Autocomplete
 			className='search-bar'
+			forcePopupIcon={false}
 			inputValue={searchInput}
 			disableCloseOnSelect
 			loading={isFetching}

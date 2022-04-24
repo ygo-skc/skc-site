@@ -66,6 +66,7 @@ const CardBrowse: FC<{ skcCardBrowseCriteriaOutput: SKCCardBrowseCriteria }> = (
 			<Autocomplete
 				className='search-bar'
 				multiple
+				forcePopupIcon={false}
 				disableCloseOnSelect
 				inputValue={browseInput}
 				id='browseCriteriaFilter'
