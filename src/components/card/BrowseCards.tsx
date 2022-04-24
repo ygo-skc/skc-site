@@ -30,6 +30,36 @@ function browseReducer(state: { selectedCriteria: BrowseCriteria[] }, action: an
 			return state
 	}
 }
+
+function generateBrowseQueryURL(selectedCriteria: BrowseCriteria[]) {
+	const criteriaMap = new Map()
+	criteriaMap.set('cardColors', [])
+	criteriaMap.set('attributes', [])
+	criteriaMap.set('monsterTypes', [])
+	criteriaMap.set('monsterSubTypes', [])
+	criteriaMap.set('levels', [])
+	criteriaMap.set('ranks', [])
+	criteriaMap.set('linkRatings', [])
+
+	selectedCriteria.forEach((criteria: BrowseCriteria) => {
+		if (criteria.name === 'cardColors' || criteria.name === 'attributes' || criteria.name === 'monsterTypes' || criteria.name === 'monsterSubTypes')
+			criteriaMap.get(criteria.name).push(criteria.value)
+		else if (criteria.name === 'levels') {
+			criteriaMap.get(criteria.name).push(criteria.value.replace('Level ', ''))
+		} else if (criteria.name === 'ranks') {
+			criteriaMap.get(criteria.name).push(criteria.value.replace('Rank ', ''))
+		} else if (criteria.name === 'linkRatings') {
+			criteriaMap.get(criteria.name).push(criteria.value.replace('Link Rating ', ''))
+		}
+	})
+
+	return `${DownstreamServices.NAME_maps_ENDPOINT['browse']}?cardColors=${criteriaMap.get('cardColors').join(',')}&attributes=${criteriaMap
+		.get('attributes')
+		.join(',')}&monsterTypes=${criteriaMap.get('monsterTypes').join(',')}&monsterSubTypes=${criteriaMap.get('monsterSubTypes').join(',')}&levels=${criteriaMap
+		.get('levels')
+		.join(',')}&ranks=${criteriaMap.get('ranks').join(',')}&linkRatings=${criteriaMap.get('linkRatings').join(',')}`
+}
+
 export default function BrowseCards() {
 	const [{ selectedCriteria }, browseCriteriaDispatch] = useReducer(browseReducer, { selectedCriteria: [] })
 
@@ -57,41 +87,13 @@ export default function BrowseCards() {
 		setIsCardBrowseDataLoaded(false)
 		setJsonResults([])
 
-		const criteriaMap = new Map()
-		criteriaMap.set('cardColors', [])
-		criteriaMap.set('attributes', [])
-		criteriaMap.set('monsterTypes', [])
-		criteriaMap.set('monsterSubTypes', [])
-		criteriaMap.set('levels', [])
-		criteriaMap.set('ranks', [])
-		criteriaMap.set('linkRatings', [])
+		Fetch.handleFetch(generateBrowseQueryURL(selectedCriteria), (json) => {
+			setJsonResults(json.results)
+			setNumResults(json.numResults)
+			setNumResultsDisplayed(50)
 
-		selectedCriteria.forEach((criteria: BrowseCriteria) => {
-			if (criteria.name === 'cardColors' || criteria.name === 'attributes' || criteria.name === 'monsterTypes' || criteria.name === 'monsterSubTypes')
-				criteriaMap.get(criteria.name).push(criteria.value)
-			else if (criteria.name === 'levels') {
-				criteriaMap.get(criteria.name).push(criteria.value.replace('Level ', ''))
-			} else if (criteria.name === 'ranks') {
-				criteriaMap.get(criteria.name).push(criteria.value.replace('Rank ', ''))
-			} else if (criteria.name === 'linkRatings') {
-				criteriaMap.get(criteria.name).push(criteria.value.replace('Link Rating ', ''))
-			}
+			setIsCardBrowseDataLoaded(true)
 		})
-
-		Fetch.handleFetch(
-			`${DownstreamServices.NAME_maps_ENDPOINT['browse']}?cardColors=${criteriaMap.get('cardColors').join(',')}&attributes=${criteriaMap
-				.get('attributes')
-				.join(',')}&monsterTypes=${criteriaMap.get('monsterTypes').join(',')}&monsterSubTypes=${criteriaMap.get('monsterSubTypes').join(',')}&levels=${criteriaMap
-				.get('levels')
-				.join(',')}&ranks=${criteriaMap.get('ranks').join(',')}&linkRatings=${criteriaMap.get('linkRatings').join(',')}`,
-			(json) => {
-				setJsonResults(json.results)
-				setNumResults(json.numResults)
-				setNumResultsDisplayed(50)
-
-				setIsCardBrowseDataLoaded(true)
-			}
-		)
 	}, [selectedCriteria])
 
 	return (
