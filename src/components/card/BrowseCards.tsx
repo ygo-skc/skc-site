@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy } from 'react'
+import { useState, useEffect, lazy, useReducer } from 'react'
 import { Typography } from '@mui/material'
 import { Helmet } from 'react-helmet'
 
@@ -19,15 +19,25 @@ import CardBrowse from '../util/search/CardBrowse'
 
 const CardDisplayGrid = lazy(() => import('../util/grid/CardDisplayGrid'))
 
+function browseReducer(state: { selectedCriteria: BrowseCriteria[] }, action: any) {
+	switch (action.type) {
+		case 'UPDATE_SELECTED_CRITERIA':
+			return {
+				...state,
+				selectedCriteria: action.selectedCriteria,
+			}
+		default:
+			return state
+	}
+}
 export default function BrowseCards() {
+	const [{ selectedCriteria }, browseCriteriaDispatch] = useReducer(browseReducer, { selectedCriteria: [] })
+
 	const [skcCardBrowseCriteriaOutput, setSkcCardBrowseCriteriaOutput] = useState<SKCCardBrowseCriteria>({} as SKCCardBrowseCriteria)
-	const [_selectedCriteria, _setSelectedCriteria] = useState<BrowseCriteria[]>([])
+	const [jsonResults, setJsonResults] = useState([])
 
-	const [_selectedCriteriaChips, _setSelectedCriteriaChips] = useState<JSX.Element[]>([])
-	const [jsonResults, _setJsonResults] = useState([])
-
-	const [numResults, _setNumResults] = useState(0)
-	const [numResultsDisplayed, _setNumResultsDisplayed] = useState(0)
+	const [numResults, setNumResults] = useState(0)
+	const [numResultsDisplayed, setNumResultsDisplayed] = useState(0)
 	const [numItemsToLoadWhenNeeded, _setNumItemsToLoadWhenNeeded] = useState(0)
 
 	const [isLoadMoreVisible, _setIsLoadMoreVisible] = useState(false)
@@ -42,6 +52,34 @@ export default function BrowseCards() {
 			setSkcCardBrowseCriteriaOutput(json)
 		})
 	}, [])
+
+	useEffect(() => {
+		if (selectedCriteria === undefined || selectedCriteria.length === 0) return
+
+		const criteriaMap = new Map()
+		criteriaMap.set('cardColors', [])
+		criteriaMap.set('attributes', [])
+		criteriaMap.set('monsterTypes', [])
+		criteriaMap.set('monsterSubTypes', [])
+		criteriaMap.set('levels', [])
+		criteriaMap.set('ranks', [])
+		criteriaMap.set('linkRatings', [])
+
+		Fetch.handleFetch(
+			`${DownstreamServices.NAME_maps_ENDPOINT['browse']}?cardColors=${criteriaMap.get('cardColors').join(',')}&attributes=${criteriaMap
+				.get('attributes')
+				.join(',')}&monsterTypes=${criteriaMap.get('monsterTypes').join(',')}&monsterSubTypes=${criteriaMap.get('monsterSubTypes').join(',')}&levels=${criteriaMap
+				.get('levels')
+				.join(',')}&ranks=${criteriaMap.get('ranks').join(',')}&linkRatings=${criteriaMap.get('linkRatings').join(',')}`,
+			(json) => {
+				setJsonResults(json.results)
+				setNumResults(json.numResults)
+				setNumResultsDisplayed(50)
+
+				// setIsCardBrowseDataLoaded(true)
+			}
+		)
+	}, [selectedCriteria])
 
 	return (
 		<div className='generic-container'>
@@ -62,7 +100,7 @@ export default function BrowseCards() {
 						sectionContent={
 							<div className='section-content'>
 								<div style={{ minHeight: '1.5rem', marginBottom: '1rem' }}>
-									<CardBrowse skcCardBrowseCriteriaOutput={skcCardBrowseCriteriaOutput} />
+									<CardBrowse browseCriteriaDispatch={browseCriteriaDispatch} selectedCriteria={selectedCriteria} skcCardBrowseCriteriaOutput={skcCardBrowseCriteriaOutput} />
 								</div>
 
 								<Typography variant='h5'>Results</Typography>

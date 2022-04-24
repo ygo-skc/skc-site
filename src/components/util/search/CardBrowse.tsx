@@ -7,9 +7,7 @@ import SearchInput from './SearchInput'
 import Typography from '@mui/material/Typography'
 import SelectedCardBrowseCriteria from './SelectedCardBrowseCriteria'
 
-export type CardBrowseReducerType = { browseInput: string; browseCriteria: BrowseCriteria[]; selectedCriteria: BrowseCriteria[] }
-
-function browseReducer(state: CardBrowseReducerType, action: any) {
+function browseCriteriaSearchReducer(state: { browseInput: string; browseCriteria: BrowseCriteria[] }, action: any) {
 	switch (action.type) {
 		case 'UPDATE_INPUT':
 			return {
@@ -21,18 +19,17 @@ function browseReducer(state: CardBrowseReducerType, action: any) {
 				...state,
 				browseCriteria: action.browseCriteria,
 			}
-		case 'UPDATE_SELECTED_CRITERIA':
-			return {
-				...state,
-				selectedCriteria: action.selectedCriteria,
-			}
 		default:
 			return state
 	}
 }
 
-const CardBrowse: FC<{ skcCardBrowseCriteriaOutput: SKCCardBrowseCriteria }> = ({ skcCardBrowseCriteriaOutput }) => {
-	const [{ browseInput, browseCriteria, selectedCriteria }, browseDispatch] = useReducer(browseReducer, { browseInput: '', browseCriteria: [], selectedCriteria: [] })
+const CardBrowse: FC<{
+	skcCardBrowseCriteriaOutput: SKCCardBrowseCriteria
+	selectedCriteria: BrowseCriteria[]
+	browseCriteriaDispatch: React.Dispatch<{ type: string; selectedCriteria: BrowseCriteria[] }>
+}> = ({ skcCardBrowseCriteriaOutput, selectedCriteria, browseCriteriaDispatch }) => {
+	const [{ browseInput, browseCriteria }, browseCriteriaSearchDispatch] = useReducer(browseCriteriaSearchReducer, { browseInput: '', browseCriteria: [] })
 
 	useEffect(() => {
 		const criteria: BrowseCriteria[] = []
@@ -57,7 +54,7 @@ const CardBrowse: FC<{ skcCardBrowseCriteriaOutput: SKCCardBrowseCriteria }> = (
 			}
 		})
 
-		browseDispatch({ type: 'UPDATE_BROWSE_CRITERIA', browseCriteria: criteria })
+		browseCriteriaSearchDispatch({ type: 'UPDATE_BROWSE_CRITERIA', browseCriteria: criteria })
 	}, [skcCardBrowseCriteriaOutput])
 
 	return (
@@ -75,13 +72,13 @@ const CardBrowse: FC<{ skcCardBrowseCriteriaOutput: SKCCardBrowseCriteria }> = (
 				groupBy={(option: BrowseCriteria) => option.name}
 				autoHighlight
 				onChange={(_, val: BrowseCriteria[]) => {
-					browseDispatch({ type: 'UPDATE_SELECTED_CRITERIA', selectedCriteria: val })
+					browseCriteriaDispatch({ type: 'UPDATE_SELECTED_CRITERIA', selectedCriteria: val })
 				}}
 				renderTags={() => null}
 				renderGroup={(option) => {
 					return <DBSearchGrouping group={startCase(option.group)} children={option.children} />
 				}}
-				renderInput={(params) => <SearchInput setInput={browseDispatch} searchParams={params} placeholder='Narrow criteria...' />}
+				renderInput={(params) => <SearchInput setInput={browseCriteriaSearchDispatch} searchParams={params} placeholder='Narrow criteria...' />}
 				renderOption={(props, option) => {
 					return (
 						<li {...props} className='search-suggestions-parent'>
