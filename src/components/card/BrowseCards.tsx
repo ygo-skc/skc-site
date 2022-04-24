@@ -38,10 +38,8 @@ export default function BrowseCards() {
 
 	const [numResults, setNumResults] = useState(0)
 	const [numResultsDisplayed, setNumResultsDisplayed] = useState(0)
-	const [numItemsToLoadWhenNeeded, _setNumItemsToLoadWhenNeeded] = useState(0)
 
-	const [isLoadMoreVisible, _setIsLoadMoreVisible] = useState(false)
-	const [isCardBrowseDataLoaded, _setIsCardBrowseDataLoaded] = useState(true)
+	const [isCardBrowseDataLoaded, setIsCardBrowseDataLoaded] = useState(true)
 
 	const browseSummaryStats: string[][] = []
 	browseSummaryStats.push(['Total', numResults.toString()])
@@ -55,6 +53,9 @@ export default function BrowseCards() {
 
 	useEffect(() => {
 		if (selectedCriteria === undefined || selectedCriteria.length === 0) return
+
+		setIsCardBrowseDataLoaded(false)
+		setJsonResults([])
 
 		const criteriaMap = new Map()
 		criteriaMap.set('cardColors', [])
@@ -87,9 +88,8 @@ export default function BrowseCards() {
 				setJsonResults(json.results)
 				setNumResults(json.numResults)
 				setNumResultsDisplayed(50)
-				console.log(json.numResults)
 
-				// setIsCardBrowseDataLoaded(true)
+				setIsCardBrowseDataLoaded(true)
 			}
 		)
 	}, [selectedCriteria])
@@ -133,9 +133,9 @@ export default function BrowseCards() {
 								<CardDisplayGrid
 									cardJsonResults={jsonResults}
 									numResultsDisplayed={numResultsDisplayed}
-									numItemsToLoadWhenNeeded={numItemsToLoadWhenNeeded}
+									numItemsToLoadWhenNeeded={50}
 									loadMoreCallback={() => {}}
-									isLoadMoreOptionVisible={isLoadMoreVisible}
+									isLoadMoreOptionVisible={true}
 									numResults={numResults}
 									isDataLoaded={isCardBrowseDataLoaded}
 								/>

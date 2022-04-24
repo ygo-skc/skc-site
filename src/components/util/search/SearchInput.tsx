@@ -17,7 +17,6 @@ const SearchInput: FC<{
 			<TextField
 				{...searchParams}
 				className='search-input-field'
-				autoFocus
 				inputRef={inputRef}
 				ref={parentRef}
 				placeholder={placeholder}
