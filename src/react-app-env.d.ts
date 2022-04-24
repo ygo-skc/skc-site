@@ -1,5 +1,10 @@
 /// <reference types="react-scripts" />
 
+declare type BrowseCriteria = {
+	name: string
+	value: string
+}
+
 declare type ProductInfo = {
 	productId: string
 	productLocale?: string
@@ -80,6 +85,19 @@ declare type SKCCard = {
 	monsterAttack?: string
 	monsterDefense?: string
 	cardEffect: string
+}
+
+declare type SKCCardBrowseCriteria = {
+	cardColors: string[]
+	attributes: string[]
+	monsterTypes: string[]
+	monsterSubTypes: string[]
+	levels: number[]
+	ranks: number[]
+	linkRatings: number[]
+	_links: {
+		self: HATEOAS
+	}
 }
 
 declare type SKCCardsPreviousBanListStatus = {

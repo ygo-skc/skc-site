@@ -6,7 +6,7 @@ import DownstreamServices from '../../../helper/DownstreamServices'
 
 import DBSearchGrouping from './DBSearchGrouping'
 import axios, { CancelTokenSource } from 'axios'
-import DBSearchInput from './DBSearchInput'
+import SearchInput from './SearchInput'
 import DBSearchOptions from './DBSearchOptions'
 
 class _DatabaseSearch {
@@ -26,7 +26,7 @@ class _DatabaseSearch {
 	}
 }
 
-export default function DatabaseSearch() {
+export default function DBSearch() {
 	const [searchInput, setSearchInput] = useState<string>('')
 	const [searchOptions, setSearchOptions] = useState([])
 	const [fetchToken, setFetchToken] = useState<CancelTokenSource>(axios.CancelToken.source())
@@ -68,7 +68,7 @@ export default function DatabaseSearch() {
 			renderGroup={(option) => {
 				return <DBSearchGrouping group={option.group} children={option.children} />
 			}}
-			renderInput={(params) => <DBSearchInput searchParams={params} setSearchInput={setSearchInput} />}
+			renderInput={(params) => <SearchInput searchParams={params} setSearchInput={setSearchInput} placeholder='Search database for specific card...' />}
 			renderOption={(props: React.HTMLAttributes<HTMLLIElement>, option: any) => (
 				<DBSearchOptions props={props} searchSubject={searchInput} cardNameOption={option.cardName} cardIdOption={option.cardID} monsterTypeOption={option.monsterType} />
 			)}
