@@ -75,6 +75,7 @@ export default function BrowseCards() {
 				setJsonResults(json.results)
 				setNumResults(json.numResults)
 				setNumResultsDisplayed(50)
+				console.log(json.numResults)
 
 				// setIsCardBrowseDataLoaded(true)
 			}
