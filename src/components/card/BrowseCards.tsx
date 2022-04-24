@@ -82,18 +82,22 @@ export default function BrowseCards() {
 	}, [])
 
 	useEffect(() => {
-		if (selectedCriteria === undefined || selectedCriteria.length === 0) return
+		if (selectedCriteria === undefined || selectedCriteria.length === 0) {
+			setJsonResults([])
+			setNumResults(0)
+			setNumResultsDisplayed(0)
+		} else {
+			setIsCardBrowseDataLoaded(false)
+			setJsonResults([])
 
-		setIsCardBrowseDataLoaded(false)
-		setJsonResults([])
+			Fetch.handleFetch(generateBrowseQueryURL(selectedCriteria), (json) => {
+				setJsonResults(json.results)
+				setNumResults(json.numResults)
+				setNumResultsDisplayed(50)
 
-		Fetch.handleFetch(generateBrowseQueryURL(selectedCriteria), (json) => {
-			setJsonResults(json.results)
-			setNumResults(json.numResults)
-			setNumResultsDisplayed(50)
-
-			setIsCardBrowseDataLoaded(true)
-		})
+				setIsCardBrowseDataLoaded(true)
+			})
+		}
 	}, [selectedCriteria])
 
 	return (

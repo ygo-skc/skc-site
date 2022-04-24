@@ -96,6 +96,7 @@ const CardDisplayGrid: FC<_CardDisplayGrid> = memo(
 
 		useEffect(() => {
 			cardGridDispatch({ type: 'CLEAR_GRID' })
+			console.log(numResults)
 		}, [numResults])
 
 		return (
@@ -127,7 +128,7 @@ const CardDisplayGrid: FC<_CardDisplayGrid> = memo(
 		)
 	},
 	(prevProps, newProps) => {
-		if (prevProps.isDataLoaded !== newProps.isDataLoaded) return false
+		if (prevProps.isDataLoaded !== newProps.isDataLoaded || prevProps.numResults !== newProps.numResults) return false
 
 		return true
 	}
