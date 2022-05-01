@@ -13,11 +13,11 @@ const BanListChangedStatus: FC<{
 
 	var border
 	if (newStatusName === 'Forbidden') {
-		border = '3px solid #ef7ea4'
+		border = '3px solid #f50057'
 	} else if (newStatusName === 'Limited') {
-		border = '3px solid #f4f400'
+		border = '3px solid rgb(255, 145, 0)'
 	} else if (newStatusName === 'Semi Limited') {
-		border = '3px solid #61ff86'
+		border = '3px solid rgb(76, 175, 80)'
 	} else if (newStatusName === 'Unlimited') {
 		border = '3px solid black'
 	}
@@ -28,7 +28,7 @@ const BanListChangedStatus: FC<{
 				const card: SKCCard = newStatus.card
 
 				return (
-					<div style={{ width: '14rem', minWidth: '14rem', marginRight: '.5rem' }}>
+					<div onClick={() => window.location.assign(`/card/${card.cardID}`)} style={{ width: '12rem', minWidth: '12rem', marginRight: '.75rem', cursor: 'pointer' }}>
 						<CardImageRounded cardImg={`https://images.thesupremekingscastle.com/cards/x-sm/${card.cardID}.jpg`} />
 						<YGOCard
 							cardID={card.cardID}
@@ -53,7 +53,7 @@ const BanListChangedStatus: FC<{
 			<Typography variant='h4'>
 				Newly {newStatusName} ({numCards})
 			</Typography>
-			{isLoadingData ? <Skeleton style={{ height: '30rem' }} /> : <div style={{ display: 'flex', overflowX: 'auto' }}>{cardsWithNewStatus}</div>}
+			{isLoadingData ? <Skeleton variant='rectangular' height='20rem' /> : <div style={{ display: 'flex', overflowX: 'auto' }}>{cardsWithNewStatus}</div>}
 		</div>
 	)
 }
