@@ -1,13 +1,14 @@
-import { Typography } from '@mui/material'
+import { Skeleton, Typography } from '@mui/material'
 import { FC, useEffect, useState } from 'react'
 import CardImageRounded from '../card/CardImageRounded'
 import YGOCard from '../card/YGOCard'
 
-const BanListChangedStatus: FC<{ newStatusName: 'Forbidden' | 'Limited' | 'Semi Limited' | 'Unlimited'; cards: SKCCardsPreviousBanListStatus[]; numCards: number }> = ({
-	newStatusName,
-	cards,
-	numCards,
-}) => {
+const BanListChangedStatus: FC<{
+	newStatusName: 'Forbidden' | 'Limited' | 'Semi Limited' | 'Unlimited'
+	cards: SKCCardsPreviousBanListStatus[]
+	numCards: number
+	isLoadingData: boolean
+}> = ({ newStatusName, cards, numCards, isLoadingData }) => {
 	const [cardsWithNewStatus, setCardsWithNewStatus] = useState<JSX.Element[]>([])
 
 	var border
@@ -52,7 +53,7 @@ const BanListChangedStatus: FC<{ newStatusName: 'Forbidden' | 'Limited' | 'Semi 
 			<Typography variant='h4'>
 				Newly {newStatusName} ({numCards})
 			</Typography>
-			<div style={{ display: 'flex', overflowX: 'auto' }}>{cardsWithNewStatus}</div>
+			{isLoadingData ? <Skeleton style={{ height: '30rem' }} /> : <div style={{ display: 'flex', overflowX: 'auto' }}>{cardsWithNewStatus}</div>}
 		</div>
 	)
 }
