@@ -28,8 +28,29 @@ const BanListChangedStatus: FC<{
 				const card: SKCCard = newStatus.card
 
 				return (
-					<div onClick={() => window.location.assign(`/card/${card.cardID}`)} style={{ width: '12rem', minWidth: '12rem', marginRight: '.75rem', cursor: 'pointer' }}>
-						<CardImageRounded cardImg={`https://images.thesupremekingscastle.com/cards/x-sm/${card.cardID}.jpg`} />
+					<div
+						onClick={() => window.location.assign(`/card/${card.cardID}`)}
+						style={{
+							width: '18rem',
+							minWidth: '18rem',
+							marginRight: '.75rem',
+							cursor: 'pointer',
+							backgroundColor: '#eee',
+							padding: '1rem',
+							borderRadius: '2.5rem',
+						}}
+					>
+						<div style={{ display: 'flex' }}>
+							<CardImageRounded cardImg={`https://images.thesupremekingscastle.com/cards/tn/${card.cardID}.jpg`} />
+							<div style={{ minWidth: '60%', margin: 'auto' }}>
+								<Typography align='right' variant='h5' style={{ marginBottom: '0rem' }}>
+									Previously
+								</Typography>
+								<Typography align='right' variant='h6' style={{ color: 'black' }}>
+									{newStatus.previousBanStatus}
+								</Typography>
+							</div>
+						</div>
 						<YGOCard
 							cardID={card.cardID}
 							cardName={card.cardName}
@@ -53,7 +74,7 @@ const BanListChangedStatus: FC<{
 			<Typography variant='h4'>
 				Newly {newStatusName} ({numCards})
 			</Typography>
-			{isLoadingData ? <Skeleton variant='rectangular' height='20rem' /> : <div style={{ display: 'flex', overflowX: 'auto' }}>{cardsWithNewStatus}</div>}
+			{isLoadingData ? <Skeleton variant='rectangular' height='20rem' /> : <div style={{ display: 'flex', overflowX: 'auto', paddingBottom: '1rem' }}>{cardsWithNewStatus}</div>}
 		</div>
 	)
 }
