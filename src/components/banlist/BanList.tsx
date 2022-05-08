@@ -13,12 +13,13 @@ import '../../css/main-pages/ban-list.css'
 import Section from '../util/Section'
 import TabbedView from './TabbedView'
 import BanListSection from './BanListSection'
+import BanListChangedStatus from './BanListChangedStatus'
 
 const BanListDates = lazy(() => import('./BanListDates'))
-const BanListStats = lazy(() => import('./BanListStats'))
+// const BanListStats = lazy(() => import('./BanListStats'))
 
-function dateReducer(_: any, action: any) {
-	return { banListStartDates: action.banListStartDates, banListInstanceLinks: action.banListInstanceLinks }
+function dateReducer(_: { banListStartDates: string; banContentLinks: SKCBanListDateLinks }, action: any) {
+	return { banListStartDates: action.banListStartDates, banContentLinks: action.banContentLinks }
 }
 
 function determineListSize(size: number | undefined): number {
@@ -37,11 +38,15 @@ function currentlySelectedBanListReducer(state: any, action: any) {
 				numLimited: action.numLimited,
 				numSemiLimited: action.numSemiLimited,
 			}
-		case 'UPDATE_DIFF':
+		case 'UPDATE_REMOVED':
 			return {
 				...state,
 				removedCards: action.removedCards,
 				numRemoved: action.numRemoved,
+			}
+		case 'UPDATE_NEW':
+			return {
+				...state,
 				newForbiddenCards: action.newForbiddenCards,
 				newLimitedCards: action.newLimitedCards,
 				newSemiLimitedCards: action.newSemiLimitedCards,
@@ -55,7 +60,13 @@ function currentlySelectedBanListReducer(state: any, action: any) {
 }
 
 export default function BanList() {
-	const [{ banListStartDates, banListInstanceLinks }, dateDispatch] = useReducer(dateReducer, { banListStartDates: [], banListInstanceLinks: [] })
+	const [{ banListStartDates, banContentLinks }, dateDispatch] = useReducer(dateReducer, { banListStartDates: [], banContentLinks: [] })
+
+	const [selectedBanList, setSelectedBanList] = useState<string>('')
+	const [isFetchingBanList, setIsFetchingBanList] = useState(true)
+	const [isFetchingBanListNewContent, setFetchingBanListNewContent] = useState(true)
+	const [isFetchingBanListRemovedContent, setFetchingBanListRemovedContent] = useState(true)
+
 	const [
 		{
 			forbidden,
@@ -91,29 +102,52 @@ export default function BanList() {
 		numNewSemiLimited: 0,
 	})
 
-	const [selectedBanList, setSelectedBanList] = useState<string>('')
-
-	const [isFetchingBanList, setIsFetchingBanList] = useState(true)
-
 	useEffect(() => {
 		Fetch.handleFetch(DownstreamServices.NAME_maps_ENDPOINT['banListsUrl'], (json) => {
 			dateDispatch({
 				type: 'UPDATE_BAN_LIST',
-				banListInstanceLinks: json.banListDates.map((item: SKCBanListDate) => item._links['Ban List Content'].href),
+				banContentLinks: json.banListDates.map((item: SKCBanListDate) => item._links),
 				banListStartDates: json.banListDates.map((item: SKCBanListDate) => item.effectiveDate),
 			})
 		})
 	}, [])
 
 	useEffect(() => {
-		if (banListInstanceLinks.length !== 0) setSelectedBanList(banListStartDates[0])
-	}, [banListInstanceLinks, banListStartDates])
+		if (banContentLinks.length !== 0) setSelectedBanList(banListStartDates[0])
+	}, [banContentLinks, banListStartDates])
 
 	useEffect(() => {
 		if (selectedBanList && selectedBanList.length !== 0) {
 			setIsFetchingBanList(true)
+			setFetchingBanListNewContent(true)
+			setFetchingBanListRemovedContent(true)
 
-			Fetch.handleFetch(banListInstanceLinks[banListStartDates.indexOf(selectedBanList)], (json) => {
+			Fetch.handleFetch(banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List New Content'].href, (json) => {
+				selectedBanListDispatch({
+					type: 'UPDATE_NEW',
+					newForbiddenCards: json.newForbidden,
+					newLimitedCards: json.newLimited,
+					newSemiLimitedCards: json.newSemiLimited,
+					numNewForbidden: json.numNewForbidden,
+					numNewLimited: json.numNewLimited,
+					numNewSemiLimited: json.numNewSemiLimited,
+				})
+
+				setFetchingBanListNewContent(false)
+				console.log(isFetchingBanListNewContent)
+			})
+
+			Fetch.handleFetch(banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List Removed Content'].href, (json) => {
+				selectedBanListDispatch({
+					type: 'UPDATE_REMOVED',
+					removedCards: json.removedCards,
+					numRemoved: determineListSize(json.numRemoved),
+				})
+
+				setFetchingBanListRemovedContent(false)
+			})
+
+			Fetch.handleFetch(banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List Content'].href, (json) => {
 				selectedBanListDispatch({
 					type: 'UPDATE_LIST',
 					forbidden: json.forbidden,
@@ -122,18 +156,6 @@ export default function BanList() {
 					numForbidden: determineListSize(json.numForbidden),
 					numLimited: determineListSize(json.numLimited),
 					numSemiLimited: determineListSize(json.numSemiLimited),
-				})
-
-				selectedBanListDispatch({
-					type: 'UPDATE_DIFF',
-					removedCards: json.removedContent.removedCards,
-					numRemoved: determineListSize(json.removedContent.numRemoved),
-					newForbiddenCards: json.newContent.newForbidden,
-					newLimitedCards: json.newContent.newLimited,
-					newSemiLimitedCards: json.newContent.newSemiLimited,
-					numNewForbidden: json.newContent.numNewForbidden,
-					numNewLimited: json.newContent.numNewLimited,
-					numNewSemiLimited: json.newContent.numNewSemiLimited,
 				})
 
 				setIsFetchingBanList(false)
@@ -162,7 +184,7 @@ export default function BanList() {
 								<div className='section-content'>
 									<BanListDates banListStartDates={banListStartDates} setSelectedBanList={(ind: number) => setSelectedBanList(banListStartDates[ind])} />
 
-									<BanListStats
+									{/* <BanListStats
 										totalCardsInSelectedList={numForbidden + numLimited + numSemiLimited}
 										selectedBanList={selectedBanList}
 										newForbiddenCards={newForbiddenCards}
@@ -173,7 +195,7 @@ export default function BanList() {
 										numNewSemiLimited={numNewSemiLimited}
 										removedCards={removedCards}
 										numRemoved={numRemoved}
-									/>
+									/> */}
 								</div>
 							}
 						/>
@@ -181,6 +203,12 @@ export default function BanList() {
 				}
 				twoThirdComponent={
 					<Suspense fallback={<div />}>
+						<BanListChangedStatus newStatusName='Forbidden' cards={newForbiddenCards} numCards={numNewForbidden} isLoadingData={isFetchingBanListNewContent} />
+						<BanListChangedStatus newStatusName='Limited' cards={newLimitedCards} numCards={numNewLimited} isLoadingData={isFetchingBanListNewContent} />
+						<BanListChangedStatus newStatusName='Semi Limited' cards={newSemiLimitedCards} numCards={numNewSemiLimited} isLoadingData={isFetchingBanListNewContent} />
+
+						<BanListChangedStatus newStatusName='Unlimited' cards={removedCards} numCards={numRemoved} isLoadingData={isFetchingBanListRemovedContent} />
+
 						<Section
 							sectionHeaderBackground={'ban-list'}
 							sectionName='Content'

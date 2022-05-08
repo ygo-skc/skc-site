@@ -12,7 +12,7 @@ const BanList = lazy(() => import('./banlist/BanList'))
 const ProductBrowse = lazy(() => import('./product/ProductBrowse'))
 const ProductInfo = lazy(() => import('./product/ProductInfo'))
 
-const Browse = lazy(() => import('./card/CardBrowse'))
+const Browse = lazy(() => import('./card/BrowseCards'))
 const Card = lazy(() => import('./card/card-information/CardInformation'))
 
 const About = lazy(() => import('./about/About'))

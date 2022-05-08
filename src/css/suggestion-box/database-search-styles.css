@@ -50,9 +50,17 @@
 	padding: 0.5rem;
 }
 
+.search-suggestions-parent[aria-selected='true'] {
+	background: #afa;
+}
+
 .search-suggestions-parent.Mui-focused {
 	background: rgba(135, 120, 229, 0.08);
 	cursor: pointer;
+}
+
+.search-suggestions-parent.Mui-focused[aria-selected='true'] {
+	background: #d4d4d4;
 }
 
 .search-suggestions-info-parent {
@@ -77,12 +85,4 @@
 	padding: 0rem;
 	margin: 0rem;
 	font-weight: 500;
-}
-
-.search-icon-container {
-	margin: auto;
-}
-
-.search-icon {
-	background: #eee;
 }

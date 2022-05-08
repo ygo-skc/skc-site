@@ -28,7 +28,6 @@ const CardBanListInformation: FunctionComponent<args> = ({ isLoading, hasInfo, b
 		const rowValues: string[][] = banListInfo.map((banList: BanListInfo) => [Dates.getDateString(new Date(banList.banListDate)), banList.banStatus])
 
 		const table: JSX.Element = createTable(headerNames, rowValues)
-
 		setBanListTable(table)
 	}, [banListInfo])
 

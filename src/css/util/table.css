@@ -1,0 +1,37 @@
+.table-head {
+	background-color: rgba(0, 0, 0, 0.6);
+	backdrop-filter: blur(10px);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+}
+
+.table-container {
+	border-top-left-radius: 1.1rem;
+	border-top-right-radius: 1.1rem;
+	border-bottom-left-radius: 0.7rem;
+	border-bottom-right-radius: 0.7rem;
+	color: rgba(255, 255, 255, 0.97);
+	max-width: 98%;
+	margin: auto;
+
+	background-color: rgba(0, 0, 0, 0.7);
+	backdrop-filter: blur(10px);
+}
+
+.MuiTableRow-root:hover {
+	cursor: pointer;
+	background: rgba(255, 255, 255, 0.05);
+}
+
+.MuiTableRow-root:nth-child(even) {
+	background-color: rgba(0, 0, 0, 0.1);
+	backdrop-filter: blur(10px);
+}
+
+.MuiTableCell-root {
+	color: rgba(255, 255, 255, 0.97);
+	padding: 0.7rem !important;
+}
+
+td {
+	border-bottom: none !important;
+}

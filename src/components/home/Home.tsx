@@ -7,11 +7,11 @@ import DownstreamServices from '../../helper/DownstreamServices'
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 import Section from '../util/Section'
 
+import Breadcrumb from '../header-footer/Breadcrumb'
 import DatabaseInfo from '../util/database-info/DatabaseInfo'
+import UpcomingTCGProducts from '../util/event/UpcomingTCGProducts'
 
-const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 const Welcome = lazy(() => import('./Welcome'))
-const UpcomingTCGProducts = lazy(() => import('../util/event/UpcomingTCGProducts'))
 const YouTubeData = lazy(() => import('./YouTubeData'))
 const SocialMedia = lazy(() => import('../util/social/SocialMedia'))
 
@@ -36,23 +36,35 @@ export default function Home() {
 				<meta name='keywords' content={`YuGiOh, ban list, card info, The Supreme Kings Castle`} />
 			</Helmet>
 
-			<Suspense fallback={null}>
-				<Breadcrumb crumbs={['Home']} />
-				<DatabaseInfo cardTotal={cardTotal} banListTotal={banListTotal} productTotal={productTotal} />
+			<Breadcrumb crumbs={['Home']} />
+			<DatabaseInfo cardTotal={cardTotal} banListTotal={banListTotal} productTotal={productTotal} />
+			<div id='upcoming-tcg-products'>
 				<UpcomingTCGProducts />
-			</Suspense>
+			</div>
 
 			<OneThirdTwoThirdsGrid
 				mirrored={true}
-				oneThirdComponent={<Section sticky sectionName='Social' sectionContent={<SocialMedia />} />}
+				oneThirdComponent={
+					<Section
+						sticky
+						sectionName='Social'
+						sectionContent={
+							<Suspense fallback={null}>
+								<SocialMedia /> /
+							</Suspense>
+						}
+					/>
+				}
 				twoThirdComponent={
 					<Section
 						sectionName='Welcome'
 						sectionContent={
 							<div className='section-content'>
-								<Welcome />
-								<YouTubeData channel='skc' hasDarkBackground={true} />
-								<YouTubeData channel='btsc' hasDarkBackground={false} />
+								<Suspense fallback={null}>
+									<Welcome />
+									<YouTubeData channel='skc' hasDarkBackground={true} />
+									<YouTubeData channel='btsc' hasDarkBackground={false} />
+								</Suspense>
 							</div>
 						}
 					/>

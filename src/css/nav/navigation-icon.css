@@ -1,12 +1,13 @@
 .styled-icon-button.MuiIconButton-root {
 	border-radius: 100rem;
-	background: rgb(0, 0, 0, .6);
+	background: rgb(0, 0, 0, 0.6);
 	padding: 8px;
-	margin-left: .8rem;
+	margin-left: 0.8rem;
+	color: white;
 }
 
 .styled-icon-button.MuiIconButton-root:hover {
-	background: rgb(255, 255, 255, .4);
+	background: rgb(255, 255, 255, 0.4);
 	backdrop-filter: blur(60px);
 }
 
