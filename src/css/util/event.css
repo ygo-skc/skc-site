@@ -5,6 +5,16 @@
 	overflow-x: auto;
 }
 
+.event-header-container {
+	display: -webkit-flex;
+	margin-bottom: 0.5rem;
+}
+
+.event-header {
+	margin-left: 0.75rem;
+	margin-bottom: 0rem;
+}
+
 .event-container-end {
 	margin-bottom: 5rem;
 }

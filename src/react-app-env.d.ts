@@ -1,5 +1,10 @@
 /// <reference types="react-scripts" />
 
+declare type BrowseCriteria = {
+	name: string
+	value: string
+}
+
 declare type ProductInfo = {
 	productId: string
 	productLocale?: string
@@ -59,11 +64,13 @@ declare type HATEOAS = {
 
 declare type SKCBanListDate = {
 	effectiveDate: Date
-	_links: {
-		'Ban List Content': HATEOAS
-		'Ban List New Content': HATEOAS
-		'Ban List New Content': HATEOAS
-	}
+	_links: SKCBanListDateLinks
+}
+
+declare type SKCBanListDateLinks = {
+	'Ban List Content': HATEOAS
+	'Ban List New Content': HATEOAS
+	'Ban List New Content': HATEOAS
 }
 
 declare type SKCBanListDates = {
@@ -82,9 +89,21 @@ declare type SKCCard = {
 	cardEffect: string
 }
 
+declare type SKCCardBrowseCriteria = {
+	cardColors: string[]
+	attributes: string[]
+	monsterTypes: string[]
+	monsterSubTypes: string[]
+	levels: number[]
+	ranks: number[]
+	linkRatings: number[]
+	_links: {
+		self: HATEOAS
+	}
+}
+
 declare type SKCCardsPreviousBanListStatus = {
-	cardName: string
-	cardId: string
+	card: SKCCard
 	previousBanStatus: string
 }
 

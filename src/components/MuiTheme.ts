@@ -15,6 +15,14 @@ const MuiTheme = createTheme({
 		},
 	},
 	components: {
+		MuiIconButton: {
+			styleOverrides: {
+				root: {
+					background: '#eee',
+					color: 'black',
+				},
+			},
+		},
 		MuiDivider: {
 			styleOverrides: {
 				root: {
@@ -63,9 +71,10 @@ const MuiTheme = createTheme({
 		MuiPopover: {
 			styleOverrides: {
 				paper: {
-					background: 'rgba(255, 255, 255, .6)',
-					backdropFilter: 'blur(60px)',
+					backgroundColor: 'rgba(255, 255, 255, .05)',
+					backdropFilter: 'blur(20px)',
 					borderRadius: '2rem',
+					boxShadow: '0 0 10px rgba(0, 0, 0, .25)',
 				},
 			},
 		},

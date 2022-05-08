@@ -1,26 +1,22 @@
 import { Table, TableHead, TableRow, TableBody, TableCell, TableContainer, Box } from '@mui/material'
-import '../../css/card-information-styles.css'
+import '../../css/util/table.css'
 
 function createHeaderRow(headerNames: string[]) {
 	return headerNames.map((header: string) => {
-		return <TableCell className={'table-cell'}>{header}</TableCell>
+		return <TableCell>{header}</TableCell>
 	})
 }
 
 function createRows(rowValues: string[][], rowOnClick: { (): void }[] = []): JSX.Element[] {
 	return rowValues.map((row: string[], index: number) => {
 		const columns: JSX.Element[] = row.map((columnValue: string) => {
-			return (
-				<TableCell key={columnValue} className={'table-cell'}>
-					{columnValue}
-				</TableCell>
-			)
+			return <TableCell key={columnValue}>{columnValue}</TableCell>
 		})
 
 		return rowOnClick.length === 0 ? (
 			<TableRow key={index}>{columns}</TableRow>
 		) : (
-			<TableRow key={index} className={'table-row'} onClick={rowOnClick[index]}>
+			<TableRow key={index} onClick={rowOnClick[index]}>
 				{columns}
 			</TableRow>
 		)

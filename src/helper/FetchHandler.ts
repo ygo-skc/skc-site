@@ -3,7 +3,7 @@ import { _SKCSiteRoutes } from '../components/Routes'
 
 class Fetch {
 	static readonly CLIENT_ID = process.env.REACT_APP_CLIENT_ID as string
-	static readonly DEFAULT_TIMEOUT = 2500
+	static readonly DEFAULT_TIMEOUT = 3000
 
 	static readonly handleFetch = (
 		endPoint: string,

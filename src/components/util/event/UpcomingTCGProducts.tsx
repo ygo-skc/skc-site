@@ -1,13 +1,15 @@
 import '../../../css/util/event.css'
-import { Typography } from '@mui/material'
+import { Alert, IconButton, Snackbar, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import DownstreamServices from '../../../helper/DownstreamServices'
 import Fetch from '../../../helper/FetchHandler'
 import EventItem from './EventItem'
+import LinkIcon from '@mui/icons-material/Link'
 
 const UpcomingTCGProducts = () => {
 	const [events, setEvents] = useState<HeartApiEventItem[]>([])
 	const [eventsUI, setEventsUI] = useState<JSX.Element[]>([])
+	const [isSnackbarOpen, setIsSnackbarOpen] = useState<boolean>(false)
 
 	const upcomingTCGProductsCB = (eventOutput: HeartApiEventOutput) => {
 		setEvents(eventOutput.events)
@@ -27,9 +29,26 @@ const UpcomingTCGProducts = () => {
 
 	return (
 		<div className='event-container-end'>
-			<Typography variant='h4'>Upcoming Yu-Gi-Oh! TCG Products</Typography>
+			<div className='event-header-container search-icon-container'>
+				<IconButton
+					onClick={() => {
+						navigator.clipboard.writeText(`${window.location.href}#upcoming-tcg-products`)
+						setIsSnackbarOpen(true)
+					}}
+				>
+					<LinkIcon />
+				</IconButton>
+				<Typography className='event-header' variant='h4'>
+					Upcoming Yu-Gi-Oh! TCG Products
+				</Typography>
+			</div>
 
 			<div className='event-container'>{eventsUI}</div>
+			<Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} open={isSnackbarOpen} autoHideDuration={3000} onClose={() => setIsSnackbarOpen(false)}>
+				<Alert onClose={() => setIsSnackbarOpen(false)} severity='success'>
+					Link copied to clipboard
+				</Alert>
+			</Snackbar>
 		</div>
 	)
 }

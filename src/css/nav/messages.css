@@ -36,7 +36,6 @@
 
 .communication-message-tag.MuiChip-root {
 	background: rgba(135, 120, 229, 0.95);
-	backdrop-filter: blur(60px);
 	height: auto;
 }
 
@@ -57,7 +56,6 @@
 	max-width: 400px;
 	max-height: 500px;
 	background: rgb(255, 255, 255, 0.75);
-	backdrop-filter: blur(60px);
 	overflow-x: hidden;
 }
 
