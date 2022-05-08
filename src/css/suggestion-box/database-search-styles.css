@@ -60,7 +60,7 @@
 }
 
 .search-suggestions-parent.Mui-focused[aria-selected='true'] {
-	background: #f18daf;
+	background: #d4d4d4;
 }
 
 .search-suggestions-info-parent {
