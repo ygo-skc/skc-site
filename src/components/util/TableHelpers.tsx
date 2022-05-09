@@ -14,9 +14,11 @@ function createRows(rowValues: string[][], rowOnClick: { (): void }[] = []): JSX
 		})
 
 		return rowOnClick.length === 0 ? (
-			<TableRow key={index}>{columns}</TableRow>
+			<TableRow className='no-hover' key={index}>
+				{columns}
+			</TableRow>
 		) : (
-			<TableRow key={index} onClick={rowOnClick[index]}>
+			<TableRow className='hover' key={index} onClick={rowOnClick[index]}>
 				{columns}
 			</TableRow>
 		)
