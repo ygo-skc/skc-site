@@ -22,6 +22,7 @@ declare type ProductDetails = {
 	productType: string
 	productSubType: string
 	productReleaseDate: string
+	numUniqueCards: string
 	isDataLoaded: boolean
 }
 

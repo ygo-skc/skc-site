@@ -71,6 +71,7 @@ export default function ProductInfo() {
 								productType={productType}
 								productSubType={productSubType}
 								productReleaseDate={productReleaseDate}
+								numUniqueCards={productTotal.toString()}
 								isDataLoaded={isDataLoaded}
 							/>
 						}
