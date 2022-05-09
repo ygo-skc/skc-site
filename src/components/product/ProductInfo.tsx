@@ -78,7 +78,7 @@ export default function ProductInfo() {
 				}
 				twoThirdComponent={
 					<div>
-						<ProductStats cards={cardJsonResults} productTotal={+productTotal} productRarityStats={productRarityStats} />
+						<ProductStats isDataLoaded={isDataLoaded} cards={cardJsonResults} productTotal={+productTotal} productRarityStats={productRarityStats} />
 						<Section
 							sectionName='Product Content'
 							sectionContent={
