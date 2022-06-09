@@ -3,7 +3,6 @@ import '../../css/util/date-glance.css'
 import { FC } from 'react'
 import { Typography } from '@mui/material'
 
-import '../../css/ygo-card-styles.css'
 import { Dates } from '../../helper/Dates'
 
 type _Date = {
