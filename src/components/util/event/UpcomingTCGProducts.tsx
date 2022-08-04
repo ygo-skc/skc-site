@@ -5,11 +5,13 @@ import DownstreamServices from '../../../helper/DownstreamServices'
 import Fetch from '../../../helper/FetchHandler'
 import EventItem from './EventItem'
 import LinkIcon from '@mui/icons-material/Link'
+import GenericNonBreakingErr from '../exception/GenericNonBreakingErr'
 
 const UpcomingTCGProducts = () => {
 	const [events, setEvents] = useState<HeartApiEventItem[]>([])
 	const [eventsUI, setEventsUI] = useState<JSX.Element[]>([])
 	const [isSnackbarOpen, setIsSnackbarOpen] = useState<boolean>(false)
+	const [errFetchingData, setErrFetchingData] = useState(false)
 
 	const upcomingTCGProductsCB = (eventOutput: HeartApiEventOutput) => {
 		setEvents(eventOutput.events)
@@ -17,7 +19,7 @@ const UpcomingTCGProducts = () => {
 
 	useEffect(() => {
 		Fetch.handleFetch(`${DownstreamServices.HEART_API_HOST_NAME}/api/v1/events?service=skc&tags=product-release`, upcomingTCGProductsCB, false)?.catch((_err) => {
-			// setErrorFetchingMessages(true)
+			setErrFetchingData(true)
 		})
 	}, [])
 
@@ -43,7 +45,13 @@ const UpcomingTCGProducts = () => {
 				</Typography>
 			</div>
 
-			<div className='event-container'>{eventsUI}</div>
+			{errFetchingData ? (
+				<div style={{ backgroundColor: 'white', maxWidth: '60rem', padding: '1rem', borderRadius: '1rem' }}>
+					<GenericNonBreakingErr errExplanation='Come back at a different time to see upcoming TCG products!' />
+				</div>
+			) : (
+				<div className='event-container'>{eventsUI}</div>
+			)}
 			<Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} open={isSnackbarOpen} autoHideDuration={3000} onClose={() => setIsSnackbarOpen(false)}>
 				<Alert onClose={() => setIsSnackbarOpen(false)} severity='success'>
 					Link copied to clipboard
