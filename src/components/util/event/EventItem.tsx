@@ -7,10 +7,10 @@ const EventItem: FC<{ event: HeartApiEventItem }> = ({ event }) => {
 	return (
 		<div className='event-item'>
 			<div className='event-item-header'>
-				<DateGlance date={new Date(event.eventDate)} />
-				<Typography className='event-name' variant='h6' align='right'>
+				<Typography className='event-name' variant='h6'>
 					{event.name}
 				</Typography>
+				<DateGlance date={new Date(event.eventDate)} />
 			</div>
 
 			<Typography className='event-notes-header' variant='subtitle1'>

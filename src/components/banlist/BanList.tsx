@@ -175,7 +175,7 @@ export default function BanList() {
 
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={
-					<Suspense fallback={<Skeleton width='100%' height='470px' />}>
+					<Suspense fallback={<Skeleton variant='rectangular' width='100%' height='300px' />}>
 						<Section
 							sticky
 							sectionHeaderBackground={'ban-list'}
@@ -183,19 +183,6 @@ export default function BanList() {
 							sectionContent={
 								<div className='section-content'>
 									<BanListDates banListStartDates={banListStartDates} setSelectedBanList={(ind: number) => setSelectedBanList(banListStartDates[ind])} />
-
-									{/* <BanListStats
-										totalCardsInSelectedList={numForbidden + numLimited + numSemiLimited}
-										selectedBanList={selectedBanList}
-										newForbiddenCards={newForbiddenCards}
-										newLimitedCards={newLimitedCards}
-										newSemiLimitedCards={newSemiLimitedCards}
-										numNewForbidden={numNewForbidden}
-										numNewLimited={numNewLimited}
-										numNewSemiLimited={numNewSemiLimited}
-										removedCards={removedCards}
-										numRemoved={numRemoved}
-									/> */}
 								</div>
 							}
 						/>

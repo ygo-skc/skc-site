@@ -35,10 +35,10 @@
 }
 
 .event-name {
+	color: black;
 	font-weight: 800;
 	flex-grow: 1;
 	margin-bottom: 0rem;
-	padding-left: 0.75rem;
 	padding-right: 0.75rem;
 }
 
