@@ -14,7 +14,7 @@ const Glance: FC<_Glance> = ({ total, subject, color, action }) => {
 	return (
 		<div className='glance' onClick={() => action()}>
 			<Typography className='glance-prominent-text' variant='h1' align='center'>
-				{total}
+				{total.toLocaleString('en')}
 			</Typography>
 			<Typography variant='h5' align='center' style={{ color: color }}>
 				{subject}
