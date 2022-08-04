@@ -41,7 +41,7 @@ const YouTubeData: FC<_YouTubeData> = ({ channel, hasDarkBackground }) => {
 	return (
 		<div className={hasDarkBackground ? 'section-dark-background multi-section-middle' : 'multi-section-end'}>
 			{errFetchingData ? (
-				<GenericNonBreakingErr errExplanation='No meaningful impact to the site functionality expected. Come back at a different time to see recent YouTube uploads 🎥!' />
+				<GenericNonBreakingErr errExplanation='Come back at a different time to see recent YouTube uploads 🎥!' />
 			) : (
 				<YouTubeUploads youtubeData={youtubeUploadData} channelName={channelNames[channel]} channelId={channelId} />
 			)}

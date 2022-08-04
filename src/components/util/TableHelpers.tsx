@@ -2,9 +2,11 @@ import { Table, TableHead, TableRow, TableBody, TableCell, TableContainer, Box }
 import '../../css/util/table.css'
 
 function createHeaderRow(headerNames: string[]) {
-	return headerNames.map((header: string) => {
+	const columns = headerNames.map((header: string) => {
 		return <TableCell>{header}</TableCell>
 	})
+
+	return <TableRow className='no-hover'>{columns}</TableRow>
 }
 
 function createRows(rowValues: string[][], rowOnClick: { (): void }[] = []): JSX.Element[] {
@@ -14,9 +16,11 @@ function createRows(rowValues: string[][], rowOnClick: { (): void }[] = []): JSX
 		})
 
 		return rowOnClick.length === 0 ? (
-			<TableRow key={index}>{columns}</TableRow>
+			<TableRow className='no-hover' key={index}>
+				{columns}
+			</TableRow>
 		) : (
-			<TableRow key={index} onClick={rowOnClick[index]}>
+			<TableRow className='hover' key={index} onClick={rowOnClick[index]}>
 				{columns}
 			</TableRow>
 		)

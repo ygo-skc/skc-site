@@ -1,7 +1,5 @@
 .table-head {
 	background-color: rgba(0, 0, 0, 0.6);
-	backdrop-filter: blur(10px);
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
 }
 
 .table-container {
@@ -13,18 +11,21 @@
 	max-width: 98%;
 	margin: auto;
 
-	background-color: rgba(0, 0, 0, 0.7);
-	backdrop-filter: blur(10px);
+	background-color: rgba(0, 0, 0, 0.75);
 }
 
-.MuiTableRow-root:hover {
+.hover:hover,
+.hover:hover:nth-child(even) {
 	cursor: pointer;
 	background: rgba(255, 255, 255, 0.05);
 }
 
+.no-hover {
+	cursor: auto !important;
+}
+
 .MuiTableRow-root:nth-child(even) {
 	background-color: rgba(0, 0, 0, 0.1);
-	backdrop-filter: blur(10px);
 }
 
 .MuiTableCell-root {

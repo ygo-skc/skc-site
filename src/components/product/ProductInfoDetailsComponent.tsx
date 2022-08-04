@@ -3,12 +3,13 @@ import createTable from '../util/TableHelpers'
 import { FC } from 'react'
 import { Dates } from '../../helper/Dates'
 
-const ProductInfoDetailsComponent: FC<ProductDetails> = ({ productName, productId, productType, productSubType, productReleaseDate, isDataLoaded }) => {
+const ProductInfoDetailsComponent: FC<ProductDetails> = ({ productName, productId, productType, productSubType, productReleaseDate, isDataLoaded, numUniqueCards }) => {
 	const summaryRows = []
 	summaryRows.push(['Product ID', productId])
 	summaryRows.push(['Product Type', productType])
 	summaryRows.push(['Product Sub-Type', productSubType])
 	summaryRows.push(['American Release', Dates.getDateString(new Date(productReleaseDate))])
+	summaryRows.push(['Number of Unique Cards', numUniqueCards])
 
 	return (
 		<Box className='sticky'>
@@ -18,11 +19,11 @@ const ProductInfoDetailsComponent: FC<ProductDetails> = ({ productName, productI
 						{productName} • ({productId})
 					</Typography>
 				) : (
-					<Skeleton variant='rectangular' height={30} width={250} style={{ marginBottom: '.8rem' }} />
+					<Skeleton variant='text' height={40} width='100%' style={{ marginBottom: '.8rem' }} />
 				)}
 
 				<Typography variant='h5'>Summary</Typography>
-				{createTable([], summaryRows)}
+				{isDataLoaded ? createTable([], summaryRows) : <Skeleton variant='rectangular' height='170' />}
 			</div>
 		</Box>
 	)

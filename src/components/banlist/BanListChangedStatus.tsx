@@ -11,15 +11,15 @@ const BanListChangedStatus: FC<{
 }> = ({ newStatusName, cards, numCards, isLoadingData }) => {
 	const [cardsWithNewStatus, setCardsWithNewStatus] = useState<JSX.Element[]>([])
 
-	var border
+	let border
 	if (newStatusName === 'Forbidden') {
-		border = '3px solid #f50057'
+		border = '5px solid #f50057'
 	} else if (newStatusName === 'Limited') {
-		border = '3px solid rgb(255, 145, 0)'
+		border = '5px solid rgb(255, 145, 0)'
 	} else if (newStatusName === 'Semi Limited') {
-		border = '3px solid rgb(76, 175, 80)'
+		border = '5px solid rgb(76, 175, 80)'
 	} else if (newStatusName === 'Unlimited') {
-		border = '3px solid black'
+		border = '5px solid black'
 	}
 
 	useEffect(() => {
@@ -38,6 +38,7 @@ const BanListChangedStatus: FC<{
 							backgroundColor: '#eee',
 							padding: '1rem',
 							borderRadius: '2.5rem',
+							border: '2px solid #888',
 						}}
 					>
 						<div style={{ display: 'flex' }}>
@@ -70,7 +71,7 @@ const BanListChangedStatus: FC<{
 	}, [cards])
 
 	return (
-		<div style={{ marginBottom: '1rem', background: 'white', padding: '1rem', borderRadius: '1.5rem', border: border }}>
+		<div style={{ marginBottom: '1rem', background: 'white', padding: '1.5rem', borderRadius: '1.5rem', border: border }}>
 			<Typography variant='h4'>
 				Newly {newStatusName} ({numCards})
 			</Typography>
