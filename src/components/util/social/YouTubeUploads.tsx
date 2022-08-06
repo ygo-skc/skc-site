@@ -3,7 +3,12 @@ import { Typography, Link, Skeleton } from '@mui/material'
 
 import VideoInfoContainer from './VideoInfoContainer'
 
-const YouTubeUploads: FC<{ youtubeData: HeartApiYouTubeUpload[]; channelName: string; channelId: string }> = ({ youtubeData, channelName, channelId }) => {
+const YouTubeUploads: FC<{ youtubeData: HeartApiYouTubeUpload[]; channelName: string; channelId: string; channelDescription: string }> = ({
+	youtubeData,
+	channelName,
+	channelId,
+	channelDescription,
+}) => {
 	const [videos, setVideos] = useState<JSX.Element[]>([])
 	const [isLoading, setIsLoading] = useState(true)
 
@@ -22,16 +27,18 @@ const YouTubeUploads: FC<{ youtubeData: HeartApiYouTubeUpload[]; channelName: st
 
 	return (
 		<div>
-			<Typography variant='h5'>Catch Up On Previous Uploads</Typography>
+			<Typography variant='h5'>Most recent video uploads For Channel - {channelName}</Typography>
 
-			<Typography variant='h6'>
-				Most recent uploads for{' '}
+			<Typography variant='h6'>{channelDescription}</Typography>
+
+			<Typography variant='subtitle2'>
+				Go ahead and give it a{' '}
 				<Link className='link' color='secondary' href={`https://www.youtube.com/channel/${channelId}`}>
-					{channelName}
+					sub!
 				</Link>
 			</Typography>
-			<br />
 
+			<br />
 			{isLoading === true ? (
 				<Skeleton width='100%' height='24rem' style={{ transform: 'none', borderRadius: '2rem' }} />
 			) : (

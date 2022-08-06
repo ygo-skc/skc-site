@@ -40,10 +40,10 @@ const ProductStats: FC<ProductStats & { isDataLoaded: boolean }> = ({ productRar
 			sectionContent={
 				<Grid className='section-content' container style={{ width: '100%' }}>
 					<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-						<ProductStatPie isDataLoaded={isDataLoaded} statName='Rarities' data={data} />
+						<ProductStatPie isDataLoaded={isDataLoaded} statName='Rarity Spread' data={data} />
 					</Grid>
 					<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-						<ProductStatPie isDataLoaded={isDataLoaded} statName='Card Types' data={rrr} />
+						<ProductStatPie isDataLoaded={isDataLoaded} statName='Card Type Spread' data={rrr} />
 					</Grid>
 				</Grid>
 			}
