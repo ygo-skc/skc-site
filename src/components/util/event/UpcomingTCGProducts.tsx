@@ -32,6 +32,9 @@ const UpcomingTCGProducts = () => {
 	return (
 		<div className='event-container-end'>
 			<div className='event-header-container search-icon-container'>
+				<Typography className='event-header' variant='h4'>
+					Upcoming Yu-Gi-Oh! TCG Products
+				</Typography>
 				<IconButton
 					onClick={() => {
 						navigator.clipboard.writeText(`${window.location.href}#upcoming-tcg-products`)
@@ -40,9 +43,6 @@ const UpcomingTCGProducts = () => {
 				>
 					<LinkIcon />
 				</IconButton>
-				<Typography className='event-header' variant='h4'>
-					Upcoming Yu-Gi-Oh! TCG Products
-				</Typography>
 			</div>
 
 			{errFetchingData ? (
@@ -54,7 +54,7 @@ const UpcomingTCGProducts = () => {
 			)}
 			<Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} open={isSnackbarOpen} autoHideDuration={3000} onClose={() => setIsSnackbarOpen(false)}>
 				<Alert onClose={() => setIsSnackbarOpen(false)} severity='success'>
-					Link copied to clipboard
+					Link copied to clipboard. Share that shit!
 				</Alert>
 			</Snackbar>
 		</div>
