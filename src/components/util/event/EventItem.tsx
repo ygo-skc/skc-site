@@ -16,8 +16,8 @@ const EventItem: FC<{ event: HeartApiEventItem }> = ({ event }) => {
 			<Typography className='event-notes-header' variant='subtitle1'>
 				Notes
 			</Typography>
-			<Typography className='event-notes' variant='body2'>
-				<ReactMarkdown children={`${event.notes}`} />
+			<Typography variant='body2'>
+				<ReactMarkdown className='event-notes markdown' children={`${event.notes}`} />
 			</Typography>
 			<Typography className='event-url' variant='body1' align='right'>
 				<Link color='secondary' className='link' href={event.url} target='_blank'>
