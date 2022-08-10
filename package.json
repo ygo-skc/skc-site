@@ -36,6 +36,7 @@
     "build:development_remote": "env-cmd -e remote-dev react-scripts build",
     "build:production": "env-cmd -e prod react-scripts build",
     "test": "react-scripts test",
+    "ci:test": "react-scripts test --ci --coverage --watchAll=false",
     "eject": "react-scripts eject",
     "checkAWS:cloudfrontSKC": "aws cloudfront list-distributions | jq '.DistributionList.Items[] | select(.Aliases.Items | contains([\"thesupremekingscastle.com\"])) |  {id: .Id, aliases: .Aliases}'",
     "uploadAWS:production": "npm run build:production; aws s3 rm s3://yugiohsite/ --recursive; aws s3 sync build s3://yugiohsite/ --cache-control max-age=3600; aws cloudfront create-invalidation --distribution-id ${YGO_CLOUDFRONT_PROD} --paths '/*'",
@@ -66,5 +67,15 @@
     "react-scripts": "5.0.1",
     "react-test-renderer": "17.0.2",
     "typescript": "4.7.4"
-  }
+  },
+  "jest": {
+	"coverageThreshold": {
+	  "global": {
+		 "branches": 50,
+		 "functions": 50,
+		 "lines": 50,
+		 "statements": 50
+	  }
+	}
+ }
 }
