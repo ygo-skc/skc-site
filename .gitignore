@@ -5,3 +5,8 @@ build/*
 
 .idea/
 coverage/
+
+# Stryker.js
+.stryker-tmp
+stryker.log
+mutation.html
