@@ -12,6 +12,6 @@
 	"checkers": ["typescript"],
 	"tsconfigFile": "tsconfig.json",
 	"allowConsoleColors": true,
-	"mutate": ["src/helper/*.ts"],
+	"mutate": ["src/helper/*.ts", "src/components/**/*.tsx"],
 	"ignoreStatic": true
 }
