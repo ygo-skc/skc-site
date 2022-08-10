@@ -1,4 +1,4 @@
-# YGO_API_Website
+# SKC Site
 
 ## Purpose
 This repo serves up content to the web from SKC API and SKC Suggestion Engine.
