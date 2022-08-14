@@ -1,5 +1,5 @@
 import '../../../css/util/event.css'
-import { Alert, IconButton, Snackbar, Typography } from '@mui/material'
+import { Alert, Dialog, DialogTitle, IconButton, Snackbar, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import DownstreamServices from '../../../helper/DownstreamServices'
 import Fetch from '../../../helper/FetchHandler'
@@ -13,6 +13,9 @@ const UpcomingTCGProducts = () => {
 	const [isSnackbarOpen, setIsSnackbarOpen] = useState<boolean>(false)
 	const [errFetchingData, setErrFetchingData] = useState(false)
 
+	const [eventDialogIsOpen, setEventDialogIsOpen] = useState(false)
+	const [eventDialogEventData, setEventDialogEventData] = useState<HeartApiEventItem | undefined>(undefined)
+
 	const upcomingTCGProductsCB = (eventOutput: HeartApiEventOutput) => {
 		setEvents(eventOutput.events)
 	}
@@ -24,7 +27,7 @@ const UpcomingTCGProducts = () => {
 	}, [])
 
 	useEffect(() => {
-		const eUI = events.map((event: HeartApiEventItem) => <EventItem event={event} />)
+		const eUI = events.map((event: HeartApiEventItem) => <EventItem event={event} showEventDialog={setEventDialogIsOpen} setEventDialogEventData={setEventDialogEventData} />)
 
 		setEventsUI(eUI)
 	}, [events])
@@ -58,6 +61,17 @@ const UpcomingTCGProducts = () => {
 					Link copied to clipboard. Share that shit!
 				</Alert>
 			</Snackbar>
+
+			<Dialog
+				maxWidth='xs'
+				onClose={() => {
+					setEventDialogIsOpen(false)
+				}}
+				open={eventDialogIsOpen}
+			>
+				<DialogTitle>TCG Product Details</DialogTitle>
+				{eventDialogEventData != undefined ? <EventItem event={eventDialogEventData} /> : undefined}
+			</Dialog>
 		</div>
 	)
 }
