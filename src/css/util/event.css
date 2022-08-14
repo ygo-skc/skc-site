@@ -20,13 +20,12 @@
 }
 
 .event-item {
-	padding: 0.75rem;
+	padding: 1.5rem;
 	width: 24rem;
 	border-radius: 1.5rem;
 	background: white;
 	margin-right: 1rem;
 	margin-bottom: 1rem;
-	border: 3px solid #ef7ea4;
 }
 
 .event-item-header {
@@ -55,12 +54,6 @@
 	color: inherit;
 }
 
-.event-url {
-	margin-top: 0.5rem;
-	margin-bottom: 0.25rem;
-	margin-right: 0.25rem;
-}
-
 /* below styles are for react markdown */
 .markdown p {
 	margin-block-start: 0em;
@@ -76,4 +69,13 @@
 .markdown h3 {
 	margin-block-start: 0em;
 	margin-block-end: 0.5rem;
+}
+
+.event-icon-container {
+	margin-top: 1rem;
+	float: right;
+}
+
+.event-icon-button.MuiButtonBase-root:not(:last-child) {
+	margin-right: 1rem;
 }

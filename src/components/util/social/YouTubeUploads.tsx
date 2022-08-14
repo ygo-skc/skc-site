@@ -31,8 +31,9 @@ const YouTubeUploads: FC<{ youtubeData: HeartApiYouTubeUpload[]; channelName: st
 
 			<Typography variant='h6'>Most Recent Uploads</Typography>
 
-			<Typography variant='body1'>
-				{channelDescription}
+			<Typography variant='body1'>{channelDescription}</Typography>
+			<br />
+			<Typography>
 				Go ahead and give it a{' '}
 				<Link className='link' color='secondary' href={`https://www.youtube.com/channel/${channelId}`}>
 					sub!
