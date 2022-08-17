@@ -1,86 +1,97 @@
 {
-  "name": "skc-site",
-  "version": "1.6.0",
-  "description": "Website to help duelists.",
-  "main": "index.js",
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@emotion/react": "11.10.0",
-    "@emotion/styled": "11.10.0",
-    "@mui/icons-material": "5.8.4",
-    "@mui/material": "5.9.3",
-    "@mui/styled-engine-sc": "5.9.3",
-    "@nivo/pie": "0.79.1",
-    "async": "3.2.4",
-    "axios": "0.27.2",
-    "glob-parent": "6.0.2",
-    "he": "1.2.0",
-    "lodash.startcase": "4.4.0",
-    "node-forge": "1.3.1",
-    "nth-check": "2.1.1",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "react-helmet": "6.1.0",
-    "react-markdown": "8.0.3",
-    "react-router-dom": "6.3.0",
-    "react-visibility-sensor": "5.1.1",
-    "styled-components": "5.3.5"
-  },
-  "scripts": {
-    "fresh-install": "rm -rf node_modules; npm install --no-optional",
-    "start": "env-cmd -e dev react-scripts start",
-    "start:development_remote": "env-cmd -e remote-dev react-scripts start",
-    "start:production": "env-cmd -e prod react scripts start",
-    "build": "env-cmd -e dev react-scripts build",
-    "build:development_remote": "env-cmd -e remote-dev react-scripts build",
-    "build:production": "env-cmd -e prod react-scripts build",
-    "test": "react-scripts test",
-    "ci:test": "react-scripts test --ci --coverage --watchAll=false",
-    "mutation": "stryker run config/stryker.conf.json",
-    "eject": "react-scripts eject",
-    "checkAWS:cloudfrontSKC": "aws cloudfront list-distributions | jq '.DistributionList.Items[] | select(.Aliases.Items | contains([\"thesupremekingscastle.com\"])) |  {id: .Id, aliases: .Aliases}'",
-    "uploadAWS:production": "npm run build:production; aws s3 rm s3://yugiohsite/ --recursive; aws s3 sync build s3://yugiohsite/ --cache-control max-age=3600; aws cloudfront create-invalidation --distribution-id ${YGO_CLOUDFRONT_PROD} --paths '/*'",
-    "uploadAWS:development": "npm run build:development_remote; aws s3 rm s3://yugiohsitedev/ --recursive; aws s3 sync build s3://yugiohsitedev/ --cache-control max-age=3600; aws cloudfront create-invalidation --distribution-id ${YGO_CLOUDFRONT_DEV} --paths '/*'"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ],
-  "devDependencies": {
-    "@stryker-mutator/core": "^6.1.2",
-    "@stryker-mutator/jest-runner": "^6.1.2",
-    "@stryker-mutator/typescript-checker": "^6.1.2",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "12.1.2",
-    "@types/lodash.startcase": "4.4.7",
-    "@types/react": "18.0.17",
-    "@types/react-dom": "18.0.6",
-    "@types/react-helmet": "6.1.5",
-    "@types/react-router-dom": "5.3.3",
-    "@types/styled-components": "5.1.25",
-    "env-cmd": "10.1.0",
-    "eslint-config-react-app": "7.0.1",
-    "jest-environment-jsdom": "^28.1.3",
-    "postcss-flexbugs-fixes": "5.0.2",
-    "postcss-normalize": "10.0.1",
-    "react-scripts": "5.0.1",
-    "react-test-renderer": "17.0.2",
-    "typescript": "4.7.4"
-  },
-  "jest": {
-    "coverageThreshold": {
-      "global": {
-        "branches": 50,
-        "functions": 50,
-        "lines": 50,
-        "statements": 50
-      }
-    }
-  }
+	"name": "skc-site",
+	"version": "1.6.0",
+	"description": "Website to help duelists.",
+	"main": "index.js",
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@emotion/react": "11.10.0",
+		"@emotion/styled": "11.10.0",
+		"@mui/icons-material": "5.8.4",
+		"@mui/material": "5.9.3",
+		"@mui/styled-engine-sc": "5.9.3",
+		"@nivo/pie": "0.79.1",
+		"async": "3.2.4",
+		"axios": "0.27.2",
+		"glob-parent": "6.0.2",
+		"he": "1.2.0",
+		"lodash.startcase": "4.4.0",
+		"node-forge": "1.3.1",
+		"nth-check": "2.1.1",
+		"react": "17.0.2",
+		"react-dom": "17.0.2",
+		"react-helmet": "6.1.0",
+		"react-markdown": "8.0.3",
+		"react-router-dom": "6.3.0",
+		"react-visibility-sensor": "5.1.1",
+		"styled-components": "5.3.5"
+	},
+	"scripts": {
+		"fresh-install": "rm -rf node_modules; npm install --no-optional",
+		"start": "webpack-dev-server --mode development",
+		"start:development_remote": "env-cmd -e remote-dev react-scripts start",
+		"start:production": "env-cmd -e prod react scripts start",
+		"build": "env-cmd -e dev webpack --mode production",
+		"build:development_remote": "env-cmd -e remote-dev webpack --mode production",
+		"build:production": "env-cmd -e prod webpack --mode production",
+		"test": "react-scripts test",
+		"ci:test": "react-scripts test --ci --coverage --watchAll=false",
+		"mutation": "stryker run config/stryker.conf.json",
+		"eject": "react-scripts eject",
+		"checkAWS:cloudfrontSKC": "aws cloudfront list-distributions | jq '.DistributionList.Items[] | select(.Aliases.Items | contains([\"thesupremekingscastle.com\"])) |  {id: .Id, aliases: .Aliases}'",
+		"uploadAWS:production": "npm run build:production; aws s3 rm s3://yugiohsite/ --recursive; aws s3 sync build s3://yugiohsite/ --cache-control max-age=3600; aws cloudfront create-invalidation --distribution-id ${YGO_CLOUDFRONT_PROD} --paths '/*'",
+		"uploadAWS:development": "npm run build:development_remote; aws s3 rm s3://yugiohsitedev/ --recursive; aws s3 sync build s3://yugiohsitedev/ --cache-control max-age=3600; aws cloudfront create-invalidation --distribution-id ${YGO_CLOUDFRONT_DEV} --paths '/*'"
+	},
+	"eslintConfig": {
+		"extends": "react-app"
+	},
+	"browserslist": [
+		">0.2%",
+		"not dead",
+		"not ie <= 11",
+		"not op_mini all"
+	],
+	"devDependencies": {
+		"@babel/preset-env": "^7.18.10",
+		"@babel/preset-react": "^7.18.6",
+		"@babel/preset-typescript": "^7.18.6",
+		"@stryker-mutator/core": "^6.1.2",
+		"@stryker-mutator/jest-runner": "^6.1.2",
+		"@stryker-mutator/typescript-checker": "^6.1.2",
+		"@testing-library/jest-dom": "^5.16.5",
+		"@testing-library/react": "12.1.2",
+		"@types/lodash.startcase": "4.4.7",
+		"@types/react": "18.0.17",
+		"@types/react-dom": "18.0.6",
+		"@types/react-helmet": "6.1.5",
+		"@types/react-router-dom": "5.3.3",
+		"@types/styled-components": "5.1.25",
+		"@types/webpack-dev-server": "^4.7.2",
+		"babel-loader": "^8.2.5",
+		"env-cmd": "10.1.0",
+		"eslint-config-react-app": "7.0.1",
+		"html-webpack-plugin": "^5.5.0",
+		"jest-environment-jsdom": "^28.1.3",
+		"postcss-flexbugs-fixes": "5.0.2",
+		"postcss-normalize": "10.0.1",
+		"react-scripts": "5.0.1",
+		"react-test-renderer": "17.0.2",
+		"ts-loader": "^9.3.1",
+		"ts-node": "^10.9.1",
+		"typescript": "4.7.4",
+		"webpack": "^5.74.0",
+		"webpack-cli": "^4.10.0",
+		"webpack-dev-server": "^4.10.0"
+	},
+	"jest": {
+		"coverageThreshold": {
+			"global": {
+				"branches": 50,
+				"functions": 50,
+				"lines": 50,
+				"statements": 50
+			}
+		}
+	}
 }
