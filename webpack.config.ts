@@ -2,6 +2,7 @@ import path from 'path'
 import { Configuration as WebpackConfiguration } from 'webpack'
 import { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
+import Dotenv from 'dotenv-webpack'
 
 interface Configuration extends WebpackConfiguration {
 	devServer?: WebpackDevServerConfiguration
@@ -51,7 +52,12 @@ const config: Configuration = {
 	resolve: {
 		extensions: ['.tsx', '.ts', '.js', 'jsx'],
 	},
-	plugins: [new HtmlWebpackPlugin({ template: './public/index.html', filename: 'index.html', inject: 'body' })],
+	plugins: [
+		new HtmlWebpackPlugin({ template: './public/index.html', filename: 'index.html', inject: 'body' }),
+		new Dotenv({
+			path: './env-cmdrc.json',
+		}),
+	],
 }
 
 export default config
