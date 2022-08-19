@@ -16,7 +16,7 @@ const config: Configuration = {
 	entry: './src/index.tsx',
 	// Where files should be sent once they are bundled
 	output: {
-		path: path.resolve(__dirname, 'dist'),
+		path: path.resolve(__dirname, 'build'),
 		filename: 'bundle.js',
 		publicPath: '/',
 	},
