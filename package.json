@@ -29,7 +29,7 @@
 	},
 	"scripts": {
 		"fresh-install": "rm -rf node_modules; npm install --no-optional",
-		"start": "NODE_ENV=dev webpack-dev-server --mode development",
+		"start": "webpack-dev-server --mode development --env dev --node-env dev",
 		"start:development_remote": "env-cmd -e remote-dev react-scripts start",
 		"start:production": "env-cmd -e prod react scripts start",
 		"build": "env-cmd -e dev webpack --mode production",
@@ -70,6 +70,7 @@
 		"@types/styled-components": "5.1.25",
 		"@types/webpack-dev-server": "^4.7.2",
 		"babel-loader": "^8.2.5",
+		"copy-webpack-plugin": "^11.0.0",
 		"dotenv-webpack": "^8.0.1",
 		"env-cmd": "10.1.0",
 		"eslint-config-react-app": "7.0.1",

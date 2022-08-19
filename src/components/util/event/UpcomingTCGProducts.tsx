@@ -34,7 +34,7 @@ const UpcomingTCGProducts = () => {
 
 	return (
 		<div className='event-container-end'>
-			<img src={`${process.env.PUBLIC_URL}/Img/yugioh-tcg-official-logo.png`} />
+			<img src={'assets/yugioh-tcg-official-logo.png'} />
 			<div className='event-header-container search-icon-container'>
 				<Typography className='event-header' variant='h4'>
 					Upcoming Yu-Gi-Oh! TCG Products
