@@ -2,11 +2,11 @@ import path from 'path'
 import { Configuration as WebpackConfiguration } from 'webpack'
 import { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
-import Dotenv from 'dotenv-webpack'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
 
-// import * as environment from './.env-cmdrc.json'
-// import webpack from 'webpack'
+import * as environment from './.env-cmdrc.json'
+import * as packageInfo from './package.json'
+import webpack from 'webpack'
 
 interface Configuration extends WebpackConfiguration {
 	devServer?: WebpackDevServerConfiguration
@@ -59,13 +59,18 @@ const config: Configuration = {
 	},
 	plugins: [
 		new HtmlWebpackPlugin({ template: './public/index.html', filename: 'index.html', inject: 'body' }),
-		new Dotenv({
-			path: './.env',
-		}),
+		// new Dotenv({
+		// 	path: './.env',
+		// }),
 		new CopyWebpackPlugin({
 			patterns: [{ from: 'public/Img', to: 'assets' }],
 		}),
-		// new webpack.DefinePlugin(environment['dev']),
+		new webpack.DefinePlugin({
+			'process.env.REACT_APP_API_HOST': JSON.stringify(environment['dev'].REACT_APP_API_HOST),
+			'process.env.REACT_APP_HEART_API_HOST': JSON.stringify(environment['dev'].REACT_APP_HEART_API_HOST),
+			'process.env.REACT_APP_CLIENT_ID': JSON.stringify(environment['dev'].REACT_APP_CLIENT_ID),
+			'process.env.REACT_APP_VERSION': JSON.stringify(packageInfo.version),
+		}),
 	],
 }
 
