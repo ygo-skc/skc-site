@@ -18,6 +18,7 @@ const config: Configuration = {
 	output: {
 		path: path.resolve(__dirname, 'dist'),
 		filename: 'bundle.js',
+		publicPath: '/',
 	},
 	// webpack 5 comes with devServer which loads in development mode
 	devServer: {
@@ -62,7 +63,7 @@ const config: Configuration = {
 			path: './.env',
 		}),
 		new CopyWebpackPlugin({
-			patterns: [{ from: 'public/Img', to: 'assets' }],
+			patterns: [{ from: 'public/Img', to: '/assets' }],
 		}),
 		// new webpack.DefinePlugin(environment['dev']),
 	],
