@@ -63,7 +63,7 @@ const config: Configuration = {
 			path: './.env',
 		}),
 		new CopyWebpackPlugin({
-			patterns: [{ from: 'public/Img', to: '/assets' }],
+			patterns: [{ from: 'public/Img', to: 'assets' }],
 		}),
 		// new webpack.DefinePlugin(environment['dev']),
 	],
