@@ -76,9 +76,6 @@ function config(env: any) {
 		},
 		plugins: [
 			new HtmlWebpackPlugin({ template: './public/index.html', filename: 'index.html', inject: 'body' }),
-			// new Dotenv({
-			// 	path: './.env',
-			// }),
 			new CopyWebpackPlugin({
 				patterns: [{ from: 'public/Img', to: 'assets' }],
 			}),
@@ -90,13 +87,7 @@ function config(env: any) {
 			}),
 			new webpackDashboard(),
 			new CleanWebpackPlugin({
-				// Use !negative patterns to exclude files
-				// default: []
 				cleanAfterEveryBuildPatterns: ['static*.*', '!static1.js'],
-
-				// Write Logs to Console
-				// (Always enabled when dry is true)
-				// default: false
 				verbose: true,
 			}),
 		],
