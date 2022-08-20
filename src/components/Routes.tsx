@@ -13,7 +13,7 @@ const ProductBrowse = lazy(() => import('./product/ProductBrowse'))
 const ProductInfo = lazy(() => import('./product/ProductInfo'))
 
 const Browse = lazy(() => import('./card/BrowseCards'))
-const Card = lazy(() => import('./card/card-information/CardInformation'))
+const CardInformation = lazy(() => import('./card/card-information/CardInformation'))
 
 const About = lazy(() => import('./about/About'))
 const HttpErr = lazy(() => import('./util/exception/HttpErr'))
@@ -44,7 +44,7 @@ export default function SKCSiteRoutes() {
 				<Routes>
 					<Route path={_SKCSiteRoutes.NAME_maps_ROUTE.Home} element={<Home />} />
 					<Route path={_SKCSiteRoutes.NAME_maps_ROUTE.BanList} element={<BanList />} />
-					<Route path={_SKCSiteRoutes.NAME_maps_ROUTE.Card} element={<Card />} />
+					<Route path={_SKCSiteRoutes.NAME_maps_ROUTE.Card} element={<CardInformation />} />
 					<Route path={_SKCSiteRoutes.NAME_maps_ROUTE.CardBrowse} element={<Browse />} />
 
 					<Route path={_SKCSiteRoutes.NAME_maps_ROUTE.ProductBrowse} element={<ProductBrowse />} />

@@ -3,24 +3,16 @@ import { ImageWithNumber } from './ImageWithText'
 
 class _CardAssociation {
 	static readonly levelImage = (
-		<img
-			src={`${process.env.PUBLIC_URL}/Img/card_level.svg`}
-			alt='Card Level'
-			style={{ width: '30px', height: '30px', display: 'inline-block', marginRight: '.35rem', verticalAlign: 'middle' }}
-		/>
+		<img src={`/assets/card_level.svg`} alt='Card Level' style={{ width: '30px', height: '30px', display: 'inline-block', marginRight: '.35rem', verticalAlign: 'middle' }} />
 	)
 
 	static readonly rankImage = (
-		<img
-			src={`${process.env.PUBLIC_URL}/Img/card_rank.svg`}
-			alt='Card Rank'
-			style={{ width: '30px', height: '30px', display: 'inline-block', marginRight: '.35rem', verticalAlign: 'middle' }}
-		/>
+		<img src={`/assets/card_rank.svg`} alt='Card Rank' style={{ width: '30px', height: '30px', display: 'inline-block', marginRight: '.35rem', verticalAlign: 'middle' }} />
 	)
 
 	static readonly pendulumScaleImage = (
 		<img
-			src={`${process.env.PUBLIC_URL}/Img/card_pendulum_scale.svg`}
+			src={`/assets/card_pendulum_scale.svg`}
 			alt='Card Rank'
 			style={{ width: '30px', height: '30px', display: 'inline-block', marginRight: '.35rem', marginLeft: '.5rem', verticalAlign: 'middle' }}
 		/>
@@ -48,7 +40,7 @@ const CardAssociation: FC<{ monsterAssociation?: SKCMonsterAssociation; attribut
 				<img
 					alt='Card Attribute'
 					style={{ width: '30px', height: '30px', display: 'inline-block', marginRight: '.85rem', verticalAlign: 'middle' }}
-					src={`${process.env.PUBLIC_URL}/Img/${attribute}.svg`}
+					src={`/assets/${attribute}.svg`}
 				/>
 
 				{monsterAssociation.level === undefined ? undefined : <ImageWithNumber imageComponent={_CardAssociation.levelImage} text={`x${monsterAssociation.level}`} />}

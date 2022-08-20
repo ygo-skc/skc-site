@@ -1,11 +1,23 @@
-import { Link, Typography } from '@mui/material'
+import { IconButton, Typography } from '@mui/material'
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
+import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined'
 import { FC } from 'react'
 import ReactMarkdown from 'react-markdown'
 import DateGlance from '../DateGlance'
 
-const EventItem: FC<{ event: HeartApiEventItem }> = ({ event }) => {
+const EventItem: FC<{ event: HeartApiEventItem; showEventDialog?: any; setEventDialogEventData?: any }> = ({ event, showEventDialog, setEventDialogEventData }) => {
+	const isWithinDialog = showEventDialog === undefined && setEventDialogEventData === undefined ? true : false
+	let parentStyle, notesStyle
+	if (isWithinDialog) {
+		parentStyle = 'event-item'
+		notesStyle = 'markdown'
+	} else {
+		parentStyle = 'event-item very-light-shadow'
+		notesStyle = 'event-notes markdown'
+	}
+
 	return (
-		<div className='event-item'>
+		<div className={parentStyle}>
 			<div className='event-item-header'>
 				<Typography className='event-name' variant='h6'>
 					{event.name}
@@ -16,14 +28,27 @@ const EventItem: FC<{ event: HeartApiEventItem }> = ({ event }) => {
 			<Typography className='event-notes-header' variant='subtitle1'>
 				Notes
 			</Typography>
-			<Typography className='event-notes' variant='body2'>
-				<ReactMarkdown children={`${event.notes}`} />
+			<Typography variant='body2'>
+				<ReactMarkdown className={notesStyle} children={`${event.notes}`} />
 			</Typography>
-			<Typography className='event-url' variant='body1' align='right'>
-				<Link color='secondary' className='link' href={event.url} target='_blank'>
-					{'More Info >'}
-				</Link>
-			</Typography>
+
+			<div className='event-icon-container'>
+				{isWithinDialog ? undefined : (
+					<IconButton
+						className='event-icon-button'
+						aria-label='info'
+						onClick={() => {
+							showEventDialog(true)
+							setEventDialogEventData(event)
+						}}
+					>
+						<InfoOutlinedIcon />
+					</IconButton>
+				)}
+				<IconButton className='event-icon-button' href={event.url} target='_blank' aria-label='visit site'>
+					<LaunchOutlinedIcon />
+				</IconButton>
+			</div>
 		</div>
 	)
 }

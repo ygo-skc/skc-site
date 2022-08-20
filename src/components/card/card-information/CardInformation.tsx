@@ -48,7 +48,7 @@ function cardDataReducer(state: any, action: any) {
 	}
 }
 
-const Card = () => {
+const CardInformation = () => {
 	const { cardId } = useParams()
 
 	if (_Card.cardId === null) {
@@ -137,4 +137,4 @@ const Card = () => {
 	)
 }
 
-export default Card
+export default CardInformation
