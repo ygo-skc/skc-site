@@ -7,6 +7,8 @@ import CopyWebpackPlugin from 'copy-webpack-plugin'
 import * as environment from './.env-cmdrc.json'
 import * as packageInfo from './package.json'
 import webpack from 'webpack'
+import webpackDashboard from 'webpack-dashboard/plugin'
+import { CleanWebpackPlugin } from 'clean-webpack-plugin'
 
 interface Configuration extends WebpackConfiguration {
 	devServer?: WebpackDevServerConfiguration
@@ -85,6 +87,17 @@ function config(env: any) {
 				'process.env.REACT_APP_HEART_API_HOST': JSON.stringify(environment[e].REACT_APP_HEART_API_HOST),
 				'process.env.REACT_APP_CLIENT_ID': JSON.stringify(environment[e].REACT_APP_CLIENT_ID),
 				'process.env.REACT_APP_VERSION': JSON.stringify(packageInfo.version),
+			}),
+			new webpackDashboard(),
+			new CleanWebpackPlugin({
+				// Use !negative patterns to exclude files
+				// default: []
+				cleanAfterEveryBuildPatterns: ['static*.*', '!static1.js'],
+
+				// Write Logs to Console
+				// (Always enabled when dry is true)
+				// default: false
+				verbose: true,
 			}),
 		],
 	} as Configuration

@@ -30,6 +30,7 @@
 	"scripts": {
 		"fresh-install": "rm -rf node_modules; npm install --no-optional",
 		"start": "webpack-dev-server --mode development --env dev",
+		"start:dashboard": "webpack-dashboard -- webpack serve --mode development --env dev",
 		"build": "webpack --mode production --env dev",
 		"build:development_remote": "webpack --mode production --env remote-dev",
 		"build:production": "webpack --mode production --env prod",
@@ -66,6 +67,7 @@
 		"@types/styled-components": "5.1.25",
 		"@types/webpack-dev-server": "^4.7.2",
 		"babel-loader": "^8.2.5",
+		"clean-webpack-plugin": "^4.0.0",
 		"copy-webpack-plugin": "^11.0.0",
 		"eslint-config-react-app": "7.0.1",
 		"html-webpack-plugin": "^5.5.0",
@@ -79,6 +81,7 @@
 		"typescript": "4.7.4",
 		"webpack": "^5.74.0",
 		"webpack-cli": "^4.10.0",
+		"webpack-dashboard": "^3.3.7",
 		"webpack-dev-server": "^4.10.0"
 	},
 	"jest": {
