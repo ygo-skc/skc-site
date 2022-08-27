@@ -108,6 +108,11 @@ const CardInformation = () => {
 					content={`Information for YuGiOh card ${cardName} such as ban lists it was in, products it can be found in, effect/stats, etc.`}
 				/>
 				<meta name='keywords' content={`YuGiOh, The Supreme Kings Castle, card, ${cardName}, ${_Card.cardId}, ${cardColor}`} />
+
+				<meta property='og:title' content={`${cardName} - ${_Card.cardId}`} />
+				<meta property='og:image' content={`https://images.thesupremekingscastle.com/cards/sm/${_Card.cardId}.jpg`} />
+				<meta property='og:type' content='website' />
+				<meta property='og:description' content={`Details For Yugioh Card - ${cardName}`} />
 			</Helmet>
 
 			<Breadcrumb crumbs={dynamicCrumbs} />
