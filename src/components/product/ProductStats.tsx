@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material'
+import Grid2 from '@mui/material/Unstable_Grid2'
 import { FC } from 'react'
 import Section from '../util/Section'
 import ProductStatPie from './ProductStatPie'
@@ -38,14 +38,14 @@ const ProductStats: FC<ProductStats & { isDataLoaded: boolean }> = ({ productRar
 		<Section
 			sectionName='Product Stats'
 			sectionContent={
-				<Grid className='section-content' container style={{ width: '100%' }}>
-					<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+				<Grid2 className='section-content' container style={{ width: '100%' }}>
+					<Grid2 xs={12} sm={12} md={6} lg={6} xl={6}>
 						<ProductStatPie isDataLoaded={isDataLoaded} statName='Rarity Spread' data={data} />
-					</Grid>
-					<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+					</Grid2>
+					<Grid2 xs={12} sm={12} md={6} lg={6} xl={6}>
 						<ProductStatPie isDataLoaded={isDataLoaded} statName='Card Type Spread' data={rrr} />
-					</Grid>
-				</Grid>
+					</Grid2>
+				</Grid2>
 			}
 		></Section>
 	)

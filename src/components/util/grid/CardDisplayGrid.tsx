@@ -1,6 +1,7 @@
 import { useEffect, memo, FC, useReducer } from 'react'
 
-import { Grid, IconButton, Box, Skeleton } from '@mui/material'
+import { IconButton, Box, Skeleton } from '@mui/material'
+import Grid2 from '@mui/material/Unstable_Grid2'
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded'
 import CardImageRounded from '../../card/CardImageRounded'
 import YGOCard from '../../card/YGOCard'
@@ -11,10 +12,10 @@ function getPlaceholderCardComponent() {
 
 	for (let i = 0; i < 10; i++) {
 		placeHolder.push(
-			<Grid key={`skeleton-${i}`} item xs={6} sm={4} md={4} lg={3} xl={2} style={{ padding: '.3rem' }}>
+			<Grid2 key={`skeleton-${i}`} xs={6} sm={4} md={4} lg={3} xl={2} style={{ padding: '.3rem' }}>
 				<Skeleton variant='rectangular' height='170' width='100%' style={{ borderRadius: '4rem', marginBottom: '1rem' }} />
 				<Skeleton variant='rectangular' width='100%' height='100' />
-			</Grid>
+			</Grid2>
 		)
 	}
 
@@ -43,17 +44,15 @@ const CardDisplayGrid: FC<_CardDisplayGrid> = memo(
 			const renderCards = () => {
 				return cardJsonResults.slice(numResultsDisplayed - numItemsToLoadWhenNeeded, numResultsDisplayed).map((card: SKCCard) => {
 					return (
-						<Grid
+						<Grid2
 							className='ygo-card-grid-item'
 							id={card.cardID}
 							key={card.cardID}
-							item
 							xs={6}
 							sm={4}
 							md={4}
 							lg={3}
 							xl={2}
-							style={{}}
 							onClick={() => window.location.assign(`/card/${card.cardID}`)}
 						>
 							<CardImageRounded cardImg={`https://images.thesupremekingscastle.com/cards/x-sm/${card.cardID}.jpg`} />
@@ -68,7 +67,7 @@ const CardDisplayGrid: FC<_CardDisplayGrid> = memo(
 								monsterAssociation={card.monsterAssociation}
 								cardAttribute={card.cardAttribute}
 							/>
-						</Grid>
+						</Grid2>
 					)
 				})
 			}
@@ -101,7 +100,7 @@ const CardDisplayGrid: FC<_CardDisplayGrid> = memo(
 
 		return (
 			<Box style={{ maxWidth: '100%' }}>
-				<Grid container>{!isDataLoaded ? cardGridUISkeleton : numResults === 0 ? <Hint>{'No Content To Show'}</Hint> : cardGridUI}</Grid>
+				<Grid2 container>{!isDataLoaded ? cardGridUISkeleton : numResults === 0 ? <Hint>{'No Content To Show'}</Hint> : cardGridUI}</Grid2>
 
 				{!isDataLoaded ? undefined : (
 					<IconButton
