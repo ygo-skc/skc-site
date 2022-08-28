@@ -1,0 +1,22 @@
+.ygo-card-with-quantity-parent {
+	width: 20rem;
+	max-width: 20rem;
+	cursor: pointer;
+	background-color: #eee;
+	padding: 1rem;
+	border-radius: 2.5rem;
+	box-sizing: border-box;
+}
+
+.MuiTypography-h5 {
+	margin-bottom: 0rem;
+}
+
+.quantity-text-container {
+	min-width: 45%;
+	margin: auto;
+}
+
+.header {
+	display: flex;
+}

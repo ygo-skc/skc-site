@@ -15,12 +15,12 @@ class _Card {
 	static cardImg: HTMLImageElement
 	static readonly crumbs = ['Home', 'Card Browse']
 
-	static readonly loadRelatedContent = (isLoading: boolean, cardName: string, cardColor: cardColor, productInfo: any, banListInfo: any) => {
+	static readonly loadRelatedContent = (isLoading: boolean, card: SKCCard, cardColor: cardColor, productInfo: any, banListInfo: any) => {
 		if (!isLoading) {
 			const CardInformationRelatedContent = lazy(() => import('./CardInformationRelatedContent'))
 			return (
 				<CardInformationRelatedContent
-					cardName={cardName}
+					card={card}
 					cardColor={cardColor?.replace(/Pendulum-/gi, '') as cardColor}
 					isLoading={isLoading}
 					cardID={_Card.cardId!}
@@ -135,7 +135,25 @@ const CardInformation = () => {
 					/>
 				}
 				twoThirdComponent={
-					<Suspense fallback={<Skeleton width='100%' height='20rem' />}>{_Card.loadRelatedContent(isLoading, cardName, cardColor, productInfo, banListInfo)}</Suspense>
+					<Suspense fallback={<Skeleton width='100%' height='20rem' />}>
+						{_Card.loadRelatedContent(
+							isLoading,
+							{
+								cardName: cardName,
+								cardColor: cardColor,
+								cardEffect: cardEffect,
+								cardAttribute: cardAttribute,
+								monsterType: monsterType,
+								monsterAttack: monsterAtk,
+								monsterDefense: monsterDef,
+								monsterAssociation: monsterAssociation,
+								cardID: _Card.cardId,
+							},
+							cardColor,
+							productInfo,
+							banListInfo
+						)}
+					</Suspense>
 				}
 			/>
 		</div>
