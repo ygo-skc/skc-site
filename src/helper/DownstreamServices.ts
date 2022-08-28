@@ -13,8 +13,11 @@ class DownstreamServices {
 		status: `${DownstreamServices.API_HOST}/api/v1/status`,
 	}
 
-	static readonly HEART_API_HOST_NAME = process.env.REACT_APP_HEART_API_HOST
+	// SKC Suggestion Engine
+	static readonly SKC_SUGGESTION_HOST_NAME = process.env.REACT_APP_SKC_SUGGESTION_HOST
 
+	// Heart API
+	static readonly HEART_API_HOST_NAME = process.env.REACT_APP_HEART_API_HOST
 	static readonly HEART_API_ENDPOINTS: { status: string } = {
 		status: `${DownstreamServices.HEART_API_HOST_NAME}/api/v1/status`,
 	}

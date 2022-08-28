@@ -161,3 +161,24 @@ declare type HeartApiEventItem = {
 	createdAt: string
 	updatedAt: string
 }
+
+declare type Deck = {
+	id: string
+	name: string
+	listContent: string
+	VideoUrl: string
+	uniqueCards: number
+	deckMascots: string[]
+	numMainDeckCards: number
+	numExtraDeckCards: number
+	tags: string[]
+	createdAt: Date
+	updatedAt: Date
+	mainDeck: null
+	extraDeck: null
+}
+
+declare type MaterialSuggestionOutput = {
+	namedMaterials: SKCCard[]
+	decks: Deck[]
+}

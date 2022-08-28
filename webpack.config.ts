@@ -81,6 +81,7 @@ function config(env: any) {
 			}),
 			new webpack.DefinePlugin({
 				'process.env.REACT_APP_API_HOST': JSON.stringify(environment[e].REACT_APP_API_HOST),
+				'process.env.REACT_APP_SKC_SUGGESTION_HOST': JSON.stringify(environment[e].REACT_APP_SKC_SUGGESTION_HOST),
 				'process.env.REACT_APP_HEART_API_HOST': JSON.stringify(environment[e].REACT_APP_HEART_API_HOST),
 				'process.env.REACT_APP_CLIENT_ID': JSON.stringify(environment[e].REACT_APP_CLIENT_ID),
 				'process.env.REACT_APP_VERSION': JSON.stringify(packageInfo.version),

@@ -1,4 +1,4 @@
-import { FC, memo } from 'react'
+import { FC, memo, useEffect, useState } from 'react'
 import { Typography } from '@mui/material'
 import Grid2 from '@mui/material/Unstable_Grid2'
 
@@ -7,6 +7,8 @@ import Section from '../../util/Section'
 import CardProductInformation from './CardProductInformation'
 import CardBanListInformation from './CardBanListInformation'
 import YGOCardWithQuantity from '../YGOCardWithQuantity'
+import Fetch from '../../../helper/FetchHandler'
+import DownstreamServices from '../../../helper/DownstreamServices'
 
 type CardInformationRelatedContentType = {
 	card: SKCCard
@@ -19,6 +21,26 @@ type CardInformationRelatedContentType = {
 
 const CardInformationRelatedContent: FC<CardInformationRelatedContentType> = memo(
 	({ card, cardColor, isLoading, productInfo, banListInfo, cardID }) => {
+		const [suggestions, setSuggestions] = useState<JSX.Element[]>()
+
+		useEffect(() => {
+			if (card === undefined) {
+				return
+			}
+
+			Fetch.handleFetch(
+				`${DownstreamServices.SKC_SUGGESTION_HOST_NAME}/api/v1/suggestions/card/${card.cardID}`,
+				(json: MaterialSuggestionOutput) => {
+					const s = json.namedMaterials.map((cardData) => {
+						return <YGOCardWithQuantity card={cardData} quantity={1} />
+					})
+
+					setSuggestions(s)
+				},
+				false
+			)?.catch((_err) => {})
+		}, [card])
+
 		return (
 			<div>
 				<Section
@@ -30,7 +52,7 @@ const CardInformationRelatedContent: FC<CardInformationRelatedContentType> = mem
 								Cards Used In Summoning <i>{card.cardName}</i> From ED
 							</Typography>
 
-							<YGOCardWithQuantity card={card} quantity={1} />
+							<div style={{ display: 'flex', overflowX: 'auto', paddingBottom: '1rem' }}>{suggestions}</div>
 						</div>
 					}
 				/>
