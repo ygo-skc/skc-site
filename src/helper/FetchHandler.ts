@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosResponse, CancelTokenSource } from 'axios'
-import { _SKCSiteRoutes } from '../components/Routes'
+import { _SKCSiteRoutes } from '../components/pages/Routes'
 
 class Fetch {
 	static readonly CLIENT_ID = process.env.REACT_APP_CLIENT_ID as string

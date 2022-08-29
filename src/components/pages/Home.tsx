@@ -11,8 +11,8 @@ import Breadcrumb from '../header-footer/Breadcrumb'
 import DatabaseInfo from '../util/database-info/DatabaseInfo'
 import UpcomingTCGProducts from '../util/event/UpcomingTCGProducts'
 
-const Welcome = lazy(() => import('./Welcome'))
-const YouTubeData = lazy(() => import('./YouTubeData'))
+const Welcome = lazy(() => import('../home/Welcome'))
+const YouTubeData = lazy(() => import('../home/YouTubeData'))
 const SocialMedia = lazy(() => import('../util/social/SocialMedia'))
 
 export default function Home() {

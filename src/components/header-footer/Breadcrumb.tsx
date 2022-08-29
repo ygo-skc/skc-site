@@ -8,7 +8,7 @@ import Block from '@mui/icons-material/Block'
 import ErrorIcon from '@mui/icons-material/Error'
 import InfoIcon from '@mui/icons-material/Info'
 
-import { _SKCSiteRoutes } from '../Routes'
+import { _SKCSiteRoutes } from '../pages/Routes'
 
 import '../../css/nav/breadcrumb.css'
 

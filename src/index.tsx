@@ -3,7 +3,7 @@ import { ThemeProvider } from '@mui/material/styles'
 
 import Footer from './components/header-footer/Footer'
 import NavigationBar from './components/header-footer/NavigationBar'
-import Routes from './components/Routes'
+import Routes from './components/pages/Routes'
 import MuiTheme from './components/MuiTheme'
 
 // const root = createRoot(document.getElementById('root') as Element)

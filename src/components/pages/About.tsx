@@ -3,8 +3,8 @@ import { Helmet } from 'react-helmet'
 
 import Breadcrumb from '../header-footer/Breadcrumb'
 import Section from '../util/Section'
-import AboutSKC from './AboutSKC'
-import Overview from './AboutServices'
+import AboutSKC from '../about/AboutSKC'
+import Overview from '../about/AboutServices'
 
 const About: FunctionComponent = () => {
 	return (

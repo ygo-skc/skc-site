@@ -3,12 +3,12 @@ import { useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { Skeleton } from '@mui/material'
 
-import Fetch from '../../../helper/FetchHandler'
-import DownstreamServices from '../../../helper/DownstreamServices'
-import OneThirdTwoThirdsGrid from '../../util/grid/OneThirdTwoThirdsGrid'
+import Fetch from '../../helper/FetchHandler'
+import DownstreamServices from '../../helper/DownstreamServices'
+import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 
-const Breadcrumb = lazy(() => import('../../header-footer/Breadcrumb'))
-const CardData = lazy(() => import('./CardData'))
+const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
+const CardData = lazy(() => import('../card/card-information/CardData'))
 
 class _Card {
 	static cardId: string | null = null
@@ -17,7 +17,7 @@ class _Card {
 
 	static readonly loadRelatedContent = (isLoading: boolean, card: SKCCard, cardColor: cardColor, productInfo: any, banListInfo: any) => {
 		if (!isLoading) {
-			const CardInformationRelatedContent = lazy(() => import('./CardInformationRelatedContent'))
+			const CardInformationRelatedContent = lazy(() => import('../card/card-information/CardInformationRelatedContent'))
 			return (
 				<CardInformationRelatedContent
 					card={card}

@@ -8,11 +8,11 @@ import Section from '../util/Section'
 
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 import { Typography } from '@mui/material'
-import ProductStats from './ProductStats'
+import ProductStats from '../product/ProductStats'
 
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 const CardDisplayGrid = lazy(() => import('../util/grid/CardDisplayGrid'))
-const ProductInfoDetailsComponent = lazy(() => import('./ProductInfoDetailsComponent'))
+const ProductInfoDetailsComponent = lazy(() => import('../product/ProductInfoDetailsComponent'))
 
 export default function ProductInfo() {
 	const { productId } = useParams()
