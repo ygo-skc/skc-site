@@ -2,7 +2,7 @@ import { useState, useEffect, lazy } from 'react'
 import { useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 
-import Fetch from '../../helper/FetchHandler'
+import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 import Section from '../util/Section'
 
@@ -32,7 +32,7 @@ export default function ProductInfo() {
 	const [cardJsonResults, setCardJsonResults] = useState([])
 
 	useEffect(() => {
-		Fetch.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT['productDetails']}/${productId}/en`, (json) => {
+		FetchHandler.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT['productDetails']}/${productId}/en`, (json) => {
 			setDynamicBreadcrumbs(['Home', 'Product Browse', `${json.productId}`])
 
 			setProductName(json.productName)

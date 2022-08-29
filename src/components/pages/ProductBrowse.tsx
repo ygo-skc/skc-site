@@ -1,7 +1,7 @@
 import { useState, useEffect, lazy, FunctionComponent } from 'react'
 import { Helmet } from 'react-helmet'
 
-import Fetch from '../../helper/FetchHandler'
+import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 
 import createTable from '../util/TableHelpers'
@@ -17,7 +17,7 @@ const ProductBrowse: FunctionComponent = () => {
 	const [isDataLoaded, setIsDataLoaded] = useState(false)
 
 	useEffect(() => {
-		Fetch.handleFetch(DownstreamServices.NAME_maps_ENDPOINT['productBrowse'], (json) => {
+		FetchHandler.handleFetch(DownstreamServices.NAME_maps_ENDPOINT['productBrowse'], (json) => {
 			setProductJson(json.products)
 			setIsDataLoaded(true)
 		})

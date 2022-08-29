@@ -2,7 +2,7 @@ import { lazy, useState, useEffect, Suspense, useReducer } from 'react'
 import { Helmet } from 'react-helmet'
 
 import { Skeleton } from '@mui/material'
-import Fetch from '../../helper/FetchHandler'
+import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
@@ -103,7 +103,7 @@ export default function BanList() {
 	})
 
 	useEffect(() => {
-		Fetch.handleFetch(DownstreamServices.NAME_maps_ENDPOINT['banListsUrl'], (json) => {
+		FetchHandler.handleFetch(DownstreamServices.NAME_maps_ENDPOINT['banListsUrl'], (json) => {
 			dateDispatch({
 				type: 'UPDATE_BAN_LIST',
 				banContentLinks: json.banListDates.map((item: SKCBanListDate) => item._links),
@@ -122,7 +122,7 @@ export default function BanList() {
 			setFetchingBanListNewContent(true)
 			setFetchingBanListRemovedContent(true)
 
-			Fetch.handleFetch(banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List New Content'].href, (json) => {
+			FetchHandler.handleFetch(banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List New Content'].href, (json) => {
 				selectedBanListDispatch({
 					type: 'UPDATE_NEW',
 					newForbiddenCards: json.newForbidden,
@@ -137,7 +137,7 @@ export default function BanList() {
 				console.log(isFetchingBanListNewContent)
 			})
 
-			Fetch.handleFetch(banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List Removed Content'].href, (json) => {
+			FetchHandler.handleFetch(banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List Removed Content'].href, (json) => {
 				selectedBanListDispatch({
 					type: 'UPDATE_REMOVED',
 					removedCards: json.removedCards,
@@ -147,7 +147,7 @@ export default function BanList() {
 				setFetchingBanListRemovedContent(false)
 			})
 
-			Fetch.handleFetch(banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List Content'].href, (json) => {
+			FetchHandler.handleFetch(banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List Content'].href, (json) => {
 				selectedBanListDispatch({
 					type: 'UPDATE_LIST',
 					forbidden: json.forbidden,

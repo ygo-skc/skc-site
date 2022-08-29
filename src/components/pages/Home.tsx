@@ -1,7 +1,7 @@
 import { useEffect, useState, lazy, Suspense } from 'react'
 import { Helmet } from 'react-helmet'
 
-import Fetch from '../../helper/FetchHandler'
+import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
@@ -21,7 +21,7 @@ export default function Home() {
 	const [productTotal, setProductTotal] = useState(0)
 
 	useEffect(() => {
-		Fetch.handleFetch(DownstreamServices.NAME_maps_ENDPOINT['databaseStats'], (json) => {
+		FetchHandler.handleFetch(DownstreamServices.NAME_maps_ENDPOINT['databaseStats'], (json) => {
 			setCardTotal(json.cardTotal)
 			setBanListTotal(json.banListTotal)
 			setProductTotal(json.productTotal)

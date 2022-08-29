@@ -7,7 +7,7 @@ import Section from '../../util/Section'
 import CardProductInformation from './CardProductInformation'
 import CardBanListInformation from './CardBanListInformation'
 import YGOCardWithQuantity from '../YGOCardWithQuantity'
-import Fetch from '../../../helper/FetchHandler'
+import FetchHandler from '../../../helper/FetchHandler'
 import DownstreamServices from '../../../helper/DownstreamServices'
 
 type CardInformationRelatedContentType = {
@@ -28,7 +28,7 @@ const CardInformationRelatedContent: FC<CardInformationRelatedContentType> = mem
 				return
 			}
 
-			Fetch.handleFetch(
+			FetchHandler.handleFetch(
 				`${DownstreamServices.SKC_SUGGESTION_HOST_NAME}/api/v1/suggestions/card/${card.cardID}`,
 				(json: MaterialSuggestionOutput) => {
 					const s = json.namedMaterials.map((cardData) => {

@@ -6,7 +6,7 @@ import { Typography, IconButton, Popover, Badge } from '@mui/material'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 
 import DownstreamServices from '../../helper/DownstreamServices'
-import Fetch from '../../helper/FetchHandler'
+import FetchHandler from '../../helper/FetchHandler'
 import GenericNonBreakingErr from '../util/exception/GenericNonBreakingErr'
 import MessageItemComponent from './MessageItemComponent'
 
@@ -23,7 +23,7 @@ function Messages() {
 	const isDisplayingNotifications = Boolean(messagesAnchor)
 
 	useEffect(() => {
-		Fetch.handleFetch(
+		FetchHandler.handleFetch(
 			`${DownstreamServices.HEART_API_HOST_NAME}/api/v1/message?service=skc&tags=skc-site,skc-api`,
 			(messageData: HeartApiMessageOutput) => {
 				const totalMessages = messageData.messages.length

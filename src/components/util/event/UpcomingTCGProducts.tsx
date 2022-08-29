@@ -2,7 +2,7 @@ import '../../../css/util/event.css'
 import { Alert, Dialog, DialogTitle, IconButton, Snackbar, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import DownstreamServices from '../../../helper/DownstreamServices'
-import Fetch from '../../../helper/FetchHandler'
+import FetchHandler from '../../../helper/FetchHandler'
 import EventItem from './EventItem'
 import LinkIcon from '@mui/icons-material/Link'
 import GenericNonBreakingErr from '../exception/GenericNonBreakingErr'
@@ -21,7 +21,7 @@ const UpcomingTCGProducts = () => {
 	}
 
 	useEffect(() => {
-		Fetch.handleFetch(`${DownstreamServices.HEART_API_HOST_NAME}/api/v1/events?service=skc&tags=product-release`, upcomingTCGProductsCB, false)?.catch((_err) => {
+		FetchHandler.handleFetch(`${DownstreamServices.HEART_API_HOST_NAME}/api/v1/events?service=skc&tags=product-release`, upcomingTCGProductsCB, false)?.catch((_err) => {
 			setErrFetchingData(true)
 		})
 	}, [])

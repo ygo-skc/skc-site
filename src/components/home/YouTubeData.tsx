@@ -2,7 +2,7 @@ import { useEffect, useState, lazy, FC } from 'react'
 
 import YouTubeUploads from '../util/social/YouTubeUploads'
 import DownstreamServices from '../../helper/DownstreamServices'
-import Fetch from '../../helper/FetchHandler'
+import FetchHandler from '../../helper/FetchHandler'
 
 const GenericNonBreakingErr = lazy(() => import('../util/exception/GenericNonBreakingErr'))
 
@@ -32,7 +32,7 @@ const YouTubeData: FC<_YouTubeData> = ({ channel, hasDarkBackground }) => {
 	const [errFetchingData, setErrFetchingData] = useState(false)
 
 	useEffect(() => {
-		Fetch.handleFetch(
+		FetchHandler.handleFetch(
 			`${DownstreamServices.HEART_API_HOST_NAME}/api/v1/yt/channel/uploads?channelId=${channelId}`,
 			(json) => {
 				setYoutubeUploadData(json.videos)

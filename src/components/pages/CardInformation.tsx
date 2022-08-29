@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { Skeleton } from '@mui/material'
 
-import Fetch from '../../helper/FetchHandler'
+import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 
@@ -80,7 +80,7 @@ const CardInformation = () => {
 	const [dynamicCrumbs, setDynamicCrumbs] = useState([..._Card.crumbs, ''])
 
 	useEffect(() => {
-		Fetch.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT['cardInstanceUrl']}${_Card.cardId}?allInfo=true`, (json) => {
+		FetchHandler.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT['cardInstanceUrl']}${_Card.cardId}?allInfo=true`, (json) => {
 			setDynamicCrumbs([..._Card.crumbs, json.cardID])
 
 			cardDispatch({
