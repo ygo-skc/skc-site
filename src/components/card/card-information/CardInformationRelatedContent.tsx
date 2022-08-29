@@ -52,7 +52,7 @@ const CardInformationRelatedContent: FC<CardInformationRelatedContentType> = mem
 								Cards Used In Summoning <i>{card.cardName}</i> From ED
 							</Typography>
 
-							<div style={{ display: 'flex', overflowX: 'auto', paddingBottom: '1rem' }}>{suggestions}</div>
+							<div style={{ display: 'flex', overflowX: 'auto', paddingBottom: '.3rem' }}>{suggestions}</div>
 						</div>
 					}
 				/>

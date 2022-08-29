@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material'
+import { Chip } from '@mui/material'
 import { FC } from 'react'
 import CardImageRounded from './CardImageRounded'
 import YGOCard from './YGOCard'
@@ -14,9 +14,7 @@ const YGOCardWithQuantity: FC<{
 			<div className='header'>
 				<CardImageRounded cardImg={`https://images.thesupremekingscastle.com/cards/tn/${card.cardID}.jpg`} />
 				<div className='quantity-text-container'>
-					<Typography align='right' variant='h5'>
-						Quantity: {quantity}
-					</Typography>
+					<Chip className='quantity-chip' key={card.cardID} label={`X ${quantity}`} />
 				</div>
 			</div>
 
