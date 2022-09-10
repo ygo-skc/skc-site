@@ -11,7 +11,7 @@
 		"@mui/icons-material": "5.10.3",
 		"@mui/material": "5.10.4",
 		"@mui/styled-engine-sc": "5.10.3",
-		"@nivo/pie": "0.79.1",
+		"@nivo/pie": "0.80.0",
 		"axios": "0.27.2",
 		"he": "1.2.0",
 		"lodash.startcase": "4.4.0",
