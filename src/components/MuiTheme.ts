@@ -30,6 +30,17 @@ const MuiTheme = createTheme({
 				},
 			},
 		},
+		MuiFormLabel: {
+			styleOverrides: {
+				root: {
+					fontFamily: 'Catamaran,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
+					fontWeight: 600,
+					lineHeight: '1.8rem',
+					color: '#555',
+					fontSize: '1.45rem',
+				},
+			},
+		},
 		MuiChip: {
 			styleOverrides: {
 				root: {

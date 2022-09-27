@@ -66,6 +66,7 @@ export default function BanList() {
 	const [isFetchingBanList, setIsFetchingBanList] = useState(true)
 	const [isFetchingBanListNewContent, setFetchingBanListNewContent] = useState(true)
 	const [isFetchingBanListRemovedContent, setFetchingBanListRemovedContent] = useState(true)
+	const [format, setFormat] = useState<BanListFormat>('TCG')
 
 	const [
 		{
@@ -103,14 +104,14 @@ export default function BanList() {
 	})
 
 	useEffect(() => {
-		FetchHandler.handleFetch(DownstreamServices.NAME_maps_ENDPOINT['banListsUrl'], (json) => {
+		FetchHandler.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT['banListsUrl']}?format=${format}`, (json) => {
 			dateDispatch({
 				type: 'UPDATE_BAN_LIST',
 				banContentLinks: json.banListDates.map((item: SKCBanListDate) => item._links),
 				banListStartDates: json.banListDates.map((item: SKCBanListDate) => item.effectiveDate),
 			})
 		})
-	}, [])
+	}, [format])
 
 	useEffect(() => {
 		if (banContentLinks.length !== 0) setSelectedBanList(banListStartDates[0])
@@ -182,7 +183,12 @@ export default function BanList() {
 							sectionName='Overview'
 							sectionContent={
 								<div className='section-content'>
-									<BanListDates banListStartDates={banListStartDates} setSelectedBanList={(ind: number) => setSelectedBanList(banListStartDates[ind])} />
+									<BanListDates
+										format={format}
+										setFormat={setFormat}
+										banListStartDates={banListStartDates}
+										setSelectedBanList={(ind: number) => setSelectedBanList(banListStartDates[ind])}
+									/>
 								</div>
 							}
 						/>

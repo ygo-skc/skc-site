@@ -182,3 +182,5 @@ declare type MaterialSuggestionOutput = {
 	namedMaterials: SKCCard[]
 	decks: Deck[]
 }
+
+declare type BanListFormat = 'TCG' | 'MD'

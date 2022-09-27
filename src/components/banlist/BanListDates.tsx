@@ -1,14 +1,16 @@
 import { FC, memo, useEffect, useState } from 'react'
-import { MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material'
+import { FormControl, FormControlLabel, FormLabel, MenuItem, Radio, RadioGroup, Select, SelectChangeEvent, Typography } from '@mui/material'
 import { Dates } from '../../helper/Dates'
 
 type _BanListDates = {
+	format: BanListFormat
+	setFormat: React.Dispatch<React.SetStateAction<BanListFormat>>
 	banListStartDates: string[]
 	setSelectedBanList: { (ind: number): void }
 }
 
 const BanListDates: FC<_BanListDates> = memo(
-	({ banListStartDates, setSelectedBanList }) => {
+	({ format, setFormat, banListStartDates, setSelectedBanList }) => {
 		const [banListGrid, setBanListGrid] = useState<JSX.Element[]>([])
 
 		useEffect(() => {
@@ -26,7 +28,21 @@ const BanListDates: FC<_BanListDates> = memo(
 
 		return (
 			<div>
-				<Typography variant='h4'>Date Range</Typography>
+				<FormControl className='ban-list-format-form'>
+					<FormLabel id='ban-list-format-label'>Format</FormLabel>
+					<RadioGroup
+						value={format}
+						onChange={(item) => setFormat(item.target.value as BanListFormat)}
+						row
+						aria-labelledby='ban-list-format-label'
+						name='ban-list-format-buttons-group'
+					>
+						<FormControlLabel value='TCG' control={<Radio />} label='TCG' />
+						<FormControlLabel value='MD' control={<Radio />} label='Master Duel' />
+					</RadioGroup>
+				</FormControl>
+
+				<Typography variant='h6'>Date Range</Typography>
 				<Select
 					style={{ width: '95%', margin: 'auto' }}
 					onChange={(event: SelectChangeEvent) => {
@@ -39,7 +55,7 @@ const BanListDates: FC<_BanListDates> = memo(
 		)
 	},
 	(prevProps, nextProps) => {
-		if (prevProps.banListStartDates.length !== nextProps.banListStartDates.length) return false
+		if (prevProps.banListStartDates.length !== nextProps.banListStartDates.length || prevProps.format !== nextProps.format) return false
 		return true
 	}
 )
