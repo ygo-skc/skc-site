@@ -183,4 +183,4 @@ declare type MaterialSuggestionOutput = {
 	decks: Deck[]
 }
 
-declare type BanListFormat = 'TCG' | 'MD'
+declare type BanListFormat = 'TCG' | 'MD' | 'DL'

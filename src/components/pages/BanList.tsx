@@ -11,12 +11,9 @@ import BreadCrumb from '../header-footer/Breadcrumb'
 
 import '../../css/main-pages/ban-list.css'
 import Section from '../util/Section'
-import TabbedView from '../banlist/TabbedView'
-import BanListSection from '../banlist/BanListSection'
-import BanListChangedStatus from '../banlist/BanListChangedStatus'
 
 const BanListDates = lazy(() => import('../banlist/BanListDates'))
-// const BanListStats = lazy(() => import('./BanListStats'))
+const BanListContentNormalFormat = lazy(() => import('../banlist/BanListContentNormalFormat'))
 
 function dateReducer(_: { banListStartDates: string; banContentLinks: SKCBanListDateLinks }, action: any) {
 	return { banListStartDates: action.banListStartDates, banContentLinks: action.banContentLinks }
@@ -135,7 +132,6 @@ export default function BanList() {
 				})
 
 				setFetchingBanListNewContent(false)
-				console.log(isFetchingBanListNewContent)
 			})
 
 			FetchHandler.handleFetch(banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List Removed Content'].href, (json) => {
@@ -196,38 +192,27 @@ export default function BanList() {
 				}
 				twoThirdComponent={
 					<Suspense fallback={<div />}>
-						<BanListChangedStatus newStatusName='Forbidden' cards={newForbiddenCards} numCards={numNewForbidden} isLoadingData={isFetchingBanListNewContent} />
-						<BanListChangedStatus newStatusName='Limited' cards={newLimitedCards} numCards={numNewLimited} isLoadingData={isFetchingBanListNewContent} />
-						<BanListChangedStatus newStatusName='Semi Limited' cards={newSemiLimitedCards} numCards={numNewSemiLimited} isLoadingData={isFetchingBanListNewContent} />
-
-						<BanListChangedStatus newStatusName='Unlimited' cards={removedCards} numCards={numRemoved} isLoadingData={isFetchingBanListRemovedContent} />
-
-						<Section
-							sectionHeaderBackground={'ban-list'}
-							sectionName='Content'
-							sectionContent={
-								<div className='sticky section-content'>
-									<TabbedView
-										numForbidden={numForbidden}
-										numLimited={numLimited}
-										numSemiLimited={numSemiLimited}
-										forbiddenContent={
-											<BanListSection
-												sectionExplanation='Forbidden cards cannot be used in Deck/Side Deck in the Advanced Format'
-												cards={forbidden}
-												isDataLoaded={!isFetchingBanList}
-											/>
-										}
-										limitedContent={
-											<BanListSection sectionExplanation='Limited cards can be included in Deck/Side deck - max 1' cards={limited} isDataLoaded={!isFetchingBanList} />
-										}
-										semiLimitedContent={
-											<BanListSection sectionExplanation='Semi-Limited cards can be included in Deck/Side deck - max 2' cards={semiLimited} isDataLoaded={!isFetchingBanList} />
-										}
-									/>
-								</div>
-							}
-						/>
+						{format === 'DL' ? undefined : (
+							<BanListContentNormalFormat
+								forbidden={forbidden}
+								limited={limited}
+								semiLimited={semiLimited}
+								numForbidden={numForbidden}
+								numLimited={numLimited}
+								numSemiLimited={numSemiLimited}
+								removedCards={removedCards}
+								numRemoved={numRemoved}
+								newForbiddenCards={newForbiddenCards}
+								newLimitedCards={newLimitedCards}
+								newSemiLimitedCards={newSemiLimitedCards}
+								numNewForbidden={numNewForbidden}
+								numNewLimited={numNewLimited}
+								numNewSemiLimited={numNewSemiLimited}
+								isFetchingBanListNewContent={isFetchingBanListNewContent}
+								isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
+								isFetchingBanList={isFetchingBanList}
+							/>
+						)}
 					</Suspense>
 				}
 			/>

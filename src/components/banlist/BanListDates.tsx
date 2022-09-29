@@ -39,6 +39,7 @@ const BanListDates: FC<_BanListDates> = memo(
 					>
 						<FormControlLabel value='TCG' control={<Radio />} label='TCG' />
 						<FormControlLabel value='MD' control={<Radio />} label='Master Duel' />
+						<FormControlLabel value='DL' control={<Radio />} label='Duel Links' />
 					</RadioGroup>
 				</FormControl>
 
