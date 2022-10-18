@@ -11,6 +11,7 @@ import BreadCrumb from '../header-footer/Breadcrumb'
 
 import '../../css/main-pages/ban-list.css'
 import Section from '../util/Section'
+import BanListContentDuelLinksFormat from '../banlist/BanListContentDuelLinksFormat'
 
 const BanListDates = lazy(() => import('../banlist/BanListDates'))
 const BanListContentNormalFormat = lazy(() => import('../banlist/BanListContentNormalFormat'))
@@ -25,15 +26,37 @@ function determineListSize(size: number | undefined): number {
 
 function currentlySelectedBanListReducer(state: any, action: any) {
 	switch (action.type) {
-		case 'UPDATE_LIST':
+		case 'UPDATE_NORMAL_FORMAT_LIST':
 			return {
 				...state,
 				forbidden: action.forbidden,
 				limited: action.limited,
 				semiLimited: action.semiLimited,
+				limitedOne: [],
+				limitedTwo: [],
+				limitedThree: [],
 				numForbidden: action.numForbidden,
 				numLimited: action.numLimited,
 				numSemiLimited: action.numSemiLimited,
+				numLimitedOne: 0,
+				numLimitedTwo: 0,
+				numLimitedThree: 0,
+			}
+		case 'UPDATE_DUEL_LINKS_FORMAT_LIST':
+			return {
+				...state,
+				forbidden: action.forbidden,
+				limited: [],
+				semiLimited: [],
+				limitedOne: action.limitedOne,
+				limitedTwo: action.limitedTwo,
+				limitedThree: action.limitedThree,
+				numForbidden: action.numForbidden,
+				numLimited: 0,
+				numSemiLimited: 0,
+				numLimitedOne: action.numLimitedOne,
+				numLimitedTwo: action.numLimitedTwo,
+				numLimitedThree: action.numLimitedThree,
 			}
 		case 'UPDATE_REMOVED':
 			return {
@@ -70,6 +93,9 @@ export default function BanList() {
 			forbidden,
 			limited,
 			semiLimited,
+			limitedOne,
+			limitedTwo,
+			limitedThree,
 			numForbidden,
 			numLimited,
 			numSemiLimited,
@@ -81,12 +107,18 @@ export default function BanList() {
 			numNewForbidden,
 			numNewLimited,
 			numNewSemiLimited,
+			numLimitedOne,
+			numLimitedTwo,
+			numLimitedThree,
 		},
 		selectedBanListDispatch,
 	] = useReducer(currentlySelectedBanListReducer, {
 		forbidden: [],
 		limited: [],
 		semiLimited: [],
+		limitedOne: [],
+		limitedTwo: [],
+		limitedThree: [],
 		numForbidden: 0,
 		numLimited: 0,
 		numSemiLimited: 0,
@@ -98,10 +130,14 @@ export default function BanList() {
 		numNewForbidden: 0,
 		numNewLimited: 0,
 		numNewSemiLimited: 0,
+		numLimitedOne: 0,
+		numLimitedTwo: 0,
+		numLimitedThree: 0,
 	})
 
 	useEffect(() => {
 		FetchHandler.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT['banListsUrl']}?format=${format}`, (json) => {
+			console.log(json)
 			dateDispatch({
 				type: 'UPDATE_BAN_LIST',
 				banContentLinks: json.banListDates.map((item: SKCBanListDate) => item._links),
@@ -145,15 +181,29 @@ export default function BanList() {
 			})
 
 			FetchHandler.handleFetch(banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List Content'].href, (json) => {
-				selectedBanListDispatch({
-					type: 'UPDATE_LIST',
-					forbidden: json.forbidden,
-					limited: json.limited,
-					semiLimited: json.semiLimited,
-					numForbidden: determineListSize(json.numForbidden),
-					numLimited: determineListSize(json.numLimited),
-					numSemiLimited: determineListSize(json.numSemiLimited),
-				})
+				if (format === 'DL') {
+					selectedBanListDispatch({
+						type: 'UPDATE_DUEL_LINKS_FORMAT_LIST',
+						forbidden: json.forbidden,
+						limitedOne: json.limitedOne,
+						limitedTwo: json.limitedTwo,
+						limitedThree: json.limitedThree,
+						numForbidden: determineListSize(json.numForbidden),
+						numLimitedOne: determineListSize(json.numLimitedOne),
+						numLimitedTwo: determineListSize(json.numLimitedTwo),
+						numLimitedThree: determineListSize(json.numLimitedThree),
+					})
+				} else {
+					selectedBanListDispatch({
+						type: 'UPDATE_NORMAL_FORMAT_LIST',
+						forbidden: json.forbidden,
+						limited: json.limited,
+						semiLimited: json.semiLimited,
+						numForbidden: determineListSize(json.numForbidden),
+						numLimited: determineListSize(json.numLimited),
+						numSemiLimited: determineListSize(json.numSemiLimited),
+					})
+				}
 
 				setIsFetchingBanList(false)
 			})
@@ -192,7 +242,29 @@ export default function BanList() {
 				}
 				twoThirdComponent={
 					<Suspense fallback={<div />}>
-						{format === 'DL' ? undefined : (
+						{format === 'DL' ? (
+							<BanListContentDuelLinksFormat
+								forbidden={forbidden}
+								limitedOne={limitedOne}
+								limitedTwo={limitedTwo}
+								limitedThree={limitedThree}
+								numForbidden={numForbidden}
+								numLimitedOne={numLimitedOne}
+								numLimitedTwo={numLimitedTwo}
+								numLimitedThree={numLimitedThree}
+								// removedCards={removedCards}
+								// numRemoved={numRemoved}
+								// newForbiddenCards={newForbiddenCards}
+								// newLimitedCards={newLimitedCards}
+								// newSemiLimitedCards={newSemiLimitedCards}
+								// numNewForbidden={numNewForbidden}
+								// numNewLimited={numNewLimited}
+								// numNewSemiLimited={numNewSemiLimited}
+								isFetchingBanListNewContent={isFetchingBanListNewContent}
+								isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
+								isFetchingBanList={isFetchingBanList}
+							/>
+						) : (
 							<BanListContentNormalFormat
 								forbidden={forbidden}
 								limited={limited}

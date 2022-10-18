@@ -2,7 +2,7 @@ import { FC } from 'react'
 import Section from '../util/Section'
 import BanListChangedStatus from './BanListChangedStatus'
 import BanListSection from './BanListSection'
-import TabbedView from './TabbedView'
+import NormalFormatTabbedView from './tab/NormalFormatTabbedView'
 
 type _BanListContentNormalFormat = {
 	forbidden: SKCCard[]
@@ -56,7 +56,7 @@ const BanListContentNormalFormat: FC<_BanListContentNormalFormat> = ({
 				sectionName='Content'
 				sectionContent={
 					<div className='sticky section-content'>
-						<TabbedView
+						<NormalFormatTabbedView
 							numForbidden={numForbidden}
 							numLimited={numLimited}
 							numSemiLimited={numSemiLimited}
