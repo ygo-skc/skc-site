@@ -64,15 +64,37 @@ function currentlySelectedBanListReducer(state: any, action: any) {
 				removedCards: action.removedCards,
 				numRemoved: action.numRemoved,
 			}
-		case 'UPDATE_NEW':
+		case 'UPDATE_NEW_ADDITIONS_NORMAL_FORMAT':
 			return {
 				...state,
 				newForbiddenCards: action.newForbiddenCards,
 				newLimitedCards: action.newLimitedCards,
 				newSemiLimitedCards: action.newSemiLimitedCards,
+				newLimitedOne: [],
+				newLimitedTwo: [],
+				newLimitedThree: [],
 				numNewForbidden: action.numNewForbidden,
 				numNewLimited: action.numNewLimited,
 				numNewSemiLimited: action.numNewSemiLimited,
+				numNewLimitedOne: 0,
+				numNewLimitedTwo: 0,
+				numNewLimitedThree: 0,
+			}
+		case 'UPDATE_NEW_ADDITIONS_DUEL_LINKS_FORMAT':
+			return {
+				...state,
+				newForbiddenCards: action.newForbiddenCards,
+				newLimitedCards: [],
+				newSemiLimitedCards: [],
+				newLimitedOneCards: action.newLimitedOneCards,
+				newLimitedTwoCards: action.newLimitedTwoCards,
+				newLimitedThreeCards: action.newLimitedThreeCards,
+				numNewForbidden: action.numNewForbidden,
+				numNewLimited: 0,
+				numNewSemiLimited: 0,
+				numNewLimitedOne: action.numNewLimitedOne,
+				numNewLimitedTwo: action.numNewLimitedTwo,
+				numNewLimitedThree: action.numNewLimitedThree,
 			}
 		default:
 			return state
@@ -104,9 +126,15 @@ export default function BanList() {
 			newForbiddenCards,
 			newLimitedCards,
 			newSemiLimitedCards,
+			newLimitedOneCards,
+			newLimitedTwoCards,
+			newLimitedThreeCards,
 			numNewForbidden,
 			numNewLimited,
 			numNewSemiLimited,
+			numNewLimitedOne,
+			numNewLimitedTwo,
+			numNewLimitedThree,
 			numLimitedOne,
 			numLimitedTwo,
 			numLimitedThree,
@@ -127,9 +155,15 @@ export default function BanList() {
 		newForbiddenCards: [],
 		newLimitedCards: [],
 		newSemiLimitedCards: [],
+		newLimitedOneCards: [],
+		newLimitedTwoCards: [],
+		newLimitedThreeCards: [],
 		numNewForbidden: 0,
 		numNewLimited: 0,
 		numNewSemiLimited: 0,
+		numNewLimitedOneCards: 0,
+		numNewLimitedTwoCards: 0,
+		numNewLimitedThreeCards: 0,
 		numLimitedOne: 0,
 		numLimitedTwo: 0,
 		numLimitedThree: 0,
@@ -137,7 +171,6 @@ export default function BanList() {
 
 	useEffect(() => {
 		FetchHandler.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT['banListsUrl']}?format=${format}`, (json) => {
-			console.log(json)
 			dateDispatch({
 				type: 'UPDATE_BAN_LIST',
 				banContentLinks: json.banListDates.map((item: SKCBanListDate) => item._links),
@@ -157,16 +190,30 @@ export default function BanList() {
 			setFetchingBanListRemovedContent(true)
 
 			FetchHandler.handleFetch(banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List New Content'].href, (json) => {
-				selectedBanListDispatch({
-					type: 'UPDATE_NEW',
-					newForbiddenCards: json.newForbidden,
-					newLimitedCards: json.newLimited,
-					newSemiLimitedCards: json.newSemiLimited,
-					numNewForbidden: json.numNewForbidden,
-					numNewLimited: json.numNewLimited,
-					numNewSemiLimited: json.numNewSemiLimited,
-				})
-
+				console.log(banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List New Content'].href)
+				if (format === 'DL') {
+					selectedBanListDispatch({
+						type: 'UPDATE_NEW_ADDITIONS_DUEL_LINKS_FORMAT',
+						newForbiddenCards: json.newForbidden,
+						newLimitedOneCards: json.newLimitedOne,
+						newLimitedTwoCards: json.newLimitedTwo,
+						newLimitedThreeCards: json.newLimitedThree,
+						numNewForbidden: json.numNewForbidden,
+						numNewLimitedOne: json.numNewLimitedOne,
+						numNewLimitedTwo: json.numNewLimitedTwo,
+						numNewLimitedThree: json.numNewLimitedThree,
+					})
+				} else {
+					selectedBanListDispatch({
+						type: 'UPDATE_NEW_ADDITIONS_NORMAL_FORMAT',
+						newForbiddenCards: json.newForbidden,
+						newLimitedCards: json.newLimited,
+						newSemiLimitedCards: json.newSemiLimited,
+						numNewForbidden: json.numNewForbidden,
+						numNewLimited: json.numNewLimited,
+						numNewSemiLimited: json.numNewSemiLimited,
+					})
+				}
 				setFetchingBanListNewContent(false)
 			})
 
@@ -252,14 +299,16 @@ export default function BanList() {
 								numLimitedOne={numLimitedOne}
 								numLimitedTwo={numLimitedTwo}
 								numLimitedThree={numLimitedThree}
-								// removedCards={removedCards}
-								// numRemoved={numRemoved}
-								// newForbiddenCards={newForbiddenCards}
-								// newLimitedCards={newLimitedCards}
-								// newSemiLimitedCards={newSemiLimitedCards}
-								// numNewForbidden={numNewForbidden}
-								// numNewLimited={numNewLimited}
-								// numNewSemiLimited={numNewSemiLimited}
+								removedCards={removedCards}
+								numRemoved={numRemoved}
+								newForbiddenCards={newForbiddenCards}
+								newLimitedOneCards={newLimitedOneCards}
+								newLimitedTwoCards={newLimitedTwoCards}
+								newLimitedThreeCards={newLimitedThreeCards}
+								numNewForbidden={numNewForbidden}
+								numNewLimitedOne={numNewLimitedOne}
+								numNewLimitedTwo={numNewLimitedTwo}
+								numNewLimitedThree={numNewLimitedThree}
 								isFetchingBanListNewContent={isFetchingBanListNewContent}
 								isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
 								isFetchingBanList={isFetchingBanList}

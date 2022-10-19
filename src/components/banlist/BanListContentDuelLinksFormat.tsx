@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import Section from '../util/Section'
+import BanListChangedStatus from './BanListChangedStatus'
 import BanListSection from './BanListSection'
 import DuelLinksFormatTabbedView from './tab/DuelLinksFormatTabbedView'
 
@@ -12,14 +13,16 @@ type _BanListContentNormalFormat = {
 	numLimitedOne: number
 	numLimitedTwo: number
 	numLimitedThree: number
-	// removedCards: SKCCardsPreviousBanListStatus[]
-	// numRemoved: number
-	// newForbiddenCards: SKCCardsPreviousBanListStatus[]
-	// newLimitedCards: SKCCardsPreviousBanListStatus[]
-	// newSemiLimitedCards: SKCCardsPreviousBanListStatus[]
-	// numNewForbidden: number
-	// numNewLimited: number
-	// numNewSemiLimited: number
+	removedCards: SKCCardsPreviousBanListStatus[]
+	numRemoved: number
+	newForbiddenCards: SKCCardsPreviousBanListStatus[]
+	newLimitedOneCards: SKCCardsPreviousBanListStatus[]
+	newLimitedTwoCards: SKCCardsPreviousBanListStatus[]
+	newLimitedThreeCards: SKCCardsPreviousBanListStatus[]
+	numNewForbidden: number
+	numNewLimitedOne: number
+	numNewLimitedTwo: number
+	numNewLimitedThree: number
 	isFetchingBanListNewContent: boolean
 	isFetchingBanListRemovedContent: boolean
 	isFetchingBanList: boolean
@@ -34,25 +37,27 @@ const BanListContentNormalFormat: FC<_BanListContentNormalFormat> = ({
 	numLimitedOne,
 	numLimitedTwo,
 	numLimitedThree,
-	// removedCards,
-	// numRemoved,
-	// newForbiddenCards,
-	// newLimitedCards,
-	// newSemiLimitedCards,
-	// numNewForbidden,
-	// numNewLimited,
-	// numNewSemiLimited,
-	// isFetchingBanListNewContent,
-	// isFetchingBanListRemovedContent,
+	removedCards,
+	numRemoved,
+	newForbiddenCards,
+	newLimitedOneCards,
+	newLimitedTwoCards,
+	newLimitedThreeCards,
+	numNewForbidden,
+	numNewLimitedOne,
+	numNewLimitedTwo,
+	numNewLimitedThree,
+	isFetchingBanListNewContent,
+	isFetchingBanListRemovedContent,
 	isFetchingBanList,
 }) => {
 	return (
 		<div>
-			{/* <BanListChangedStatus newStatusName='Forbidden' cards={newForbiddenCards} numCards={numNewForbidden} isLoadingData={isFetchingBanListNewContent} />
-			<BanListChangedStatus newStatusName='Limited' cards={newLimitedCards} numCards={numNewLimited} isLoadingData={isFetchingBanListNewContent} />
-			<BanListChangedStatus newStatusName='Semi Limited' cards={newSemiLimitedCards} numCards={numNewSemiLimited} isLoadingData={isFetchingBanListNewContent} />
-
-			<BanListChangedStatus newStatusName='Unlimited' cards={removedCards} numCards={numRemoved} isLoadingData={isFetchingBanListRemovedContent} /> */}
+			<BanListChangedStatus newStatusName='Forbidden' cards={newForbiddenCards} numCards={numNewForbidden} isLoadingData={isFetchingBanListNewContent} />
+			<BanListChangedStatus newStatusName='Limited One' cards={newLimitedOneCards} numCards={numNewLimitedOne} isLoadingData={isFetchingBanListNewContent} />
+			<BanListChangedStatus newStatusName='Limited Two' cards={newLimitedTwoCards} numCards={numNewLimitedTwo} isLoadingData={isFetchingBanListNewContent} />
+			<BanListChangedStatus newStatusName='Limited Three' cards={newLimitedThreeCards} numCards={numNewLimitedThree} isLoadingData={isFetchingBanListNewContent} />
+			<BanListChangedStatus newStatusName='Unlimited' cards={removedCards} numCards={numRemoved} isLoadingData={isFetchingBanListRemovedContent} />
 
 			<Section
 				sectionHeaderBackground={'ban-list'}
