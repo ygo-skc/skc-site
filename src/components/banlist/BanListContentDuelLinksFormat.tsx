@@ -67,7 +67,7 @@ const BanListContentNormalFormat: FC<_BanListContentNormalFormat> = ({
 							forbiddenContent={<BanListSection sectionExplanation='Forbidden cards cannot be used in your deck' cards={forbidden} isDataLoaded={!isFetchingBanList} />}
 							limitedOneContent={
 								<BanListSection
-									sectionExplanation='You can only use a maximum of one card in the Limited One list in your deck.'
+									sectionExplanation='You can only use a maximum of one card in the Limited One list in your deck'
 									cards={limitedOne}
 									isDataLoaded={!isFetchingBanList}
 								/>
