@@ -11,10 +11,10 @@ import BreadCrumb from '../header-footer/Breadcrumb'
 
 import '../../css/main-pages/ban-list.css'
 import Section from '../util/Section'
-import BanListContentDuelLinksFormat from '../banlist/BanListContentDuelLinksFormat'
+import BanListContentDuelLinksFormat from '../banlist/content/BanListContentDuelLinksFormat'
 
 const BanListDates = lazy(() => import('../banlist/BanListDates'))
-const BanListContentNormalFormat = lazy(() => import('../banlist/BanListContentNormalFormat'))
+const BanListContentNormalFormat = lazy(() => import('../banlist/content/BanListContentNormalFormat'))
 
 function dateReducer(_: { banListStartDates: string; banContentLinks: SKCBanListDateLinks }, action: any) {
 	return { banListStartDates: action.banListStartDates, banContentLinks: action.banContentLinks }

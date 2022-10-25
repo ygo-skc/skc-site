@@ -1,8 +1,8 @@
 import { FC } from 'react'
-import Section from '../util/Section'
-import BanListChangedStatus from './BanListChangedStatus'
-import BanListSection from './BanListSection'
-import DuelLinksFormatTabbedView from './tab/DuelLinksFormatTabbedView'
+import Section from '../../util/Section'
+import BanListChangedStatus from '../BanListChangedStatus'
+import BanListSection from '../BanListSection'
+import DuelLinksFormatTabbedView from '../tab/DuelLinksFormatTabbedView'
 
 type _BanListContentNormalFormat = {
 	forbidden: SKCCard[]
