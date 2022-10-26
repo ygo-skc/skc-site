@@ -170,6 +170,10 @@ export default function BanList() {
 	})
 
 	useEffect(() => {
+		setIsFetchingBanList(true)
+		setFetchingBanListNewContent(true)
+		setFetchingBanListRemovedContent(true)
+
 		FetchHandler.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT['banListsUrl']}?format=${format}`, (json) => {
 			dateDispatch({
 				type: 'UPDATE_BAN_LIST',
@@ -190,7 +194,6 @@ export default function BanList() {
 			setFetchingBanListRemovedContent(true)
 
 			FetchHandler.handleFetch(banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List New Content'].href, (json) => {
-				console.log(banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List New Content'].href)
 				if (format === 'DL') {
 					selectedBanListDispatch({
 						type: 'UPDATE_NEW_ADDITIONS_DUEL_LINKS_FORMAT',
