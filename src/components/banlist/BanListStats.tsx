@@ -14,7 +14,11 @@ import { FC } from 'react'
 // }
 
 const BanListStats: FC<{}> = () => {
-	return <div></div>
+	return (
+		<div>
+			<p>ddd</p>
+		</div>
+	)
 }
 
 export default BanListStats

@@ -1,6 +1,7 @@
 import { FC, memo, useEffect, useState } from 'react'
 import { FormControl, FormControlLabel, FormLabel, MenuItem, Radio, RadioGroup, Select, SelectChangeEvent, Typography } from '@mui/material'
 import { Dates } from '../../helper/Dates'
+import BanListStats from './BanListStats'
 
 type _BanListDates = {
 	format: BanListFormat
@@ -28,7 +29,7 @@ const BanListDates: FC<_BanListDates> = memo(
 
 		return (
 			<div>
-				<FormControl className='ban-list-format-form'>
+				<FormControl className='ban-list-format-form group'>
 					<FormLabel id='ban-list-format-label'>Format</FormLabel>
 					<RadioGroup
 						value={format}
@@ -43,15 +44,21 @@ const BanListDates: FC<_BanListDates> = memo(
 					</RadioGroup>
 				</FormControl>
 
-				<Typography variant='h6'>Date Range</Typography>
-				<Select
-					style={{ width: '95%', margin: 'auto' }}
-					onChange={(event: SelectChangeEvent) => {
-						setSelectedBanList(+event.target.value)
-					}}
-				>
-					{banListGrid}
-				</Select>
+				<div className='group'>
+					<Typography variant='h6'>Date Range</Typography>
+					<Select
+						style={{ width: '95%', margin: 'auto' }}
+						onChange={(event: SelectChangeEvent) => {
+							setSelectedBanList(+event.target.value)
+						}}
+					>
+						{banListGrid}
+					</Select>
+				</div>
+
+				<div className='group'>
+					<BanListStats />
+				</div>
 			</div>
 		)
 	},

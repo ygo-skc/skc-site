@@ -9,7 +9,7 @@ const ProductInfoDetailsComponent: FC<ProductDetails> = ({ productName, productI
 	summaryRows.push(['Product Type', productType])
 	summaryRows.push(['Product Sub-Type', productSubType])
 	summaryRows.push(['American Release', Dates.getDateString(new Date(productReleaseDate))])
-	summaryRows.push(['Number of Unique Cards', numUniqueCards])
+	summaryRows.push(['Total Unique Cards', numUniqueCards])
 
 	return (
 		<Box className='sticky'>
@@ -22,8 +22,10 @@ const ProductInfoDetailsComponent: FC<ProductDetails> = ({ productName, productI
 					<Skeleton variant='text' height={40} width='100%' style={{ marginBottom: '.8rem' }} />
 				)}
 
-				<Typography variant='h5'>Summary</Typography>
-				{isDataLoaded ? createTable([], summaryRows) : <Skeleton variant='rectangular' height='170' />}
+				<div className='group'>
+					<Typography variant='h5'>Summary</Typography>
+					{isDataLoaded ? createTable([], summaryRows) : <Skeleton variant='rectangular' height='170' />}
+				</div>
 			</div>
 		</Box>
 	)

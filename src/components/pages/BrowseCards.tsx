@@ -122,8 +122,10 @@ export default function BrowseCards() {
 									<CardBrowse browseCriteriaDispatch={browseCriteriaDispatch} selectedCriteria={selectedCriteria} skcCardBrowseCriteriaOutput={skcCardBrowseCriteriaOutput} />
 								</div>
 
-								<Typography variant='h5'>Results</Typography>
-								{createTable([], browseSummaryStats)}
+								<div className='group'>
+									<Typography variant='h5'>Results</Typography>
+									{createTable([], browseSummaryStats)}
+								</div>
 							</div>
 						}
 					/>
