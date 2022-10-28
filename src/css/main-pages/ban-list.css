@@ -13,6 +13,28 @@
 	text-transform: none;
 }
 
-.ban-list-format-form {
-	margin-bottom: 1.2rem;
+.ban-list-format-section {
+	margin-bottom: 1.5rem;
+}
+
+.ban-list-date-section {
+	margin-bottom: 1.5rem;
+}
+
+.ban-list-date-selector {
+	width: 100%;
+	margin: auto;
+}
+
+.ban-list-date-selector .MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper {
+	background-color: black;
+}
+
+.ban-list-date-selector-menu-item {
+	padding: 0.85rem;
+}
+
+.breakdown-chip.MuiChip-root {
+	color: black;
+	background-color: white;
 }

@@ -14,6 +14,9 @@ import Section from '../util/Section'
 import BanListContentDuelLinksFormat from '../banlist/content/BanListContentDuelLinksFormat'
 
 const BanListDates = lazy(() => import('../banlist/BanListDates'))
+const BanListFormat = lazy(() => import('../banlist/BanListFormat'))
+const BanListBreakdown = lazy(() => import('../banlist/BanListBreakdown'))
+
 const BanListContentNormalFormat = lazy(() => import('../banlist/content/BanListContentNormalFormat'))
 
 function dateReducer(_: { banListStartDates: string; banContentLinks: SKCBanListDateLinks }, action: any) {
@@ -180,12 +183,13 @@ export default function BanList() {
 				banContentLinks: json.banListDates.map((item: SKCBanListDate) => item._links),
 				banListStartDates: json.banListDates.map((item: SKCBanListDate) => item.effectiveDate),
 			})
+			if (banContentLinks.length !== 0) setSelectedBanList(banListStartDates[0])
 		})
 	}, [format])
 
 	useEffect(() => {
 		if (banContentLinks.length !== 0) setSelectedBanList(banListStartDates[0])
-	}, [banContentLinks, banListStartDates])
+	}, [banListStartDates, banContentLinks])
 
 	useEffect(() => {
 		if (selectedBanList && selectedBanList.length !== 0) {
@@ -272,19 +276,16 @@ export default function BanList() {
 
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={
-					<Suspense fallback={<Skeleton variant='rectangular' width='100%' height='300px' />}>
+					<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='500px' />}>
 						<Section
 							sticky
 							sectionHeaderBackground={'ban-list'}
 							sectionName='Overview'
 							sectionContent={
 								<div className='section-content'>
-									<BanListDates
-										format={format}
-										setFormat={setFormat}
-										banListStartDates={banListStartDates}
-										setSelectedBanList={(ind: number) => setSelectedBanList(banListStartDates[ind])}
-									/>
+									<BanListFormat format={format} setFormat={setFormat} />
+									<BanListDates banListStartDates={banListStartDates} setSelectedBanList={(ind: number) => setSelectedBanList(banListStartDates[ind])} />
+									<BanListBreakdown stats={{ numForbidden, numLimited, numSemiLimited }} isFetchingBanList={isFetchingBanList} />
 								</div>
 							}
 						/>

@@ -1,69 +1,50 @@
 import { FC, memo, useEffect, useState } from 'react'
-import { FormControl, FormControlLabel, FormLabel, MenuItem, Radio, RadioGroup, Select, SelectChangeEvent, Typography } from '@mui/material'
+import { MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material'
 import { Dates } from '../../helper/Dates'
-import BanListStats from './BanListStats'
 
 type _BanListDates = {
-	format: BanListFormat
-	setFormat: React.Dispatch<React.SetStateAction<BanListFormat>>
 	banListStartDates: string[]
 	setSelectedBanList: { (ind: number): void }
 }
 
 const BanListDates: FC<_BanListDates> = memo(
-	({ format, setFormat, banListStartDates, setSelectedBanList }) => {
-		const [banListGrid, setBanListGrid] = useState<JSX.Element[]>([])
+	({ banListStartDates, setSelectedBanList }) => {
+		const [selectorItems, setSelectorItems] = useState<JSX.Element[]>()
+		const [selectedBanListInd, setSelectedBanListInd] = useState('0')
 
 		useEffect(() => {
-			let banListGridItems = banListStartDates.map((_: string, ind: number) => {
+			let selectorItems: JSX.Element[] = banListStartDates.map((_: string, ind: number) => {
 				return (
-					<MenuItem style={{ padding: '1rem' }} value={ind}>
+					<MenuItem className='ban-list-date-selector-menu-item' value={ind}>
 						{Dates.getCurrentBanListDate(banListStartDates[ind], banListStartDates)}
 					</MenuItem>
 				)
 			})
 
-			setBanListGrid(banListGridItems)
-			setSelectedBanList(0)
-		}, [banListStartDates, setSelectedBanList])
+			setSelectorItems(selectorItems)
+			setSelectedBanListInd('0')
+		}, [banListStartDates])
 
 		return (
-			<div>
-				<FormControl className='ban-list-format-form group'>
-					<FormLabel id='ban-list-format-label'>Format</FormLabel>
-					<RadioGroup
-						value={format}
-						onChange={(item) => setFormat(item.target.value as BanListFormat)}
-						row
-						aria-labelledby='ban-list-format-label'
-						name='ban-list-format-buttons-group'
-					>
-						<FormControlLabel value='TCG' control={<Radio />} label='TCG' />
-						<FormControlLabel value='MD' control={<Radio />} label='Master Duel' />
-						<FormControlLabel value='DL' control={<Radio />} label='Duel Links' />
-					</RadioGroup>
-				</FormControl>
+			<div className='ban-list-date-section group'>
+				<Typography variant='h5'>Date Range</Typography>
+				<Typography variant='subtitle1'>There are {banListStartDates.length} ban lists for selected format currently in the database</Typography>
 
-				<div className='group'>
-					<Typography variant='h6'>Date Range</Typography>
-					<Select
-						style={{ width: '95%', margin: 'auto' }}
-						onChange={(event: SelectChangeEvent) => {
-							setSelectedBanList(+event.target.value)
-						}}
-					>
-						{banListGrid}
-					</Select>
-				</div>
-
-				<div className='group'>
-					<BanListStats />
-				</div>
+				<Select
+					className='ban-list-date-selector'
+					value={selectedBanListInd}
+					onChange={(event: SelectChangeEvent) => {
+						setSelectedBanListInd(event.target.value)
+						setSelectedBanList(+event.target.value)
+					}}
+				>
+					{selectorItems}
+				</Select>
 			</div>
 		)
 	},
 	(prevProps, nextProps) => {
-		if (prevProps.banListStartDates.length !== nextProps.banListStartDates.length || prevProps.format !== nextProps.format) return false
+		if (prevProps.banListStartDates !== nextProps.banListStartDates) return false
 		return true
 	}
 )

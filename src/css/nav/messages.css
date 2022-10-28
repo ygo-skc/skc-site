@@ -53,9 +53,9 @@
 	padding-left: 1.2rem;
 	padding-top: 1.75rem;
 	padding-bottom: 1.75rem;
-	max-width: 400px;
-	max-height: 500px;
-	background: rgb(255, 255, 255, 0.75);
+	max-width: 500px;
+	max-height: 550px;
+	background: rgb(255, 255, 255, 0.85);
 	overflow-x: hidden;
 }
 
