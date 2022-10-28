@@ -13,7 +13,6 @@ import DownstreamServices from '../../helper/DownstreamServices'
 
 import createTable from '../util/TableHelpers'
 
-import '../../css/util/divider.css'
 import '../../css/suggestion-box/database-search-styles.css'
 import CardBrowse from '../util/search/CardBrowse'
 

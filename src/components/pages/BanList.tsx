@@ -15,7 +15,7 @@ import BanListContentDuelLinksFormat from '../banlist/content/BanListContentDuel
 
 const BanListDates = lazy(() => import('../banlist/BanListDates'))
 const BanListFormat = lazy(() => import('../banlist/BanListFormat'))
-const BanListBreakdown = lazy(() => import('../banlist/BanListBreakdown'))
+const BanListBreakdown = lazy(() => import('../banlist/breakdown/BanListBreakdown'))
 
 const BanListContentNormalFormat = lazy(() => import('../banlist/content/BanListContentNormalFormat'))
 
@@ -285,7 +285,13 @@ export default function BanList() {
 								<div className='section-content'>
 									<BanListFormat format={format} setFormat={setFormat} />
 									<BanListDates banListStartDates={banListStartDates} setSelectedBanList={(ind: number) => setSelectedBanList(banListStartDates[ind])} />
-									<BanListBreakdown stats={{ numForbidden, numLimited, numSemiLimited }} isFetchingBanList={isFetchingBanList} />
+									<BanListBreakdown
+										spreads={{ numForbidden, numLimited, numSemiLimited }}
+										diffSpreads={{ numNewForbidden, numNewLimited, numNewSemiLimited, numRemoved }}
+										isFetchingBanList={isFetchingBanList}
+										isFetchingBanListNewContent={isFetchingBanListNewContent}
+										isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
+									/>
 								</div>
 							}
 						/>

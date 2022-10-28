@@ -38,3 +38,31 @@
 	color: black;
 	background-color: white;
 }
+
+.forbidden-breakdown-chip.MuiChip-root {
+	border: 1px solid rgb(245, 0, 87);
+}
+
+.limited-breakdown-chip.MuiChip-root {
+	border: 1px solid rgb(255, 145, 0);
+}
+
+.semi-limited-breakdown-chip.MuiChip-root {
+	border: 1px solid rgb(76, 175, 80);
+}
+
+.limited-one-breakdown-chip.MuiChip-root {
+	border: 1px solid rgb(255, 145, 0);
+}
+
+.limited-two-breakdown-chip.MuiChip-root {
+	border: 1px solid rgb(255, 145, 0);
+}
+
+.limited-three-breakdown-chip.MuiChip-root {
+	border: 1px solid rgb(255, 145, 0);
+}
+
+.removed-breakdown-chip.MuiChip-root {
+	border: 1px solid black;
+}
