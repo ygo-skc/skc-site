@@ -11,13 +11,15 @@ import BreadCrumb from '../header-footer/Breadcrumb'
 
 import '../../css/main-pages/ban-list.css'
 import Section from '../util/Section'
-import BanListContentDuelLinksFormat from '../banlist/content/BanListContentDuelLinksFormat'
 
 const BanListDates = lazy(() => import('../banlist/BanListDates'))
 const BanListFormat = lazy(() => import('../banlist/BanListFormat'))
 const BanListBreakdown = lazy(() => import('../banlist/breakdown/BanListBreakdown'))
 
 const BanListContentNormalFormat = lazy(() => import('../banlist/content/BanListContentNormalFormat'))
+const BanListContentDuelLinksFormat = lazy(() => import('../banlist/content/BanListContentDuelLinksFormat'))
+const BanListDiffContentNormalFormat = lazy(() => import('../banlist/content/BanListDiffContentNormalFormat'))
+const BanListDiffContentDuelLinksFormat = lazy(() => import('../banlist/content/BanListDiffContentDuelLinksFormat'))
 
 function dateReducer(_: { banListStartDates: string; banContentLinks: SKCBanListDateLinks }, action: any) {
 	return { banListStartDates: action.banListStartDates, banContentLinks: action.banContentLinks }
@@ -108,6 +110,7 @@ export default function BanList() {
 	const [{ banListStartDates, banContentLinks }, dateDispatch] = useReducer(dateReducer, { banListStartDates: [], banContentLinks: [] })
 
 	const [selectedBanList, setSelectedBanList] = useState<string>('')
+	const [isFetchingBanListDates, setIsFetchingBanListDates] = useState(true)
 	const [isFetchingBanList, setIsFetchingBanList] = useState(true)
 	const [isFetchingBanListNewContent, setFetchingBanListNewContent] = useState(true)
 	const [isFetchingBanListRemovedContent, setFetchingBanListRemovedContent] = useState(true)
@@ -173,6 +176,7 @@ export default function BanList() {
 	})
 
 	useEffect(() => {
+		setIsFetchingBanListDates(true)
 		setIsFetchingBanList(true)
 		setFetchingBanListNewContent(true)
 		setFetchingBanListRemovedContent(true)
@@ -184,6 +188,8 @@ export default function BanList() {
 				banListStartDates: json.banListDates.map((item: SKCBanListDate) => item.effectiveDate),
 			})
 			if (banContentLinks.length !== 0) setSelectedBanList(banListStartDates[0])
+
+			setIsFetchingBanListDates(false)
 		})
 	}, [format])
 
@@ -284,7 +290,11 @@ export default function BanList() {
 							sectionContent={
 								<div className='section-content'>
 									<BanListFormat format={format} setFormat={setFormat} />
-									<BanListDates banListStartDates={banListStartDates} setSelectedBanList={(ind: number) => setSelectedBanList(banListStartDates[ind])} />
+									<BanListDates
+										isFetchingBanListDates={isFetchingBanListDates}
+										banListStartDates={banListStartDates}
+										setSelectedBanList={(ind: number) => setSelectedBanList(banListStartDates[ind])}
+									/>
 									<BanListBreakdown
 										spreads={{ numForbidden, numLimited, numSemiLimited }}
 										diffSpreads={{ numNewForbidden, numNewLimited, numNewSemiLimited, numRemoved }}
@@ -300,49 +310,57 @@ export default function BanList() {
 				twoThirdComponent={
 					<Suspense fallback={<div />}>
 						{format === 'DL' ? (
-							<BanListContentDuelLinksFormat
-								forbidden={forbidden}
-								limitedOne={limitedOne}
-								limitedTwo={limitedTwo}
-								limitedThree={limitedThree}
-								numForbidden={numForbidden}
-								numLimitedOne={numLimitedOne}
-								numLimitedTwo={numLimitedTwo}
-								numLimitedThree={numLimitedThree}
-								removedCards={removedCards}
-								numRemoved={numRemoved}
-								newForbiddenCards={newForbiddenCards}
-								newLimitedOneCards={newLimitedOneCards}
-								newLimitedTwoCards={newLimitedTwoCards}
-								newLimitedThreeCards={newLimitedThreeCards}
-								numNewForbidden={numNewForbidden}
-								numNewLimitedOne={numNewLimitedOne}
-								numNewLimitedTwo={numNewLimitedTwo}
-								numNewLimitedThree={numNewLimitedThree}
-								isFetchingBanListNewContent={isFetchingBanListNewContent}
-								isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
-								isFetchingBanList={isFetchingBanList}
-							/>
+							<div>
+								<BanListDiffContentDuelLinksFormat
+									removedCards={removedCards}
+									numRemoved={numRemoved}
+									newForbiddenCards={newForbiddenCards}
+									newLimitedOneCards={newLimitedOneCards}
+									newLimitedTwoCards={newLimitedTwoCards}
+									newLimitedThreeCards={newLimitedThreeCards}
+									numNewForbidden={numNewForbidden}
+									numNewLimitedOne={numNewLimitedOne}
+									numNewLimitedTwo={numNewLimitedTwo}
+									numNewLimitedThree={numNewLimitedThree}
+									isFetchingBanListNewContent={isFetchingBanListNewContent}
+									isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
+								/>
+								<BanListContentDuelLinksFormat
+									forbidden={forbidden}
+									limitedOne={limitedOne}
+									limitedTwo={limitedTwo}
+									limitedThree={limitedThree}
+									numForbidden={numForbidden}
+									numLimitedOne={numLimitedOne}
+									numLimitedTwo={numLimitedTwo}
+									numLimitedThree={numLimitedThree}
+									isFetchingBanList={isFetchingBanList}
+								/>
+							</div>
 						) : (
-							<BanListContentNormalFormat
-								forbidden={forbidden}
-								limited={limited}
-								semiLimited={semiLimited}
-								numForbidden={numForbidden}
-								numLimited={numLimited}
-								numSemiLimited={numSemiLimited}
-								removedCards={removedCards}
-								numRemoved={numRemoved}
-								newForbiddenCards={newForbiddenCards}
-								newLimitedCards={newLimitedCards}
-								newSemiLimitedCards={newSemiLimitedCards}
-								numNewForbidden={numNewForbidden}
-								numNewLimited={numNewLimited}
-								numNewSemiLimited={numNewSemiLimited}
-								isFetchingBanListNewContent={isFetchingBanListNewContent}
-								isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
-								isFetchingBanList={isFetchingBanList}
-							/>
+							<div>
+								<BanListDiffContentNormalFormat
+									removedCards={removedCards}
+									numRemoved={numRemoved}
+									newForbiddenCards={newForbiddenCards}
+									newLimitedCards={newLimitedCards}
+									newSemiLimitedCards={newSemiLimitedCards}
+									numNewForbidden={numNewForbidden}
+									numNewLimited={numNewLimited}
+									numNewSemiLimited={numNewSemiLimited}
+									isFetchingBanListNewContent={isFetchingBanListNewContent}
+									isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
+								/>
+								<BanListContentNormalFormat
+									forbidden={forbidden}
+									limited={limited}
+									semiLimited={semiLimited}
+									numForbidden={numForbidden}
+									numLimited={numLimited}
+									numSemiLimited={numSemiLimited}
+									isFetchingBanList={isFetchingBanList}
+								/>
+							</div>
 						)}
 					</Suspense>
 				}
