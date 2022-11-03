@@ -69,7 +69,7 @@
 		"@types/react-router-dom": "5.3.3",
 		"@types/styled-components": "5.1.26",
 		"@types/webpack-dev-server": "4.7.2",
-		"babel-loader": "9.0.1",
+		"babel-loader": "9.1.0",
 		"clean-webpack-plugin": "4.0.0",
 		"copy-webpack-plugin": "11.0.0",
 		"eslint-config-react-app": "7.0.1",
