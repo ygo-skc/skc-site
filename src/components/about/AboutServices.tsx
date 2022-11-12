@@ -115,7 +115,7 @@ export default function Overview() {
 											email me
 										</Link>
 										. Otherwise, feel free to follow me on{' '}
-										<Link className='link' color='secondary' href='https://twitter.com/SupremeKing93'>
+										<Link className='link' color='secondary' href='https://twitter.com/supreme_king_yt'>
 											twitter
 										</Link>
 										. Though I don't really do social media, I will try my best to post updates there.
