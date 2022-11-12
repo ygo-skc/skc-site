@@ -1,4 +1,4 @@
-import { lazy, useState, useEffect, Suspense, useReducer } from 'react'
+import { lazy, useState, useEffect, Suspense, useReducer, startTransition } from 'react'
 import { Helmet } from 'react-helmet'
 
 import { Skeleton } from '@mui/material'
@@ -100,13 +100,15 @@ export default function BanList() {
 	})
 
 	useEffect(() => {
-		dateDispatch({
-			type: 'FETCHING_DATES',
-		})
+		startTransition(() => {
+			dateDispatch({
+				type: 'FETCHING_DATES',
+			})
 
-		setIsFetchingBanList(true)
-		setFetchingBanListNewContent(true)
-		setFetchingBanListRemovedContent(true)
+			setIsFetchingBanList(true)
+			setFetchingBanListNewContent(true)
+			setFetchingBanListRemovedContent(true)
+		})
 
 		FetchHandler.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT['banListsUrl']}?format=${format}`, (json) => {
 			dateDispatch({
@@ -123,73 +125,81 @@ export default function BanList() {
 
 	useEffect(() => {
 		if (selectedBanList && selectedBanList.length !== 0) {
-			setIsFetchingBanList(true)
-			setFetchingBanListNewContent(true)
-			setFetchingBanListRemovedContent(true)
+			startTransition(() => {
+				setIsFetchingBanList(true)
+				setFetchingBanListNewContent(true)
+				setFetchingBanListRemovedContent(true)
+			})
 
 			FetchHandler.handleFetch(banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List New Content'].href, (json) => {
-				if (format === 'DL') {
-					selectedBanListDispatch({
-						type: 'UPDATE_NEW_ADDITIONS_DUEL_LINKS_FORMAT',
-						newForbiddenCards: json.newForbidden,
-						newLimitedOneCards: json.newLimitedOne,
-						newLimitedTwoCards: json.newLimitedTwo,
-						newLimitedThreeCards: json.newLimitedThree,
-						numNewForbidden: json.numNewForbidden,
-						numNewLimitedOne: json.numNewLimitedOne,
-						numNewLimitedTwo: json.numNewLimitedTwo,
-						numNewLimitedThree: json.numNewLimitedThree,
-					})
-				} else {
-					selectedBanListDispatch({
-						type: 'UPDATE_NEW_ADDITIONS_NORMAL_FORMAT',
-						newForbiddenCards: json.newForbidden,
-						newLimitedCards: json.newLimited,
-						newSemiLimitedCards: json.newSemiLimited,
-						numNewForbidden: json.numNewForbidden,
-						numNewLimited: json.numNewLimited,
-						numNewSemiLimited: json.numNewSemiLimited,
-					})
-				}
-				setFetchingBanListNewContent(false)
+				startTransition(() => {
+					if (format === 'DL') {
+						selectedBanListDispatch({
+							type: 'UPDATE_NEW_ADDITIONS_DUEL_LINKS_FORMAT',
+							newForbiddenCards: json.newForbidden,
+							newLimitedOneCards: json.newLimitedOne,
+							newLimitedTwoCards: json.newLimitedTwo,
+							newLimitedThreeCards: json.newLimitedThree,
+							numNewForbidden: json.numNewForbidden,
+							numNewLimitedOne: json.numNewLimitedOne,
+							numNewLimitedTwo: json.numNewLimitedTwo,
+							numNewLimitedThree: json.numNewLimitedThree,
+						})
+					} else {
+						selectedBanListDispatch({
+							type: 'UPDATE_NEW_ADDITIONS_NORMAL_FORMAT',
+							newForbiddenCards: json.newForbidden,
+							newLimitedCards: json.newLimited,
+							newSemiLimitedCards: json.newSemiLimited,
+							numNewForbidden: json.numNewForbidden,
+							numNewLimited: json.numNewLimited,
+							numNewSemiLimited: json.numNewSemiLimited,
+						})
+					}
+					setFetchingBanListNewContent(false)
+				})
 			})
 
 			FetchHandler.handleFetch(banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List Removed Content'].href, (json) => {
-				selectedBanListDispatch({
-					type: 'UPDATE_REMOVED',
-					removedCards: json.removedCards,
-					numRemoved: determineListSize(json.numRemoved),
-				})
+				startTransition(() => {
+					selectedBanListDispatch({
+						type: 'UPDATE_REMOVED',
+						removedCards: json.removedCards,
+						numRemoved: determineListSize(json.numRemoved),
+					})
 
-				setFetchingBanListRemovedContent(false)
+					setFetchingBanListRemovedContent(false)
+				})
 			})
 
 			FetchHandler.handleFetch(banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List Content'].href, (json) => {
-				if (format === 'DL') {
-					selectedBanListDispatch({
-						type: 'UPDATE_DUEL_LINKS_FORMAT_LIST',
-						forbidden: json.forbidden,
-						limitedOne: json.limitedOne,
-						limitedTwo: json.limitedTwo,
-						limitedThree: json.limitedThree,
-						numForbidden: determineListSize(json.numForbidden),
-						numLimitedOne: determineListSize(json.numLimitedOne),
-						numLimitedTwo: determineListSize(json.numLimitedTwo),
-						numLimitedThree: determineListSize(json.numLimitedThree),
-					})
-				} else {
-					selectedBanListDispatch({
-						type: 'UPDATE_NORMAL_FORMAT_LIST',
-						forbidden: json.forbidden,
-						limited: json.limited,
-						semiLimited: json.semiLimited,
-						numForbidden: determineListSize(json.numForbidden),
-						numLimited: determineListSize(json.numLimited),
-						numSemiLimited: determineListSize(json.numSemiLimited),
-					})
-				}
+				startTransition(() => {
+					if (format === 'DL') {
+						selectedBanListDispatch({
+							type: 'UPDATE_DUEL_LINKS_FORMAT_LIST',
+							forbidden: json.forbidden,
+							limitedOne: json.limitedOne,
+							limitedTwo: json.limitedTwo,
+							limitedThree: json.limitedThree,
+							numForbidden: determineListSize(json.numForbidden),
+							numLimitedOne: determineListSize(json.numLimitedOne),
+							numLimitedTwo: determineListSize(json.numLimitedTwo),
+							numLimitedThree: determineListSize(json.numLimitedThree),
+						})
+					} else {
+						selectedBanListDispatch({
+							type: 'UPDATE_NORMAL_FORMAT_LIST',
+							forbidden: json.forbidden,
+							limited: json.limited,
+							semiLimited: json.semiLimited,
+							numForbidden: determineListSize(json.numForbidden),
+							numLimited: determineListSize(json.numLimited),
+							numSemiLimited: determineListSize(json.numSemiLimited),
+						})
+					}
 
-				setIsFetchingBanList(false)
+					setIsFetchingBanList(false)
+				})
 			})
 		}
 	}, [selectedBanList])

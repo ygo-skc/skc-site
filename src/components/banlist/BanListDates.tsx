@@ -9,7 +9,6 @@ type _BanListDates = {
 }
 
 const BanListDates: FC<_BanListDates> = ({ isFetchingBanListDates, banListStartDates, setSelectedBanList }) => {
-	console.log('yooo')
 	const [selectorItems, setSelectorItems] = useState<JSX.Element[]>()
 	const [selectedBanListInd, setSelectedBanListInd] = useState('0')
 

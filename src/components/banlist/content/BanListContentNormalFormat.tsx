@@ -1,4 +1,4 @@
-import { FC, memo } from 'react'
+import { FC } from 'react'
 import Section from '../../util/Section'
 import BanListSection from '../BanListSection'
 import NormalFormatTabbedView from '../tab/NormalFormatTabbedView'
@@ -13,41 +13,31 @@ type _BanListContentNormalFormat = {
 	isFetchingBanList: boolean
 }
 
-const BanListContentNormalFormat: FC<_BanListContentNormalFormat> = memo(
-	({ forbidden, limited, semiLimited, numForbidden, numLimited, numSemiLimited, isFetchingBanList }) => {
-		return (
-			<div>
-				<Section
-					sectionHeaderBackground={'ban-list'}
-					sectionName='Content'
-					sectionContent={
-						<div className='sticky section-content'>
-							<NormalFormatTabbedView
-								numForbidden={numForbidden}
-								numLimited={numLimited}
-								numSemiLimited={numSemiLimited}
-								forbiddenContent={
-									<BanListSection
-										sectionExplanation='Forbidden cards cannot be used in Deck/Side Deck in the Advanced Format'
-										cards={forbidden}
-										isDataLoaded={!isFetchingBanList}
-									/>
-								}
-								limitedContent={<BanListSection sectionExplanation='Limited cards can be included in Deck/Side deck - max 1' cards={limited} isDataLoaded={!isFetchingBanList} />}
-								semiLimitedContent={
-									<BanListSection sectionExplanation='Semi-Limited cards can be included in Deck/Side deck - max 2' cards={semiLimited} isDataLoaded={!isFetchingBanList} />
-								}
-							/>
-						</div>
-					}
-				/>
-			</div>
-		)
-	},
-	(prevProps, nextProps) => {
-		if (prevProps.isFetchingBanList !== nextProps.isFetchingBanList) return false
-		return true
-	}
-)
+const BanListContentNormalFormat: FC<_BanListContentNormalFormat> = ({ forbidden, limited, semiLimited, numForbidden, numLimited, numSemiLimited, isFetchingBanList }) => {
+	return (
+		<div>
+			<Section
+				sectionHeaderBackground={'ban-list'}
+				sectionName='Content'
+				sectionContent={
+					<div className='sticky section-content'>
+						<NormalFormatTabbedView
+							numForbidden={numForbidden}
+							numLimited={numLimited}
+							numSemiLimited={numSemiLimited}
+							forbiddenContent={
+								<BanListSection sectionExplanation='Forbidden cards cannot be used in Deck/Side Deck in the Advanced Format' cards={forbidden} isDataLoaded={!isFetchingBanList} />
+							}
+							limitedContent={<BanListSection sectionExplanation='Limited cards can be included in Deck/Side deck - max 1' cards={limited} isDataLoaded={!isFetchingBanList} />}
+							semiLimitedContent={
+								<BanListSection sectionExplanation='Semi-Limited cards can be included in Deck/Side deck - max 2' cards={semiLimited} isDataLoaded={!isFetchingBanList} />
+							}
+						/>
+					</div>
+				}
+			/>
+		</div>
+	)
+}
 
 export default BanListContentNormalFormat
