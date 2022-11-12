@@ -1,7 +1,8 @@
 import { Skeleton, Typography } from '@mui/material'
-import { FC, useEffect, useState } from 'react'
+import { FC, startTransition, useEffect, useState } from 'react'
 import CardImageRounded from '../card/CardImageRounded'
 import YGOCard from '../card/YGOCard'
+import { Hint } from '../util/Hints'
 
 const BanListChangedStatus: FC<{
 	newStatusName: 'Forbidden' | 'Limited' | 'Semi Limited' | 'Unlimited' | 'Limited One' | 'Limited Two' | 'Limited Three'
@@ -25,51 +26,41 @@ const BanListChangedStatus: FC<{
 	}
 
 	useEffect(() => {
-		setCardsWithNewStatus(
-			cards.map((newStatus: SKCCardsPreviousBanListStatus) => {
-				const card: SKCCard = newStatus.card
+		startTransition(() => {
+			setCardsWithNewStatus(
+				cards.map((newStatus: SKCCardsPreviousBanListStatus) => {
+					const card: SKCCard = newStatus.card
 
-				return (
-					<div
-						onClick={() => window.location.assign(`/card/${card.cardID}`)}
-						style={{
-							width: '18rem',
-							minWidth: '18rem',
-							marginRight: '.75rem',
-							cursor: 'pointer',
-							backgroundColor: '#eee',
-							padding: '1rem',
-							borderRadius: '2.5rem',
-							border: '2px solid #888',
-						}}
-					>
-						<div style={{ display: 'flex' }}>
-							<CardImageRounded cardImg={`https://images.thesupremekingscastle.com/cards/tn/${card.cardID}.jpg`} />
-							<div style={{ minWidth: '60%', margin: 'auto' }}>
-								<Typography align='right' variant='h5' style={{ marginBottom: '0rem' }}>
-									Previously
-								</Typography>
-								<Typography align='right' variant='h6' style={{ color: 'black' }}>
-									{newStatus.previousBanStatus}
-								</Typography>
+					return (
+						<div onClick={() => window.location.assign(`/card/${card.cardID}`)} className='ygo-card-info-parent'>
+							<div className='img-and-previous-status-parent'>
+								<CardImageRounded cardImg={`https://images.thesupremekingscastle.com/cards/tn/${card.cardID}.jpg`} />
+								<div className='ban-list-status-change-text-parent'>
+									<Typography align='right' variant='h5' className='ban-list-status-change-text-1'>
+										Previously
+									</Typography>
+									<Typography align='right' variant='h6' className='ban-list-status-change-text-2'>
+										{newStatus.previousBanStatus}
+									</Typography>
+								</div>
 							</div>
+							<YGOCard
+								cardID={card.cardID}
+								cardName={card.cardName}
+								cardColor={card.cardColor}
+								cardEffect={card.cardEffect}
+								monsterType={card.monsterType}
+								cardAttribute={card.cardAttribute}
+								monsterAttack={card.monsterAttack}
+								monsterDefense={card.monsterDefense}
+								monsterAssociation={card.monsterAssociation}
+								fullDetails={false}
+							/>
 						</div>
-						<YGOCard
-							cardID={card.cardID}
-							cardName={card.cardName}
-							cardColor={card.cardColor}
-							cardEffect={card.cardEffect}
-							monsterType={card.monsterType}
-							cardAttribute={card.cardAttribute}
-							monsterAttack={card.monsterAttack}
-							monsterDefense={card.monsterDefense}
-							monsterAssociation={card.monsterAssociation}
-							fullDetails={false}
-						/>
-					</div>
-				)
-			})
-		)
+					)
+				})
+			)
+		})
 	}, [cards])
 
 	return (
@@ -77,7 +68,13 @@ const BanListChangedStatus: FC<{
 			<Typography variant='h4'>
 				Newly {newStatusName} ({numCards})
 			</Typography>
-			{isLoadingData ? <Skeleton variant='rectangular' height='20rem' /> : <div style={{ display: 'flex', overflowX: 'auto', paddingBottom: '1rem' }}>{cardsWithNewStatus}</div>}
+			{isLoadingData ? (
+				<Skeleton className='rounded-skeleton' variant='rectangular' height='20rem' />
+			) : numCards === 0 ? (
+				<Hint>Nothing here 🤨</Hint>
+			) : (
+				<div style={{ display: 'flex', overflowX: 'auto', paddingBottom: '1rem' }}>{cardsWithNewStatus}</div>
+			)}
 		</div>
 	)
 }
