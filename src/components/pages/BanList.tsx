@@ -28,17 +28,17 @@ function determineListSize(size: number | undefined): number {
 }
 
 export default function BanList() {
-	const [{ banListStartDates, banContentLinks, isFetchingBanListDates }, dateDispatch] = useReducer(dateReducer, {
-		banListStartDates: [],
-		banContentLinks: [],
-		isFetchingBanListDates: true,
-	})
-
 	const [selectedBanList, setSelectedBanList] = useState<string>('')
 	const [isFetchingBanList, setIsFetchingBanList] = useState(true)
 	const [isFetchingBanListNewContent, setFetchingBanListNewContent] = useState(true)
 	const [isFetchingBanListRemovedContent, setFetchingBanListRemovedContent] = useState(true)
 	const [format, setFormat] = useState<BanListFormat>('TCG')
+
+	const [{ banListStartDates, banContentLinks, isFetchingBanListDates }, dateDispatch] = useReducer(dateReducer, {
+		banListStartDates: [],
+		banContentLinks: [],
+		isFetchingBanListDates: true,
+	})
 
 	const [
 		{
@@ -100,15 +100,13 @@ export default function BanList() {
 	})
 
 	useEffect(() => {
-		startTransition(() => {
-			dateDispatch({
-				type: 'FETCHING_DATES',
-			})
-
-			setIsFetchingBanList(true)
-			setFetchingBanListNewContent(true)
-			setFetchingBanListRemovedContent(true)
+		dateDispatch({
+			type: 'FETCHING_DATES',
 		})
+
+		setIsFetchingBanList(true)
+		setFetchingBanListNewContent(true)
+		setFetchingBanListRemovedContent(true)
 
 		FetchHandler.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT['banListsUrl']}?format=${format}`, (json) => {
 			dateDispatch({
@@ -125,11 +123,9 @@ export default function BanList() {
 
 	useEffect(() => {
 		if (selectedBanList && selectedBanList.length !== 0) {
-			startTransition(() => {
-				setIsFetchingBanList(true)
-				setFetchingBanListNewContent(true)
-				setFetchingBanListRemovedContent(true)
-			})
+			setIsFetchingBanList(true)
+			setFetchingBanListNewContent(true)
+			setFetchingBanListRemovedContent(true)
 
 			FetchHandler.handleFetch(banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List New Content'].href, (json) => {
 				startTransition(() => {
