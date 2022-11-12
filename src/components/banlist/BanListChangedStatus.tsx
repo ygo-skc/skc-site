@@ -4,7 +4,7 @@ import CardImageRounded from '../card/CardImageRounded'
 import YGOCard from '../card/YGOCard'
 
 const BanListChangedStatus: FC<{
-	newStatusName: 'Forbidden' | 'Limited' | 'Semi Limited' | 'Unlimited'
+	newStatusName: 'Forbidden' | 'Limited' | 'Semi Limited' | 'Unlimited' | 'Limited One' | 'Limited Two' | 'Limited Three'
 	cards: SKCCardsPreviousBanListStatus[]
 	numCards: number
 	isLoadingData: boolean
@@ -14,10 +14,12 @@ const BanListChangedStatus: FC<{
 	let border
 	if (newStatusName === 'Forbidden') {
 		border = '5px solid #f50057'
-	} else if (newStatusName === 'Limited') {
+	} else if (newStatusName === 'Limited' || newStatusName === 'Limited One') {
 		border = '5px solid rgb(255, 145, 0)'
-	} else if (newStatusName === 'Semi Limited') {
+	} else if (newStatusName === 'Semi Limited' || newStatusName === 'Limited Two') {
 		border = '5px solid rgb(76, 175, 80)'
+	} else if (newStatusName === 'Limited Three') {
+		border = '5px solid #00B5E2'
 	} else if (newStatusName === 'Unlimited') {
 		border = '5px solid black'
 	}

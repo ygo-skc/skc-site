@@ -95,7 +95,6 @@ const CardDisplayGrid: FC<_CardDisplayGrid> = memo(
 
 		useEffect(() => {
 			cardGridDispatch({ type: 'CLEAR_GRID' })
-			console.log(numResults)
 		}, [numResults])
 
 		return (

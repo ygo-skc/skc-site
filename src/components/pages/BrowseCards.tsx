@@ -13,7 +13,6 @@ import DownstreamServices from '../../helper/DownstreamServices'
 
 import createTable from '../util/TableHelpers'
 
-import '../../css/util/divider.css'
 import '../../css/suggestion-box/database-search-styles.css'
 import CardBrowse from '../util/search/CardBrowse'
 
@@ -122,8 +121,10 @@ export default function BrowseCards() {
 									<CardBrowse browseCriteriaDispatch={browseCriteriaDispatch} selectedCriteria={selectedCriteria} skcCardBrowseCriteriaOutput={skcCardBrowseCriteriaOutput} />
 								</div>
 
-								<Typography variant='h5'>Results</Typography>
-								{createTable([], browseSummaryStats)}
+								<div className='group'>
+									<Typography variant='h5'>Results</Typography>
+									{createTable([], browseSummaryStats)}
+								</div>
 							</div>
 						}
 					/>
