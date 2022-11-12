@@ -11,6 +11,8 @@ import BreadCrumb from '../header-footer/Breadcrumb'
 
 import '../../css/main-pages/ban-list.css'
 import Section from '../util/Section'
+import dateReducer from '../../helper/reducers/BanListDateReducer'
+import currentlySelectedBanListReducer from '../../helper/reducers/CurrentBanListReducer'
 
 const BanListDates = lazy(() => import('../banlist/BanListDates'))
 const BanListFormat = lazy(() => import('../banlist/BanListFormat'))
@@ -21,96 +23,18 @@ const BanListContentDuelLinksFormat = lazy(() => import('../banlist/content/BanL
 const BanListDiffContentNormalFormat = lazy(() => import('../banlist/content/BanListDiffContentNormalFormat'))
 const BanListDiffContentDuelLinksFormat = lazy(() => import('../banlist/content/BanListDiffContentDuelLinksFormat'))
 
-function dateReducer(_: { banListStartDates: string; banContentLinks: SKCBanListDateLinks }, action: any) {
-	return { banListStartDates: action.banListStartDates, banContentLinks: action.banContentLinks }
-}
-
 function determineListSize(size: number | undefined): number {
 	return size === undefined ? 0 : size
 }
 
-function currentlySelectedBanListReducer(state: any, action: any) {
-	switch (action.type) {
-		case 'UPDATE_NORMAL_FORMAT_LIST':
-			return {
-				...state,
-				forbidden: action.forbidden,
-				limited: action.limited,
-				semiLimited: action.semiLimited,
-				limitedOne: [],
-				limitedTwo: [],
-				limitedThree: [],
-				numForbidden: action.numForbidden,
-				numLimited: action.numLimited,
-				numSemiLimited: action.numSemiLimited,
-				numLimitedOne: 0,
-				numLimitedTwo: 0,
-				numLimitedThree: 0,
-			}
-		case 'UPDATE_DUEL_LINKS_FORMAT_LIST':
-			return {
-				...state,
-				forbidden: action.forbidden,
-				limited: [],
-				semiLimited: [],
-				limitedOne: action.limitedOne,
-				limitedTwo: action.limitedTwo,
-				limitedThree: action.limitedThree,
-				numForbidden: action.numForbidden,
-				numLimited: 0,
-				numSemiLimited: 0,
-				numLimitedOne: action.numLimitedOne,
-				numLimitedTwo: action.numLimitedTwo,
-				numLimitedThree: action.numLimitedThree,
-			}
-		case 'UPDATE_REMOVED':
-			return {
-				...state,
-				removedCards: action.removedCards,
-				numRemoved: action.numRemoved,
-			}
-		case 'UPDATE_NEW_ADDITIONS_NORMAL_FORMAT':
-			return {
-				...state,
-				newForbiddenCards: action.newForbiddenCards,
-				newLimitedCards: action.newLimitedCards,
-				newSemiLimitedCards: action.newSemiLimitedCards,
-				newLimitedOne: [],
-				newLimitedTwo: [],
-				newLimitedThree: [],
-				numNewForbidden: action.numNewForbidden,
-				numNewLimited: action.numNewLimited,
-				numNewSemiLimited: action.numNewSemiLimited,
-				numNewLimitedOne: 0,
-				numNewLimitedTwo: 0,
-				numNewLimitedThree: 0,
-			}
-		case 'UPDATE_NEW_ADDITIONS_DUEL_LINKS_FORMAT':
-			return {
-				...state,
-				newForbiddenCards: action.newForbiddenCards,
-				newLimitedCards: [],
-				newSemiLimitedCards: [],
-				newLimitedOneCards: action.newLimitedOneCards,
-				newLimitedTwoCards: action.newLimitedTwoCards,
-				newLimitedThreeCards: action.newLimitedThreeCards,
-				numNewForbidden: action.numNewForbidden,
-				numNewLimited: 0,
-				numNewSemiLimited: 0,
-				numNewLimitedOne: action.numNewLimitedOne,
-				numNewLimitedTwo: action.numNewLimitedTwo,
-				numNewLimitedThree: action.numNewLimitedThree,
-			}
-		default:
-			return state
-	}
-}
-
 export default function BanList() {
-	const [{ banListStartDates, banContentLinks }, dateDispatch] = useReducer(dateReducer, { banListStartDates: [], banContentLinks: [] })
+	const [{ banListStartDates, banContentLinks, isFetchingBanListDates }, dateDispatch] = useReducer(dateReducer, {
+		banListStartDates: [],
+		banContentLinks: [],
+		isFetchingBanListDates: true,
+	})
 
 	const [selectedBanList, setSelectedBanList] = useState<string>('')
-	const [isFetchingBanListDates, setIsFetchingBanListDates] = useState(true)
 	const [isFetchingBanList, setIsFetchingBanList] = useState(true)
 	const [isFetchingBanListNewContent, setFetchingBanListNewContent] = useState(true)
 	const [isFetchingBanListRemovedContent, setFetchingBanListRemovedContent] = useState(true)
@@ -176,20 +100,20 @@ export default function BanList() {
 	})
 
 	useEffect(() => {
-		setIsFetchingBanListDates(true)
+		dateDispatch({
+			type: 'FETCHING_DATES',
+		})
+
 		setIsFetchingBanList(true)
 		setFetchingBanListNewContent(true)
 		setFetchingBanListRemovedContent(true)
 
 		FetchHandler.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT['banListsUrl']}?format=${format}`, (json) => {
 			dateDispatch({
-				type: 'UPDATE_BAN_LIST',
+				type: 'DATES_RECEIVED',
 				banContentLinks: json.banListDates.map((item: SKCBanListDate) => item._links),
 				banListStartDates: json.banListDates.map((item: SKCBanListDate) => item.effectiveDate),
 			})
-			if (banContentLinks.length !== 0) setSelectedBanList(banListStartDates[0])
-
-			setIsFetchingBanListDates(false)
 		})
 	}, [format])
 
