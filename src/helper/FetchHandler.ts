@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse, CancelTokenSource } from 'axios'
-import { _SKCSiteRoutes } from '../components/Routes'
+import { _SKCSiteRoutes } from '../components/pages/Routes'
 
-class Fetch {
+class FetchHandler {
 	static readonly CLIENT_ID = process.env.REACT_APP_CLIENT_ID as string
 	static readonly DEFAULT_TIMEOUT = 3000
 
@@ -14,9 +14,9 @@ class Fetch {
 		const request = axios
 			.get(endPoint, {
 				headers: {
-					CLIENT_ID: Fetch.CLIENT_ID,
+					CLIENT_ID: FetchHandler.CLIENT_ID,
 				},
-				timeout: Fetch.DEFAULT_TIMEOUT,
+				timeout: FetchHandler.DEFAULT_TIMEOUT,
 				cancelToken: fetchToken?.token,
 			})
 			.then((res: AxiosResponse) => {
@@ -24,7 +24,7 @@ class Fetch {
 			})
 
 		if (useDefaultErrorHandler) {
-			request.catch(Fetch.handleError)
+			request.catch(FetchHandler.handleError)
 		} else {
 			return request
 		}
@@ -48,4 +48,4 @@ class Fetch {
 	}
 }
 
-export default Fetch
+export default FetchHandler

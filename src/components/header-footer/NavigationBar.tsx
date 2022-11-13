@@ -6,7 +6,7 @@ import GitHubIcon from '@mui/icons-material/GitHub'
 import YouTube from '@mui/icons-material/YouTube'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 
-import { _SKCSiteRoutes } from '../Routes'
+import { _SKCSiteRoutes } from '../pages/Routes'
 import SubNav from './SubNav'
 
 const Messages = lazy(() => import('./Messages'))

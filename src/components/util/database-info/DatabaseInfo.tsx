@@ -1,6 +1,6 @@
 import { FC, lazy } from 'react'
 
-import { Grid } from '@mui/material'
+import Grid2 from '@mui/material/Unstable_Grid2'
 import Glance from './Glance'
 import Section from '../Section'
 
@@ -25,19 +25,19 @@ const DatabaseInfo: FC<DatabaseInfoType> = ({ cardTotal, banListTotal, productTo
 						<DatabaseSearch />
 					</div>
 					<div className='database-summary-container'>
-						<Grid container spacing={3}>
-							<Grid item xs={6} sm={6} md={4} lg={4} xl={4}>
+						<Grid2 container spacing={3}>
+							<Grid2 xs={6} sm={6} md={4} lg={4} xl={4}>
 								<Glance total={cardTotal} subject='Cards' color='rgb(144, 13, 218)' action={() => window.location.assign(`/browse/card`)} />
-							</Grid>
+							</Grid2>
 
-							<Grid item xs={6} sm={6} md={4} lg={4} xl={4}>
+							<Grid2 xs={6} sm={6} md={4} lg={4} xl={4}>
 								<Glance total={banListTotal} subject='Ban Lists' color='#FE6D6B' action={() => window.location.assign(`/ban_list`)} />
-							</Grid>
+							</Grid2>
 
-							<Grid item xs={6} sm={6} md={4} lg={4} xl={4}>
+							<Grid2 xs={6} sm={6} md={4} lg={4} xl={4}>
 								<Glance total={productTotal} subject='Products' color='rgb(195, 47, 150)' action={() => window.location.assign(`/browse/product`)} />
-							</Grid>
-						</Grid>
+							</Grid2>
+						</Grid2>
 					</div>
 				</div>
 			}

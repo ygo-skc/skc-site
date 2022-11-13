@@ -9,7 +9,7 @@ const ParagraphTypography = styled(Typography)`
 
 export default function AboutSKC() {
 	return (
-		<div className='section-content'>
+		<div data-testid='about-skc' className='section-content'>
 			<Typography variant='h4'>Why I Started The Project</Typography>
 
 			<div>

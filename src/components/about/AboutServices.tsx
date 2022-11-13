@@ -1,4 +1,5 @@
-import { Typography, Grid, Link } from '@mui/material'
+import { Typography, Link } from '@mui/material'
+import Grid2 from '@mui/material/Unstable_Grid2'
 import AboutInfoCard from './AboutInfoCard'
 
 import styled from 'styled-components'
@@ -19,8 +20,8 @@ export default function Overview() {
 			<Typography variant='h4'>SKC API, Donate, Contact Info, And More!</Typography>
 
 			<div>
-				<Grid container spacing={2}>
-					<Grid style={{ display: 'inline-grid' }} item xs={12} sm={12} md={6} lg={4} xl={4}>
+				<Grid2 container spacing={2}>
+					<Grid2 style={{ display: 'inline-grid' }} xs={12} sm={12} md={6} lg={4} xl={4}>
 						<AboutInfoCard
 							title='SKC API'
 							subtitle='The Backend'
@@ -48,9 +49,9 @@ export default function Overview() {
 							imgPath='backend.png'
 							imgLink={`${process.env.REACT_APP_API_HOST}/api/v1/swagger-ui/index.html`}
 						/>
-					</Grid>
+					</Grid2>
 
-					<Grid style={{ display: 'inline-grid' }} item xs={12} sm={12} md={6} lg={4} xl={4}>
+					<Grid2 style={{ display: 'inline-grid' }} xs={12} sm={12} md={6} lg={4} xl={4}>
 						<AboutInfoCard
 							title='Contributions'
 							subtitle='Donations To Website'
@@ -99,9 +100,9 @@ export default function Overview() {
 							imgPath='monetary_contribution.png'
 							imgLink=''
 						/>
-					</Grid>
+					</Grid2>
 
-					<Grid style={{ display: 'inline-grid' }} item xs={12} sm={12} md={6} lg={4} xl={4}>
+					<Grid2 style={{ display: 'inline-grid' }} xs={12} sm={12} md={6} lg={4} xl={4}>
 						<AboutInfoCard
 							title='Other Information'
 							subtitle='Contact & Other Stuff'
@@ -114,7 +115,7 @@ export default function Overview() {
 											email me
 										</Link>
 										. Otherwise, feel free to follow me on{' '}
-										<Link className='link' color='secondary' href='https://twitter.com/SupremeKing93'>
+										<Link className='link' color='secondary' href='https://twitter.com/supreme_king_yt'>
 											twitter
 										</Link>
 										. Though I don't really do social media, I will try my best to post updates there.
@@ -131,9 +132,9 @@ export default function Overview() {
 							imgPath='information.png'
 							imgLink=''
 						/>
-					</Grid>
+					</Grid2>
 
-					<Grid style={{ display: 'inline-grid' }} item xs={12} sm={12} md={6} lg={4} xl={4}>
+					<Grid2 style={{ display: 'inline-grid' }} xs={12} sm={12} md={6} lg={4} xl={4}>
 						<AboutInfoCard
 							title='Watch Yu-Gi-Oh! Related Content'
 							subtitle='Subscribe On YouTube'
@@ -154,8 +155,8 @@ export default function Overview() {
 							imgPath='yt_channel_icon.jpeg'
 							imgLink='https://www.youtube.com/channel/UCBZ_1wWyLQI3SV9IgLbyiNQ/videos'
 						/>
-					</Grid>
-				</Grid>
+					</Grid2>
+				</Grid2>
 			</div>
 		</div>
 	)

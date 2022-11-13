@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { Autocomplete } from '@mui/material'
-import Fetch from '../../../helper/FetchHandler'
+import FetchHandler from '../../../helper/FetchHandler'
 import DownstreamServices from '../../../helper/DownstreamServices'
 
 import DBSearchGrouping from './DBSearchGrouping'
@@ -11,7 +11,7 @@ import DBSearchOptions from './DBSearchOptions'
 
 class _DatabaseSearch {
 	static readonly search = (searchSubject: string, setSearchOptions: any, fetchToken: CancelTokenSource, setIsFetching: React.Dispatch<React.SetStateAction<boolean>>) => {
-		Fetch.handleFetch(
+		FetchHandler.handleFetch(
 			`${DownstreamServices.NAME_maps_ENDPOINT['search']}?limit=10&cName=${searchSubject}`,
 			(json) => {
 				setSearchOptions(json)

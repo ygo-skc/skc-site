@@ -2,17 +2,17 @@ import { useState, useEffect, lazy } from 'react'
 import { useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 
-import Fetch from '../../helper/FetchHandler'
+import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 import Section from '../util/Section'
 
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 import { Typography } from '@mui/material'
-import ProductStats from './ProductStats'
+import ProductStats from '../product/ProductStats'
 
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 const CardDisplayGrid = lazy(() => import('../util/grid/CardDisplayGrid'))
-const ProductInfoDetailsComponent = lazy(() => import('./ProductInfoDetailsComponent'))
+const ProductInfoDetailsComponent = lazy(() => import('../product/ProductInfoDetailsComponent'))
 
 export default function ProductInfo() {
 	const { productId } = useParams()
@@ -32,7 +32,7 @@ export default function ProductInfo() {
 	const [cardJsonResults, setCardJsonResults] = useState([])
 
 	useEffect(() => {
-		Fetch.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT['productDetails']}/${productId}/en`, (json) => {
+		FetchHandler.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT['productDetails']}/${productId}/en`, (json) => {
 			setDynamicBreadcrumbs(['Home', 'Product Browse', `${json.productId}`])
 
 			setProductName(json.productName)

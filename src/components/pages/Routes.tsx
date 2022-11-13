@@ -1,22 +1,22 @@
 import { lazy, Suspense } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
-import SuspenseFallback from './SuspenseFallback'
+import SuspenseFallback from '../SuspenseFallback'
 
-import '../css/util/grids-and-containers.css'
+import '../../css/util/grids-and-containers.css'
 
-const Home = lazy(() => import('./home/Home'))
+const Home = lazy(() => import('./Home'))
 
-const BanList = lazy(() => import('./banlist/BanList'))
+const BanList = lazy(() => import('./BanList'))
 
-const ProductBrowse = lazy(() => import('./product/ProductBrowse'))
-const ProductInfo = lazy(() => import('./product/ProductInfo'))
+const ProductBrowse = lazy(() => import('./ProductBrowse'))
+const ProductInfo = lazy(() => import('./ProductInfo'))
 
-const Browse = lazy(() => import('./card/BrowseCards'))
-const Card = lazy(() => import('./card/card-information/CardInformation'))
+const Browse = lazy(() => import('./BrowseCards'))
+const CardInformation = lazy(() => import('./CardInformation'))
 
-const About = lazy(() => import('./about/About'))
-const HttpErr = lazy(() => import('./util/exception/HttpErr'))
+const About = lazy(() => import('./About'))
+const HttpErr = lazy(() => import('./HttpErr'))
 
 class _SKCSiteRoutes {
 	static readonly NAME_maps_ROUTE: { [key: string]: string } = {
@@ -44,7 +44,7 @@ export default function SKCSiteRoutes() {
 				<Routes>
 					<Route path={_SKCSiteRoutes.NAME_maps_ROUTE.Home} element={<Home />} />
 					<Route path={_SKCSiteRoutes.NAME_maps_ROUTE.BanList} element={<BanList />} />
-					<Route path={_SKCSiteRoutes.NAME_maps_ROUTE.Card} element={<Card />} />
+					<Route path={_SKCSiteRoutes.NAME_maps_ROUTE.Card} element={<CardInformation />} />
 					<Route path={_SKCSiteRoutes.NAME_maps_ROUTE.CardBrowse} element={<Browse />} />
 
 					<Route path={_SKCSiteRoutes.NAME_maps_ROUTE.ProductBrowse} element={<ProductBrowse />} />

@@ -1,7 +1,7 @@
 import { useEffect, useState, lazy, Suspense } from 'react'
 import { Helmet } from 'react-helmet'
 
-import Fetch from '../../helper/FetchHandler'
+import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
@@ -11,8 +11,8 @@ import Breadcrumb from '../header-footer/Breadcrumb'
 import DatabaseInfo from '../util/database-info/DatabaseInfo'
 import UpcomingTCGProducts from '../util/event/UpcomingTCGProducts'
 
-const Welcome = lazy(() => import('./Welcome'))
-const YouTubeData = lazy(() => import('./YouTubeData'))
+const Welcome = lazy(() => import('../home/Welcome'))
+const YouTubeData = lazy(() => import('../home/YouTubeData'))
 const SocialMedia = lazy(() => import('../util/social/SocialMedia'))
 
 export default function Home() {
@@ -21,7 +21,7 @@ export default function Home() {
 	const [productTotal, setProductTotal] = useState(0)
 
 	useEffect(() => {
-		Fetch.handleFetch(DownstreamServices.NAME_maps_ENDPOINT['databaseStats'], (json) => {
+		FetchHandler.handleFetch(DownstreamServices.NAME_maps_ENDPOINT['databaseStats'], (json) => {
 			setCardTotal(json.cardTotal)
 			setBanListTotal(json.banListTotal)
 			setProductTotal(json.productTotal)

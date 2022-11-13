@@ -1,6 +1,6 @@
 import { FunctionComponent, useEffect, useState } from 'react'
 import { Typography } from '@mui/material'
-import Fetch from '../../helper/FetchHandler'
+import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 
 const Footer: FunctionComponent = () => {
@@ -9,7 +9,7 @@ const Footer: FunctionComponent = () => {
 
 	useEffect(() => {
 		// fetch version for SKC API
-		Fetch.handleFetch(
+		FetchHandler.handleFetch(
 			DownstreamServices.NAME_maps_ENDPOINT['status'],
 			(json) => {
 				setSkcAPIVersion(json?.version)
@@ -17,8 +17,8 @@ const Footer: FunctionComponent = () => {
 			false
 		)
 
-		// Fetch version for SKC API
-		Fetch.handleFetch(
+		// FetchHandler version for SKC API
+		FetchHandler.handleFetch(
 			DownstreamServices.HEART_API_ENDPOINTS.status,
 			(json) => {
 				setHeartAPIVersion(json?.version)

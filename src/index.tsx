@@ -1,14 +1,14 @@
-import { render } from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import { ThemeProvider } from '@mui/material/styles'
 
 import Footer from './components/header-footer/Footer'
 import NavigationBar from './components/header-footer/NavigationBar'
-import Routes from './components/Routes'
+import Routes from './components/pages/Routes'
 import MuiTheme from './components/MuiTheme'
 
-// const root = createRoot(document.getElementById('root') as Element)
+const root = createRoot(document.getElementById('root') as Element)
 
-render(
+root.render(
 	<ThemeProvider theme={MuiTheme}>
 		<div className='content'>
 			<NavigationBar />
@@ -19,6 +19,5 @@ render(
 			</div>
 		</div>
 		<Footer />
-	</ThemeProvider>,
-	document.getElementById('root')
+	</ThemeProvider>
 )

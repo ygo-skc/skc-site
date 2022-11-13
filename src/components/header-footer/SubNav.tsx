@@ -1,6 +1,6 @@
 import { Typography, Link } from '@mui/material'
 
-import { _SKCSiteRoutes } from '../Routes'
+import { _SKCSiteRoutes } from '../pages/Routes'
 
 export default function SubNav() {
 	return (

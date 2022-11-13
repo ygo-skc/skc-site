@@ -3,24 +3,24 @@ import { useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { Skeleton } from '@mui/material'
 
-import Fetch from '../../../helper/FetchHandler'
-import DownstreamServices from '../../../helper/DownstreamServices'
-import OneThirdTwoThirdsGrid from '../../util/grid/OneThirdTwoThirdsGrid'
+import FetchHandler from '../../helper/FetchHandler'
+import DownstreamServices from '../../helper/DownstreamServices'
+import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 
-const Breadcrumb = lazy(() => import('../../header-footer/Breadcrumb'))
-const CardData = lazy(() => import('./CardData'))
+const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
+const CardData = lazy(() => import('../card/card-information/CardData'))
 
 class _Card {
 	static cardId: string | null = null
 	static cardImg: HTMLImageElement
 	static readonly crumbs = ['Home', 'Card Browse']
 
-	static readonly loadRelatedContent = (isLoading: boolean, cardName: string, cardColor: cardColor, productInfo: any, banListInfo: any) => {
+	static readonly loadRelatedContent = (isLoading: boolean, card: SKCCard, cardColor: cardColor, productInfo: any, banListInfo: any) => {
 		if (!isLoading) {
-			const CardInformationRelatedContent = lazy(() => import('./CardInformationRelatedContent'))
+			const CardInformationRelatedContent = lazy(() => import('../card/card-information/CardInformationRelatedContent'))
 			return (
 				<CardInformationRelatedContent
-					cardName={cardName}
+					card={card}
 					cardColor={cardColor?.replace(/Pendulum-/gi, '') as cardColor}
 					isLoading={isLoading}
 					cardID={_Card.cardId!}
@@ -48,7 +48,7 @@ function cardDataReducer(state: any, action: any) {
 	}
 }
 
-const Card = () => {
+const CardInformation = () => {
 	const { cardId } = useParams()
 
 	if (_Card.cardId === null) {
@@ -80,7 +80,7 @@ const Card = () => {
 	const [dynamicCrumbs, setDynamicCrumbs] = useState([..._Card.crumbs, ''])
 
 	useEffect(() => {
-		Fetch.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT['cardInstanceUrl']}${_Card.cardId}?allInfo=true`, (json) => {
+		FetchHandler.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT['cardInstanceUrl']}${_Card.cardId}?allInfo=true`, (json) => {
 			setDynamicCrumbs([..._Card.crumbs, json.cardID])
 
 			cardDispatch({
@@ -108,6 +108,11 @@ const Card = () => {
 					content={`Information for YuGiOh card ${cardName} such as ban lists it was in, products it can be found in, effect/stats, etc.`}
 				/>
 				<meta name='keywords' content={`YuGiOh, The Supreme Kings Castle, card, ${cardName}, ${_Card.cardId}, ${cardColor}`} />
+
+				<meta property='og:title' content={`${cardName} - ${_Card.cardId}`} />
+				<meta property='og:image' content={`https://images.thesupremekingscastle.com/cards/sm/${_Card.cardId}.jpg`} />
+				<meta property='og:type' content='website' />
+				<meta property='og:description' content={`Details For Yugioh Card - ${cardName}`} />
 			</Helmet>
 
 			<Breadcrumb crumbs={dynamicCrumbs} />
@@ -130,11 +135,29 @@ const Card = () => {
 					/>
 				}
 				twoThirdComponent={
-					<Suspense fallback={<Skeleton width='100%' height='20rem' />}>{_Card.loadRelatedContent(isLoading, cardName, cardColor, productInfo, banListInfo)}</Suspense>
+					<Suspense fallback={<Skeleton width='100%' height='20rem' />}>
+						{_Card.loadRelatedContent(
+							isLoading,
+							{
+								cardName: cardName,
+								cardColor: cardColor,
+								cardEffect: cardEffect,
+								cardAttribute: cardAttribute,
+								monsterType: monsterType,
+								monsterAttack: monsterAtk,
+								monsterDefense: monsterDef,
+								monsterAssociation: monsterAssociation,
+								cardID: _Card.cardId,
+							},
+							cardColor,
+							productInfo,
+							banListInfo
+						)}
+					</Suspense>
 				}
 			/>
 		</div>
 	)
 }
 
-export default Card
+export default CardInformation

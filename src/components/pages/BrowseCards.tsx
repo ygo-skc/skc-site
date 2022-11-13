@@ -8,12 +8,11 @@ import Breadcrumb from '../header-footer/Breadcrumb'
 
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 
-import Fetch from '../../helper/FetchHandler'
+import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 
 import createTable from '../util/TableHelpers'
 
-import '../../css/util/divider.css'
 import '../../css/suggestion-box/database-search-styles.css'
 import CardBrowse from '../util/search/CardBrowse'
 
@@ -76,7 +75,7 @@ export default function BrowseCards() {
 	browseSummaryStats.push(['Displaying', numResultsDisplayed.toString()])
 
 	useEffect(() => {
-		Fetch.handleFetch(DownstreamServices.NAME_maps_ENDPOINT['browseCriteria'], (json) => {
+		FetchHandler.handleFetch(DownstreamServices.NAME_maps_ENDPOINT['browseCriteria'], (json) => {
 			setSkcCardBrowseCriteriaOutput(json)
 		})
 	}, [])
@@ -90,7 +89,7 @@ export default function BrowseCards() {
 			setIsCardBrowseDataLoaded(false)
 			setJsonResults([])
 
-			Fetch.handleFetch(generateBrowseQueryURL(selectedCriteria), (json) => {
+			FetchHandler.handleFetch(generateBrowseQueryURL(selectedCriteria), (json) => {
 				setJsonResults(json.results)
 				setNumResults(json.numResults)
 				setNumResultsDisplayed(50)
@@ -122,8 +121,10 @@ export default function BrowseCards() {
 									<CardBrowse browseCriteriaDispatch={browseCriteriaDispatch} selectedCriteria={selectedCriteria} skcCardBrowseCriteriaOutput={skcCardBrowseCriteriaOutput} />
 								</div>
 
-								<Typography variant='h5'>Results</Typography>
-								{createTable([], browseSummaryStats)}
+								<div className='group'>
+									<Typography variant='h5'>Results</Typography>
+									{createTable([], browseSummaryStats)}
+								</div>
 							</div>
 						}
 					/>
