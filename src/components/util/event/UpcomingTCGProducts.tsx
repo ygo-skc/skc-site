@@ -27,7 +27,9 @@ const UpcomingTCGProducts = () => {
 	}, [])
 
 	useEffect(() => {
-		const eUI = events.map((event: HeartApiEventItem) => <EventItem event={event} showEventDialog={setEventDialogIsOpen} setEventDialogEventData={setEventDialogEventData} />)
+		const eUI = events.map((event: HeartApiEventItem) => (
+			<EventItem key={`${event.name} ${event.createdAt}`} event={event} showEventDialog={setEventDialogIsOpen} setEventDialogEventData={setEventDialogEventData} />
+		))
 
 		setEventsUI(eUI)
 	}, [events])
