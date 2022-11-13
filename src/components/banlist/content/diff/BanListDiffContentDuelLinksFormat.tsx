@@ -1,5 +1,5 @@
 import { FC, memo } from 'react'
-import BanListChangedStatus from '../BanListChangedStatus'
+import BanListChangedStatus from './CardsWithDifferentStatus'
 
 type _BanListDiffContentDuelLinksFormat = {
 	removedCards: SKCCardsPreviousBanListStatus[]

@@ -56,13 +56,82 @@
 }
 
 .limited-two-breakdown-chip.MuiChip-root {
-	border: 1px solid rgb(255, 145, 0);
+	border: 1px solid rgb(76, 175, 80);
 }
 
 .limited-three-breakdown-chip.MuiChip-root {
-	border: 1px solid rgb(255, 145, 0);
+	border: 1px solid #00b5e2;
 }
 
 .removed-breakdown-chip.MuiChip-root {
 	border: 1px solid black;
+}
+
+.ygo-card-info-parent {
+	width: 18rem;
+	min-width: 18rem;
+	margin-right: 0.75rem;
+	cursor: pointer;
+	background-color: #eee;
+	padding: 1rem;
+	border-radius: 2.5rem;
+	border: 2px solid #888;
+}
+
+.img-and-previous-status-parent {
+	display: flex;
+}
+
+.ban-list-status-change-text-parent {
+	min-width: 60%;
+	margin: auto;
+}
+
+.ban-list-status-change-text-1 {
+	margin-bottom: 0rem;
+}
+
+.ban-list-status-change-text-2 {
+	color: black;
+}
+
+.cards-with-different-status-parent-forbidden {
+	border: 5px solid #f50057;
+}
+
+.cards-with-different-status-parent-limited {
+	border: 5px solid rgb(255, 145, 0);
+}
+
+.cards-with-different-status-parent-semi-limited {
+	border: 5px solid rgb(76, 175, 80);
+}
+
+.cards-with-different-status-parent-limited-one {
+	border: 5px solid rgb(255, 145, 0);
+}
+
+.cards-with-different-status-parent-limited-two {
+	border: 5px solid rgb(76, 175, 80);
+}
+
+.cards-with-different-status-parent-limited-three {
+	border: 5px solid #00b5e2;
+}
+
+.cards-with-different-status-parent-unlimited {
+	border: 5px solid black;
+}
+
+.cards-with-different-status-parent {
+	margin-bottom: 1rem;
+	background: white;
+	padding: 1.5rem;
+	border-radius: 1.5rem;
+}
+
+.cards-with-different-status-content {
+	display: flex;
+	overflow-x: auto;
+	padding-bottom: 1rem;
 }

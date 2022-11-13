@@ -89,7 +89,6 @@ function Messages() {
 				onClose={() => {
 					setNumNewMessages(0)
 					setMessagesAnchor(undefined)
-					console.log(newestMessageSeen)
 					localStorage.setItem('previousNewestMessage', newestMessageSeen)
 				}}
 				anchorOrigin={{

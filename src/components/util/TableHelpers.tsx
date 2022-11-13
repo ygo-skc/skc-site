@@ -3,16 +3,20 @@ import '../../css/util/table.css'
 
 function createHeaderRow(headerNames: string[]) {
 	const columns = headerNames.map((header: string) => {
-		return <TableCell>{header}</TableCell>
+		return <TableCell key={header}>{header}</TableCell>
 	})
 
-	return <TableRow className='no-hover'>{columns}</TableRow>
+	return (
+		<TableRow key='header' className='no-hover'>
+			{columns}
+		</TableRow>
+	)
 }
 
 function createRows(rowValues: string[][], rowOnClick: { (): void }[] = []): JSX.Element[] {
 	return rowValues.map((row: string[], index: number) => {
-		const columns: JSX.Element[] = row.map((columnValue: string) => {
-			return <TableCell key={columnValue}>{columnValue}</TableCell>
+		const columns: JSX.Element[] = row.map((columnValue: string, innerIndex: number) => {
+			return <TableCell key={`${columnValue}-${index}-${innerIndex}`}>{columnValue}</TableCell>
 		})
 
 		return rowOnClick.length === 0 ? (

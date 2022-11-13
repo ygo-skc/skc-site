@@ -25,13 +25,13 @@ const NormalFormatTabbedView: FC<_NormalFormatTabbedView> = ({ numForbidden, num
 				<Tab key='semiLimited' className='tab' icon={<LooksTwoTwoToneIcon style={{ color: '#4caf50', fontSize: '1.8rem' }} />} label={numSemiLimited} {...allyProps(2)} />,
 			]}
 			tabPanels={[
-				<TabPanel value={currentTab} index={0}>
+				<TabPanel key='forbidden-tab' value={currentTab} index={0}>
 					{forbiddenContent}
 				</TabPanel>,
-				<TabPanel value={currentTab} index={1}>
+				<TabPanel key='limited-tab' value={currentTab} index={1}>
 					{limitedContent}
 				</TabPanel>,
-				<TabPanel value={currentTab} index={2}>
+				<TabPanel key='semi-limited-tab' value={currentTab} index={2}>
 					{semiLimitedContent}
 				</TabPanel>,
 			]}
