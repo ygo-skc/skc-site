@@ -1,30 +1,21 @@
 import { Skeleton, Typography } from '@mui/material'
 import { FC, useEffect, useState, memo } from 'react'
-import CardImageRounded from '../card/CardImageRounded'
-import YGOCard from '../card/YGOCard'
-import { Hint } from '../util/Hints'
+import CardImageRounded from '../../../card/CardImageRounded'
+import YGOCard from '../../../card/YGOCard'
+import { Hint } from '../../../util/Hints'
 
-const BanListChangedStatus: FC<{
+type _CardsWithDifferentStatus = {
 	newStatusName: 'Forbidden' | 'Limited' | 'Semi Limited' | 'Unlimited' | 'Limited One' | 'Limited Two' | 'Limited Three'
 	cards: SKCCardsPreviousBanListStatus[]
 	numCards: number
 	isLoadingData: boolean
-}> = memo(
+}
+
+const CardsWithDifferentStatus: FC<_CardsWithDifferentStatus> = memo(
 	({ newStatusName, cards, numCards, isLoadingData }) => {
 		const [cardsWithNewStatus, setCardsWithNewStatus] = useState<JSX.Element[]>([])
 
-		let border
-		if (newStatusName === 'Forbidden') {
-			border = '5px solid #f50057'
-		} else if (newStatusName === 'Limited' || newStatusName === 'Limited One') {
-			border = '5px solid rgb(255, 145, 0)'
-		} else if (newStatusName === 'Semi Limited' || newStatusName === 'Limited Two') {
-			border = '5px solid rgb(76, 175, 80)'
-		} else if (newStatusName === 'Limited Three') {
-			border = '5px solid #00B5E2'
-		} else if (newStatusName === 'Unlimited') {
-			border = '5px solid black'
-		}
+		const parentClassName = `cards-with-different-status-parent-${newStatusName.toLowerCase().replace(' ', '-')}`
 
 		useEffect(() => {
 			setCardsWithNewStatus(
@@ -63,12 +54,12 @@ const BanListChangedStatus: FC<{
 		}, [cards])
 
 		return (
-			<div style={{ marginBottom: '1rem', background: 'white', padding: '1.5rem', borderRadius: '1.5rem', border: border }}>
+			<div className={`${parentClassName} cards-with-different-status-parent`}>
 				<Typography variant='h4'>
 					Newly {newStatusName} ({numCards})
 				</Typography>
 
-				<div style={{ display: 'flex', overflowX: 'auto', paddingBottom: '1rem' }}>
+				<div className='cards-with-different-status-content'>
 					{isLoadingData ? <Skeleton className='rounded-skeleton' variant='rectangular' height='20rem' /> : numCards === 0 ? <Hint>Nothing here 🤨</Hint> : cardsWithNewStatus}
 				</div>
 			</div>
@@ -80,4 +71,4 @@ const BanListChangedStatus: FC<{
 	}
 )
 
-export default BanListChangedStatus
+export default CardsWithDifferentStatus

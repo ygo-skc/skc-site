@@ -20,8 +20,8 @@ const BanListBreakdown = lazy(() => import('../banlist/breakdown/BanListBreakdow
 
 const BanListContentNormalFormat = lazy(() => import('../banlist/content/BanListContentNormalFormat'))
 const BanListContentDuelLinksFormat = lazy(() => import('../banlist/content/BanListContentDuelLinksFormat'))
-const BanListDiffContentNormalFormat = lazy(() => import('../banlist/content/BanListDiffContentNormalFormat'))
-const BanListDiffContentDuelLinksFormat = lazy(() => import('../banlist/content/BanListDiffContentDuelLinksFormat'))
+const BanListDiffContentNormalFormat = lazy(() => import('../banlist/content/diff/BanListDiffContentNormalFormat'))
+const BanListDiffContentDuelLinksFormat = lazy(() => import('../banlist/content/diff/BanListDiffContentDuelLinksFormat'))
 
 function determineListSize(size: number | undefined): number {
 	return size === undefined ? 0 : size
