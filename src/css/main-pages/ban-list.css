@@ -56,11 +56,11 @@
 }
 
 .limited-two-breakdown-chip.MuiChip-root {
-	border: 1px solid rgb(255, 145, 0);
+	border: 1px solid rgb(76, 175, 80);
 }
 
 .limited-three-breakdown-chip.MuiChip-root {
-	border: 1px solid rgb(255, 145, 0);
+	border: 1px solid #00b5e2;
 }
 
 .removed-breakdown-chip.MuiChip-root {

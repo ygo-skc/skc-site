@@ -13,10 +13,11 @@ import '../../css/main-pages/ban-list.css'
 import Section from '../util/Section'
 import dateReducer from '../../helper/reducers/BanListDateReducer'
 import currentlySelectedBanListReducer from '../../helper/reducers/CurrentBanListReducer'
+import BanListBreakdownDuelLinksFormat from '../banlist/breakdown/BanListBreakdownDuelLinksFormat'
 
 const BanListDates = lazy(() => import('../banlist/BanListDates'))
 const BanListFormat = lazy(() => import('../banlist/BanListFormat'))
-const BanListBreakdown = lazy(() => import('../banlist/breakdown/BanListBreakdown'))
+const BanListBreakdown = lazy(() => import('../banlist/breakdown/BanListBreakdownNormalFormat'))
 
 const BanListContentNormalFormat = lazy(() => import('../banlist/content/BanListContentNormalFormat'))
 const BanListContentDuelLinksFormat = lazy(() => import('../banlist/content/BanListContentDuelLinksFormat'))
@@ -225,13 +226,24 @@ export default function BanList() {
 										banListStartDates={banListStartDates}
 										setSelectedBanList={(ind: number) => setSelectedBanList(banListStartDates[ind])}
 									/>
-									<BanListBreakdown
-										spreads={{ numForbidden, numLimited, numSemiLimited }}
-										diffSpreads={{ numNewForbidden, numNewLimited, numNewSemiLimited, numRemoved }}
-										isFetchingBanList={isFetchingBanList}
-										isFetchingBanListNewContent={isFetchingBanListNewContent}
-										isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
-									/>
+
+									{format === 'DL' ? (
+										<BanListBreakdownDuelLinksFormat
+											spreads={{ numForbidden, numLimitedOne, numLimitedTwo, numLimitedThree }}
+											diffSpreads={{ numNewForbidden, numNewLimitedOne, numNewLimitedTwo, numNewLimitedThree, numRemoved }}
+											isFetchingBanList={isFetchingBanList}
+											isFetchingBanListNewContent={isFetchingBanListNewContent}
+											isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
+										/>
+									) : (
+										<BanListBreakdown
+											spreads={{ numForbidden, numLimited, numSemiLimited }}
+											diffSpreads={{ numNewForbidden, numNewLimited, numNewSemiLimited, numRemoved }}
+											isFetchingBanList={isFetchingBanList}
+											isFetchingBanListNewContent={isFetchingBanListNewContent}
+											isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
+										/>
+									)}
 								</div>
 							}
 						/>

@@ -1,11 +1,11 @@
 import { FC } from 'react'
 import { Divider, Skeleton, Typography } from '@mui/material'
-import BanListSpread, { _BanListSpread } from './BanListSpread'
-import BanListDiffSpread, { _BanListDiffSpread } from './BanListDiffSpread'
+import BanListSpreadDuelLinksFormat, { _BanListSpreadDuelLinksFormat } from './BanListSpreadDuelLinksFormat'
+import BanListDiffSpreadDuelLinksFormat, { _BanListDiffSpreadDuelLinksFormat } from './BanListDiffSpreadDuelLinksFormat'
 
 type _BanListBreakdown = {
-	spreads: _BanListSpread
-	diffSpreads: _BanListDiffSpread
+	spreads: _BanListSpreadDuelLinksFormat
+	diffSpreads: _BanListDiffSpreadDuelLinksFormat
 	isFetchingBanList: boolean
 	isFetchingBanListNewContent: boolean
 	isFetchingBanListRemovedContent: boolean
@@ -19,7 +19,12 @@ const BanListBreakdown: FC<_BanListBreakdown> = ({ spreads, diffSpreads, isFetch
 			{isFetchingBanList ? (
 				<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='80px' />
 			) : (
-				<BanListSpread numForbidden={spreads.numForbidden} numLimited={spreads.numLimited} numSemiLimited={spreads.numSemiLimited} />
+				<BanListSpreadDuelLinksFormat
+					numForbidden={spreads.numForbidden}
+					numLimitedOne={spreads.numLimitedOne}
+					numLimitedTwo={spreads.numLimitedTwo}
+					numLimitedThree={spreads.numLimitedThree}
+				/>
 			)}
 
 			<Divider className='dark-translucent-divider' />
@@ -27,10 +32,11 @@ const BanListBreakdown: FC<_BanListBreakdown> = ({ spreads, diffSpreads, isFetch
 			{isFetchingBanListNewContent || isFetchingBanListRemovedContent ? (
 				<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='80px' />
 			) : (
-				<BanListDiffSpread
+				<BanListDiffSpreadDuelLinksFormat
 					numNewForbidden={diffSpreads.numNewForbidden}
-					numNewLimited={diffSpreads.numNewLimited}
-					numNewSemiLimited={diffSpreads.numNewSemiLimited}
+					numNewLimitedOne={diffSpreads.numNewLimitedOne}
+					numNewLimitedTwo={diffSpreads.numNewLimitedTwo}
+					numNewLimitedThree={diffSpreads.numNewLimitedThree}
 					numRemoved={diffSpreads.numRemoved}
 				/>
 			)}
