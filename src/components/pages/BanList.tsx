@@ -13,11 +13,11 @@ import '../../css/main-pages/ban-list.css'
 import Section from '../util/Section'
 import dateReducer from '../../helper/reducers/BanListDateReducer'
 import currentlySelectedBanListReducer from '../../helper/reducers/CurrentBanListReducer'
-import BanListBreakdownDuelLinksFormat from '../banlist/breakdown/BanListBreakdownDuelLinksFormat'
+import BanListBreakdownDuelLinksFormat from '../banlist/breakdown/duel-links/BanListBreakdownDuelLinksFormat'
 
 const BanListDates = lazy(() => import('../banlist/BanListDates'))
 const BanListFormat = lazy(() => import('../banlist/BanListFormat'))
-const BanListBreakdown = lazy(() => import('../banlist/breakdown/BanListBreakdownNormalFormat'))
+const BanListBreakdownNormalFormat = lazy(() => import('../banlist/breakdown/BanListBreakdownNormalFormat'))
 
 const BanListContentNormalFormat = lazy(() => import('../banlist/content/BanListContentNormalFormat'))
 const BanListContentDuelLinksFormat = lazy(() => import('../banlist/content/BanListContentDuelLinksFormat'))
@@ -236,7 +236,7 @@ export default function BanList() {
 											isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
 										/>
 									) : (
-										<BanListBreakdown
+										<BanListBreakdownNormalFormat
 											spreads={{ numForbidden, numLimited, numSemiLimited }}
 											diffSpreads={{ numNewForbidden, numNewLimited, numNewSemiLimited, numRemoved }}
 											isFetchingBanList={isFetchingBanList}

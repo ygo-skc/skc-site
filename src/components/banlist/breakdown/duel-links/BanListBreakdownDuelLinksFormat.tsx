@@ -3,7 +3,7 @@ import { Divider, Skeleton, Typography } from '@mui/material'
 import BanListSpreadDuelLinksFormat, { _BanListSpreadDuelLinksFormat } from './BanListSpreadDuelLinksFormat'
 import BanListDiffSpreadDuelLinksFormat, { _BanListDiffSpreadDuelLinksFormat } from './BanListDiffSpreadDuelLinksFormat'
 
-type _BanListBreakdown = {
+type _BanListBreakdownDuelLinksFormat = {
 	spreads: _BanListSpreadDuelLinksFormat
 	diffSpreads: _BanListDiffSpreadDuelLinksFormat
 	isFetchingBanList: boolean
@@ -11,7 +11,13 @@ type _BanListBreakdown = {
 	isFetchingBanListRemovedContent: boolean
 }
 
-const BanListBreakdown: FC<_BanListBreakdown> = ({ spreads, diffSpreads, isFetchingBanList, isFetchingBanListNewContent, isFetchingBanListRemovedContent }) => {
+const BanListBreakdownDuelLinksFormat: FC<_BanListBreakdownDuelLinksFormat> = ({
+	spreads,
+	diffSpreads,
+	isFetchingBanList,
+	isFetchingBanListNewContent,
+	isFetchingBanListRemovedContent,
+}) => {
 	return (
 		<div className='group'>
 			<Typography variant='h5'>Breakdown</Typography>
@@ -44,4 +50,4 @@ const BanListBreakdown: FC<_BanListBreakdown> = ({ spreads, diffSpreads, isFetch
 	)
 }
 
-export default BanListBreakdown
+export default BanListBreakdownDuelLinksFormat

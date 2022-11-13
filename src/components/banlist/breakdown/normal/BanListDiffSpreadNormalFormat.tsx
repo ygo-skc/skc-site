@@ -1,14 +1,14 @@
 import { Chip } from '@mui/material'
 import { FC } from 'react'
 
-export type _BanListDiffSpread = {
+export type _BanListDiffSpreadNormalFormat = {
 	numNewForbidden: number
 	numNewLimited: number
 	numNewSemiLimited: number
 	numRemoved: number
 }
 
-const BanListSpread: FC<_BanListDiffSpread> = ({ numNewForbidden, numNewLimited, numNewSemiLimited, numRemoved }) => {
+const BanListDiffSpreadNormalFormat: FC<_BanListDiffSpreadNormalFormat> = ({ numNewForbidden, numNewLimited, numNewSemiLimited, numRemoved }) => {
 	return (
 		<div style={{ width: '100%' }}>
 			<Chip className='breakdown-chip forbidden-breakdown-chip' variant='outlined' label={`${numNewForbidden} New Forbidden`} />
@@ -19,4 +19,4 @@ const BanListSpread: FC<_BanListDiffSpread> = ({ numNewForbidden, numNewLimited,
 	)
 }
 
-export default BanListSpread
+export default BanListDiffSpreadNormalFormat

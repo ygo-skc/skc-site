@@ -1,17 +1,23 @@
 import { FC } from 'react'
 import { Divider, Skeleton, Typography } from '@mui/material'
-import BanListSpread, { _BanListSpread } from './BanListSpreadNormalFormat'
-import BanListDiffSpread, { _BanListDiffSpread } from './BanListDiffSpreadNormalFormat'
+import BanListSpreadNormalFormat, { _BanListSpreadNormalFormat } from './BanListSpreadNormalFormat'
+import BanListDiffSpreadNormalFormat, { _BanListDiffSpreadNormalFormat } from './BanListDiffSpreadNormalFormat'
 
-type _BanListBreakdown = {
-	spreads: _BanListSpread
-	diffSpreads: _BanListDiffSpread
+type _BanListBreakdownNormalFormat = {
+	spreads: _BanListSpreadNormalFormat
+	diffSpreads: _BanListDiffSpreadNormalFormat
 	isFetchingBanList: boolean
 	isFetchingBanListNewContent: boolean
 	isFetchingBanListRemovedContent: boolean
 }
 
-const BanListBreakdown: FC<_BanListBreakdown> = ({ spreads, diffSpreads, isFetchingBanList, isFetchingBanListNewContent, isFetchingBanListRemovedContent }) => {
+const BanListBreakdownNormalFormat: FC<_BanListBreakdownNormalFormat> = ({
+	spreads,
+	diffSpreads,
+	isFetchingBanList,
+	isFetchingBanListNewContent,
+	isFetchingBanListRemovedContent,
+}) => {
 	return (
 		<div className='group'>
 			<Typography variant='h5'>Breakdown</Typography>
@@ -19,7 +25,7 @@ const BanListBreakdown: FC<_BanListBreakdown> = ({ spreads, diffSpreads, isFetch
 			{isFetchingBanList ? (
 				<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='80px' />
 			) : (
-				<BanListSpread numForbidden={spreads.numForbidden} numLimited={spreads.numLimited} numSemiLimited={spreads.numSemiLimited} />
+				<BanListSpreadNormalFormat numForbidden={spreads.numForbidden} numLimited={spreads.numLimited} numSemiLimited={spreads.numSemiLimited} />
 			)}
 
 			<Divider className='dark-translucent-divider' />
@@ -27,7 +33,7 @@ const BanListBreakdown: FC<_BanListBreakdown> = ({ spreads, diffSpreads, isFetch
 			{isFetchingBanListNewContent || isFetchingBanListRemovedContent ? (
 				<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='80px' />
 			) : (
-				<BanListDiffSpread
+				<BanListDiffSpreadNormalFormat
 					numNewForbidden={diffSpreads.numNewForbidden}
 					numNewLimited={diffSpreads.numNewLimited}
 					numNewSemiLimited={diffSpreads.numNewSemiLimited}
@@ -38,4 +44,4 @@ const BanListBreakdown: FC<_BanListBreakdown> = ({ spreads, diffSpreads, isFetch
 	)
 }
 
-export default BanListBreakdown
+export default BanListBreakdownNormalFormat

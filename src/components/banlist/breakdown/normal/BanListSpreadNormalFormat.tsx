@@ -4,13 +4,13 @@ import BlockIcon from '@mui/icons-material/Block'
 import LooksOneTwoToneIcon from '@mui/icons-material/LooksOneTwoTone'
 import LooksTwoTwoToneIcon from '@mui/icons-material/LooksTwoTwoTone'
 
-export type _BanListSpread = {
+export type _BanListSpreadNormalFormat = {
 	numForbidden: number
 	numLimited: number
 	numSemiLimited: number
 }
 
-const BanListSpread: FC<_BanListSpread> = ({ numForbidden, numLimited, numSemiLimited }) => {
+const BanListSpreadNormalFormat: FC<_BanListSpreadNormalFormat> = ({ numForbidden, numLimited, numSemiLimited }) => {
 	return (
 		<div style={{ width: '100%' }}>
 			<Chip className='breakdown-chip forbidden-breakdown-chip' variant='outlined' icon={<BlockIcon style={{ fontSize: '1.8rem', color: 'red' }} />} label={`${numForbidden}`} />
@@ -30,4 +30,4 @@ const BanListSpread: FC<_BanListSpread> = ({ numForbidden, numLimited, numSemiLi
 	)
 }
 
-export default BanListSpread
+export default BanListSpreadNormalFormat
