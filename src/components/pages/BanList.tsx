@@ -13,11 +13,12 @@ import '../../css/main-pages/ban-list.css'
 import Section from '../util/Section'
 import dateReducer from '../../helper/reducers/BanListDateReducer'
 import currentlySelectedBanListReducer from '../../helper/reducers/CurrentBanListReducer'
-import BanListBreakdownDuelLinksFormat from '../banlist/breakdown/duel-links/BanListBreakdownDuelLinksFormat'
 
 const BanListDates = lazy(() => import('../banlist/BanListDates'))
 const BanListFormat = lazy(() => import('../banlist/BanListFormat'))
-const BanListBreakdownNormalFormat = lazy(() => import('../banlist/breakdown/BanListBreakdownNormalFormat'))
+
+const BanListBreakdownNormalFormat = lazy(() => import('../banlist/breakdown/normal/BanListBreakdownNormalFormat'))
+const BanListBreakdownDuelLinksFormat = lazy(() => import('../banlist/breakdown/duel-links/BanListBreakdownDuelLinksFormat'))
 
 const BanListContentNormalFormat = lazy(() => import('../banlist/content/BanListContentNormalFormat'))
 const BanListContentDuelLinksFormat = lazy(() => import('../banlist/content/BanListContentDuelLinksFormat'))
