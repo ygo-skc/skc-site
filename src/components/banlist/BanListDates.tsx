@@ -15,7 +15,7 @@ const BanListDates: FC<_BanListDates> = ({ isFetchingBanListDates, banListStartD
 	useEffect(() => {
 		let selectorItems: JSX.Element[] = banListStartDates.map((_: string, ind: number) => {
 			return (
-				<MenuItem className='ban-list-date-selector-menu-item' value={ind}>
+				<MenuItem key={banListStartDates[ind]} className='ban-list-date-selector-menu-item' value={ind}>
 					{Dates.getCurrentBanListDate(banListStartDates[ind], banListStartDates)}
 				</MenuItem>
 			)

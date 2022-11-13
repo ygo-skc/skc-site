@@ -8,7 +8,6 @@ type _TabPanel = {
 }
 
 const TabPanel: FC<_TabPanel> = ({ children, value, index }) => {
-	console.log(children)
 	return (
 		<Typography component='div' role='tabpanel' hidden={value !== index} id={`full-width-tabpanel-${index}`} aria-labelledby={`full-width-tab-${index}`}>
 			{children}

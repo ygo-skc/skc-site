@@ -38,16 +38,16 @@ const NormalFormatTabbedView: FC<_NormalFormatTabbedView> = ({
 				<Tab key='limited-three' className='tab' icon={<Filter3TwoToneIcon style={{ color: '#00B5E2', fontSize: '1.8rem' }} />} label={numLimitedThree} {...allyProps(2)} />,
 			]}
 			tabPanels={[
-				<TabPanel value={currentTab} index={0}>
+				<TabPanel key='forbidden-tab' value={currentTab} index={0}>
 					{forbiddenContent}
 				</TabPanel>,
-				<TabPanel value={currentTab} index={1}>
+				<TabPanel key='limited-one-tab' value={currentTab} index={1}>
 					{limitedOneContent}
 				</TabPanel>,
-				<TabPanel value={currentTab} index={2}>
+				<TabPanel key='limited-two-tab' value={currentTab} index={2}>
 					{limitedTwoContent}
 				</TabPanel>,
-				<TabPanel value={currentTab} index={3}>
+				<TabPanel key='limited-three-tab' value={currentTab} index={3}>
 					{limitedThreeContent}
 				</TabPanel>,
 			]}
