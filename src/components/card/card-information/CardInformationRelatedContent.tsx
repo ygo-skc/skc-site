@@ -1,4 +1,4 @@
-import { FC, memo } from 'react'
+import { FC, memo, useEffect, useState } from 'react'
 import { Typography } from '@mui/material'
 import Grid2 from '@mui/material/Unstable_Grid2'
 
@@ -6,6 +6,9 @@ import Section from '../../util/Section'
 
 import CardProductInformation from './CardProductInformation'
 import CardBanListInformation from './CardBanListInformation'
+import YGOCardWithQuantity from '../YGOCardWithQuantity'
+import FetchHandler from '../../../helper/FetchHandler'
+import DownstreamServices from '../../../helper/DownstreamServices'
 
 type CardInformationRelatedContentType = {
 	card: SKCCard
@@ -18,8 +21,42 @@ type CardInformationRelatedContentType = {
 
 const CardInformationRelatedContent: FC<CardInformationRelatedContentType> = memo(
 	({ card, cardColor, isLoading, productInfo, banListInfo, cardID }) => {
+		const [suggestions, setSuggestions] = useState<JSX.Element[]>()
+
+		useEffect(() => {
+			if (card === undefined) {
+				return
+			}
+
+			FetchHandler.handleFetch(
+				`${DownstreamServices.SKC_SUGGESTION_HOST_NAME}/api/v1/suggestions/card/${card.cardID}`,
+				(json: MaterialSuggestionOutput) => {
+					const s = json.namedMaterials.map((cardData) => {
+						return <YGOCardWithQuantity card={cardData} quantity={1} />
+					})
+
+					setSuggestions(s)
+				},
+				false
+			)?.catch((_err) => {})
+		}, [card])
+
 		return (
 			<div>
+				<Section
+					sectionHeaderBackground={cardColor !== undefined ? (cardColor?.replace(/Pendulum-/gi, '') as cardColor) : ''}
+					sectionName='Materials'
+					sectionContent={
+						<div className='section-content'>
+							<Typography variant='h5'>
+								Cards Used In Summoning <i>{card.cardName}</i> From ED
+							</Typography>
+
+							<div style={{ display: 'flex', overflowX: 'auto', paddingBottom: '.3rem' }}>{suggestions}</div>
+						</div>
+					}
+				/>
+
 				<Section
 					sectionHeaderBackground={cardColor !== undefined ? (cardColor?.replace(/Pendulum-/gi, '') as cardColor) : ''}
 					sectionName='Explore'
