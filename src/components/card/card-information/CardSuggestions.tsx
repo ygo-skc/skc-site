@@ -6,29 +6,35 @@ import Section from '../../util/Section'
 import YGOCardWithQuantity from '../YGOCardWithQuantity'
 import FetchHandler from '../../../helper/FetchHandler'
 import DownstreamServices from '../../../helper/DownstreamServices'
+import { Hint } from '../../util/Hints'
 
 type _CardSuggestion = {
 	cardID: string
+	cardName: string
 	cardColor: cardColor
 }
 
 const CardSuggestions: FC<_CardSuggestion> = memo(
-	({ cardID, cardColor }) => {
-		const [suggestions, setSuggestions] = useState<JSX.Element[]>()
+	({ cardID, cardColor, cardName }) => {
+		const [suggestions, setSuggestions] = useState<JSX.Element[]>([])
 		const [isLoadingSuggestions, setIsLoadingSuggestions] = useState<boolean>(true)
 
 		useEffect(() => {
 			FetchHandler.handleFetch(
 				`${DownstreamServices.SKC_SUGGESTION_HOST_NAME}/api/v1/suggestions/card/${cardID}`,
 				(json: MaterialSuggestionOutput) => {
-					const suggestionOutput = json.namedMaterials.map((cardData: SKCCard) => {
-						return <YGOCardWithQuantity key={cardData.cardID} card={cardData} quantity={1} />
-					})
-
-					startTransition(() => {
-						setSuggestions(suggestionOutput)
+					if (json.namedMaterials === null) {
 						setIsLoadingSuggestions(false)
-					})
+					} else {
+						const suggestionOutput = json.namedMaterials.map((cardData: SKCCard) => {
+							return <YGOCardWithQuantity key={cardData.cardID} card={cardData} quantity={1} />
+						})
+
+						startTransition(() => {
+							setSuggestions(suggestionOutput)
+							setIsLoadingSuggestions(false)
+						})
+					}
 				},
 				false
 			)?.catch((_err) => {})
@@ -46,9 +52,10 @@ const CardSuggestions: FC<_CardSuggestion> = memo(
 							</div>
 						) : (
 							<div className='section-content'>
-								<Typography variant='h5'>{/* Cards Used In Summoning <i>{card.cardName}</i> From ED */}</Typography>
-
-								<div style={{ display: 'flex', overflowX: 'auto', paddingBottom: '.3rem' }}>{suggestions}</div>
+								<Typography variant='h5'>
+									<i>{cardName}</i> Materials - Direct References
+								</Typography>
+								{suggestions.length === 0 ? <Hint>Nothing here 🤔</Hint> : <div style={{ display: 'flex', overflowX: 'auto', paddingBottom: '.3rem' }}>{suggestions}</div>}
 							</div>
 						)
 					}
