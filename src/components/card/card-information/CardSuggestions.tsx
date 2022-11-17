@@ -44,7 +44,7 @@ const CardSuggestions: FC<_CardSuggestion> = memo(
 			<div>
 				<Section
 					sectionHeaderBackground={cardColor !== undefined ? (cardColor?.replace(/Pendulum-/gi, '') as cardColor) : ''}
-					sectionName='Materials'
+					sectionName='Suggestions'
 					sectionContent={
 						isLoadingSuggestions ? (
 							<div className='section-content'>
