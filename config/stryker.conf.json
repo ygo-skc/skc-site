@@ -2,7 +2,7 @@
 	"$schema": "./node_modules/@stryker-mutator/core/schema/stryker-schema.json",
 	"packageManager": "npm",
 	"reporters": ["html", "clear-text", "progress"],
-	"concurrency": 4,
+	"concurrency": 6,
 	"testRunner": "jest",
 	"jest": {
 		"projectType": "create-react-app",
@@ -12,6 +12,6 @@
 	"checkers": ["typescript"],
 	"tsconfigFile": "tsconfig.json",
 	"allowConsoleColors": true,
-	"mutate": ["src/helper/*.ts", "src/components/**/*.tsx"],
+	"mutate": ["src/helper/**/*.ts", "!**/__tests__/**"],
 	"ignoreStatic": true
 }
