@@ -28,7 +28,7 @@ const ProductBrowse: FunctionComponent = () => {
 		const rowOnClick: { (): void }[] = []
 		const productRows: string[][] = productJson.map((product: ProductInfo): string[] => {
 			rowOnClick.push(() => window.location.assign(`/product/${product.productId}`))
-			return [product.productName!, product.productId, product.productType!, product.productSubType!, Dates.getDateString(new Date(product.productReleaseDate))]
+			return [product.productName!, product.productId, product.productType!, product.productSubType!, Dates.fromYYYYMMDDToDate(product.productReleaseDate)]
 		})
 
 		setProductGridItems(createTable(headers, productRows, rowOnClick, true))

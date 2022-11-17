@@ -34,10 +34,10 @@ test('verify year is formatted correctly {xxxx}', () => {
 })
 
 test('verify ban list date gets formatted correctly', () => {
-	expect(Dates.banListDate('2022-01-01')).toBe('Jan 1, 2022')
-	expect(Dates.banListDate('2021-02-10')).toBe('Feb 10, 2021')
-	expect(Dates.banListDate('1993-12-31')).toBe('Dec 31, 1993')
-	expect(Dates.banListDate('2001-09-11')).toBe('Sep 11, 2001')
+	expect(Dates.fromYYYYMMDDToDate('2022-01-01')).toBe('Jan 1, 2022')
+	expect(Dates.fromYYYYMMDDToDate('2021-02-10')).toBe('Feb 10, 2021')
+	expect(Dates.fromYYYYMMDDToDate('1993-12-31')).toBe('Dec 31, 1993')
+	expect(Dates.fromYYYYMMDDToDate('2001-09-11')).toBe('Sep 11, 2001')
 })
 
 test("verify retrieval of ban list date range doesn't cause issues with undefined input", () => {
