@@ -15,8 +15,6 @@ const CardsWithDifferentStatus: FC<_CardsWithDifferentStatus> = memo(
 	({ newStatusName, cards, numCards, isLoadingData }) => {
 		const [cardsWithNewStatus, setCardsWithNewStatus] = useState<JSX.Element[]>([])
 
-		const parentClassName = `cards-with-different-status-parent-${newStatusName.toLowerCase().replace(' ', '-')}`
-
 		useEffect(() => {
 			setCardsWithNewStatus(
 				cards.map((newStatus: SKCCardsPreviousBanListStatus) => {
@@ -54,7 +52,7 @@ const CardsWithDifferentStatus: FC<_CardsWithDifferentStatus> = memo(
 		}, [cards])
 
 		return (
-			<div className={`${parentClassName} cards-with-different-status-parent`}>
+			<div className='cards-with-different-status-parent'>
 				<Typography variant='h4'>
 					Newly {newStatusName} ({numCards})
 				</Typography>

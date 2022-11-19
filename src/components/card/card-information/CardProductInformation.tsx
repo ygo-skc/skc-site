@@ -1,10 +1,11 @@
-import { useEffect, useState, FunctionComponent } from 'react'
+import { useEffect, useState, FC } from 'react'
+import { Typography } from '@mui/material'
+
 import '../../../css/card-information-styles.css'
 
 import { Dates } from '../../../helper/Dates'
 import { Hint } from '../../util/Hints'
 import createTable from '../../util/TableHelpers'
-import Section from '../../util/Section'
 
 type args = {
 	isLoading: boolean
@@ -13,7 +14,7 @@ type args = {
 	productInfo: ProductInfo[]
 }
 
-const CardProductInformation: FunctionComponent<args> = ({ isLoading, hasInfo, productInfo, cardID }) => {
+const CardProductInformation: FC<args> = ({ isLoading, hasInfo, productInfo, cardID }) => {
 	const [productTable, setProductTable] = useState<JSX.Element | undefined>(undefined)
 
 	useEffect(() => {
@@ -40,23 +41,16 @@ const CardProductInformation: FunctionComponent<args> = ({ isLoading, hasInfo, p
 	}, [productInfo, cardID])
 
 	return (
-		<Section
-			shadow=''
-			sectionHeaderBackground='product'
-			sectionName='Products'
-			margin='tight'
-			sectionContent={
-				<div className={'section-content card-info-container'}>
-					{!isLoading && hasInfo ? (
-						productTable
-					) : (
-						<Hint backgroundColor='rgba(0, 0, 0, 0.7)' textColor='white'>
-							{'Not Found In Any Product'}
-						</Hint>
-					)}
-				</div>
-			}
-		/>
+		<div className='group'>
+			<Typography variant='h4'>YGO Products</Typography>
+			{!isLoading && hasInfo ? (
+				productTable
+			) : (
+				<Hint backgroundColor='rgba(0, 0, 0, 0.7)' textColor='white'>
+					{'Not Found In Any Product'}
+				</Hint>
+			)}
+		</div>
 	)
 }
 

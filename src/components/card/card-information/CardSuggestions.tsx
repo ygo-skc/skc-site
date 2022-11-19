@@ -56,23 +56,29 @@ const CardSuggestions: FC<_CardSuggestion> = memo(
 					sectionContent={
 						isLoadingSuggestions ? (
 							<div className='section-content'>
-								<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='250px' />
+								<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='380px' />
 							</div>
 						) : (
 							<div className='section-content'>
-								<Typography variant='h5'>Named Summoning Materials</Typography>
-								{materialSuggestions.length === 0 ? (
-									<Hint>Nothing here 🤔</Hint>
-								) : (
-									<div style={{ display: 'flex', overflowX: 'auto', paddingBottom: '.3rem' }}>{materialSuggestions}</div>
-								)}
+								<div className='group-with-outline'>
+									<Typography variant='h4'>Named Summoning Materials</Typography>
+									{materialSuggestions.length === 0 ? (
+										<Hint>Nothing here 🤔</Hint>
+									) : (
+										<div style={{ display: 'flex', overflowX: 'auto', paddingBottom: '.3rem' }}>{materialSuggestions}</div>
+									)}
+								</div>
 
-								<Typography variant='h5'>Named References</Typography>
-								{referenceSuggestions.length === 0 ? (
-									<Hint>Nothing here 🤔</Hint>
-								) : (
-									<div style={{ display: 'flex', overflowX: 'auto', paddingBottom: '.3rem' }}>{referenceSuggestions}</div>
-								)}
+								<br />
+
+								<div className='group-with-outline'>
+									<Typography variant='h4'>Named References</Typography>
+									{referenceSuggestions.length === 0 ? (
+										<Hint>Nothing here 🤔</Hint>
+									) : (
+										<div style={{ display: 'flex', overflowX: 'auto', paddingBottom: '.3rem' }}>{referenceSuggestions}</div>
+									)}
+								</div>
 							</div>
 						)
 					}
