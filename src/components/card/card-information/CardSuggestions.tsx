@@ -10,31 +10,39 @@ import { Hint } from '../../util/Hints'
 
 type _CardSuggestion = {
 	cardID: string
-	cardName: string
 	cardColor: cardColor
 }
 
 const CardSuggestions: FC<_CardSuggestion> = memo(
-	({ cardID, cardColor, cardName }) => {
-		const [suggestions, setSuggestions] = useState<JSX.Element[]>([])
+	({ cardID, cardColor }) => {
+		const [materialSuggestions, setMaterialSuggestions] = useState<JSX.Element[]>([])
+		const [referenceSuggestions, setReferenceSuggestions] = useState<JSX.Element[]>([])
 		const [isLoadingSuggestions, setIsLoadingSuggestions] = useState<boolean>(true)
 
 		useEffect(() => {
 			FetchHandler.handleFetch(
 				`${DownstreamServices.SKC_SUGGESTION_HOST_NAME}/api/v1/suggestions/card/${cardID}`,
-				(json: MaterialSuggestionOutput) => {
-					if (json.namedMaterials === null) {
-						setIsLoadingSuggestions(false)
-					} else {
-						const suggestionOutput = json.namedMaterials.map((cardData: SKCCard) => {
-							return <YGOCardWithQuantity key={cardData.cardID} card={cardData} quantity={1} />
-						})
+				(json: CardSuggestionOutput) => {
+					let materials: JSX.Element[] = []
+					let references: JSX.Element[] = []
 
-						startTransition(() => {
-							setSuggestions(suggestionOutput)
-							setIsLoadingSuggestions(false)
+					if (json.namedMaterials !== null) {
+						materials = json.namedMaterials.map((reference: CardReference) => {
+							return <YGOCardWithQuantity key={reference.card.cardID} card={reference.card} occurrences={reference.occurrences} />
 						})
 					}
+
+					if (json.namedReferences !== null) {
+						references = json.namedReferences.map((reference: CardReference) => {
+							return <YGOCardWithQuantity key={reference.card.cardID} card={reference.card} occurrences={reference.occurrences} />
+						})
+					}
+
+					startTransition(() => {
+						setMaterialSuggestions(materials)
+						setReferenceSuggestions(references)
+						setIsLoadingSuggestions(false)
+					})
 				},
 				false
 			)?.catch((_err) => {})
@@ -52,10 +60,19 @@ const CardSuggestions: FC<_CardSuggestion> = memo(
 							</div>
 						) : (
 							<div className='section-content'>
-								<Typography variant='h5'>
-									<i>{cardName}</i> Materials - Direct References
-								</Typography>
-								{suggestions.length === 0 ? <Hint>Nothing here 🤔</Hint> : <div style={{ display: 'flex', overflowX: 'auto', paddingBottom: '.3rem' }}>{suggestions}</div>}
+								<Typography variant='h5'>Named Summoning Materials</Typography>
+								{materialSuggestions.length === 0 ? (
+									<Hint>Nothing here 🤔</Hint>
+								) : (
+									<div style={{ display: 'flex', overflowX: 'auto', paddingBottom: '.3rem' }}>{materialSuggestions}</div>
+								)}
+
+								<Typography variant='h5'>Named References</Typography>
+								{referenceSuggestions.length === 0 ? (
+									<Hint>Nothing here 🤔</Hint>
+								) : (
+									<div style={{ display: 'flex', overflowX: 'auto', paddingBottom: '.3rem' }}>{referenceSuggestions}</div>
+								)}
 							</div>
 						)
 					}

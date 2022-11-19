@@ -22,7 +22,7 @@ const CardInformationRelatedContent: FC<CardInformationRelatedContentType> = mem
 	({ card, cardColor, isLoading, productInfo, banListInfo, cardID }) => {
 		return (
 			<div>
-				<CardSuggestions cardID={card.cardID} cardColor={card.cardColor} cardName={card.cardName} />
+				<CardSuggestions cardID={card.cardID} cardColor={card.cardColor} />
 
 				<Section
 					sectionHeaderBackground={cardColor !== undefined ? (cardColor?.replace(/Pendulum-/gi, '') as cardColor) : ''}
