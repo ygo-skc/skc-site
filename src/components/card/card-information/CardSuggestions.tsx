@@ -7,6 +7,7 @@ import YGOCardWithQuantity from '../YGOCardWithQuantity'
 import FetchHandler from '../../../helper/FetchHandler'
 import DownstreamServices from '../../../helper/DownstreamServices'
 import { Hint } from '../../util/Hints'
+import GenericNonBreakingErr from '../../util/exception/GenericNonBreakingErr'
 
 type _CardSuggestion = {
 	cardID: string
@@ -18,6 +19,7 @@ const CardSuggestions: FC<_CardSuggestion> = memo(
 		const [materialSuggestions, setMaterialSuggestions] = useState<JSX.Element[]>([])
 		const [referenceSuggestions, setReferenceSuggestions] = useState<JSX.Element[]>([])
 		const [isLoadingSuggestions, setIsLoadingSuggestions] = useState<boolean>(true)
+		const [hasError, setHasError] = useState<boolean>(false)
 
 		useEffect(() => {
 			FetchHandler.handleFetch(
@@ -45,7 +47,12 @@ const CardSuggestions: FC<_CardSuggestion> = memo(
 					})
 				},
 				false
-			)?.catch((_err) => {})
+			)?.catch((_err) => {
+				startTransition(() => {
+					setIsLoadingSuggestions(false)
+					setHasError(true)
+				})
+			})
 		}, [cardID])
 
 		return (
@@ -54,33 +61,37 @@ const CardSuggestions: FC<_CardSuggestion> = memo(
 					sectionHeaderBackground={cardColor !== undefined ? (cardColor?.replace(/Pendulum-/gi, '') as cardColor) : ''}
 					sectionName='Suggestions'
 					sectionContent={
-						isLoadingSuggestions ? (
-							<div className='section-content'>
-								<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='380px' />
-							</div>
-						) : (
-							<div className='section-content'>
-								<div className='group-with-outline'>
-									<Typography variant='h4'>Named Summoning Materials</Typography>
-									{materialSuggestions.length === 0 ? (
-										<Hint>Nothing here 🤔</Hint>
-									) : (
-										<div style={{ display: 'flex', overflowX: 'auto', paddingBottom: '.3rem' }}>{materialSuggestions}</div>
-									)}
-								</div>
+						<div className='section-content'>
+							{isLoadingSuggestions && <Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='380px' />}
+							{!isLoadingSuggestions && !hasError && (
+								<div>
+									<div className='group-with-outline'>
+										<Typography variant='h4'>Named Summoning Materials</Typography>
+										{materialSuggestions.length === 0 ? (
+											<Hint>Nothing here 🤔</Hint>
+										) : (
+											<div style={{ display: 'flex', overflowX: 'auto', paddingBottom: '.3rem' }}>{materialSuggestions}</div>
+										)}
+									</div>
 
-								<br />
+									<br />
 
-								<div className='group-with-outline'>
-									<Typography variant='h4'>Named References</Typography>
-									{referenceSuggestions.length === 0 ? (
-										<Hint>Nothing here 🤔</Hint>
-									) : (
-										<div style={{ display: 'flex', overflowX: 'auto', paddingBottom: '.3rem' }}>{referenceSuggestions}</div>
-									)}
+									<div className='group-with-outline'>
+										<Typography variant='h4'>Named References</Typography>
+										{referenceSuggestions.length === 0 ? (
+											<Hint>Nothing here 🤔</Hint>
+										) : (
+											<div style={{ display: 'flex', overflowX: 'auto', paddingBottom: '.3rem' }}>{referenceSuggestions}</div>
+										)}
+									</div>
 								</div>
-							</div>
-						)
+							)}
+							{!isLoadingSuggestions && hasError && (
+								<div>
+									<GenericNonBreakingErr errExplanation={'🤯 Suggestion Engine Is Offline 🤯'} />
+								</div>
+							)}
+						</div>
 					}
 				/>
 			</div>
