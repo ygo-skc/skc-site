@@ -42,7 +42,7 @@ test('verify ban list date gets formatted correctly', () => {
 
 test("verify retrieval of ban list date range doesn't cause issues with undefined input", () => {
 	expect(Dates.getCurrentBanListDate()).toBe('')
-	expect(Dates.getCurrentBanListDate('', undefined)).toBe('')
+	expect(Dates.getCurrentBanListDate('')).toBe('')
 })
 
 test('verify retrieval of ban list date range works as intended', () => {

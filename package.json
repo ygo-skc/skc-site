@@ -39,7 +39,7 @@
 		"build": "webpack --mode production --env dev",
 		"build:development_remote": "webpack --mode production --env remote-dev",
 		"build:production": "webpack --mode production --env prod",
-		"test": "react-scripts test",
+		"test": "react-scripts test --coverage --watchAll",
 		"ci:test": "react-scripts test --ci --coverage --watchAll=false",
 		"mutation": "stryker run config/stryker.conf.json",
 		"checkAWS:cloudfrontSKC": "aws cloudfront list-distributions | jq '.DistributionList.Items[] | select(.Aliases.Items | contains([\"thesupremekingscastle.com\"])) |  {id: .Id, aliases: .Aliases}'",

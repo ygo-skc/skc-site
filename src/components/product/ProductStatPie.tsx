@@ -5,7 +5,7 @@ import { FC } from 'react'
 const ProductStatPie: FC<{ data: any[]; statName: string; isDataLoaded: boolean }> = ({ data, statName, isDataLoaded }) => {
 	const margin = 10
 	return (
-		<div style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)', width: '90%', margin: 'auto', padding: '1rem', borderRadius: '2rem', marginBottom: '1rem' }}>
+		<div className='group-dark' style={{ width: '90%', margin: 'auto', marginBottom: '1rem' }}>
 			<Typography style={{ color: 'white' }} variant='h2' align='center'>
 				{statName}
 			</Typography>
@@ -46,7 +46,7 @@ const ProductStatPie: FC<{ data: any[]; statName: string; isDataLoaded: boolean 
 						]}
 					/>
 				) : (
-					<Skeleton variant='rectangular' height='100%' width='100%' style={{ backgroundColor: 'rgba(0255, 255, 255, 0.11)' }} />
+					<Skeleton className='rounded-skeleton-light' variant='rectangular' height='100%' width='100%' />
 				)}
 			</div>
 		</div>

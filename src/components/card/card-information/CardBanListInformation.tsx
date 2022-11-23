@@ -1,11 +1,12 @@
 import { useEffect, useState, FunctionComponent } from 'react'
+import { Typography } from '@mui/material'
+
 import '../../../css/card-information-styles.css'
 
 import { Dates } from '../../../helper/Dates'
 import { Hint } from '../../util/Hints'
 
 import createTable from '../../util/TableHelpers'
-import Section from '../../util/Section'
 
 type args = {
 	isLoading: boolean
@@ -32,23 +33,16 @@ const CardBanListInformation: FunctionComponent<args> = ({ isLoading, hasInfo, b
 	}, [banListInfo])
 
 	return (
-		<Section
-			shadow=''
-			sectionHeaderBackground='ban-list'
-			sectionName='Ban Lists'
-			margin='no'
-			sectionContent={
-				<div className={'section-content card-info-container'}>
-					{!isLoading && hasInfo ? (
-						banListTable
-					) : (
-						<Hint backgroundColor='rgba(0, 0, 0, 0.7)' textColor='white'>
-							{'Not Found In Any Ban List'}
-						</Hint>
-					)}
-				</div>
-			}
-		/>
+		<div className='group'>
+			<Typography variant='h4'>Ban Lists</Typography>
+			{!isLoading && hasInfo ? (
+				banListTable
+			) : (
+				<Hint backgroundColor='rgba(0, 0, 0, 0.7)' textColor='white'>
+					{'Not Found In Any Ban List'}
+				</Hint>
+			)}
+		</div>
 	)
 }
 

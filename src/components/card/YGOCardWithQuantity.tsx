@@ -7,14 +7,14 @@ import '../../css/card/ygo-card-with-quantity.css'
 
 const YGOCardWithQuantity: FC<{
 	card: SKCCard
-	quantity: number
-}> = ({ card, quantity }) => {
+	occurrences: number
+}> = ({ card, occurrences }) => {
 	return (
 		<div className='light-shadow ygo-card-with-quantity-parent' onClick={() => window.location.assign(`/card/${card.cardID}`)}>
 			<div className='header'>
 				<CardImageRounded cardImg={`https://images.thesupremekingscastle.com/cards/tn/${card.cardID}.jpg`} />
 				<div className='quantity-text-container'>
-					<Chip className='quantity-chip' key={card.cardID} label={`X ${quantity}`} />
+					<Chip className='quantity-chip' key={card.cardID} label={`X ${occurrences}`} />
 				</div>
 			</div>
 
