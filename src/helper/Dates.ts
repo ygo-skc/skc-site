@@ -23,11 +23,10 @@ class Dates {
 			return false
 		})
 
-		switch (banListPos) {
-			case 0:
-				return Dates.fromYYYYMMDDToDate(selectedBanList) + ' - Present'
-			default:
-				return Dates.fromYYYYMMDDToDate(selectedBanList) + ' - ' + Dates.fromYYYYMMDDToDate(banListStartDates[banListPos - 1])
+		if (banListPos === 0) {
+			return Dates.fromYYYYMMDDToDate(selectedBanList) + ' - Present'
+		} else {
+			return Dates.fromYYYYMMDDToDate(selectedBanList) + ' - ' + Dates.fromYYYYMMDDToDate(banListStartDates[banListPos - 1])
 		}
 	}
 }
