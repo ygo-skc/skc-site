@@ -71,7 +71,7 @@ declare type SKCBanListDate = {
 declare type SKCBanListDateLinks = {
 	'Ban List Content': HATEOAS
 	'Ban List New Content': HATEOAS
-	'Ban List New Content': HATEOAS
+	'Ban List Removed Content': HATEOAS
 }
 
 declare type SKCBanListDates = {

@@ -11,8 +11,8 @@ import BreadCrumb from '../header-footer/Breadcrumb'
 
 import '../../css/main-pages/ban-list.css'
 import Section from '../util/Section'
-import dateReducer from '../../helper/reducers/BanListDateReducer'
-import currentlySelectedBanListReducer from '../../helper/reducers/CurrentBanListReducer'
+import dateReducer, { BanListDateReducerActionType } from '../../helper/reducers/BanListDateReducer'
+import currentlySelectedBanListReducer, { CurrentlySelectedBanListReducerActionType } from '../../helper/reducers/CurrentBanListReducer'
 
 const BanListDates = lazy(() => import('../banlist/BanListDates'))
 const BanListFormat = lazy(() => import('../banlist/BanListFormat'))
@@ -103,7 +103,7 @@ export default function BanList() {
 
 	useEffect(() => {
 		dateDispatch({
-			type: 'FETCHING_DATES',
+			type: BanListDateReducerActionType.FETCHING_DATES,
 		})
 
 		setIsFetchingBanList(true)
@@ -112,9 +112,11 @@ export default function BanList() {
 
 		FetchHandler.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT['banListsUrl']}?format=${format}`, (json) => {
 			dateDispatch({
-				type: 'DATES_RECEIVED',
-				banContentLinks: json.banListDates.map((item: SKCBanListDate) => item._links),
-				banListStartDates: json.banListDates.map((item: SKCBanListDate) => item.effectiveDate),
+				type: BanListDateReducerActionType.DATES_RECEIVED,
+				payload: {
+					banContentLinks: json.banListDates.map((item: SKCBanListDate) => item._links),
+					banListStartDates: json.banListDates.map((item: SKCBanListDate) => item.effectiveDate),
+				},
 			})
 		})
 	}, [format])
@@ -133,7 +135,7 @@ export default function BanList() {
 				startTransition(() => {
 					if (format === 'DL') {
 						selectedBanListDispatch({
-							type: 'UPDATE_NEW_ADDITIONS_DUEL_LINKS_FORMAT',
+							type: CurrentlySelectedBanListReducerActionType.UPDATE_NEW_ADDITIONS_DUEL_LINKS_FORMAT,
 							newForbiddenCards: json.newForbidden,
 							newLimitedOneCards: json.newLimitedOne,
 							newLimitedTwoCards: json.newLimitedTwo,
@@ -145,7 +147,7 @@ export default function BanList() {
 						})
 					} else {
 						selectedBanListDispatch({
-							type: 'UPDATE_NEW_ADDITIONS_NORMAL_FORMAT',
+							type: CurrentlySelectedBanListReducerActionType.UPDATE_NEW_ADDITIONS_NORMAL_FORMAT,
 							newForbiddenCards: json.newForbidden,
 							newLimitedCards: json.newLimited,
 							newSemiLimitedCards: json.newSemiLimited,
@@ -161,7 +163,7 @@ export default function BanList() {
 			FetchHandler.handleFetch(banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List Removed Content'].href, (json) => {
 				startTransition(() => {
 					selectedBanListDispatch({
-						type: 'UPDATE_REMOVED',
+						type: CurrentlySelectedBanListReducerActionType.UPDATE_REMOVED,
 						removedCards: json.removedCards,
 						numRemoved: determineListSize(json.numRemoved),
 					})
@@ -174,7 +176,7 @@ export default function BanList() {
 				startTransition(() => {
 					if (format === 'DL') {
 						selectedBanListDispatch({
-							type: 'UPDATE_DUEL_LINKS_FORMAT_LIST',
+							type: CurrentlySelectedBanListReducerActionType.UPDATE_DUEL_LINKS_FORMAT_LIST,
 							forbidden: json.forbidden,
 							limitedOne: json.limitedOne,
 							limitedTwo: json.limitedTwo,
@@ -186,7 +188,7 @@ export default function BanList() {
 						})
 					} else {
 						selectedBanListDispatch({
-							type: 'UPDATE_NORMAL_FORMAT_LIST',
+							type: CurrentlySelectedBanListReducerActionType.UPDATE_NORMAL_FORMAT_LIST,
 							forbidden: json.forbidden,
 							limited: json.limited,
 							semiLimited: json.semiLimited,

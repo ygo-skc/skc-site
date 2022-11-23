@@ -1,4 +1,4 @@
-import { FC, memo } from 'react'
+import { FC, lazy, memo } from 'react'
 import { Typography } from '@mui/material'
 import Grid2 from '@mui/material/Unstable_Grid2'
 
@@ -6,6 +6,8 @@ import Section from '../../util/Section'
 
 import CardProductInformation from './CardProductInformation'
 import CardBanListInformation from './CardBanListInformation'
+
+const CardSuggestions = lazy(() => import('./CardSuggestions'))
 
 type CardInformationRelatedContentType = {
 	card: SKCCard
@@ -20,6 +22,8 @@ const CardInformationRelatedContent: FC<CardInformationRelatedContentType> = mem
 	({ card, cardColor, isLoading, productInfo, banListInfo, cardID }) => {
 		return (
 			<div>
+				<CardSuggestions cardID={card.cardID} cardColor={card.cardColor} cardName={card.cardName} />
+
 				<Section
 					sectionHeaderBackground={cardColor !== undefined ? (cardColor?.replace(/Pendulum-/gi, '') as cardColor) : ''}
 					sectionName='Explore'

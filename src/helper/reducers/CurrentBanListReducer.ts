@@ -1,6 +1,14 @@
+export enum CurrentlySelectedBanListReducerActionType {
+	UPDATE_NORMAL_FORMAT_LIST,
+	UPDATE_DUEL_LINKS_FORMAT_LIST,
+	UPDATE_REMOVED,
+	UPDATE_NEW_ADDITIONS_NORMAL_FORMAT,
+	UPDATE_NEW_ADDITIONS_DUEL_LINKS_FORMAT,
+}
+
 export default function currentlySelectedBanListReducer(state: any, action: any) {
 	switch (action.type) {
-		case 'UPDATE_NORMAL_FORMAT_LIST':
+		case CurrentlySelectedBanListReducerActionType.UPDATE_NORMAL_FORMAT_LIST:
 			return {
 				...state,
 				forbidden: action.forbidden,
@@ -16,7 +24,7 @@ export default function currentlySelectedBanListReducer(state: any, action: any)
 				numLimitedTwo: 0,
 				numLimitedThree: 0,
 			}
-		case 'UPDATE_DUEL_LINKS_FORMAT_LIST':
+		case CurrentlySelectedBanListReducerActionType.UPDATE_DUEL_LINKS_FORMAT_LIST:
 			return {
 				...state,
 				forbidden: action.forbidden,
@@ -32,13 +40,13 @@ export default function currentlySelectedBanListReducer(state: any, action: any)
 				numLimitedTwo: action.numLimitedTwo,
 				numLimitedThree: action.numLimitedThree,
 			}
-		case 'UPDATE_REMOVED':
+		case CurrentlySelectedBanListReducerActionType.UPDATE_REMOVED:
 			return {
 				...state,
 				removedCards: action.removedCards,
 				numRemoved: action.numRemoved,
 			}
-		case 'UPDATE_NEW_ADDITIONS_NORMAL_FORMAT':
+		case CurrentlySelectedBanListReducerActionType.UPDATE_NEW_ADDITIONS_NORMAL_FORMAT:
 			return {
 				...state,
 				newForbiddenCards: action.newForbiddenCards,
@@ -54,7 +62,7 @@ export default function currentlySelectedBanListReducer(state: any, action: any)
 				numNewLimitedTwo: 0,
 				numNewLimitedThree: 0,
 			}
-		case 'UPDATE_NEW_ADDITIONS_DUEL_LINKS_FORMAT':
+		case CurrentlySelectedBanListReducerActionType.UPDATE_NEW_ADDITIONS_DUEL_LINKS_FORMAT:
 			return {
 				...state,
 				newForbiddenCards: action.newForbiddenCards,

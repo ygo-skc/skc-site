@@ -8,7 +8,7 @@ const ProductInfoDetailsComponent: FC<ProductDetails> = ({ productName, productI
 	summaryRows.push(['Product ID', productId])
 	summaryRows.push(['Product Type', productType])
 	summaryRows.push(['Product Sub-Type', productSubType])
-	summaryRows.push(['American Release', Dates.getDateString(new Date(productReleaseDate))])
+	summaryRows.push(['American Release', Dates.fromYYYYMMDDToDate(productReleaseDate)])
 	summaryRows.push(['Total Unique Cards', numUniqueCards])
 
 	return (

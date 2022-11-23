@@ -28,7 +28,7 @@ const CardProductInformation: FunctionComponent<args> = ({ isLoading, hasInfo, p
 				const row: [string, string, string, string] = [
 					product.productId,
 					productContent.productPosition,
-					Dates.getDateString(new Date(product.productReleaseDate)),
+					Dates.fromYYYYMMDDToDate(product.productReleaseDate),
 					productContent.rarities.join(', '),
 				]
 				rowValues.push(row)

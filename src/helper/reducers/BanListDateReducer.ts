@@ -1,12 +1,28 @@
-export default function dateReducer(state: any, action: any) {
+export type BanListDateReducerState = {
+	banListStartDates: string[]
+	banContentLinks: SKCBanListDateLinks[]
+	isFetchingBanListDates?: boolean
+}
+
+export type BanListDateReducerAction = {
+	type: BanListDateReducerActionType
+	payload?: BanListDateReducerState
+}
+
+export enum BanListDateReducerActionType {
+	DATES_RECEIVED,
+	FETCHING_DATES,
+}
+
+export default function dateReducer(state: BanListDateReducerState, action: BanListDateReducerAction) {
 	switch (action.type) {
-		case 'DATES_RECEIVED':
+		case BanListDateReducerActionType.DATES_RECEIVED:
 			return {
-				banListStartDates: action.banListStartDates,
-				banContentLinks: action.banContentLinks,
+				banListStartDates: action.payload!.banListStartDates,
+				banContentLinks: action.payload!.banContentLinks,
 				isFetchingBanListDates: false,
 			}
-		case 'FETCHING_DATES':
+		case BanListDateReducerActionType.FETCHING_DATES:
 			return {
 				...state,
 				isFetchingBanListDates: true,

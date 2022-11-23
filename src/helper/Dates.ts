@@ -7,8 +7,8 @@ class Dates {
 	static readonly getDay = (date: Date) => date.toLocaleDateString('en-US', { day: 'numeric' })
 	static readonly getYear = (date: Date) => date.toLocaleDateString('en-US', { year: 'numeric' })
 
-	static readonly banListDate = (banListDate: string) => {
-		const [year, month, day] = banListDate.split('-')
+	static readonly fromYYYYMMDDToDate = (fromDate: string) => {
+		const [year, month, day] = fromDate.split('-')
 		return Dates.getDateString(new Date(+year, +month - 1, +day))
 	}
 
@@ -25,9 +25,9 @@ class Dates {
 
 		switch (banListPos) {
 			case 0:
-				return Dates.banListDate(selectedBanList) + ' - Present'
+				return Dates.fromYYYYMMDDToDate(selectedBanList) + ' - Present'
 			default:
-				return Dates.banListDate(selectedBanList) + ' - ' + Dates.banListDate(banListStartDates[banListPos - 1])
+				return Dates.fromYYYYMMDDToDate(selectedBanList) + ' - ' + Dates.fromYYYYMMDDToDate(banListStartDates[banListPos - 1])
 		}
 	}
 }
