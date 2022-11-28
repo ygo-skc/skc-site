@@ -34,10 +34,23 @@ test('verify year is formatted correctly {xxxx}', () => {
 })
 
 test('verify ban list date gets formatted correctly', () => {
-	expect(Dates.fromYYYYMMDDToDate('2022-01-01')).toBe('Jan 1, 2022')
-	expect(Dates.fromYYYYMMDDToDate('2021-02-10')).toBe('Feb 10, 2021')
-	expect(Dates.fromYYYYMMDDToDate('1993-12-31')).toBe('Dec 31, 1993')
-	expect(Dates.fromYYYYMMDDToDate('2001-09-11')).toBe('Sep 11, 2001')
+	expect(Dates.fromYYYYMMDDToDateStr('2022-01-01')).toBe('Jan 1, 2022')
+	expect(Dates.fromYYYYMMDDToDateStr('2021-02-10')).toBe('Feb 10, 2021')
+	expect(Dates.fromYYYYMMDDToDateStr('1993-12-31')).toBe('Dec 31, 1993')
+	expect(Dates.fromYYYYMMDDToDateStr('2001-09-11')).toBe('Sep 11, 2001')
+})
+
+test('verify fromYYYYMMDDToDate() works as intended', () => {
+	const d = Dates.fromYYYYMMDDToDate('2022-09-11')
+
+	expect(d.getFullYear()).toBe(2022)
+	expect(d.getUTCMonth()).toBe(8)
+	expect(d.getUTCDate()).toBe(11)
+})
+
+test('verify isFutureDate() works as intended', () => {
+	expect(Dates.isFutureDate(Dates.fromYYYYMMDDToDate('2050-01-01'))).toBe(true)
+	expect(Dates.isFutureDate(Dates.fromYYYYMMDDToDate('2022-01-01'))).toBe(false)
 })
 
 test("verify retrieval of ban list date range doesn't cause issues with undefined input", () => {

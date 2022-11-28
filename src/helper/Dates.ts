@@ -1,15 +1,23 @@
 class Dates {
-	static readonly getNonLocalizedDateString = (date: Date) => date.toDateString()
-	static readonly getDateString = (date: Date) => date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
-	static readonly getTimeString = (date: Date) => date.toLocaleTimeString('en-US', { hour12: true, hour: 'numeric', minute: 'numeric' })
+	static readonly getNonLocalizedDateString = (date: Date): string => date.toDateString()
+	static readonly getDateString = (date: Date): string => date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+	static readonly getTimeString = (date: Date): string => date.toLocaleTimeString('en-US', { hour12: true, hour: 'numeric', minute: 'numeric' })
 
-	static readonly getMonth = (date: Date) => date.toLocaleDateString('en-US', { month: 'short' })
-	static readonly getDay = (date: Date) => date.toLocaleDateString('en-US', { day: 'numeric' })
-	static readonly getYear = (date: Date) => date.toLocaleDateString('en-US', { year: 'numeric' })
+	static readonly getMonth = (date: Date): string => date.toLocaleDateString('en-US', { month: 'short' })
+	static readonly getDay = (date: Date): string => date.toLocaleDateString('en-US', { day: 'numeric' })
+	static readonly getYear = (date: Date): string => date.toLocaleDateString('en-US', { year: 'numeric' })
 
-	static readonly fromYYYYMMDDToDate = (fromDate: string) => {
-		const [year, month, day] = fromDate.split('-')
-		return Dates.getDateString(new Date(+year, +month - 1, +day))
+	static readonly fromYYYYMMDDToDateStr = (fromDateStr: string): string => {
+		return Dates.getDateString(this.fromYYYYMMDDToDate(fromDateStr))
+	}
+
+	static readonly fromYYYYMMDDToDate = (fromDateStr: string): Date => {
+		const [year, month, day] = fromDateStr.split('-')
+		return new Date(+year, +month - 1, +day)
+	}
+
+	static readonly isFutureDate = (d: Date): boolean => {
+		return d > new Date() ? true : false
 	}
 
 	static readonly getCurrentBanListDate = (selectedBanList?: string, banListStartDates?: string[]): string => {
@@ -24,9 +32,9 @@ class Dates {
 		})
 
 		if (banListPos === 0) {
-			return Dates.fromYYYYMMDDToDate(selectedBanList) + ' - Present'
+			return Dates.fromYYYYMMDDToDateStr(selectedBanList) + ' - Present'
 		} else {
-			return Dates.fromYYYYMMDDToDate(selectedBanList) + ' - ' + Dates.fromYYYYMMDDToDate(banListStartDates[banListPos - 1])
+			return Dates.fromYYYYMMDDToDateStr(selectedBanList) + ' - ' + Dates.fromYYYYMMDDToDateStr(banListStartDates[banListPos - 1])
 		}
 	}
 }

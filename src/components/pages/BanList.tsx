@@ -13,6 +13,8 @@ import '../../css/main-pages/ban-list.css'
 import Section from '../util/Section'
 import dateReducer, { BanListDateReducerActionType } from '../../helper/reducers/BanListDateReducer'
 import currentlySelectedBanListReducer, { CurrentlySelectedBanListReducerActionType } from '../../helper/reducers/CurrentBanListReducer'
+import { Hint } from '../util/Hints'
+import { Dates } from '../../helper/Dates'
 
 const BanListDates = lazy(() => import('../banlist/BanListDates'))
 const BanListFormat = lazy(() => import('../banlist/BanListFormat'))
@@ -229,6 +231,8 @@ export default function BanList() {
 										banListStartDates={banListStartDates}
 										setSelectedBanList={(ind: number) => setSelectedBanList(banListStartDates[ind])}
 									/>
+
+									{Dates.isFutureDate(Dates.fromYYYYMMDDToDate(selectedBanList)) && <Hint>Current List Will Be Effective In Future Date</Hint>}
 
 									{format === 'DL' ? (
 										<BanListBreakdownDuelLinksFormat

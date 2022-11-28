@@ -29,7 +29,7 @@ const CardProductInformation: FC<args> = ({ isLoading, hasInfo, productInfo, car
 				const row: [string, string, string, string] = [
 					product.productId,
 					productContent.productPosition,
-					Dates.fromYYYYMMDDToDate(product.productReleaseDate),
+					Dates.fromYYYYMMDDToDateStr(product.productReleaseDate),
 					productContent.rarities.join(', '),
 				]
 				rowValues.push(row)
