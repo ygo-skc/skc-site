@@ -1,4 +1,4 @@
-import { Chip } from '@mui/material'
+import { Chip, Typography } from '@mui/material'
 import { FC } from 'react'
 
 export type _BanListDiffSpreadNormalFormat = {
@@ -11,6 +11,8 @@ export type _BanListDiffSpreadNormalFormat = {
 const BanListDiffSpreadNormalFormat: FC<_BanListDiffSpreadNormalFormat> = ({ numNewForbidden, numNewLimited, numNewSemiLimited, numRemoved }) => {
 	return (
 		<div style={{ width: '100%' }}>
+			<Typography variant='h6'>Changes Compared To Previous Ban List</Typography>
+
 			<Chip className='breakdown-chip forbidden-breakdown-chip' variant='outlined' label={`${numNewForbidden} New Forbidden`} />
 			<Chip className='breakdown-chip limited-breakdown-chip' variant='outlined' label={`${numNewLimited} New Limited`} />
 			<Chip className='breakdown-chip semi-limited-breakdown-chip' variant='outlined' label={`${numNewSemiLimited} New Semi Limited`} />
