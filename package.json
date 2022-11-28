@@ -67,7 +67,7 @@
 		"@types/lodash.startcase": "4.4.7",
 		"@types/react": "18.0.25",
 		"@types/react-dom": "18.0.9",
-		"@types/react-helmet": "6.1.5",
+		"@types/react-helmet": "6.1.6",
 		"@types/react-router-dom": "5.3.3",
 		"@types/styled-components": "5.1.26",
 		"@types/webpack-dev-server": "4.7.2",
