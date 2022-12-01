@@ -16,6 +16,10 @@ class Dates {
 		return new Date(+year, +month - 1, +day)
 	}
 
+	static readonly daysBetweenTwoDates = (lowestDate: Date, highestDate: Date = new Date()): number => {
+		return Math.ceil((highestDate.getTime() - lowestDate.getTime()) / (1000 * 3600 * 24))
+	}
+
 	static readonly isFutureDate = (d: Date): boolean => {
 		return d > new Date() ? true : false
 	}

@@ -6,7 +6,7 @@ import Section from '../../util/Section'
 import YGOCardWithQuantity from '../YGOCardWithQuantity'
 import FetchHandler from '../../../helper/FetchHandler'
 import DownstreamServices from '../../../helper/DownstreamServices'
-import { Hint } from '../../util/Hints'
+import Hint from '../../util/Hints'
 import GenericNonBreakingErr from '../../util/exception/GenericNonBreakingErr'
 
 type _CardSuggestion = {

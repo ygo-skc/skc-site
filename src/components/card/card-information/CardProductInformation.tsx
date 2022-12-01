@@ -4,7 +4,7 @@ import { Typography } from '@mui/material'
 import '../../../css/card-information-styles.css'
 
 import { Dates } from '../../../helper/Dates'
-import { Hint } from '../../util/Hints'
+import Hint from '../../util/Hints'
 import createTable from '../../util/TableHelpers'
 
 type args = {

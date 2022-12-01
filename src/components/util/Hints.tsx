@@ -19,4 +19,4 @@ const Hint: FunctionComponent<_Hint> = ({ children, backgroundColor = '#f6f2fb',
 	)
 }
 
-export { Hint }
+export default Hint

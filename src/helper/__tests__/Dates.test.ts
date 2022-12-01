@@ -1,36 +1,36 @@
 import { Dates } from '../Dates'
 
-const date = new Date(746322027000)
-const date2 = new Date(680664480000)
+const myBday = new Date(746322027000)
+const becksBday = new Date(680664480000)
 
 test('verify date gets formatted with {Day-Of-Week Month day, year}', () => {
-	expect(Dates.getNonLocalizedDateString(date)).toBe('Wed Aug 25 1993')
-	expect(Dates.getNonLocalizedDateString(date2)).toBe('Sat Jul 27 1991')
+	expect(Dates.getNonLocalizedDateString(myBday)).toBe('Wed Aug 25 1993')
+	expect(Dates.getNonLocalizedDateString(becksBday)).toBe('Sat Jul 27 1991')
 })
 
 test('verify date gets formatted with {month day, year}', () => {
-	expect(Dates.getDateString(date)).toBe('Aug 25, 1993')
-	expect(Dates.getDateString(date2)).toBe('Jul 27, 1991')
+	expect(Dates.getDateString(myBday)).toBe('Aug 25, 1993')
+	expect(Dates.getDateString(becksBday)).toBe('Jul 27, 1991')
 })
 
 test('verify time gets formatted with {hh:mm ZONE}', () => {
-	expect(Dates.getTimeString(date)).toBe('6:40 PM')
-	expect(Dates.getTimeString(date2)).toBe('8:28 PM')
+	expect(Dates.getTimeString(myBday)).toBe('6:40 PM')
+	expect(Dates.getTimeString(becksBday)).toBe('8:28 PM')
 })
 
 test('verify month is formatted correctly {3 char month - xxx}', () => {
-	expect(Dates.getMonth(date)).toBe('Aug')
-	expect(Dates.getMonth(date2)).toBe('Jul')
+	expect(Dates.getMonth(myBday)).toBe('Aug')
+	expect(Dates.getMonth(becksBday)).toBe('Jul')
 })
 
 test('verify day is formatted correctly {day of month - x or xx}', () => {
-	expect(Dates.getDay(date)).toBe('25')
-	expect(Dates.getDay(date2)).toBe('27')
+	expect(Dates.getDay(myBday)).toBe('25')
+	expect(Dates.getDay(becksBday)).toBe('27')
 })
 
 test('verify year is formatted correctly {xxxx}', () => {
-	expect(Dates.getYear(date)).toBe('1993')
-	expect(Dates.getYear(date2)).toBe('1991')
+	expect(Dates.getYear(myBday)).toBe('1993')
+	expect(Dates.getYear(becksBday)).toBe('1991')
 })
 
 test('verify ban list date gets formatted correctly', () => {
@@ -46,6 +46,13 @@ test('verify fromYYYYMMDDToDate() works as intended', () => {
 	expect(d.getFullYear()).toBe(2022)
 	expect(d.getUTCMonth()).toBe(8)
 	expect(d.getUTCDate()).toBe(11)
+})
+
+test('verify daysBetweenTwoDates() works as intended', () => {
+	expect(Dates.daysBetweenTwoDates(Dates.fromYYYYMMDDToDate('1993-08-24'), Dates.fromYYYYMMDDToDate('1993-08-25'))).toBe(1)
+	expect(Dates.daysBetweenTwoDates(Dates.fromYYYYMMDDToDate('1991-07-27'), Dates.fromYYYYMMDDToDate('1993-08-25'))).toBe(760)
+	expect(Dates.daysBetweenTwoDates(becksBday, new Date(680664481000))).toBe(1)
+	expect(Dates.daysBetweenTwoDates(new Date())).toBe(0)
 })
 
 test('verify isFutureDate() works as intended', () => {
