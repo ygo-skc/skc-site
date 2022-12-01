@@ -38,9 +38,7 @@ export default function Home() {
 
 			<Breadcrumb crumbs={['Home']} />
 			<DatabaseInfo cardTotal={cardTotal} banListTotal={banListTotal} productTotal={productTotal} />
-			<div id='upcoming-tcg-products'>
-				<UpcomingTCGProducts />
-			</div>
+			<UpcomingTCGProducts />
 
 			<OneThirdTwoThirdsGrid
 				mirrored={true}

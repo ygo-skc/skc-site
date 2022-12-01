@@ -1,7 +1,7 @@
 import '../../css/nav/navigation-icon.css'
 import '../../css/nav/messages.css'
 
-import { useState, useEffect, Fragment } from 'react'
+import { useState, useEffect, Fragment, startTransition } from 'react'
 import { Typography, IconButton, Popover, Badge } from '@mui/material'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 
@@ -27,38 +27,41 @@ function Messages() {
 			`${DownstreamServices.HEART_API_HOST_NAME}/api/v1/message?service=skc&tags=skc-site,skc-api`,
 			(messageData: HeartApiMessageOutput) => {
 				const totalMessages = messageData.messages.length
-				setNumMessages(totalMessages)
 
 				let findNumNewMessages = false
 				let _numNewMessages = 0
 				const previousNewestMessageTimeStamp = localStorage.getItem('previousNewestMessage') as string
 				const previousNewestMessageDate = new Date(previousNewestMessageTimeStamp)
 
-				if (totalMessages > 0) {
-					setNewestMessageSeen(messageData.messages[0].createdAt)
+				startTransition(() => {
+					setNumMessages(totalMessages)
 
-					if (previousNewestMessageTimeStamp !== messageData.messages[0].createdAt) {
-						findNumNewMessages = true
-					}
-				}
+					if (totalMessages > 0) {
+						setNewestMessageSeen(messageData.messages[0].createdAt)
 
-				setMessagesList(
-					messageData.messages.map((message: HeartApiMessageItem, index: number) => {
-						const creationDate = new Date(message.createdAt)
-
-						if (findNumNewMessages) {
-							if (previousNewestMessageDate >= creationDate) {
-								findNumNewMessages = false
-							} else {
-								_numNewMessages++
-							}
+						if (previousNewestMessageTimeStamp !== messageData.messages[0].createdAt) {
+							findNumNewMessages = true
 						}
+					}
 
-						return <MessageItemComponent key={creationDate.toString()} creationDate={creationDate} message={message} isLastMessage={index === totalMessages - 1} />
-					})
-				)
+					setMessagesList(
+						messageData.messages.map((message: HeartApiMessageItem, index: number) => {
+							const creationDate = new Date(message.createdAt)
 
-				setNumNewMessages(_numNewMessages)
+							if (findNumNewMessages) {
+								if (previousNewestMessageDate >= creationDate) {
+									findNumNewMessages = false
+								} else {
+									_numNewMessages++
+								}
+							}
+
+							return <MessageItemComponent key={creationDate.toString()} creationDate={creationDate} message={message} isLastMessage={index === totalMessages - 1} />
+						})
+					)
+
+					setNumNewMessages(_numNewMessages)
+				})
 			},
 			false
 		)?.catch((_err) => {
