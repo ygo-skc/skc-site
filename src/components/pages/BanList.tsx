@@ -1,4 +1,4 @@
-import { lazy, useState, useEffect, Suspense, useReducer, startTransition } from 'react'
+import { lazy, useState, useEffect, Suspense, useReducer, startTransition, Fragment } from 'react'
 import { Helmet } from 'react-helmet'
 
 import { Skeleton } from '@mui/material'
@@ -233,8 +233,10 @@ export default function BanList() {
 										setSelectedBanList={(ind: number) => setSelectedBanList(banListStartDates[ind])}
 									/>
 
-									{Dates.isFutureDate(Dates.fromYYYYMMDDToDate(selectedBanList)) && (
-										<Hint>Current List Will Be Effective In {Dates.daysBetweenTwoDates(new Date(), Dates.fromYYYYMMDDToDate(selectedBanList))} Day(s)</Hint>
+									{!isFetchingBanListDates && Dates.isFutureDate(Dates.fromYYYYMMDDToDate(selectedBanList)) && (
+										<Hint backgroundColor='rgba(0, 0, 0, 0.7)' textColor='white' variant='tight'>
+											Current List Will Be Effective In {Dates.daysBetweenTwoDates(new Date(), Dates.fromYYYYMMDDToDate(selectedBanList))} Day(s)
+										</Hint>
 									)}
 
 									{format === 'DL' ? (
@@ -262,7 +264,7 @@ export default function BanList() {
 				twoThirdComponent={
 					<Suspense fallback={<div />}>
 						{format === 'DL' ? (
-							<div>
+							<Fragment>
 								<BanListDiffContentDuelLinksFormat
 									removedCards={removedCards}
 									numRemoved={numRemoved}
@@ -288,9 +290,9 @@ export default function BanList() {
 									numLimitedThree={numLimitedThree}
 									isFetchingBanList={isFetchingBanList}
 								/>
-							</div>
+							</Fragment>
 						) : (
-							<div>
+							<Fragment>
 								<BanListDiffContentNormalFormat
 									removedCards={removedCards}
 									numRemoved={numRemoved}
@@ -312,7 +314,7 @@ export default function BanList() {
 									numSemiLimited={numSemiLimited}
 									isFetchingBanList={isFetchingBanList}
 								/>
-							</div>
+							</Fragment>
 						)}
 					</Suspense>
 				}

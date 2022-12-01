@@ -1,7 +1,7 @@
 import React from 'react'
 import '../../css/ygo-card-styles.css'
 
-import { Typography, Box, Tooltip } from '@mui/material'
+import { Typography, Box } from '@mui/material'
 
 import he from 'he'
 import AtkDef from './AtkDef'
@@ -14,11 +14,9 @@ const YGOCardStats = ({ cardColor, cardEffect, monsterType, monsterAtk, monsterD
 			</Typography>
 
 			{!fullDetails ? (
-				<Tooltip title={he.decode(cardEffect)} followCursor>
-					<Typography className='ygo-card-effect-component-some-details' variant='body2'>
-						{he.decode(cardEffect)}
-					</Typography>
-				</Tooltip>
+				<Typography className='ygo-card-effect-component-some-details' variant='body2'>
+					{he.decode(cardEffect)}
+				</Typography>
 			) : (
 				<Typography className='ygo-card-effect-component-full-details' variant='body2'>
 					{he.decode(cardEffect)}

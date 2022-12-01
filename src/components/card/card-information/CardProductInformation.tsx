@@ -1,4 +1,4 @@
-import { useEffect, useState, FC } from 'react'
+import { useEffect, useState, FC, Fragment } from 'react'
 import { Typography } from '@mui/material'
 
 import '../../../css/card-information-styles.css'
@@ -44,12 +44,12 @@ const CardProductInformation: FC<args> = ({ isLoading, hasInfo, productInfo, car
 		<div className='group'>
 			<Typography variant='h4'>YGO Products</Typography>
 			{!isLoading && hasInfo ? (
-				<div>
-					<Hint backgroundColor='rgba(0, 0, 0, 0.7)' textColor='white'>
+				<Fragment>
+					<Hint backgroundColor='rgba(0, 0, 0, 0.7)' textColor='white' variant='tight'>
 						Last printing released {Dates.daysBetweenTwoDates(Dates.fromYYYYMMDDToDate(productInfo[0].productReleaseDate))} day(s) ago
 					</Hint>
 					{productTable}
-				</div>
+				</Fragment>
 			) : (
 				<Hint backgroundColor='rgba(0, 0, 0, 0.7)' textColor='white'>
 					{'Not Found In Any Product'}

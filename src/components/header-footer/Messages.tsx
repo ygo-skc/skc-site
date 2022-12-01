@@ -1,7 +1,7 @@
 import '../../css/nav/navigation-icon.css'
 import '../../css/nav/messages.css'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Fragment } from 'react'
 import { Typography, IconButton, Popover, Badge } from '@mui/material'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 
@@ -67,7 +67,7 @@ function Messages() {
 	}, [])
 
 	return (
-		<div>
+		<Fragment>
 			<Badge className='communication-message-badge' badgeContent={numNewMessages} variant='standard' color='error'>
 				<IconButton
 					className='styled-icon-button'
@@ -105,7 +105,7 @@ function Messages() {
 					{errorFetchingMessages ? <GenericNonBreakingErr errExplanation='No meaningful impact to the site functionality expected.' /> : messagesList}
 				</div>
 			</Popover>
-		</div>
+		</Fragment>
 	)
 }
 

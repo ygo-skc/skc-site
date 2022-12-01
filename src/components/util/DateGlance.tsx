@@ -17,15 +17,13 @@ const DateGlance: FC<_Date> = ({ date }) => {
 					{Dates.getMonth(date)}
 				</Typography>
 			</div>
-			<div>
-				<Typography align='center' variant='h3' className='day-text'>
-					{Dates.getDay(date)}
-				</Typography>
-				<Typography align='center' variant='subtitle2' className='year-text'>
-					{Dates.getYear(date)}
-				</Typography>
-			</div>
-			<div></div>
+
+			<Typography align='center' variant='h3' className='day-text'>
+				{Dates.getDay(date)}
+			</Typography>
+			<Typography align='center' variant='subtitle2' className='year-text'>
+				{Dates.getYear(date)}
+			</Typography>
 		</div>
 	)
 }

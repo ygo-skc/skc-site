@@ -1,4 +1,4 @@
-import { FC, memo, startTransition, useEffect, useState } from 'react'
+import { FC, Fragment, memo, startTransition, useEffect, useState } from 'react'
 import { Skeleton, Typography } from '@mui/material'
 
 import Section from '../../util/Section'
@@ -56,45 +56,39 @@ const CardSuggestions: FC<_CardSuggestion> = memo(
 		}, [cardID])
 
 		return (
-			<div>
-				<Section
-					sectionHeaderBackground={cardColor !== undefined ? (cardColor?.replace(/Pendulum-/gi, '') as cardColor) : ''}
-					sectionName='Suggestions'
-					sectionContent={
-						<div className='section-content'>
-							{isLoadingSuggestions && <Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='380px' />}
-							{!isLoadingSuggestions && !hasError && (
-								<div>
-									<div className='group-with-outline'>
-										<Typography variant='h4'>Named Summoning Materials</Typography>
-										{materialSuggestions.length === 0 ? (
-											<Hint>Nothing here 🤔</Hint>
-										) : (
-											<div style={{ display: 'flex', overflowX: 'auto', paddingBottom: '.3rem' }}>{materialSuggestions}</div>
-										)}
-									</div>
-
-									<br />
-
-									<div className='group-with-outline'>
-										<Typography variant='h4'>Named References</Typography>
-										{referenceSuggestions.length === 0 ? (
-											<Hint>Nothing here 🤔</Hint>
-										) : (
-											<div style={{ display: 'flex', overflowX: 'auto', paddingBottom: '.3rem' }}>{referenceSuggestions}</div>
-										)}
-									</div>
+			<Section
+				sectionHeaderBackground={cardColor !== undefined ? (cardColor?.replace(/Pendulum-/gi, '') as cardColor) : ''}
+				sectionName='Suggestions'
+				sectionContent={
+					<div className='section-content'>
+						{isLoadingSuggestions && <Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='380px' />}
+						{!isLoadingSuggestions && !hasError && (
+							<Fragment>
+								<div className='group-with-outline'>
+									<Typography variant='h4'>Named Summoning Materials</Typography>
+									{materialSuggestions.length === 0 ? (
+										<Hint>Nothing here 🤔</Hint>
+									) : (
+										<div style={{ display: 'flex', overflowX: 'auto', paddingBottom: '.3rem' }}>{materialSuggestions}</div>
+									)}
 								</div>
-							)}
-							{!isLoadingSuggestions && hasError && (
-								<div>
-									<GenericNonBreakingErr errExplanation={'🤯 Suggestion Engine Is Offline 🤯'} />
+
+								<br />
+
+								<div className='group-with-outline'>
+									<Typography variant='h4'>Named References</Typography>
+									{referenceSuggestions.length === 0 ? (
+										<Hint>Nothing here 🤔</Hint>
+									) : (
+										<div style={{ display: 'flex', overflowX: 'auto', paddingBottom: '.3rem' }}>{referenceSuggestions}</div>
+									)}
 								</div>
-							)}
-						</div>
-					}
-				/>
-			</div>
+							</Fragment>
+						)}
+						{!isLoadingSuggestions && hasError && <GenericNonBreakingErr errExplanation={'🤯 Suggestion Engine Is Offline 🤯'} />}
+					</div>
+				}
+			/>
 		)
 	},
 	(prevProps, newProps) => {

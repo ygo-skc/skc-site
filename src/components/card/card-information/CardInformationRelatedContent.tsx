@@ -1,4 +1,4 @@
-import { FC, lazy, memo } from 'react'
+import { FC, Fragment, lazy, memo } from 'react'
 import Grid2 from '@mui/material/Unstable_Grid2'
 
 import Section from '../../util/Section'
@@ -20,7 +20,7 @@ type CardInformationRelatedContentType = {
 const CardInformationRelatedContent: FC<CardInformationRelatedContentType> = memo(
 	({ card, cardColor, isLoading, productInfo, banListInfo, cardID }) => {
 		return (
-			<div>
+			<Fragment>
 				<CardSuggestions cardID={card.cardID} cardColor={card.cardColor} />
 
 				<Section
@@ -40,7 +40,7 @@ const CardInformationRelatedContent: FC<CardInformationRelatedContentType> = mem
 						</div>
 					}
 				/>
-			</div>
+			</Fragment>
 		)
 	},
 	(prevProps, newProps) => {

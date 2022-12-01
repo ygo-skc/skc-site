@@ -2,7 +2,7 @@ import Autocomplete from '@mui/material/Autocomplete'
 import DBSearchGrouping from './DBSearchGrouping'
 
 import startCase from 'lodash.startcase'
-import { FC, useEffect, useReducer } from 'react'
+import { FC, Fragment, useEffect, useReducer } from 'react'
 import SearchInput from './SearchInput'
 import Typography from '@mui/material/Typography'
 import SelectedCardBrowseCriteria from './SelectedCardBrowseCriteria'
@@ -58,7 +58,7 @@ const CardBrowse: FC<{
 	}, [skcCardBrowseCriteriaOutput])
 
 	return (
-		<div>
+		<Fragment>
 			<SelectedCardBrowseCriteria selectedCriteria={selectedCriteria} />
 			<Autocomplete
 				className='search-bar'
@@ -89,7 +89,7 @@ const CardBrowse: FC<{
 					)
 				}}
 			/>
-		</div>
+		</Fragment>
 	)
 }
 
