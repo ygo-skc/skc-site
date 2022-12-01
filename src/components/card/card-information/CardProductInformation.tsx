@@ -44,7 +44,12 @@ const CardProductInformation: FC<args> = ({ isLoading, hasInfo, productInfo, car
 		<div className='group'>
 			<Typography variant='h4'>YGO Products</Typography>
 			{!isLoading && hasInfo ? (
-				productTable
+				<div>
+					<Hint backgroundColor='rgba(0, 0, 0, 0.7)' textColor='white'>
+						Last printing released {Dates.daysBetweenTwoDates(Dates.fromYYYYMMDDToDate(productInfo[0].productReleaseDate))} day(s) ago
+					</Hint>
+					{productTable}
+				</div>
 			) : (
 				<Hint backgroundColor='rgba(0, 0, 0, 0.7)' textColor='white'>
 					{'Not Found In Any Product'}
