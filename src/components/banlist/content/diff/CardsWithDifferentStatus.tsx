@@ -2,7 +2,7 @@ import { Skeleton, Typography } from '@mui/material'
 import { FC, useEffect, useState, memo } from 'react'
 import CardImageRounded from '../../../card/CardImageRounded'
 import YGOCard from '../../../card/YGOCard'
-import { Hint } from '../../../util/Hints'
+import Hint from '../../../util/Hints'
 
 type _CardsWithDifferentStatus = {
 	newStatusName: 'Forbidden' | 'Limited' | 'Semi Limited' | 'Unlimited' | 'Limited One' | 'Limited Two' | 'Limited Three'
@@ -14,8 +14,6 @@ type _CardsWithDifferentStatus = {
 const CardsWithDifferentStatus: FC<_CardsWithDifferentStatus> = memo(
 	({ newStatusName, cards, numCards, isLoadingData }) => {
 		const [cardsWithNewStatus, setCardsWithNewStatus] = useState<JSX.Element[]>([])
-
-		const parentClassName = `cards-with-different-status-parent-${newStatusName.toLowerCase().replace(' ', '-')}`
 
 		useEffect(() => {
 			setCardsWithNewStatus(
@@ -54,7 +52,7 @@ const CardsWithDifferentStatus: FC<_CardsWithDifferentStatus> = memo(
 		}, [cards])
 
 		return (
-			<div className={`${parentClassName} cards-with-different-status-parent`}>
+			<div className='cards-with-different-status-parent'>
 				<Typography variant='h4'>
 					Newly {newStatusName} ({numCards})
 				</Typography>

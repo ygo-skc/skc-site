@@ -1,4 +1,4 @@
-import { Chip } from '@mui/material'
+import { Chip, Typography } from '@mui/material'
 import { FC } from 'react'
 import BlockIcon from '@mui/icons-material/Block'
 import Filter1TwoToneIcon from '@mui/icons-material/Filter1TwoTone'
@@ -15,6 +15,8 @@ export type _BanListSpreadDuelLinksFormat = {
 const BanListSpreadDuelLinksFormat: FC<_BanListSpreadDuelLinksFormat> = ({ numForbidden, numLimitedOne, numLimitedTwo, numLimitedThree }) => {
 	return (
 		<div style={{ width: '100%' }}>
+			<Typography variant='h6'>Totals</Typography>
+
 			<Chip className='breakdown-chip forbidden-breakdown-chip' variant='outlined' icon={<BlockIcon style={{ fontSize: '1.8rem', color: 'red' }} />} label={`${numForbidden}`} />
 			<Chip
 				className='breakdown-chip limited-one-breakdown-chip'

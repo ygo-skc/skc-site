@@ -178,8 +178,14 @@ declare type Deck = {
 	extraDeck: null
 }
 
-declare type MaterialSuggestionOutput = {
-	namedMaterials: SKCCard[]
+declare type CardReference = {
+	occurrences: number
+	card: SKCCard
+}
+
+declare type CardSuggestionOutput = {
+	namedMaterials: CardReference[]
+	namedReferences: CardReference[]
 	decks: Deck[]
 }
 

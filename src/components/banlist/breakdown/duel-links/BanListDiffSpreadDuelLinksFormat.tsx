@@ -1,4 +1,4 @@
-import { Chip } from '@mui/material'
+import { Chip, Typography } from '@mui/material'
 import { FC } from 'react'
 
 export type _BanListDiffSpreadDuelLinksFormat = {
@@ -12,6 +12,8 @@ export type _BanListDiffSpreadDuelLinksFormat = {
 const BanListDiffSpreadDuelLinksFormat: FC<_BanListDiffSpreadDuelLinksFormat> = ({ numNewForbidden, numNewLimitedOne, numNewLimitedTwo, numNewLimitedThree, numRemoved }) => {
 	return (
 		<div style={{ width: '100%' }}>
+			<Typography variant='h6'>Changes Compared To Previous Ban List</Typography>
+
 			<Chip className='breakdown-chip forbidden-breakdown-chip' variant='outlined' label={`${numNewForbidden} New Forbidden`} />
 			<Chip className='breakdown-chip limited-one-breakdown-chip' variant='outlined' label={`${numNewLimitedOne} New Limited One`} />
 			<Chip className='breakdown-chip limited-two-breakdown-chip' variant='outlined' label={`${numNewLimitedTwo} New Limited Two`} />

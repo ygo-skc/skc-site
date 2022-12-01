@@ -1,6 +1,6 @@
 import { useState, useEffect, FC } from 'react'
 import CardDisplayGrid from '../util/grid/CardDisplayGrid'
-import { Hint } from '../util/Hints'
+import Hint from '../util/Hints'
 
 type _BanListSection = {
 	sectionExplanation: string

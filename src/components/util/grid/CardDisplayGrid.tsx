@@ -5,7 +5,7 @@ import Grid2 from '@mui/material/Unstable_Grid2'
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded'
 import CardImageRounded from '../../card/CardImageRounded'
 import YGOCard from '../../card/YGOCard'
-import { Hint } from '../Hints'
+import Hint from '../Hints'
 
 function getPlaceholderCardComponent() {
 	const placeHolder = []
