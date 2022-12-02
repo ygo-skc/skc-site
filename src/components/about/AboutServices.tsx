@@ -2,18 +2,8 @@ import { Typography, Link } from '@mui/material'
 import Grid2 from '@mui/material/Unstable_Grid2'
 import AboutInfoCard from './AboutInfoCard'
 
-import styled from 'styled-components'
 import { Fragment } from 'react'
-
-const CenteredImage = styled.div`
-	text-align: center;
-`
-
-const ParagraphTypography = styled(Typography)`
-	&& {
-		margin-left: 0.55rem;
-	}
-`
+import Topic from './Topic'
 
 export default function Overview() {
 	return (
@@ -27,22 +17,30 @@ export default function Overview() {
 						subtitle='The Backend'
 						body={
 							<Fragment>
-								<Typography variant='body1'>
-									A new API was created in the process of creating this site. Though there are other API's available, my purpose was in creating my own to learn a new stack.
-								</Typography>
-								<br />
-								<Typography variant='body1'>
-									This is good for other developers. It means you have another <strong>[FREE]</strong> choice when you want to learn about API's or need an API for a small project.
-								</Typography>
-								<br />
-								<Typography variant='body1'>
-									You can start using it by looking at the{' '}
-									<Link className='link' color='secondary' href={`${process.env.REACT_APP_API_HOST}/api/v1/swagger-ui/index.html`}>
-										documentation
-									</Link>
-									. As of right now, the only permissible uses are for education (learning about REST, needing data for a consumer, etc). If you have question on usage please email
-									me.
-								</Typography>
+								<Topic
+									header='How Is Data Retrieved?'
+									details={
+										<Typography variant='body1' className='topic-details'>
+											A new API was created in the process of creating this site. Though there are other API's available, at the time I wanted to learn a new technology and grow as
+											a developer. It has since then grown to be a very robust and powerful source of data.
+										</Typography>
+									}
+								/>
+
+								<Topic
+									header='Who Can Use The API?'
+									details={
+										<Typography variant='body1' className='topic-details'>
+											Other than for curiosity or educational purposes you cannot use the API. This means that if you want to build your own site or have other commercial uses for
+											the API, you cannot use it. The reason is due to having no available bandwidth. This site makes no money through ads or otherwise and I cannot add more
+											instances to accommodate traffic that isn't in the immediate vision. The API itself is{' '}
+											<Link className='link' color='secondary' href={`${process.env.REACT_APP_API_HOST}/api/v1/swagger-ui/index.html`}>
+												documented
+											</Link>
+											.
+										</Typography>
+									}
+								/>
 							</Fragment>
 						}
 						imgPath='backend.png'
@@ -81,7 +79,7 @@ export default function Overview() {
 									</ul>
 								</Typography>
 
-								<CenteredImage>
+								<div>
 									<form action='https://www.paypal.com/donate' method='post' target='_top'>
 										<input type='hidden' name='hosted_button_id' value='S3MFF6AVW662U' />
 										<input
@@ -93,7 +91,7 @@ export default function Overview() {
 										/>
 										<img alt='' src='https://www.paypal.com/en_US/i/scr/pixel.gif' width='1' height='1' />
 									</form>
-								</CenteredImage>
+								</div>
 							</Fragment>
 						}
 						imgPath='monetary_contribution.png'
@@ -107,25 +105,32 @@ export default function Overview() {
 						subtitle='Contact & Other Stuff'
 						body={
 							<Fragment>
-								<Typography variant='h6'>Contact</Typography>
-								<ParagraphTypography variant='body1'>
-									If you have questions or want to submit a bug/feature request you can always{' '}
-									<Link className='link' color='secondary' href='mailto:thesupremeking25@gmail.com'>
-										email me
-									</Link>
-									. Otherwise, feel free to follow me on{' '}
-									<Link className='link' color='secondary' href='https://twitter.com/supreme_king_yt'>
-										twitter
-									</Link>
-									. Though I don't really do social media, I will try my best to post updates there.
-								</ParagraphTypography>
+								<Topic
+									header='Contact'
+									details={
+										<Typography variant='body1' className='topic-details'>
+											If you have questions or want to submit a bug/feature request you can always{' '}
+											<Link className='link' color='secondary' href='mailto:thesupremeking25@gmail.com'>
+												email me
+											</Link>
+											. Otherwise, feel free to follow me on{' '}
+											<Link className='link' color='secondary' href='https://twitter.com/supreme_king_yt'>
+												twitter
+											</Link>
+											. Though I don't really do social media, I will try my best to post updates there.
+										</Typography>
+									}
+								/>
 
-								<br />
-								<Typography variant='h6'>Privacy</Typography>
-								<ParagraphTypography variant='body1'>
-									Though there are no trackers on this site, every request sent to the API has the IP address of the requester. This is strictly to fight DDOS attacks by
-									blacklisting IPs based on attacks. Regular user IPs are not stored in a database and are only written to a log accessible only by me.
-								</ParagraphTypography>
+								<Topic
+									header='Privacy'
+									details={
+										<Typography variant='body1' className='topic-details'>
+											I have started storing usage patterns for some metrics. This is in an effort to help build a robust suggestion engine. Whats stored? Just your IP and what you
+											accessed from the database (card, or product info for example). IP addresses are also logged for all requests to help in blacklisting potential DDOS actors.
+										</Typography>
+									}
+								/>
 							</Fragment>
 						}
 						imgPath='information.png'
@@ -138,18 +143,21 @@ export default function Overview() {
 						title='Watch Yu-Gi-Oh! Related Content'
 						subtitle='Subscribe On YouTube'
 						body={
-							<Typography variant='body1'>
-								To help keep the site up (and in no ways an excuse to buy more cards), I started an unboxing/pack opening channel. I feel that I could give you, the consumers, more
-								content. While also making money to support this project.
-								<br />
-								<br />
-								The channel is pretty laid back and I won't be screaming/freaking out every time I get a rare card. In other words, It is an alternative to the fake or over the top
-								reaction based Yugioh openings. Feel free to{' '}
-								<Link className='link' color='secondary' href='https://www.youtube.com/channel/UCBZ_1wWyLQI3SV9IgLbyiNQ/videos'>
-									watch/subscribe
-								</Link>
-								!
-							</Typography>
+							<Fragment>
+								<Topic
+									header='My YouTube Channel'
+									details={
+										<Typography variant='body1' className='topic-details'>
+											Since this site is ad free and basically loses money, I started a YT channel to help fund the project. The channel has grown in size and has a wide array of
+											content. If you want to support this project without donating, you can simply{' '}
+											<Link className='link' color='secondary' href='https://www.youtube.com/channel/UCBZ_1wWyLQI3SV9IgLbyiNQ/videos'>
+												watch/subscribe
+											</Link>{' '}
+											to the channel!
+										</Typography>
+									}
+								/>
+							</Fragment>
 						}
 						imgPath='yt_channel_icon.jpeg'
 						imgLink='https://www.youtube.com/channel/UCBZ_1wWyLQI3SV9IgLbyiNQ/videos'
