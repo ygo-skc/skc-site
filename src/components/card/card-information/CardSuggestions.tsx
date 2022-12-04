@@ -22,33 +22,31 @@ const CardSuggestions: FC<_CardSuggestion> = memo(
 		const [hasError, setHasError] = useState<boolean>(false)
 
 		useEffect(() => {
-			FetchHandler.handleFetch(
-				`${DownstreamServices.SKC_SUGGESTION_HOST_NAME}/api/v1/suggestions/card/${cardID}`,
-				(json: CardSuggestionOutput) => {
-					let materials: JSX.Element[] = []
-					let references: JSX.Element[] = []
+			startTransition(() => {
+				FetchHandler.handleFetch(
+					`${DownstreamServices.SKC_SUGGESTION_HOST_NAME}/api/v1/suggestions/card/${cardID}`,
+					(json: CardSuggestionOutput) => {
+						let materials: JSX.Element[] = []
+						let references: JSX.Element[] = []
 
-					if (json.namedMaterials !== null) {
-						materials = json.namedMaterials.map((reference: CardReference) => {
-							return <YGOCardWithQuantity key={reference.card.cardID} card={reference.card} occurrences={reference.occurrences} />
-						})
-					}
+						if (json.namedMaterials !== null) {
+							materials = json.namedMaterials.map((reference: CardReference) => {
+								return <YGOCardWithQuantity key={reference.card.cardID} card={reference.card} occurrences={reference.occurrences} />
+							})
+						}
 
-					if (json.namedReferences !== null) {
-						references = json.namedReferences.map((reference: CardReference) => {
-							return <YGOCardWithQuantity key={reference.card.cardID} card={reference.card} occurrences={reference.occurrences} />
-						})
-					}
+						if (json.namedReferences !== null) {
+							references = json.namedReferences.map((reference: CardReference) => {
+								return <YGOCardWithQuantity key={reference.card.cardID} card={reference.card} occurrences={reference.occurrences} />
+							})
+						}
 
-					startTransition(() => {
 						setMaterialSuggestions(materials)
 						setReferenceSuggestions(references)
 						setIsLoadingSuggestions(false)
-					})
-				},
-				false
-			)?.catch((_err) => {
-				startTransition(() => {
+					},
+					false
+				)?.catch((_err) => {
 					setIsLoadingSuggestions(false)
 					setHasError(true)
 				})
