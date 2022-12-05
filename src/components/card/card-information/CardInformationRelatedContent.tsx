@@ -11,14 +11,14 @@ const CardSuggestions = lazy(() => import('./CardSuggestions'))
 type CardInformationRelatedContentType = {
 	card: SKCCard
 	isLoading: boolean
-	productInfo: any
-	banListInfo: any
+	productInfo: ProductInfo[]
+	restrictedIn: RestrictedIn
 	cardID: string
 	cardColor: cardColor
 }
 
 const CardInformationRelatedContent: FC<CardInformationRelatedContentType> = memo(
-	({ card, cardColor, isLoading, productInfo, banListInfo, cardID }) => {
+	({ card, cardColor, isLoading, productInfo, restrictedIn, cardID }) => {
 		return (
 			<Fragment>
 				<CardSuggestions cardID={card.cardID} cardColor={card.cardColor} />
@@ -30,11 +30,11 @@ const CardInformationRelatedContent: FC<CardInformationRelatedContentType> = mem
 						<div className='section-content'>
 							<Grid2 container spacing={3}>
 								<Grid2 xs={12} sm={12} md={12} lg={6} xl={6}>
-									<CardProductInformation isLoading={isLoading} hasInfo={productInfo.length === 0 ? false : true} cardID={cardID} productInfo={productInfo} />
+									<CardProductInformation isLoading={isLoading} cardID={cardID} productInfo={productInfo} />
 								</Grid2>
 
 								<Grid2 xs={12} sm={12} md={12} lg={6} xl={6}>
-									<CardBanListInformation isLoading={isLoading} hasInfo={banListInfo.length === 0 ? false : true} banListInfo={banListInfo} />
+									<CardBanListInformation isLoading={isLoading} restrictedIn={restrictedIn} />
 								</Grid2>
 							</Grid2>
 						</div>

@@ -15,7 +15,7 @@ class _Card {
 	static cardImg: HTMLImageElement
 	static readonly crumbs = ['Home', 'Card Browse']
 
-	static readonly loadRelatedContent = (isLoading: boolean, card: SKCCard, cardColor: cardColor, productInfo: any, banListInfo: any) => {
+	static readonly loadRelatedContent = (isLoading: boolean, card: SKCCard, cardColor: cardColor, productInfo: ProductInfo[], restrictedIn: RestrictedIn) => {
 		if (!isLoading) {
 			const CardInformationRelatedContent = lazy(() => import('../card/card-information/CardInformationRelatedContent'))
 			return (
@@ -25,7 +25,7 @@ class _Card {
 					isLoading={isLoading}
 					cardID={_Card.cardId!}
 					productInfo={productInfo}
-					banListInfo={banListInfo}
+					restrictedIn={restrictedIn}
 				/>
 			)
 		}
@@ -44,7 +44,7 @@ function cardDataReducer(state: any, action: any) {
 		monsterDef: action.monsterDef,
 		monsterAssociation: action.monsterAssociation,
 		productInfo: action.productInfo,
-		banListInfo: action.banListInfo,
+		restrictionInfo: action.restrictionInfo,
 	}
 }
 
@@ -61,7 +61,7 @@ const CardInformation = () => {
 
 	const [isLoading, setIsLoading] = useState(true)
 
-	const [{ cardName, cardColor, cardEffect, cardAttribute, monsterType, monsterAtk, monsterDef, monsterAssociation, productInfo, banListInfo }, cardDispatch] = useReducer(
+	const [{ cardName, cardColor, cardEffect, cardAttribute, monsterType, monsterAtk, monsterDef, monsterAssociation, productInfo, restrictionInfo }, cardDispatch] = useReducer(
 		cardDataReducer,
 		{
 			cardName: '',
@@ -73,27 +73,27 @@ const CardInformation = () => {
 			monsterDef: '',
 			monsterAssociation: undefined,
 			productInfo: [],
-			banListInfo: [],
+			restrictionInfo: [],
 		}
 	)
 
 	const [dynamicCrumbs, setDynamicCrumbs] = useState([..._Card.crumbs, ''])
 
 	useEffect(() => {
-		FetchHandler.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT['cardInstanceUrl']}${_Card.cardId}?allInfo=true`, (json) => {
-			setDynamicCrumbs([..._Card.crumbs, json.cardID])
+		FetchHandler.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT['cardInstanceUrl']}${_Card.cardId}?allInfo=true`, (cardInfo: SKCCardInfo) => {
+			setDynamicCrumbs([..._Card.crumbs, cardInfo.cardID])
 
 			cardDispatch({
-				cardName: json.cardName,
-				cardColor: json.cardColor,
-				cardEffect: json.cardEffect,
-				cardAttribute: json.cardAttribute,
-				monsterType: json.monsterType,
-				monsterAtk: json.monsterAttack,
-				monsterDef: json.monsterDefense,
-				monsterAssociation: json.monsterAssociation,
-				productInfo: json.foundIn === undefined ? [] : json.foundIn,
-				banListInfo: json.restrictedIn === undefined ? [] : json.restrictedIn,
+				cardName: cardInfo.cardName,
+				cardColor: cardInfo.cardColor,
+				cardEffect: cardInfo.cardEffect,
+				cardAttribute: cardInfo.cardAttribute,
+				monsterType: cardInfo.monsterType,
+				monsterAtk: cardInfo.monsterAttack,
+				monsterDef: cardInfo.monsterDefense,
+				monsterAssociation: cardInfo.monsterAssociation,
+				productInfo: cardInfo.foundIn === undefined ? [] : cardInfo.foundIn,
+				restrictionInfo: cardInfo.restrictedIn === undefined ? [] : cardInfo.restrictedIn,
 			})
 			setIsLoading(false)
 		})
@@ -151,7 +151,7 @@ const CardInformation = () => {
 							},
 							cardColor,
 							productInfo,
-							banListInfo
+							restrictionInfo
 						)}
 					</Suspense>
 				}
