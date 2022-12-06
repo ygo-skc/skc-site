@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, FunctionComponent } from 'react'
+import { useState, useEffect, lazy, FunctionComponent, startTransition } from 'react'
 import { Helmet } from 'react-helmet'
 
 import FetchHandler from '../../helper/FetchHandler'
@@ -7,7 +7,7 @@ import DownstreamServices from '../../helper/DownstreamServices'
 import createTable from '../util/TableHelpers'
 import { Dates } from '../../helper/Dates'
 import Section from '../util/Section'
-import { Typography } from '@mui/material'
+import { Skeleton, Typography } from '@mui/material'
 
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 
@@ -18,8 +18,9 @@ const ProductBrowse: FunctionComponent = () => {
 
 	useEffect(() => {
 		FetchHandler.handleFetch(DownstreamServices.NAME_maps_ENDPOINT['productBrowse'], (json) => {
-			setProductJson(json.products)
-			setIsDataLoaded(true)
+			startTransition(() => {
+				setProductJson(json.products)
+			})
 		})
 	}, [])
 
@@ -31,7 +32,10 @@ const ProductBrowse: FunctionComponent = () => {
 			return [product.productName!, product.productId, product.productType!, product.productSubType!, Dates.fromYYYYMMDDToDateStr(product.productReleaseDate)]
 		})
 
-		setProductGridItems(createTable(headers, productRows, rowOnClick, true))
+		startTransition(() => {
+			setProductGridItems(createTable(headers, productRows, rowOnClick, true))
+			setIsDataLoaded(true)
+		})
 	}, [productJson])
 
 	return (
@@ -59,7 +63,8 @@ const ProductBrowse: FunctionComponent = () => {
 								borderRadius: '1.1rem',
 							}}
 						>
-							{isDataLoaded ? productGridItems : undefined}
+							{!isDataLoaded && <Skeleton variant='rectangular' height='500' width='100%' className='rounded-skeleton' />}
+							{isDataLoaded && productGridItems}
 						</div>
 					</div>
 				}

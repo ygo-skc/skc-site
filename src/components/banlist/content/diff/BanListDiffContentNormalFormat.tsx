@@ -1,4 +1,4 @@
-import { FC, memo } from 'react'
+import { FC, Fragment, memo } from 'react'
 import BanListChangedStatus from './CardsWithDifferentStatus'
 
 type _BanListDiffContentNormalFormat = {
@@ -28,13 +28,13 @@ const BanListDiffContentNormalFormat: FC<_BanListDiffContentNormalFormat> = memo
 		isFetchingBanListRemovedContent,
 	}) => {
 		return (
-			<div>
+			<Fragment>
 				<BanListChangedStatus newStatusName='Forbidden' cards={newForbiddenCards} numCards={numNewForbidden} isLoadingData={isFetchingBanListNewContent} />
 				<BanListChangedStatus newStatusName='Limited' cards={newLimitedCards} numCards={numNewLimited} isLoadingData={isFetchingBanListNewContent} />
 				<BanListChangedStatus newStatusName='Semi Limited' cards={newSemiLimitedCards} numCards={numNewSemiLimited} isLoadingData={isFetchingBanListNewContent} />
 
 				<BanListChangedStatus newStatusName='Unlimited' cards={removedCards} numCards={numRemoved} isLoadingData={isFetchingBanListRemovedContent} />
-			</div>
+			</Fragment>
 		)
 	},
 	(prevProps, nextProps) => {

@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy } from 'react'
+import { useState, useEffect, lazy, Fragment } from 'react'
 import { useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 
@@ -78,7 +78,7 @@ export default function ProductInfo() {
 					/>
 				}
 				twoThirdComponent={
-					<div>
+					<Fragment>
 						<ProductStats isDataLoaded={isDataLoaded} cards={cardJsonResults} productTotal={+productTotal} productRarityStats={productRarityStats} />
 						<Section
 							sectionName='Product Content'
@@ -98,7 +98,7 @@ export default function ProductInfo() {
 								</div>
 							}
 						></Section>
-					</div>
+					</Fragment>
 				}
 			/>
 		</div>

@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useState } from 'react'
+import { FunctionComponent, startTransition, useEffect, useState } from 'react'
 import { Typography } from '@mui/material'
 import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
@@ -6,25 +6,37 @@ import DownstreamServices from '../../helper/DownstreamServices'
 const Footer: FunctionComponent = () => {
 	const [skcAPIVersion, setSkcAPIVersion] = useState('---')
 	const [heartAPIVersion, setHeartAPIVersion] = useState('---')
+	const [skcSuggestionEngineVersion, setSkcSuggestionEngineVersion] = useState('---')
 
 	useEffect(() => {
-		// fetch version for SKC API
-		FetchHandler.handleFetch(
-			DownstreamServices.NAME_maps_ENDPOINT['status'],
-			(json) => {
-				setSkcAPIVersion(json?.version)
-			},
-			false
-		)
+		startTransition(() => {
+			// fetch version for SKC API
+			FetchHandler.handleFetch(
+				DownstreamServices.NAME_maps_ENDPOINT['status'],
+				(json) => {
+					setSkcAPIVersion(json?.version)
+				},
+				false
+			)
 
-		// FetchHandler version for SKC API
-		FetchHandler.handleFetch(
-			DownstreamServices.HEART_API_ENDPOINTS.status,
-			(json) => {
-				setHeartAPIVersion(json?.version)
-			},
-			false
-		)
+			// FetchHandler version for SKC API
+			FetchHandler.handleFetch(
+				DownstreamServices.HEART_API_ENDPOINTS.status,
+				(json) => {
+					setHeartAPIVersion(json?.version)
+				},
+				false
+			)
+
+			// FetchHandler version for SKC Suggestion Engine
+			FetchHandler.handleFetch(
+				DownstreamServices.SKC_SUGGESTION_ENDPOINTS.status,
+				(json) => {
+					setSkcSuggestionEngineVersion(json?.version)
+				},
+				false
+			)
+		})
 	}, [])
 
 	return (
@@ -40,16 +52,20 @@ const Footer: FunctionComponent = () => {
 
 				<br />
 
-				<Typography className='footer-font' variant='body1' align='center'>
-					<strong>SKC Web Version:</strong> v{process.env.REACT_APP_VERSION}
+				<Typography className='footer-font' variant='h6' align='center'>
+					System Info
 				</Typography>
-
 				<Typography className='footer-font' variant='body1' align='center'>
-					<strong>SKC API Version:</strong> v{skcAPIVersion}
+					<strong>SKC Web:</strong> v{process.env.REACT_APP_VERSION}
 				</Typography>
-
 				<Typography className='footer-font' variant='body1' align='center'>
-					<strong>Heart API Version:</strong> v{heartAPIVersion}
+					<strong>SKC API:</strong> v{skcAPIVersion}
+				</Typography>
+				<Typography className='footer-font' variant='body1' align='center'>
+					<strong>Heart API:</strong> v{heartAPIVersion}
+				</Typography>
+				<Typography className='footer-font' variant='body1' align='center'>
+					<strong>SKC Suggestion Engine:</strong> v{skcSuggestionEngineVersion}
 				</Typography>
 			</div>
 		</div>
