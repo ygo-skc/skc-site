@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, Fragment, useEffect, useState } from 'react'
 import { Typography, Link, Skeleton } from '@mui/material'
 
 import VideoInfoContainer from './VideoInfoContainer'
@@ -26,7 +26,7 @@ const YouTubeUploads: FC<{ youtubeData: HeartApiYouTubeUpload[]; channelName: st
 	}, [youtubeData])
 
 	return (
-		<div>
+		<Fragment>
 			<Typography variant='h5'>{channelName}</Typography>
 
 			<Typography variant='h6'>Most Recent Uploads</Typography>
@@ -46,7 +46,7 @@ const YouTubeUploads: FC<{ youtubeData: HeartApiYouTubeUpload[]; channelName: st
 			) : (
 				<div style={{ display: 'grid', gridAutoFlow: 'column', gridTemplateRows: 'auto', overflowX: 'scroll', maxWidth: '100%' }}>{videos}</div>
 			)}
-		</div>
+		</Fragment>
 	)
 }
 

@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, Fragment, useEffect, useState } from 'react'
 import { MenuItem, Select, SelectChangeEvent, Skeleton, Typography } from '@mui/material'
 import { Dates } from '../../helper/Dates'
 
@@ -32,7 +32,7 @@ const BanListDates: FC<_BanListDates> = ({ isFetchingBanListDates, banListStartD
 			{isFetchingBanListDates ? (
 				<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='80px' />
 			) : (
-				<div>
+				<Fragment>
 					<Typography variant='subtitle1'>There are {banListStartDates.length} ban lists for selected format currently in the database</Typography>
 
 					<Select
@@ -45,7 +45,7 @@ const BanListDates: FC<_BanListDates> = ({ isFetchingBanListDates, banListStartD
 					>
 						{selectorItems}
 					</Select>
-				</div>
+				</Fragment>
 			)}
 		</div>
 	)

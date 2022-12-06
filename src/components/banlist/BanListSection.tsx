@@ -1,4 +1,4 @@
-import { useState, useEffect, FC } from 'react'
+import { useState, useEffect, FC, Fragment } from 'react'
 import CardDisplayGrid from '../util/grid/CardDisplayGrid'
 import Hint from '../util/Hints'
 
@@ -28,10 +28,10 @@ const BanListSection: FC<_BanListSection> = ({ sectionExplanation, cards, isData
 	}, [isDataLoaded])
 
 	return (
-		<div>
+		<Fragment>
 			<Hint>{sectionExplanation}</Hint>
 			{cardTypeContentGrid}
-		</div>
+		</Fragment>
 	)
 }
 

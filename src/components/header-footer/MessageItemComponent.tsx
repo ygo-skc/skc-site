@@ -1,6 +1,6 @@
 import '../../css/nav/messages.css'
 
-import { FC, ReactElement } from 'react'
+import { FC, Fragment, ReactElement } from 'react'
 import { Typography, Chip, Divider } from '@mui/material'
 import ReactMarkdown from 'react-markdown'
 
@@ -14,7 +14,7 @@ type MessageItemComponentArgs = {
 
 const MessageItemComponent: FC<MessageItemComponentArgs> = ({ creationDate, message, isLastMessage }): ReactElement => {
 	return (
-		<div>
+		<Fragment>
 			<Typography className='communication-message-header' variant='h6'>
 				{message.title}
 			</Typography>
@@ -34,7 +34,7 @@ const MessageItemComponent: FC<MessageItemComponentArgs> = ({ creationDate, mess
 				</div>
 			</div>
 			{isLastMessage ? <div /> : <Divider className='communication-divider' />}
-		</div>
+		</Fragment>
 	)
 }
 

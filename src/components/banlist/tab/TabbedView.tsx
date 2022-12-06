@@ -1,4 +1,4 @@
-import { FC, ReactElement } from 'react'
+import { FC, Fragment, ReactElement } from 'react'
 import { AppBar, Tabs, Typography } from '@mui/material'
 
 type _TabPanel = {
@@ -24,7 +24,7 @@ type _TabbedView = {
 
 const TabbedView: FC<_TabbedView> = ({ tabs, tabPanels, currentTab, setCurrentTab }) => {
 	return (
-		<div>
+		<Fragment>
 			<AppBar className='tab-container' position='sticky'>
 				<Tabs
 					className='tabs'
@@ -40,7 +40,7 @@ const TabbedView: FC<_TabbedView> = ({ tabs, tabPanels, currentTab, setCurrentTa
 			</AppBar>
 
 			{tabPanels}
-		</div>
+		</Fragment>
 	)
 }
 

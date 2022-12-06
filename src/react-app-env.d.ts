@@ -190,3 +190,21 @@ declare type CardSuggestionOutput = {
 }
 
 declare type BanListFormat = 'TCG' | 'MD' | 'DL'
+
+declare type SKCBanListInstance = {
+	banListDate: string
+	cardID: string
+	banStatus: string
+	_links: SKCBanListDateLinks
+}
+
+declare type RestrictedIn = {
+	TCG: SKCBanListInstance[]
+	MD: SKCBanListInstance[]
+	DL: SKCBanListInstance[]
+}
+
+declare type SKCCardInfo = SKCCard & {
+	restrictedIn: RestrictedIn
+	foundIn: ProductInfo[]
+}

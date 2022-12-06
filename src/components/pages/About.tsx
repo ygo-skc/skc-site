@@ -6,6 +6,8 @@ import Section from '../util/Section'
 import AboutSKC from '../about/AboutSKC'
 import Overview from '../about/AboutServices'
 
+import '../../css/main-pages/about.css'
+
 const About: FunctionComponent = () => {
 	return (
 		<div className='generic-container'>
