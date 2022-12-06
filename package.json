@@ -9,7 +9,7 @@
 		"@emotion/react": "11.10.5",
 		"@emotion/styled": "11.10.5",
 		"@mui/icons-material": "5.10.16",
-		"@mui/material": "5.10.16",
+		"@mui/material": "5.10.17",
 		"@mui/styled-engine-sc": "5.10.16",
 		"@nivo/pie": "0.80.0",
 		"@types/jest": "^29.2.3",
