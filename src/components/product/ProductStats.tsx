@@ -1,6 +1,6 @@
 import Grid2 from '@mui/material/Unstable_Grid2'
 import { FC, lazy } from 'react'
-import Section from '../util/Section'
+import Section from '../util/generic/Section'
 
 const ProductStatPie = lazy(() => import('../util/data-display/Pie'))
 

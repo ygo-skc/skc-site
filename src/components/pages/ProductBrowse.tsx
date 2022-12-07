@@ -4,9 +4,9 @@ import { Helmet } from 'react-helmet'
 import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 
-import createTable from '../util/TableHelpers'
+import createTable from '../util/generic/TableHelpers'
 import { Dates } from '../../helper/Dates'
-import Section from '../util/Section'
+import Section from '../util/generic/Section'
 import { Skeleton, Typography } from '@mui/material'
 
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))

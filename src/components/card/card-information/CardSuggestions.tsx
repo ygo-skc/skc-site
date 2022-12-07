@@ -1,12 +1,12 @@
 import { FC, Fragment, memo, startTransition, useEffect, useState } from 'react'
 import { Skeleton, Typography } from '@mui/material'
 
-import Section from '../../util/Section'
+import Section from '../../util/generic/Section'
 
 import YGOCardWithQuantity from '../YGOCardWithQuantity'
 import FetchHandler from '../../../helper/FetchHandler'
 import DownstreamServices from '../../../helper/DownstreamServices'
-import Hint from '../../util/Hints'
+import Hint from '../../util/generic/Hints'
 import GenericNonBreakingErr from '../../util/exception/GenericNonBreakingErr'
 
 import '../../../css/card/ygo-card-suggestion.css'

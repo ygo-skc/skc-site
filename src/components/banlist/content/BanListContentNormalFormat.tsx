@@ -1,5 +1,5 @@
 import { FC, memo } from 'react'
-import Section from '../../util/Section'
+import Section from '../../util/generic/Section'
 import BanListSection from '../BanListSection'
 import NormalFormatTabbedView from '../tab/NormalFormatTabbedView'
 

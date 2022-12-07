@@ -2,7 +2,7 @@ import { useState, useEffect, lazy, useReducer } from 'react'
 import { Typography } from '@mui/material'
 import { Helmet } from 'react-helmet'
 
-import Section from '../util/Section'
+import Section from '../util/generic/Section'
 
 import Breadcrumb from '../header-footer/Breadcrumb'
 
@@ -11,9 +11,9 @@ import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 
-import createTable from '../util/TableHelpers'
+import createTable from '../util/generic/TableHelpers'
 
-import '../../css/suggestion-box/database-search-styles.css'
+import '../../css/util/database-info/database-search-styles.css'
 import '../../css/main-pages/card-browse.css'
 import CardBrowse from '../util/search/CardBrowse'
 

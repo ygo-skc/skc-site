@@ -1,4 +1,4 @@
-import '../../css/nav/messages.css'
+import '../../css/header-footer/messages.css'
 
 import { FC, Fragment, ReactElement } from 'react'
 import { Typography, Chip, Divider } from '@mui/material'

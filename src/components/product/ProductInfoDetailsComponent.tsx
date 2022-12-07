@@ -1,5 +1,5 @@
 import { Skeleton, Typography, Box } from '@mui/material'
-import createTable from '../util/TableHelpers'
+import createTable from '../util/generic/TableHelpers'
 import { FC } from 'react'
 import { Dates } from '../../helper/Dates'
 

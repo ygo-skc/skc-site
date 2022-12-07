@@ -1,5 +1,5 @@
 import { Box } from '@mui/material'
-import Parent from '../Parent'
+import Parent from '../generic/Parent'
 import { FC, ReactNode } from 'react'
 
 type _OneThirdTwoThirdsGrid = {

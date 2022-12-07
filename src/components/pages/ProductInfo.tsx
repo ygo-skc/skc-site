@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet'
 
 import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
-import Section from '../util/Section'
+import Section from '../util/generic/Section'
 
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 import { Typography } from '@mui/material'

@@ -1,5 +1,5 @@
 import { FC, startTransition, useState } from 'react'
-import '../../css/util/rounded-img.css'
+import '../../../css/util/photo/rounded-img.css'
 import VizSensor from 'react-visibility-sensor'
 
 type _CardImageRounded = {

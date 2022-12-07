@@ -1,10 +1,10 @@
 import { lazy, startTransition, useEffect, useState } from 'react'
 
 import Grid2 from '@mui/material/Unstable_Grid2'
-import Glance from './Glance'
-import Section from '../Section'
+import Glance from '../generic/Glance'
+import Section from '../generic/Section'
 
-import '../../../css/suggestion-box/database-search-styles.css'
+import '../../../css/util/database-info/database-search-styles.css'
 import DownstreamServices from '../../../helper/DownstreamServices'
 import FetchHandler from '../../../helper/FetchHandler'
 import { Skeleton } from '@mui/material'

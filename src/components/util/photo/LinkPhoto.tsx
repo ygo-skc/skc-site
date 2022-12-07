@@ -1,8 +1,8 @@
 import { FC } from 'react'
 
-import '../../../css/util/photo.css'
+import '../../../css/util/photo/link-photo.css'
 
-const GenericLinkPhoto: FC<{ imageName: string; link: string }> = ({ imageName, link }) => {
+const LinkPhoto: FC<{ imageName: string; link: string }> = ({ imageName, link }) => {
 	return (
 		<img
 			className='generic-link-photo'
@@ -16,4 +16,4 @@ const GenericLinkPhoto: FC<{ imageName: string; link: string }> = ({ imageName, 
 	)
 }
 
-export default GenericLinkPhoto
+export default LinkPhoto

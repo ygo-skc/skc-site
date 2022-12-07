@@ -2,7 +2,7 @@ import { Skeleton, Typography } from '@mui/material'
 import { ResponsivePie } from '@nivo/pie'
 import { FC } from 'react'
 
-import '../../../css/util/data-display.css'
+import '../../../css/util/data-display/pie.css'
 
 const ProductStatPie: FC<{ data: any[]; statName: string; isDataLoaded: boolean }> = ({ data, statName, isDataLoaded }) => {
 	const margin = 10

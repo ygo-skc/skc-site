@@ -1,7 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { Helmet } from 'react-helmet'
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
-import Section from '../util/Section'
+import Section from '../util/generic/Section'
 
 import Breadcrumb from '../header-footer/Breadcrumb'
 import DatabaseInfo from '../util/database-info/DatabaseInfo'

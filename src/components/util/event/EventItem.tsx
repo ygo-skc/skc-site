@@ -3,7 +3,7 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined'
 import { FC } from 'react'
 import ReactMarkdown from 'react-markdown'
-import DateGlance from '../DateGlance'
+import DateComponent from '../generic/DateComponent'
 
 const EventItem: FC<{ event: HeartApiEventItem; showEventDialog?: any; setEventDialogEventData?: any }> = ({ event, showEventDialog, setEventDialogEventData }) => {
 	const isWithinDialog = showEventDialog === undefined && setEventDialogEventData === undefined ? true : false
@@ -22,7 +22,7 @@ const EventItem: FC<{ event: HeartApiEventItem; showEventDialog?: any; setEventD
 				<Typography className='event-name' variant='h6'>
 					{event.name}
 				</Typography>
-				<DateGlance date={new Date(event.eventDate)} />
+				<DateComponent date={new Date(event.eventDate)} />
 			</div>
 
 			<Typography className='event-notes-header' variant='subtitle1'>

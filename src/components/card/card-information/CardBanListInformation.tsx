@@ -4,9 +4,9 @@ import { Button, ButtonGroup, Typography } from '@mui/material'
 import '../../../css/card/card-information-styles.css'
 
 import { Dates } from '../../../helper/Dates'
-import Hint from '../../util/Hints'
+import Hint from '../../util/generic/Hints'
 
-import createTable from '../../util/TableHelpers'
+import createTable from '../../util/generic/TableHelpers'
 
 type args = {
 	isLoading: boolean

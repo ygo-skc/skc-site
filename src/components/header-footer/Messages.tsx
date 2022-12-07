@@ -1,5 +1,5 @@
-import '../../css/nav/navigation-icon.css'
-import '../../css/nav/messages.css'
+import '../../css/header-footer/navigation-icon.css'
+import '../../css/header-footer/messages.css'
 
 import { useState, useEffect, Fragment, startTransition } from 'react'
 import { Typography, IconButton, Popover, Badge } from '@mui/material'

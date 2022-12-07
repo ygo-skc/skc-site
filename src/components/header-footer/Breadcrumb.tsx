@@ -9,7 +9,7 @@ import InfoIcon from '@mui/icons-material/Info'
 
 import { _SKCSiteRoutes } from '../pages/Routes'
 
-import '../../css/nav/breadcrumb.css'
+import '../../css/header-footer/breadcrumb.css'
 
 type BreadcrumbProps = {
 	crumbs: string[]

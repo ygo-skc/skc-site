@@ -1,6 +1,6 @@
 import { Chip } from '@mui/material'
 import { FC } from 'react'
-import CardImageRounded from './CardImageRounded'
+import CardImageRounded from '../util/photo/CardImageRounded'
 import YGOCard from './YGOCard'
 
 import '../../css/card/ygo-card-with-quantity.css'
