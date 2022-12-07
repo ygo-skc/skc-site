@@ -3,7 +3,7 @@ import '../../css/util/section.css'
 import { FC, ReactNode } from 'react'
 import { Typography } from '@mui/material'
 
-import '../../css/ygo-card-styles.css'
+import '../../css/card/ygo-card-styles.css'
 
 type SectionType = {
 	sectionName: string

@@ -1,7 +1,7 @@
 import { useEffect, useState, FunctionComponent, startTransition, Fragment } from 'react'
 import { Button, ButtonGroup, Typography } from '@mui/material'
 
-import '../../../css/card-information-styles.css'
+import '../../../css/card/card-information-styles.css'
 
 import { Dates } from '../../../helper/Dates'
 import Hint from '../../util/Hints'

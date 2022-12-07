@@ -13,7 +13,7 @@ type _YGOCard = SKCCard & {
 const YGOCard: FC<_YGOCard> = memo(
 	({ cardName, cardColor, cardEffect, monsterType, cardAttribute, monsterAttack, monsterDefense, monsterAssociation, cardID, fullDetails, isLoading, className }) => {
 		if (isLoading) {
-			return <Skeleton variant='rectangular' height='150' style={{ borderRadius: '.5rem' }} />
+			return <Skeleton variant='rectangular' height='150' className='rounded-skeleton' />
 		}
 
 		return (

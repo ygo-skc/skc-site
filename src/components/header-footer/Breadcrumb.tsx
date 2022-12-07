@@ -47,7 +47,8 @@ const Breadcrumb: FunctionComponent<BreadcrumbProps> = memo(
 		return (
 			<Box className='breadcrumb-parent light-shadow'>
 				<Breadcrumbs separator={'/'} aria-label='breadcrumb'>
-					{crumbUI}
+					{crumbUI.length !== 0 && crumbUI}
+					{crumbUI.length === 0 && <Skeleton variant='text' height={22} width={200} />}
 				</Breadcrumbs>
 			</Box>
 		)

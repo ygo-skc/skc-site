@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../css/ygo-card-styles.css'
+import '../../css/card/ygo-card-styles.css'
 
 import { Typography, Box } from '@mui/material'
 
@@ -23,7 +23,7 @@ const YGOCardStats = ({ cardColor, cardEffect, monsterType, monsterAtk, monsterD
 				</Typography>
 			)}
 
-			<Box style={{ display: 'flex', paddingTop: '.5rem', alignItems: 'center' }}>
+			<Box className='ygo-card-footer-parent'>
 				{fullDetails ? (
 					<Typography variant='body2' id='card-id'>
 						{cardID}

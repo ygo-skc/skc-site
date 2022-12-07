@@ -37,7 +37,9 @@ const UpcomingTCGProducts = () => {
 			<EventItem key={`${event.name} ${event.createdAt}`} event={event} showEventDialog={setEventDialogIsOpen} setEventDialogEventData={setEventDialogEventData} />
 		))
 
-		setEventsUI(eUI)
+		startTransition(() => {
+			setEventsUI(eUI)
+		})
 	}, [events])
 
 	return (

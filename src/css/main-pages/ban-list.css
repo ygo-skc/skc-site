@@ -43,18 +43,12 @@
 	border: 1px solid rgb(245, 0, 87);
 }
 
-.limited-breakdown-chip.MuiChip-root {
-	border: 1px solid rgb(255, 145, 0);
-}
-
-.semi-limited-breakdown-chip.MuiChip-root {
-	border: 1px solid rgb(76, 175, 80);
-}
-
+.limited-breakdown-chip.MuiChip-root,
 .limited-one-breakdown-chip.MuiChip-root {
 	border: 1px solid rgb(255, 145, 0);
 }
 
+.semi-limited-breakdown-chip.MuiChip-root,
 .limited-two-breakdown-chip.MuiChip-root {
 	border: 1px solid rgb(76, 175, 80);
 }
@@ -107,4 +101,26 @@
 	display: flex;
 	overflow-x: auto;
 	padding-bottom: 1rem;
+}
+
+.forbidden-icon.MuiSvgIcon-root {
+	color: red;
+	font-size: 1.8rem;
+}
+
+.limited-icon.MuiSvgIcon-root,
+.limited-one-icon.MuiSvgIcon-root {
+	color: #ff9100;
+	font-size: 1.8rem;
+}
+
+.semi-limited-icon.MuiSvgIcon-root,
+.limited-two-icon.MuiSvgIcon-root {
+	color: #4caf50;
+	font-size: 1.8rem;
+}
+
+.limited-three-icon.MuiSvgIcon-root {
+	color: #00b5e2;
+	font-size: 1.8rem;
 }

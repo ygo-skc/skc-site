@@ -1,0 +1,41 @@
+.base-img {
+	width: 30px;
+	height: 30px;
+	display: inline-block;
+	margin-right: 0.35rem;
+	vertical-align: middle;
+}
+
+.pend-img {
+	width: 30px;
+	height: 30px;
+	display: inline-block;
+	margin-right: 0.35rem;
+	margin-left: 0.5rem;
+	vertical-align: middle;
+}
+
+.attribute-img {
+	width: 30px;
+	height: 30px;
+	display: inline-block;
+	margin-right: 0.85rem;
+	vertical-align: middle;
+}
+
+.card-association-parent {
+	width: 100%;
+	margin-bottom: 0.35rem;
+	text-align: center;
+}
+
+.card-association-sub-parent {
+	background: rgba(255, 255, 255, 0.82);
+	display: inline-block;
+	padding-top: 0.2rem;
+	padding-bottom: 0.2rem;
+	padding-left: 0.7rem;
+	padding-right: 0.7rem;
+	border-radius: 4rem;
+	text-align: center;
+}

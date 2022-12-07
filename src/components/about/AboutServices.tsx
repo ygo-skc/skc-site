@@ -11,7 +11,7 @@ export default function Overview() {
 			<Typography variant='h4'>SKC API, Donate, Contact Info, And More!</Typography>
 
 			<Grid2 container spacing={2}>
-				<Grid2 style={{ display: 'inline-grid' }} xs={12} sm={12} md={6} lg={4} xl={4}>
+				<Grid2 className='grid' xs={12} sm={12} md={6} lg={4} xl={4}>
 					<AboutInfoCard
 						title='SKC API'
 						subtitle='The Backend'
@@ -48,7 +48,7 @@ export default function Overview() {
 					/>
 				</Grid2>
 
-				<Grid2 style={{ display: 'inline-grid' }} xs={12} sm={12} md={6} lg={4} xl={4}>
+				<Grid2 className='grid' xs={12} sm={12} md={6} lg={4} xl={4}>
 					<AboutInfoCard
 						title='Contributions'
 						subtitle='Donations To Website'
@@ -65,10 +65,10 @@ export default function Overview() {
 								<Typography variant='body1'>
 									To help maintain this web page, you can donate using one of the options below.
 									<ul>
-										<li style={{ wordBreak: 'break-all' }}>
+										<li>
 											<strong>BTC (Bitcoin) Wallet:</strong> 3DbG1525F4HMf9Qttj5waDxJv747JrBh4g
 										</li>
-										<li style={{ wordBreak: 'break-all' }}>
+										<li>
 											<strong>ZEC (Zcash) Wallet:</strong> t1UdXZkAUUNY35Kh2FiRoRk29Xu8SEYsXxS
 										</li>
 										<li>
@@ -99,7 +99,7 @@ export default function Overview() {
 					/>
 				</Grid2>
 
-				<Grid2 style={{ display: 'inline-grid' }} xs={12} sm={12} md={6} lg={4} xl={4}>
+				<Grid2 className='grid' xs={12} sm={12} md={6} lg={4} xl={4}>
 					<AboutInfoCard
 						title='Other Information'
 						subtitle='Contact & Other Stuff'
@@ -138,7 +138,7 @@ export default function Overview() {
 					/>
 				</Grid2>
 
-				<Grid2 style={{ display: 'inline-grid' }} xs={12} sm={12} md={6} lg={4} xl={4}>
+				<Grid2 className='grid' xs={12} sm={12} md={6} lg={4} xl={4}>
 					<AboutInfoCard
 						title='Watch Yu-Gi-Oh! Related Content'
 						subtitle='Subscribe On YouTube'

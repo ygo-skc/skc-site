@@ -32,10 +32,10 @@ const NormalFormatTabbedView: FC<_NormalFormatTabbedView> = ({
 	return (
 		<TabbedView
 			tabs={[
-				<Tab key='forbidden' className='tab' icon={<BlockIcon color='error' style={{ fontSize: '1.8rem' }} />} label={numForbidden} {...allyProps(0)} />,
-				<Tab key='limited-one' className='tab' icon={<Filter1TwoToneIcon style={{ color: '#ff9100', fontSize: '1.8rem' }} />} label={numLimitedOne} {...allyProps(1)} />,
-				<Tab key='limited-two' className='tab' icon={<Filter2TwoToneIcon style={{ color: '#4caf50', fontSize: '1.8rem' }} />} label={numLimitedTwo} {...allyProps(2)} />,
-				<Tab key='limited-three' className='tab' icon={<Filter3TwoToneIcon style={{ color: '#00B5E2', fontSize: '1.8rem' }} />} label={numLimitedThree} {...allyProps(2)} />,
+				<Tab key='forbidden' className='tab' icon={<BlockIcon className='forbidden-icon' />} label={numForbidden} {...allyProps(0)} />,
+				<Tab key='limited-one' className='tab' icon={<Filter1TwoToneIcon className='limited-one-icon' />} label={numLimitedOne} {...allyProps(1)} />,
+				<Tab key='limited-two' className='tab' icon={<Filter2TwoToneIcon className='limited-two-icon' />} label={numLimitedTwo} {...allyProps(2)} />,
+				<Tab key='limited-three' className='tab' icon={<Filter3TwoToneIcon className='limited-three-icon' />} label={numLimitedThree} {...allyProps(2)} />,
 			]}
 			tabPanels={[
 				<TabPanel key='forbidden-tab' value={currentTab} index={0}>

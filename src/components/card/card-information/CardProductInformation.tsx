@@ -1,7 +1,7 @@
 import { useEffect, useState, FC, Fragment, startTransition } from 'react'
 import { Typography } from '@mui/material'
 
-import '../../../css/card-information-styles.css'
+import '../../../css/card/card-information-styles.css'
 
 import { Dates } from '../../../helper/Dates'
 import Hint from '../../util/Hints'
