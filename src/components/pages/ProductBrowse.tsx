@@ -54,18 +54,8 @@ const ProductBrowse: FunctionComponent = () => {
 				sectionContent={
 					<div className='section-content'>
 						<Typography variant='h5'>Sorted By Release Date</Typography>
-						<div
-							style={{
-								paddingTop: '0rem',
-								paddingBottom: '0rem',
-								paddingLeft: '0rem',
-								paddingRight: '0rem',
-								borderRadius: '1.1rem',
-							}}
-						>
-							{!isDataLoaded && <Skeleton variant='rectangular' height='500' width='100%' className='rounded-skeleton' />}
-							{isDataLoaded && productGridItems}
-						</div>
+						{!isDataLoaded && <Skeleton variant='rectangular' height='500' width='100%' className='rounded-skeleton' />}
+						{isDataLoaded && productGridItems}
 					</div>
 				}
 			></Section>

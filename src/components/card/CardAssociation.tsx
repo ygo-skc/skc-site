@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { ImageWithNumber } from './ImageWithText'
+import { ImageWithNumber } from './ImageWithNumber'
 
 import '../../css/card/card-association.css'
 

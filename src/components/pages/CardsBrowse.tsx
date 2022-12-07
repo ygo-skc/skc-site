@@ -14,6 +14,7 @@ import DownstreamServices from '../../helper/DownstreamServices'
 import createTable from '../util/TableHelpers'
 
 import '../../css/suggestion-box/database-search-styles.css'
+import '../../css/main-pages/card-browse.css'
 import CardBrowse from '../util/search/CardBrowse'
 
 const CardDisplayGrid = lazy(() => import('../util/grid/CardDisplayGrid'))
@@ -117,7 +118,7 @@ export default function BrowseCards() {
 						sticky={true}
 						sectionContent={
 							<div className='section-content'>
-								<div style={{ minHeight: '1.5rem', marginBottom: '1rem' }}>
+								<div className='group card-browse-group'>
 									<CardBrowse browseCriteriaDispatch={browseCriteriaDispatch} selectedCriteria={selectedCriteria} skcCardBrowseCriteriaOutput={skcCardBrowseCriteriaOutput} />
 								</div>
 

@@ -39,3 +39,16 @@
 	border-radius: 4rem;
 	text-align: center;
 }
+
+.img-with-number-parent {
+	display: inline-block;
+}
+
+.img-with-number-parent .MuiTypography-root {
+	display: inline-block;
+	color: rgba(0, 0, 0, 0.55);
+	line-height: 24px;
+	vertical-align: middle;
+	margin: auto;
+	font-weight: 800;
+}

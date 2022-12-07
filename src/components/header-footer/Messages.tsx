@@ -85,7 +85,7 @@ function Messages() {
 			</Badge>
 
 			<Popover
-				style={{ overflowX: 'hidden', overflowY: 'hidden' }}
+				className='popover'
 				id={isDisplayingNotifications ? 'notification-popover' : undefined}
 				open={isDisplayingNotifications}
 				anchorEl={messagesAnchor}

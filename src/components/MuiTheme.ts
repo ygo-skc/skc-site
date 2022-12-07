@@ -55,7 +55,7 @@ const MuiTheme = createTheme({
 		MuiChip: {
 			styleOverrides: {
 				root: {
-					fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
+					fontFamily: 'open sans,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 					marginRight: '.55rem',
 					marginTop: '.5rem',
 					backgroundColor: 'rgba(0, 0, 0, .23)',
@@ -83,7 +83,7 @@ const MuiTheme = createTheme({
 					paddingRight: '.8rem',
 					paddingTop: '.4rem',
 					paddingBottom: '.4rem',
-					fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
+					fontFamily: 'open sans,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 				},
 				root: {
 					minHeight: '0rem',
@@ -122,7 +122,7 @@ const MuiTheme = createTheme({
 		MuiTooltip: {
 			styleOverrides: {
 				tooltip: {
-					fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
+					fontFamily: 'open sans,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 					fontWeight: 500,
 					lineHeight: '1.3rem',
 					fontSize: '.88rem',
@@ -234,14 +234,14 @@ const MuiTheme = createTheme({
 			fontSize: '1.1rem',
 		},
 		body1: {
-			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
+			fontFamily: 'open sans,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 500,
 			lineHeight: '1.35rem',
 			color: 'black',
 			fontSize: '.98rem',
 		},
 		body2: {
-			fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
+			fontFamily: 'open sans,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 500,
 			lineHeight: '1.25rem',
 			color: 'black',
