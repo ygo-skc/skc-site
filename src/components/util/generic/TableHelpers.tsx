@@ -1,5 +1,5 @@
 import { Table, TableHead, TableRow, TableBody, TableCell, TableContainer, Box } from '@mui/material'
-import '../../css/util/table.css'
+import '../../../css/util/generic/table.css'
 
 function createHeaderRow(headerNames: string[]) {
 	const columns = headerNames.map((header: string) => {

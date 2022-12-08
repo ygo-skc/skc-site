@@ -1,12 +1,12 @@
 import { useEffect, useState, FunctionComponent, startTransition, Fragment } from 'react'
 import { Button, ButtonGroup, Typography } from '@mui/material'
 
-import '../../../css/card-information-styles.css'
+import '../../../css/card/card-information-styles.css'
 
 import { Dates } from '../../../helper/Dates'
-import Hint from '../../util/Hints'
+import Hint from '../../util/generic/Hints'
 
-import createTable from '../../util/TableHelpers'
+import createTable from '../../util/generic/TableHelpers'
 
 type args = {
 	isLoading: boolean
@@ -62,14 +62,14 @@ const CardBanListInformation: FunctionComponent<args> = ({ isLoading, restricted
 		<div className='group'>
 			<Typography variant='h4'>Ban Lists</Typography>
 
-			<ButtonGroup className='ban-list-format-container' fullWidth disableElevation variant='contained' aria-label='Disabled elevation buttons'>
-				{CreateButton('TCG')}
-				{CreateButton('MD')}
-				{CreateButton('DL')}
-			</ButtonGroup>
-
 			{!isLoading && restrictedIn[format].length !== 0 && (
 				<Fragment>
+					<ButtonGroup className='ban-list-format-container' fullWidth disableElevation variant='contained' aria-label='Disabled elevation buttons'>
+						{CreateButton('TCG')}
+						{CreateButton('MD')}
+						{CreateButton('DL')}
+					</ButtonGroup>
+
 					<Typography variant='h5'>Selected Format — {transformFormat(format)}</Typography>
 					{banListTable}
 				</Fragment>

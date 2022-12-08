@@ -1,5 +1,5 @@
-import '../../css/nav/navigation-icon.css'
-import '../../css/nav/messages.css'
+import '../../css/header-footer/navigation-icon.css'
+import '../../css/header-footer/messages.css'
 
 import { useState, useEffect, Fragment, startTransition } from 'react'
 import { Typography, IconButton, Popover, Badge } from '@mui/material'
@@ -23,17 +23,17 @@ function Messages() {
 	const isDisplayingNotifications = Boolean(messagesAnchor)
 
 	useEffect(() => {
-		FetchHandler.handleFetch(
-			`${DownstreamServices.HEART_API_HOST_NAME}/api/v1/message?service=skc&tags=skc-site,skc-api`,
-			(messageData: HeartApiMessageOutput) => {
-				const totalMessages = messageData.messages.length
+		startTransition(() => {
+			FetchHandler.handleFetch(
+				`${DownstreamServices.HEART_API_HOST_NAME}/api/v1/message?service=skc&tags=skc-site,skc-api`,
+				(messageData: HeartApiMessageOutput) => {
+					const totalMessages = messageData.messages.length
 
-				let findNumNewMessages = false
-				let _numNewMessages = 0
-				const previousNewestMessageTimeStamp = localStorage.getItem('previousNewestMessage') as string
-				const previousNewestMessageDate = new Date(previousNewestMessageTimeStamp)
+					let findNumNewMessages = false
+					let _numNewMessages = 0
+					const previousNewestMessageTimeStamp = localStorage.getItem('previousNewestMessage') as string
+					const previousNewestMessageDate = new Date(previousNewestMessageTimeStamp)
 
-				startTransition(() => {
 					setNumMessages(totalMessages)
 
 					if (totalMessages > 0) {
@@ -61,11 +61,11 @@ function Messages() {
 					)
 
 					setNumNewMessages(_numNewMessages)
-				})
-			},
-			false
-		)?.catch((_err) => {
-			setErrorFetchingMessages(true)
+				},
+				false
+			)?.catch((_err) => {
+				setErrorFetchingMessages(true)
+			})
 		})
 	}, [])
 
@@ -85,7 +85,7 @@ function Messages() {
 			</Badge>
 
 			<Popover
-				style={{ overflowX: 'hidden', overflowY: 'hidden' }}
+				className='popover'
 				id={isDisplayingNotifications ? 'notification-popover' : undefined}
 				open={isDisplayingNotifications}
 				anchorEl={messagesAnchor}

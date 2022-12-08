@@ -10,12 +10,12 @@ import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 import BreadCrumb from '../header-footer/Breadcrumb'
 
 import '../../css/main-pages/ban-list.css'
-import Section from '../util/Section'
+import Section from '../util/generic/Section'
 import dateReducer, { BanListDateReducerActionType } from '../../helper/reducers/BanListDateReducer'
 import currentlySelectedBanListReducer, { CurrentlySelectedBanListReducerActionType } from '../../helper/reducers/CurrentBanListReducer'
 import { Dates } from '../../helper/Dates'
 
-const Hint = lazy(() => import('../util/Hints'))
+const Hint = lazy(() => import('../util/generic/Hints'))
 
 const BanListDates = lazy(() => import('../banlist/BanListDates'))
 const BanListFormat = lazy(() => import('../banlist/BanListFormat'))

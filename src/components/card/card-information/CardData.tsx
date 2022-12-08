@@ -1,9 +1,9 @@
 import { FC, memo } from 'react'
 
-import CardImageRounded from '../CardImageRounded'
+import CardImageRounded from '../../util/photo/CardImageRounded'
 
 import YGOCard from '../YGOCard'
-import Section from '../../util/Section'
+import Section from '../../util/generic/Section'
 
 type _CardData = SKCCard & {
 	isLoading: boolean

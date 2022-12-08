@@ -1,7 +1,8 @@
 import Grid2 from '@mui/material/Unstable_Grid2'
-import { FC } from 'react'
-import Section from '../util/Section'
-import ProductStatPie from './ProductStatPie'
+import { FC, lazy } from 'react'
+import Section from '../util/generic/Section'
+
+const ProductStatPie = lazy(() => import('../util/data-display/Pie'))
 
 const ProductStats: FC<ProductStats & { isDataLoaded: boolean }> = ({ productRarityStats, cards, isDataLoaded }) => {
 	const data: any[] = Object.keys(productRarityStats).map((key: string) => {

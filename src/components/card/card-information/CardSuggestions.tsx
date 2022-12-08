@@ -1,13 +1,15 @@
 import { FC, Fragment, memo, startTransition, useEffect, useState } from 'react'
 import { Skeleton, Typography } from '@mui/material'
 
-import Section from '../../util/Section'
+import Section from '../../util/generic/Section'
 
 import YGOCardWithQuantity from '../YGOCardWithQuantity'
 import FetchHandler from '../../../helper/FetchHandler'
 import DownstreamServices from '../../../helper/DownstreamServices'
-import Hint from '../../util/Hints'
+import Hint from '../../util/generic/Hints'
 import GenericNonBreakingErr from '../../util/exception/GenericNonBreakingErr'
+
+import '../../../css/card/ygo-card-suggestion.css'
 
 type _CardSuggestion = {
 	cardID: string
@@ -62,24 +64,14 @@ const CardSuggestions: FC<_CardSuggestion> = memo(
 						{isLoadingSuggestions && <Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='380px' />}
 						{!isLoadingSuggestions && !hasError && (
 							<Fragment>
-								<div className='group-with-outline'>
+								<div className='group-with-outline suggestion-parent'>
 									<Typography variant='h4'>Named Summoning Materials</Typography>
-									{materialSuggestions.length === 0 ? (
-										<Hint>Nothing here 🤔</Hint>
-									) : (
-										<div style={{ display: 'flex', overflowX: 'auto', paddingBottom: '.3rem' }}>{materialSuggestions}</div>
-									)}
+									{materialSuggestions.length === 0 ? <Hint>Nothing here 🤔</Hint> : <div className='suggestion-wrapper'>{materialSuggestions}</div>}
 								</div>
 
-								<br />
-
-								<div className='group-with-outline'>
+								<div className='group-with-outline suggestion-parent'>
 									<Typography variant='h4'>Named References</Typography>
-									{referenceSuggestions.length === 0 ? (
-										<Hint>Nothing here 🤔</Hint>
-									) : (
-										<div style={{ display: 'flex', overflowX: 'auto', paddingBottom: '.3rem' }}>{referenceSuggestions}</div>
-									)}
+									{referenceSuggestions.length === 0 ? <Hint>Nothing here 🤔</Hint> : <div className='suggestion-wrapper'>{referenceSuggestions}</div>}
 								</div>
 							</Fragment>
 						)}

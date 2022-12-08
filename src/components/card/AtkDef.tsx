@@ -1,8 +1,6 @@
 import { Box, Typography } from '@mui/material'
 import { FC } from 'react'
 
-import '../../css/ygo-card-styles.css'
-
 const modifyStat = (stat: string | undefined) => {
 	if (stat === undefined) return '?'
 	return stat

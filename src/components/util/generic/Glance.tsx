@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material'
 import { FC } from 'react'
 
-import '../../../css/util/glance.css'
+import '../../../css/util/generic/glance.css'
 
 type _Glance = {
 	total: number

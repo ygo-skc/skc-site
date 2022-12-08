@@ -1,7 +1,7 @@
 import { FC, Fragment, lazy, memo } from 'react'
 import Grid2 from '@mui/material/Unstable_Grid2'
 
-import Section from '../../util/Section'
+import Section from '../../util/generic/Section'
 
 import CardProductInformation from './CardProductInformation'
 import CardBanListInformation from './CardBanListInformation'

@@ -65,3 +65,7 @@
 	background: rgba(0, 0, 0, 0.2);
 	backdrop-filter: blur(60px);
 }
+
+.popover {
+	overflow: hidden;
+}

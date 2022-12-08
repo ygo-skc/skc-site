@@ -33,3 +33,11 @@
 .info-card-body {
 	padding: 1.4rem;
 }
+
+.grid {
+	display: inline-grid;
+}
+
+li {
+	word-break: break-all;
+}

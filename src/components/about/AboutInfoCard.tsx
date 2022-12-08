@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react'
 
 import { Typography } from '@mui/material'
-import GenericLinkPhoto from '../util/photo/GenericLinkPhoto'
+import LinkPhoto from '../util/photo/LinkPhoto'
 
 type AboutInfoCardProps = {
 	title: string
@@ -15,7 +15,7 @@ const AboutInfoCard: FunctionComponent<AboutInfoCardProps> = ({ title, subtitle,
 	<div className='info-card'>
 		<div className='info-card-header-container'>
 			<div className='centered-image'>
-				<GenericLinkPhoto imageName={imgPath} link={imgLink} />
+				<LinkPhoto imageName={imgPath} link={imgLink} />
 			</div>
 			<Typography align='center' variant='h4'>
 				{title}

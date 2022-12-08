@@ -15,10 +15,6 @@ a {
 	background-color: white;
 }
 
-.MuiBreadcrumbs-separator {
-	padding-bottom: 0.3rem;
-}
-
 .breadcrumb {
 	display: flex;
 	font-weight: 500;

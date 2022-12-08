@@ -1,5 +1,5 @@
 import { Chip, Typography } from '@mui/material'
-import { FC } from 'react'
+import { FC, Fragment } from 'react'
 import BlockIcon from '@mui/icons-material/Block'
 import Filter1TwoToneIcon from '@mui/icons-material/Filter1TwoTone'
 import Filter2TwoToneIcon from '@mui/icons-material/Filter2TwoTone'
@@ -14,29 +14,14 @@ export type _BanListSpreadDuelLinksFormat = {
 
 const BanListSpreadDuelLinksFormat: FC<_BanListSpreadDuelLinksFormat> = ({ numForbidden, numLimitedOne, numLimitedTwo, numLimitedThree }) => {
 	return (
-		<div style={{ width: '100%' }}>
+		<Fragment>
 			<Typography variant='h6'>Totals</Typography>
 
-			<Chip className='breakdown-chip forbidden-breakdown-chip' variant='outlined' icon={<BlockIcon style={{ fontSize: '1.8rem', color: 'red' }} />} label={`${numForbidden}`} />
-			<Chip
-				className='breakdown-chip limited-one-breakdown-chip'
-				variant='outlined'
-				icon={<Filter1TwoToneIcon style={{ color: '#ff9100', fontSize: '1.8rem' }} />}
-				label={`${numLimitedOne}`}
-			/>
-			<Chip
-				className='breakdown-chip limited-two-breakdown-chip'
-				variant='outlined'
-				icon={<Filter2TwoToneIcon style={{ color: '#4caf50', fontSize: '1.8rem' }} />}
-				label={`${numLimitedTwo}`}
-			/>
-			<Chip
-				className='breakdown-chip limited-three-breakdown-chip'
-				variant='outlined'
-				icon={<Filter3TwoToneIcon style={{ color: '#00B5E2', fontSize: '1.8rem' }} />}
-				label={`${numLimitedThree}`}
-			/>
-		</div>
+			<Chip className='breakdown-chip forbidden-breakdown-chip' variant='outlined' icon={<BlockIcon className='forbidden-icon' />} label={`${numForbidden}`} />
+			<Chip className='breakdown-chip limited-one-breakdown-chip' variant='outlined' icon={<Filter1TwoToneIcon className='limited-one-icon' />} label={`${numLimitedOne}`} />
+			<Chip className='breakdown-chip limited-two-breakdown-chip' variant='outlined' icon={<Filter2TwoToneIcon className='limited-two-icon' />} label={`${numLimitedTwo}`} />
+			<Chip className='breakdown-chip limited-three-breakdown-chip' variant='outlined' icon={<Filter3TwoToneIcon className='limited-three-icon' />} label={`${numLimitedThree}`} />
+		</Fragment>
 	)
 }
 

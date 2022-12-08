@@ -2,16 +2,17 @@ import { Skeleton, Typography } from '@mui/material'
 import { ResponsivePie } from '@nivo/pie'
 import { FC } from 'react'
 
+import '../../../css/util/data-display/pie.css'
+
 const ProductStatPie: FC<{ data: any[]; statName: string; isDataLoaded: boolean }> = ({ data, statName, isDataLoaded }) => {
 	const margin = 10
 	return (
-		<div className='group-dark' style={{ width: '90%', margin: 'auto', marginBottom: '1rem' }}>
-			<Typography style={{ color: 'white' }} variant='h2' align='center'>
+		<div className='pie-parent group-dark'>
+			<Typography className='pie-header' variant='h2' align='center'>
 				{statName}
 			</Typography>
-			<br />
 
-			<div style={{ height: '250px', width: '100%' }}>
+			<div className='pie'>
 				{isDataLoaded ? (
 					<ResponsivePie
 						margin={{ top: margin, right: margin * 5, bottom: margin, left: margin }}
@@ -24,8 +25,8 @@ const ProductStatPie: FC<{ data: any[]; statName: string; isDataLoaded: boolean 
 						layers={['arcs', 'legends', 'arcLabels']}
 						colors={{ scheme: 'pastel2' }}
 						theme={{
-							fontSize: 14,
-							fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
+							fontSize: 12,
+							fontFamily: 'open sans,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 						}}
 						legends={[
 							{

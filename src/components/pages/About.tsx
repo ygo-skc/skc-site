@@ -2,7 +2,7 @@ import { FunctionComponent } from 'react'
 import { Helmet } from 'react-helmet'
 
 import Breadcrumb from '../header-footer/Breadcrumb'
-import Section from '../util/Section'
+import Section from '../util/generic/Section'
 import AboutSKC from '../about/AboutSKC'
 import Overview from '../about/AboutServices'
 

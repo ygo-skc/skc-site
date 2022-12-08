@@ -1,8 +1,8 @@
 import { Skeleton, Typography } from '@mui/material'
 import { FC, useEffect, useState, memo } from 'react'
-import CardImageRounded from '../../../card/CardImageRounded'
+import CardImageRounded from '../../../util/photo/CardImageRounded'
 import YGOCard from '../../../card/YGOCard'
-import Hint from '../../../util/Hints'
+import Hint from '../../../util/generic/Hints'
 
 type _CardsWithDifferentStatus = {
 	newStatusName: 'Forbidden' | 'Limited' | 'Semi Limited' | 'Unlimited' | 'Limited One' | 'Limited Two' | 'Limited Three'

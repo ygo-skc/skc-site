@@ -3,9 +3,9 @@ import { useEffect, memo, FC, useReducer } from 'react'
 import { IconButton, Box, Skeleton } from '@mui/material'
 import Grid2 from '@mui/material/Unstable_Grid2'
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded'
-import CardImageRounded from '../../card/CardImageRounded'
+import CardImageRounded from '../photo/CardImageRounded'
 import YGOCard from '../../card/YGOCard'
-import Hint from '../Hints'
+import Hint from '../generic/Hints'
 
 function getPlaceholderCardComponent() {
 	const placeHolder = []

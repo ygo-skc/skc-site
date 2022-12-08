@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
 import SuspenseFallback from '../SuspenseFallback'
 
-import '../../css/util/grids-and-containers.css'
+import '../../css/util/grid/grids-and-containers.css'
 
 const Home = lazy(() => import('./Home'))
 
@@ -12,7 +12,7 @@ const BanList = lazy(() => import('./BanList'))
 const ProductBrowse = lazy(() => import('./ProductBrowse'))
 const ProductInfo = lazy(() => import('./ProductInfo'))
 
-const Browse = lazy(() => import('./BrowseCards'))
+const Browse = lazy(() => import('./CardsBrowse'))
 const CardInformation = lazy(() => import('./CardInformation'))
 
 const About = lazy(() => import('./About'))

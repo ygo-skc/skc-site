@@ -9,13 +9,9 @@ type _ImageWithNumber = {
 
 const ImageWithNumber: FC<_ImageWithNumber> = ({ imageComponent, text }) => {
 	return (
-		<div style={{ display: 'inline-block' }}>
+		<div className='img-with-number-parent'>
 			{imageComponent}
-			<Typography
-				variant='subtitle1'
-				textAlign='center'
-				style={{ display: 'inline-block', color: 'rgba(0, 0, 0, .55)', lineHeight: '24px', verticalAlign: 'middle', margin: 'auto', fontWeight: '800' }}
-			>
+			<Typography variant='subtitle1' textAlign='center'>
 				{text}
 			</Typography>
 		</div>

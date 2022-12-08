@@ -1,7 +1,6 @@
-import { FunctionComponent, memo } from 'react'
+import { FunctionComponent, memo, startTransition, useEffect, useState } from 'react'
 
-import { Breadcrumbs, Link, Box, Typography } from '@mui/material'
-import { Skeleton } from '@mui/material'
+import { Breadcrumbs, Link, Box, Typography, Skeleton } from '@mui/material'
 
 import HomeIcon from '@mui/icons-material/Home'
 import Block from '@mui/icons-material/Block'
@@ -10,7 +9,7 @@ import InfoIcon from '@mui/icons-material/Info'
 
 import { _SKCSiteRoutes } from '../pages/Routes'
 
-import '../../css/nav/breadcrumb.css'
+import '../../css/header-footer/breadcrumb.css'
 
 type BreadcrumbProps = {
 	crumbs: string[]
@@ -18,30 +17,38 @@ type BreadcrumbProps = {
 
 const Breadcrumb: FunctionComponent<BreadcrumbProps> = memo(
 	({ crumbs }) => {
-		var Crumbs: JSX.Element[] = crumbs.map((item: string, ind: number) => {
-			if (ind === crumbs.length - 1) {
-				return item === '' ? (
-					<Skeleton key={item} variant='text' width={50} />
-				) : (
-					<Link className='breadcrumb' variant='subtitle2' color='inherit' key={item} underline='none'>
-						{BreadcrumbStaticFields.BREADCRUMB_maps_ICON.get(item)}
-						<Typography className='breadcrumb breadcrumb-text'>{item}</Typography>
-					</Link>
-				)
-			}
+		const [crumbUI, setCrumbUI] = useState<JSX.Element[]>([])
 
-			return (
-				<Link underline='none' className='breadcrumb' variant='subtitle2' color='inherit' href={_SKCSiteRoutes.NAME_maps_ROUTE[item.replace(' ', '')]} key={item}>
-					{BreadcrumbStaticFields.BREADCRUMB_maps_ICON.get(item)}
-					<Typography className='breadcrumb breadcrumb-text'>{item}</Typography>
-				</Link>
-			)
-		})
+		useEffect(() => {
+			startTransition(() => {
+				const c = crumbs.map((item: string, ind: number) => {
+					if (ind === crumbs.length - 1) {
+						return item === '' ? (
+							<Skeleton key={item} variant='text' width={50} />
+						) : (
+							<Link className='breadcrumb' variant='subtitle2' color='inherit' key={item} underline='none'>
+								{BreadcrumbStaticFields.BREADCRUMB_maps_ICON.get(item)}
+								<Typography className='breadcrumb breadcrumb-text'>{item}</Typography>
+							</Link>
+						)
+					}
+
+					return (
+						<Link underline='none' className='breadcrumb' variant='subtitle2' color='inherit' href={_SKCSiteRoutes.NAME_maps_ROUTE[item.replace(' ', '')]} key={item}>
+							{BreadcrumbStaticFields.BREADCRUMB_maps_ICON.get(item)}
+							<Typography className='breadcrumb breadcrumb-text'>{item}</Typography>
+						</Link>
+					)
+				})
+				setCrumbUI(c)
+			})
+		}, [crumbs])
 
 		return (
 			<Box className='breadcrumb-parent light-shadow'>
 				<Breadcrumbs separator={'/'} aria-label='breadcrumb'>
-					{Crumbs}
+					{crumbUI.length !== 0 && crumbUI}
+					{crumbUI.length === 0 && <Skeleton variant='text' height={22} width={200} />}
 				</Breadcrumbs>
 			</Box>
 		)

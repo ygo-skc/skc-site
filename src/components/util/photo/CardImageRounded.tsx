@@ -1,5 +1,5 @@
-import { FC, useState } from 'react'
-import '../../css/rounded-img.css'
+import { FC, startTransition, useState } from 'react'
+import '../../../css/util/photo/rounded-img.css'
 import VizSensor from 'react-visibility-sensor'
 
 type _CardImageRounded = {
@@ -15,7 +15,9 @@ const CardImageRounded: FC<_CardImageRounded> = ({ cardImg, defaultVisibility = 
 			partialVisibility
 			offset={{ bottom: -350, top: -200 }}
 			onChange={(isVisible: boolean) => {
-				if (isVisible !== false) setVisible(isVisible)
+				startTransition(() => {
+					if (isVisible !== false) setVisible(isVisible)
+				})
 			}}
 		>
 			<div id='rounded-img-outer-container'>

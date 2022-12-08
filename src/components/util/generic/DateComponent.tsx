@@ -1,15 +1,15 @@
-import '../../css/util/date-glance.css'
-
 import { FC } from 'react'
 import { Typography } from '@mui/material'
 
-import { Dates } from '../../helper/Dates'
+import { Dates } from '../../../helper/Dates'
+
+import '../../../css/util/generic/date-component.css'
 
 type _Date = {
 	date: Date
 }
 
-const DateGlance: FC<_Date> = ({ date }) => {
+const DateComponent: FC<_Date> = ({ date }) => {
 	return (
 		<div className='date-parent'>
 			<div className='month-container'>
@@ -28,4 +28,4 @@ const DateGlance: FC<_Date> = ({ date }) => {
 	)
 }
 
-export default DateGlance
+export default DateComponent

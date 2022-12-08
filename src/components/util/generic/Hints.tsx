@@ -1,7 +1,7 @@
 import { FunctionComponent, ReactNode } from 'react'
 import { Typography } from '@mui/material'
 
-import '../../css/util/hint.css'
+import '../../../css/util/generic/hint.css'
 
 type _Hint = {
 	children?: ReactNode

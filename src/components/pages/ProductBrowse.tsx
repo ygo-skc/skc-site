@@ -4,9 +4,9 @@ import { Helmet } from 'react-helmet'
 import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 
-import createTable from '../util/TableHelpers'
+import createTable from '../util/generic/TableHelpers'
 import { Dates } from '../../helper/Dates'
-import Section from '../util/Section'
+import Section from '../util/generic/Section'
 import { Skeleton, Typography } from '@mui/material'
 
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
@@ -54,18 +54,8 @@ const ProductBrowse: FunctionComponent = () => {
 				sectionContent={
 					<div className='section-content'>
 						<Typography variant='h5'>Sorted By Release Date</Typography>
-						<div
-							style={{
-								paddingTop: '0rem',
-								paddingBottom: '0rem',
-								paddingLeft: '0rem',
-								paddingRight: '0rem',
-								borderRadius: '1.1rem',
-							}}
-						>
-							{!isDataLoaded && <Skeleton variant='rectangular' height='500' width='100%' className='rounded-skeleton' />}
-							{isDataLoaded && productGridItems}
-						</div>
+						{!isDataLoaded && <Skeleton variant='rectangular' height='500' width='100%' className='rounded-skeleton' />}
+						{isDataLoaded && productGridItems}
 					</div>
 				}
 			></Section>

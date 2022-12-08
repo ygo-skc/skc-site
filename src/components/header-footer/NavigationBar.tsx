@@ -1,4 +1,4 @@
-import '../../css/nav/navigation-icon.css'
+import '../../css/header-footer/navigation-icon.css'
 
 import { lazy, Suspense } from 'react'
 import { AppBar, Toolbar, Typography, Link, IconButton } from '@mui/material'
