@@ -62,14 +62,14 @@ const CardBanListInformation: FunctionComponent<args> = ({ isLoading, restricted
 		<div className='group'>
 			<Typography variant='h4'>Ban Lists</Typography>
 
-			<ButtonGroup className='ban-list-format-container' fullWidth disableElevation variant='contained' aria-label='Disabled elevation buttons'>
-				{CreateButton('TCG')}
-				{CreateButton('MD')}
-				{CreateButton('DL')}
-			</ButtonGroup>
-
 			{!isLoading && restrictedIn[format].length !== 0 && (
 				<Fragment>
+					<ButtonGroup className='ban-list-format-container' fullWidth disableElevation variant='contained' aria-label='Disabled elevation buttons'>
+						{CreateButton('TCG')}
+						{CreateButton('MD')}
+						{CreateButton('DL')}
+					</ButtonGroup>
+
 					<Typography variant='h5'>Selected Format — {transformFormat(format)}</Typography>
 					{banListTable}
 				</Fragment>
