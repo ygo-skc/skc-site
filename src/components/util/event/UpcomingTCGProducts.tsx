@@ -1,6 +1,6 @@
 import '../../../css/util/event.css'
+import { useCallback, lazy, startTransition, useEffect, useState } from 'react'
 import { Alert, Dialog, DialogTitle, IconButton, Skeleton, Snackbar, Typography } from '@mui/material'
-import { lazy, startTransition, useEffect, useState } from 'react'
 import DownstreamServices from '../../../helper/DownstreamServices'
 import FetchHandler from '../../../helper/FetchHandler'
 import EventItem from './EventItem'
@@ -42,6 +42,15 @@ const UpcomingTCGProducts = () => {
 		})
 	}, [events])
 
+	const handleSnackbarIsClosed = useCallback(() => setIsSnackbarOpen(false), [isSnackbarOpen])
+
+	const handleShowSnackbar = useCallback(() => {
+		navigator.clipboard.writeText(`${window.location.href}#upcoming-tcg-products`)
+		setIsSnackbarOpen(true)
+	}, [isSnackbarOpen])
+
+	const handleDisplayDialog = useCallback(() => setEventDialogIsOpen(false), [eventDialogIsOpen])
+
 	return (
 		<div id='upcoming-tcg-products' style={{ marginBottom: '3.5rem' }}>
 			<img src={'/assets/yugioh-tcg-official-logo.png'} />
@@ -49,12 +58,7 @@ const UpcomingTCGProducts = () => {
 				<Typography className='event-header' variant='h4'>
 					Upcoming Yu-Gi-Oh! TCG Products
 				</Typography>
-				<IconButton
-					onClick={() => {
-						navigator.clipboard.writeText(`${window.location.href}#upcoming-tcg-products`)
-						setIsSnackbarOpen(true)
-					}}
-				>
+				<IconButton onClick={handleShowSnackbar}>
 					<LinkIcon />
 				</IconButton>
 			</div>
@@ -67,19 +71,13 @@ const UpcomingTCGProducts = () => {
 			)}
 			{isFetchingData && <Skeleton variant='rectangular' height='280' width='100%' className='rounded-skeleton' />}
 
-			<Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} open={isSnackbarOpen} autoHideDuration={3000} onClose={() => setIsSnackbarOpen(false)}>
-				<Alert onClose={() => setIsSnackbarOpen(false)} severity='success'>
+			<Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} open={isSnackbarOpen} autoHideDuration={3000} onClose={handleSnackbarIsClosed}>
+				<Alert onClose={handleSnackbarIsClosed} severity='success'>
 					Link copied to clipboard. Share that shit!
 				</Alert>
 			</Snackbar>
 
-			<Dialog
-				maxWidth='xs'
-				onClose={() => {
-					setEventDialogIsOpen(false)
-				}}
-				open={eventDialogIsOpen}
-			>
+			<Dialog maxWidth='xs' onClose={handleDisplayDialog} open={eventDialogIsOpen}>
 				<DialogTitle>TCG Product Details</DialogTitle>
 				{eventDialogEventData != undefined ? <EventItem event={eventDialogEventData} /> : undefined}
 			</Dialog>
