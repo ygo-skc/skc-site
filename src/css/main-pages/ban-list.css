@@ -89,14 +89,6 @@
 	color: black;
 }
 
-.cards-with-different-status-parent {
-	margin-bottom: 1rem;
-	background: white;
-	padding: 1.5rem;
-	border-radius: 1.5rem;
-	border: 3px solid rgba(135, 120, 229, 0.9);
-}
-
 .cards-with-different-status-content {
 	display: flex;
 	overflow-x: auto;
