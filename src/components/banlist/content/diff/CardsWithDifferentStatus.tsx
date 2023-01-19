@@ -52,7 +52,7 @@ const CardsWithDifferentStatus: FC<_CardsWithDifferentStatus> = memo(
 		}, [cards])
 
 		return (
-			<div>
+			<div className='cards-with-different-status-parent'>
 				<Typography variant='h4'>
 					Newly {newStatusName} ({numCards})
 				</Typography>

@@ -43,7 +43,7 @@ const UpcomingTCGProducts = () => {
 	}, [events])
 
 	return (
-		<div id='upcoming-tcg-products'>
+		<div id='upcoming-tcg-products' style={{ marginBottom: '3.5rem' }}>
 			<img src={'/assets/yugioh-tcg-official-logo.png'} />
 			<div className='event-header-container search-icon-container'>
 				<Typography className='event-header' variant='h4'>
