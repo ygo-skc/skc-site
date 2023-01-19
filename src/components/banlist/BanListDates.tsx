@@ -1,4 +1,4 @@
-import { FC, Fragment, useEffect, useState } from 'react'
+import { FC, Fragment, useCallback, useEffect, useState } from 'react'
 import { MenuItem, Select, SelectChangeEvent, Skeleton, Typography } from '@mui/material'
 import { Dates } from '../../helper/Dates'
 
@@ -25,6 +25,14 @@ const BanListDates: FC<_BanListDates> = ({ isFetchingBanListDates, banListStartD
 		setSelectedBanListInd('0')
 	}, [banListStartDates])
 
+	const handleBanListChanged = useCallback(
+		(event: SelectChangeEvent) => {
+			setSelectedBanListInd(event.target.value)
+			setSelectedBanList(+event.target.value)
+		},
+		[selectedBanListInd, setSelectedBanList]
+	)
+
 	return (
 		<div className='ban-list-date-section group'>
 			<Typography variant='h5'>Date Range</Typography>
@@ -35,14 +43,7 @@ const BanListDates: FC<_BanListDates> = ({ isFetchingBanListDates, banListStartD
 				<Fragment>
 					<Typography variant='subtitle1'>There are {banListStartDates.length} ban lists for selected format currently in the database</Typography>
 
-					<Select
-						className='ban-list-date-selector'
-						value={selectedBanListInd}
-						onChange={(event: SelectChangeEvent) => {
-							setSelectedBanListInd(event.target.value)
-							setSelectedBanList(+event.target.value)
-						}}
-					>
+					<Select className='ban-list-date-selector' value={selectedBanListInd} onChange={handleBanListChanged}>
 						{selectorItems}
 					</Select>
 				</Fragment>

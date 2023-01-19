@@ -1,4 +1,4 @@
-import { lazy, useState, useEffect, Suspense, useReducer, startTransition, Fragment } from 'react'
+import { lazy, useState, useEffect, Suspense, useReducer, startTransition, Fragment, useCallback } from 'react'
 import { Helmet } from 'react-helmet'
 
 import { Skeleton } from '@mui/material'
@@ -207,6 +207,8 @@ export default function BanList() {
 		}
 	}, [selectedBanList])
 
+	const handleBanListChosen = useCallback((ind: number) => setSelectedBanList(banListStartDates[ind]), [selectedBanList])
+
 	return (
 		<div className='generic-container'>
 			<Helmet>
@@ -227,11 +229,7 @@ export default function BanList() {
 							sectionContent={
 								<div className='section-content'>
 									<BanListFormat format={format} setFormat={setFormat} />
-									<BanListDates
-										isFetchingBanListDates={isFetchingBanListDates}
-										banListStartDates={banListStartDates}
-										setSelectedBanList={(ind: number) => setSelectedBanList(banListStartDates[ind])}
-									/>
+									<BanListDates isFetchingBanListDates={isFetchingBanListDates} banListStartDates={banListStartDates} setSelectedBanList={handleBanListChosen} />
 
 									{!isFetchingBanListDates && Dates.isFutureDate(Dates.fromYYYYMMDDToDate(selectedBanList)) && (
 										<Hint backgroundColor='rgba(0, 0, 0, 0.7)' textColor='white' variant='tight'>

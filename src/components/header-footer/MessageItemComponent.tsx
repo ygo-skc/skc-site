@@ -29,7 +29,7 @@ const MessageItemComponent: FC<MessageItemComponentArgs> = ({ creationDate, mess
 
 				<div className='communication-message-tag-container'>
 					{message.tags.map((tag: string) => (
-						<Chip className='communication-message-tag' label={tag} />
+						<Chip key={tag} className='communication-message-tag' label={tag} />
 					))}
 				</div>
 			</div>

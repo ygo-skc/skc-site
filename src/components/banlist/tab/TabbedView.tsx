@@ -1,4 +1,4 @@
-import { FC, Fragment, ReactElement } from 'react'
+import { FC, Fragment, ReactElement, useCallback } from 'react'
 import { AppBar, Tabs, Typography } from '@mui/material'
 
 type _TabPanel = {
@@ -23,18 +23,12 @@ type _TabbedView = {
 }
 
 const TabbedView: FC<_TabbedView> = ({ tabs, tabPanels, currentTab, setCurrentTab }) => {
+	const handleTabClicked = useCallback((_: React.SyntheticEvent, newValue: number) => setCurrentTab(newValue), [])
+
 	return (
 		<Fragment>
 			<AppBar className='tab-container' position='sticky'>
-				<Tabs
-					className='tabs'
-					textColor='primary'
-					value={currentTab}
-					onChange={(_event, newValue: number) => {
-						setCurrentTab(newValue)
-					}}
-					variant='fullWidth'
-				>
+				<Tabs className='tabs' textColor='primary' value={currentTab} onChange={handleTabClicked} variant='fullWidth'>
 					{tabs}
 				</Tabs>
 			</AppBar>

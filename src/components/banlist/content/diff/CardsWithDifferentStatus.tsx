@@ -58,13 +58,9 @@ const CardsWithDifferentStatus: FC<_CardsWithDifferentStatus> = memo(
 				</Typography>
 
 				<div className='cards-with-different-status-content'>
-					{isLoadingData ? (
-						<Skeleton className='rounded-skeleton' variant='rectangular' height='20rem' width='100%' />
-					) : numCards === 0 ? (
-						<Hint>Nothing here 🤨</Hint>
-					) : (
-						cardsWithNewStatus
-					)}
+					{isLoadingData && <Skeleton className='rounded-skeleton' variant='rectangular' height='20rem' width='100%' />}
+					{!isLoadingData && numCards === 0 && <Hint>Nothing here 🤨</Hint>}
+					{!isLoadingData && numCards !== 0 && cardsWithNewStatus}
 				</div>
 			</div>
 		)

@@ -1,7 +1,7 @@
 import { IconButton, Typography } from '@mui/material'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined'
-import { FC } from 'react'
+import { FC, useCallback } from 'react'
 import ReactMarkdown from 'react-markdown'
 import DateComponent from '../generic/DateComponent'
 
@@ -15,6 +15,11 @@ const EventItem: FC<{ event: HeartApiEventItem; showEventDialog?: any; setEventD
 		parentStyle = 'event-item very-light-shadow'
 		notesStyle = 'event-notes markdown'
 	}
+
+	const handleExpandEvent = useCallback(() => {
+		showEventDialog(true)
+		setEventDialogEventData(event)
+	}, [showEventDialog, setEventDialogEventData])
 
 	return (
 		<div className={parentStyle}>
@@ -34,14 +39,7 @@ const EventItem: FC<{ event: HeartApiEventItem; showEventDialog?: any; setEventD
 
 			<div className='event-icon-container'>
 				{isWithinDialog ? undefined : (
-					<IconButton
-						className='event-icon-button'
-						aria-label='info'
-						onClick={() => {
-							showEventDialog(true)
-							setEventDialogEventData(event)
-						}}
-					>
+					<IconButton className='event-icon-button' aria-label='info' onClick={handleExpandEvent}>
 						<InfoOutlinedIcon />
 					</IconButton>
 				)}

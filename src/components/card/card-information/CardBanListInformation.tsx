@@ -34,17 +34,17 @@ function transformFormat(format: BanListFormat) {
 	}
 }
 
+function createButton(format: BanListFormat, restrictedIn: RestrictedIn, setFormat: any) {
+	return (
+		<Button onClick={() => setFormat(format)} disabled={restrictedIn[format].length === 0}>
+			{transformFormat(format)} — {restrictedIn[format].length}
+		</Button>
+	)
+}
+
 const CardBanListInformation: FunctionComponent<args> = ({ isLoading, restrictedIn }) => {
 	const [banListTable, setBanListTable] = useState<JSX.Element | undefined>(undefined)
 	const [format, setFormat] = useState<BanListFormat>(determineFormat(restrictedIn))
-
-	const CreateButton = (format: BanListFormat) => {
-		return (
-			<Button onClick={() => setFormat(format)} disabled={restrictedIn[format].length === 0}>
-				{transformFormat(format)} — {restrictedIn[format].length}
-			</Button>
-		)
-	}
 
 	useEffect(() => {
 		if (isLoading) return
@@ -65,9 +65,9 @@ const CardBanListInformation: FunctionComponent<args> = ({ isLoading, restricted
 			{!isLoading && restrictedIn[format].length !== 0 && (
 				<Fragment>
 					<ButtonGroup className='ban-list-format-container' fullWidth disableElevation variant='contained' aria-label='Disabled elevation buttons'>
-						{CreateButton('TCG')}
-						{CreateButton('MD')}
-						{CreateButton('DL')}
+						{createButton('TCG', restrictedIn, setFormat)}
+						{createButton('MD', restrictedIn, setFormat)}
+						{createButton('DL', restrictedIn, setFormat)}
 					</ButtonGroup>
 
 					<Typography variant='h5'>Selected Format — {transformFormat(format)}</Typography>

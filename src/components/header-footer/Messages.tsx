@@ -1,7 +1,7 @@
 import '../../css/header-footer/navigation-icon.css'
 import '../../css/header-footer/messages.css'
 
-import { useState, useEffect, Fragment, startTransition } from 'react'
+import { useState, useEffect, Fragment, startTransition, useCallback } from 'react'
 import { Typography, IconButton, Popover, Badge } from '@mui/material'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 
@@ -69,17 +69,18 @@ function Messages() {
 		})
 	}, [])
 
+	const handleMessagesIconClicked = useCallback((event: React.MouseEvent<HTMLButtonElement>) => setMessagesAnchor(event.currentTarget), [])
+
+	const handleMessagePopupClosed = useCallback(() => {
+		setNumNewMessages(0)
+		setMessagesAnchor(undefined)
+		localStorage.setItem('previousNewestMessage', newestMessageSeen)
+	}, [numNewMessages, messagesAnchor])
+
 	return (
 		<Fragment>
 			<Badge className='communication-message-badge' badgeContent={numNewMessages} variant='standard' color='error'>
-				<IconButton
-					className='styled-icon-button'
-					onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
-						setMessagesAnchor(event.currentTarget)
-					}}
-					aria-label='show 17 new notifications'
-					color='inherit'
-				>
+				<IconButton className='styled-icon-button' onClick={handleMessagesIconClicked} aria-label='show 17 new notifications' color='inherit'>
 					<NotificationsIcon />
 				</IconButton>
 			</Badge>
@@ -89,11 +90,7 @@ function Messages() {
 				id={isDisplayingNotifications ? 'notification-popover' : undefined}
 				open={isDisplayingNotifications}
 				anchorEl={messagesAnchor}
-				onClose={() => {
-					setNumNewMessages(0)
-					setMessagesAnchor(undefined)
-					localStorage.setItem('previousNewestMessage', newestMessageSeen)
-				}}
+				onClose={handleMessagePopupClosed}
 				anchorOrigin={{
 					vertical: 'bottom',
 					horizontal: 'left',

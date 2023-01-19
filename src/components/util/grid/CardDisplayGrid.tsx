@@ -99,11 +99,15 @@ const CardDisplayGrid: FC<_CardDisplayGrid> = memo(
 
 		return (
 			<Box style={{ maxWidth: '100%' }}>
-				<Grid2 container>{!isDataLoaded ? cardGridUISkeleton : numResults === 0 ? <Hint>{'No Content To Show'}</Hint> : cardGridUI}</Grid2>
+				<Grid2 container>
+					{!isDataLoaded && cardGridUISkeleton}
+					{isDataLoaded && numResults === 0 && <Hint>{'No Content To Show'}</Hint>}
+					{isDataLoaded && numResults !== 0 && cardGridUI}
+				</Grid2>
 
 				{!isDataLoaded ? undefined : (
 					<IconButton
-						onClick={() => loadMoreCallback()}
+						onClick={loadMoreCallback}
 						style={
 							isLoadMoreOptionVisible
 								? {

@@ -1,4 +1,4 @@
-import { lazy, startTransition, useEffect, useState } from 'react'
+import { lazy, startTransition, useCallback, useEffect, useState } from 'react'
 
 import Grid2 from '@mui/material/Unstable_Grid2'
 import Glance from '../generic/Glance'
@@ -28,6 +28,10 @@ const DatabaseInfo = () => {
 		})
 	}, [])
 
+	const handleBrowseGlanceClicked = useCallback(() => window.location.assign('/browse/card'), [])
+	const handleBanListGlanceClicked = useCallback(() => window.location.assign('/ban_list'), [])
+	const handleProductsGlanceClicked = useCallback(() => window.location.assign('/browse/product'), [])
+
 	return (
 		<Section
 			maxWidth='1000px'
@@ -43,15 +47,15 @@ const DatabaseInfo = () => {
 						<div className='database-summary-container'>
 							<Grid2 container spacing={3}>
 								<Grid2 xs={6} sm={6} md={4} lg={4} xl={4}>
-									<Glance total={cardTotal} subject='Cards' color='rgb(144, 13, 218)' action={() => window.location.assign(`/browse/card`)} />
+									<Glance total={cardTotal} subject='Cards' color='rgb(144, 13, 218)' action={handleBrowseGlanceClicked} />
 								</Grid2>
 
 								<Grid2 xs={6} sm={6} md={4} lg={4} xl={4}>
-									<Glance total={banListTotal} subject='Ban Lists' color='#FE6D6B' action={() => window.location.assign(`/ban_list`)} />
+									<Glance total={banListTotal} subject='Ban Lists' color='#FE6D6B' action={handleBanListGlanceClicked} />
 								</Grid2>
 
 								<Grid2 xs={6} sm={6} md={4} lg={4} xl={4}>
-									<Glance total={productTotal} subject='Products' color='rgb(195, 47, 150)' action={() => window.location.assign(`/browse/product`)} />
+									<Glance total={productTotal} subject='Products' color='rgb(195, 47, 150)' action={handleProductsGlanceClicked} />
 								</Grid2>
 							</Grid2>
 						</div>

@@ -1,6 +1,6 @@
 import '../../css/header-footer/navigation-icon.css'
 
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useCallback } from 'react'
 import { AppBar, Toolbar, Typography, Link, IconButton } from '@mui/material'
 import GitHubIcon from '@mui/icons-material/GitHub'
 import YouTube from '@mui/icons-material/YouTube'
@@ -12,6 +12,9 @@ import SubNav from './SubNav'
 const Messages = lazy(() => import('./Messages'))
 
 const NavigationBar = () => {
+	const handleYTIconClicked = useCallback((_event: React.MouseEvent<HTMLButtonElement>) => window.open('https://www.youtube.com/channel/UCBZ_1wWyLQI3SV9IgLbyiNQ'), [])
+	const handleGHIconClicked = useCallback((_event: React.MouseEvent<HTMLButtonElement>) => window.open('https://github.com/YGO-SKC/skc-site'), [])
+
 	return (
 		<AppBar position='static' className='app-bar-container'>
 			<Toolbar className='app-bar'>
@@ -23,23 +26,11 @@ const NavigationBar = () => {
 
 				<div className='empty-space' />
 
-				<IconButton
-					className='styled-icon-button'
-					onClick={(_event: React.MouseEvent<HTMLButtonElement>) => {
-						window.open('https://www.youtube.com/channel/UCBZ_1wWyLQI3SV9IgLbyiNQ')
-					}}
-					color='inherit'
-				>
+				<IconButton className='styled-icon-button' onClick={handleYTIconClicked} color='inherit'>
 					<YouTube />
 				</IconButton>
 
-				<IconButton
-					className='styled-icon-button'
-					onClick={(_event: React.MouseEvent<HTMLButtonElement>) => {
-						window.open('https://github.com/YGO-SKC/skc-site')
-					}}
-					color='inherit'
-				>
+				<IconButton className='styled-icon-button' onClick={handleGHIconClicked} color='inherit'>
 					<GitHubIcon />
 				</IconButton>
 

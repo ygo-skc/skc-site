@@ -15,16 +15,18 @@ function createHeaderRow(headerNames: string[]) {
 
 function createRows(rowValues: string[][], rowOnClick: { (): void }[] = []): JSX.Element[] {
 	return rowValues.map((row: string[], index: number) => {
-		const columns: JSX.Element[] = row.map((columnValue: string, innerIndex: number) => {
-			return <TableCell key={`${columnValue}-${index}-${innerIndex}`}>{columnValue}</TableCell>
+		const columns: JSX.Element[] = row.map((columnValue: string) => {
+			return <TableCell key={columnValue}>{columnValue}</TableCell>
 		})
 
+		const rowKey = row.toString()
+
 		return rowOnClick.length === 0 ? (
-			<TableRow className='no-hover' key={index}>
+			<TableRow className='no-hover' key={rowKey}>
 				{columns}
 			</TableRow>
 		) : (
-			<TableRow className='hover' key={index} onClick={rowOnClick[index]}>
+			<TableRow className='hover' key={rowKey} onClick={rowOnClick[index]}>
 				{columns}
 			</TableRow>
 		)

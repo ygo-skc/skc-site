@@ -29,9 +29,8 @@ const YGOCardStats = ({ cardColor, cardEffect, monsterType, monsterAtk, monsterD
 						{cardID}
 					</Typography>
 				) : undefined}
-				{cardColor === 'Spell' || cardColor === 'Trap' || cardColor === 'Err' ? undefined : fullDetails ? (
-					<AtkDef monsterAtk={monsterAtk} monsterDef={monsterDef} cardColor={cardColor} />
-				) : undefined}
+
+				{fullDetails && cardColor !== 'Spell' && cardColor !== 'Trap' && cardColor !== 'Err' && <AtkDef monsterAtk={monsterAtk} monsterDef={monsterDef} cardColor={cardColor} />}
 			</Box>
 		</Box>
 	)
