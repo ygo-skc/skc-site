@@ -4,7 +4,7 @@ import Styled from 'styled-components'
 import Breadcrumbs from '../header-footer/Breadcrumb'
 import YGOCard from '../card/YGOCard'
 
-class _HttpErr {
+class HttpErrMaps {
 	static readonly HTTP_ERR_maps_ERR_NAME: { [key: string]: string } = {
 		400: '400 - Bad Request',
 		408: '408 - Request Timeout',
@@ -51,9 +51,9 @@ const HttpErr: FC<{ httpErr: string }> = ({ httpErr }) => {
 			<Breadcrumbs crumbs={['Home', httpErr]} />
 			<ErrCard
 				cardColor='err'
-				cardName={_HttpErr.HTTP_ERR_maps_ERR_NAME[httpErr]}
-				monsterType={_HttpErr.HTTP_ERR_maps_ERR_TYPE[httpErr]}
-				cardEffect={_HttpErr.HTTP_ERR_maps_ERR_DESCRIPTION[httpErr]}
+				cardName={HttpErrMaps.HTTP_ERR_maps_ERR_NAME[httpErr]}
+				monsterType={HttpErrMaps.HTTP_ERR_maps_ERR_TYPE[httpErr]}
+				cardEffect={HttpErrMaps.HTTP_ERR_maps_ERR_DESCRIPTION[httpErr]}
 				cardID={`00000${httpErr}`}
 				fullDetails={true}
 			/>

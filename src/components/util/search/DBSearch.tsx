@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { Autocomplete } from '@mui/material'
 import FetchHandler from '../../../helper/FetchHandler'
@@ -49,6 +49,25 @@ export default function DBSearch() {
 		}
 	}, [fetchToken])
 
+	const handleGetOptionLabel = useCallback((option: SKCCard) => option.cardName, [])
+	const handleGroupBy = useCallback((option: any) => option.cardColor, [])
+	const handleOnChange = useCallback((_event: any, value: SKCCard | null, reason: string) => {
+		if (reason === 'selectOption' && value != null) {
+			window.location.assign(`/card/${value!.cardID}`)
+		}
+	}, [])
+	const handleRenderGroup = useCallback((option: any) => <DBSearchGrouping group={option.group} children={option.children} />, [])
+	const handleRenderInput = useCallback(
+		(params: any) => <SearchInput searchParams={params} setSearchInput={setSearchInput} placeholder='Search database for specific card...' />,
+		[]
+	)
+	const handleRenderOption = useCallback(
+		(props: React.HTMLAttributes<HTMLLIElement>, option: SKCCard) => (
+			<DBSearchOptions props={props} searchSubject={searchInput} cardNameOption={option.cardName} cardIdOption={option.cardID} monsterTypeOption={option.monsterType!} />
+		),
+		[]
+	)
+
 	return (
 		<Autocomplete
 			className='search-bar'
@@ -58,21 +77,13 @@ export default function DBSearch() {
 			loading={isFetching}
 			id='search'
 			noOptionsText={searchInput === '' ? 'Type For Suggestions' : 'No Results'}
-			getOptionLabel={(option: any) => option.cardName}
+			getOptionLabel={handleGetOptionLabel}
 			options={searchOptions}
-			groupBy={(option) => option.cardColor}
-			onChange={(_event, value, reason: string) => {
-				if (reason === 'selectOption') {
-					window.location.assign(`/card/${value.cardID}`)
-				}
-			}}
-			renderGroup={(option) => {
-				return <DBSearchGrouping group={option.group} children={option.children} />
-			}}
-			renderInput={(params) => <SearchInput searchParams={params} setSearchInput={setSearchInput} placeholder='Search database for specific card...' />}
-			renderOption={(props: React.HTMLAttributes<HTMLLIElement>, option: any) => (
-				<DBSearchOptions props={props} searchSubject={searchInput} cardNameOption={option.cardName} cardIdOption={option.cardID} monsterTypeOption={option.monsterType} />
-			)}
+			groupBy={handleGroupBy}
+			onChange={handleOnChange}
+			renderGroup={handleRenderGroup}
+			renderInput={handleRenderInput}
+			renderOption={handleRenderOption}
 		/>
 	)
 }

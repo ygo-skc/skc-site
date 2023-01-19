@@ -3,7 +3,7 @@ import { ImageWithNumber } from './ImageWithNumber'
 
 import '../../css/card/card-association.css'
 
-class _CardAssociation {
+class CardAssociationStatic {
 	static readonly levelImage = (<img src={`/assets/card_level.svg`} alt='Card Level' className='base-img' />)
 
 	static readonly rankImage = (<img src={`/assets/card_rank.svg`} alt='Card Rank' className='base-img' />)
@@ -20,9 +20,9 @@ const CardAssociation: FC<{ monsterAssociation?: SKCMonsterAssociation; attribut
 			<div className='card-association-sub-parent'>
 				<img alt='Card Attribute' className='attribute-img' src={`/assets/${attribute}.svg`} />
 
-				{monsterAssociation.level !== undefined && <ImageWithNumber imageComponent={_CardAssociation.levelImage} text={`x${monsterAssociation.level}`} />}
-				{monsterAssociation.rank !== undefined && <ImageWithNumber imageComponent={_CardAssociation.rankImage} text={`x${monsterAssociation.rank}`} />}
-				{monsterAssociation.scaleRating !== undefined && <ImageWithNumber imageComponent={_CardAssociation.pendulumScaleImage} text={`x${monsterAssociation.scaleRating}`} />}
+				{monsterAssociation.level !== undefined && <ImageWithNumber imageComponent={CardAssociationStatic.levelImage} text={`x${monsterAssociation.level}`} />}
+				{monsterAssociation.rank !== undefined && <ImageWithNumber imageComponent={CardAssociationStatic.rankImage} text={`x${monsterAssociation.rank}`} />}
+				{monsterAssociation.scaleRating !== undefined && <ImageWithNumber imageComponent={CardAssociationStatic.pendulumScaleImage} text={`x${monsterAssociation.scaleRating}`} />}
 				{monsterAssociation.linkRating !== undefined && <ImageWithNumber text={`L${monsterAssociation.linkRating}: ${monsterAssociation.linkArrows.join(' ')}`} />}
 			</div>
 		</div>

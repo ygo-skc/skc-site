@@ -7,7 +7,7 @@ import Block from '@mui/icons-material/Block'
 import ErrorIcon from '@mui/icons-material/Error'
 import InfoIcon from '@mui/icons-material/Info'
 
-import { _SKCSiteRoutes } from '../pages/Routes'
+import { RouteMap } from '../pages/Routes'
 
 import '../../css/header-footer/breadcrumb.css'
 
@@ -34,7 +34,7 @@ const Breadcrumb: FunctionComponent<BreadcrumbProps> = memo(
 					}
 
 					return (
-						<Link underline='none' className='breadcrumb' variant='subtitle2' color='inherit' href={_SKCSiteRoutes.NAME_maps_ROUTE[item.replace(' ', '')]} key={item}>
+						<Link underline='none' className='breadcrumb' variant='subtitle2' color='inherit' href={RouteMap.NAME_maps_ROUTE[item.replace(' ', '')]} key={item}>
 							{BreadcrumbStaticFields.BREADCRUMB_maps_ICON.get(item)}
 							<Typography className='breadcrumb breadcrumb-text'>{item}</Typography>
 						</Link>

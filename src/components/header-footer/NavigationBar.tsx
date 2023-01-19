@@ -6,7 +6,7 @@ import GitHubIcon from '@mui/icons-material/GitHub'
 import YouTube from '@mui/icons-material/YouTube'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 
-import { _SKCSiteRoutes } from '../pages/Routes'
+import { RouteMap } from '../pages/Routes'
 import SubNav from './SubNav'
 
 const Messages = lazy(() => import('./Messages'))
@@ -18,7 +18,7 @@ const NavigationBar = () => {
 	return (
 		<AppBar position='static' className='app-bar-container'>
 			<Toolbar className='app-bar'>
-				<Link underline='none' color='inherit' href={_SKCSiteRoutes.NAME_maps_ROUTE.Home}>
+				<Link underline='none' color='inherit' href={RouteMap.NAME_maps_ROUTE.Home}>
 					<Typography className='app-bar-button' color='inherit'>
 						SKC (BETA)
 					</Typography>

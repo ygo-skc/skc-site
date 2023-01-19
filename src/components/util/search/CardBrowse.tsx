@@ -2,7 +2,7 @@ import Autocomplete from '@mui/material/Autocomplete'
 import DBSearchGrouping from './DBSearchGrouping'
 
 import startCase from 'lodash.startcase'
-import { FC, Fragment, useEffect, useReducer } from 'react'
+import { FC, Fragment, useCallback, useEffect, useReducer } from 'react'
 import SearchInput from './SearchInput'
 import Typography from '@mui/material/Typography'
 import SelectedCardBrowseCriteria from './SelectedCardBrowseCriteria'
@@ -57,6 +57,23 @@ const CardBrowse: FC<{
 		browseCriteriaSearchDispatch({ type: 'UPDATE_BROWSE_CRITERIA', browseCriteria: criteria })
 	}, [skcCardBrowseCriteriaOutput])
 
+	const handleGetOptionLabel = useCallback((option: BrowseCriteria) => option.value, [])
+	const handleGroupBy = useCallback((option: BrowseCriteria) => option.name, [])
+	const handleOnChange = useCallback((_: any, val: BrowseCriteria[]) => browseCriteriaDispatch({ type: 'UPDATE_SELECTED_CRITERIA', selectedCriteria: val }), [])
+	const renderTags = useCallback(() => null, [])
+	const handleRenderGroup = useCallback((option: any) => <DBSearchGrouping group={startCase(option.group)} children={option.children} />, [])
+	const handleRenderInput = useCallback((params: any) => <SearchInput setInput={browseCriteriaSearchDispatch} searchParams={params} placeholder='Narrow criteria...' />, [])
+	const handleRenderOption = useCallback(
+		(props: React.HTMLAttributes<HTMLLIElement>, option: BrowseCriteria) => (
+			<li {...props} className='search-suggestions-parent'>
+				<Typography className='search-suggestion-text search-suggestion-header' variant='body1'>
+					{option.value}
+				</Typography>
+			</li>
+		),
+		[]
+	)
+
 	return (
 		<Fragment>
 			<SelectedCardBrowseCriteria selectedCriteria={selectedCriteria} />
@@ -68,26 +85,14 @@ const CardBrowse: FC<{
 				inputValue={browseInput}
 				id='browseCriteriaFilter'
 				options={browseCriteria}
-				getOptionLabel={(option: BrowseCriteria) => option.value}
-				groupBy={(option: BrowseCriteria) => option.name}
+				getOptionLabel={handleGetOptionLabel}
+				groupBy={handleGroupBy}
 				autoHighlight
-				onChange={(_, val: BrowseCriteria[]) => {
-					browseCriteriaDispatch({ type: 'UPDATE_SELECTED_CRITERIA', selectedCriteria: val })
-				}}
-				renderTags={() => null}
-				renderGroup={(option) => {
-					return <DBSearchGrouping group={startCase(option.group)} children={option.children} />
-				}}
-				renderInput={(params) => <SearchInput setInput={browseCriteriaSearchDispatch} searchParams={params} placeholder='Narrow criteria...' />}
-				renderOption={(props, option) => {
-					return (
-						<li {...props} className='search-suggestions-parent'>
-							<Typography className='search-suggestion-text search-suggestion-header' variant='body1'>
-								{option.value}
-							</Typography>
-						</li>
-					)
-				}}
+				onChange={handleOnChange}
+				renderTags={renderTags}
+				renderGroup={handleRenderGroup}
+				renderInput={handleRenderInput}
+				renderOption={handleRenderOption}
 			/>
 		</Fragment>
 	)
