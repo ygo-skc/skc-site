@@ -29,38 +29,24 @@ function Messages() {
 				(messageData: HeartApiMessageOutput) => {
 					const totalMessages = messageData.messages.length
 
-					let findNumNewMessages = false
 					let _numNewMessages = 0
 					const previousNewestMessageTimeStamp = localStorage.getItem('previousNewestMessage') as string
 					const previousNewestMessageDate = new Date(previousNewestMessageTimeStamp)
-
-					setNumMessages(totalMessages)
-
-					if (totalMessages > 0) {
-						setNewestMessageSeen(messageData.messages[0].createdAt)
-
-						if (previousNewestMessageTimeStamp !== messageData.messages[0].createdAt) {
-							findNumNewMessages = true
-						}
-					}
 
 					setMessagesList(
 						messageData.messages.map((message: HeartApiMessageItem, index: number) => {
 							const creationDate = new Date(message.createdAt)
 
-							if (findNumNewMessages) {
-								if (previousNewestMessageDate >= creationDate) {
-									findNumNewMessages = false
-								} else {
-									_numNewMessages++
-								}
+							if (previousNewestMessageDate < creationDate) {
+								_numNewMessages++
 							}
 
-							return <MessageItemComponent key={creationDate.toString()} creationDate={creationDate} message={message} isLastMessage={index === totalMessages - 1} />
+							return <MessageItemComponent key={message.createdAt} creationDate={creationDate} message={message} isLastMessage={index === totalMessages - 1} />
 						})
 					)
-
 					setNumNewMessages(_numNewMessages)
+					setNumMessages(totalMessages)
+					setNewestMessageSeen(messageData.messages[0].createdAt)
 				},
 				false
 			)?.catch((_err) => {
@@ -75,7 +61,7 @@ function Messages() {
 		setNumNewMessages(0)
 		setMessagesAnchor(undefined)
 		localStorage.setItem('previousNewestMessage', newestMessageSeen)
-	}, [numNewMessages, messagesAnchor])
+	}, [numNewMessages, messagesAnchor, newestMessageSeen])
 
 	return (
 		<Fragment>

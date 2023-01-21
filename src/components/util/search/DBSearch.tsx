@@ -9,7 +9,7 @@ import axios, { CancelTokenSource } from 'axios'
 import SearchInput from './SearchInput'
 import DBSearchOptions from './DBSearchOptions'
 
-class _DatabaseSearch {
+class DatabaseSearchStatic {
 	static readonly search = (searchSubject: string, setSearchOptions: any, fetchToken: CancelTokenSource, setIsFetching: React.Dispatch<React.SetStateAction<boolean>>) => {
 		FetchHandler.handleFetch(
 			`${DownstreamServices.NAME_maps_ENDPOINT['search']}?limit=10&cName=${searchSubject}`,
@@ -45,7 +45,7 @@ export default function DBSearch() {
 	useEffect(() => {
 		if (searchInput !== '') {
 			setIsFetching(true)
-			_DatabaseSearch.search(searchInput, setSearchOptions, fetchToken, setIsFetching)
+			DatabaseSearchStatic.search(searchInput, setSearchOptions, fetchToken, setIsFetching)
 		}
 	}, [fetchToken])
 
@@ -53,7 +53,7 @@ export default function DBSearch() {
 	const handleGroupBy = useCallback((option: any) => option.cardColor, [])
 	const handleOnChange = useCallback((_event: any, value: SKCCard | null, reason: string) => {
 		if (reason === 'selectOption' && value != null) {
-			window.location.assign(`/card/${value!.cardID}`)
+			window.location.assign(`/card/${value.cardID}`)
 		}
 	}, [])
 	const handleRenderGroup = useCallback((option: any) => <DBSearchGrouping group={option.group} children={option.children} />, [])
