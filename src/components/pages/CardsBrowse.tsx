@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, useReducer } from 'react'
+import { useState, useEffect, lazy, useReducer, useCallback } from 'react'
 import { Typography } from '@mui/material'
 import { Helmet } from 'react-helmet'
 
@@ -100,6 +100,8 @@ export default function BrowseCards() {
 		}
 	}, [selectedCriteria])
 
+	const handleLoadMore = useCallback(() => {}, [])
+
 	return (
 		<div className='generic-container'>
 			<Helmet>
@@ -142,7 +144,7 @@ export default function BrowseCards() {
 									cardJsonResults={jsonResults}
 									numResultsDisplayed={numResultsDisplayed}
 									numItemsToLoadWhenNeeded={50}
-									loadMoreCallback={() => {}}
+									loadMoreCallback={handleLoadMore}
 									isLoadMoreOptionVisible={true}
 									numResults={numResults}
 									isDataLoaded={isCardBrowseDataLoaded}

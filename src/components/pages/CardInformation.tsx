@@ -10,7 +10,7 @@ import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 const CardData = lazy(() => import('../card/card-information/CardData'))
 
-class _Card {
+class Card {
 	static cardId: string | null = null
 	static cardImg: HTMLImageElement
 	static readonly crumbs = ['Home', 'Card Browse']
@@ -23,7 +23,7 @@ class _Card {
 					card={card}
 					cardColor={cardColor?.replace(/Pendulum-/gi, '') as cardColor}
 					isLoading={isLoading}
-					cardID={_Card.cardId!}
+					cardID={Card.cardId!}
 					productInfo={productInfo}
 					restrictedIn={restrictedIn}
 				/>
@@ -51,12 +51,12 @@ function cardDataReducer(state: any, action: any) {
 const CardInformation = () => {
 	const { cardId } = useParams()
 
-	if (_Card.cardId === null) {
-		_Card.cardId = cardId as string
+	if (Card.cardId === null) {
+		Card.cardId = cardId as string
 
 		const cardImage = new Image()
-		cardImage.src = `https://images.thesupremekingscastle.com/cards/lg/${_Card.cardId}.jpg`
-		_Card.cardImg = cardImage
+		cardImage.src = `https://images.thesupremekingscastle.com/cards/lg/${Card.cardId}.jpg`
+		Card.cardImg = cardImage
 	}
 
 	const [isLoading, setIsLoading] = useState(true)
@@ -77,11 +77,11 @@ const CardInformation = () => {
 		}
 	)
 
-	const [dynamicCrumbs, setDynamicCrumbs] = useState([..._Card.crumbs, ''])
+	const [dynamicCrumbs, setDynamicCrumbs] = useState([...Card.crumbs, ''])
 
 	useEffect(() => {
-		FetchHandler.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT['cardInstanceUrl']}${_Card.cardId}?allInfo=true`, (cardInfo: SKCCardInfo) => {
-			setDynamicCrumbs([..._Card.crumbs, cardInfo.cardID])
+		FetchHandler.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT['cardInstanceUrl']}${Card.cardId}?allInfo=true`, (cardInfo: SKCCardInfo) => {
+			setDynamicCrumbs([...Card.crumbs, cardInfo.cardID])
 
 			cardDispatch({
 				cardName: cardInfo.cardName,
@@ -102,15 +102,15 @@ const CardInformation = () => {
 	return (
 		<div className='generic-container'>
 			<Helmet>
-				<title>SKC - Card: {_Card.cardId}</title>
+				<title>SKC - Card: {Card.cardId}</title>
 				<meta
-					name={`SKC - Card: ${_Card.cardId}`}
+					name={`SKC - Card: ${Card.cardId}`}
 					content={`Information for YuGiOh card ${cardName} such as ban lists it was in, products it can be found in, effect/stats, etc.`}
 				/>
-				<meta name='keywords' content={`YuGiOh, The Supreme Kings Castle, card, ${cardName}, ${_Card.cardId}, ${cardColor}`} />
+				<meta name='keywords' content={`YuGiOh, The Supreme Kings Castle, card, ${cardName}, ${Card.cardId}, ${cardColor}`} />
 
-				<meta property='og:title' content={`${cardName} - ${_Card.cardId}`} />
-				<meta property='og:image' content={`https://images.thesupremekingscastle.com/cards/sm/${_Card.cardId}.jpg`} />
+				<meta property='og:title' content={`${cardName} - ${Card.cardId}`} />
+				<meta property='og:image' content={`https://images.thesupremekingscastle.com/cards/sm/${Card.cardId}.jpg`} />
 				<meta property='og:type' content='website' />
 				<meta property='og:description' content={`Details For Yugioh Card - ${cardName}`} />
 			</Helmet>
@@ -129,14 +129,14 @@ const CardInformation = () => {
 						monsterAttack={monsterAtk}
 						monsterDefense={monsterDef}
 						monsterAssociation={monsterAssociation}
-						cardID={_Card.cardId}
+						cardID={Card.cardId}
 						isLoading={isLoading}
-						cardImg={_Card.cardImg}
+						cardImg={Card.cardImg}
 					/>
 				}
 				twoThirdComponent={
 					<Suspense fallback={<Skeleton width='100%' height='20rem' />}>
-						{_Card.loadRelatedContent(
+						{Card.loadRelatedContent(
 							isLoading,
 							{
 								cardName: cardName,
@@ -147,7 +147,7 @@ const CardInformation = () => {
 								monsterAttack: monsterAtk,
 								monsterDefense: monsterDef,
 								monsterAssociation: monsterAssociation,
-								cardID: _Card.cardId,
+								cardID: Card.cardId,
 							},
 							cardColor,
 							productInfo,

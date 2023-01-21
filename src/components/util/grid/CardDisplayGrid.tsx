@@ -1,4 +1,4 @@
-import { useEffect, memo, FC, useReducer } from 'react'
+import { useEffect, memo, FC, useReducer, useCallback } from 'react'
 
 import { IconButton, Box, Skeleton } from '@mui/material'
 import Grid2 from '@mui/material/Unstable_Grid2'
@@ -32,6 +32,27 @@ type _CardDisplayGrid = {
 	isDataLoaded: boolean
 }
 
+const CardDisplayGridItem: FC<{ card: SKCCard }> = ({ card }) => {
+	const handleCardClicked = useCallback(() => window.location.assign(`/card/${card.cardID}`), [card])
+
+	return (
+		<Grid2 className='ygo-card-grid-item' id={card.cardID} key={card.cardID} xs={6} sm={4} md={4} lg={3} xl={2} onClick={handleCardClicked}>
+			<CardImageRounded cardImg={`https://images.thesupremekingscastle.com/cards/x-sm/${card.cardID}.jpg`} />
+
+			<YGOCard
+				cardName={card.cardName}
+				cardColor={card.cardColor}
+				cardEffect={card.cardEffect}
+				monsterType={card.monsterType}
+				cardID={card.cardID}
+				fullDetails={false}
+				monsterAssociation={card.monsterAssociation}
+				cardAttribute={card.cardAttribute}
+			/>
+		</Grid2>
+	)
+}
+
 const CardDisplayGrid: FC<_CardDisplayGrid> = memo(
 	({ cardJsonResults, numResultsDisplayed, numItemsToLoadWhenNeeded, loadMoreCallback, isLoadMoreOptionVisible, numResults, isDataLoaded }) => {
 		const [{ cardGridUI, updateGrid, cardGridUISkeleton }, cardGridDispatch] = useReducer(cardGridReducer, {
@@ -42,34 +63,9 @@ const CardDisplayGrid: FC<_CardDisplayGrid> = memo(
 
 		function cardGridReducer(state: { cardGridUI: JSX.Element[]; updateGrid: boolean; cardGridUISkeleton: JSX.Element[] }, action: any) {
 			const renderCards = () => {
-				return cardJsonResults.slice(numResultsDisplayed - numItemsToLoadWhenNeeded, numResultsDisplayed).map((card: SKCCard) => {
-					return (
-						<Grid2
-							className='ygo-card-grid-item'
-							id={card.cardID}
-							key={card.cardID}
-							xs={6}
-							sm={4}
-							md={4}
-							lg={3}
-							xl={2}
-							onClick={() => window.location.assign(`/card/${card.cardID}`)}
-						>
-							<CardImageRounded cardImg={`https://images.thesupremekingscastle.com/cards/x-sm/${card.cardID}.jpg`} />
-
-							<YGOCard
-								cardName={card.cardName}
-								cardColor={card.cardColor}
-								cardEffect={card.cardEffect}
-								monsterType={card.monsterType}
-								cardID={card.cardID}
-								fullDetails={false}
-								monsterAssociation={card.monsterAssociation}
-								cardAttribute={card.cardAttribute}
-							/>
-						</Grid2>
-					)
-				})
+				return cardJsonResults
+					.slice(numResultsDisplayed - numItemsToLoadWhenNeeded, numResultsDisplayed)
+					.map((card: SKCCard) => <CardDisplayGridItem key={card.cardID} card={card} />)
 			}
 			switch (action.type) {
 				case 'CLEAR_GRID':
@@ -99,11 +95,15 @@ const CardDisplayGrid: FC<_CardDisplayGrid> = memo(
 
 		return (
 			<Box style={{ maxWidth: '100%' }}>
-				<Grid2 container>{!isDataLoaded ? cardGridUISkeleton : numResults === 0 ? <Hint>{'No Content To Show'}</Hint> : cardGridUI}</Grid2>
+				<Grid2 container>
+					{!isDataLoaded && cardGridUISkeleton}
+					{isDataLoaded && numResults === 0 && <Hint>{'No Content To Show'}</Hint>}
+					{isDataLoaded && numResults !== 0 && cardGridUI}
+				</Grid2>
 
 				{!isDataLoaded ? undefined : (
 					<IconButton
-						onClick={() => loadMoreCallback()}
+						onClick={loadMoreCallback}
 						style={
 							isLoadMoreOptionVisible
 								? {

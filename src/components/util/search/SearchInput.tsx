@@ -1,4 +1,4 @@
-import React, { FC, useRef } from 'react'
+import React, { FC, useCallback, useRef } from 'react'
 
 import { AutocompleteRenderInputParams, IconButton, TextField } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
@@ -12,33 +12,30 @@ const SearchInput: FC<{
 	const inputRef = useRef<HTMLDivElement>(null)
 	const parentRef = useRef<HTMLDivElement>(null)
 
+	const handleUserTyping = useCallback(
+		(event: React.ChangeEvent<HTMLInputElement>) => {
+			// TODO: update to have one method
+			if (setSearchInput === undefined && setInput !== undefined) {
+				setInput({ type: 'UPDATE_INPUT', browseInput: event.target.value })
+			} else if (setSearchInput !== undefined) {
+				setSearchInput(event.target.value)
+			}
+		},
+		[setInput, setSearchInput]
+	)
+
+	const handleSearchIconClicked = useCallback(() => {
+		if (inputRef.current !== null && parentRef.current !== null) {
+			parentRef.current.focus()
+			inputRef.current.focus()
+		}
+	}, [inputRef, parentRef])
+
 	return (
 		<div className='search-input-parent'>
-			<TextField
-				{...searchParams}
-				className='search-input-field'
-				inputRef={inputRef}
-				ref={parentRef}
-				placeholder={placeholder}
-				onChange={(event) => {
-					// TODO: update to have one method
-					if (setSearchInput === undefined && setInput !== undefined) {
-						setInput({ type: 'UPDATE_INPUT', browseInput: event.target.value })
-					} else if (setSearchInput !== undefined) {
-						setSearchInput(event.target.value)
-					}
-				}}
-			/>
+			<TextField {...searchParams} className='search-input-field' inputRef={inputRef} ref={parentRef} placeholder={placeholder} onChange={handleUserTyping} />
 			<div className='search-icon-container'>
-				<IconButton
-					onClick={() => {
-						if (inputRef.current !== null && parentRef.current !== null) {
-							parentRef.current.focus()
-							inputRef.current.focus()
-						}
-					}}
-					className='search-icon'
-				>
+				<IconButton onClick={handleSearchIconClicked} className='search-icon'>
 					<SearchIcon className='search-icon' />
 				</IconButton>
 			</div>

@@ -1,7 +1,7 @@
 import '../../css/header-footer/navigation-icon.css'
 import '../../css/header-footer/messages.css'
 
-import { useState, useEffect, Fragment, startTransition } from 'react'
+import { useState, useEffect, Fragment, startTransition, useCallback } from 'react'
 import { Typography, IconButton, Popover, Badge } from '@mui/material'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 
@@ -29,38 +29,24 @@ function Messages() {
 				(messageData: HeartApiMessageOutput) => {
 					const totalMessages = messageData.messages.length
 
-					let findNumNewMessages = false
 					let _numNewMessages = 0
 					const previousNewestMessageTimeStamp = localStorage.getItem('previousNewestMessage') as string
 					const previousNewestMessageDate = new Date(previousNewestMessageTimeStamp)
-
-					setNumMessages(totalMessages)
-
-					if (totalMessages > 0) {
-						setNewestMessageSeen(messageData.messages[0].createdAt)
-
-						if (previousNewestMessageTimeStamp !== messageData.messages[0].createdAt) {
-							findNumNewMessages = true
-						}
-					}
 
 					setMessagesList(
 						messageData.messages.map((message: HeartApiMessageItem, index: number) => {
 							const creationDate = new Date(message.createdAt)
 
-							if (findNumNewMessages) {
-								if (previousNewestMessageDate >= creationDate) {
-									findNumNewMessages = false
-								} else {
-									_numNewMessages++
-								}
+							if (previousNewestMessageDate < creationDate) {
+								_numNewMessages++
 							}
 
-							return <MessageItemComponent key={creationDate.toString()} creationDate={creationDate} message={message} isLastMessage={index === totalMessages - 1} />
+							return <MessageItemComponent key={message.createdAt} creationDate={creationDate} message={message} isLastMessage={index === totalMessages - 1} />
 						})
 					)
-
 					setNumNewMessages(_numNewMessages)
+					setNumMessages(totalMessages)
+					setNewestMessageSeen(messageData.messages[0].createdAt)
 				},
 				false
 			)?.catch((_err) => {
@@ -69,17 +55,18 @@ function Messages() {
 		})
 	}, [])
 
+	const handleMessagesIconClicked = useCallback((event: React.MouseEvent<HTMLButtonElement>) => setMessagesAnchor(event.currentTarget), [])
+
+	const handleMessagePopupClosed = useCallback(() => {
+		setNumNewMessages(0)
+		setMessagesAnchor(undefined)
+		localStorage.setItem('previousNewestMessage', newestMessageSeen)
+	}, [numNewMessages, messagesAnchor, newestMessageSeen])
+
 	return (
 		<Fragment>
 			<Badge className='communication-message-badge' badgeContent={numNewMessages} variant='standard' color='error'>
-				<IconButton
-					className='styled-icon-button'
-					onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
-						setMessagesAnchor(event.currentTarget)
-					}}
-					aria-label='show 17 new notifications'
-					color='inherit'
-				>
+				<IconButton className='styled-icon-button' onClick={handleMessagesIconClicked} aria-label='show 17 new notifications' color='inherit'>
 					<NotificationsIcon />
 				</IconButton>
 			</Badge>
@@ -89,11 +76,7 @@ function Messages() {
 				id={isDisplayingNotifications ? 'notification-popover' : undefined}
 				open={isDisplayingNotifications}
 				anchorEl={messagesAnchor}
-				onClose={() => {
-					setNumNewMessages(0)
-					setMessagesAnchor(undefined)
-					localStorage.setItem('previousNewestMessage', newestMessageSeen)
-				}}
+				onClose={handleMessagePopupClosed}
 				anchorOrigin={{
 					vertical: 'bottom',
 					horizontal: 'left',

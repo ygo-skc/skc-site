@@ -1,11 +1,7 @@
-import {FunctionComponent} from 'react'
+import { FunctionComponent } from 'react'
 
-const SuspenseFallback: FunctionComponent = () =>
-{
-	return(
-		<div>
-		</div>
-	)
+const SuspenseFallback: FunctionComponent = () => {
+	return <div></div>
 }
 
 export default SuspenseFallback
