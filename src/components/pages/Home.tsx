@@ -6,8 +6,8 @@ import Section from '../util/generic/Section'
 import Breadcrumb from '../header-footer/Breadcrumb'
 import DatabaseInfo from '../util/database-info/DatabaseInfo'
 import UpcomingTCGProducts from '../util/event/UpcomingTCGProducts'
+import Welcome from '../home/Welcome'
 
-const Welcome = lazy(() => import('../home/Welcome'))
 const YouTubeData = lazy(() => import('../home/YouTubeData'))
 const SocialMedia = lazy(() => import('../util/social/SocialMedia'))
 
@@ -42,10 +42,16 @@ export default function Home() {
 						sectionName='Welcome'
 						sectionContent={
 							<div className='section-content'>
-								<Suspense fallback={null}>
+								<div className='multi-section'>
 									<Welcome />
-									<YouTubeData channel='skc' hasDarkBackground={true} />
-									<YouTubeData channel='btsc' hasDarkBackground={false} />
+								</div>
+								<Suspense fallback={null}>
+									<div className='multi-section'>
+										<YouTubeData channel='skc' />
+									</div>
+									<div className='multi-section'>
+										<YouTubeData channel='btsc' />
+									</div>
 								</Suspense>
 							</div>
 						}

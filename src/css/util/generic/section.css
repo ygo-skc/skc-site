@@ -43,7 +43,12 @@
 	border-bottom-right-radius: 2rem;
 }
 
-.section-dark-background {
+.default-border {
+	border: 2px rgba(0, 0, 0, 0.3);
+	border-style: solid;
+}
+
+.multi-section:nth-child(even) {
 	background: rgb(246, 246, 246);
 	margin-left: -0.8rem;
 	margin-right: -0.8rem;
@@ -51,28 +56,15 @@
 	padding-right: 0.8rem;
 }
 
-.default-border {
-	border: 2px rgba(0, 0, 0, 0.3);
-	border-style: solid;
-}
-
-.multi-section-start {
+.multi-section:first-child {
 	padding-bottom: 2rem;
 }
 
-.multi-section-middle {
+.multi-section:not(:first-child):not(:last-child) {
 	padding-top: 2rem;
 	padding-bottom: 2rem;
 }
 
-.multi-section-end {
+.multi-section:last-child {
 	padding-top: 2rem;
-}
-
-.tight-margin {
-	margin-bottom: 1rem;
-}
-
-.no-margin {
-	margin-bottom: 0rem;
 }

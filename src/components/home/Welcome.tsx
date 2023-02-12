@@ -1,8 +1,9 @@
 import { Link, Typography } from '@mui/material'
+import { Fragment } from 'react'
 
 export default function Welcome() {
 	return (
-		<div className='multi-section-start'>
+		<Fragment>
 			<Typography variant='h5'>The BEST Yu-Gi-Oh! Site?</Typography>
 
 			<Typography variant='h6'>Maybe one day!</Typography>
@@ -22,6 +23,6 @@ export default function Welcome() {
 				</Link>{' '}
 				section
 			</Typography>
-		</div>
+		</Fragment>
 	)
 }
