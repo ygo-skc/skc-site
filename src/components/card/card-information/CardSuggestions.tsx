@@ -64,12 +64,12 @@ const CardSuggestions: FC<_CardSuggestion> = memo(
 						{isLoadingSuggestions && <Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='380px' />}
 						{!isLoadingSuggestions && !hasError && (
 							<Fragment>
-								<div className='group-with-outline suggestion-parent'>
+								<div className='suggestion-parent'>
 									<Typography variant='h4'>Named Summoning Materials</Typography>
 									{materialSuggestions.length === 0 ? <Hint>Nothing here 🤔</Hint> : <div className='suggestion-wrapper'>{materialSuggestions}</div>}
 								</div>
 
-								<div className='group-with-outline suggestion-parent'>
+								<div className='suggestion-parent'>
 									<Typography variant='h4'>Named References</Typography>
 									{referenceSuggestions.length === 0 ? <Hint>Nothing here 🤔</Hint> : <div className='suggestion-wrapper'>{referenceSuggestions}</div>}
 								</div>
