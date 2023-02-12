@@ -6,19 +6,6 @@
 	border-radius: 1.5rem;
 	flex: 1;
 	background: #f3f3f3;
-	animation: pulse-animation 1.8s infinite;
-}
-
-@keyframes pulse-animation {
-	0% {
-		box-shadow: 0 0 0 0rem rgba(255, 184, 136, 0.15);
-	}
-	25% {
-		box-shadow: 0 0 0 0.4rem rgba(255, 184, 136, 0.7);
-	}
-	50% {
-		box-shadow: 0 0 0 0.75rem rgba(255, 184, 136, 0);
-	}
 }
 
 .glance:hover {

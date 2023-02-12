@@ -15,8 +15,7 @@ const SocialMedia: FunctionComponent = () => {
 				style={{ borderStyle: 'solid', borderRadius: '1rem' }}
 				src='https://discord.com/widget?id=659477868799197185&theme=light'
 				width='100%'
-				height='250'
-				frameBorder='1'
+				height='300'
 				sandbox='allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts'
 			/>
 		</div>
