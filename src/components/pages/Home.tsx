@@ -42,10 +42,16 @@ export default function Home() {
 						sectionName='Welcome'
 						sectionContent={
 							<div className='section-content'>
-								<Welcome />
+								<div className='multi-section'>
+									<Welcome />
+								</div>
 								<Suspense fallback={null}>
-									<YouTubeData channel='skc' hasDarkBackground={true} />
-									<YouTubeData channel='btsc' hasDarkBackground={false} />
+									<div className='multi-section'>
+										<YouTubeData channel='skc' />
+									</div>
+									<div className='multi-section'>
+										<YouTubeData channel='btsc' />
+									</div>
 								</Suspense>
 							</div>
 						}

@@ -1,4 +1,4 @@
-import { useEffect, useState, lazy, FC, startTransition } from 'react'
+import { useEffect, useState, lazy, FC, startTransition, Fragment } from 'react'
 
 import YouTubeUploads from '../util/social/YouTubeUploads'
 import DownstreamServices from '../../helper/DownstreamServices'
@@ -9,7 +9,6 @@ const GenericNonBreakingErr = lazy(() => import('../util/exception/GenericNonBre
 
 type _YouTubeData = {
 	channel: 'skc' | 'btsc'
-	hasDarkBackground: boolean
 }
 
 const channelIds = {
@@ -27,7 +26,7 @@ const channelDescription = {
 	btsc: 'This is my secondary channel. Really, I only upload here if I see an interesting Pokemon TCG product I want to open.',
 }
 
-const YouTubeData: FC<_YouTubeData> = ({ channel, hasDarkBackground }) => {
+const YouTubeData: FC<_YouTubeData> = ({ channel }) => {
 	const channelId = channelIds[channel]
 	const [youtubeUploadData, setYoutubeUploadData] = useState<HeartApiYouTubeUpload[]>([])
 	const [isFetchingData, setIsFetchingData] = useState(true)
@@ -50,13 +49,13 @@ const YouTubeData: FC<_YouTubeData> = ({ channel, hasDarkBackground }) => {
 	}, [])
 
 	return (
-		<div className={hasDarkBackground ? 'section-dark-background multi-section-middle' : 'multi-section-end'}>
+		<Fragment>
 			{!isFetchingData && (
 				<YouTubeUploads youtubeData={youtubeUploadData} channelName={channelNames[channel]} channelId={channelId} channelDescription={channelDescription[channel]} />
 			)}
 			{!isFetchingData && errFetchingData && <GenericNonBreakingErr errExplanation='Come back at a different time to see recent YouTube uploads 🎥!' />}
 			{isFetchingData && <Skeleton variant='rectangular' height='375' width='100%' className='rounded-skeleton' />}
-		</div>
+		</Fragment>
 	)
 }
 
