@@ -32,7 +32,7 @@
 	},
 	"scripts": {
 		"preinstall": "npx npm-force-resolutions",
-		"fresh-install": "rm -rf node_modules; npm install --no-optional",
+		"fresh-install": "rm -rf node_modules; npm install --no-optional && npx browserslist@latest --update-db",
 		"start": "webpack-dev-server --mode development --env dev",
 		"start:dashboard": "webpack-dashboard -- webpack serve --mode development --env dev",
 		"build": "webpack --mode production --env dev",
