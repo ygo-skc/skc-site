@@ -1,4 +1,4 @@
-import { FC, Fragment, lazy, memo } from 'react'
+import { FC, Fragment, memo } from 'react'
 import Grid2 from '@mui/material/Unstable_Grid2'
 
 import Section from '../../util/generic/Section'
@@ -6,7 +6,7 @@ import Section from '../../util/generic/Section'
 import CardProductInformation from './CardProductInformation'
 import CardBanListInformation from './CardBanListInformation'
 
-const CardSuggestions = lazy(() => import('./CardSuggestions'))
+import CardSuggestions from './CardSuggestions'
 
 type CardInformationRelatedContentType = {
 	card: SKCCard

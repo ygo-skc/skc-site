@@ -6,9 +6,10 @@ import { Skeleton } from '@mui/material'
 import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
+import Breadcrumb from '../header-footer/Breadcrumb'
 
-const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 const CardData = lazy(() => import('../card/card-information/CardData'))
+const CardInformationRelatedContent = lazy(() => import('../card/card-information/CardInformationRelatedContent'))
 
 class Card {
 	static cardId: string | null = null
@@ -17,7 +18,6 @@ class Card {
 
 	static readonly loadRelatedContent = (isLoading: boolean, card: SKCCard, cardColor: cardColor, productInfo: ProductInfo[], restrictedIn: RestrictedIn) => {
 		if (!isLoading) {
-			const CardInformationRelatedContent = lazy(() => import('../card/card-information/CardInformationRelatedContent'))
 			return (
 				<CardInformationRelatedContent
 					card={card}
