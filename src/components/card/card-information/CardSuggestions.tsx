@@ -90,28 +90,28 @@ const CardSuggestions: FC<_CardSuggestion> = memo(
 							<Fragment>
 								{materialSuggestions.length === 0 ? undefined : (
 									<div className='suggestion-parent'>
-										<Typography variant='h4'>Named Materials</Typography>
+										<Typography variant='h4'>Named Materials ({materialSuggestions.length})</Typography>
 										<div className='suggestion-wrapper'>{materialSuggestions}</div>
 									</div>
 								)}
 
 								{materialFor.length === 0 ? undefined : (
 									<div className='suggestion-parent'>
-										<Typography variant='h4'>Material For</Typography>
+										<Typography variant='h4'>Material For ({materialFor.length})</Typography>
 										<div className='suggestion-wrapper'>{materialFor}</div>
 									</div>
 								)}
 
 								{referenceSuggestions.length === 0 ? undefined : (
 									<div className='suggestion-parent'>
-										<Typography variant='h4'>References</Typography>
+										<Typography variant='h4'>References ({referenceSuggestions.length})</Typography>
 										<div className='suggestion-wrapper'>{referenceSuggestions}</div>
 									</div>
 								)}
 
 								{referencedBy.length === 0 ? undefined : (
 									<div className='suggestion-parent'>
-										<Typography variant='h4'>Referenced By</Typography>
+										<Typography variant='h4'>Referenced By ({referencedBy.length})</Typography>
 										<div className='suggestion-wrapper'>{referencedBy}</div>
 									</div>
 								)}
