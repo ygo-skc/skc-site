@@ -189,6 +189,12 @@ declare type CardSuggestionOutput = {
 	decks: Deck[]
 }
 
+declare type CardSupportOutput = {
+	card: SKCCard
+	referencedBy: SKCCard[]
+	materialFor: SKCCard[]
+}
+
 declare type BanListFormat = 'TCG' | 'MD' | 'DL'
 
 declare type SKCBanListInstance = {
