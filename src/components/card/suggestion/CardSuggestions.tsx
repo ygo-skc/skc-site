@@ -1,17 +1,17 @@
-import { FC, Fragment, memo, startTransition, useEffect, useState } from 'react'
+import { FC, Fragment, lazy, memo, startTransition, useEffect, useState } from 'react'
 import { Skeleton } from '@mui/material'
 
 import Section from '../../util/generic/Section'
 
-import YGOCardWithQuantity from '../YGOCardWithQuantity'
 import FetchHandler from '../../../helper/FetchHandler'
 import DownstreamServices from '../../../helper/DownstreamServices'
 import GenericNonBreakingErr from '../../util/exception/GenericNonBreakingErr'
 
 import '../../../css/card/ygo-card-suggestion.css'
-import Hint from '../../util/generic/Hints'
 
-import SuggestionSection from './SuggestionSection'
+const Hint = lazy(() => import('../../util/generic/Hints'))
+const SuggestionSection = lazy(() => import('./SuggestionSection'))
+const YGOCardWithQuantity = lazy(() => import('../YGOCardWithQuantity'))
 
 type _CardSuggestion = {
 	cardID: string
@@ -49,6 +49,7 @@ const CardSuggestions: FC<_CardSuggestion> = memo(
 		const isLoading = (): boolean => {
 			return isLoadingSuggestions || isLoadingSupport
 		}
+		console.log('yo')
 
 		useEffect(() => {
 			startTransition(() => {
