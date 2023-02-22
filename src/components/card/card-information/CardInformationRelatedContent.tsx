@@ -6,7 +6,7 @@ import Section from '../../util/generic/Section'
 import CardProductInformation from './CardProductInformation'
 import CardBanListInformation from './CardBanListInformation'
 
-import CardSuggestions from './CardSuggestions'
+import CardSuggestions from '../suggestion/CardSuggestions'
 
 type CardInformationRelatedContentType = {
 	card: SKCCard

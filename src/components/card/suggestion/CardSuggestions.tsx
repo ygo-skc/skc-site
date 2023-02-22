@@ -1,5 +1,5 @@
 import { FC, Fragment, memo, startTransition, useEffect, useState } from 'react'
-import { Skeleton, Typography } from '@mui/material'
+import { Skeleton } from '@mui/material'
 
 import Section from '../../util/generic/Section'
 
@@ -11,12 +11,14 @@ import GenericNonBreakingErr from '../../util/exception/GenericNonBreakingErr'
 import '../../../css/card/ygo-card-suggestion.css'
 import Hint from '../../util/generic/Hints'
 
+import SuggestionSection from './SuggestionSection'
+
 type _CardSuggestion = {
 	cardID: string
 	cardColor: cardColor
 }
 
-function transformReferences(references: CardReference[]) {
+function transformReferences(references: CardReference[]): JSX.Element[] {
 	return references !== null
 		? references.map((reference: CardReference) => {
 				return <YGOCardWithQuantity key={reference.card.cardID} card={reference.card} occurrences={reference.occurrences} />
@@ -24,7 +26,7 @@ function transformReferences(references: CardReference[]) {
 		: []
 }
 
-function transformSupport(support: SKCCard[]) {
+function transformSupport(support: SKCCard[]): JSX.Element[] {
 	return support !== null
 		? support.map((reference: SKCCard) => {
 				return <YGOCardWithQuantity key={reference.cardID} card={reference} occurrences={1} />
@@ -44,7 +46,7 @@ const CardSuggestions: FC<_CardSuggestion> = memo(
 
 		const [hasError, setHasError] = useState<boolean>(false)
 
-		const isLoading = () => {
+		const isLoading = (): boolean => {
 			return isLoadingSuggestions || isLoadingSupport
 		}
 
@@ -88,33 +90,10 @@ const CardSuggestions: FC<_CardSuggestion> = memo(
 						{isLoading() && <Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='380px' />}
 						{!isLoading() && !hasError && (
 							<Fragment>
-								{materialSuggestions.length === 0 ? undefined : (
-									<div className='suggestion-parent'>
-										<Typography variant='h4'>Named Materials ({materialSuggestions.length})</Typography>
-										<div className='suggestion-wrapper'>{materialSuggestions}</div>
-									</div>
-								)}
-
-								{materialFor.length === 0 ? undefined : (
-									<div className='suggestion-parent'>
-										<Typography variant='h4'>Material For ({materialFor.length})</Typography>
-										<div className='suggestion-wrapper'>{materialFor}</div>
-									</div>
-								)}
-
-								{referenceSuggestions.length === 0 ? undefined : (
-									<div className='suggestion-parent'>
-										<Typography variant='h4'>References ({referenceSuggestions.length})</Typography>
-										<div className='suggestion-wrapper'>{referenceSuggestions}</div>
-									</div>
-								)}
-
-								{referencedBy.length === 0 ? undefined : (
-									<div className='suggestion-parent'>
-										<Typography variant='h4'>Referenced By ({referencedBy.length})</Typography>
-										<div className='suggestion-wrapper'>{referencedBy}</div>
-									</div>
-								)}
+								<SuggestionSection suggestions={materialSuggestions} sectionName='Named Materials' />
+								<SuggestionSection suggestions={materialFor} sectionName='Material For' />
+								<SuggestionSection suggestions={referenceSuggestions} sectionName='References' />
+								<SuggestionSection suggestions={referencedBy} sectionName='Referenced By' />
 							</Fragment>
 						)}
 						{!isLoadingSuggestions && hasError && <GenericNonBreakingErr errExplanation={'🤯 Suggestion Engine Is Offline 🤯'} />}
