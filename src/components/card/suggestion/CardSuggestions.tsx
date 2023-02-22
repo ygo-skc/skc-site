@@ -49,7 +49,6 @@ const CardSuggestions: FC<_CardSuggestion> = memo(
 		const isLoading = (): boolean => {
 			return isLoadingSuggestions || isLoadingSupport
 		}
-		console.log('yo')
 
 		useEffect(() => {
 			startTransition(() => {
