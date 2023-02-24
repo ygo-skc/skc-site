@@ -5,6 +5,8 @@ import DownstreamServices from '../../helper/DownstreamServices'
 import FetchHandler from '../../helper/FetchHandler'
 import { Skeleton } from '@mui/material'
 
+import '../../css/util/generic/youtube-data.css'
+
 const GenericNonBreakingErr = lazy(() => import('../util/exception/GenericNonBreakingErr'))
 
 type _YouTubeData = {
