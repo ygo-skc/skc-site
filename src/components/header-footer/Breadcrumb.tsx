@@ -7,9 +7,8 @@ import Block from '@mui/icons-material/Block'
 import ErrorIcon from '@mui/icons-material/Error'
 import InfoIcon from '@mui/icons-material/Info'
 
-import { RouteMap } from '../pages/Routes'
-
 import '../../css/header-footer/breadcrumb.css'
+import AppRoutes from '../../helper/AppRoutes'
 
 type BreadcrumbProps = {
 	crumbs: string[]
@@ -33,8 +32,9 @@ const Breadcrumb: FunctionComponent<BreadcrumbProps> = memo(
 						)
 					}
 
+					const link = item.replace(' ', '')
 					return (
-						<Link underline='none' className='breadcrumb' variant='subtitle2' color='inherit' href={RouteMap.NAME_maps_ROUTE[item.replace(' ', '')]} key={item}>
+						<Link underline='none' className='breadcrumb' variant='subtitle2' color='inherit' href={AppRoutes[link as keyof typeof AppRoutes]} key={item}>
 							{BreadcrumbStaticFields.BREADCRUMB_maps_ICON.get(item)}
 							<Typography className='breadcrumb breadcrumb-text'>{item}</Typography>
 						</Link>

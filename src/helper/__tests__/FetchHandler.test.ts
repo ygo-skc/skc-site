@@ -1,5 +1,5 @@
 import { AxiosError, AxiosResponse } from 'axios'
-import { RouteMap } from '../../components/pages/Routes'
+import AppRoutes from '../AppRoutes'
 import FetchHandler from '../FetchHandler'
 
 beforeEach(() => {
@@ -16,7 +16,7 @@ test('verify user is redirected to 503 page on Network Error', () => {
 	err.message = 'Network Error'
 	FetchHandler.handleError(err)
 
-	expect(location.href).toBe(RouteMap.NAME_maps_ROUTE[503])
+	expect(location.href).toBe(AppRoutes.ServiceUnavailable)
 })
 
 test('verify user is redirected to 503 page on TypeError', () => {
@@ -24,7 +24,7 @@ test('verify user is redirected to 503 page on TypeError', () => {
 	err.message = 'TypeError'
 	FetchHandler.handleError(err)
 
-	expect(location.href).toBe(RouteMap.NAME_maps_ROUTE[503])
+	expect(location.href).toBe(AppRoutes.ServiceUnavailable)
 })
 
 test('verify user is redirected to 408 page on Request Aborted Error', () => {
@@ -32,7 +32,7 @@ test('verify user is redirected to 408 page on Request Aborted Error', () => {
 	err.code = 'ECONNABORTED'
 	FetchHandler.handleError(err)
 
-	expect(location.href).toBe(RouteMap.NAME_maps_ROUTE[408])
+	expect(location.href).toBe(AppRoutes.RequestTimeout)
 })
 
 test('verify user is redirected to 404-Server page on 404 error from API call', () => {
@@ -40,7 +40,7 @@ test('verify user is redirected to 404-Server page on 404 error from API call', 
 	err.response = { status: 404 } as AxiosResponse
 	FetchHandler.handleError(err)
 
-	expect(location.href).toBe(RouteMap.NAME_maps_ROUTE['404-Server'])
+	expect(location.href).toBe(AppRoutes.Server404Error)
 })
 
 test('verify user is redirected to 400 page on 400 error from API call', () => {
@@ -48,5 +48,5 @@ test('verify user is redirected to 400 page on 400 error from API call', () => {
 	err.response = { status: 400 } as AxiosResponse
 	FetchHandler.handleError(err)
 
-	expect(location.href).toBe(RouteMap.NAME_maps_ROUTE[400])
+	expect(location.href).toBe(AppRoutes.BadRequest)
 })

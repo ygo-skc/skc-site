@@ -14,8 +14,9 @@ test('verify date gets formatted with {month day, year}', () => {
 })
 
 test('verify time gets formatted with {hh:mm ZONE}', () => {
-	expect(Dates.getTimeString(myBday)).toBe('6:40 PM')
-	expect(Dates.getTimeString(becksBday)).toBe('8:28 PM')
+	// v8 browsers (like chrome) started adding this character in place of space https://stackoverflow.com/questions/75406192/javascript-tolocaletimestring-returning-ascii-226-instead-of-space-in-latest-v
+	expect(Dates.getTimeString(myBday)).toBe('6:40 PM')
+	expect(Dates.getTimeString(becksBday)).toBe('8:28 PM')
 })
 
 test('verify month is formatted correctly {3 char month - xxx}', () => {

@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import SuspenseFallback from '../SuspenseFallback'
 
 import '../../css/util/grid/grids-and-containers.css'
+import AppRoutes from '../../helper/AppRoutes'
 
 const Home = lazy(() => import('./Home'))
 
@@ -18,52 +19,33 @@ const CardInformation = lazy(() => import('./CardInformation'))
 const About = lazy(() => import('./About'))
 const HttpErr = lazy(() => import('./HttpErr'))
 
-class RouteMap {
-	static readonly NAME_maps_ROUTE: { [key: string]: string } = {
-		Home: '/',
-		BanList: '/ban_list',
-		About: '/about',
-		Card: '/card/:cardId',
-		CardBrowse: '/browse/card',
-		ProductBrowse: '/browse/product',
-		ProductInformation: '/product/:productId',
-
-		'400': '/bad-request',
-		'408': '/request-timeout',
-		'422': '/unprocessable-entity',
-		'404-Server': '/not-found',
-		'500': '/server-err',
-		'503': '/service-unavailable',
-	}
-}
-
 export default function SKCSiteRoutes() {
 	return (
 		<Router>
 			<Suspense fallback={<SuspenseFallback />}>
 				<Routes>
-					<Route path={RouteMap.NAME_maps_ROUTE.Home} element={<Home />} />
-					<Route path={RouteMap.NAME_maps_ROUTE.BanList} element={<BanList />} />
-					<Route path={RouteMap.NAME_maps_ROUTE.Card} element={<CardInformation />} />
-					<Route path={RouteMap.NAME_maps_ROUTE.CardBrowse} element={<Browse />} />
+					<Route index element={<Home />} />
+					<Route path={AppRoutes.BanList} element={<BanList />} />
+					<Route path={AppRoutes.Card} element={<CardInformation />} />
+					<Route path='browse'>
+						<Route path='card' element={<Browse />} />
+						<Route path='product' element={<ProductBrowse />} />
+					</Route>
 
-					<Route path={RouteMap.NAME_maps_ROUTE.ProductBrowse} element={<ProductBrowse />} />
-					<Route path={RouteMap.NAME_maps_ROUTE.ProductInformation} element={<ProductInfo />} />
+					<Route path={AppRoutes.ProductInformation} element={<ProductInfo />} />
 
-					<Route path={RouteMap.NAME_maps_ROUTE.About} element={<About />} />
+					<Route path={AppRoutes.About} element={<About />} />
 
 					{/* Routes specifically for errs */}
-					<Route path={RouteMap.NAME_maps_ROUTE[400]} element={<HttpErr httpErr={'400'} />} />
-					<Route path={RouteMap.NAME_maps_ROUTE[408]} element={<HttpErr httpErr={'408'} />} />
-					<Route path={RouteMap.NAME_maps_ROUTE[422]} element={<HttpErr httpErr={'422'} />} />
-					<Route path={RouteMap.NAME_maps_ROUTE[500]} element={<HttpErr httpErr={'500'} />} />
-					<Route path={RouteMap.NAME_maps_ROUTE[503]} element={<HttpErr httpErr={'503'} />} />
-					<Route path={RouteMap.NAME_maps_ROUTE['404-Server']} element={<HttpErr httpErr={'404-Server'} />} />
-					<Route path={'/*'} element={<HttpErr httpErr={'404-Client'} />} />
+					<Route path={AppRoutes.BadRequest} element={<HttpErr httpErr={'400'} />} />
+					<Route path={AppRoutes.RequestTimeout} element={<HttpErr httpErr={'408'} />} />
+					<Route path={AppRoutes.UnprocessableEntity} element={<HttpErr httpErr={'422'} />} />
+					<Route path={AppRoutes.GenericServerError} element={<HttpErr httpErr={'500'} />} />
+					<Route path={AppRoutes.ServiceUnavailable} element={<HttpErr httpErr={'503'} />} />
+					<Route path={AppRoutes.Server404Error} element={<HttpErr httpErr={'404-Server'} />} />
+					<Route path='/*' element={<HttpErr httpErr={'404-Client'} />} />
 				</Routes>
 			</Suspense>
 		</Router>
 	)
 }
-
-export { RouteMap }
