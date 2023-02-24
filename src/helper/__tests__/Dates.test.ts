@@ -69,7 +69,7 @@ test("verify retrieval of ban list date range doesn't cause issues with undefine
 test('verify retrieval of ban list date range works as intended', () => {
 	const dates = ['2021-01-10', '2021-03-11', '2021-07-01']
 
-	expect(Dates.getCurrentBanListDate('2021-01-10', dates)).toBe('Jan 10, 2021 - Present')
+	expect(Dates.getCurrentBanListDate('2021-01-10', dates)).toBe('Jan 10, 2021 - ⁇')
 	expect(Dates.getCurrentBanListDate('2021-03-11', dates)).toBe('Mar 11, 2021 - Jan 10, 2021')
 	expect(Dates.getCurrentBanListDate('2021-07-01', dates)).toBe('Jul 1, 2021 - Mar 11, 2021')
 })
