@@ -1,4 +1,4 @@
-import { Skeleton, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import { FC, useEffect, useState, memo } from 'react'
 import CardImageRounded from '../../../util/photo/CardImageRounded'
 import YGOCard from '../../../card/YGOCard'
@@ -7,11 +7,10 @@ type _CardsWithDifferentStatus = {
 	newStatusName: 'Forbidden' | 'Limited' | 'Semi Limited' | 'Unlimited' | 'Limited One' | 'Limited Two' | 'Limited Three'
 	cards: SKCCardsPreviousBanListStatus[]
 	numCards: number
-	isLoadingData: boolean
 }
 
 const CardsWithDifferentStatus: FC<_CardsWithDifferentStatus> = memo(
-	({ newStatusName, cards, numCards, isLoadingData }) => {
+	({ newStatusName, cards, numCards }) => {
 		const [cardsWithNewStatus, setCardsWithNewStatus] = useState<JSX.Element[]>([])
 
 		useEffect(() => {
@@ -56,15 +55,12 @@ const CardsWithDifferentStatus: FC<_CardsWithDifferentStatus> = memo(
 					Newly {newStatusName} ({numCards})
 				</Typography>
 
-				<div className='cards-with-different-status-content'>
-					{isLoadingData && <Skeleton className='rounded-skeleton' variant='rectangular' height='20rem' width='100%' />}
-					{!isLoadingData && numCards !== 0 && cardsWithNewStatus}
-				</div>
+				<div className='cards-with-different-status-content'>{cardsWithNewStatus}</div>
 			</div>
 		)
 	},
 	(prevProps, nextProps) => {
-		if (prevProps.isLoadingData !== nextProps.isLoadingData) return false
+		if (prevProps.numCards !== nextProps.numCards) return false
 		return true
 	}
 )

@@ -100,6 +100,10 @@
 	margin-bottom: 5rem;
 }
 
+.cards-with-diff-status-skeleton {
+	margin-bottom: 5rem;
+}
+
 .cards-with-different-status-content {
 	display: flex;
 	overflow-x: auto;
@@ -126,4 +130,8 @@
 .limited-three-icon.MuiSvgIcon-root {
 	color: #00b5e2;
 	font-size: 1.8rem;
+}
+
+.cards-with-diff-status-skeleton {
+	margin-bottom: 5r;
 }

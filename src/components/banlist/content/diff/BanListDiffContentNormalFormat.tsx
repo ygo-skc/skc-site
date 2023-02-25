@@ -1,3 +1,4 @@
+import { Skeleton } from '@mui/material'
 import { FC, Fragment, memo } from 'react'
 import CardsWithDifferentStatus from './CardsWithDifferentStatus'
 
@@ -29,14 +30,13 @@ const BanListDiffContentNormalFormat: FC<_BanListDiffContentNormalFormat> = memo
 	}) => {
 		return (
 			<Fragment>
-				{numNewForbidden !== 0 && (
-					<CardsWithDifferentStatus newStatusName='Forbidden' cards={newForbiddenCards} numCards={numNewForbidden} isLoadingData={isFetchingBanListNewContent} />
+				{isFetchingBanListNewContent && isFetchingBanListRemovedContent && (
+					<Skeleton className='rounded-skeleton cards-with-diff-status-skeleton' variant='rectangular' height='30rem' width='100%' />
 				)}
-				{numNewLimited !== 0 && <CardsWithDifferentStatus newStatusName='Limited' cards={newLimitedCards} numCards={numNewLimited} isLoadingData={isFetchingBanListNewContent} />}
-				{numNewSemiLimited !== 0 && (
-					<CardsWithDifferentStatus newStatusName='Semi Limited' cards={newSemiLimitedCards} numCards={numNewSemiLimited} isLoadingData={isFetchingBanListNewContent} />
-				)}
-				{numRemoved !== 0 && <CardsWithDifferentStatus newStatusName='Unlimited' cards={removedCards} numCards={numRemoved} isLoadingData={isFetchingBanListRemovedContent} />}
+				{numNewForbidden !== 0 && <CardsWithDifferentStatus newStatusName='Forbidden' cards={newForbiddenCards} numCards={numNewForbidden} />}
+				{numNewLimited !== 0 && <CardsWithDifferentStatus newStatusName='Limited' cards={newLimitedCards} numCards={numNewLimited} />}
+				{numNewSemiLimited !== 0 && <CardsWithDifferentStatus newStatusName='Semi Limited' cards={newSemiLimitedCards} numCards={numNewSemiLimited} />}
+				{numRemoved !== 0 && <CardsWithDifferentStatus newStatusName='Unlimited' cards={removedCards} numCards={numRemoved} />}
 			</Fragment>
 		)
 	},

@@ -1,3 +1,4 @@
+import { Skeleton } from '@mui/material'
 import { FC, Fragment, memo } from 'react'
 import CardsWithDifferentStatus from './CardsWithDifferentStatus'
 
@@ -33,19 +34,12 @@ const BanListDiffContentDuelLinksFormat: FC<_BanListDiffContentDuelLinksFormat> 
 	}) => {
 		return (
 			<Fragment>
-				{numNewForbidden !== 0 && (
-					<CardsWithDifferentStatus newStatusName='Forbidden' cards={newForbiddenCards} numCards={numNewForbidden} isLoadingData={isFetchingBanListNewContent} />
-				)}
-				{numNewLimitedOne !== 0 && (
-					<CardsWithDifferentStatus newStatusName='Limited One' cards={newLimitedOneCards} numCards={numNewLimitedOne} isLoadingData={isFetchingBanListNewContent} />
-				)}
-				{numNewLimitedTwo !== 0 && (
-					<CardsWithDifferentStatus newStatusName='Limited Two' cards={newLimitedTwoCards} numCards={numNewLimitedTwo} isLoadingData={isFetchingBanListNewContent} />
-				)}
-				{numNewLimitedThree !== 0 && (
-					<CardsWithDifferentStatus newStatusName='Limited Three' cards={newLimitedThreeCards} numCards={numNewLimitedThree} isLoadingData={isFetchingBanListNewContent} />
-				)}
-				{numRemoved !== 0 && <CardsWithDifferentStatus newStatusName='Unlimited' cards={removedCards} numCards={numRemoved} isLoadingData={isFetchingBanListRemovedContent} />}
+				{isFetchingBanListNewContent && isFetchingBanListRemovedContent && <Skeleton />}
+				{numNewForbidden !== 0 && <CardsWithDifferentStatus newStatusName='Forbidden' cards={newForbiddenCards} numCards={numNewForbidden} />}
+				{numNewLimitedOne !== 0 && <CardsWithDifferentStatus newStatusName='Limited One' cards={newLimitedOneCards} numCards={numNewLimitedOne} />}
+				{numNewLimitedTwo !== 0 && <CardsWithDifferentStatus newStatusName='Limited Two' cards={newLimitedTwoCards} numCards={numNewLimitedTwo} />}
+				{numNewLimitedThree !== 0 && <CardsWithDifferentStatus newStatusName='Limited Three' cards={newLimitedThreeCards} numCards={numNewLimitedThree} />}
+				{numRemoved !== 0 && <CardsWithDifferentStatus newStatusName='Unlimited' cards={removedCards} numCards={numRemoved} />}
 			</Fragment>
 		)
 	},
