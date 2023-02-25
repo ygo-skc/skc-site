@@ -195,8 +195,6 @@ declare type CardSupportOutput = {
 	materialFor: SKCCard[]
 }
 
-declare type BanListFormat = 'TCG' | 'MD' | 'DL'
-
 declare type SKCBanListInstance = {
 	banListDate: string
 	cardID: string

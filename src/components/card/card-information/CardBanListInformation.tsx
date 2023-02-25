@@ -7,6 +7,7 @@ import { Dates } from '../../../helper/Dates'
 import Hint from '../../util/generic/Hints'
 
 import createTable from '../../util/generic/TableHelpers'
+import { AcceptableBanListFormat } from '../../../helper/BanListUtil'
 
 type Args = {
 	isLoading: boolean
@@ -14,22 +15,22 @@ type Args = {
 }
 
 type BanListFormatButtonArgs = {
-	format: BanListFormat
+	format: AcceptableBanListFormat
 	restrictedIn: RestrictedIn
 	setFormat: any
 }
 
-function determineFormat(restrictedIn: RestrictedIn): BanListFormat {
+function determineFormat(restrictedIn: RestrictedIn): AcceptableBanListFormat {
 	if (restrictedIn['TCG'].length !== 0) {
-		return 'TCG'
+		return AcceptableBanListFormat.TCG
 	} else if (restrictedIn['MD'].length !== 0) {
-		return 'MD'
+		return AcceptableBanListFormat.MD
 	} else {
-		return 'DL'
+		return AcceptableBanListFormat.DL
 	}
 }
 
-function transformFormat(format: BanListFormat) {
+function transformFormat(format: AcceptableBanListFormat) {
 	switch (format) {
 		case 'TCG':
 			return 'TCG'
@@ -52,7 +53,7 @@ const BanListFormatButton: FunctionComponent<BanListFormatButtonArgs> = ({ forma
 
 const CardBanListInformation: FunctionComponent<Args> = ({ isLoading, restrictedIn }) => {
 	const [banListTable, setBanListTable] = useState<JSX.Element | undefined>(undefined)
-	const [format, setFormat] = useState<BanListFormat>(determineFormat(restrictedIn))
+	const [format, setFormat] = useState<AcceptableBanListFormat>(determineFormat(restrictedIn))
 
 	useEffect(() => {
 		if (isLoading) return
@@ -73,9 +74,9 @@ const CardBanListInformation: FunctionComponent<Args> = ({ isLoading, restricted
 			{!isLoading && restrictedIn[format].length !== 0 && (
 				<Fragment>
 					<ButtonGroup className='ban-list-format-container' fullWidth disableElevation variant='contained' aria-label='Disabled elevation buttons'>
-						<BanListFormatButton format='TCG' setFormat={setFormat} restrictedIn={restrictedIn} />
-						<BanListFormatButton format='MD' setFormat={setFormat} restrictedIn={restrictedIn} />
-						<BanListFormatButton format='DL' setFormat={setFormat} restrictedIn={restrictedIn} />
+						<BanListFormatButton format={AcceptableBanListFormat.TCG} setFormat={setFormat} restrictedIn={restrictedIn} />
+						<BanListFormatButton format={AcceptableBanListFormat.MD} setFormat={setFormat} restrictedIn={restrictedIn} />
+						<BanListFormatButton format={AcceptableBanListFormat.DL} setFormat={setFormat} restrictedIn={restrictedIn} />
 					</ButtonGroup>
 
 					<Typography variant='h5'>Selected Format — {transformFormat(format)}</Typography>

@@ -25,7 +25,10 @@ export default function SKCSiteRoutes() {
 			<Suspense fallback={<SuspenseFallback />}>
 				<Routes>
 					<Route index element={<Home />} />
-					<Route path={AppRoutes.BanList} element={<BanList />} />
+					<Route path={AppRoutes.BanList} element={<BanList />}>
+						<Route path=':specifiedFormat' element={<BanList />} />
+					</Route>
+
 					<Route path={AppRoutes.Card} element={<CardInformation />} />
 					<Route path='browse'>
 						<Route path='card' element={<Browse />} />

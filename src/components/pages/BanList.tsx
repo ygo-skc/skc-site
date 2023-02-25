@@ -14,6 +14,8 @@ import Section from '../util/generic/Section'
 import dateReducer, { BanListDateReducerActionType } from '../../helper/reducers/BanListDateReducer'
 import currentlySelectedBanListReducer, { CurrentlySelectedBanListReducerActionType } from '../../helper/reducers/CurrentBanListReducer'
 import { Dates } from '../../helper/Dates'
+import { useParams } from 'react-router-dom'
+import { AcceptableBanListFormat, getValidFormat } from '../../helper/BanListUtil'
 
 const Hint = lazy(() => import('../util/generic/Hints'))
 
@@ -37,7 +39,9 @@ export default function BanList() {
 	const [isFetchingBanList, setIsFetchingBanList] = useState(true)
 	const [isFetchingBanListNewContent, setFetchingBanListNewContent] = useState(true)
 	const [isFetchingBanListRemovedContent, setFetchingBanListRemovedContent] = useState(true)
-	const [format, setFormat] = useState<BanListFormat>('TCG')
+
+	const { specifiedFormat } = useParams<'specifiedFormat'>()
+	const [format, setFormat] = useState<AcceptableBanListFormat>(getValidFormat(specifiedFormat))
 
 	const [{ banListStartDates, banContentLinks, isFetchingBanListDates }, dateDispatch] = useReducer(dateReducer, {
 		banListStartDates: [],
