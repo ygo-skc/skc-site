@@ -109,6 +109,8 @@ export default function BanList() {
 	})
 
 	useEffect(() => {
+		window.history.replaceState(null, '', `/ban_list/${format}`)
+
 		dateDispatch({
 			type: BanListDateReducerActionType.FETCHING_DATES,
 		})
