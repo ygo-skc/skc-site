@@ -1,5 +1,5 @@
 import { FC, Fragment, memo } from 'react'
-import BanListChangedStatus from './CardsWithDifferentStatus'
+import CardsWithDifferentStatus from './CardsWithDifferentStatus'
 
 type _BanListDiffContentNormalFormat = {
 	removedCards: SKCCardsPreviousBanListStatus[]
@@ -29,11 +29,14 @@ const BanListDiffContentNormalFormat: FC<_BanListDiffContentNormalFormat> = memo
 	}) => {
 		return (
 			<Fragment>
-				<BanListChangedStatus newStatusName='Forbidden' cards={newForbiddenCards} numCards={numNewForbidden} isLoadingData={isFetchingBanListNewContent} />
-				<BanListChangedStatus newStatusName='Limited' cards={newLimitedCards} numCards={numNewLimited} isLoadingData={isFetchingBanListNewContent} />
-				<BanListChangedStatus newStatusName='Semi Limited' cards={newSemiLimitedCards} numCards={numNewSemiLimited} isLoadingData={isFetchingBanListNewContent} />
-
-				<BanListChangedStatus newStatusName='Unlimited' cards={removedCards} numCards={numRemoved} isLoadingData={isFetchingBanListRemovedContent} />
+				{numNewForbidden !== 0 && (
+					<CardsWithDifferentStatus newStatusName='Forbidden' cards={newForbiddenCards} numCards={numNewForbidden} isLoadingData={isFetchingBanListNewContent} />
+				)}
+				{numNewLimited !== 0 && <CardsWithDifferentStatus newStatusName='Limited' cards={newLimitedCards} numCards={numNewLimited} isLoadingData={isFetchingBanListNewContent} />}
+				{numNewSemiLimited !== 0 && (
+					<CardsWithDifferentStatus newStatusName='Semi Limited' cards={newSemiLimitedCards} numCards={numNewSemiLimited} isLoadingData={isFetchingBanListNewContent} />
+				)}
+				{numRemoved !== 0 && <CardsWithDifferentStatus newStatusName='Unlimited' cards={removedCards} numCards={numRemoved} isLoadingData={isFetchingBanListRemovedContent} />}
 			</Fragment>
 		)
 	},

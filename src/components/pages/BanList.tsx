@@ -263,20 +263,23 @@ export default function BanList() {
 					<Suspense fallback={<div />}>
 						{format === 'DL' ? (
 							<Fragment>
-								<BanListDiffContentDuelLinksFormat
-									removedCards={removedCards}
-									numRemoved={numRemoved}
-									newForbiddenCards={newForbiddenCards}
-									newLimitedOneCards={newLimitedOneCards}
-									newLimitedTwoCards={newLimitedTwoCards}
-									newLimitedThreeCards={newLimitedThreeCards}
-									numNewForbidden={numNewForbidden}
-									numNewLimitedOne={numNewLimitedOne}
-									numNewLimitedTwo={numNewLimitedTwo}
-									numNewLimitedThree={numNewLimitedThree}
-									isFetchingBanListNewContent={isFetchingBanListNewContent}
-									isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
-								/>
+								{/* this div might seem useless but it is needed for css to work as expected on its children */}
+								<div>
+									<BanListDiffContentDuelLinksFormat
+										removedCards={removedCards}
+										numRemoved={numRemoved}
+										newForbiddenCards={newForbiddenCards}
+										newLimitedOneCards={newLimitedOneCards}
+										newLimitedTwoCards={newLimitedTwoCards}
+										newLimitedThreeCards={newLimitedThreeCards}
+										numNewForbidden={numNewForbidden}
+										numNewLimitedOne={numNewLimitedOne}
+										numNewLimitedTwo={numNewLimitedTwo}
+										numNewLimitedThree={numNewLimitedThree}
+										isFetchingBanListNewContent={isFetchingBanListNewContent}
+										isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
+									/>
+								</div>
 								<BanListContentDuelLinksFormat
 									forbidden={forbidden}
 									limitedOne={limitedOne}
@@ -291,18 +294,21 @@ export default function BanList() {
 							</Fragment>
 						) : (
 							<Fragment>
-								<BanListDiffContentNormalFormat
-									removedCards={removedCards}
-									numRemoved={numRemoved}
-									newForbiddenCards={newForbiddenCards}
-									newLimitedCards={newLimitedCards}
-									newSemiLimitedCards={newSemiLimitedCards}
-									numNewForbidden={numNewForbidden}
-									numNewLimited={numNewLimited}
-									numNewSemiLimited={numNewSemiLimited}
-									isFetchingBanListNewContent={isFetchingBanListNewContent}
-									isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
-								/>
+								{/* this div might seem useless but it is needed for css to work as expected on its children */}
+								<div>
+									<BanListDiffContentNormalFormat
+										removedCards={removedCards}
+										numRemoved={numRemoved}
+										newForbiddenCards={newForbiddenCards}
+										newLimitedCards={newLimitedCards}
+										newSemiLimitedCards={newSemiLimitedCards}
+										numNewForbidden={numNewForbidden}
+										numNewLimited={numNewLimited}
+										numNewSemiLimited={numNewSemiLimited}
+										isFetchingBanListNewContent={isFetchingBanListNewContent}
+										isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
+									/>
+								</div>
 								<BanListContentNormalFormat
 									forbidden={forbidden}
 									limited={limited}

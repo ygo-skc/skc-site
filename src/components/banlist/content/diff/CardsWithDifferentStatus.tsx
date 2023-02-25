@@ -2,7 +2,6 @@ import { Skeleton, Typography } from '@mui/material'
 import { FC, useEffect, useState, memo } from 'react'
 import CardImageRounded from '../../../util/photo/CardImageRounded'
 import YGOCard from '../../../card/YGOCard'
-import Hint from '../../../util/generic/Hints'
 
 type _CardsWithDifferentStatus = {
 	newStatusName: 'Forbidden' | 'Limited' | 'Semi Limited' | 'Unlimited' | 'Limited One' | 'Limited Two' | 'Limited Three'
@@ -59,7 +58,6 @@ const CardsWithDifferentStatus: FC<_CardsWithDifferentStatus> = memo(
 
 				<div className='cards-with-different-status-content'>
 					{isLoadingData && <Skeleton className='rounded-skeleton' variant='rectangular' height='20rem' width='100%' />}
-					{!isLoadingData && numCards === 0 && <Hint>Nothing here 🤨</Hint>}
 					{!isLoadingData && numCards !== 0 && cardsWithNewStatus}
 				</div>
 			</div>
