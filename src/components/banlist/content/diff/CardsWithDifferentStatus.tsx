@@ -1,7 +1,6 @@
 import { Typography } from '@mui/material'
-import { FC, useEffect, useState, memo } from 'react'
-import CardImageRounded from '../../../util/photo/CardImageRounded'
-import YGOCard from '../../../card/YGOCard'
+import { FC, useEffect, useState } from 'react'
+import YGOCardWithPreviousBanStatus from '../../../card/YGOCardWithPreviousBanStatus'
 
 type _CardsWithDifferentStatus = {
 	newStatusName: 'Forbidden' | 'Limited' | 'Semi Limited' | 'Unlimited' | 'Limited One' | 'Limited Two' | 'Limited Three'
@@ -9,60 +8,28 @@ type _CardsWithDifferentStatus = {
 	numCards: number
 }
 
-const CardsWithDifferentStatus: FC<_CardsWithDifferentStatus> = memo(
-	({ newStatusName, cards, numCards }) => {
-		const [cardsWithNewStatus, setCardsWithNewStatus] = useState<JSX.Element[]>([])
+const CardsWithDifferentStatus: FC<_CardsWithDifferentStatus> = ({ newStatusName, cards, numCards }) => {
+	const [cardsWithNewStatus, setCardsWithNewStatus] = useState<JSX.Element[]>([])
 
-		useEffect(() => {
-			setCardsWithNewStatus(
-				cards.map((newStatus: SKCCardsPreviousBanListStatus) => {
-					const card: SKCCard = newStatus.card
+	useEffect(() => {
+		setCardsWithNewStatus(
+			cards.map((newStatus: SKCCardsPreviousBanListStatus) => {
+				const card: SKCCard = newStatus.card
 
-					return (
-						<div key={`${newStatusName}-${card.cardID}`} onClick={() => window.location.assign(`/card/${card.cardID}`)} className='ygo-card-info-parent'>
-							<div className='img-and-previous-status-parent'>
-								<CardImageRounded cardImg={`https://images.thesupremekingscastle.com/cards/tn/${card.cardID}.jpg`} />
-								<div className='ban-list-status-change-text-parent'>
-									<Typography align='right' variant='h5' className='ban-list-status-change-text-1'>
-										Previously
-									</Typography>
-									<Typography align='right' variant='h6' className='ban-list-status-change-text-2'>
-										{newStatus.previousBanStatus}
-									</Typography>
-								</div>
-							</div>
-							<YGOCard
-								cardID={card.cardID}
-								cardName={card.cardName}
-								cardColor={card.cardColor}
-								cardEffect={card.cardEffect}
-								monsterType={card.monsterType}
-								cardAttribute={card.cardAttribute}
-								monsterAttack={card.monsterAttack}
-								monsterDefense={card.monsterDefense}
-								monsterAssociation={card.monsterAssociation}
-								fullDetails={false}
-							/>
-						</div>
-					)
-				})
-			)
-		}, [cards])
-
-		return (
-			<div className='cards-with-different-status-parent very-light-shadow'>
-				<Typography variant='h4'>
-					Newly {newStatusName} ({numCards})
-				</Typography>
-
-				<div className='cards-with-different-status-content'>{cardsWithNewStatus}</div>
-			</div>
+				return <YGOCardWithPreviousBanStatus key={`${newStatusName}-${card.cardID}`} card={card} previousBanStatus={newStatus.previousBanStatus} />
+			})
 		)
-	},
-	(prevProps, nextProps) => {
-		if (prevProps.numCards !== nextProps.numCards) return false
-		return true
-	}
-)
+	}, [cards])
+
+	return (
+		<div className='cards-with-different-status-parent very-light-shadow'>
+			<Typography variant='h4'>
+				Newly {newStatusName} ({numCards})
+			</Typography>
+
+			<div className='cards-with-different-status-content'>{cardsWithNewStatus}</div>
+		</div>
+	)
+}
 
 export default CardsWithDifferentStatus
