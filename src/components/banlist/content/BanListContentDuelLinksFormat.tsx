@@ -3,7 +3,7 @@ import Section from '../../util/generic/Section'
 import BanListSection from '../BanListSection'
 import DuelLinksFormatTabbedView from '../tab/DuelLinksFormatTabbedView'
 
-type _BanListContentNormalFormat = {
+export type _BanListContentDuelLinksFormat = {
 	forbidden: SKCCard[]
 	limitedOne: SKCCard[]
 	limitedTwo: SKCCard[]
@@ -15,7 +15,7 @@ type _BanListContentNormalFormat = {
 	isFetchingBanList: boolean
 }
 
-const BanListContentNormalFormat: FC<_BanListContentNormalFormat> = memo(
+const BanListContentNormalFormat: FC<_BanListContentDuelLinksFormat> = memo(
 	({ forbidden, limitedOne, limitedTwo, limitedThree, numForbidden, numLimitedOne, numLimitedTwo, numLimitedThree, isFetchingBanList }) => {
 		return (
 			<Section

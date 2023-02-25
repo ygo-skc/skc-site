@@ -2,7 +2,7 @@ import { Skeleton } from '@mui/material'
 import { FC, Fragment, memo } from 'react'
 import CardsWithDifferentStatus from './CardsWithDifferentStatus'
 
-type _BanListDiffContentDuelLinksFormat = {
+export type _BanListDiffContentDuelLinksFormat = {
 	removedCards: SKCCardsPreviousBanListStatus[]
 	numRemoved: number
 	newForbiddenCards: SKCCardsPreviousBanListStatus[]

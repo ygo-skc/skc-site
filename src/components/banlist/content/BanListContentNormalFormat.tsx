@@ -3,7 +3,7 @@ import Section from '../../util/generic/Section'
 import BanListSection from '../BanListSection'
 import NormalFormatTabbedView from '../tab/NormalFormatTabbedView'
 
-type _BanListContentNormalFormat = {
+export type _BanListContentNormalFormat = {
 	forbidden: SKCCard[]
 	limited: SKCCard[]
 	semiLimited: SKCCard[]
