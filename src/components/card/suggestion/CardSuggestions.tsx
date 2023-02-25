@@ -39,15 +39,20 @@ const CardSuggestions: FC<_CardSuggestion> = memo(
 		const [materialSuggestions, setMaterialSuggestions] = useState<JSX.Element[]>([])
 		const [referenceSuggestions, setReferenceSuggestions] = useState<JSX.Element[]>([])
 		const [isLoadingSuggestions, setIsLoadingSuggestions] = useState<boolean>(true)
+		const [suggestionRequestHasError, setSuggestionRequestHasError] = useState<boolean>(false)
 
 		const [materialFor, setMaterialFor] = useState<JSX.Element[]>([])
 		const [referencedBy, setReferencedBy] = useState<JSX.Element[]>([])
 		const [isLoadingSupport, setIsLoadingSupport] = useState<boolean>(true)
-
-		const [hasError, setHasError] = useState<boolean>(false)
+		const [supportRequestHasError, setSupportRequestHasError] = useState<boolean>(false)
 
 		const isLoading = (): boolean => {
 			return isLoadingSuggestions || isLoadingSupport
+		}
+
+		// if both requests fail, then we will consider it an error
+		const hasError = (): boolean => {
+			return suggestionRequestHasError && supportRequestHasError
 		}
 
 		useEffect(() => {
@@ -62,7 +67,7 @@ const CardSuggestions: FC<_CardSuggestion> = memo(
 					false
 				)?.catch((_err) => {
 					setIsLoadingSuggestions(false)
-					setHasError(true)
+					setSuggestionRequestHasError(true)
 				})
 
 				FetchHandler.handleFetch(
@@ -75,7 +80,7 @@ const CardSuggestions: FC<_CardSuggestion> = memo(
 					false
 				)?.catch((_err) => {
 					setIsLoadingSupport(false)
-					setHasError(true)
+					setSupportRequestHasError(true)
 				})
 			})
 		}, [cardID])
@@ -86,9 +91,9 @@ const CardSuggestions: FC<_CardSuggestion> = memo(
 				sectionName='Suggestions'
 				sectionContent={
 					<div className='section-content'>
-						{!isLoading() && materialSuggestions.length === 0 && referenceSuggestions.length === 0 && materialFor.length === 0 && <Hint>Nothing here 🤔</Hint>}
+						{!isLoading() && !hasError() && materialSuggestions.length === 0 && referenceSuggestions.length === 0 && materialFor.length === 0 && <Hint>Nothing here 🤔</Hint>}
 						{isLoading() && <Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='380px' />}
-						{!isLoading() && !hasError && (
+						{!isLoading() && !hasError() && (
 							<Fragment>
 								<SuggestionSection suggestions={materialSuggestions} sectionName='Named Materials' />
 								<SuggestionSection suggestions={materialFor} sectionName='Material For' />
@@ -96,7 +101,7 @@ const CardSuggestions: FC<_CardSuggestion> = memo(
 								<SuggestionSection suggestions={referencedBy} sectionName='Referenced By' />
 							</Fragment>
 						)}
-						{!isLoadingSuggestions && hasError && <GenericNonBreakingErr errExplanation={'🤯 Suggestion Engine Is Offline 🤯'} />}
+						{!isLoadingSuggestions && hasError() && <GenericNonBreakingErr errExplanation={'🤯 Suggestion Engine Is Offline 🤯'} />}
 					</div>
 				}
 			/>
