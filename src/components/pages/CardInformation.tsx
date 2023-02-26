@@ -8,6 +8,7 @@ import DownstreamServices from '../../helper/DownstreamServices'
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 import Breadcrumb from '../header-footer/Breadcrumb'
 
+import CardSuggestions from '../card/suggestion/CardSuggestions'
 const CardData = lazy(() => import('../card/card-information/CardData'))
 const CardInformationRelatedContent = lazy(() => import('../card/card-information/CardInformationRelatedContent'))
 
@@ -15,21 +16,6 @@ class Card {
 	static cardId: string | null = null
 	static cardImg: HTMLImageElement
 	static readonly crumbs = ['Home', 'Card Browse']
-
-	static readonly loadRelatedContent = (isLoading: boolean, card: SKCCard, cardColor: cardColor, productInfo: ProductInfo[], restrictedIn: RestrictedIn) => {
-		if (!isLoading) {
-			return (
-				<CardInformationRelatedContent
-					card={card}
-					cardColor={cardColor?.replace(/Pendulum-/gi, '') as cardColor}
-					isLoading={isLoading}
-					cardID={Card.cardId!}
-					productInfo={productInfo}
-					restrictedIn={restrictedIn}
-				/>
-			)
-		}
-	}
 }
 
 function cardDataReducer(state: any, action: any) {
@@ -136,22 +122,26 @@ const CardInformation = () => {
 				}
 				twoThirdComponent={
 					<Suspense fallback={<Skeleton width='100%' height='20rem' />}>
-						{Card.loadRelatedContent(
-							isLoading,
-							{
-								cardName: cardName,
-								cardColor: cardColor,
-								cardEffect: cardEffect,
-								cardAttribute: cardAttribute,
-								monsterType: monsterType,
-								monsterAttack: monsterAtk,
-								monsterDefense: monsterDef,
-								monsterAssociation: monsterAssociation,
-								cardID: Card.cardId,
-							},
-							cardColor,
-							productInfo,
-							restrictionInfo
+						<CardSuggestions cardID={Card.cardId} cardColor={cardColor} />
+						{!isLoading && (
+							<CardInformationRelatedContent
+								card={{
+									cardName: cardName,
+									cardColor: cardColor,
+									cardEffect: cardEffect,
+									cardAttribute: cardAttribute,
+									monsterType: monsterType,
+									monsterAttack: monsterAtk,
+									monsterDefense: monsterDef,
+									monsterAssociation: monsterAssociation,
+									cardID: Card.cardId,
+								}}
+								cardColor={cardColor?.replace(/Pendulum-/gi, '') as cardColor}
+								isLoading={isLoading}
+								cardID={Card.cardId}
+								productInfo={productInfo}
+								restrictedIn={restrictionInfo}
+							/>
 						)}
 					</Suspense>
 				}

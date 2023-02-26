@@ -6,8 +6,6 @@ import Section from '../../util/generic/Section'
 import CardProductInformation from './CardProductInformation'
 import CardBanListInformation from './CardBanListInformation'
 
-import CardSuggestions from '../suggestion/CardSuggestions'
-
 type CardInformationRelatedContentType = {
 	card: SKCCard
 	isLoading: boolean
@@ -18,11 +16,9 @@ type CardInformationRelatedContentType = {
 }
 
 const CardInformationRelatedContent: FC<CardInformationRelatedContentType> = memo(
-	({ card, cardColor, isLoading, productInfo, restrictedIn, cardID }) => {
+	({ cardColor, isLoading, productInfo, restrictedIn, cardID }) => {
 		return (
 			<Fragment>
-				<CardSuggestions cardID={card.cardID} cardColor={card.cardColor} />
-
 				<Section
 					sectionHeaderBackground={cardColor !== undefined ? (cardColor?.replace(/Pendulum-/gi, '') as cardColor) : ''}
 					sectionName='Explore'
