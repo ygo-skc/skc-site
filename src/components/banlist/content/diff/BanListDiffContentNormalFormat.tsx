@@ -28,15 +28,17 @@ const BanListDiffContentNormalFormat: FC<_BanListDiffContentNormalFormat> = memo
 		isFetchingBanListNewContent,
 		isFetchingBanListRemovedContent,
 	}) => {
+		const isFetchingContent = (): boolean => {
+			return isFetchingBanListNewContent || isFetchingBanListRemovedContent
+		}
+
 		return (
 			<Fragment>
-				{isFetchingBanListNewContent && isFetchingBanListRemovedContent && (
-					<Skeleton className='rounded-skeleton cards-with-diff-status-skeleton' variant='rectangular' height='30rem' width='100%' />
-				)}
-				{numNewForbidden !== 0 && <CardsWithDifferentStatus newStatusName='Forbidden' cards={newForbiddenCards} numCards={numNewForbidden} />}
-				{numNewLimited !== 0 && <CardsWithDifferentStatus newStatusName='Limited' cards={newLimitedCards} numCards={numNewLimited} />}
-				{numNewSemiLimited !== 0 && <CardsWithDifferentStatus newStatusName='Semi Limited' cards={newSemiLimitedCards} numCards={numNewSemiLimited} />}
-				{numRemoved !== 0 && <CardsWithDifferentStatus newStatusName='Unlimited' cards={removedCards} numCards={numRemoved} />}
+				{isFetchingContent() && <Skeleton className='rounded-skeleton cards-with-diff-status-skeleton' variant='rectangular' height='30rem' width='100%' />}
+				{!isFetchingContent() && numNewForbidden !== 0 && <CardsWithDifferentStatus newStatusName='Forbidden' cards={newForbiddenCards} numCards={numNewForbidden} />}
+				{!isFetchingContent() && numNewLimited !== 0 && <CardsWithDifferentStatus newStatusName='Limited' cards={newLimitedCards} numCards={numNewLimited} />}
+				{!isFetchingContent() && numNewSemiLimited !== 0 && <CardsWithDifferentStatus newStatusName='Semi Limited' cards={newSemiLimitedCards} numCards={numNewSemiLimited} />}
+				{!isFetchingContent() && numRemoved !== 0 && <CardsWithDifferentStatus newStatusName='Unlimited' cards={removedCards} numCards={numRemoved} />}
 			</Fragment>
 		)
 	},

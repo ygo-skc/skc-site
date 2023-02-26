@@ -186,7 +186,6 @@ declare type CardReference = {
 declare type CardSuggestionOutput = {
 	namedMaterials: CardReference[]
 	namedReferences: CardReference[]
-	decks: Deck[]
 }
 
 declare type CardSupportOutput = {

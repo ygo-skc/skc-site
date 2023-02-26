@@ -32,14 +32,18 @@ const BanListDiffContentDuelLinksFormat: FC<_BanListDiffContentDuelLinksFormat> 
 		isFetchingBanListNewContent,
 		isFetchingBanListRemovedContent,
 	}) => {
+		const isFetchingContent = (): boolean => {
+			return isFetchingBanListNewContent || isFetchingBanListRemovedContent
+		}
+
 		return (
 			<Fragment>
-				{isFetchingBanListNewContent && isFetchingBanListRemovedContent && <Skeleton />}
-				{numNewForbidden !== 0 && <CardsWithDifferentStatus newStatusName='Forbidden' cards={newForbiddenCards} numCards={numNewForbidden} />}
-				{numNewLimitedOne !== 0 && <CardsWithDifferentStatus newStatusName='Limited One' cards={newLimitedOneCards} numCards={numNewLimitedOne} />}
-				{numNewLimitedTwo !== 0 && <CardsWithDifferentStatus newStatusName='Limited Two' cards={newLimitedTwoCards} numCards={numNewLimitedTwo} />}
-				{numNewLimitedThree !== 0 && <CardsWithDifferentStatus newStatusName='Limited Three' cards={newLimitedThreeCards} numCards={numNewLimitedThree} />}
-				{numRemoved !== 0 && <CardsWithDifferentStatus newStatusName='Unlimited' cards={removedCards} numCards={numRemoved} />}
+				{isFetchingContent() && <Skeleton className='rounded-skeleton cards-with-diff-status-skeleton' variant='rectangular' height='30rem' width='100%' />}
+				{!isFetchingContent() && numNewForbidden !== 0 && <CardsWithDifferentStatus newStatusName='Forbidden' cards={newForbiddenCards} numCards={numNewForbidden} />}
+				{!isFetchingContent() && numNewLimitedOne !== 0 && <CardsWithDifferentStatus newStatusName='Limited One' cards={newLimitedOneCards} numCards={numNewLimitedOne} />}
+				{!isFetchingContent() && numNewLimitedTwo !== 0 && <CardsWithDifferentStatus newStatusName='Limited Two' cards={newLimitedTwoCards} numCards={numNewLimitedTwo} />}
+				{!isFetchingContent() && numNewLimitedThree !== 0 && <CardsWithDifferentStatus newStatusName='Limited Three' cards={newLimitedThreeCards} numCards={numNewLimitedThree} />}
+				{!isFetchingContent() && numRemoved !== 0 && <CardsWithDifferentStatus newStatusName='Unlimited' cards={removedCards} numCards={numRemoved} />}
 			</Fragment>
 		)
 	},
