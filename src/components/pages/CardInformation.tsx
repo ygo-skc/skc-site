@@ -41,7 +41,7 @@ const CardInformation = () => {
 		Card.cardId = cardId as string
 
 		const cardImage = new Image()
-		cardImage.src = `https://images.thesupremekingscastle.com/cards/lg/${Card.cardId}.jpg`
+		cardImage.src = `https://images.thesupremekingscastle.com/cards/md/${Card.cardId}.jpg`
 		Card.cardImg = cardImage
 	}
 
