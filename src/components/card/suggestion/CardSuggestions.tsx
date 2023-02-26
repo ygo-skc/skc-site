@@ -54,6 +54,10 @@ const CardSuggestions: FC<_CardSuggestion> = ({ cardID, cardColor }) => {
 		return suggestionRequestHasError && supportRequestHasError
 	}
 
+	const hasNoContent = () => {
+		return materialSuggestions.length === 0 && referenceSuggestions.length === 0 && materialFor.length === 0 && referencedBy.length === 0
+	}
+
 	useEffect(() => {
 		startTransition(() => {
 			FetchHandler.handleFetch(
@@ -90,7 +94,7 @@ const CardSuggestions: FC<_CardSuggestion> = ({ cardID, cardColor }) => {
 			sectionName='Suggestions'
 			sectionContent={
 				<div className='section-content'>
-					{!isLoading() && !hasError() && materialSuggestions.length === 0 && referenceSuggestions.length === 0 && materialFor.length === 0 && <Hint>Nothing here 🤔</Hint>}
+					{!isLoading() && !hasError() && hasNoContent() && <Hint>Nothing here 🤔</Hint>}
 					{isLoading() && <Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='380px' />}
 					{!isLoading() && !hasError() && (
 						<Fragment>
@@ -100,7 +104,7 @@ const CardSuggestions: FC<_CardSuggestion> = ({ cardID, cardColor }) => {
 							<SuggestionSection suggestions={referencedBy} sectionName='Referenced By' />
 						</Fragment>
 					)}
-					{!isLoadingSuggestions && hasError() && <GenericNonBreakingErr errExplanation={'🤯 Suggestion Engine Is Offline 🤯'} />}
+					{!isLoading() && hasError() && <GenericNonBreakingErr errExplanation={'🤯 Suggestion Engine Is Offline 🤯'} />}
 				</div>
 			}
 		/>
