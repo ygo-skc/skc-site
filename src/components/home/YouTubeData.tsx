@@ -1,6 +1,5 @@
-import { useEffect, useState, lazy, FC, startTransition, Fragment } from 'react'
+import { useEffect, useState, lazy, FC, startTransition, Fragment, Suspense } from 'react'
 
-import YouTubeUploads from '../util/social/YouTubeUploads'
 import DownstreamServices from '../../helper/DownstreamServices'
 import FetchHandler from '../../helper/FetchHandler'
 import { Skeleton } from '@mui/material'
@@ -8,6 +7,7 @@ import { Skeleton } from '@mui/material'
 import '../../css/util/generic/youtube-data.css'
 
 const GenericNonBreakingErr = lazy(() => import('../util/exception/GenericNonBreakingErr'))
+const YouTubeUploads = lazy(() => import('../util/social/YouTubeUploads'))
 
 type _YouTubeData = {
 	channel: 'skc' | 'btsc'
@@ -52,11 +52,13 @@ const YouTubeData: FC<_YouTubeData> = ({ channel }) => {
 
 	return (
 		<Fragment>
-			{!isFetchingData && (
-				<YouTubeUploads youtubeData={youtubeUploadData} channelName={channelNames[channel]} channelId={channelId} channelDescription={channelDescription[channel]} />
-			)}
-			{!isFetchingData && errFetchingData && <GenericNonBreakingErr errExplanation='Come back at a different time to see recent YouTube uploads 🎥!' />}
-			{isFetchingData && <Skeleton variant='rectangular' height='375' width='100%' className='rounded-skeleton' />}
+			<Suspense fallback={<Skeleton variant='rectangular' height='375' width='100%' className='rounded-skeleton' />}>
+				{!isFetchingData && (
+					<YouTubeUploads youtubeData={youtubeUploadData} channelName={channelNames[channel]} channelId={channelId} channelDescription={channelDescription[channel]} />
+				)}
+				{!isFetchingData && errFetchingData && <GenericNonBreakingErr errExplanation='Come back at a different time to see recent YouTube uploads 🎥!' />}
+				{isFetchingData && <Skeleton variant='rectangular' height='375' width='100%' className='rounded-skeleton' />}
+			</Suspense>
 		</Fragment>
 	)
 }

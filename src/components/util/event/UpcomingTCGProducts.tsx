@@ -3,13 +3,12 @@ import { useCallback, lazy, startTransition, useEffect, useState } from 'react'
 import { Alert, Dialog, DialogTitle, IconButton, Skeleton, Snackbar, Typography } from '@mui/material'
 import DownstreamServices from '../../../helper/DownstreamServices'
 import FetchHandler from '../../../helper/FetchHandler'
-import EventItem from './EventItem'
 import LinkIcon from '@mui/icons-material/Link'
 
 const GenericNonBreakingErr = lazy(() => import('../exception/GenericNonBreakingErr'))
+const EventItem = lazy(() => import('./EventItem'))
 
 const UpcomingTCGProducts = () => {
-	const [events, setEvents] = useState<HeartApiEventItem[]>([])
 	const [eventsUI, setEventsUI] = useState<JSX.Element[]>([])
 	const [isSnackbarOpen, setIsSnackbarOpen] = useState<boolean>(false)
 	const [isFetchingData, setIsFetchingData] = useState(true)
@@ -18,29 +17,27 @@ const UpcomingTCGProducts = () => {
 	const [eventDialogIsOpen, setEventDialogIsOpen] = useState(false)
 	const [eventDialogEventData, setEventDialogEventData] = useState<HeartApiEventItem | undefined>(undefined)
 
-	const upcomingTCGProductsCB = (eventOutput: HeartApiEventOutput) => {
-		setEvents(eventOutput.events)
-		setIsFetchingData(false)
-	}
-
 	useEffect(() => {
 		startTransition(() => {
-			FetchHandler.handleFetch(`${DownstreamServices.HEART_API_HOST_NAME}/api/v1/events?service=skc&tags=product-release`, upcomingTCGProductsCB, false)?.catch((_err) => {
+			FetchHandler.handleFetch(
+				`${DownstreamServices.HEART_API_HOST_NAME}/api/v1/events?service=skc&tags=product-release`,
+				(eventOutput: HeartApiEventOutput) => {
+					const eUI = eventOutput.events.map((event: HeartApiEventItem) => (
+						<EventItem key={`${event.name} ${event.createdAt}`} event={event} showEventDialog={setEventDialogIsOpen} setEventDialogEventData={setEventDialogEventData} />
+					))
+
+					startTransition(() => {
+						setEventsUI(eUI)
+						setIsFetchingData(false)
+					})
+				},
+				false
+			)?.catch((_err) => {
 				setErrFetchingData(true)
 				setIsFetchingData(false)
 			})
 		})
 	}, [])
-
-	useEffect(() => {
-		const eUI = events.map((event: HeartApiEventItem) => (
-			<EventItem key={`${event.name} ${event.createdAt}`} event={event} showEventDialog={setEventDialogIsOpen} setEventDialogEventData={setEventDialogEventData} />
-		))
-
-		startTransition(() => {
-			setEventsUI(eUI)
-		})
-	}, [events])
 
 	const handleSnackbarIsClosed = useCallback(() => setIsSnackbarOpen(false), [isSnackbarOpen])
 
