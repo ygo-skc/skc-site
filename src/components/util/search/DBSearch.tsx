@@ -67,6 +67,7 @@ export default function DBSearch() {
 		),
 		[]
 	)
+	const handleFilterOptions = useCallback((options: any) => options, []) // this override is necessary as filtering happens at API level
 
 	return (
 		<Autocomplete
@@ -84,6 +85,7 @@ export default function DBSearch() {
 			renderGroup={handleRenderGroup}
 			renderInput={handleRenderInput}
 			renderOption={handleRenderOption}
+			filterOptions={handleFilterOptions}
 		/>
 	)
 }
