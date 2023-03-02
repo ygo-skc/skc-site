@@ -21,7 +21,7 @@
 		"react-markdown": "8.0.5",
 		"react-router-dom": "6.8.2",
 		"react-visibility-sensor": "5.1.1",
-		"styled-components": "5.3.6"
+		"styled-components": "5.3.8"
 	},
 	"resolutions": {
 		"d3-color": "3.1.0",
