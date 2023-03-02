@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, Suspense, useReducer } from 'react'
+import { useState, useEffect, lazy, Suspense, useReducer, Fragment } from 'react'
 import { useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { Skeleton } from '@mui/material'
@@ -121,29 +121,31 @@ const CardInformation = () => {
 					/>
 				}
 				twoThirdComponent={
-					<Suspense fallback={<Skeleton width='100%' height='20rem' />}>
+					<Fragment>
 						<CardSuggestions cardID={Card.cardId} cardColor={cardColor} />
-						{!isLoading && (
-							<CardInformationRelatedContent
-								card={{
-									cardName: cardName,
-									cardColor: cardColor,
-									cardEffect: cardEffect,
-									cardAttribute: cardAttribute,
-									monsterType: monsterType,
-									monsterAttack: monsterAtk,
-									monsterDefense: monsterDef,
-									monsterAssociation: monsterAssociation,
-									cardID: Card.cardId,
-								}}
-								cardColor={cardColor?.replace(/Pendulum-/gi, '') as cardColor}
-								isLoading={isLoading}
-								cardID={Card.cardId}
-								productInfo={productInfo}
-								restrictedIn={restrictionInfo}
-							/>
-						)}
-					</Suspense>
+						<Suspense fallback={<Skeleton width='100%' height='20rem' />}>
+							{!isLoading && (
+								<CardInformationRelatedContent
+									card={{
+										cardName: cardName,
+										cardColor: cardColor,
+										cardEffect: cardEffect,
+										cardAttribute: cardAttribute,
+										monsterType: monsterType,
+										monsterAttack: monsterAtk,
+										monsterDefense: monsterDef,
+										monsterAssociation: monsterAssociation,
+										cardID: Card.cardId,
+									}}
+									cardColor={cardColor?.replace(/Pendulum-/gi, '') as cardColor}
+									isLoading={isLoading}
+									cardID={Card.cardId}
+									productInfo={productInfo}
+									restrictedIn={restrictionInfo}
+								/>
+							)}
+						</Suspense>
+					</Fragment>
 				}
 			/>
 		</div>
