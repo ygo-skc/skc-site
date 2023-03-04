@@ -1,18 +1,3 @@
-.ygo-card-with-quantity-parent {
-	width: 20rem;
-	max-width: 20rem;
-	min-width: 20rem;
-	cursor: pointer;
-	background-color: #eee;
-	padding: 1rem;
-	border-radius: 2.5rem;
-	box-sizing: border-box;
-}
-
-.ygo-card-with-quantity-parent:not(:last-child) {
-	margin-right: 2rem;
-}
-
 .quantity-chip {
 	background: rgba(107, 52, 91, 0.8);
 	margin: 0;

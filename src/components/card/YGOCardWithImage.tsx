@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, Fragment } from 'react'
 import CardImageRounded from '../util/photo/CardImageRounded'
 import YGOCard from './YGOCard'
 
@@ -8,7 +8,7 @@ type _YGOCardWithImage = {
 
 const YGOCardWithImage: FC<_YGOCardWithImage> = ({ card }) => {
 	return (
-		<div>
+		<Fragment>
 			<CardImageRounded cardImg={`https://images.thesupremekingscastle.com/cards/x-sm/${card.cardID}.jpg`} />
 
 			<YGOCard
@@ -21,7 +21,7 @@ const YGOCardWithImage: FC<_YGOCardWithImage> = ({ card }) => {
 				monsterAssociation={card.monsterAssociation}
 				cardAttribute={card.cardAttribute}
 			/>
-		</div>
+		</Fragment>
 	)
 }
 

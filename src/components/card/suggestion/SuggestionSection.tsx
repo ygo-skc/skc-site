@@ -2,8 +2,6 @@ import { ClickAwayListener, IconButton, Tooltip, Typography } from '@mui/materia
 import { FC, Fragment, useCallback, useState } from 'react'
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark'
 
-import '../../../css/card/ygo-card-suggestion.css'
-
 type _SuggestionSection = {
 	suggestions: JSX.Element[]
 	sectionName: string

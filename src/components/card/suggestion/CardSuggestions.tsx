@@ -6,6 +6,9 @@ import Section from '../../util/generic/Section'
 import FetchHandler from '../../../helper/FetchHandler'
 import DownstreamServices from '../../../helper/DownstreamServices'
 import GenericNonBreakingErr from '../../util/exception/GenericNonBreakingErr'
+import YGOCardWithImage from '../YGOCardWithImage'
+
+import '../../../css/card/ygo-card-suggestion.css'
 
 const Hint = lazy(() => import('../../util/generic/Hints'))
 const SuggestionSection = lazy(() => import('./SuggestionSection'))
@@ -20,7 +23,11 @@ type _CardSuggestion = {
 function transformReferences(references: CardReference[]): JSX.Element[] {
 	return references !== null
 		? references.map((reference: CardReference) => {
-				return <YGOCardWithQuantity key={reference.card.cardID} card={reference.card} occurrences={reference.occurrences} />
+				return (
+					<div key={reference.card.cardID} className='suggested-ygo-card-wrapper' onClick={() => window.location.assign(`/card/${reference.card.cardID}`)}>
+						<YGOCardWithQuantity card={reference.card} occurrences={reference.occurrences} />
+					</div>
+				)
 		  })
 		: []
 }
@@ -28,7 +35,11 @@ function transformReferences(references: CardReference[]): JSX.Element[] {
 function transformSupport(support: SKCCard[]): JSX.Element[] {
 	return support !== null
 		? support.map((reference: SKCCard) => {
-				return <YGOCardWithQuantity key={reference.cardID} card={reference} occurrences={1} />
+				return (
+					<div key={reference.cardID} className='suggested-ygo-card-wrapper' onClick={() => window.location.assign(`/card/${reference.cardID}`)}>
+						<YGOCardWithImage key={reference.cardID} card={reference} />
+					</div>
+				)
 		  })
 		: []
 }

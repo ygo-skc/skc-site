@@ -1,5 +1,5 @@
 import { Chip } from '@mui/material'
-import { FC } from 'react'
+import { FC, Fragment } from 'react'
 import CardImageRounded from '../util/photo/CardImageRounded'
 import YGOCard from './YGOCard'
 
@@ -10,11 +10,11 @@ const YGOCardWithQuantity: FC<{
 	occurrences: number
 }> = ({ card, occurrences }) => {
 	return (
-		<div className='light-shadow ygo-card-with-quantity-parent' onClick={() => window.location.assign(`/card/${card.cardID}`)}>
+		<Fragment>
 			<div className='header'>
 				<CardImageRounded cardImg={`https://images.thesupremekingscastle.com/cards/tn/${card.cardID}.jpg`} />
 				<div className='quantity-text-container'>
-					<Chip className='quantity-chip' key={card.cardID} label={`X ${occurrences}`} />
+					<Chip className='quantity-chip' key={card.cardID} label={`${occurrences} Reference(s)`} />
 				</div>
 			</div>
 
@@ -30,7 +30,7 @@ const YGOCardWithQuantity: FC<{
 				monsterAssociation={card.monsterAssociation}
 				fullDetails={false}
 			/>
-		</div>
+		</Fragment>
 	)
 }
 
