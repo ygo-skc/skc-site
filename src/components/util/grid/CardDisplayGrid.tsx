@@ -3,9 +3,8 @@ import { useEffect, memo, FC, useReducer, useCallback } from 'react'
 import { IconButton, Box, Skeleton } from '@mui/material'
 import Grid2 from '@mui/material/Unstable_Grid2'
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded'
-import CardImageRounded from '../photo/CardImageRounded'
-import YGOCard from '../../card/YGOCard'
 import Hint from '../generic/Hints'
+import YGOCardWithImage from '../../card/YGOCardWithImage'
 
 function getPlaceholderCardComponent() {
 	const placeHolder = []
@@ -37,18 +36,7 @@ const CardDisplayGridItem: FC<{ card: SKCCard }> = ({ card }) => {
 
 	return (
 		<Grid2 className='ygo-card-grid-item' id={card.cardID} key={card.cardID} xs={6} sm={4} md={4} lg={3} xl={2} onClick={handleCardClicked}>
-			<CardImageRounded cardImg={`https://images.thesupremekingscastle.com/cards/x-sm/${card.cardID}.jpg`} />
-
-			<YGOCard
-				cardName={card.cardName}
-				cardColor={card.cardColor}
-				cardEffect={card.cardEffect}
-				monsterType={card.monsterType}
-				cardID={card.cardID}
-				fullDetails={false}
-				monsterAssociation={card.monsterAssociation}
-				cardAttribute={card.cardAttribute}
-			/>
+			<YGOCardWithImage card={card} />
 		</Grid2>
 	)
 }
