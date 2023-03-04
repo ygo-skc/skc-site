@@ -1,5 +1,5 @@
 import { ClickAwayListener, IconButton, Tooltip, Typography } from '@mui/material'
-import { FC, Fragment, useState } from 'react'
+import { FC, Fragment, useCallback, useState } from 'react'
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark'
 
 import '../../../css/card/ygo-card-suggestion.css'
@@ -13,6 +13,14 @@ type _SuggestionSection = {
 const SuggestionSection: FC<_SuggestionSection> = ({ suggestions, sectionName, sectionExplanation }) => {
 	const [isTooltipOpen, setIsTooltipOpen] = useState(false)
 
+	const handleDismissTooltip = useCallback(() => {
+		setIsTooltipOpen(false)
+	}, [])
+
+	const handleOpenTooltip = useCallback(() => {
+		setIsTooltipOpen(true)
+	}, [])
+
 	return (
 		<Fragment>
 			{suggestions.length === 0 ? undefined : (
@@ -22,13 +30,13 @@ const SuggestionSection: FC<_SuggestionSection> = ({ suggestions, sectionName, s
 							{sectionName} ({suggestions.length})
 						</Typography>
 
-						<ClickAwayListener onClickAway={() => setIsTooltipOpen(false)}>
+						<ClickAwayListener onClickAway={handleDismissTooltip}>
 							<div>
 								<Tooltip
 									PopperProps={{
 										disablePortal: true,
 									}}
-									onClose={() => setIsTooltipOpen(false)}
+									onClose={handleDismissTooltip}
 									open={isTooltipOpen}
 									disableFocusListener
 									disableHoverListener
@@ -36,7 +44,7 @@ const SuggestionSection: FC<_SuggestionSection> = ({ suggestions, sectionName, s
 									title={sectionExplanation}
 									arrow
 								>
-									<IconButton className='suggestion-section-question-mark-button' onClick={() => setIsTooltipOpen(true)}>
+									<IconButton className='suggestion-section-question-mark-button' onClick={handleOpenTooltip}>
 										<QuestionMarkIcon className='suggestion-section-question-mark-icon' />
 									</IconButton>
 								</Tooltip>
