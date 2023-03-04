@@ -1,9 +1,29 @@
-.suggestion-wrapper {
+.suggestions-wrapper {
 	display: flex;
 	overflow-x: auto;
 	padding-bottom: 0.3rem;
 }
 
-.suggestion-parent:not(:last-child) {
+.suggestion-section:not(:last-child) {
 	margin-bottom: 3rem;
+}
+
+.suggestion-section-title {
+	display: flex;
+}
+
+.suggestion-section-question-mark-button {
+	height: 18;
+	width: 18;
+	background: #4d4a59;
+	color: white;
+	margin-left: 5px;
+}
+
+.suggestion-section-question-mark-button:hover {
+	background: #4d4a59;
+}
+
+.suggestion-section-question-mark-icon.MuiSvgIcon-fontSizeMedium {
+	font-size: 1rem;
 }

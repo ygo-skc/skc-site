@@ -122,7 +122,7 @@ const CardInformation = () => {
 				}
 				twoThirdComponent={
 					<Fragment>
-						<CardSuggestions cardID={Card.cardId} cardColor={cardColor} />
+						<CardSuggestions cardID={Card.cardId} cardColor={cardColor} cardName={cardName} />
 						<Suspense fallback={<Skeleton width='100%' height='20rem' />}>
 							{!isLoading && (
 								<CardInformationRelatedContent

@@ -7,8 +7,6 @@ import FetchHandler from '../../../helper/FetchHandler'
 import DownstreamServices from '../../../helper/DownstreamServices'
 import GenericNonBreakingErr from '../../util/exception/GenericNonBreakingErr'
 
-import '../../../css/card/ygo-card-suggestion.css'
-
 const Hint = lazy(() => import('../../util/generic/Hints'))
 const SuggestionSection = lazy(() => import('./SuggestionSection'))
 const YGOCardWithQuantity = lazy(() => import('../YGOCardWithQuantity'))
@@ -16,6 +14,7 @@ const YGOCardWithQuantity = lazy(() => import('../YGOCardWithQuantity'))
 type _CardSuggestion = {
 	cardID: string
 	cardColor: cardColor
+	cardName: string
 }
 
 function transformReferences(references: CardReference[]): JSX.Element[] {
@@ -34,7 +33,7 @@ function transformSupport(support: SKCCard[]): JSX.Element[] {
 		: []
 }
 
-const CardSuggestions: FC<_CardSuggestion> = ({ cardID, cardColor }) => {
+const CardSuggestions: FC<_CardSuggestion> = ({ cardID, cardColor, cardName }) => {
 	const [materialSuggestions, setMaterialSuggestions] = useState<JSX.Element[]>([])
 	const [referenceSuggestions, setReferenceSuggestions] = useState<JSX.Element[]>([])
 	const [isLoadingSuggestions, setIsLoadingSuggestions] = useState<boolean>(true)
@@ -101,10 +100,26 @@ const CardSuggestions: FC<_CardSuggestion> = ({ cardID, cardColor }) => {
 						{isLoading() && LoadingUI}
 						{!isLoading() && !hasError() && (
 							<Fragment>
-								<SuggestionSection suggestions={materialSuggestions} sectionName='Named Materials' />
-								<SuggestionSection suggestions={materialFor} sectionName='Material For' />
-								<SuggestionSection suggestions={referenceSuggestions} sectionName='References' />
-								<SuggestionSection suggestions={referencedBy} sectionName='Referenced By' />
+								<SuggestionSection
+									suggestions={materialSuggestions}
+									sectionName='Named Materials'
+									sectionExplanation={`Other cards that are directly referenced as summoning material by ${cardName} card. Currently, only extra deck summonsing materials are suggested.`}
+								/>
+								<SuggestionSection
+									suggestions={materialFor}
+									sectionName='Material For'
+									sectionExplanation={`${cardName} can be used as a material for the cards in this section.`}
+								/>
+								<SuggestionSection
+									suggestions={referenceSuggestions}
+									sectionName='References'
+									sectionExplanation={`${cardName} is referencing the below cards. If ${cardName} is an extra deck monster, its named summoning materials are omitted here.`}
+								/>
+								<SuggestionSection
+									suggestions={referencedBy}
+									sectionName='Referenced By'
+									sectionExplanation={`Cards that directly reference ${cardName}. Omits extra deck monsters that reference ${cardName} as a summoning material.`}
+								/>
 							</Fragment>
 						)}
 						{!isLoading() && hasError() && <GenericNonBreakingErr errExplanation={'🤯 Suggestion Engine Is Offline 🤯'} />}
