@@ -8,7 +8,7 @@ type _YGOCardWithImage = {
 
 const YGOCardWithImage: FC<_YGOCardWithImage> = ({ card }) => {
 	return (
-		<div className='ygo-card-with-image-parent'>
+		<div>
 			<CardImageRounded cardImg={`https://images.thesupremekingscastle.com/cards/x-sm/${card.cardID}.jpg`} />
 
 			<YGOCard
