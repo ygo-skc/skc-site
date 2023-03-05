@@ -1,6 +1,6 @@
 {
 	"name": "skc-site",
-	"version": "1.8.0",
+	"version": "1.9.0",
 	"description": "Website to help duelists.",
 	"main": "index.js",
 	"author": "",
