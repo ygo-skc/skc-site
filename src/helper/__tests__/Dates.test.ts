@@ -14,8 +14,9 @@ test('verify date gets formatted with {month day, year}', () => {
 })
 
 test('verify time gets formatted with {hh:mm ZONE}', () => {
-	expect(Dates.getTimeString(myBday)).toBe('6:40 PM')
-	expect(Dates.getTimeString(becksBday)).toBe('8:28 PM')
+	// v8 browsers (like chrome) started adding this character in place of space https://stackoverflow.com/questions/75406192/javascript-tolocaletimestring-returning-ascii-226-instead-of-space-in-latest-v
+	expect(Dates.getTimeString(myBday)).toBe('6:40 PM')
+	expect(Dates.getTimeString(becksBday)).toBe('8:28 PM')
 })
 
 test('verify month is formatted correctly {3 char month - xxx}', () => {
@@ -68,7 +69,7 @@ test("verify retrieval of ban list date range doesn't cause issues with undefine
 test('verify retrieval of ban list date range works as intended', () => {
 	const dates = ['2021-01-10', '2021-03-11', '2021-07-01']
 
-	expect(Dates.getCurrentBanListDate('2021-01-10', dates)).toBe('Jan 10, 2021 - Present')
+	expect(Dates.getCurrentBanListDate('2021-01-10', dates)).toBe('Jan 10, 2021 - ⁇')
 	expect(Dates.getCurrentBanListDate('2021-03-11', dates)).toBe('Mar 11, 2021 - Jan 10, 2021')
 	expect(Dates.getCurrentBanListDate('2021-07-01', dates)).toBe('Jul 1, 2021 - Mar 11, 2021')
 })

@@ -1,4 +1,4 @@
-import { lazy, useState, useEffect, Suspense, useReducer, startTransition, Fragment, useCallback } from 'react'
+import { lazy, useState, useEffect, Suspense, useReducer, startTransition, useCallback } from 'react'
 import { Helmet } from 'react-helmet'
 
 import { Skeleton } from '@mui/material'
@@ -13,31 +13,23 @@ import '../../css/main-pages/ban-list.css'
 import Section from '../util/generic/Section'
 import dateReducer, { BanListDateReducerActionType } from '../../helper/reducers/BanListDateReducer'
 import currentlySelectedBanListReducer, { CurrentlySelectedBanListReducerActionType } from '../../helper/reducers/CurrentBanListReducer'
-import { Dates } from '../../helper/Dates'
-
-const Hint = lazy(() => import('../util/generic/Hints'))
+import { useParams } from 'react-router-dom'
+import { AcceptableBanListFormat, determineListSize, getValidFormat } from '../../helper/BanListUtil'
 
 const BanListDates = lazy(() => import('../banlist/BanListDates'))
 const BanListFormat = lazy(() => import('../banlist/BanListFormat'))
 
-const BanListBreakdownNormalFormat = lazy(() => import('../banlist/breakdown/normal/BanListBreakdownNormalFormat'))
-const BanListBreakdownDuelLinksFormat = lazy(() => import('../banlist/breakdown/duel-links/BanListBreakdownDuelLinksFormat'))
-
-const BanListContentNormalFormat = lazy(() => import('../banlist/content/BanListContentNormalFormat'))
-const BanListContentDuelLinksFormat = lazy(() => import('../banlist/content/BanListContentDuelLinksFormat'))
-const BanListDiffContentNormalFormat = lazy(() => import('../banlist/content/diff/BanListDiffContentNormalFormat'))
-const BanListDiffContentDuelLinksFormat = lazy(() => import('../banlist/content/diff/BanListDiffContentDuelLinksFormat'))
-
-function determineListSize(size: number | undefined): number {
-	return size === undefined ? 0 : size
-}
+const BanListBreakdown = lazy(() => import('../banlist/breakdown/BanListBreakdown'))
+const BanListContent = lazy(() => import('../banlist/content/BanListContent'))
 
 export default function BanList() {
 	const [selectedBanList, setSelectedBanList] = useState<string>('')
 	const [isFetchingBanList, setIsFetchingBanList] = useState(true)
 	const [isFetchingBanListNewContent, setFetchingBanListNewContent] = useState(true)
 	const [isFetchingBanListRemovedContent, setFetchingBanListRemovedContent] = useState(true)
-	const [format, setFormat] = useState<BanListFormat>('TCG')
+
+	const { specifiedFormat } = useParams<'specifiedFormat'>()
+	const [format, setFormat] = useState<AcceptableBanListFormat>(getValidFormat(specifiedFormat))
 
 	const [{ banListStartDates, banContentLinks, isFetchingBanListDates }, dateDispatch] = useReducer(dateReducer, {
 		banListStartDates: [],
@@ -105,6 +97,8 @@ export default function BanList() {
 	})
 
 	useEffect(() => {
+		window.history.replaceState(null, '', `/ban_list/${format}`)
+
 		dateDispatch({
 			type: BanListDateReducerActionType.FETCHING_DATES,
 		})
@@ -229,91 +223,82 @@ export default function BanList() {
 							sectionContent={
 								<div className='section-content'>
 									<BanListFormat format={format} setFormat={setFormat} />
-									<BanListDates isFetchingBanListDates={isFetchingBanListDates} banListStartDates={banListStartDates} setSelectedBanList={handleBanListChosen} />
+									<BanListDates
+										isFetchingBanListDates={isFetchingBanListDates}
+										banListStartDates={banListStartDates}
+										selectedBanList={selectedBanList}
+										setSelectedBanList={handleBanListChosen}
+									/>
 
-									{!isFetchingBanListDates && Dates.isFutureDate(Dates.fromYYYYMMDDToDate(selectedBanList)) && (
-										<Hint backgroundColor='rgba(0, 0, 0, 0.7)' textColor='white' variant='tight'>
-											Current List Will Be Effective In {Dates.daysBetweenTwoDates(new Date(), Dates.fromYYYYMMDDToDate(selectedBanList))} Day(s)
-										</Hint>
-									)}
-
-									{format === 'DL' ? (
-										<BanListBreakdownDuelLinksFormat
-											spreads={{ numForbidden, numLimitedOne, numLimitedTwo, numLimitedThree }}
-											diffSpreads={{ numNewForbidden, numNewLimitedOne, numNewLimitedTwo, numNewLimitedThree, numRemoved }}
-											isFetchingBanList={isFetchingBanList}
-											isFetchingBanListNewContent={isFetchingBanListNewContent}
-											isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
-										/>
-									) : (
-										<BanListBreakdownNormalFormat
-											spreads={{ numForbidden, numLimited, numSemiLimited }}
-											diffSpreads={{ numNewForbidden, numNewLimited, numNewSemiLimited, numRemoved }}
-											isFetchingBanList={isFetchingBanList}
-											isFetchingBanListNewContent={isFetchingBanListNewContent}
-											isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
-										/>
-									)}
+									<BanListBreakdown
+										normalFormatSpreads={{ numForbidden, numLimited, numSemiLimited }}
+										normalFormatDiffSpreads={{ numNewForbidden, numNewLimited, numNewSemiLimited, numRemoved }}
+										dlFormatSpreads={{ numForbidden, numLimitedOne, numLimitedTwo, numLimitedThree }}
+										dlFormatDiffSpreads={{ numNewForbidden, numNewLimitedOne, numNewLimitedTwo, numNewLimitedThree, numRemoved }}
+										isFetchingBanList={isFetchingBanList}
+										isFetchingBanListNewContent={isFetchingBanListNewContent}
+										isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
+										format={format}
+									/>
 								</div>
 							}
 						/>
 					</Suspense>
 				}
 				twoThirdComponent={
-					<Suspense fallback={<div />}>
-						{format === 'DL' ? (
-							<Fragment>
-								<BanListDiffContentDuelLinksFormat
-									removedCards={removedCards}
-									numRemoved={numRemoved}
-									newForbiddenCards={newForbiddenCards}
-									newLimitedOneCards={newLimitedOneCards}
-									newLimitedTwoCards={newLimitedTwoCards}
-									newLimitedThreeCards={newLimitedThreeCards}
-									numNewForbidden={numNewForbidden}
-									numNewLimitedOne={numNewLimitedOne}
-									numNewLimitedTwo={numNewLimitedTwo}
-									numNewLimitedThree={numNewLimitedThree}
-									isFetchingBanListNewContent={isFetchingBanListNewContent}
-									isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
-								/>
-								<BanListContentDuelLinksFormat
-									forbidden={forbidden}
-									limitedOne={limitedOne}
-									limitedTwo={limitedTwo}
-									limitedThree={limitedThree}
-									numForbidden={numForbidden}
-									numLimitedOne={numLimitedOne}
-									numLimitedTwo={numLimitedTwo}
-									numLimitedThree={numLimitedThree}
-									isFetchingBanList={isFetchingBanList}
-								/>
-							</Fragment>
-						) : (
-							<Fragment>
-								<BanListDiffContentNormalFormat
-									removedCards={removedCards}
-									numRemoved={numRemoved}
-									newForbiddenCards={newForbiddenCards}
-									newLimitedCards={newLimitedCards}
-									newSemiLimitedCards={newSemiLimitedCards}
-									numNewForbidden={numNewForbidden}
-									numNewLimited={numNewLimited}
-									numNewSemiLimited={numNewSemiLimited}
-									isFetchingBanListNewContent={isFetchingBanListNewContent}
-									isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
-								/>
-								<BanListContentNormalFormat
-									forbidden={forbidden}
-									limited={limited}
-									semiLimited={semiLimited}
-									numForbidden={numForbidden}
-									numLimited={numLimited}
-									numSemiLimited={numSemiLimited}
-									isFetchingBanList={isFetchingBanList}
-								/>
-							</Fragment>
-						)}
+					<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='500px' />}>
+						<BanListContent
+							normalFormatContent={{
+								forbidden: forbidden,
+								limited: limited,
+								semiLimited: semiLimited,
+								numForbidden: numForbidden,
+								numLimited: numLimited,
+								numSemiLimited: numSemiLimited,
+								isFetchingBanList: isFetchingBanList,
+							}}
+							normalFormatDiffContent={{
+								removedCards: removedCards,
+								numRemoved: numRemoved,
+								newForbiddenCards: newForbiddenCards,
+								newLimitedCards: newLimitedCards,
+								newSemiLimitedCards: newSemiLimitedCards,
+								numNewForbidden: numNewForbidden,
+								numNewLimited: numNewLimited,
+								numNewSemiLimited: numNewSemiLimited,
+								isFetchingBanListNewContent: isFetchingBanListNewContent,
+								isFetchingBanListRemovedContent: isFetchingBanListRemovedContent,
+							}}
+							dlFormatContent={{
+								forbidden: forbidden,
+								limitedOne: limitedOne,
+								limitedTwo: limitedTwo,
+								limitedThree: limitedThree,
+								numForbidden: numForbidden,
+								numLimitedOne: numLimitedOne,
+								numLimitedTwo: numLimitedTwo,
+								numLimitedThree: numLimitedThree,
+								isFetchingBanList: isFetchingBanList,
+							}}
+							dlFormatDiffContent={{
+								removedCards: removedCards,
+								numRemoved: numRemoved,
+								newForbiddenCards: newForbiddenCards,
+								newLimitedOneCards: newLimitedOneCards,
+								newLimitedTwoCards: newLimitedTwoCards,
+								newLimitedThreeCards: newLimitedThreeCards,
+								numNewForbidden: numNewForbidden,
+								numNewLimitedOne: numNewLimitedOne,
+								numNewLimitedTwo: numNewLimitedTwo,
+								numNewLimitedThree: numNewLimitedThree,
+								isFetchingBanListNewContent: isFetchingBanListNewContent,
+								isFetchingBanListRemovedContent: isFetchingBanListRemovedContent,
+							}}
+							format={format}
+							isFetchingBanListNewContent={isFetchingBanListNewContent}
+							isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
+							isFetchingBanList={isFetchingBanList}
+						/>
 					</Suspense>
 				}
 			/>

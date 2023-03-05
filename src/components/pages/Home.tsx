@@ -1,4 +1,3 @@
-import { lazy, Suspense } from 'react'
 import { Helmet } from 'react-helmet'
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 import Section from '../util/generic/Section'
@@ -7,9 +6,8 @@ import Breadcrumb from '../header-footer/Breadcrumb'
 import DatabaseInfo from '../util/database-info/DatabaseInfo'
 import UpcomingTCGProducts from '../util/event/UpcomingTCGProducts'
 import Welcome from '../home/Welcome'
-
-const YouTubeData = lazy(() => import('../home/YouTubeData'))
-const SocialMedia = lazy(() => import('../util/social/SocialMedia'))
+import SocialMedia from '../util/social/SocialMedia'
+import YouTubeData from '../home/YouTubeData'
 
 export default function Home() {
 	return (
@@ -26,17 +24,7 @@ export default function Home() {
 
 			<OneThirdTwoThirdsGrid
 				mirrored={true}
-				oneThirdComponent={
-					<Section
-						sticky
-						sectionName='Social'
-						sectionContent={
-							<Suspense fallback={null}>
-								<SocialMedia /> /
-							</Suspense>
-						}
-					/>
-				}
+				oneThirdComponent={<Section sticky sectionName='Social' sectionContent={<SocialMedia />} />}
 				twoThirdComponent={
 					<Section
 						sectionName='Welcome'
@@ -45,14 +33,12 @@ export default function Home() {
 								<div className='multi-section'>
 									<Welcome />
 								</div>
-								<Suspense fallback={null}>
-									<div className='multi-section'>
-										<YouTubeData channel='skc' />
-									</div>
-									<div className='multi-section'>
-										<YouTubeData channel='btsc' />
-									</div>
-								</Suspense>
+								<div className='multi-section'>
+									<YouTubeData channel='skc' />
+								</div>
+								<div className='multi-section'>
+									<YouTubeData channel='btsc' />
+								</div>
 							</div>
 						}
 					/>

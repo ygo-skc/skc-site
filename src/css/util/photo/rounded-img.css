@@ -15,4 +15,5 @@
 #rounded-img {
 	height: auto;
 	object-fit: cover;
+	aspect-ratio: 1;
 }

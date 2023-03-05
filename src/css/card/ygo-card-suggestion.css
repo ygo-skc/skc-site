@@ -1,9 +1,44 @@
-.suggestion-wrapper {
+.suggestions-wrapper {
 	display: flex;
 	overflow-x: auto;
 	padding-bottom: 0.3rem;
 }
 
-.suggestion-parent:not(:last-child) {
-	margin-bottom: 5rem;
+.suggestion-section:not(:last-child) {
+	margin-bottom: 3rem;
+}
+
+.suggestion-section-title {
+	display: flex;
+}
+
+.suggestion-section-question-mark-button {
+	height: 18;
+	width: 18;
+	background: #4d4a59;
+	color: white;
+	margin-left: 5px;
+}
+
+.suggestion-section-question-mark-button:hover {
+	background: #4d4a59;
+}
+
+.suggestion-section-question-mark-icon.MuiSvgIcon-fontSizeMedium {
+	font-size: 1rem;
+}
+
+.suggested-ygo-card-wrapper {
+	width: 19rem;
+	max-width: 19rem;
+	min-width: 19rem;
+	cursor: pointer;
+	background-color: #eee;
+	padding: 1rem;
+	border-radius: 2.5rem;
+	box-sizing: border-box;
+}
+
+.suggested-ygo-card-wrapper:not(:last-child) {
+	margin-right: 2rem;
 }

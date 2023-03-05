@@ -1,7 +1,8 @@
+import { Skeleton } from '@mui/material'
 import { FC, Fragment, memo } from 'react'
-import BanListChangedStatus from './CardsWithDifferentStatus'
+import CardsWithDifferentStatus from './CardsWithDifferentStatus'
 
-type _BanListDiffContentNormalFormat = {
+export type _BanListDiffContentNormalFormat = {
 	removedCards: SKCCardsPreviousBanListStatus[]
 	numRemoved: number
 	newForbiddenCards: SKCCardsPreviousBanListStatus[]
@@ -27,13 +28,17 @@ const BanListDiffContentNormalFormat: FC<_BanListDiffContentNormalFormat> = memo
 		isFetchingBanListNewContent,
 		isFetchingBanListRemovedContent,
 	}) => {
+		const isFetchingContent = (): boolean => {
+			return isFetchingBanListNewContent || isFetchingBanListRemovedContent
+		}
+
 		return (
 			<Fragment>
-				<BanListChangedStatus newStatusName='Forbidden' cards={newForbiddenCards} numCards={numNewForbidden} isLoadingData={isFetchingBanListNewContent} />
-				<BanListChangedStatus newStatusName='Limited' cards={newLimitedCards} numCards={numNewLimited} isLoadingData={isFetchingBanListNewContent} />
-				<BanListChangedStatus newStatusName='Semi Limited' cards={newSemiLimitedCards} numCards={numNewSemiLimited} isLoadingData={isFetchingBanListNewContent} />
-
-				<BanListChangedStatus newStatusName='Unlimited' cards={removedCards} numCards={numRemoved} isLoadingData={isFetchingBanListRemovedContent} />
+				{isFetchingContent() && <Skeleton className='rounded-skeleton cards-with-diff-status-skeleton' variant='rectangular' height='30rem' width='100%' />}
+				{!isFetchingContent() && numNewForbidden !== 0 && <CardsWithDifferentStatus newStatusName='Forbidden' cards={newForbiddenCards} numCards={numNewForbidden} />}
+				{!isFetchingContent() && numNewLimited !== 0 && <CardsWithDifferentStatus newStatusName='Limited' cards={newLimitedCards} numCards={numNewLimited} />}
+				{!isFetchingContent() && numNewSemiLimited !== 0 && <CardsWithDifferentStatus newStatusName='Semi Limited' cards={newSemiLimitedCards} numCards={numNewSemiLimited} />}
+				{!isFetchingContent() && numRemoved !== 0 && <CardsWithDifferentStatus newStatusName='Unlimited' cards={removedCards} numCards={numRemoved} />}
 			</Fragment>
 		)
 	},

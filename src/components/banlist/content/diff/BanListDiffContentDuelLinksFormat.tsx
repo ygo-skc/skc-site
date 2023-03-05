@@ -1,7 +1,8 @@
+import { Skeleton } from '@mui/material'
 import { FC, Fragment, memo } from 'react'
-import BanListChangedStatus from './CardsWithDifferentStatus'
+import CardsWithDifferentStatus from './CardsWithDifferentStatus'
 
-type _BanListDiffContentDuelLinksFormat = {
+export type _BanListDiffContentDuelLinksFormat = {
 	removedCards: SKCCardsPreviousBanListStatus[]
 	numRemoved: number
 	newForbiddenCards: SKCCardsPreviousBanListStatus[]
@@ -31,13 +32,18 @@ const BanListDiffContentDuelLinksFormat: FC<_BanListDiffContentDuelLinksFormat> 
 		isFetchingBanListNewContent,
 		isFetchingBanListRemovedContent,
 	}) => {
+		const isFetchingContent = (): boolean => {
+			return isFetchingBanListNewContent || isFetchingBanListRemovedContent
+		}
+
 		return (
 			<Fragment>
-				<BanListChangedStatus newStatusName='Forbidden' cards={newForbiddenCards} numCards={numNewForbidden} isLoadingData={isFetchingBanListNewContent} />
-				<BanListChangedStatus newStatusName='Limited One' cards={newLimitedOneCards} numCards={numNewLimitedOne} isLoadingData={isFetchingBanListNewContent} />
-				<BanListChangedStatus newStatusName='Limited Two' cards={newLimitedTwoCards} numCards={numNewLimitedTwo} isLoadingData={isFetchingBanListNewContent} />
-				<BanListChangedStatus newStatusName='Limited Three' cards={newLimitedThreeCards} numCards={numNewLimitedThree} isLoadingData={isFetchingBanListNewContent} />
-				<BanListChangedStatus newStatusName='Unlimited' cards={removedCards} numCards={numRemoved} isLoadingData={isFetchingBanListRemovedContent} />
+				{isFetchingContent() && <Skeleton className='rounded-skeleton cards-with-diff-status-skeleton' variant='rectangular' height='30rem' width='100%' />}
+				{!isFetchingContent() && numNewForbidden !== 0 && <CardsWithDifferentStatus newStatusName='Forbidden' cards={newForbiddenCards} numCards={numNewForbidden} />}
+				{!isFetchingContent() && numNewLimitedOne !== 0 && <CardsWithDifferentStatus newStatusName='Limited One' cards={newLimitedOneCards} numCards={numNewLimitedOne} />}
+				{!isFetchingContent() && numNewLimitedTwo !== 0 && <CardsWithDifferentStatus newStatusName='Limited Two' cards={newLimitedTwoCards} numCards={numNewLimitedTwo} />}
+				{!isFetchingContent() && numNewLimitedThree !== 0 && <CardsWithDifferentStatus newStatusName='Limited Three' cards={newLimitedThreeCards} numCards={numNewLimitedThree} />}
+				{!isFetchingContent() && numRemoved !== 0 && <CardsWithDifferentStatus newStatusName='Unlimited' cards={removedCards} numCards={numRemoved} />}
 			</Fragment>
 		)
 	},

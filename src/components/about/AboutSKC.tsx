@@ -1,7 +1,7 @@
 import { Link, Typography } from '@mui/material'
-import { Fragment, lazy } from 'react'
+import { Fragment } from 'react'
 
-const Topic = lazy(() => import('./Topic'))
+import Topic from './Topic'
 
 export default function AboutSKC() {
 	return (

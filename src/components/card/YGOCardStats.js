@@ -3,7 +3,7 @@ import '../../css/card/ygo-card-styles.css'
 
 import { Typography, Box } from '@mui/material'
 
-import he from 'he'
+import { decodeHTML } from 'entities'
 import AtkDef from './AtkDef'
 
 const YGOCardStats = ({ cardColor, cardEffect, monsterType, monsterAtk, monsterDef, cardID, fullDetails }) => {
@@ -15,11 +15,11 @@ const YGOCardStats = ({ cardColor, cardEffect, monsterType, monsterAtk, monsterD
 
 			{!fullDetails ? (
 				<Typography className='ygo-card-effect-component-some-details' variant='body2'>
-					{he.decode(cardEffect)}
+					{decodeHTML(cardEffect)}
 				</Typography>
 			) : (
 				<Typography className='ygo-card-effect-component-full-details' variant='body2'>
-					{he.decode(cardEffect)}
+					{decodeHTML(cardEffect)}
 				</Typography>
 			)}
 

@@ -186,10 +186,13 @@ declare type CardReference = {
 declare type CardSuggestionOutput = {
 	namedMaterials: CardReference[]
 	namedReferences: CardReference[]
-	decks: Deck[]
 }
 
-declare type BanListFormat = 'TCG' | 'MD' | 'DL'
+declare type CardSupportOutput = {
+	card: SKCCard
+	referencedBy: SKCCard[]
+	materialFor: SKCCard[]
+}
 
 declare type SKCBanListInstance = {
 	banListDate: string
