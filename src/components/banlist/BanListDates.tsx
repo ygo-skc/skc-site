@@ -2,6 +2,7 @@ import { FC, Fragment, memo, useCallback, useEffect, useState } from 'react'
 import { MenuItem, Select, SelectChangeEvent, Skeleton, Typography } from '@mui/material'
 import { Dates } from '../../helper/Dates'
 import Hint from '../util/generic/Hints'
+import { scrollToTop } from '../../helper/Etc'
 
 type _BanListDates = {
 	isFetchingBanListDates: boolean
@@ -32,6 +33,7 @@ const BanListDates: FC<_BanListDates> = memo(
 			(event: SelectChangeEvent) => {
 				setSelectedBanListInd(event.target.value)
 				setSelectedBanList(+event.target.value)
+				scrollToTop()
 			},
 			[selectedBanListInd, setSelectedBanList]
 		)

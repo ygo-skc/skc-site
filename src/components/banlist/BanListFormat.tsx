@@ -1,6 +1,7 @@
 import { FC, memo, useCallback } from 'react'
 import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material'
 import { AcceptableBanListFormat } from '../../helper/BanListUtil'
+import { scrollToTop } from '../../helper/Etc'
 
 type _BanListFormat = {
 	format: AcceptableBanListFormat
@@ -9,7 +10,13 @@ type _BanListFormat = {
 
 const BanListFormat: FC<_BanListFormat> = memo(
 	({ format, setFormat }) => {
-		const handleFormatChanged = useCallback((_: React.ChangeEvent<HTMLInputElement>, value: string) => setFormat(value as AcceptableBanListFormat), [setFormat])
+		const handleFormatChanged = useCallback(
+			(_: React.ChangeEvent<HTMLInputElement>, value: string) => {
+				setFormat(value as AcceptableBanListFormat)
+				scrollToTop()
+			},
+			[setFormat]
+		)
 
 		return (
 			<div className='ban-list-format-section group'>
