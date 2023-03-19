@@ -1,6 +1,6 @@
 import { useState, useEffect, FC, Fragment } from 'react'
+import { Hint } from 'skc-rcl'
 import CardDisplayGrid from '../util/grid/CardDisplayGrid'
-import Hint from '../util/generic/Hints'
 
 type _BanListSection = {
 	sectionExplanation: string

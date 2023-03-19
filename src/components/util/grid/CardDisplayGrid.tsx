@@ -3,8 +3,8 @@ import { useEffect, memo, FC, useReducer, useCallback } from 'react'
 import { IconButton, Box, Skeleton } from '@mui/material'
 import Grid2 from '@mui/material/Unstable_Grid2'
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded'
-import Hint from '../generic/Hints'
 import YGOCardWithImage from '../../card/YGOCardWithImage'
+import { Hint } from 'skc-rcl'
 
 function getPlaceholderCardComponent() {
 	const placeHolder = []
@@ -85,7 +85,7 @@ const CardDisplayGrid: FC<_CardDisplayGrid> = memo(
 			<Box style={{ maxWidth: '100%' }}>
 				<Grid2 container>
 					{!isDataLoaded && cardGridUISkeleton}
-					{isDataLoaded && numResults === 0 && <Hint>{'No Content To Show'}</Hint>}
+					{isDataLoaded && numResults === 0 && <Hint fullWidth={false}>{'No Content To Show'}</Hint>}
 					{isDataLoaded && numResults !== 0 && cardGridUI}
 				</Grid2>
 

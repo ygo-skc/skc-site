@@ -3,7 +3,7 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined'
 import { FC, useCallback } from 'react'
 import ReactMarkdown from 'react-markdown'
-import DateComponent from '../generic/DateComponent'
+import { DateComponent } from 'skc-rcl'
 
 const EventItem: FC<{ event: HeartApiEventItem; showEventDialog?: any; setEventDialogEventData?: any }> = ({ event, showEventDialog, setEventDialogEventData }) => {
 	const isWithinDialog = showEventDialog === undefined && setEventDialogEventData === undefined ? true : false

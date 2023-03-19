@@ -10,7 +10,12 @@ import YGOCardWithImage from '../YGOCardWithImage'
 
 import '../../../css/card/ygo-card-suggestion.css'
 
-const Hint = lazy(() => import('../../util/generic/Hints'))
+const Hint = lazy(() =>
+	import('skc-rcl').then((module) => {
+		return { default: module.Hint }
+	})
+)
+
 const SuggestionSection = lazy(() => import('./SuggestionSection'))
 const YGOCardWithQuantity = lazy(() => import('../YGOCardWithQuantity'))
 
@@ -107,7 +112,7 @@ const CardSuggestions: FC<_CardSuggestion> = ({ cardID, cardColor, cardName }) =
 			sectionContent={
 				<div className='section-content'>
 					<Suspense fallback={LoadingUI}>
-						{!isLoading() && !hasError() && hasNoContent() && <Hint>Nothing here 🤔</Hint>}
+						{!isLoading() && !hasError() && hasNoContent() && <Hint fullWidth={false}>Nothing here 🤔</Hint>}
 						{isLoading() && LoadingUI}
 						{!isLoading() && !hasError() && (
 							<Fragment>

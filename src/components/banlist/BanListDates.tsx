@@ -1,8 +1,8 @@
 import { FC, Fragment, memo, useCallback, useEffect, useState } from 'react'
 import { MenuItem, Select, SelectChangeEvent, Skeleton, Typography } from '@mui/material'
 import { Dates } from '../../helper/Dates'
-import Hint from '../util/generic/Hints'
 import { scrollToTop } from '../../helper/Etc'
+import { Hint } from 'skc-rcl'
 
 type _BanListDates = {
 	isFetchingBanListDates: boolean

@@ -4,10 +4,10 @@ import { Button, ButtonGroup, Typography } from '@mui/material'
 import '../../../css/card/card-information-styles.css'
 
 import { Dates } from '../../../helper/Dates'
-import Hint from '../../util/generic/Hints'
 
 import createTable from '../../util/generic/TableHelpers'
 import { AcceptableBanListFormat } from '../../../helper/BanListUtil'
+import { Hint } from 'skc-rcl'
 
 type Args = {
 	isLoading: boolean
