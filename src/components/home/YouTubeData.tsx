@@ -6,7 +6,11 @@ import { Skeleton } from '@mui/material'
 
 import '../../css/util/generic/youtube-data.css'
 
-const GenericNonBreakingErr = lazy(() => import('../util/exception/GenericNonBreakingErr'))
+const GenericNonBreakingErr = lazy(() =>
+	import('skc-rcl').then((module) => {
+		return { default: module.GenericNonBreakingErr }
+	})
+)
 const YouTubeUploads = lazy(() => import('../util/social/YouTubeUploads'))
 
 type _YouTubeData = {

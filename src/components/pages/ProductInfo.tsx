@@ -4,11 +4,11 @@ import { Helmet } from 'react-helmet'
 
 import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
-import Section from '../util/generic/Section'
 
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 import { Typography } from '@mui/material'
 import ProductStats from '../product/ProductStats'
+import { Section } from 'skc-rcl'
 
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 const CardDisplayGrid = lazy(() => import('../util/grid/CardDisplayGrid'))
@@ -60,44 +60,36 @@ export default function ProductInfo() {
 			<OneThirdTwoThirdsGrid
 				mirrored={false}
 				oneThirdComponent={
-					<Section
-						sectionHeaderBackground='product'
-						sectionName='Product'
-						sticky={true}
-						sectionContent={
-							<ProductInfoDetailsComponent
-								productName={productName}
-								productId={productId as string}
-								productType={productType}
-								productSubType={productSubType}
-								productReleaseDate={productReleaseDate}
-								numUniqueCards={productTotal.toString()}
-								isDataLoaded={isDataLoaded}
-							/>
-						}
-					/>
+					<Section sectionHeaderBackground='product' sectionName='Product' sticky={true}>
+						<ProductInfoDetailsComponent
+							productName={productName}
+							productId={productId as string}
+							productType={productType}
+							productSubType={productSubType}
+							productReleaseDate={productReleaseDate}
+							numUniqueCards={productTotal.toString()}
+							isDataLoaded={isDataLoaded}
+						/>
+					</Section>
 				}
 				twoThirdComponent={
 					<Fragment>
 						<ProductStats isDataLoaded={isDataLoaded} cards={cardJsonResults} productTotal={+productTotal} productRarityStats={productRarityStats} />
-						<Section
-							sectionName='Product Content'
-							sectionContent={
-								<div className='section-content'>
-									<Typography variant='h5'>Sorted By Pack Order</Typography>
+						<Section sectionName='Product Content'>
+							<div className='section-content'>
+								<Typography variant='h5'>Sorted By Pack Order</Typography>
 
-									<CardDisplayGrid
-										cardJsonResults={cardJsonResults}
-										numResultsDisplayed={productTotal}
-										numItemsToLoadWhenNeeded={productTotal}
-										numResults={productTotal}
-										loadMoreCallback={undefined}
-										isLoadMoreOptionVisible={false}
-										isDataLoaded={isDataLoaded}
-									/>
-								</div>
-							}
-						></Section>
+								<CardDisplayGrid
+									cardJsonResults={cardJsonResults}
+									numResultsDisplayed={productTotal}
+									numItemsToLoadWhenNeeded={productTotal}
+									numResults={productTotal}
+									loadMoreCallback={undefined}
+									isLoadMoreOptionVisible={false}
+									isDataLoaded={isDataLoaded}
+								/>
+							</div>
+						</Section>
 					</Fragment>
 				}
 			/>

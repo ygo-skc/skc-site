@@ -1,6 +1,5 @@
 import { Helmet } from 'react-helmet'
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
-import Section from '../util/generic/Section'
 
 import Breadcrumb from '../header-footer/Breadcrumb'
 import DatabaseInfo from '../util/database-info/DatabaseInfo'
@@ -8,6 +7,7 @@ import UpcomingTCGProducts from '../util/event/UpcomingTCGProducts'
 import Welcome from '../home/Welcome'
 import SocialMedia from '../util/social/SocialMedia'
 import YouTubeData from '../home/YouTubeData'
+import { Section } from 'skc-rcl'
 
 export default function Home() {
 	return (
@@ -24,24 +24,25 @@ export default function Home() {
 
 			<OneThirdTwoThirdsGrid
 				mirrored={true}
-				oneThirdComponent={<Section sticky sectionName='Social' sectionContent={<SocialMedia />} />}
+				oneThirdComponent={
+					<Section sticky sectionName='Social'>
+						<SocialMedia />
+					</Section>
+				}
 				twoThirdComponent={
-					<Section
-						sectionName='Welcome'
-						sectionContent={
-							<div className='section-content'>
-								<div className='multi-section'>
-									<Welcome />
-								</div>
-								<div className='multi-section'>
-									<YouTubeData channel='skc' />
-								</div>
-								<div className='multi-section'>
-									<YouTubeData channel='btsc' />
-								</div>
+					<Section sectionName='Welcome'>
+						<div className='section-content'>
+							<div className='multi-section'>
+								<Welcome />
 							</div>
-						}
-					/>
+							<div className='multi-section'>
+								<YouTubeData channel='skc' />
+							</div>
+							<div className='multi-section'>
+								<YouTubeData channel='btsc' />
+							</div>
+						</div>
+					</Section>
 				}
 			/>
 		</div>

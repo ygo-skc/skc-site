@@ -5,7 +5,11 @@ import DownstreamServices from '../../../helper/DownstreamServices'
 import FetchHandler from '../../../helper/FetchHandler'
 import LinkIcon from '@mui/icons-material/Link'
 
-const GenericNonBreakingErr = lazy(() => import('../exception/GenericNonBreakingErr'))
+const GenericNonBreakingErr = lazy(() =>
+	import('skc-rcl').then((module) => {
+		return { default: module.GenericNonBreakingErr }
+	})
+)
 const EventItem = lazy(() => import('./EventItem'))
 
 const UpcomingTCGProducts = () => {

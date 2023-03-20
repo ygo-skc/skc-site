@@ -2,11 +2,11 @@ import { FunctionComponent } from 'react'
 import { Helmet } from 'react-helmet'
 
 import Breadcrumb from '../header-footer/Breadcrumb'
-import Section from '../util/generic/Section'
 import AboutSKC from '../about/AboutSKC'
 import Overview from '../about/AboutServices'
 
 import '../../css/main-pages/about.css'
+import { Section } from 'skc-rcl'
 
 const About: FunctionComponent = () => {
 	return (
@@ -19,8 +19,12 @@ const About: FunctionComponent = () => {
 
 			<Breadcrumb crumbs={['Home', 'About']} />
 
-			<Section maxWidth='1000px' sectionName='About SKC' sectionContent={<AboutSKC />} />
-			<Section sectionName='Everything You Might Want To Know' sectionContent={<Overview />} />
+			<Section maxWidth='1000px' sectionName='About SKC'>
+				<AboutSKC />
+			</Section>
+			<Section sectionName='Everything You Might Want To Know'>
+				<Overview />
+			</Section>
 		</div>
 	)
 }

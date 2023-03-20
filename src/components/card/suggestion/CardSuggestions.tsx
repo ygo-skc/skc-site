@@ -1,14 +1,12 @@
 import { FC, Fragment, lazy, startTransition, Suspense, useEffect, useState } from 'react'
 import { Skeleton } from '@mui/material'
 
-import Section from '../../util/generic/Section'
-
 import FetchHandler from '../../../helper/FetchHandler'
 import DownstreamServices from '../../../helper/DownstreamServices'
-import GenericNonBreakingErr from '../../util/exception/GenericNonBreakingErr'
 import YGOCardWithImage from '../YGOCardWithImage'
 
 import '../../../css/card/ygo-card-suggestion.css'
+import { GenericNonBreakingErr, Section } from 'skc-rcl'
 
 const Hint = lazy(() =>
 	import('skc-rcl').then((module) => {
@@ -106,43 +104,35 @@ const CardSuggestions: FC<_CardSuggestion> = ({ cardID, cardColor, cardName }) =
 	}, [cardID])
 
 	return (
-		<Section
-			sectionHeaderBackground={cardColor !== undefined ? (cardColor?.replace(/Pendulum-/gi, '') as cardColor) : ''}
-			sectionName='Suggestions'
-			sectionContent={
-				<div className='section-content'>
-					<Suspense fallback={LoadingUI}>
-						{!isLoading() && !hasError() && hasNoContent() && <Hint fullWidth={false}>Nothing here 🤔</Hint>}
-						{isLoading() && LoadingUI}
-						{!isLoading() && !hasError() && (
-							<Fragment>
-								<SuggestionSection
-									suggestions={materialSuggestions}
-									sectionName='Named Materials'
-									sectionExplanation={`Other cards that are directly referenced as summoning material by ${cardName} card. Currently, only extra deck summonsing materials are suggested.`}
-								/>
-								<SuggestionSection
-									suggestions={materialFor}
-									sectionName='Material For'
-									sectionExplanation={`${cardName} can be used as a material for the cards in this section.`}
-								/>
-								<SuggestionSection
-									suggestions={referenceSuggestions}
-									sectionName='References'
-									sectionExplanation={`${cardName} is referencing the below cards. If ${cardName} is an extra deck monster, its named summoning materials are omitted here.`}
-								/>
-								<SuggestionSection
-									suggestions={referencedBy}
-									sectionName='Referenced By'
-									sectionExplanation={`Cards that directly reference ${cardName}. Omits extra deck monsters that reference ${cardName} as a summoning material.`}
-								/>
-							</Fragment>
-						)}
-						{!isLoading() && hasError() && <GenericNonBreakingErr errExplanation={'🤯 Suggestion Engine Is Offline 🤯'} />}
-					</Suspense>
-				</div>
-			}
-		/>
+		<Section sectionHeaderBackground={cardColor !== undefined ? (cardColor?.replace(/Pendulum-/gi, '') as cardColor) : ''} sectionName='Suggestions'>
+			<div className='section-content'>
+				<Suspense fallback={LoadingUI}>
+					{!isLoading() && !hasError() && hasNoContent() && <Hint fullWidth={false}>Nothing here 🤔</Hint>}
+					{isLoading() && LoadingUI}
+					{!isLoading() && !hasError() && (
+						<Fragment>
+							<SuggestionSection
+								suggestions={materialSuggestions}
+								sectionName='Named Materials'
+								sectionExplanation={`Other cards that are directly referenced as summoning material by ${cardName} card. Currently, only extra deck summonsing materials are suggested.`}
+							/>
+							<SuggestionSection suggestions={materialFor} sectionName='Material For' sectionExplanation={`${cardName} can be used as a material for the cards in this section.`} />
+							<SuggestionSection
+								suggestions={referenceSuggestions}
+								sectionName='References'
+								sectionExplanation={`${cardName} is referencing the below cards. If ${cardName} is an extra deck monster, its named summoning materials are omitted here.`}
+							/>
+							<SuggestionSection
+								suggestions={referencedBy}
+								sectionName='Referenced By'
+								sectionExplanation={`Cards that directly reference ${cardName}. Omits extra deck monsters that reference ${cardName} as a summoning material.`}
+							/>
+						</Fragment>
+					)}
+					{!isLoading() && hasError() && <GenericNonBreakingErr errExplanation={'🤯 Suggestion Engine Is Offline 🤯'} />}
+				</Suspense>
+			</div>
+		</Section>
 	)
 }
 

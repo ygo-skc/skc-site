@@ -1,13 +1,12 @@
 import { lazy, startTransition, useCallback, useEffect, useState } from 'react'
 
 import Grid2 from '@mui/material/Unstable_Grid2'
-import Section from '../generic/Section'
 
 import '../../../css/util/database-info/database-search-styles.css'
 import DownstreamServices from '../../../helper/DownstreamServices'
 import FetchHandler from '../../../helper/FetchHandler'
 import { Skeleton } from '@mui/material'
-import { Glance } from 'skc-rcl'
+import { Glance, Section } from 'skc-rcl'
 
 const DatabaseSearch = lazy(() => import('../search/DBSearch'))
 
@@ -33,36 +32,32 @@ const DatabaseInfo = () => {
 	const handleProductsGlanceClicked = useCallback(() => window.location.assign('/browse/product'), [])
 
 	return (
-		<Section
-			maxWidth='1000px'
-			sectionName='Content'
-			sectionContent={
-				<div className='section-content'>
-					<div className='search-container'>
-						<DatabaseSearch />
-					</div>
-
-					{isFetchingData && <Skeleton variant='rectangular' height='170' width='100%' className='rounded-skeleton' />}
-					{!isFetchingData && (
-						<div className='database-summary-container'>
-							<Grid2 container spacing={3}>
-								<Grid2 xs={6} sm={6} md={4} lg={4} xl={4}>
-									<Glance variant='medium' total={cardTotal} subject='Cards' color='rgb(144, 13, 218)' action={handleBrowseGlanceClicked} />
-								</Grid2>
-
-								<Grid2 xs={6} sm={6} md={4} lg={4} xl={4}>
-									<Glance variant='medium' total={banListTotal} subject='Ban Lists' color='#FE6D6B' action={handleBanListGlanceClicked} />
-								</Grid2>
-
-								<Grid2 xs={6} sm={6} md={4} lg={4} xl={4}>
-									<Glance variant='medium' total={productTotal} subject='Products' color='rgb(195, 47, 150)' action={handleProductsGlanceClicked} />
-								</Grid2>
-							</Grid2>
-						</div>
-					)}
+		<Section sectionName='Content' maxWidth='1000px'>
+			<div className='section-content'>
+				<div className='search-container'>
+					<DatabaseSearch />
 				</div>
-			}
-		/>
+
+				{isFetchingData && <Skeleton variant='rectangular' height='170' width='100%' className='rounded-skeleton' />}
+				{!isFetchingData && (
+					<div className='database-summary-container'>
+						<Grid2 container spacing={3}>
+							<Grid2 xs={6} sm={6} md={4} lg={4} xl={4}>
+								<Glance variant='medium' total={cardTotal} subject='Cards' color='rgb(144, 13, 218)' action={handleBrowseGlanceClicked} />
+							</Grid2>
+
+							<Grid2 xs={6} sm={6} md={4} lg={4} xl={4}>
+								<Glance variant='medium' total={banListTotal} subject='Ban Lists' color='#FE6D6B' action={handleBanListGlanceClicked} />
+							</Grid2>
+
+							<Grid2 xs={6} sm={6} md={4} lg={4} xl={4}>
+								<Glance variant='medium' total={productTotal} subject='Products' color='rgb(195, 47, 150)' action={handleProductsGlanceClicked} />
+							</Grid2>
+						</Grid2>
+					</div>
+				)}
+			</div>
+		</Section>
 	)
 }
 

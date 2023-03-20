@@ -7,8 +7,8 @@ import NotificationsIcon from '@mui/icons-material/Notifications'
 
 import DownstreamServices from '../../helper/DownstreamServices'
 import FetchHandler from '../../helper/FetchHandler'
-import GenericNonBreakingErr from '../util/exception/GenericNonBreakingErr'
 import MessageItemComponent from './MessageItemComponent'
+import { GenericNonBreakingErr } from 'skc-rcl'
 
 function Messages() {
 	const [messagesAnchor, setMessagesAnchor] = useState<HTMLButtonElement | undefined>(undefined)

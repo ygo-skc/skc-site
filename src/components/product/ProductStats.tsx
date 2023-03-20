@@ -1,6 +1,6 @@
 import Grid2 from '@mui/material/Unstable_Grid2'
 import { FC, lazy } from 'react'
-import Section from '../util/generic/Section'
+import { Section } from 'skc-rcl'
 
 const ProductStatPie = lazy(() => import('../util/data-display/Pie'))
 
@@ -36,19 +36,16 @@ const ProductStats: FC<ProductStats & { isDataLoaded: boolean }> = ({ productRar
 	})
 
 	return (
-		<Section
-			sectionName='Product Stats'
-			sectionContent={
-				<Grid2 className='section-content' container style={{ width: '100%' }}>
-					<Grid2 xs={12} sm={12} md={6} lg={6} xl={6}>
-						<ProductStatPie isDataLoaded={isDataLoaded} statName='Rarity Spread' data={data} />
-					</Grid2>
-					<Grid2 xs={12} sm={12} md={6} lg={6} xl={6}>
-						<ProductStatPie isDataLoaded={isDataLoaded} statName='Card Type Spread' data={rrr} />
-					</Grid2>
+		<Section sectionName='Product Stats'>
+			<Grid2 className='section-content' container style={{ width: '100%' }}>
+				<Grid2 xs={12} sm={12} md={6} lg={6} xl={6}>
+					<ProductStatPie isDataLoaded={isDataLoaded} statName='Rarity Spread' data={data} />
 				</Grid2>
-			}
-		></Section>
+				<Grid2 xs={12} sm={12} md={6} lg={6} xl={6}>
+					<ProductStatPie isDataLoaded={isDataLoaded} statName='Card Type Spread' data={rrr} />
+				</Grid2>
+			</Grid2>
+		</Section>
 	)
 }
 

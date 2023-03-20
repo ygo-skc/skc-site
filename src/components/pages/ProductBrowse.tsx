@@ -6,8 +6,8 @@ import DownstreamServices from '../../helper/DownstreamServices'
 
 import createTable from '../util/generic/TableHelpers'
 import { Dates } from '../../helper/Dates'
-import Section from '../util/generic/Section'
 import { Skeleton, Typography } from '@mui/material'
+import { Section } from 'skc-rcl'
 
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 
@@ -48,17 +48,13 @@ const ProductBrowse: FunctionComponent = () => {
 
 			<Breadcrumb crumbs={['Home', 'Product Browse']} />
 
-			<Section
-				sectionHeaderBackground='product'
-				sectionName='Products In Database'
-				sectionContent={
-					<div className='section-content'>
-						<Typography variant='h5'>Sorted By Release Date</Typography>
-						{!isDataLoaded && <Skeleton variant='rectangular' height='500' width='100%' className='rounded-skeleton' />}
-						{isDataLoaded && productGridItems}
-					</div>
-				}
-			></Section>
+			<Section sectionHeaderBackground='product' sectionName='Products In Database'>
+				<div className='section-content'>
+					<Typography variant='h5'>Sorted By Release Date</Typography>
+					{!isDataLoaded && <Skeleton variant='rectangular' height='500' width='100%' className='rounded-skeleton' />}
+					{isDataLoaded && productGridItems}
+				</div>
+			</Section>
 		</div>
 	)
 }
