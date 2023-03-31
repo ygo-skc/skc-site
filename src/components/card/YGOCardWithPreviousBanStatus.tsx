@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material'
+import { decodeHTML } from 'entities'
 import { FC } from 'react'
-import { CardImageRounded } from 'skc-rcl'
-import YGOCard from './YGOCard'
+import { CardImageRounded, YGOCard } from 'skc-rcl'
 
 type _YGOCardWithPreviousBanStatus = {
 	card: SKCCard
@@ -26,7 +26,7 @@ const YGOCardWithPreviousBanStatus: FC<_YGOCardWithPreviousBanStatus> = ({ card,
 				cardID={card.cardID}
 				cardName={card.cardName}
 				cardColor={card.cardColor}
-				cardEffect={card.cardEffect}
+				cardEffect={decodeHTML(card.cardEffect)}
 				monsterType={card.monsterType}
 				cardAttribute={card.cardAttribute}
 				monsterAttack={card.monsterAttack}

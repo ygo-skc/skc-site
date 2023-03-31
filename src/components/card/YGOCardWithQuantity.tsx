@@ -1,9 +1,9 @@
 import { Chip } from '@mui/material'
 import { FC, Fragment } from 'react'
-import YGOCard from './YGOCard'
 
-import { CardImageRounded } from 'skc-rcl'
+import { CardImageRounded, YGOCard } from 'skc-rcl'
 import '../../css/card/ygo-card-with-quantity.css'
+import { decodeHTML } from 'entities'
 
 const YGOCardWithQuantity: FC<{
 	card: SKCCard
@@ -22,7 +22,7 @@ const YGOCardWithQuantity: FC<{
 				cardID={card.cardID}
 				cardName={card.cardName}
 				cardColor={card.cardColor}
-				cardEffect={card.cardEffect}
+				cardEffect={decodeHTML(card.cardEffect)}
 				monsterType={card.monsterType}
 				cardAttribute={card.cardAttribute}
 				monsterAttack={card.monsterAttack}

@@ -1,6 +1,6 @@
+import { decodeHTML } from 'entities'
 import { FC, Fragment } from 'react'
-import YGOCard from './YGOCard'
-import { CardImageRounded } from 'skc-rcl'
+import { CardImageRounded, YGOCard } from 'skc-rcl'
 
 type _YGOCardWithImage = {
 	card: SKCCard
@@ -14,7 +14,7 @@ const YGOCardWithImage: FC<_YGOCardWithImage> = ({ card }) => {
 			<YGOCard
 				cardName={card.cardName}
 				cardColor={card.cardColor}
-				cardEffect={card.cardEffect}
+				cardEffect={decodeHTML(card.cardEffect)}
 				monsterType={card.monsterType}
 				cardID={card.cardID}
 				fullDetails={false}

@@ -1,7 +1,6 @@
+import { decodeHTML } from 'entities'
 import { FC, memo } from 'react'
-import { CardImageRounded, Section } from 'skc-rcl'
-
-import YGOCard from '../YGOCard'
+import { CardImageRounded, Section, YGOCard } from 'skc-rcl'
 
 type _CardData = SKCCard & {
 	isLoading: boolean
@@ -18,7 +17,7 @@ const CardData: FC<_CardData> = memo(
 					<YGOCard
 						cardName={cardName}
 						cardColor={cardColor}
-						cardEffect={cardEffect}
+						cardEffect={decodeHTML(cardEffect)}
 						cardAttribute={cardAttribute}
 						monsterType={monsterType}
 						monsterAttack={monsterAttack}

@@ -2,7 +2,7 @@ import { FC } from 'react'
 import Styled from 'styled-components'
 
 import Breadcrumbs from '../header-footer/Breadcrumb'
-import YGOCard from '../card/YGOCard'
+import { YGOCard } from 'skc-rcl'
 
 class HttpErrMaps {
 	static readonly HTTP_ERR_maps_ERR_NAME: { [key: string]: string } = {
