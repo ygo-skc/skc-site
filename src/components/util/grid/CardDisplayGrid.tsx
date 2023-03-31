@@ -3,8 +3,7 @@ import { useEffect, memo, FC, useReducer, useCallback } from 'react'
 import { IconButton, Box, Skeleton } from '@mui/material'
 import Grid2 from '@mui/material/Unstable_Grid2'
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded'
-import YGOCardWithImage from '../../card/YGOCardWithImage'
-import { Hint } from 'skc-rcl'
+import { Hint, YGOCardWithImage } from 'skc-rcl'
 
 function getPlaceholderCardComponent() {
 	const placeHolder = []

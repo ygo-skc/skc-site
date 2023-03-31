@@ -3,10 +3,9 @@ import { Skeleton } from '@mui/material'
 
 import FetchHandler from '../../../helper/FetchHandler'
 import DownstreamServices from '../../../helper/DownstreamServices'
-import YGOCardWithImage from '../YGOCardWithImage'
 
 import '../../../css/card/ygo-card-suggestion.css'
-import { GenericNonBreakingErr, Section } from 'skc-rcl'
+import { GenericNonBreakingErr, Section, YGOCardWithImage } from 'skc-rcl'
 
 const Hint = lazy(() =>
 	import('skc-rcl').then((module) => {
@@ -15,7 +14,11 @@ const Hint = lazy(() =>
 )
 
 const SuggestionSection = lazy(() => import('./SuggestionSection'))
-const YGOCardWithQuantity = lazy(() => import('../YGOCardWithQuantity'))
+const YGOCardWithQuantity = lazy(() =>
+	import('skc-rcl').then((module) => {
+		return { default: module.YGOCardWithQuantity }
+	})
+)
 
 type _CardSuggestion = {
 	cardID: string

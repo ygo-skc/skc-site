@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material'
 import { FC, useEffect, useState } from 'react'
-import YGOCardWithPreviousBanStatus from '../../../card/YGOCardWithPreviousBanStatus'
+import { YGOCardWithPreviousBanStatus } from 'skc-rcl'
 
 type _CardsWithDifferentStatus = {
 	newStatusName: 'Forbidden' | 'Limited' | 'Semi Limited' | 'Unlimited' | 'Limited One' | 'Limited Two' | 'Limited Three'
