@@ -1,6 +1,6 @@
 import { FC, Fragment } from 'react'
-import CardImageRounded from '../util/photo/CardImageRounded'
 import YGOCard from './YGOCard'
+import { CardImageRounded } from 'skc-rcl'
 
 type _YGOCardWithImage = {
 	card: SKCCard

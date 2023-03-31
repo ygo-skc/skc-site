@@ -1,8 +1,8 @@
 import { Chip } from '@mui/material'
 import { FC, Fragment } from 'react'
-import CardImageRounded from '../util/photo/CardImageRounded'
 import YGOCard from './YGOCard'
 
+import { CardImageRounded } from 'skc-rcl'
 import '../../css/card/ygo-card-with-quantity.css'
 
 const YGOCardWithQuantity: FC<{

@@ -1,7 +1,5 @@
 import { FC, memo } from 'react'
-import { Section } from 'skc-rcl'
-
-import CardImageRounded from '../../util/photo/CardImageRounded'
+import { CardImageRounded, Section } from 'skc-rcl'
 
 import YGOCard from '../YGOCard'
 

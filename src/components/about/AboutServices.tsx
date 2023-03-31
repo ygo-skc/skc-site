@@ -43,7 +43,7 @@ export default function Overview() {
 								/>
 							</Fragment>
 						}
-						imgPath='backend.png'
+						imgName='backend.png'
 						imgLink={`${process.env.REACT_APP_API_HOST}/api/v1/swagger-ui/index.html`}
 					/>
 				</Grid2>
@@ -94,8 +94,8 @@ export default function Overview() {
 								</div>
 							</Fragment>
 						}
-						imgPath='monetary_contribution.png'
-						imgLink=''
+						imgName='monetary_contribution.png'
+						imgLink='https://www.paypal.com/donate?token=cqxHbHEXK6-mxQeeArpzXbPNCngsNwSscv3vVARXBwyFL6NWebDRaj4Xze7jEZ1OYi9BtmxjfsKRGeEI'
 					/>
 				</Grid2>
 
@@ -133,8 +133,8 @@ export default function Overview() {
 								/>
 							</Fragment>
 						}
-						imgPath='information.png'
-						imgLink=''
+						imgName='information.png'
+						imgLink='https://twitter.com/supreme_king_yt'
 					/>
 				</Grid2>
 
@@ -159,7 +159,7 @@ export default function Overview() {
 								/>
 							</Fragment>
 						}
-						imgPath='yt_channel_icon.jpeg'
+						imgName='yt_channel_icon.jpeg'
 						imgLink='https://www.youtube.com/channel/UCBZ_1wWyLQI3SV9IgLbyiNQ/videos'
 					/>
 				</Grid2>

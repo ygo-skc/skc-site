@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material'
 import { FC } from 'react'
-import CardImageRounded from '../util/photo/CardImageRounded'
+import { CardImageRounded } from 'skc-rcl'
 import YGOCard from './YGOCard'
 
 type _YGOCardWithPreviousBanStatus = {
