@@ -38,7 +38,7 @@ const DatabaseInfo = () => {
 					<DatabaseSearch />
 				</div>
 
-				{isFetchingData && <Skeleton variant='rectangular' height='170' width='100%' className='rounded-skeleton' />}
+				{isFetchingData && <Skeleton variant='rectangular' height='170px' width='100%' className='rounded-skeleton' />}
 				{!isFetchingData && (
 					<div className='database-summary-container'>
 						<Grid2 container spacing={3}>

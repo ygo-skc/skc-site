@@ -56,7 +56,7 @@ const YouTubeData: FC<_YouTubeData> = ({ channel }) => {
 
 	return (
 		<Fragment>
-			<Suspense fallback={<Skeleton variant='rectangular' height='375' width='100%' className='rounded-skeleton' />}>
+			<Suspense fallback={<Skeleton variant='rectangular' height='375px' width='100%' className='rounded-skeleton' />}>
 				{!isFetchingData && (
 					<YouTubeUploads youtubeData={youtubeUploadData} channelName={channelNames[channel]} channelId={channelId} channelDescription={channelDescription[channel]} />
 				)}

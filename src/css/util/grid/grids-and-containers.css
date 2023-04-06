@@ -14,35 +14,24 @@
 }
 
 @media screen and (min-width: 800px) {
-	.one-third-section-mirrored {
-		padding-left: 0rem;
+	.one-third-two-thirds-container {
+		display: flex;
+		column-gap: 1.5rem;
+		width: calc(100% - 1.5em);
+		max-width: calc(100% - 1.5em);
 	}
 
-	.one-third-section,
-	.one-third-section-mirrored {
-		min-width: 25rem;
-		max-width: 25rem;
-	}
-
-	.two-third-section,
-	.two-third-section-mirrored {
-		flex-grow: 1;
-		width: 1;
+	.one-third-section {
+		flex: 0 0 calc(100% / 3);
+		min-width: 0;
+		position: -webkit-sticky; /* for Safari */
+		position: sticky;
+		top: 0;
+		align-self: flex-start;
 	}
 
 	.two-third-section {
-		padding-left: 1.5rem;
-	}
-
-	.two-third-section-mirrored {
-		padding-right: 1.5rem;
-	}
-}
-
-@media screen and (min-width: 1500px) {
-	.one-third-section,
-	.one-third-section-mirrored {
-		min-width: 30rem;
-		max-width: 30rem;
+		flex: 0 0 calc(200% / 3);
+		min-width: 0;
 	}
 }

@@ -70,7 +70,7 @@ const UpcomingTCGProducts = () => {
 					<GenericNonBreakingErr errExplanation='Come back at a different time to see upcoming TCG products!' />
 				</div>
 			)}
-			{isFetchingData && <Skeleton variant='rectangular' height='280' width='100%' className='rounded-skeleton' />}
+			{isFetchingData && <Skeleton variant='rectangular' height='280px' width='100%' className='rounded-skeleton' />}
 
 			<Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} open={isSnackbarOpen} autoHideDuration={3000} onClose={handleSnackbarIsClosed}>
 				<Alert onClose={handleSnackbarIsClosed} severity='success'>

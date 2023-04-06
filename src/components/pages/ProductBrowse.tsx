@@ -51,7 +51,7 @@ const ProductBrowse: FunctionComponent = () => {
 			<Section sectionHeaderBackground='product' sectionName='Products In Database'>
 				<div className='section-content'>
 					<Typography variant='h5'>Sorted By Release Date</Typography>
-					{!isDataLoaded && <Skeleton variant='rectangular' height='500' width='100%' className='rounded-skeleton' />}
+					{!isDataLoaded && <Skeleton variant='rectangular' height='500px' width='100%' className='rounded-skeleton' />}
 					{isDataLoaded && productGridItems}
 				</div>
 			</Section>

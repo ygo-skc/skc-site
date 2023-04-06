@@ -1,8 +1,7 @@
 import { useEffect, memo, FC, useReducer, useCallback } from 'react'
 
-import { IconButton, Box, Skeleton } from '@mui/material'
+import { Button, Skeleton } from '@mui/material'
 import Grid2 from '@mui/material/Unstable_Grid2'
-import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded'
 import { Hint, YGOCardWithImage } from 'skc-rcl'
 
 function getPlaceholderCardComponent() {
@@ -11,8 +10,8 @@ function getPlaceholderCardComponent() {
 	for (let i = 0; i < 10; i++) {
 		placeHolder.push(
 			<Grid2 key={`skeleton-${i}`} xs={6} sm={4} md={4} lg={3} xl={2} style={{ padding: '.3rem' }}>
-				<Skeleton variant='rectangular' height='170' width='100%' style={{ borderRadius: '4rem', marginBottom: '1rem' }} />
-				<Skeleton variant='rectangular' width='100%' height='100' />
+				<Skeleton variant='rectangular' height='170px' width='100%' style={{ borderRadius: '4rem', marginBottom: '1rem' }} />
+				<Skeleton variant='rectangular' width='100%' height='100px' />
 			</Grid2>
 		)
 	}
@@ -81,7 +80,7 @@ const CardDisplayGrid: FC<_CardDisplayGrid> = memo(
 		}, [numResults])
 
 		return (
-			<Box style={{ maxWidth: '100%' }}>
+			<div>
 				<Grid2 container>
 					{!isDataLoaded && cardGridUISkeleton}
 					{isDataLoaded && numResults === 0 && <Hint fullWidth={false}>{'No Content To Show'}</Hint>}
@@ -89,27 +88,22 @@ const CardDisplayGrid: FC<_CardDisplayGrid> = memo(
 				</Grid2>
 
 				{!isDataLoaded ? undefined : (
-					<IconButton
+					<Button
 						onClick={loadMoreCallback}
 						style={
 							isLoadMoreOptionVisible
 								? {
+										padding: '1rem',
+										margin: '0 auto',
 										display: 'block',
-										margin: 'auto',
-										background: '#310e68',
-										backgroundImage: 'linear-gradient(316deg, #310e68 0%, #5f0f40 74%)',
-										color: 'rgba(255, 255, 255, .95)',
-										marginTop: '1.5rem',
-										marginBottom: '1.5rem',
-										fontSize: '2rem',
 								  }
 								: { display: 'none' }
 						}
 					>
-						<ExpandMoreRoundedIcon />
-					</IconButton>
+						Load More
+					</Button>
 				)}
-			</Box>
+			</div>
 		)
 	},
 	(prevProps, newProps) => {
