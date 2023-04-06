@@ -17,21 +17,42 @@
 	.one-third-two-thirds-container {
 		display: flex;
 		column-gap: 1.5rem;
-		width: calc(100% - 1.5em);
-		max-width: calc(100% - 1.5em);
 	}
 
 	.one-third-section {
-		flex: 0 0 calc(100% / 3);
+		flex: 0 0 33%;
 		min-width: 0;
-		position: -webkit-sticky; /* for Safari */
 		position: sticky;
 		top: 0;
 		align-self: flex-start;
 	}
 
 	.two-third-section {
-		flex: 0 0 calc(200% / 3);
+		flex: 1;
 		min-width: 0;
+	}
+}
+
+@media screen and (min-width: 1000px) {
+	.one-third-section {
+		flex: 0 0 32%;
+	}
+}
+
+@media screen and (min-width: 1200px) {
+	.one-third-section {
+		flex: 0 0 31%;
+	}
+}
+
+@media screen and (min-width: 1400px) {
+	.one-third-section {
+		flex: 0 0 26%;
+	}
+}
+
+@media screen and (min-width: 1650px) {
+	.one-third-section {
+		flex: 0 0 23%;
 	}
 }
