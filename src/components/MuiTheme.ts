@@ -78,11 +78,9 @@ const MuiTheme = createTheme({
 		MuiBadge: {
 			styleOverrides: {
 				badge: {
-					fontSize: '1.05rem',
-					paddingLeft: '.8rem',
-					paddingRight: '.8rem',
-					paddingTop: '.4rem',
-					paddingBottom: '.4rem',
+					fontSize: '1.0rem',
+					marginTop: '.4rem',
+					marginRight: '.5rem',
 					fontFamily: 'open sans,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 				},
 				root: {
