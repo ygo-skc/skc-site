@@ -43,7 +43,7 @@ const Footer: FunctionComponent = () => {
 		<div className='footer'>
 			<div className='footer-wrapper'>
 				<Typography className='footer-font' variant='body1' align='center'>
-					Copyright 2022
+					Copyright 2023
 				</Typography>
 
 				<Typography className='footer-font' variant='body1' align='center'>
