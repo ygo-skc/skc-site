@@ -5,9 +5,9 @@ import '../../../css/card/card-information-styles.css'
 
 import { Dates } from '../../../helper/Dates'
 
-import createTable from '../../util/generic/TableHelpers'
 import { AcceptableBanListFormat } from '../../../helper/BanListUtil'
 import { Hint } from 'skc-rcl'
+import SKCTable from '../../util/generic/SKCTable'
 
 type Args = {
 	isLoading: boolean
@@ -62,10 +62,10 @@ const CardBanListInformation: FunctionComponent<Args> = ({ isLoading, restricted
 			const headerNames: string[] = ['Date', 'Status']
 			const rowValues: string[][] = restrictedIn[format].map((banList: SKCBanListInstance) => [Dates.fromYYYYMMDDToDateStr(banList.banListDate), banList.banStatus])
 
-			const table: JSX.Element = createTable(headerNames, rowValues)
+			const table: JSX.Element = <SKCTable headerNames={headerNames} rowValues={rowValues} />
 			setBanListTable(table)
 		})
-	}, [isLoading, format])
+	}, [isLoading, format, restrictedIn])
 
 	return (
 		<div className='group'>

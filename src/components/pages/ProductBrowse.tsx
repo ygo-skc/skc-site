@@ -4,10 +4,10 @@ import { Helmet } from 'react-helmet'
 import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 
-import createTable from '../util/generic/TableHelpers'
 import { Dates } from '../../helper/Dates'
 import { Skeleton, Typography } from '@mui/material'
 import { Section } from 'skc-rcl'
+import SKCTable from '../util/generic/SKCTable'
 
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 
@@ -33,7 +33,7 @@ const ProductBrowse: FunctionComponent = () => {
 		})
 
 		startTransition(() => {
-			setProductGridItems(createTable(headers, productRows, rowOnClick, true))
+			setProductGridItems(<SKCTable headerNames={headers} rowValues={productRows} rowOnClick={rowOnClick} fullWidth />)
 			setIsDataLoaded(true)
 		})
 	}, [productJson])

@@ -8,12 +8,11 @@ import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 
-import createTable from '../util/generic/TableHelpers'
-
 import '../../css/util/database-info/database-search-styles.css'
 import '../../css/main-pages/card-browse.css'
 import CardBrowse from '../util/search/CardBrowse'
 import { Section } from 'skc-rcl'
+import SKCTable from '../util/generic/SKCTable'
 
 const CardDisplayGrid = lazy(() => import('../util/grid/CardDisplayGrid'))
 
@@ -120,7 +119,7 @@ export default function BrowseCards() {
 
 							<div className='group'>
 								<Typography variant='h5'>Results</Typography>
-								{createTable([], browseSummaryStats)}
+								{<SKCTable headerNames={[]} rowValues={browseSummaryStats} />}
 							</div>
 						</div>
 					</Section>
