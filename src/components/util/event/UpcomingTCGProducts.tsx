@@ -43,18 +43,18 @@ const UpcomingTCGProducts = () => {
 		})
 	}, [])
 
-	const handleSnackbarIsClosed = useCallback(() => setIsSnackbarOpen(false), [isSnackbarOpen])
+	const handleSnackbarIsClosed = useCallback(() => setIsSnackbarOpen(false), [])
 
 	const handleShowSnackbar = useCallback(() => {
 		navigator.clipboard.writeText(`${window.location.href}#upcoming-tcg-products`)
 		setIsSnackbarOpen(true)
-	}, [isSnackbarOpen])
+	}, [])
 
-	const handleDisplayDialog = useCallback(() => setEventDialogIsOpen(false), [eventDialogIsOpen])
+	const handleDisplayDialog = useCallback(() => setEventDialogIsOpen(false), [])
 
 	return (
 		<div id='upcoming-tcg-products' style={{ marginBottom: '3.5rem' }}>
-			<img src={'/assets/yugioh-tcg-official-logo.png'} />
+			<img alt='Yu-Gi-Oh! TCG Logo' src={'/assets/yugioh-tcg-official-logo.png'} />
 			<div className='event-header-container search-icon-container'>
 				<Typography className='event-header' variant='h4'>
 					Upcoming Yu-Gi-Oh! TCG Products
@@ -80,7 +80,7 @@ const UpcomingTCGProducts = () => {
 
 			<Dialog maxWidth='xs' onClose={handleDisplayDialog} open={eventDialogIsOpen}>
 				<DialogTitle>TCG Product Details</DialogTitle>
-				{eventDialogEventData != undefined ? <EventItem event={eventDialogEventData} /> : undefined}
+				{eventDialogEventData !== undefined ? <EventItem event={eventDialogEventData} /> : undefined}
 			</Dialog>
 		</div>
 	)

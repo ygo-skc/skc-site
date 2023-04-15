@@ -38,9 +38,6 @@ export default function Home() {
 							<div className='multi-section'>
 								<YouTubeData channel='skc' />
 							</div>
-							<div className='multi-section'>
-								<YouTubeData channel='btsc' />
-							</div>
 						</div>
 					</Section>
 				}
