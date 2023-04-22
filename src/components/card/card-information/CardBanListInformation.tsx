@@ -62,7 +62,7 @@ const CardBanListInformation: FunctionComponent<Args> = ({ isLoading, restricted
 			const headerNames: string[] = ['Date', 'Status']
 			const rowValues: string[][] = restrictedIn[format].map((banList: SKCBanListInstance) => [Dates.fromYYYYMMDDToDateStr(banList.banListDate), banList.banStatus])
 
-			const table: JSX.Element = <SKCTable headerNames={headerNames} rowValues={rowValues} />
+			const table: JSX.Element = <SKCTable header={headerNames} rows={rowValues} />
 			setBanListTable(table)
 		})
 	}, [isLoading, format, restrictedIn])

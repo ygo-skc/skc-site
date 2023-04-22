@@ -33,7 +33,7 @@ const ProductBrowse: FunctionComponent = () => {
 		})
 
 		startTransition(() => {
-			setProductGridItems(<SKCTable headerNames={headers} rowValues={productRows} rowOnClick={rowOnClick} fullWidth />)
+			setProductGridItems(<SKCTable header={headers} rows={productRows} rowActions={rowOnClick} fullWidth />)
 			setIsDataLoaded(true)
 		})
 	}, [productJson])

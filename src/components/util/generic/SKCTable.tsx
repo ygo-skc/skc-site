@@ -4,13 +4,13 @@ import { FC, memo, useCallback } from 'react'
 import '../../../css/util/generic/table.css'
 
 export type SKCTableProps = {
-	headerNames: string[]
-	rowValues: string[][]
-	rowOnClick?: { (): void }[]
+	header: string[]
+	rows: string[][]
+	rowActions?: { (): void }[]
 	fullWidth?: boolean
 }
 
-const SKCTable: FC<SKCTableProps> = ({ headerNames, rowValues, rowOnClick = [], fullWidth = false }) => {
+const SKCTable: FC<SKCTableProps> = ({ header: headerNames, rows: rowValues, rowActions: rowOnClick = [], fullWidth = false }) => {
 	const createHeaderRow = useCallback((): JSX.Element => {
 		const columns = headerNames.map((header: string) => {
 			return <TableCell key={header}>{header}</TableCell>
@@ -55,9 +55,9 @@ const SKCTable: FC<SKCTableProps> = ({ headerNames, rowValues, rowOnClick = [], 
 
 export default memo(SKCTable, (prevProps, nextProps) => {
 	if (
-		prevProps.headerNames.length !== nextProps.headerNames.length ||
-		prevProps.rowValues.length !== nextProps.rowValues.length ||
-		prevProps.rowOnClick?.length !== nextProps.rowOnClick?.length ||
+		prevProps.header.length !== nextProps.header.length ||
+		prevProps.rows.length !== nextProps.rows.length ||
+		prevProps.rowActions?.length !== nextProps.rowActions?.length ||
 		prevProps.fullWidth !== nextProps.fullWidth
 	)
 		return false

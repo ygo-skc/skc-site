@@ -37,7 +37,7 @@ const CardProductInformation: FC<args> = ({ isLoading, productInfo, cardID }) =>
 				})
 			})
 
-			setProductTable(<SKCTable headerNames={headerNames} rowValues={rowValues} rowOnClick={rowOnClick} />)
+			setProductTable(<SKCTable header={headerNames} rows={rowValues} rowActions={rowOnClick} />)
 		})
 	}, [productInfo, cardID])
 

@@ -24,7 +24,7 @@ const ProductInfoDetailsComponent: FC<ProductDetails> = ({ productName, productI
 
 				<div className='group'>
 					<Typography variant='h5'>Summary</Typography>
-					{isDataLoaded ? <SKCTable headerNames={[]} rowValues={summaryRows} /> : <Skeleton variant='rectangular' height='170px' />}
+					{isDataLoaded ? <SKCTable header={[]} rows={summaryRows} /> : <Skeleton variant='rectangular' height='170px' />}
 				</div>
 			</div>
 		</Box>

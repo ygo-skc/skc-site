@@ -119,7 +119,7 @@ export default function BrowseCards() {
 
 							<div className='group'>
 								<Typography variant='h5'>Results</Typography>
-								{<SKCTable headerNames={[]} rowValues={browseSummaryStats} />}
+								{<SKCTable header={[]} rows={browseSummaryStats} />}
 							</div>
 						</div>
 					</Section>
