@@ -4,8 +4,7 @@ import { Typography } from '@mui/material'
 import '../../../css/card/card-information-styles.css'
 
 import { Dates } from '../../../helper/Dates'
-import { Hint } from 'skc-rcl'
-import SKCTable from '../../util/generic/SKCTable'
+import { Hint, SKCTable } from 'skc-rcl'
 
 type args = {
 	isLoading: boolean

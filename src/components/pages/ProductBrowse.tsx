@@ -6,8 +6,7 @@ import DownstreamServices from '../../helper/DownstreamServices'
 
 import { Dates } from '../../helper/Dates'
 import { Skeleton, Typography } from '@mui/material'
-import { Section } from 'skc-rcl'
-import SKCTable from '../util/generic/SKCTable'
+import { SKCTable, Section } from 'skc-rcl'
 
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 

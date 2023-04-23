@@ -1,7 +1,7 @@
 import { Skeleton, Typography, Box } from '@mui/material'
 import { FC } from 'react'
 import { Dates } from '../../helper/Dates'
-import SKCTable from '../util/generic/SKCTable'
+import { SKCTable } from 'skc-rcl'
 
 const ProductInfoDetailsComponent: FC<ProductDetails> = ({ productName, productId, productType, productSubType, productReleaseDate, isDataLoaded, numUniqueCards }) => {
 	const summaryRows = []

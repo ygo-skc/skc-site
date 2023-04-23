@@ -4,8 +4,11 @@ import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined'
 import { FC, useCallback } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { DateComponent } from 'skc-rcl'
+import { Dates } from '../../../helper/Dates'
 
 const EventItem: FC<{ event: HeartApiEventItem; showEventDialog?: any; setEventDialogEventData?: any }> = ({ event, showEventDialog, setEventDialogEventData }) => {
+	const eventDate = new Date(event.eventDate)
+
 	const isWithinDialog = showEventDialog === undefined && setEventDialogEventData === undefined ? true : false
 	let parentStyle, notesStyle
 	if (isWithinDialog) {
@@ -27,7 +30,7 @@ const EventItem: FC<{ event: HeartApiEventItem; showEventDialog?: any; setEventD
 				<Typography className='event-name' variant='h6'>
 					{event.name}
 				</Typography>
-				<DateComponent date={new Date(event.eventDate)} />
+				<DateComponent month={Dates.getMonth(eventDate)} day={+Dates.getDay(eventDate)} year={+Dates.getYear(eventDate)} />
 			</div>
 
 			<Typography className='event-notes-header' variant='subtitle1'>

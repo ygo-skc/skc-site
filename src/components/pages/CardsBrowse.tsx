@@ -11,8 +11,7 @@ import DownstreamServices from '../../helper/DownstreamServices'
 import '../../css/util/database-info/database-search-styles.css'
 import '../../css/main-pages/card-browse.css'
 import CardBrowse from '../util/search/CardBrowse'
-import { Section } from 'skc-rcl'
-import SKCTable from '../util/generic/SKCTable'
+import { SKCTable, Section } from 'skc-rcl'
 
 const CardDisplayGrid = lazy(() => import('../util/grid/CardDisplayGrid'))
 
