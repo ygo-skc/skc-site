@@ -11,7 +11,7 @@
 		"@mui/icons-material": "5.11.16",
 		"@mui/material": "5.12.3",
 		"@mui/styled-engine-sc": "5.12.0",
-		"@nivo/pie": "0.80.0",
+		"@nivo/pie": "0.81.0",
 		"axios": "1.4.0",
 		"entities": "4.5.0",
 		"lodash.startcase": "4.4.0",
@@ -21,7 +21,7 @@
 		"react-markdown": "8.0.7",
 		"react-router-dom": "6.11.1",
 		"react-visibility-sensor": "5.1.1",
-		"skc-rcl": "0.7.0",
+		"skc-rcl": "0.7.2",
 		"styled-components": "5.3.10"
 	},
 	"resolutions": {
