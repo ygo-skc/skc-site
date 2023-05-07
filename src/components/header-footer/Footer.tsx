@@ -17,7 +17,7 @@ const Footer: FunctionComponent = () => {
 					setSkcAPIVersion(json?.version)
 				},
 				false
-			)
+			)?.catch(() => {})
 
 			// FetchHandler version for SKC API
 			FetchHandler.handleFetch(
@@ -26,7 +26,7 @@ const Footer: FunctionComponent = () => {
 					setHeartAPIVersion(json?.version)
 				},
 				false
-			)
+			)?.catch(() => {})
 
 			// FetchHandler version for SKC Suggestion Engine
 			FetchHandler.handleFetch(
@@ -35,7 +35,7 @@ const Footer: FunctionComponent = () => {
 					setSkcSuggestionEngineVersion(json?.version)
 				},
 				false
-			)
+			)?.catch(() => {})
 		})
 	}, [])
 

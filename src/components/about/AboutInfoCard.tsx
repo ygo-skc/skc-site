@@ -25,9 +25,7 @@ const AboutInfoCard: FunctionComponent<AboutInfoCardProps> = ({ title, subtitle,
 			</Typography>
 		</div>
 
-		<Typography variant='body1' className='info-card-body'>
-			{body}
-		</Typography>
+		<div className='info-card-body'>{body}</div>
 	</div>
 )
 

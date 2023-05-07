@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet'
 
 import Breadcrumb from '../header-footer/Breadcrumb'
 import AboutSKC from '../about/AboutSKC'
-import Overview from '../about/AboutServices'
+import Overview from '../about/Overview'
 
 import '../../css/main-pages/about.css'
 import { Section } from 'skc-rcl'
