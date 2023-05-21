@@ -10,11 +10,11 @@ import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 import BreadCrumb from '../header-footer/Breadcrumb'
 
 import '../../css/main-pages/ban-list.css'
-import Section from '../util/generic/Section'
 import dateReducer, { BanListDateReducerActionType } from '../../helper/reducers/BanListDateReducer'
 import currentlySelectedBanListReducer, { CurrentlySelectedBanListReducerActionType } from '../../helper/reducers/CurrentBanListReducer'
 import { useParams } from 'react-router-dom'
 import { AcceptableBanListFormat, determineListSize, getValidFormat } from '../../helper/BanListUtil'
+import { Section } from 'skc-rcl'
 
 const BanListDates = lazy(() => import('../banlist/BanListDates'))
 const BanListFormat = lazy(() => import('../banlist/BanListFormat'))
@@ -216,33 +216,28 @@ export default function BanList() {
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={
 					<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='500px' />}>
-						<Section
-							sticky
-							sectionHeaderBackground={'ban-list'}
-							sectionName='Overview'
-							sectionContent={
-								<div className='section-content'>
-									<BanListFormat format={format} setFormat={setFormat} />
-									<BanListDates
-										isFetchingBanListDates={isFetchingBanListDates}
-										banListStartDates={banListStartDates}
-										selectedBanList={selectedBanList}
-										setSelectedBanList={handleBanListChosen}
-									/>
+						<Section sticky sectionHeaderBackground={'ban-list'} sectionName='Overview'>
+							<div className='section-content'>
+								<BanListFormat format={format} setFormat={setFormat} />
+								<BanListDates
+									isFetchingBanListDates={isFetchingBanListDates}
+									banListStartDates={banListStartDates}
+									selectedBanList={selectedBanList}
+									setSelectedBanList={handleBanListChosen}
+								/>
 
-									<BanListBreakdown
-										normalFormatSpreads={{ numForbidden, numLimited, numSemiLimited }}
-										normalFormatDiffSpreads={{ numNewForbidden, numNewLimited, numNewSemiLimited, numRemoved }}
-										dlFormatSpreads={{ numForbidden, numLimitedOne, numLimitedTwo, numLimitedThree }}
-										dlFormatDiffSpreads={{ numNewForbidden, numNewLimitedOne, numNewLimitedTwo, numNewLimitedThree, numRemoved }}
-										isFetchingBanList={isFetchingBanList}
-										isFetchingBanListNewContent={isFetchingBanListNewContent}
-										isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
-										format={format}
-									/>
-								</div>
-							}
-						/>
+								<BanListBreakdown
+									normalFormatSpreads={{ numForbidden, numLimited, numSemiLimited }}
+									normalFormatDiffSpreads={{ numNewForbidden, numNewLimited, numNewSemiLimited, numRemoved }}
+									dlFormatSpreads={{ numForbidden, numLimitedOne, numLimitedTwo, numLimitedThree }}
+									dlFormatDiffSpreads={{ numNewForbidden, numNewLimitedOne, numNewLimitedTwo, numNewLimitedThree, numRemoved }}
+									isFetchingBanList={isFetchingBanList}
+									isFetchingBanListNewContent={isFetchingBanListNewContent}
+									isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
+									format={format}
+								/>
+							</div>
+						</Section>
 					</Suspense>
 				}
 				twoThirdComponent={

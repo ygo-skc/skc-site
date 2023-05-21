@@ -4,8 +4,7 @@ import { Typography } from '@mui/material'
 import '../../../css/card/card-information-styles.css'
 
 import { Dates } from '../../../helper/Dates'
-import Hint from '../../util/generic/Hints'
-import createTable from '../../util/generic/TableHelpers'
+import { Hint, SKCTable } from 'skc-rcl'
 
 type args = {
 	isLoading: boolean
@@ -37,7 +36,7 @@ const CardProductInformation: FC<args> = ({ isLoading, productInfo, cardID }) =>
 				})
 			})
 
-			setProductTable(createTable(headerNames, rowValues, rowOnClick))
+			setProductTable(<SKCTable header={headerNames} rows={rowValues} rowActions={rowOnClick} />)
 		})
 	}, [productInfo, cardID])
 

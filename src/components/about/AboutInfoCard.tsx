@@ -1,21 +1,21 @@
 import { FunctionComponent } from 'react'
 
 import { Typography } from '@mui/material'
-import LinkPhoto from '../util/photo/LinkPhoto'
+import { LinkPhoto } from 'skc-rcl'
 
 type AboutInfoCardProps = {
 	title: string
 	subtitle: string
 	body: JSX.Element
-	imgPath: string
+	imgName: string
 	imgLink: string
 }
 
-const AboutInfoCard: FunctionComponent<AboutInfoCardProps> = ({ title, subtitle, body, imgPath, imgLink }) => (
+const AboutInfoCard: FunctionComponent<AboutInfoCardProps> = ({ title, subtitle, body, imgName, imgLink }) => (
 	<div className='info-card'>
 		<div className='info-card-header-container'>
 			<div className='centered-image'>
-				<LinkPhoto imageName={imgPath} link={imgLink} />
+				<LinkPhoto imageName={imgName} link={imgLink} imageSrc={`/assets/${imgName}`} />
 			</div>
 			<Typography align='center' variant='h4'>
 				{title}
@@ -25,9 +25,7 @@ const AboutInfoCard: FunctionComponent<AboutInfoCardProps> = ({ title, subtitle,
 			</Typography>
 		</div>
 
-		<Typography variant='body1' className='info-card-body'>
-			{body}
-		</Typography>
+		<div className='info-card-body'>{body}</div>
 	</div>
 )
 

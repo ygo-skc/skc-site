@@ -14,35 +14,45 @@
 }
 
 @media screen and (min-width: 800px) {
-	.one-third-section-mirrored {
-		padding-left: 0rem;
+	.one-third-two-thirds-container {
+		display: flex;
+		column-gap: 1.5rem;
 	}
 
-	.one-third-section,
-	.one-third-section-mirrored {
-		min-width: 25rem;
-		max-width: 25rem;
-	}
-
-	.two-third-section,
-	.two-third-section-mirrored {
-		flex-grow: 1;
-		width: 1;
+	.one-third-section {
+		flex: 0 0 33%;
+		min-width: 0;
+		position: sticky;
+		top: 0;
+		align-self: flex-start;
 	}
 
 	.two-third-section {
-		padding-left: 1.5rem;
-	}
-
-	.two-third-section-mirrored {
-		padding-right: 1.5rem;
+		flex: 1;
+		min-width: 0;
 	}
 }
 
-@media screen and (min-width: 1500px) {
-	.one-third-section,
-	.one-third-section-mirrored {
-		min-width: 30rem;
-		max-width: 30rem;
+@media screen and (min-width: 1000px) {
+	.one-third-section {
+		flex: 0 0 32%;
+	}
+}
+
+@media screen and (min-width: 1200px) {
+	.one-third-section {
+		flex: 0 0 31%;
+	}
+}
+
+@media screen and (min-width: 1400px) {
+	.one-third-section {
+		flex: 0 0 26%;
+	}
+}
+
+@media screen and (min-width: 1650px) {
+	.one-third-section {
+		flex: 0 0 23%;
 	}
 }

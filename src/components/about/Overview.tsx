@@ -43,7 +43,7 @@ export default function Overview() {
 								/>
 							</Fragment>
 						}
-						imgPath='backend.png'
+						imgName='backend.png'
 						imgLink={`${process.env.REACT_APP_API_HOST}/api/v1/swagger-ui/index.html`}
 					/>
 				</Grid2>
@@ -54,30 +54,26 @@ export default function Overview() {
 						subtitle='Donations To Website'
 						body={
 							<Fragment>
-								<Typography variant='body1'>
-									As you can tell, this site has no ads and no trackers trying to get information about you. This has two intended effects:
-									<ol>
-										<li>The interface is fast, clean and intuitive.</li>
-										<li>Big corporations don't get browsing data about you.</li>
-									</ol>
-								</Typography>
+								<Typography variant='body1'>As you can tell, this site has no ads and no trackers trying to get information about you. This has two intended effects:</Typography>
+								<ol>
+									<li>The interface is fast, clean and intuitive.</li>
+									<li>Big corporations don't get browsing data about you.</li>
+								</ol>
 
-								<Typography variant='body1'>
-									To help maintain this web page, you can donate using one of the options below.
-									<ul>
-										<li>
-											<strong>BTC (Bitcoin) Wallet:</strong> 3DbG1525F4HMf9Qttj5waDxJv747JrBh4g
-										</li>
-										<li>
-											<strong>ZEC (Zcash) Wallet:</strong> t1UdXZkAUUNY35Kh2FiRoRk29Xu8SEYsXxS
-										</li>
-										<li>
-											<Link className='link' color='secondary' href='https://www.paypal.com/donate?hosted_button_id=S3MFF6AVW662U'>
-												PayPal
-											</Link>
-										</li>
-									</ul>
-								</Typography>
+								<Typography variant='body1'>To help maintain this web page, you can donate using one of the options below.</Typography>
+								<ul>
+									<li>
+										<strong>BTC (Bitcoin) Wallet:</strong> 3DbG1525F4HMf9Qttj5waDxJv747JrBh4g
+									</li>
+									<li>
+										<strong>ZEC (Zcash) Wallet:</strong> t1UdXZkAUUNY35Kh2FiRoRk29Xu8SEYsXxS
+									</li>
+									<li>
+										<Link className='link' color='secondary' href='https://www.paypal.com/donate?hosted_button_id=S3MFF6AVW662U'>
+											PayPal
+										</Link>
+									</li>
+								</ul>
 
 								<div>
 									<form action='https://www.paypal.com/donate' method='post' target='_top'>
@@ -94,8 +90,8 @@ export default function Overview() {
 								</div>
 							</Fragment>
 						}
-						imgPath='monetary_contribution.png'
-						imgLink=''
+						imgName='monetary_contribution.png'
+						imgLink='https://www.paypal.com/donate?token=cqxHbHEXK6-mxQeeArpzXbPNCngsNwSscv3vVARXBwyFL6NWebDRaj4Xze7jEZ1OYi9BtmxjfsKRGeEI'
 					/>
 				</Grid2>
 
@@ -133,8 +129,8 @@ export default function Overview() {
 								/>
 							</Fragment>
 						}
-						imgPath='information.png'
-						imgLink=''
+						imgName='information.png'
+						imgLink='https://twitter.com/supreme_king_yt'
 					/>
 				</Grid2>
 
@@ -159,7 +155,7 @@ export default function Overview() {
 								/>
 							</Fragment>
 						}
-						imgPath='yt_channel_icon.jpeg'
+						imgName='yt_channel_icon.jpeg'
 						imgLink='https://www.youtube.com/channel/UCBZ_1wWyLQI3SV9IgLbyiNQ/videos'
 					/>
 				</Grid2>

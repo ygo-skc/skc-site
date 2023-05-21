@@ -6,7 +6,11 @@ import { Skeleton } from '@mui/material'
 
 import '../../css/util/generic/youtube-data.css'
 
-const GenericNonBreakingErr = lazy(() => import('../util/exception/GenericNonBreakingErr'))
+const GenericNonBreakingErr = lazy(() =>
+	import('skc-rcl').then((module) => {
+		return { default: module.GenericNonBreakingErr }
+	})
+)
 const YouTubeUploads = lazy(() => import('../util/social/YouTubeUploads'))
 
 type _YouTubeData = {
@@ -52,7 +56,7 @@ const YouTubeData: FC<_YouTubeData> = ({ channel }) => {
 
 	return (
 		<Fragment>
-			<Suspense fallback={<Skeleton variant='rectangular' height='375' width='100%' className='rounded-skeleton' />}>
+			<Suspense fallback={<Skeleton variant='rectangular' height='375px' width='100%' className='rounded-skeleton' />}>
 				{!isFetchingData && (
 					<YouTubeUploads youtubeData={youtubeUploadData} channelName={channelNames[channel]} channelId={channelId} channelDescription={channelDescription[channel]} />
 				)}

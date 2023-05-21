@@ -1,5 +1,3 @@
-import { Box } from '@mui/material'
-import Parent from '../generic/Parent'
 import { FC, ReactNode } from 'react'
 
 type _OneThirdTwoThirdsGrid = {
@@ -10,10 +8,10 @@ type _OneThirdTwoThirdsGrid = {
 
 const OneThirdTwoThirdsGrid: FC<_OneThirdTwoThirdsGrid> = ({ oneThirdComponent, twoThirdComponent, mirrored = false }) => {
 	return (
-		<Parent>
-			{mirrored ? <Box className='two-third-section-mirrored'>{twoThirdComponent}</Box> : <Box className='one-third-section-mirrored'>{oneThirdComponent}</Box>}
-			{mirrored ? <Box className='one-third-section'>{oneThirdComponent}</Box> : <Box className='two-third-section'>{twoThirdComponent}</Box>}
-		</Parent>
+		<div className='one-third-two-thirds-container'>
+			{mirrored ? <div className='two-third-section'>{twoThirdComponent}</div> : <div className='one-third-section'>{oneThirdComponent}</div>}
+			{mirrored ? <div className='one-third-section'>{oneThirdComponent}</div> : <div className='two-third-section'>{twoThirdComponent}</div>}
+		</div>
 	)
 }
 

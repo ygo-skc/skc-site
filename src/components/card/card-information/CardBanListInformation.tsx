@@ -4,10 +4,9 @@ import { Button, ButtonGroup, Typography } from '@mui/material'
 import '../../../css/card/card-information-styles.css'
 
 import { Dates } from '../../../helper/Dates'
-import Hint from '../../util/generic/Hints'
 
-import createTable from '../../util/generic/TableHelpers'
 import { AcceptableBanListFormat } from '../../../helper/BanListUtil'
+import { Hint, SKCTable } from 'skc-rcl'
 
 type Args = {
 	isLoading: boolean
@@ -62,10 +61,10 @@ const CardBanListInformation: FunctionComponent<Args> = ({ isLoading, restricted
 			const headerNames: string[] = ['Date', 'Status']
 			const rowValues: string[][] = restrictedIn[format].map((banList: SKCBanListInstance) => [Dates.fromYYYYMMDDToDateStr(banList.banListDate), banList.banStatus])
 
-			const table: JSX.Element = createTable(headerNames, rowValues)
+			const table: JSX.Element = <SKCTable header={headerNames} rows={rowValues} />
 			setBanListTable(table)
 		})
-	}, [isLoading, format])
+	}, [isLoading, format, restrictedIn])
 
 	return (
 		<div className='group'>

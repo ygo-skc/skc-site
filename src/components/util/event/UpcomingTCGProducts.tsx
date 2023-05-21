@@ -5,7 +5,11 @@ import DownstreamServices from '../../../helper/DownstreamServices'
 import FetchHandler from '../../../helper/FetchHandler'
 import LinkIcon from '@mui/icons-material/Link'
 
-const GenericNonBreakingErr = lazy(() => import('../exception/GenericNonBreakingErr'))
+const GenericNonBreakingErr = lazy(() =>
+	import('skc-rcl').then((module) => {
+		return { default: module.GenericNonBreakingErr }
+	})
+)
 const EventItem = lazy(() => import('./EventItem'))
 
 const UpcomingTCGProducts = () => {
@@ -39,18 +43,18 @@ const UpcomingTCGProducts = () => {
 		})
 	}, [])
 
-	const handleSnackbarIsClosed = useCallback(() => setIsSnackbarOpen(false), [isSnackbarOpen])
+	const handleSnackbarIsClosed = useCallback(() => setIsSnackbarOpen(false), [])
 
 	const handleShowSnackbar = useCallback(() => {
 		navigator.clipboard.writeText(`${window.location.href}#upcoming-tcg-products`)
 		setIsSnackbarOpen(true)
-	}, [isSnackbarOpen])
+	}, [])
 
-	const handleDisplayDialog = useCallback(() => setEventDialogIsOpen(false), [eventDialogIsOpen])
+	const handleDisplayDialog = useCallback(() => setEventDialogIsOpen(false), [])
 
 	return (
 		<div id='upcoming-tcg-products' style={{ marginBottom: '3.5rem' }}>
-			<img src={'/assets/yugioh-tcg-official-logo.png'} />
+			<img alt='Yu-Gi-Oh! TCG Logo' src={'/assets/yugioh-tcg-official-logo.png'} />
 			<div className='event-header-container search-icon-container'>
 				<Typography className='event-header' variant='h4'>
 					Upcoming Yu-Gi-Oh! TCG Products
@@ -66,7 +70,7 @@ const UpcomingTCGProducts = () => {
 					<GenericNonBreakingErr errExplanation='Come back at a different time to see upcoming TCG products!' />
 				</div>
 			)}
-			{isFetchingData && <Skeleton variant='rectangular' height='280' width='100%' className='rounded-skeleton' />}
+			{isFetchingData && <Skeleton variant='rectangular' height='280px' width='100%' className='rounded-skeleton' />}
 
 			<Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} open={isSnackbarOpen} autoHideDuration={3000} onClose={handleSnackbarIsClosed}>
 				<Alert onClose={handleSnackbarIsClosed} severity='success'>
@@ -76,7 +80,7 @@ const UpcomingTCGProducts = () => {
 
 			<Dialog maxWidth='xs' onClose={handleDisplayDialog} open={eventDialogIsOpen}>
 				<DialogTitle>TCG Product Details</DialogTitle>
-				{eventDialogEventData != undefined ? <EventItem event={eventDialogEventData} /> : undefined}
+				{eventDialogEventData !== undefined ? <EventItem event={eventDialogEventData} /> : undefined}
 			</Dialog>
 		</div>
 	)

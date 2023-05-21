@@ -2,20 +2,16 @@ import { useState, useEffect, lazy, useReducer, useCallback } from 'react'
 import { Typography } from '@mui/material'
 import { Helmet } from 'react-helmet'
 
-import Section from '../util/generic/Section'
-
 import Breadcrumb from '../header-footer/Breadcrumb'
-
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 
 import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 
-import createTable from '../util/generic/TableHelpers'
-
 import '../../css/util/database-info/database-search-styles.css'
 import '../../css/main-pages/card-browse.css'
 import CardBrowse from '../util/search/CardBrowse'
+import { SKCTable, Section } from 'skc-rcl'
 
 const CardDisplayGrid = lazy(() => import('../util/grid/CardDisplayGrid'))
 
@@ -114,44 +110,35 @@ export default function BrowseCards() {
 
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={
-					<Section
-						sectionHeaderBackground='product'
-						sectionName='Current Criteria'
-						sticky={true}
-						sectionContent={
-							<div className='section-content'>
-								<div className='group card-browse-group'>
-									<CardBrowse browseCriteriaDispatch={browseCriteriaDispatch} selectedCriteria={selectedCriteria} skcCardBrowseCriteriaOutput={skcCardBrowseCriteriaOutput} />
-								</div>
-
-								<div className='group'>
-									<Typography variant='h5'>Results</Typography>
-									{createTable([], browseSummaryStats)}
-								</div>
+					<Section sectionHeaderBackground='product' sectionName='Current Criteria' sticky={true}>
+						<div className='section-content'>
+							<div className='group card-browse-group'>
+								<CardBrowse browseCriteriaDispatch={browseCriteriaDispatch} selectedCriteria={selectedCriteria} skcCardBrowseCriteriaOutput={skcCardBrowseCriteriaOutput} />
 							</div>
-						}
-					/>
+
+							<div className='group'>
+								<Typography variant='h5'>Results</Typography>
+								{<SKCTable header={[]} rows={browseSummaryStats} />}
+							</div>
+						</div>
+					</Section>
 				}
 				twoThirdComponent={
-					<Section
-						sectionHeaderBackground='product'
-						sectionName='Browse Results'
-						sectionContent={
-							<div className='section-content'>
-								<Typography variant='h5'>Results Are Sorted Alphabetically</Typography>
+					<Section sectionHeaderBackground='product' sectionName='Browse Results'>
+						<div className='section-content'>
+							<Typography variant='h5'>Results Are Sorted Alphabetically</Typography>
 
-								<CardDisplayGrid
-									cardJsonResults={jsonResults}
-									numResultsDisplayed={numResultsDisplayed}
-									numItemsToLoadWhenNeeded={50}
-									loadMoreCallback={handleLoadMore}
-									isLoadMoreOptionVisible={true}
-									numResults={numResults}
-									isDataLoaded={isCardBrowseDataLoaded}
-								/>
-							</div>
-						}
-					></Section>
+							<CardDisplayGrid
+								cardJsonResults={jsonResults}
+								numResultsDisplayed={numResultsDisplayed}
+								numItemsToLoadWhenNeeded={50}
+								loadMoreCallback={handleLoadMore}
+								isLoadMoreOptionVisible={true}
+								numResults={numResults}
+								isDataLoaded={isCardBrowseDataLoaded}
+							/>
+						</div>
+					</Section>
 				}
 			/>
 		</div>
