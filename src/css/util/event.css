@@ -15,10 +15,6 @@
 	margin-bottom: 0rem;
 }
 
-.event-container-end {
-	margin-bottom: 5rem;
-}
-
 .event-item {
 	padding: 1.5rem;
 	width: 24rem;
@@ -26,19 +22,27 @@
 	background: white;
 	margin-right: 1rem;
 	margin-bottom: 1rem;
+	display: flex;
 }
 
-.event-item-header {
+.event-item > *:not(:last-child) {
+	margin-right: 2rem;
+}
+
+.dialog-event-item {
+	max-width: 100%;
+	background: white;
 	display: flex;
-	margin-bottom: 1.5rem;
+}
+
+.dialog-event-item > *:not(:last-child) {
+	margin-right: 2rem;
 }
 
 .event-name {
 	color: black;
 	font-weight: 800;
 	flex-grow: 1;
-	margin-bottom: 0rem;
-	padding-right: 0.75rem;
 }
 
 .event-notes-header {
@@ -73,7 +77,6 @@
 
 .event-icon-container {
 	margin-top: 1rem;
-	float: right;
 }
 
 .event-icon-button.MuiButtonBase-root:not(:last-child) {

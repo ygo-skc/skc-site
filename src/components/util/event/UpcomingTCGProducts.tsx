@@ -1,6 +1,6 @@
 import '../../../css/util/event.css'
 import { useCallback, lazy, startTransition, useEffect, useState } from 'react'
-import { Alert, Dialog, DialogTitle, IconButton, Skeleton, Snackbar, Typography } from '@mui/material'
+import { Alert, Dialog, DialogContent, DialogTitle, IconButton, Skeleton, Snackbar, Typography } from '@mui/material'
 import DownstreamServices from '../../../helper/DownstreamServices'
 import FetchHandler from '../../../helper/FetchHandler'
 import LinkIcon from '@mui/icons-material/Link'
@@ -80,7 +80,7 @@ const UpcomingTCGProducts = () => {
 
 			<Dialog maxWidth='xs' onClose={handleDisplayDialog} open={eventDialogIsOpen}>
 				<DialogTitle>TCG Product Details</DialogTitle>
-				{eventDialogEventData !== undefined ? <EventItem event={eventDialogEventData} /> : undefined}
+				<DialogContent>{eventDialogEventData !== undefined ? <EventItem event={eventDialogEventData} /> : undefined}</DialogContent>
 			</Dialog>
 		</div>
 	)
