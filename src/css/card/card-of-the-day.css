@@ -1,0 +1,28 @@
+.card-of-the-day-parent:hover {
+	background: #eee;
+	cursor: pointer;
+}
+
+.card-of-the-day-wrapper {
+	display: flex;
+}
+
+.card-of-the-day-wrapper > *:not(:last-child) {
+	margin-right: 0.75rem;
+}
+
+.card-of-the-day-image {
+	flex: 4;
+}
+
+.card-of-the-day-data {
+	flex: 11;
+}
+
+.card-of-the-day-data > *:not(:last-child) {
+	margin-bottom: 0.5rem;
+}
+
+.card-of-the-day-text {
+	color: black;
+}
