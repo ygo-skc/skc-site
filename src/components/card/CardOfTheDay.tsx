@@ -34,7 +34,11 @@ export default function CardOfTheDay() {
 
 	return (
 		<Section sectionName='Suggestions'>
-			<div onClick={() => window.location.assign(`/card/${cardOfTheDay?.cardID}`)} className={`section-content ${hasError ? '' : 'card-of-the-day-parent'}`} id='card-of-the-day'>
+			<div
+				onClick={hasError ? undefined : () => window.location.assign(`/card/${cardOfTheDay?.cardID}`)}
+				className={`section-content ${hasError ? '' : 'card-of-the-day-parent'}`}
+				id='card-of-the-day'
+			>
 				{(!hasError && (
 					<Fragment>
 						<Typography variant='h5'>Card of The Day</Typography>
