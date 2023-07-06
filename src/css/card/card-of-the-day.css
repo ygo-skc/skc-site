@@ -7,12 +7,26 @@
 	display: flex;
 }
 
-.card-of-the-day-wrapper > *:not(:last-child) {
-	margin-right: 0.75rem;
+.card-of-the-day-wrapper #rounded-img-outer-container {
+	flex: 4;
+	margin: 0 auto; /* override parent default */
 }
 
-.card-of-the-day-image {
+.card-of-the-day-wrapper .MuiSkeleton-root {
 	flex: 4;
+	height: auto;
+}
+
+.card-of-the-day-wrapper > *:not(:last-child) {
+	margin-right: 1rem !important;
+}
+
+.card-of-the-day-type-wrapper {
+	display: flex;
+}
+
+.card-of-the-day-type-wrapper > *:not(:last-child) {
+	margin-right: 0.5rem;
 }
 
 .card-of-the-day-data {
