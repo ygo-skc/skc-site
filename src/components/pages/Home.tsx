@@ -8,6 +8,8 @@ import Welcome from '../home/Welcome'
 import SocialMedia from '../util/social/SocialMedia'
 import YouTubeData from '../home/YouTubeData'
 import { Section } from 'skc-rcl'
+import CardOfTheDay from '../card/CardOfTheDay'
+import { Fragment } from 'react'
 
 export default function Home() {
 	return (
@@ -19,8 +21,17 @@ export default function Home() {
 			</Helmet>
 
 			<Breadcrumb crumbs={['Home']} />
-			<DatabaseInfo />
-			<UpcomingTCGProducts />
+
+			<OneThirdTwoThirdsGrid
+				mirrored={true}
+				oneThirdComponent={<CardOfTheDay />}
+				twoThirdComponent={
+					<Fragment>
+						<DatabaseInfo />
+						<UpcomingTCGProducts />
+					</Fragment>
+				}
+			/>
 
 			<OneThirdTwoThirdsGrid
 				mirrored={true}
