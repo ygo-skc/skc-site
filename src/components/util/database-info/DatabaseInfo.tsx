@@ -32,7 +32,7 @@ const DatabaseInfo = () => {
 	const handleProductsGlanceClicked = useCallback(() => window.location.assign('/browse/product'), [])
 
 	return (
-		<Section sectionName='Content' maxWidth='1000px'>
+		<Section sectionName='Content'>
 			<div className='section-content'>
 				<div className='search-container'>
 					<DatabaseSearch />

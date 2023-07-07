@@ -12,7 +12,7 @@ const EventItem: FC<{ event: HeartApiEventItem; showEventDialog?: any; setEventD
 	const isWithinDialog = showEventDialog === undefined && setEventDialogEventData === undefined ? true : false
 	let parentStyle, notesStyle
 	if (isWithinDialog) {
-		parentStyle = 'event-item'
+		parentStyle = 'dialog-event-item'
 		notesStyle = 'markdown'
 	} else {
 		parentStyle = 'event-item very-light-shadow'
@@ -26,29 +26,24 @@ const EventItem: FC<{ event: HeartApiEventItem; showEventDialog?: any; setEventD
 
 	return (
 		<div className={parentStyle}>
-			<div className='event-item-header'>
+			<div>
+				<DateComponent month={Dates.getMonth(eventDate)} day={+Dates.getDay(eventDate)} year={+Dates.getYear(eventDate)} />
+				<div className='event-icon-container'>
+					<IconButton disabled={isWithinDialog} className='event-icon-button' aria-label='info' onClick={isWithinDialog ? undefined : handleExpandEvent}>
+						<InfoOutlinedIcon />
+					</IconButton>
+					<IconButton className='event-icon-button' href={event.url} target='_blank' aria-label='visit site'>
+						<LaunchOutlinedIcon />
+					</IconButton>
+				</div>
+			</div>
+			<div>
 				<Typography className='event-name' variant='h6'>
 					{event.name}
 				</Typography>
-				<DateComponent month={Dates.getMonth(eventDate)} day={+Dates.getDay(eventDate)} year={+Dates.getYear(eventDate)} />
-			</div>
-
-			<Typography className='event-notes-header' variant='subtitle1'>
-				Notes
-			</Typography>
-			<Typography variant='body2'>
-				<ReactMarkdown className={notesStyle} children={`${event.notes}`} />
-			</Typography>
-
-			<div className='event-icon-container'>
-				{isWithinDialog ? undefined : (
-					<IconButton className='event-icon-button' aria-label='info' onClick={handleExpandEvent}>
-						<InfoOutlinedIcon />
-					</IconButton>
-				)}
-				<IconButton className='event-icon-button' href={event.url} target='_blank' aria-label='visit site'>
-					<LaunchOutlinedIcon />
-				</IconButton>
+				<Typography variant='body2'>
+					<ReactMarkdown className={notesStyle} children={`${event.notes}`} />
+				</Typography>
 			</div>
 		</div>
 	)
