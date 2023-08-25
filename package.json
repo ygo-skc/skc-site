@@ -1,6 +1,6 @@
 {
 	"name": "skc-site",
-	"version": "1.10.0",
+	"version": "1.10.1",
 	"description": "Website to help duelists.",
 	"main": "index.js",
 	"author": "",
@@ -21,7 +21,7 @@
 		"react-markdown": "8.0.7",
 		"react-router-dom": "6.15.0",
 		"react-visibility-sensor": "5.1.1",
-		"skc-rcl": "1.0.0",
+		"skc-rcl": "1.0.1",
 		"styled-components": "5.3.11"
 	},
 	"resolutions": {
