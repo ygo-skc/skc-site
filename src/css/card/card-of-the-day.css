@@ -18,7 +18,7 @@
 }
 
 .card-of-the-day-wrapper > *:not(:last-child) {
-	margin-right: 1rem !important;
+	margin-right: 1.5rem !important;
 }
 
 .card-of-the-day-type-wrapper {
@@ -39,4 +39,8 @@
 
 .card-of-the-day-text {
 	color: black;
+}
+
+.card-of-the-day-text.MuiTypography-h6 {
+	font-weight: 800;
 }

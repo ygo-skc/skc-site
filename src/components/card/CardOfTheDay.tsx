@@ -51,12 +51,12 @@ export default function CardOfTheDay() {
 								{(!isLoading && (
 									<Fragment>
 										<InlineDate month={Dates.getMonth(date)} day={+Dates.getDay(date)} year={+Dates.getYear(date)} />
-										<Typography variant='h5' className='card-of-the-day-text'>
+										<Typography variant='h6' className='card-of-the-day-text'>
 											{cardOfTheDay?.cardName}
 										</Typography>
 										<div className='card-of-the-day-type-wrapper'>
 											<YGOCardColorIndicator cardColor={cardOfTheDay?.cardColor} variant={'small'} />
-											<Typography variant='h6' className='card-of-the-day-text'>
+											<Typography variant='subtitle1' className='card-of-the-day-text'>
 												{cardOfTheDay?.monsterType === undefined ? cardOfTheDay?.cardColor : cardOfTheDay.monsterType}
 											</Typography>
 										</div>
