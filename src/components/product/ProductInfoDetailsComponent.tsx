@@ -12,7 +12,7 @@ const ProductInfoDetailsComponent: FC<ProductDetails> = ({ productName, productI
 	summaryRows.push(['Total Unique Cards', numUniqueCards])
 
 	return (
-		<Box className='sticky'>
+		<Box>
 			<div className='section-content'>
 				{isDataLoaded ? (
 					<Typography variant='h4'>

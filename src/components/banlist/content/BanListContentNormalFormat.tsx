@@ -17,7 +17,7 @@ const BanListContentNormalFormat: FC<_BanListContentNormalFormat> = memo(
 	({ forbidden, limited, semiLimited, numForbidden, numLimited, numSemiLimited, isFetchingBanList }) => {
 		return (
 			<Section sectionHeaderBackground={'ban-list'} sectionName='Content'>
-				<div className='sticky section-content'>
+				<div className='section-content'>
 					<NormalFormatTabbedView
 						numForbidden={numForbidden}
 						numLimited={numLimited}

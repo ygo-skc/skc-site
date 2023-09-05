@@ -19,7 +19,7 @@ const BanListContentNormalFormat: FC<_BanListContentDuelLinksFormat> = memo(
 	({ forbidden, limitedOne, limitedTwo, limitedThree, numForbidden, numLimitedOne, numLimitedTwo, numLimitedThree, isFetchingBanList }) => {
 		return (
 			<Section sectionHeaderBackground={'ban-list'} sectionName='Content'>
-				<div className='sticky section-content'>
+				<div className='section-content'>
 					<DuelLinksFormatTabbedView
 						numForbidden={numForbidden}
 						numLimitedOne={numLimitedOne}
