@@ -22,7 +22,7 @@
 		"react-router-dom": "6.15.0",
 		"react-visibility-sensor": "5.1.1",
 		"skc-rcl": "1.0.1",
-		"styled-components": "5.3.11"
+		"styled-components": "6.0.8"
 	},
 	"resolutions": {
 		"d3-color": "3.1.0",
