@@ -216,7 +216,7 @@ export default function BanList() {
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={
 					<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='500px' />}>
-						<Section sticky sectionHeaderBackground={'ban-list'} sectionName='Overview'>
+						<Section sectionHeaderBackground={'ban-list'} sectionName='Overview'>
 							<div className='section-content'>
 								<BanListFormat format={format} setFormat={setFormat} />
 								<BanListDates

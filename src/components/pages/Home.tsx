@@ -36,7 +36,7 @@ export default function Home() {
 			<OneThirdTwoThirdsGrid
 				mirrored={true}
 				oneThirdComponent={
-					<Section sticky sectionName='Social'>
+					<Section sectionName='Social'>
 						<SocialMedia />
 					</Section>
 				}

@@ -11,7 +11,7 @@ const CardData: FC<_CardData> = memo(
 	({ cardID, cardName, cardColor, cardEffect, cardAttribute, monsterType, monsterAttack, monsterDefense, monsterAssociation, isLoading, cardImg }) => {
 		return (
 			<Section sectionHeaderBackground={cardColor !== undefined ? (cardColor?.replace(/Pendulum-/gi, '') as cardColor) : ''} sectionName='Information'>
-				<div className='sticky section-content'>
+				<div className='section-content'>
 					<CardImageRounded cardImg={cardImg.src} defaultVisibility={true} />
 
 					<YGOCard

@@ -21,8 +21,8 @@
 
 	.one-third-section {
 		flex: 0 0 33%;
-		min-width: 0;
 		position: sticky;
+		position: -webkit-sticky;
 		top: 0;
 		align-self: flex-start;
 	}

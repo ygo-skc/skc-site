@@ -27,7 +27,7 @@ function browseCriteriaSearchReducer(state: { browseInput: string; browseCriteri
 const CardBrowse: FC<{
 	skcCardBrowseCriteriaOutput: SKCCardBrowseCriteria
 	selectedCriteria: BrowseCriteria[]
-	browseCriteriaDispatch: React.Dispatch<{ type: string; selectedCriteria: BrowseCriteria[] }>
+	browseCriteriaDispatch: React.Dispatch<{ type: string; selectedCriteria: readonly BrowseCriteria[] }>
 }> = ({ skcCardBrowseCriteriaOutput, selectedCriteria, browseCriteriaDispatch }) => {
 	const [{ browseInput, browseCriteria }, browseCriteriaSearchDispatch] = useReducer(browseCriteriaSearchReducer, { browseInput: '', browseCriteria: [] })
 
@@ -59,7 +59,11 @@ const CardBrowse: FC<{
 
 	const handleGetOptionLabel = useCallback((option: BrowseCriteria) => option.value, [])
 	const handleGroupBy = useCallback((option: BrowseCriteria) => option.name, [])
-	const handleOnChange = useCallback((_: any, val: BrowseCriteria[]) => browseCriteriaDispatch({ type: 'UPDATE_SELECTED_CRITERIA', selectedCriteria: val }), [])
+	const handleOnChange = useCallback(
+		(_event: React.SyntheticEvent, newValue: readonly BrowseCriteria[], _reason: string) =>
+			browseCriteriaDispatch({ type: 'UPDATE_SELECTED_CRITERIA', selectedCriteria: newValue }),
+		[browseCriteriaDispatch]
+	)
 	const renderTags = useCallback(() => null, [])
 	const handleRenderGroup = useCallback((option: any) => <DBSearchGrouping group={startCase(option.group)} children={option.children} />, [])
 	const handleRenderInput = useCallback((params: any) => <SearchInput setInput={browseCriteriaSearchDispatch} searchParams={params} placeholder='Narrow criteria...' />, [])
