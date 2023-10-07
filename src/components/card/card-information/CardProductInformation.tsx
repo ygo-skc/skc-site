@@ -1,8 +1,6 @@
 import { useEffect, useState, FC, Fragment, startTransition } from 'react'
 import { Typography } from '@mui/material'
 
-import '../../../css/card/card-information-styles.css'
-
 import { Dates } from '../../../helper/Dates'
 import { Hint, SKCTable } from 'skc-rcl'
 
@@ -13,7 +11,7 @@ type args = {
 }
 
 const CardProductInformation: FC<args> = ({ isLoading, productInfo, cardID }) => {
-	const [productTable, setProductTable] = useState<JSX.Element | undefined>(undefined)
+	const [productTable, setProductTable] = useState<React.JSX.Element | undefined>(undefined)
 
 	useEffect(() => {
 		if (productInfo === null || productInfo === undefined || productInfo.length === 0) return
@@ -21,7 +19,7 @@ const CardProductInformation: FC<args> = ({ isLoading, productInfo, cardID }) =>
 		startTransition(() => {
 			const headerNames: string[] = ['ID', 'Pos', 'Release', 'Rarities']
 			const rowValues: string[][] = []
-			const rowOnClick: { (): void }[] = []
+			const rowOnClick: (() => void)[] = []
 
 			productInfo.forEach((product: ProductInfo) => {
 				product.productContent.forEach((productContent: SKCProductContent) => {

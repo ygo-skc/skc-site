@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, Suspense, useReducer, Fragment } from 'react'
+import { useState, useEffect, lazy, Suspense, useReducer } from 'react'
 import { useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { Skeleton } from '@mui/material'
@@ -8,8 +8,8 @@ import DownstreamServices from '../../helper/DownstreamServices'
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 import Breadcrumb from '../header-footer/Breadcrumb'
 
-import CardSuggestions from '../card/suggestion/CardSuggestions'
 const CardData = lazy(() => import('../card/card-information/CardData'))
+const CardSuggestions = lazy(() => import('../card/suggestion/CardSuggestions'))
 const CardInformationRelatedContent = lazy(() => import('../card/card-information/CardInformationRelatedContent'))
 
 class Card {
@@ -78,8 +78,8 @@ const CardInformation = () => {
 				monsterAtk: cardInfo.monsterAttack,
 				monsterDef: cardInfo.monsterDefense,
 				monsterAssociation: cardInfo.monsterAssociation,
-				productInfo: cardInfo.foundIn === undefined ? [] : cardInfo.foundIn,
-				restrictionInfo: cardInfo.restrictedIn === undefined ? [] : cardInfo.restrictedIn,
+				productInfo: cardInfo.foundIn ?? [],
+				restrictionInfo: cardInfo.restrictedIn ?? [],
 			})
 			setIsLoading(false)
 		})
@@ -106,46 +106,46 @@ const CardInformation = () => {
 			<OneThirdTwoThirdsGrid
 				mirrored={false}
 				oneThirdComponent={
-					<CardData
-						cardName={cardName}
-						cardColor={cardColor}
-						cardEffect={cardEffect}
-						cardAttribute={cardAttribute}
-						monsterType={monsterType}
-						monsterAttack={monsterAtk}
-						monsterDefense={monsterDef}
-						monsterAssociation={monsterAssociation}
-						cardID={Card.cardId}
-						isLoading={isLoading}
-						cardImg={Card.cardImg}
-					/>
+					<Suspense fallback={<Skeleton width='100%' height='10rem' />}>
+						<CardData
+							cardName={cardName}
+							cardColor={cardColor}
+							cardEffect={cardEffect}
+							cardAttribute={cardAttribute}
+							monsterType={monsterType}
+							monsterAttack={monsterAtk}
+							monsterDefense={monsterDef}
+							monsterAssociation={monsterAssociation}
+							cardID={Card.cardId}
+							isLoading={isLoading}
+							cardImg={Card.cardImg}
+						/>
+					</Suspense>
 				}
 				twoThirdComponent={
-					<Fragment>
+					<Suspense fallback={<Skeleton width='100%' height='10rem' />}>
 						<CardSuggestions cardID={Card.cardId} cardColor={cardColor} cardName={cardName} />
-						<Suspense fallback={<Skeleton width='100%' height='20rem' />}>
-							{!isLoading && (
-								<CardInformationRelatedContent
-									card={{
-										cardName: cardName,
-										cardColor: cardColor,
-										cardEffect: cardEffect,
-										cardAttribute: cardAttribute,
-										monsterType: monsterType,
-										monsterAttack: monsterAtk,
-										monsterDefense: monsterDef,
-										monsterAssociation: monsterAssociation,
-										cardID: Card.cardId,
-									}}
-									cardColor={cardColor?.replace(/Pendulum-/gi, '') as cardColor}
-									isLoading={isLoading}
-									cardID={Card.cardId}
-									productInfo={productInfo}
-									restrictedIn={restrictionInfo}
-								/>
-							)}
-						</Suspense>
-					</Fragment>
+						{!isLoading && (
+							<CardInformationRelatedContent
+								card={{
+									cardName: cardName,
+									cardColor: cardColor,
+									cardEffect: cardEffect,
+									cardAttribute: cardAttribute,
+									monsterType: monsterType,
+									monsterAttack: monsterAtk,
+									monsterDefense: monsterDef,
+									monsterAssociation: monsterAssociation,
+									cardID: Card.cardId,
+								}}
+								cardColor={cardColor?.replace(/Pendulum-/gi, '') as cardColor}
+								isLoading={isLoading}
+								cardID={Card.cardId}
+								productInfo={productInfo}
+								restrictedIn={restrictionInfo}
+							/>
+						)}
+					</Suspense>
 				}
 			/>
 		</div>

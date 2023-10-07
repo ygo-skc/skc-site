@@ -1,8 +1,6 @@
 import { useEffect, useState, FunctionComponent, startTransition, Fragment, useCallback } from 'react'
 import { Button, ButtonGroup, Typography } from '@mui/material'
 
-import '../../../css/card/card-information-styles.css'
-
 import { Dates } from '../../../helper/Dates'
 
 import { AcceptableBanListFormat } from '../../../helper/BanListUtil'
@@ -51,7 +49,7 @@ const BanListFormatButton: FunctionComponent<BanListFormatButtonArgs> = ({ forma
 }
 
 const CardBanListInformation: FunctionComponent<Args> = ({ isLoading, restrictedIn }) => {
-	const [banListTable, setBanListTable] = useState<JSX.Element | undefined>(undefined)
+	const [banListTable, setBanListTable] = useState<React.JSX.Element | undefined>(undefined)
 	const [format, setFormat] = useState<AcceptableBanListFormat>(determineFormat(restrictedIn))
 
 	useEffect(() => {
@@ -61,7 +59,7 @@ const CardBanListInformation: FunctionComponent<Args> = ({ isLoading, restricted
 			const headerNames: string[] = ['Date', 'Status']
 			const rowValues: string[][] = restrictedIn[format].map((banList: SKCBanListInstance) => [Dates.fromYYYYMMDDToDateStr(banList.banListDate), banList.banStatus])
 
-			const table: JSX.Element = <SKCTable header={headerNames} rows={rowValues} />
+			const table: React.JSX.Element = <SKCTable header={headerNames} rows={rowValues} />
 			setBanListTable(table)
 		})
 	}, [isLoading, format, restrictedIn])

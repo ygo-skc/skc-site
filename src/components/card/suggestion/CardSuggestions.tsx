@@ -1,11 +1,12 @@
-import { FC, Fragment, lazy, startTransition, Suspense, useEffect, useState } from 'react'
+import '../../../css/card/ygo-card-suggestion.css'
+import { FC, Fragment, lazy, startTransition, Suspense, useEffect, useState, useCallback } from 'react'
 import { Skeleton } from '@mui/material'
 
 import FetchHandler from '../../../helper/FetchHandler'
 import DownstreamServices from '../../../helper/DownstreamServices'
+import SuggestionSection from './SuggestionSection'
 
-import '../../../css/card/ygo-card-suggestion.css'
-import { GenericNonBreakingErr, Section, YGOCardWithImage } from 'skc-rcl'
+import { Section } from 'skc-rcl'
 
 const Hint = lazy(() =>
 	import('skc-rcl').then((module) => {
@@ -13,10 +14,9 @@ const Hint = lazy(() =>
 	})
 )
 
-const SuggestionSection = lazy(() => import('./SuggestionSection'))
-const YGOCardWithQuantity = lazy(() =>
+const GenericNonBreakingErr = lazy(() =>
 	import('skc-rcl').then((module) => {
-		return { default: module.YGOCardWithQuantity }
+		return { default: module.GenericNonBreakingErr }
 	})
 )
 
@@ -26,53 +26,65 @@ type _CardSuggestion = {
 	cardName: string
 }
 
-function transformReferences(references: CardReference[]): JSX.Element[] {
-	return references !== null
-		? references.map((reference: CardReference) => {
-				return (
-					<div key={reference.card.cardID} className='suggested-ygo-card-wrapper' onClick={() => window.location.assign(`/card/${reference.card.cardID}`)}>
-						<YGOCardWithQuantity card={reference.card} occurrences={reference.occurrences} />
-					</div>
-				)
-		  })
-		: []
-}
-
-function transformSupport(support: SKCCard[]): JSX.Element[] {
-	return support !== null
-		? support.map((reference: SKCCard) => {
-				return (
-					<div key={reference.cardID} className='suggested-ygo-card-wrapper' onClick={() => window.location.assign(`/card/${reference.cardID}`)}>
-						<YGOCardWithImage key={reference.cardID} card={reference} />
-					</div>
-				)
-		  })
-		: []
-}
-
 const CardSuggestions: FC<_CardSuggestion> = ({ cardID, cardColor, cardName }) => {
-	const [materialSuggestions, setMaterialSuggestions] = useState<JSX.Element[]>([])
-	const [referenceSuggestions, setReferenceSuggestions] = useState<JSX.Element[]>([])
+	const [materialSuggestions, setMaterialSuggestions] = useState<React.JSX.Element[]>([])
+	const [referenceSuggestions, setReferenceSuggestions] = useState<React.JSX.Element[]>([])
 	const [isLoadingSuggestions, setIsLoadingSuggestions] = useState<boolean>(true)
 	const [suggestionRequestHasError, setSuggestionRequestHasError] = useState<boolean>(false)
 
-	const [materialFor, setMaterialFor] = useState<JSX.Element[]>([])
-	const [referencedBy, setReferencedBy] = useState<JSX.Element[]>([])
+	const [materialFor, setMaterialFor] = useState<React.JSX.Element[]>([])
+	const [referencedBy, setReferencedBy] = useState<React.JSX.Element[]>([])
 	const [isLoadingSupport, setIsLoadingSupport] = useState<boolean>(true)
 	const [supportRequestHasError, setSupportRequestHasError] = useState<boolean>(false)
 
-	const isLoading = (): boolean => {
+	const isLoading = useCallback((): boolean => {
 		return isLoadingSuggestions || isLoadingSupport
-	}
+	}, [isLoadingSuggestions, isLoadingSupport])
 
 	// if both requests fail, then we will consider it an error
-	const hasError = (): boolean => {
+	const hasError = useCallback((): boolean => {
 		return suggestionRequestHasError && supportRequestHasError
-	}
+	}, [suggestionRequestHasError, supportRequestHasError])
 
-	const hasNoContent = () => {
+	const hasNoContent = useCallback(() => {
 		return materialSuggestions.length === 0 && referenceSuggestions.length === 0 && materialFor.length === 0 && referencedBy.length === 0
-	}
+	}, [materialFor.length, materialSuggestions.length, referenceSuggestions.length, referencedBy.length])
+
+	const transformReferences = useCallback((references: CardReference[]): React.JSX.Element[] => {
+		const YGOCardWithQuantity = lazy(() =>
+			import('skc-rcl').then((module) => {
+				return { default: module.YGOCardWithQuantity }
+			})
+		)
+
+		return references !== null
+			? references.map((reference: CardReference) => {
+					return (
+						<div key={reference.card.cardID} className='suggested-ygo-card-wrapper' onClick={() => window.location.assign(`/card/${reference.card.cardID}`)}>
+							<YGOCardWithQuantity card={reference.card} occurrences={reference.occurrences} />
+						</div>
+					)
+			  })
+			: []
+	}, [])
+
+	const transformSupport = useCallback((support: SKCCard[]): React.JSX.Element[] => {
+		const YGOCardWithImage = lazy(() =>
+			import('skc-rcl').then((module) => {
+				return { default: module.YGOCardWithImage }
+			})
+		)
+
+		return support !== null
+			? support.map((reference: SKCCard) => {
+					return (
+						<div key={reference.cardID} className='suggested-ygo-card-wrapper' onClick={() => window.location.assign(`/card/${reference.cardID}`)}>
+							<YGOCardWithImage key={reference.cardID} card={reference} />
+						</div>
+					)
+			  })
+			: []
+	}, [])
 
 	const LoadingUI = <Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='380px' />
 
@@ -104,7 +116,7 @@ const CardSuggestions: FC<_CardSuggestion> = ({ cardID, cardColor, cardName }) =
 				setSupportRequestHasError(true)
 			})
 		})
-	}, [cardID])
+	}, [cardID, transformSupport, transformReferences])
 
 	return (
 		<Section sectionHeaderBackground={cardColor !== undefined ? (cardColor?.replace(/Pendulum-/gi, '') as cardColor) : ''} sectionName='Suggestions'>
