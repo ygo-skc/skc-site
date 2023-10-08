@@ -80,7 +80,7 @@ li {
 }
 
 .footer-font {
-	font-weight: 500;
+	font-weight: 400;
 	color: rgba(255, 255, 255, 0.95) !important;
 	margin-bottom: 0.1rem !important;
 }
@@ -105,7 +105,7 @@ li {
 }
 
 .app-bar-button {
-	font-weight: 700 !important;
+	font-weight: 600 !important;
 	font-size: 1.4rem !important;
 	text-transform: none !important;
 	padding: 0.7rem;
@@ -118,7 +118,7 @@ li {
 }
 
 .nav-button {
-	font-weight: 500 !important;
+	font-weight: 400 !important;
 	font-size: 1.05rem !important;
 	padding: 0.7rem;
 	border-radius: 1rem;

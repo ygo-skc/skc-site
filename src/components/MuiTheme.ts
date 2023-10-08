@@ -63,7 +63,7 @@ const MuiTheme = createTheme({
 				},
 				label: {
 					fontWeight: 600,
-					fontSize: '.98rem',
+					fontSize: '1rem',
 				},
 				clickable: {
 					'&:hover': {
@@ -121,7 +121,7 @@ const MuiTheme = createTheme({
 			styleOverrides: {
 				tooltip: {
 					fontFamily: 'open sans,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
-					fontWeight: 500,
+					fontWeight: 400,
 					lineHeight: '1.3rem',
 					fontSize: '1em',
 					padding: '.75rem',
@@ -137,15 +137,15 @@ const MuiTheme = createTheme({
 			styleOverrides: {
 				stickyHeader: {
 					fontWeight: 800,
-					fontSize: '.94rem',
+					fontSize: '1.1rem',
 				},
 				head: {
 					fontWeight: 800,
-					fontSize: '.94rem',
+					fontSize: '1.1em',
 				},
 				body: {
-					fontWeight: 700,
-					fontSize: '.94rem',
+					fontWeight: 600,
+					fontSize: '1.05rem',
 				},
 				root: {
 					fontFamily: 'open sans',
@@ -167,7 +167,7 @@ const MuiTheme = createTheme({
 		button: {
 			fontFamily: 'open sans,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			lineHeight: '1.3rem',
-			fontSize: '1.1rem',
+			fontSize: '1.15rem',
 			textTransform: 'none',
 		},
 		h1: {
@@ -193,11 +193,11 @@ const MuiTheme = createTheme({
 		},
 		h4: {
 			fontFamily: 'open sans,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
-			fontWeight: 700,
+			fontWeight: 600,
 			color: '#444',
 			lineHeight: '2rem',
 			marginBottom: '1rem',
-			fontSize: '1.6rem',
+			fontSize: '1.55rem',
 		},
 		h5: {
 			fontFamily: 'open sans,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
@@ -205,7 +205,7 @@ const MuiTheme = createTheme({
 			lineHeight: '1.8rem',
 			marginBottom: '1rem',
 			color: '#555',
-			fontSize: '1.45rem',
+			fontSize: '1.4rem',
 		},
 		h6: {
 			fontFamily: 'open sans',
@@ -221,29 +221,29 @@ const MuiTheme = createTheme({
 			lineHeight: '1.4rem',
 			marginBottom: '.8rem',
 			color: 'black',
-			fontSize: '1.12rem',
+			fontSize: '1.2rem',
 		},
 		subtitle2: {
 			fontFamily: 'open sans',
-			fontWeight: 500,
+			fontWeight: 600,
 			lineHeight: '1.4rem',
 			marginBottom: '.75rem',
 			color: 'black',
-			fontSize: '1.1rem',
+			fontSize: '1.15rem',
 		},
 		body1: {
 			fontFamily: 'open sans,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
-			fontWeight: 500,
+			fontWeight: 400,
 			lineHeight: '1.35rem',
 			color: 'black',
-			fontSize: '.98rem',
+			fontSize: '1.05em',
 		},
 		body2: {
 			fontFamily: 'open sans,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
-			fontWeight: 500,
+			fontWeight: 400,
 			lineHeight: '1.25rem',
 			color: 'black',
-			fontSize: '.9rem',
+			fontSize: '.98rem',
 		},
 	},
 })
