@@ -10,3 +10,8 @@
 .ban-list-format-container {
 	margin-bottom: 1rem;
 }
+
+span.prominent {
+	color: #803788;
+	font-weight: 600;
+}

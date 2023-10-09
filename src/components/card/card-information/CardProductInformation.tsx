@@ -41,8 +41,10 @@ const CardProductInformation: FC<args> = ({ isLoading, productInfo, cardID, card
 
 	return (
 		<div className='group'>
-			<Typography variant='h4'>YGO Products</Typography>
-			<Typography variant='subtitle1'>All TCG products {cardName} was printed in</Typography>
+			<Typography variant='h4'>Products</Typography>
+			<Typography variant='subtitle1'>
+				All Yu-Gi-Oh! TCG products <span className='prominent'>{cardName}</span> was printed in
+			</Typography>
 
 			{!isLoading && productInfo.length !== 0 && (
 				<Fragment>

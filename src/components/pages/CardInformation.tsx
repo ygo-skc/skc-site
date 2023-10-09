@@ -18,22 +18,6 @@ class Card {
 	static readonly crumbs = ['Home', 'Card Browse']
 }
 
-function cardDataReducer(state: any, action: any) {
-	return {
-		...state,
-		cardName: action.cardName,
-		cardColor: action.cardColor,
-		cardEffect: action.cardEffect,
-		cardAttribute: action.cardAttribute,
-		monsterType: action.monsterType,
-		monsterAtk: action.monsterAtk,
-		monsterDef: action.monsterDef,
-		monsterAssociation: action.monsterAssociation,
-		productInfo: action.productInfo,
-		restrictionInfo: action.restrictionInfo,
-	}
-}
-
 const CardInformation = () => {
 	const { cardId } = useParams()
 
@@ -48,7 +32,21 @@ const CardInformation = () => {
 	const [isLoading, setIsLoading] = useState(true)
 
 	const [{ cardName, cardColor, cardEffect, cardAttribute, monsterType, monsterAtk, monsterDef, monsterAssociation, productInfo, restrictionInfo }, cardDispatch] = useReducer(
-		cardDataReducer,
+		(state: any, action: any) => {
+			return {
+				...state,
+				cardName: action.cardName,
+				cardColor: action.cardColor,
+				cardEffect: action.cardEffect,
+				cardAttribute: action.cardAttribute,
+				monsterType: action.monsterType,
+				monsterAtk: action.monsterAtk,
+				monsterDef: action.monsterDef,
+				monsterAssociation: action.monsterAssociation,
+				productInfo: action.productInfo,
+				restrictionInfo: action.restrictionInfo,
+			}
+		},
 		{
 			cardName: '',
 			cardColor: '',

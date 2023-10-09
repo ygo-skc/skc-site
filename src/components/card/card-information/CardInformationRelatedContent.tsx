@@ -12,13 +12,13 @@ type CardInformationRelatedContentType = {
 	restrictedIn: RestrictedIn
 	cardName: string
 	cardID: string
-	cardColor: cardColor
+	cardColor: cardColor //should remove "pendulum" suffix for Pendulum cards
 }
 
 const CardInformationRelatedContent: FC<CardInformationRelatedContentType> = memo(
 	({ cardName, cardColor, isLoading, productInfo, restrictedIn, cardID }) => {
 		return (
-			<Section sectionHeaderBackground={cardColor !== undefined ? (cardColor?.replace(/Pendulum-/gi, '') as cardColor) : ''} sectionName='Explore'>
+			<Section sectionHeaderBackground={cardColor} sectionName='Explore'>
 				<div className='section-content'>
 					<Grid2 container spacing={3}>
 						<Grid2 xs={12} sm={12} md={12} lg={6} xl={6}>
