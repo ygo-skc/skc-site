@@ -127,17 +127,7 @@ const CardInformation = () => {
 						<CardSuggestions cardID={Card.cardId} cardColor={cardColor} cardName={cardName} />
 						{!isLoading && (
 							<CardInformationRelatedContent
-								card={{
-									cardName: cardName,
-									cardColor: cardColor,
-									cardEffect: cardEffect,
-									cardAttribute: cardAttribute,
-									monsterType: monsterType,
-									monsterAttack: monsterAtk,
-									monsterDefense: monsterDef,
-									monsterAssociation: monsterAssociation,
-									cardID: Card.cardId,
-								}}
+								cardName={cardName}
 								cardColor={cardColor?.replace(/Pendulum-/gi, '') as cardColor}
 								isLoading={isLoading}
 								cardID={Card.cardId}

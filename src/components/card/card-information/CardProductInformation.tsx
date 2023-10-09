@@ -7,10 +7,11 @@ import { Hint, SKCTable } from 'skc-rcl'
 type args = {
 	isLoading: boolean
 	cardID: string
+	cardName: string
 	productInfo: ProductInfo[]
 }
 
-const CardProductInformation: FC<args> = ({ isLoading, productInfo, cardID }) => {
+const CardProductInformation: FC<args> = ({ isLoading, productInfo, cardID, cardName }) => {
 	const [productTable, setProductTable] = useState<React.JSX.Element | undefined>(undefined)
 
 	useEffect(() => {
@@ -41,12 +42,18 @@ const CardProductInformation: FC<args> = ({ isLoading, productInfo, cardID }) =>
 	return (
 		<div className='group'>
 			<Typography variant='h4'>YGO Products</Typography>
+			<Typography variant='subtitle1'>All TCG products {cardName} was printed in</Typography>
 
 			{!isLoading && productInfo.length !== 0 && (
 				<Fragment>
 					<Hint backgroundColor='rgba(0, 0, 0, 0.7)' textColor='white' variant='tight'>
-						Last printing released {Dates.daysBetweenTwoDates(Dates.fromYYYYMMDDToDate(productInfo[0].productReleaseDate))} day(s) ago
+						Last printing released {Dates.daysBetweenTwoDates(Dates.fromYYYYMMDDToDate(productInfo[0].productReleaseDate)).toLocaleString()} day(s) ago
 					</Hint>
+					{productInfo.length >= 2 && (
+						<Hint backgroundColor='rgba(0, 0, 0, 0.7)' textColor='white' variant='tight'>
+							First printing released {Dates.daysBetweenTwoDates(Dates.fromYYYYMMDDToDate(productInfo[productInfo.length - 1].productReleaseDate)).toLocaleString()} day(s) ago
+						</Hint>
+					)}
 					{productTable}
 				</Fragment>
 			)}
