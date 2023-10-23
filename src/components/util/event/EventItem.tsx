@@ -9,7 +9,7 @@ import { Dates } from '../../../helper/Dates'
 const EventItem: FC<{ event: HeartApiEventItem; showEventDialog?: any; setEventDialogEventData?: any }> = ({ event, showEventDialog, setEventDialogEventData }) => {
 	const eventDate = new Date(event.eventDate)
 
-	const isWithinDialog = showEventDialog === undefined && setEventDialogEventData === undefined ? true : false
+	const isWithinDialog = !!(showEventDialog === undefined && setEventDialogEventData === undefined)
 	let parentStyle, notesStyle
 	if (isWithinDialog) {
 		parentStyle = 'dialog-event-item'
@@ -22,12 +22,12 @@ const EventItem: FC<{ event: HeartApiEventItem; showEventDialog?: any; setEventD
 	const handleExpandEvent = useCallback(() => {
 		showEventDialog(true)
 		setEventDialogEventData(event)
-	}, [showEventDialog, setEventDialogEventData])
+	}, [showEventDialog, setEventDialogEventData, event])
 
 	return (
 		<div className={parentStyle}>
 			<div>
-				<DateComponent month={Dates.getMonth(eventDate)} day={+Dates.getDay(eventDate)} year={+Dates.getYear(eventDate)} />
+				<DateComponent month={Dates.getMonth(eventDate)} day={+Dates.getDay(eventDate)} year={+Dates.getYear(eventDate)} variant='normal' />
 				<div className='event-icon-container'>
 					<IconButton disabled={isWithinDialog} className='event-icon-button' aria-label='info' onClick={isWithinDialog ? undefined : handleExpandEvent}>
 						<InfoOutlinedIcon />
