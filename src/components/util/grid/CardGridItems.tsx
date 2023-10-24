@@ -8,7 +8,7 @@ const CardGridItems: FC<{ cards: SKCCard[] }> = ({ cards }) => {
 	useEffect(() => {
 		const cardGridItems = cards.map((card) => <CardGridItem key={card.cardID} card={card} />)
 		setCardGridItems(cardGridItems)
-	}, [])
+	}, [cards])
 
 	return <Fragment>{cardGridItems}</Fragment>
 }
