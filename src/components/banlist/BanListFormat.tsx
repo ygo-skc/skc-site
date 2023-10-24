@@ -37,4 +37,5 @@ const BanListFormat: FC<_BanListFormat> = memo(
 	}
 )
 
+BanListFormat.displayName = 'BanListFormat'
 export default BanListFormat

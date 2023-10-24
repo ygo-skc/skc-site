@@ -21,8 +21,8 @@ export default function Overview() {
 									header='How Is Data Retrieved?'
 									details={
 										<Typography variant='body1' className='topic-details'>
-											A new API was created in the process of creating this site. Though there are other API's available, at the time I wanted to learn a new technology and grow as
-											a developer. It has since then grown to be a very robust and powerful source of data.
+											A new API was created in the process of creating this site. Though there are other API&apos;s available, at the time I wanted to learn a new technology and
+											grow as a developer. It has since then grown to be a very robust and powerful source of data.
 										</Typography>
 									}
 								/>
@@ -33,7 +33,7 @@ export default function Overview() {
 										<Typography variant='body1' className='topic-details'>
 											Other than for curiosity or educational purposes you cannot use the API. This means that if you want to build your own site or have other commercial uses for
 											the API, you cannot use it. The reason is due to having no available bandwidth. This site makes no money through ads or otherwise and I cannot add more
-											instances to accommodate traffic that isn't in the immediate vision. The API itself is{' '}
+											instances to accommodate traffic that isn&apos;t in the immediate vision. The API itself is{' '}
 											<Link className='link' color='secondary' href={`${process.env.REACT_APP_API_HOST}/api/v1/swagger-ui/index.html`}>
 												documented
 											</Link>
@@ -57,7 +57,7 @@ export default function Overview() {
 								<Typography variant='body1'>As you can tell, this site has no ads and no trackers trying to get information about you. This has two intended effects:</Typography>
 								<ol>
 									<li>The interface is fast, clean and intuitive.</li>
-									<li>Big corporations don't get browsing data about you.</li>
+									<li>Big corporations don&apos;t get browsing data about you.</li>
 								</ol>
 
 								<Typography variant='body1'>To help maintain this web page, you can donate using one of the options below.</Typography>
@@ -113,7 +113,7 @@ export default function Overview() {
 											<Link className='link' color='secondary' href='https://twitter.com/supreme_king_yt'>
 												twitter
 											</Link>
-											. Though I don't really do social media, I will try my best to post updates there.
+											. Though I don&apos;t really do social media, I will try my best to post updates there.
 										</Typography>
 									}
 								/>

@@ -8,7 +8,7 @@ type _BanListDates = {
 	isFetchingBanListDates: boolean
 	banListStartDates: string[]
 	selectedBanList: string
-	setSelectedBanList: { (ind: number): void }
+	setSelectedBanList: (ind: number) => void
 }
 
 const BanListDates: FC<_BanListDates> = memo(
@@ -17,7 +17,7 @@ const BanListDates: FC<_BanListDates> = memo(
 		const [selectedBanListInd, setSelectedBanListInd] = useState('0')
 
 		useEffect(() => {
-			let selectorItems: JSX.Element[] = banListStartDates.map((_: string, ind: number) => {
+			const selectorItems: JSX.Element[] = banListStartDates.map((_: string, ind: number) => {
 				return (
 					<MenuItem key={banListStartDates[ind]} className='ban-list-date-selector-menu-item' value={ind}>
 						{Dates.getCurrentBanListDate(banListStartDates[ind], banListStartDates)}
@@ -67,4 +67,5 @@ const BanListDates: FC<_BanListDates> = memo(
 	}
 )
 
+BanListDates.displayName = 'BanListDates'
 export default BanListDates

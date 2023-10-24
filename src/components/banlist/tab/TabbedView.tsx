@@ -19,7 +19,7 @@ type _TabbedView = {
 	tabs: JSX.Element[]
 	tabPanels: JSX.Element[]
 	currentTab: number
-	setCurrentTab: any
+	setCurrentTab: React.Dispatch<React.SetStateAction<number>>
 }
 
 const TabbedView: FC<_TabbedView> = ({ tabs, tabPanels, currentTab, setCurrentTab }) => {

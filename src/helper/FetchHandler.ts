@@ -7,7 +7,7 @@ class FetchHandler {
 
 	static readonly handleFetch = (
 		endPoint: string,
-		onJsonReceived: { (res: any): void },
+		onJsonReceived: (res: any) => void,
 		useDefaultErrorHandler = true,
 		fetchToken: CancelTokenSource | undefined = undefined
 	): Promise<void> | void => {

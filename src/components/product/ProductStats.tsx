@@ -9,7 +9,7 @@ const Pie = lazy(() =>
 )
 
 const ProductStats: FC<ProductStats & { isDataLoaded: boolean }> = ({ productRarityStats, cards, isDataLoaded }) => {
-	const data: any[] = Object.keys(productRarityStats).map((key: string) => {
+	const raritySpreadData = Object.keys(productRarityStats).map((key: string) => {
 		return {
 			id: key,
 			label: key,
@@ -20,7 +20,7 @@ const ProductStats: FC<ProductStats & { isDataLoaded: boolean }> = ({ productRar
 	const cardColors = new Map<string, number>()
 
 	cards.forEach((card: SKCCard) => {
-		let cardColor = card.cardColor!
+		const cardColor = card.cardColor!
 
 		const value = cardColors.get(cardColor)
 
@@ -31,7 +31,7 @@ const ProductStats: FC<ProductStats & { isDataLoaded: boolean }> = ({ productRar
 		}
 	})
 
-	const rrr = Array.from(cardColors.keys()).map((cardColor: string) => {
+	const cardTypeSpreadData = Array.from(cardColors.keys()).map((cardColor: string) => {
 		const value = cardColors.get(cardColor)
 		return {
 			id: cardColor,
@@ -44,10 +44,10 @@ const ProductStats: FC<ProductStats & { isDataLoaded: boolean }> = ({ productRar
 		<Section sectionName='Product Stats'>
 			<Grid2 className='section-content' container style={{ width: '100%' }}>
 				<Grid2 xs={12} sm={12} md={6} lg={6} xl={6}>
-					<Pie legendTextColor='white' isDataLoaded={isDataLoaded} statName='Rarity Spread' data={data} />
+					<Pie legendTextColor='white' isDataLoaded={isDataLoaded} statName='Rarity Spread' data={raritySpreadData} />
 				</Grid2>
 				<Grid2 xs={12} sm={12} md={6} lg={6} xl={6}>
-					<Pie legendTextColor='white' isDataLoaded={isDataLoaded} statName='Card Type Spread' data={rrr} />
+					<Pie legendTextColor='white' isDataLoaded={isDataLoaded} statName='Card Type Spread' data={cardTypeSpreadData} />
 				</Grid2>
 			</Grid2>
 		</Section>

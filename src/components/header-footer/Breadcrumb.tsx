@@ -74,4 +74,5 @@ class BreadcrumbStaticFields {
 	}
 }
 
+Breadcrumb.displayName = 'Breadcrumb'
 export default Breadcrumb

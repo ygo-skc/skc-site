@@ -14,7 +14,7 @@ type Args = {
 type BanListFormatButtonArgs = {
 	format: AcceptableBanListFormat
 	restrictedIn: RestrictedIn
-	setFormat: any
+	setFormat: React.Dispatch<React.SetStateAction<AcceptableBanListFormat>>
 }
 
 function determineFormat(restrictedIn: RestrictedIn): AcceptableBanListFormat {

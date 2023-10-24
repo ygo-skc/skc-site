@@ -1,15 +1,17 @@
 import { Helmet } from 'react-helmet'
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 
-import Breadcrumb from '../header-footer/Breadcrumb'
 import DatabaseInfo from '../util/database-info/DatabaseInfo'
 import UpcomingTCGProducts from '../util/event/UpcomingTCGProducts'
 import Welcome from '../home/Welcome'
-import SocialMedia from '../util/social/SocialMedia'
-import YouTubeData from '../home/YouTubeData'
 import { Section } from 'skc-rcl'
 import CardOfTheDay from '../card/CardOfTheDay'
-import { Fragment } from 'react'
+import { Fragment, Suspense, lazy } from 'react'
+import { Skeleton } from '@mui/material'
+
+const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
+const SocialMedia = lazy(() => import('../util/social/SocialMedia'))
+const YouTubeData = lazy(() => import('../home/YouTubeData'))
 
 export default function Home() {
 	return (
@@ -20,7 +22,9 @@ export default function Home() {
 				<meta name='keywords' content={`YuGiOh, ban list, card info, The Supreme Kings Castle`} />
 			</Helmet>
 
-			<Breadcrumb crumbs={['Home']} />
+			<Suspense fallback={<Skeleton width='100%' height='1.3rem' />}>
+				<Breadcrumb crumbs={['Home']} />
+			</Suspense>
 
 			<OneThirdTwoThirdsGrid
 				mirrored={true}
@@ -37,7 +41,9 @@ export default function Home() {
 				mirrored={true}
 				oneThirdComponent={
 					<Section sectionName='Social'>
-						<SocialMedia />
+						<Suspense fallback={<Skeleton width='100%' height='7rem' />}>
+							<SocialMedia />
+						</Suspense>
 					</Section>
 				}
 				twoThirdComponent={
@@ -47,7 +53,9 @@ export default function Home() {
 								<Welcome />
 							</div>
 							<div className='multi-section'>
-								<YouTubeData channel='skc' />
+								<Suspense fallback={<Skeleton width='100%' height='7rem' />}>
+									<YouTubeData channel='skc' />
+								</Suspense>
 							</div>
 						</div>
 					</Section>

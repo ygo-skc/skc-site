@@ -24,7 +24,7 @@ const MessageItemComponent: FC<MessageItemComponentArgs> = ({ creationDate, mess
 					{Dates.getDateString(creationDate)} {Dates.getTimeString(creationDate)}
 				</Typography>
 				<Typography className='communication-message-body link-container' variant='body1'>
-					<ReactMarkdown children={`${message.content}`} />
+					<ReactMarkdown>{message.content}</ReactMarkdown>
 				</Typography>
 
 				<div className='communication-message-tag-container'>

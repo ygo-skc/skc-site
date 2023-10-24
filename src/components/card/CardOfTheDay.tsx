@@ -27,7 +27,7 @@ export default function CardOfTheDay() {
 				setIsLoading(false)
 			},
 			false
-		)?.catch((_err) => {
+		)?.catch(() => {
 			setHasError(true)
 		})
 	}, [])
@@ -39,7 +39,8 @@ export default function CardOfTheDay() {
 				className={`section-content ${hasError ? '' : 'card-of-the-day-parent'}`}
 				id='card-of-the-day'
 			>
-				{(!hasError && (
+				{hasError && <GenericNonBreakingErr errExplanation='Come back at a different time to see todays card of the day!' />}
+				{!hasError && (
 					<Fragment>
 						<Typography variant='h5'>Card of The Day</Typography>
 						<div className='card-of-the-day-wrapper'>
@@ -65,7 +66,7 @@ export default function CardOfTheDay() {
 							</div>
 						</div>
 					</Fragment>
-				)) || <GenericNonBreakingErr errExplanation='Come back at a different time to see todays card of the day!' />}
+				)}
 			</div>
 		</Section>
 	)

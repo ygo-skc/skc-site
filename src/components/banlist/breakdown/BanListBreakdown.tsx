@@ -63,4 +63,5 @@ const BanListBreakdown: FC<_BanListBreakdown> = memo(
 	}
 )
 
+BanListBreakdown.displayName = 'BanListBreakdown'
 export default BanListBreakdown

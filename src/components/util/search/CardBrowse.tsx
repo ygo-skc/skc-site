@@ -1,4 +1,4 @@
-import Autocomplete from '@mui/material/Autocomplete'
+import Autocomplete, { AutocompleteRenderGroupParams, AutocompleteRenderInputParams } from '@mui/material/Autocomplete'
 import DBSearchGrouping from './DBSearchGrouping'
 
 import startCase from 'lodash.startcase'
@@ -60,13 +60,15 @@ const CardBrowse: FC<{
 	const handleGetOptionLabel = useCallback((option: BrowseCriteria) => option.value, [])
 	const handleGroupBy = useCallback((option: BrowseCriteria) => option.name, [])
 	const handleOnChange = useCallback(
-		(_event: React.SyntheticEvent, newValue: readonly BrowseCriteria[], _reason: string) =>
-			browseCriteriaDispatch({ type: 'UPDATE_SELECTED_CRITERIA', selectedCriteria: newValue }),
+		(_event: React.SyntheticEvent, newValue: readonly BrowseCriteria[]) => browseCriteriaDispatch({ type: 'UPDATE_SELECTED_CRITERIA', selectedCriteria: newValue }),
 		[browseCriteriaDispatch]
 	)
 	const renderTags = useCallback(() => null, [])
-	const handleRenderGroup = useCallback((option: any) => <DBSearchGrouping group={startCase(option.group)} children={option.children} />, [])
-	const handleRenderInput = useCallback((params: any) => <SearchInput setInput={browseCriteriaSearchDispatch} searchParams={params} placeholder='Narrow criteria...' />, [])
+	const handleRenderGroup = useCallback((option: AutocompleteRenderGroupParams) => <DBSearchGrouping group={startCase(option.group)}>{option.children}</DBSearchGrouping>, [])
+	const handleRenderInput = useCallback(
+		(params: AutocompleteRenderInputParams) => <SearchInput setInput={browseCriteriaSearchDispatch} searchParams={params} placeholder='Narrow criteria...' />,
+		[]
+	)
 	const handleRenderOption = useCallback(
 		(props: React.HTMLAttributes<HTMLLIElement>, option: BrowseCriteria) => (
 			<li {...props} className='search-suggestions-parent'>

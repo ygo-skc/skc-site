@@ -40,4 +40,5 @@ const CardInformationRelatedContent: FC<CardInformationRelatedContentType> = mem
 	}
 )
 
+CardInformationRelatedContent.displayName = 'CardInformationRelatedContent'
 export default CardInformationRelatedContent

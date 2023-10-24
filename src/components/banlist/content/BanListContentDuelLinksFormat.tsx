@@ -58,4 +58,5 @@ const BanListContentNormalFormat: FC<_BanListContentDuelLinksFormat> = memo(
 	}
 )
 
+BanListContentNormalFormat.displayName = 'BanListContentNormalFormat'
 export default BanListContentNormalFormat

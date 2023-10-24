@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 
-import { Autocomplete } from '@mui/material'
+import { Autocomplete, AutocompleteRenderGroupParams, AutocompleteRenderInputParams } from '@mui/material'
 import FetchHandler from '../../../helper/FetchHandler'
 import DownstreamServices from '../../../helper/DownstreamServices'
 
@@ -9,8 +9,18 @@ import axios, { CancelTokenSource } from 'axios'
 import SearchInput from './SearchInput'
 import DBSearchOptions from './DBSearchOptions'
 
+type DBSearchResults = SKCCard & {
+	cardColor: string // override cardColor field from SKCCard to prevent undefined
+	links: HATEOAS[]
+}
+
 class DatabaseSearchStatic {
-	static readonly search = (searchSubject: string, setSearchOptions: any, fetchToken: CancelTokenSource, setIsFetching: React.Dispatch<React.SetStateAction<boolean>>) => {
+	static readonly search = (
+		searchSubject: string,
+		setSearchOptions: React.Dispatch<React.SetStateAction<DBSearchResults[]>>,
+		fetchToken: CancelTokenSource,
+		setIsFetching: React.Dispatch<React.SetStateAction<boolean>>
+	) => {
 		FetchHandler.handleFetch(
 			`${DownstreamServices.NAME_maps_ENDPOINT['search']}?limit=10&cName=${searchSubject}`,
 			(json) => {
@@ -28,7 +38,7 @@ class DatabaseSearchStatic {
 
 export default function DBSearch() {
 	const [searchInput, setSearchInput] = useState<string>('')
-	const [searchOptions, setSearchOptions] = useState([])
+	const [searchOptions, setSearchOptions] = useState<DBSearchResults[]>([])
 	const [fetchToken, setFetchToken] = useState<CancelTokenSource>(axios.CancelToken.source())
 	const [isFetching, setIsFetching] = useState<boolean>(false)
 
@@ -50,15 +60,15 @@ export default function DBSearch() {
 	}, [fetchToken])
 
 	const handleGetOptionLabel = useCallback((option: SKCCard) => option.cardName, [])
-	const handleGroupBy = useCallback((option: any) => option.cardColor, [])
-	const handleOnChange = useCallback((_event: any, value: SKCCard | null, reason: string) => {
+	const handleGroupBy = useCallback((option: DBSearchResults) => option.cardColor, [])
+	const handleOnChange = useCallback((_event: React.SyntheticEvent, value: SKCCard | null, reason: string) => {
 		if (reason === 'selectOption' && value != null) {
 			window.location.assign(`/card/${value.cardID}`)
 		}
 	}, [])
-	const handleRenderGroup = useCallback((option: any) => <DBSearchGrouping group={option.group} children={option.children} />, [])
+	const handleRenderGroup = useCallback((option: AutocompleteRenderGroupParams) => <DBSearchGrouping group={option.group}>{option.children}</DBSearchGrouping>, [])
 	const handleRenderInput = useCallback(
-		(params: any) => <SearchInput searchParams={params} setSearchInput={setSearchInput} placeholder='Search database for specific card...' />,
+		(params: AutocompleteRenderInputParams) => <SearchInput searchParams={params} setSearchInput={setSearchInput} placeholder='Search database for specific card...' />,
 		[]
 	)
 	const handleRenderOption = useCallback(
@@ -67,7 +77,7 @@ export default function DBSearch() {
 		),
 		[]
 	)
-	const handleFilterOptions = useCallback((options: any) => options, []) // this override is necessary as filtering happens at API level
+	const handleFilterOptions = useCallback((options: DBSearchResults[]) => options, []) // this override is necessary as filtering happens at API level
 
 	return (
 		<Autocomplete

@@ -49,4 +49,5 @@ const BanListDiffContentNormalFormat: FC<_BanListDiffContentNormalFormat> = memo
 	}
 )
 
+BanListDiffContentNormalFormat.displayName = 'BanListDiffContentNormalFormat'
 export default BanListDiffContentNormalFormat

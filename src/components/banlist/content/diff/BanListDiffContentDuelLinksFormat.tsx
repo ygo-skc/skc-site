@@ -54,4 +54,5 @@ const BanListDiffContentDuelLinksFormat: FC<_BanListDiffContentDuelLinksFormat> 
 	}
 )
 
+BanListDiffContentDuelLinksFormat.displayName = 'BanListDiffContentDuelLinksFormat'
 export default BanListDiffContentDuelLinksFormat

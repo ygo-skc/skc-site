@@ -47,7 +47,7 @@ const YouTubeData: FC<_YouTubeData> = ({ channel }) => {
 					setIsFetchingData(false)
 				},
 				false
-			)?.catch((_err) => {
+			)?.catch(() => {
 				setErrFetchingData(true)
 				setIsFetchingData(false)
 			})

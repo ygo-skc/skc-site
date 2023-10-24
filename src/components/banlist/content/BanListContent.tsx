@@ -103,4 +103,5 @@ const BanListContent: FC<_BanListContent> = memo(
 	}
 )
 
+BanListContent.displayName = 'BanListContent'
 export default BanListContent

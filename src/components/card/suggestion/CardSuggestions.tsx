@@ -98,7 +98,7 @@ const CardSuggestions: FC<_CardSuggestion> = ({ cardID, cardColor, cardName }) =
 					setIsLoadingSuggestions(false)
 				},
 				false
-			)?.catch((_err) => {
+			)?.catch(() => {
 				setIsLoadingSuggestions(false)
 				setSuggestionRequestHasError(true)
 			})
@@ -111,7 +111,7 @@ const CardSuggestions: FC<_CardSuggestion> = ({ cardID, cardColor, cardName }) =
 					setIsLoadingSupport(false)
 				},
 				false
-			)?.catch((_err) => {
+			)?.catch(() => {
 				setIsLoadingSupport(false)
 				setSupportRequestHasError(true)
 			})

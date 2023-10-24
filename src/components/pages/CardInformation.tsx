@@ -6,8 +6,8 @@ import { Skeleton } from '@mui/material'
 import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
-import Breadcrumb from '../header-footer/Breadcrumb'
 
+const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 const CardData = lazy(() => import('../card/card-information/CardData'))
 const CardSuggestions = lazy(() => import('../card/suggestion/CardSuggestions'))
 const CardInformationRelatedContent = lazy(() => import('../card/card-information/CardInformationRelatedContent'))
@@ -16,6 +16,67 @@ class Card {
 	static cardId: string | null = null
 	static cardImg: HTMLImageElement
 	static readonly crumbs = ['Home', 'Card Browse']
+}
+
+type CardInformationState = {
+	cardName: string
+	cardColor: cardColor
+	cardAttribute?: string
+	monsterType?: string
+	monsterAssociation?: SKCMonsterAssociation
+	monsterAtk?: string
+	monsterDef?: string
+	cardEffect: string
+	productInfo: ProductInfo[]
+	restrictionInfo: RestrictedIn
+}
+
+enum CardInformationType {
+	UPDATE_CARD = 'UPDATE CARD',
+	UPDATE_PRODUCTS = 'UPDATE PRODUCTS',
+	UPDATE_RESTRICTIONS = 'UPDATE RESTRICTIONS',
+}
+
+type CardInformationAction =
+	| {
+			type: CardInformationType.UPDATE_CARD
+			cardName: string
+			cardEffect: string
+			cardColor: cardColor
+			cardAttribute?: string
+			monsterType?: string
+			monsterAssociation?: SKCMonsterAssociation
+			monsterAtk?: string
+			monsterDef?: string
+	  }
+	| { type: CardInformationType.UPDATE_PRODUCTS; productInfo: ProductInfo[] }
+	| { type: CardInformationType.UPDATE_RESTRICTIONS; restrictionInfo: RestrictedIn }
+
+function cardInformationReducer(state: CardInformationState, action: CardInformationAction): CardInformationState {
+	switch (action.type) {
+		case CardInformationType.UPDATE_CARD:
+			return {
+				...state,
+				cardName: action.cardName,
+				cardColor: action.cardColor,
+				cardEffect: action.cardEffect,
+				cardAttribute: action.cardAttribute,
+				monsterType: action.monsterType,
+				monsterAtk: action.monsterAtk,
+				monsterDef: action.monsterDef,
+				monsterAssociation: action.monsterAssociation,
+			}
+		case CardInformationType.UPDATE_PRODUCTS:
+			return {
+				...state,
+				productInfo: action.productInfo,
+			}
+		case CardInformationType.UPDATE_RESTRICTIONS:
+			return {
+				...state,
+				restrictionInfo: action.restrictionInfo,
+			}
+	}
 }
 
 const CardInformation = () => {
@@ -32,24 +93,10 @@ const CardInformation = () => {
 	const [isLoading, setIsLoading] = useState(true)
 
 	const [{ cardName, cardColor, cardEffect, cardAttribute, monsterType, monsterAtk, monsterDef, monsterAssociation, productInfo, restrictionInfo }, cardDispatch] = useReducer(
-		(state: any, action: any) => {
-			return {
-				...state,
-				cardName: action.cardName,
-				cardColor: action.cardColor,
-				cardEffect: action.cardEffect,
-				cardAttribute: action.cardAttribute,
-				monsterType: action.monsterType,
-				monsterAtk: action.monsterAtk,
-				monsterDef: action.monsterDef,
-				monsterAssociation: action.monsterAssociation,
-				productInfo: action.productInfo,
-				restrictionInfo: action.restrictionInfo,
-			}
-		},
+		cardInformationReducer,
 		{
 			cardName: '',
-			cardColor: '',
+			cardColor: undefined,
 			cardEffect: '',
 			cardAttribute: '',
 			monsterType: '',
@@ -57,7 +104,7 @@ const CardInformation = () => {
 			monsterDef: '',
 			monsterAssociation: undefined,
 			productInfo: [],
-			restrictionInfo: [],
+			restrictionInfo: { TCG: [], MD: [], DL: [] },
 		}
 	)
 
@@ -68,6 +115,7 @@ const CardInformation = () => {
 			setDynamicCrumbs([...Card.crumbs, cardInfo.cardID])
 
 			cardDispatch({
+				type: CardInformationType.UPDATE_CARD,
 				cardName: cardInfo.cardName,
 				cardColor: cardInfo.cardColor,
 				cardEffect: cardInfo.cardEffect,
@@ -76,9 +124,18 @@ const CardInformation = () => {
 				monsterAtk: cardInfo.monsterAttack,
 				monsterDef: cardInfo.monsterDefense,
 				monsterAssociation: cardInfo.monsterAssociation,
-				productInfo: cardInfo.foundIn ?? [],
-				restrictionInfo: cardInfo.restrictedIn ?? [],
 			})
+
+			cardDispatch({
+				type: CardInformationType.UPDATE_PRODUCTS,
+				productInfo: cardInfo.foundIn ?? [],
+			})
+
+			cardDispatch({
+				type: CardInformationType.UPDATE_RESTRICTIONS,
+				restrictionInfo: cardInfo.restrictedIn ?? { TCG: [], MD: [], DL: [] },
+			})
+
 			setIsLoading(false)
 		})
 	}, [])
@@ -99,7 +156,9 @@ const CardInformation = () => {
 				<meta property='og:description' content={`Details For Yugioh Card - ${cardName}`} />
 			</Helmet>
 
-			<Breadcrumb crumbs={dynamicCrumbs} />
+			<Suspense fallback={<Skeleton width='100%' height='1.3rem' />}>
+				<Breadcrumb crumbs={dynamicCrumbs} />
+			</Suspense>
 
 			<OneThirdTwoThirdsGrid
 				mirrored={false}

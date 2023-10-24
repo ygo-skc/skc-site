@@ -49,7 +49,7 @@ function Messages() {
 					setNewestMessageSeen(messageData.messages[0].createdAt)
 				},
 				false
-			)?.catch((_err) => {
+			)?.catch(() => {
 				setErrorFetchingMessages(true)
 			})
 		})

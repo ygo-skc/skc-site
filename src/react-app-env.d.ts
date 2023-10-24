@@ -58,6 +58,7 @@ declare type _YouTubeUploads = {
 }
 
 declare type HATEOAS = {
+	rel: string
 	href: string
 }
 

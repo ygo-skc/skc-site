@@ -88,18 +88,7 @@ const CardDisplayGrid: FC<_CardDisplayGrid> = memo(
 				</Grid2>
 
 				{!isDataLoaded ? undefined : (
-					<Button
-						onClick={loadMoreCallback}
-						style={
-							isLoadMoreOptionVisible
-								? {
-										padding: '1rem',
-										margin: '0 auto',
-										display: 'block',
-								  }
-								: { display: 'none' }
-						}
-					>
+					<Button onClick={loadMoreCallback} style={isLoadMoreOptionVisible ? { padding: '1rem', margin: '0 auto', display: 'block' } : { display: 'none' }}>
 						Load More
 					</Button>
 				)}
@@ -113,4 +102,5 @@ const CardDisplayGrid: FC<_CardDisplayGrid> = memo(
 	}
 )
 
+CardDisplayGrid.displayName = 'CardDisplayGrid'
 export default CardDisplayGrid

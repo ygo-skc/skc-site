@@ -19,7 +19,7 @@ const UpcomingTCGProducts = () => {
 	const [errFetchingData, setErrFetchingData] = useState(false)
 
 	const [eventDialogIsOpen, setEventDialogIsOpen] = useState(false)
-	const [eventDialogEventData, setEventDialogEventData] = useState<HeartApiEventItem | undefined>(undefined)
+	const [eventDialogEventData, setEventDialogEventData] = useState<HeartApiEventItem>({} as HeartApiEventItem)
 
 	useEffect(() => {
 		startTransition(() => {
@@ -27,7 +27,13 @@ const UpcomingTCGProducts = () => {
 				`${DownstreamServices.HEART_API_HOST_NAME}/api/v1/events?service=skc&tags=product-release`,
 				(eventOutput: HeartApiEventOutput) => {
 					const eUI = eventOutput.events.map((event: HeartApiEventItem) => (
-						<EventItem key={`${event.name} ${event.createdAt}`} event={event} showEventDialog={setEventDialogIsOpen} setEventDialogEventData={setEventDialogEventData} />
+						<EventItem
+							key={`${event.name} ${event.createdAt}`}
+							isWithinDialog={false}
+							event={event}
+							showEventDialog={setEventDialogIsOpen}
+							setEventDialogEventData={setEventDialogEventData}
+						/>
 					))
 
 					startTransition(() => {
@@ -36,7 +42,7 @@ const UpcomingTCGProducts = () => {
 					})
 				},
 				false
-			)?.catch((_err) => {
+			)?.catch(() => {
 				setErrFetchingData(true)
 				setIsFetchingData(false)
 			})
@@ -80,7 +86,7 @@ const UpcomingTCGProducts = () => {
 
 			<Dialog maxWidth='xs' onClose={handleDisplayDialog} open={eventDialogIsOpen}>
 				<DialogTitle>TCG Product Details</DialogTitle>
-				<DialogContent>{eventDialogEventData !== undefined ? <EventItem event={eventDialogEventData} /> : undefined}</DialogContent>
+				<DialogContent>{eventDialogEventData !== undefined ? <EventItem isWithinDialog={true} event={eventDialogEventData} /> : undefined}</DialogContent>
 			</Dialog>
 		</div>
 	)
