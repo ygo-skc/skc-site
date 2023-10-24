@@ -1,14 +1,28 @@
-export enum CurrentlySelectedBanListReducerActionType {
-	UPDATE_NORMAL_FORMAT_LIST,
-	UPDATE_DUEL_LINKS_FORMAT_LIST,
-	UPDATE_REMOVED,
-	UPDATE_NEW_ADDITIONS_NORMAL_FORMAT,
-	UPDATE_NEW_ADDITIONS_DUEL_LINKS_FORMAT,
+export enum BanListReducerType {
+	UPDATE_LIST_CONTENT,
+	UPDATE_LIST_CONTENT_DL_FORMAT,
+	UPDATE_REMOVED_CONTENT,
+	UPDATE_NEW_CONTENT,
+	UPDATE_NEW_CONTENT_DL_FORMAT,
 }
 
-export default function currentlySelectedBanListReducer(state: any, action: any) {
+type BanListReducerAction =
+	| (SKCBanListContentNormalFormat & {
+			type: BanListReducerType.UPDATE_LIST_CONTENT
+	  })
+	| (SKCBanListContentDuelLinksFormat & {
+			type: BanListReducerType.UPDATE_LIST_CONTENT_DL_FORMAT
+	  })
+	| (SKCBanListRemovedCardsNormalFormat & { type: BanListReducerType.UPDATE_REMOVED_CONTENT })
+	| (SKCBanListNewCardsNormalFormat & { type: BanListReducerType.UPDATE_NEW_CONTENT })
+	| (SKCBanListNewCardsDuelLinksFormat & { type: BanListReducerType.UPDATE_NEW_CONTENT_DL_FORMAT })
+
+export function currentBanListReducer(
+	state: SKCBanListContentNormalFormat & SKCBanListContentDuelLinksFormat & SKCBanListDiffContentNormalFormat & SKCBanListDiffContentDuelLinksFormat,
+	action: BanListReducerAction
+) {
 	switch (action.type) {
-		case CurrentlySelectedBanListReducerActionType.UPDATE_NORMAL_FORMAT_LIST:
+		case BanListReducerType.UPDATE_LIST_CONTENT:
 			return {
 				...state,
 				forbidden: action.forbidden,
@@ -24,7 +38,7 @@ export default function currentlySelectedBanListReducer(state: any, action: any)
 				numLimitedTwo: 0,
 				numLimitedThree: 0,
 			}
-		case CurrentlySelectedBanListReducerActionType.UPDATE_DUEL_LINKS_FORMAT_LIST:
+		case BanListReducerType.UPDATE_LIST_CONTENT_DL_FORMAT:
 			return {
 				...state,
 				forbidden: action.forbidden,
@@ -40,18 +54,18 @@ export default function currentlySelectedBanListReducer(state: any, action: any)
 				numLimitedTwo: action.numLimitedTwo,
 				numLimitedThree: action.numLimitedThree,
 			}
-		case CurrentlySelectedBanListReducerActionType.UPDATE_REMOVED:
+		case BanListReducerType.UPDATE_REMOVED_CONTENT:
 			return {
 				...state,
 				removedCards: action.removedCards,
 				numRemoved: action.numRemoved,
 			}
-		case CurrentlySelectedBanListReducerActionType.UPDATE_NEW_ADDITIONS_NORMAL_FORMAT:
+		case BanListReducerType.UPDATE_NEW_CONTENT:
 			return {
 				...state,
-				newForbiddenCards: action.newForbiddenCards,
-				newLimitedCards: action.newLimitedCards,
-				newSemiLimitedCards: action.newSemiLimitedCards,
+				newForbidden: action.newForbidden,
+				newLimited: action.newLimited,
+				newSemiLimited: action.newSemiLimited,
 				newLimitedOne: [],
 				newLimitedTwo: [],
 				newLimitedThree: [],
@@ -62,15 +76,15 @@ export default function currentlySelectedBanListReducer(state: any, action: any)
 				numNewLimitedTwo: 0,
 				numNewLimitedThree: 0,
 			}
-		case CurrentlySelectedBanListReducerActionType.UPDATE_NEW_ADDITIONS_DUEL_LINKS_FORMAT:
+		case BanListReducerType.UPDATE_NEW_CONTENT_DL_FORMAT:
 			return {
 				...state,
-				newForbiddenCards: action.newForbiddenCards,
-				newLimitedCards: [],
-				newSemiLimitedCards: [],
-				newLimitedOneCards: action.newLimitedOneCards,
-				newLimitedTwoCards: action.newLimitedTwoCards,
-				newLimitedThreeCards: action.newLimitedThreeCards,
+				newForbidden: action.newForbidden,
+				newLimited: [],
+				newSemiLimited: [],
+				newLimitedOne: action.newLimitedOne,
+				newLimitedTwo: action.newLimitedTwo,
+				newLimitedThree: action.newLimitedThree,
 				numNewForbidden: action.numNewForbidden,
 				numNewLimited: 0,
 				numNewSemiLimited: 0,

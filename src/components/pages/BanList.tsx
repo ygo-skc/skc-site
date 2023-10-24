@@ -11,16 +11,22 @@ import BreadCrumb from '../header-footer/Breadcrumb'
 
 import '../../css/main-pages/ban-list.css'
 import dateReducer, { BanListDateReducerActionType } from '../../helper/reducers/BanListDateReducer'
-import currentlySelectedBanListReducer, { CurrentlySelectedBanListReducerActionType } from '../../helper/reducers/CurrentBanListReducer'
 import { useParams } from 'react-router-dom'
 import { AcceptableBanListFormat, determineListSize, getValidFormat } from '../../helper/BanListUtil'
 import { Section } from 'skc-rcl'
+import { BanListReducerType, currentBanListReducer } from '../../helper/reducers/CurrentBanListReducer'
 
 const BanListDates = lazy(() => import('../banlist/BanListDates'))
 const BanListFormat = lazy(() => import('../banlist/BanListFormat'))
 
 const BanListBreakdown = lazy(() => import('../banlist/breakdown/BanListBreakdown'))
 const BanListContent = lazy(() => import('../banlist/content/BanListContent'))
+
+type BanListDatesOutput = SKCBanListDates & {
+	_links: {
+		self: HATEOAS
+	}
+}
 
 export default function BanList() {
 	const [selectedBanList, setSelectedBanList] = useState<string>('')
@@ -50,12 +56,12 @@ export default function BanList() {
 			numSemiLimited,
 			removedCards,
 			numRemoved,
-			newForbiddenCards,
-			newLimitedCards,
-			newSemiLimitedCards,
-			newLimitedOneCards,
-			newLimitedTwoCards,
-			newLimitedThreeCards,
+			newForbidden,
+			newLimited,
+			newSemiLimited,
+			newLimitedOne,
+			newLimitedTwo,
+			newLimitedThree,
 			numNewForbidden,
 			numNewLimited,
 			numNewSemiLimited,
@@ -66,8 +72,8 @@ export default function BanList() {
 			numLimitedTwo,
 			numLimitedThree,
 		},
-		selectedBanListDispatch,
-	] = useReducer(currentlySelectedBanListReducer, {
+		currentBanListDispatch,
+	] = useReducer(currentBanListReducer, {
 		forbidden: [],
 		limited: [],
 		semiLimited: [],
@@ -79,18 +85,18 @@ export default function BanList() {
 		numSemiLimited: 0,
 		removedCards: [],
 		numRemoved: 0,
-		newForbiddenCards: [],
-		newLimitedCards: [],
-		newSemiLimitedCards: [],
-		newLimitedOneCards: [],
-		newLimitedTwoCards: [],
-		newLimitedThreeCards: [],
+		newForbidden: [],
+		newLimited: [],
+		newSemiLimited: [],
+		newLimitedOne: [],
+		newLimitedTwo: [],
+		newLimitedThree: [],
 		numNewForbidden: 0,
 		numNewLimited: 0,
 		numNewSemiLimited: 0,
-		numNewLimitedOneCards: 0,
-		numNewLimitedTwoCards: 0,
-		numNewLimitedThreeCards: 0,
+		numNewLimitedOne: 0,
+		numNewLimitedTwo: 0,
+		numNewLimitedThree: 0,
 		numLimitedOne: 0,
 		numLimitedTwo: 0,
 		numLimitedThree: 0,
@@ -107,7 +113,7 @@ export default function BanList() {
 		setFetchingBanListNewContent(true)
 		setFetchingBanListRemovedContent(true)
 
-		FetchHandler.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT['banListsUrl']}?format=${format}`, (json) => {
+		FetchHandler.handleFetch<BanListDatesOutput>(`${DownstreamServices.NAME_maps_ENDPOINT['banListsUrl']}?format=${format}`, (json) => {
 			dateDispatch({
 				type: BanListDateReducerActionType.DATES_RECEIVED,
 				payload: {
@@ -128,39 +134,42 @@ export default function BanList() {
 			setFetchingBanListNewContent(true)
 			setFetchingBanListRemovedContent(true)
 
-			FetchHandler.handleFetch(banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List New Content'].href, (json) => {
-				startTransition(() => {
-					if (format === 'DL') {
-						selectedBanListDispatch({
-							type: CurrentlySelectedBanListReducerActionType.UPDATE_NEW_ADDITIONS_DUEL_LINKS_FORMAT,
-							newForbiddenCards: json.newForbidden,
-							newLimitedOneCards: json.newLimitedOne,
-							newLimitedTwoCards: json.newLimitedTwo,
-							newLimitedThreeCards: json.newLimitedThree,
-							numNewForbidden: json.numNewForbidden,
-							numNewLimitedOne: json.numNewLimitedOne,
-							numNewLimitedTwo: json.numNewLimitedTwo,
-							numNewLimitedThree: json.numNewLimitedThree,
-						})
-					} else {
-						selectedBanListDispatch({
-							type: CurrentlySelectedBanListReducerActionType.UPDATE_NEW_ADDITIONS_NORMAL_FORMAT,
-							newForbiddenCards: json.newForbidden,
-							newLimitedCards: json.newLimited,
-							newSemiLimitedCards: json.newSemiLimited,
-							numNewForbidden: json.numNewForbidden,
-							numNewLimited: json.numNewLimited,
-							numNewSemiLimited: json.numNewSemiLimited,
-						})
-					}
-					setFetchingBanListNewContent(false)
-				})
-			})
+			FetchHandler.handleFetch<SKCBanListNewCardsNormalFormat & SKCBanListNewCardsDuelLinksFormat>(
+				banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List New Content'].href,
+				(json) => {
+					startTransition(() => {
+						if (format === 'DL') {
+							currentBanListDispatch({
+								type: BanListReducerType.UPDATE_NEW_CONTENT_DL_FORMAT,
+								newForbidden: json.newForbidden,
+								newLimitedOne: json.newLimitedOne,
+								newLimitedTwo: json.newLimitedTwo,
+								newLimitedThree: json.newLimitedThree,
+								numNewForbidden: json.numNewForbidden,
+								numNewLimitedOne: json.numNewLimitedOne,
+								numNewLimitedTwo: json.numNewLimitedTwo,
+								numNewLimitedThree: json.numNewLimitedThree,
+							})
+						} else {
+							currentBanListDispatch({
+								type: BanListReducerType.UPDATE_NEW_CONTENT,
+								newForbidden: json.newForbidden,
+								newLimited: json.newLimited,
+								newSemiLimited: json.newSemiLimited,
+								numNewForbidden: json.numNewForbidden,
+								numNewLimited: json.numNewLimited,
+								numNewSemiLimited: json.numNewSemiLimited,
+							})
+						}
+						setFetchingBanListNewContent(false)
+					})
+				}
+			)
 
-			FetchHandler.handleFetch(banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List Removed Content'].href, (json) => {
+			FetchHandler.handleFetch<SKCBanListRemovedCardsNormalFormat>(banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List Removed Content'].href, (json) => {
 				startTransition(() => {
-					selectedBanListDispatch({
-						type: CurrentlySelectedBanListReducerActionType.UPDATE_REMOVED,
+					currentBanListDispatch({
+						type: BanListReducerType.UPDATE_REMOVED_CONTENT,
 						removedCards: json.removedCards,
 						numRemoved: determineListSize(json.numRemoved),
 					})
@@ -169,35 +178,38 @@ export default function BanList() {
 				})
 			})
 
-			FetchHandler.handleFetch(banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List Content'].href, (json) => {
-				startTransition(() => {
-					if (format === 'DL') {
-						selectedBanListDispatch({
-							type: CurrentlySelectedBanListReducerActionType.UPDATE_DUEL_LINKS_FORMAT_LIST,
-							forbidden: json.forbidden,
-							limitedOne: json.limitedOne,
-							limitedTwo: json.limitedTwo,
-							limitedThree: json.limitedThree,
-							numForbidden: determineListSize(json.numForbidden),
-							numLimitedOne: determineListSize(json.numLimitedOne),
-							numLimitedTwo: determineListSize(json.numLimitedTwo),
-							numLimitedThree: determineListSize(json.numLimitedThree),
-						})
-					} else {
-						selectedBanListDispatch({
-							type: CurrentlySelectedBanListReducerActionType.UPDATE_NORMAL_FORMAT_LIST,
-							forbidden: json.forbidden,
-							limited: json.limited,
-							semiLimited: json.semiLimited,
-							numForbidden: determineListSize(json.numForbidden),
-							numLimited: determineListSize(json.numLimited),
-							numSemiLimited: determineListSize(json.numSemiLimited),
-						})
-					}
+			FetchHandler.handleFetch<SKCBanListContentNormalFormat & SKCBanListContentDuelLinksFormat>(
+				banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List Content'].href,
+				(json) => {
+					startTransition(() => {
+						if (format === 'DL') {
+							currentBanListDispatch({
+								type: BanListReducerType.UPDATE_LIST_CONTENT_DL_FORMAT,
+								forbidden: json.forbidden,
+								limitedOne: json.limitedOne,
+								limitedTwo: json.limitedTwo,
+								limitedThree: json.limitedThree,
+								numForbidden: determineListSize(json.numForbidden),
+								numLimitedOne: determineListSize(json.numLimitedOne),
+								numLimitedTwo: determineListSize(json.numLimitedTwo),
+								numLimitedThree: determineListSize(json.numLimitedThree),
+							})
+						} else {
+							currentBanListDispatch({
+								type: BanListReducerType.UPDATE_LIST_CONTENT,
+								forbidden: json.forbidden,
+								limited: json.limited,
+								semiLimited: json.semiLimited,
+								numForbidden: determineListSize(json.numForbidden),
+								numLimited: determineListSize(json.numLimited),
+								numSemiLimited: determineListSize(json.numSemiLimited),
+							})
+						}
 
-					setIsFetchingBanList(false)
-				})
-			})
+						setIsFetchingBanList(false)
+					})
+				}
+			)
 		}
 	}, [selectedBanList])
 
@@ -250,19 +262,16 @@ export default function BanList() {
 								numForbidden: numForbidden,
 								numLimited: numLimited,
 								numSemiLimited: numSemiLimited,
-								isFetchingBanList: isFetchingBanList,
 							}}
 							normalFormatDiffContent={{
 								removedCards: removedCards,
 								numRemoved: numRemoved,
-								newForbiddenCards: newForbiddenCards,
-								newLimitedCards: newLimitedCards,
-								newSemiLimitedCards: newSemiLimitedCards,
+								newForbidden: newForbidden,
+								newLimited: newLimited,
+								newSemiLimited: newSemiLimited,
 								numNewForbidden: numNewForbidden,
 								numNewLimited: numNewLimited,
 								numNewSemiLimited: numNewSemiLimited,
-								isFetchingBanListNewContent: isFetchingBanListNewContent,
-								isFetchingBanListRemovedContent: isFetchingBanListRemovedContent,
 							}}
 							dlFormatContent={{
 								forbidden: forbidden,
@@ -273,21 +282,18 @@ export default function BanList() {
 								numLimitedOne: numLimitedOne,
 								numLimitedTwo: numLimitedTwo,
 								numLimitedThree: numLimitedThree,
-								isFetchingBanList: isFetchingBanList,
 							}}
 							dlFormatDiffContent={{
 								removedCards: removedCards,
 								numRemoved: numRemoved,
-								newForbiddenCards: newForbiddenCards,
-								newLimitedOneCards: newLimitedOneCards,
-								newLimitedTwoCards: newLimitedTwoCards,
-								newLimitedThreeCards: newLimitedThreeCards,
+								newForbidden: newForbidden,
+								newLimitedOne: newLimitedOne,
+								newLimitedTwo: newLimitedTwo,
+								newLimitedThree: newLimitedThree,
 								numNewForbidden: numNewForbidden,
 								numNewLimitedOne: numNewLimitedOne,
 								numNewLimitedTwo: numNewLimitedTwo,
 								numNewLimitedThree: numNewLimitedThree,
-								isFetchingBanListNewContent: isFetchingBanListNewContent,
-								isFetchingBanListRemovedContent: isFetchingBanListRemovedContent,
 							}}
 							format={format}
 							isFetchingBanListNewContent={isFetchingBanListNewContent}

@@ -21,7 +21,7 @@ class DatabaseSearchStatic {
 		fetchToken: CancelTokenSource,
 		setIsFetching: React.Dispatch<React.SetStateAction<boolean>>
 	) => {
-		FetchHandler.handleFetch(
+		FetchHandler.handleFetch<DBSearchResults[]>(
 			`${DownstreamServices.NAME_maps_ENDPOINT['search']}?limit=10&cName=${searchSubject}`,
 			(json) => {
 				setSearchOptions(json)

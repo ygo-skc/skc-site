@@ -38,14 +38,22 @@ function generateBrowseQueryURL(selectedCriteria: BrowseCriteria[]) {
 	criteriaMap.set('linkRatings', [])
 
 	selectedCriteria.forEach((criteria: BrowseCriteria) => {
-		if (criteria.name === 'cardColors' || criteria.name === 'attributes' || criteria.name === 'monsterTypes' || criteria.name === 'monsterSubTypes')
-			criteriaMap.get(criteria.name).push(criteria.value)
-		else if (criteria.name === 'levels') {
-			criteriaMap.get(criteria.name).push(criteria.value.replace('Level ', ''))
-		} else if (criteria.name === 'ranks') {
-			criteriaMap.get(criteria.name).push(criteria.value.replace('Rank ', ''))
-		} else if (criteria.name === 'linkRatings') {
-			criteriaMap.get(criteria.name).push(criteria.value.replace('Link Rating ', ''))
+		switch (criteria.name) {
+			case 'cardColors':
+			case 'attributes':
+			case 'monsterTypes':
+			case 'monsterSubTypes':
+				criteriaMap.get(criteria.name).push(criteria.value)
+				break
+			case 'levels':
+				criteriaMap.get(criteria.name).push(criteria.value.replace('Level ', ''))
+				break
+			case 'ranks':
+				criteriaMap.get(criteria.name).push(criteria.value.replace('Rank ', ''))
+				break
+			case 'linkRatings':
+				criteriaMap.get(criteria.name).push(criteria.value.replace('Link Rating ', ''))
+				break
 		}
 	})
 
@@ -60,7 +68,7 @@ export default function BrowseCards() {
 	const [{ selectedCriteria }, browseCriteriaDispatch] = useReducer(browseReducer, { selectedCriteria: [] })
 
 	const [skcCardBrowseCriteriaOutput, setSkcCardBrowseCriteriaOutput] = useState<SKCCardBrowseCriteria>({} as SKCCardBrowseCriteria)
-	const [jsonResults, setJsonResults] = useState([])
+	const [jsonResults, setJsonResults] = useState<SKCCard[]>([])
 
 	const [numResults, setNumResults] = useState(0)
 	const [numResultsDisplayed, setNumResultsDisplayed] = useState(0)
@@ -72,7 +80,7 @@ export default function BrowseCards() {
 	browseSummaryStats.push(['Displaying', numResultsDisplayed.toString()])
 
 	useEffect(() => {
-		FetchHandler.handleFetch(DownstreamServices.NAME_maps_ENDPOINT['browseCriteria'], (json) => {
+		FetchHandler.handleFetch<SKCCardBrowseCriteria>(DownstreamServices.NAME_maps_ENDPOINT['browseCriteria'], (json) => {
 			setSkcCardBrowseCriteriaOutput(json)
 		})
 	}, [])
@@ -86,7 +94,7 @@ export default function BrowseCards() {
 			setIsCardBrowseDataLoaded(false)
 			setJsonResults([])
 
-			FetchHandler.handleFetch(generateBrowseQueryURL(selectedCriteria), (json) => {
+			FetchHandler.handleFetch<SKCCardBrowseResults>(generateBrowseQueryURL(selectedCriteria), (json) => {
 				setJsonResults(json.results)
 				setNumResults(json.numResults)
 				setNumResultsDisplayed(50)

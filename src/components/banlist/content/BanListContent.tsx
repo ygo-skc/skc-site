@@ -1,22 +1,22 @@
 import { FC, Fragment, memo } from 'react'
 import { AcceptableBanListFormat } from '../../../helper/BanListUtil'
-import BanListContentDuelLinksFormat, { _BanListContentDuelLinksFormat } from './BanListContentDuelLinksFormat'
-import BanListContentNormalFormat, { _BanListContentNormalFormat } from './BanListContentNormalFormat'
-import BanListDiffContentDuelLinksFormat, { _BanListDiffContentDuelLinksFormat } from './diff/BanListDiffContentDuelLinksFormat'
-import BanListDiffContentNormalFormat, { _BanListDiffContentNormalFormat } from './diff/BanListDiffContentNormalFormat'
+import BanListContentDuelLinksFormat from './BanListContentDuelLinksFormat'
+import BanListContentNormalFormat from './BanListContentNormalFormat'
+import BanListDiffContentDuelLinksFormat from './diff/BanListDiffContentDuelLinksFormat'
+import BanListDiffContentNormalFormat from './diff/BanListDiffContentNormalFormat'
 
-type _BanListContent = {
-	normalFormatContent: _BanListContentNormalFormat
-	normalFormatDiffContent: _BanListDiffContentNormalFormat
-	dlFormatContent: _BanListContentDuelLinksFormat
-	dlFormatDiffContent: _BanListDiffContentDuelLinksFormat
+type BanListContentProps = {
+	normalFormatContent: SKCBanListContentNormalFormat
+	normalFormatDiffContent: SKCBanListDiffContentNormalFormat
+	dlFormatContent: SKCBanListContentDuelLinksFormat
+	dlFormatDiffContent: SKCBanListDiffContentDuelLinksFormat
 	isFetchingBanListNewContent: boolean
 	isFetchingBanListRemovedContent: boolean
 	isFetchingBanList: boolean
 	format: AcceptableBanListFormat
 }
 
-const BanListContent: FC<_BanListContent> = memo(
+const BanListContent: FC<BanListContentProps> = memo(
 	({
 		normalFormatContent,
 		normalFormatDiffContent,
@@ -36,10 +36,10 @@ const BanListContent: FC<_BanListContent> = memo(
 							<BanListDiffContentDuelLinksFormat
 								removedCards={dlFormatDiffContent.removedCards}
 								numRemoved={dlFormatDiffContent.numRemoved}
-								newForbiddenCards={dlFormatDiffContent.newForbiddenCards}
-								newLimitedTwoCards={dlFormatDiffContent.newLimitedTwoCards}
-								newLimitedOneCards={dlFormatDiffContent.newLimitedOneCards}
-								newLimitedThreeCards={dlFormatDiffContent.newLimitedThreeCards}
+								newForbidden={dlFormatDiffContent.newForbidden}
+								newLimitedTwo={dlFormatDiffContent.newLimitedTwo}
+								newLimitedOne={dlFormatDiffContent.newLimitedOne}
+								newLimitedThree={dlFormatDiffContent.newLimitedThree}
 								numNewForbidden={dlFormatDiffContent.numNewForbidden}
 								numNewLimitedOne={dlFormatDiffContent.numNewLimitedOne}
 								numNewLimitedTwo={dlFormatDiffContent.numNewLimitedTwo}
@@ -67,9 +67,9 @@ const BanListContent: FC<_BanListContent> = memo(
 							<BanListDiffContentNormalFormat
 								removedCards={normalFormatDiffContent.removedCards}
 								numRemoved={normalFormatDiffContent.numRemoved}
-								newForbiddenCards={normalFormatDiffContent.newForbiddenCards}
-								newLimitedCards={normalFormatDiffContent.newLimitedCards}
-								newSemiLimitedCards={normalFormatDiffContent.newSemiLimitedCards}
+								newForbidden={normalFormatDiffContent.newForbidden}
+								newLimited={normalFormatDiffContent.newLimited}
+								newSemiLimited={normalFormatDiffContent.newSemiLimited}
 								numNewForbidden={normalFormatDiffContent.numNewForbidden}
 								numNewLimited={normalFormatDiffContent.numNewLimited}
 								numNewSemiLimited={normalFormatDiffContent.numNewSemiLimited}

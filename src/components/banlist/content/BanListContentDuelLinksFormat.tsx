@@ -3,19 +3,7 @@ import { Section } from 'skc-rcl'
 import BanListSection from '../BanListSection'
 import DuelLinksFormatTabbedView from '../tab/DuelLinksFormatTabbedView'
 
-export type _BanListContentDuelLinksFormat = {
-	forbidden: SKCCard[]
-	limitedOne: SKCCard[]
-	limitedTwo: SKCCard[]
-	limitedThree: SKCCard[]
-	numForbidden: number
-	numLimitedOne: number
-	numLimitedTwo: number
-	numLimitedThree: number
-	isFetchingBanList: boolean
-}
-
-const BanListContentNormalFormat: FC<_BanListContentDuelLinksFormat> = memo(
+const BanListContentNormalFormat: FC<SKCBanListContentDuelLinksFormat & { isFetchingBanList: boolean }> = memo(
 	({ forbidden, limitedOne, limitedTwo, limitedThree, numForbidden, numLimitedOne, numLimitedTwo, numLimitedThree, isFetchingBanList }) => {
 		return (
 			<Section sectionHeaderBackground={'ban-list'} sectionName='Content'>

@@ -11,12 +11,12 @@ import { SKCTable, Section } from 'skc-rcl'
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 
 const ProductBrowse: FunctionComponent = () => {
-	const [productJson, setProductJson] = useState([])
+	const [productJson, setProductJson] = useState<ProductInfo[]>([])
 	const [productGridItems, setProductGridItems] = useState<JSX.Element | undefined>(undefined)
 	const [isDataLoaded, setIsDataLoaded] = useState(false)
 
 	useEffect(() => {
-		FetchHandler.handleFetch(DownstreamServices.NAME_maps_ENDPOINT['productBrowse'], (json) => {
+		FetchHandler.handleFetch<ProductBrowseResults>(DownstreamServices.NAME_maps_ENDPOINT['productBrowse'], (json) => {
 			startTransition(() => {
 				setProductJson(json.products)
 			})
@@ -25,7 +25,7 @@ const ProductBrowse: FunctionComponent = () => {
 
 	useEffect(() => {
 		const headers: string[] = ['Name', 'ID', 'Type', 'Sub-Type', 'Release']
-		const rowOnClick: { (): void }[] = []
+		const rowOnClick: (() => void)[] = []
 		const productRows: string[][] = productJson.map((product: ProductInfo): string[] => {
 			rowOnClick.push(() => window.location.assign(`/product/${product.productId}`))
 			return [product.productName!, product.productId, product.productType!, product.productSubType!, Dates.fromYYYYMMDDToDateStr(product.productReleaseDate)]

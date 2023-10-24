@@ -29,10 +29,10 @@ export default function ProductInfo() {
 
 	const [isDataLoaded, setIsDataLoaded] = useState(false)
 
-	const [cardJsonResults, setCardJsonResults] = useState([])
+	const [cardJsonResults, setCardJsonResults] = useState<SKCCard[]>([])
 
 	useEffect(() => {
-		FetchHandler.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT['productDetails']}/${productId}/en`, (json) => {
+		FetchHandler.handleFetch<ProductInfo>(`${DownstreamServices.NAME_maps_ENDPOINT['productDetails']}/${productId}/en`, (json) => {
 			setDynamicBreadcrumbs(['Home', 'Product Browse', `${json.productId}`])
 
 			setProductName(json.productName)

@@ -10,6 +10,12 @@ import { Glance, Section } from 'skc-rcl'
 
 const DatabaseSearch = lazy(() => import('../search/DBSearch'))
 
+type DatabaseInfoProps = {
+	cardTotal: number
+	banListTotal: number
+	productTotal: number
+}
+
 const DatabaseInfo = () => {
 	const [cardTotal, setCardTotal] = useState(0)
 	const [banListTotal, setBanListTotal] = useState(0)
@@ -17,7 +23,7 @@ const DatabaseInfo = () => {
 	const [isFetchingData, setIsFetchingData] = useState(true)
 
 	useEffect(() => {
-		FetchHandler.handleFetch(DownstreamServices.NAME_maps_ENDPOINT['databaseStats'], (json) => {
+		FetchHandler.handleFetch<DatabaseInfoProps>(DownstreamServices.NAME_maps_ENDPOINT['databaseStats'], (json) => {
 			startTransition(() => {
 				setCardTotal(json.cardTotal)
 				setBanListTotal(json.banListTotal)

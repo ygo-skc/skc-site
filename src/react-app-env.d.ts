@@ -5,16 +5,22 @@ declare type BrowseCriteria = {
 	value: string
 }
 
-declare type ProductInfo = {
-	productId: string
-	productLocale?: string
-	productName?: string
-	productType?: string
-	productSubType?: string
-	productReleaseDate: string
-	productTotal?: number
-	productContent: ProductContent[]
+declare type ProductBrowseResults = {
+	locale: string
+	products: ProductInfo[]
 }
+
+declare type ProductInfo = ProductStats &
+	HATEOAS & {
+		productId: string
+		productLocale: string
+		productName: string
+		productType: string
+		productSubType: string
+		productReleaseDate: string
+		productTotal: number
+		productContent: SKCProductContent[]
+	}
 
 declare type ProductDetails = {
 	productId: string
@@ -65,7 +71,7 @@ declare type HATEOAS = {
 // SKC API related type declarations
 
 declare type SKCBanListDate = {
-	effectiveDate: Date
+	effectiveDate: string
 	_links: SKCBanListDateLinks
 }
 
@@ -78,6 +84,60 @@ declare type SKCBanListDateLinks = {
 declare type SKCBanListDates = {
 	banListDates: SKCBanListDate[]
 }
+
+declare type SKCBanListContentNormalFormat = {
+	forbidden: SKCCard[]
+	limited: SKCCard[]
+	semiLimited: SKCCard[]
+	numForbidden: number
+	numLimited: number
+	numSemiLimited: number
+}
+
+declare type SKCBanListRemovedCardsNormalFormat = {
+	removedCards: SKCCardsPreviousBanListStatus[]
+	numRemoved: number
+}
+
+declare type SKCBanListNewCardsNormalFormat = {
+	newForbidden: SKCCardsPreviousBanListStatus[]
+	newLimited: SKCCardsPreviousBanListStatus[]
+	newSemiLimited: SKCCardsPreviousBanListStatus[]
+	numNewForbidden: number
+	numNewLimited: number
+	numNewSemiLimited: number
+}
+
+declare type SKCBanListDiffContentNormalFormat = SKCBanListRemovedCardsNormalFormat & SKCBanListNewCardsNormalFormat
+
+declare type SKCBanListContentDuelLinksFormat = {
+	forbidden: SKCCard[]
+	limitedOne: SKCCard[]
+	limitedTwo: SKCCard[]
+	limitedThree: SKCCard[]
+	numForbidden: number
+	numLimitedOne: number
+	numLimitedTwo: number
+	numLimitedThree: number
+}
+
+declare type SKCBanListRemovedCardsDuelLinksFormat = {
+	removedCards: SKCCardsPreviousBanListStatus[]
+	numRemoved: number
+}
+
+declare type SKCBanListNewCardsDuelLinksFormat = {
+	newForbidden: SKCCardsPreviousBanListStatus[]
+	newLimitedOne: SKCCardsPreviousBanListStatus[]
+	newLimitedTwo: SKCCardsPreviousBanListStatus[]
+	newLimitedThree: SKCCardsPreviousBanListStatus[]
+	numNewForbidden: number
+	numNewLimitedOne: number
+	numNewLimitedTwo: number
+	numNewLimitedThree: number
+}
+
+declare type SKCBanListDiffContentDuelLinksFormat = SKCBanListRemovedCardsDuelLinksFormat & SKCBanListNewCardsDuelLinksFormat
 
 declare type SKCCard = {
 	cardID: string
@@ -102,6 +162,12 @@ declare type SKCCardBrowseCriteria = {
 	_links: {
 		self: HATEOAS
 	}
+}
+
+declare type SKCCardBrowseResults = {
+	results: SKCCard[]
+	numResults: number
+	requestedCriteria: SKCCardBrowseCriteria
 }
 
 declare type SKCCardsPreviousBanListStatus = {

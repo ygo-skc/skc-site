@@ -2,29 +2,14 @@ import { Skeleton } from '@mui/material'
 import { FC, Fragment, memo } from 'react'
 import CardsWithDifferentStatus from './CardsWithDifferentStatus'
 
-export type _BanListDiffContentDuelLinksFormat = {
-	removedCards: SKCCardsPreviousBanListStatus[]
-	numRemoved: number
-	newForbiddenCards: SKCCardsPreviousBanListStatus[]
-	newLimitedOneCards: SKCCardsPreviousBanListStatus[]
-	newLimitedTwoCards: SKCCardsPreviousBanListStatus[]
-	newLimitedThreeCards: SKCCardsPreviousBanListStatus[]
-	numNewForbidden: number
-	numNewLimitedOne: number
-	numNewLimitedTwo: number
-	numNewLimitedThree: number
-	isFetchingBanListNewContent: boolean
-	isFetchingBanListRemovedContent: boolean
-}
-
-const BanListDiffContentDuelLinksFormat: FC<_BanListDiffContentDuelLinksFormat> = memo(
+const BanListDiffContentDuelLinksFormat: FC<SKCBanListDiffContentDuelLinksFormat & { isFetchingBanListNewContent: boolean; isFetchingBanListRemovedContent: boolean }> = memo(
 	({
 		removedCards,
 		numRemoved,
-		newForbiddenCards,
-		newLimitedOneCards,
-		newLimitedTwoCards,
-		newLimitedThreeCards,
+		newForbidden,
+		newLimitedOne,
+		newLimitedTwo,
+		newLimitedThree,
 		numNewForbidden,
 		numNewLimitedOne,
 		numNewLimitedTwo,
@@ -39,10 +24,10 @@ const BanListDiffContentDuelLinksFormat: FC<_BanListDiffContentDuelLinksFormat> 
 		return (
 			<Fragment>
 				{isFetchingContent() && <Skeleton className='rounded-skeleton cards-with-diff-status-skeleton' variant='rectangular' height='30rem' width='100%' />}
-				{!isFetchingContent() && numNewForbidden !== 0 && <CardsWithDifferentStatus newStatusName='Forbidden' cards={newForbiddenCards} numCards={numNewForbidden} />}
-				{!isFetchingContent() && numNewLimitedOne !== 0 && <CardsWithDifferentStatus newStatusName='Limited One' cards={newLimitedOneCards} numCards={numNewLimitedOne} />}
-				{!isFetchingContent() && numNewLimitedTwo !== 0 && <CardsWithDifferentStatus newStatusName='Limited Two' cards={newLimitedTwoCards} numCards={numNewLimitedTwo} />}
-				{!isFetchingContent() && numNewLimitedThree !== 0 && <CardsWithDifferentStatus newStatusName='Limited Three' cards={newLimitedThreeCards} numCards={numNewLimitedThree} />}
+				{!isFetchingContent() && numNewForbidden !== 0 && <CardsWithDifferentStatus newStatusName='Forbidden' cards={newForbidden} numCards={numNewForbidden} />}
+				{!isFetchingContent() && numNewLimitedOne !== 0 && <CardsWithDifferentStatus newStatusName='Limited One' cards={newLimitedOne} numCards={numNewLimitedOne} />}
+				{!isFetchingContent() && numNewLimitedTwo !== 0 && <CardsWithDifferentStatus newStatusName='Limited Two' cards={newLimitedTwo} numCards={numNewLimitedTwo} />}
+				{!isFetchingContent() && numNewLimitedThree !== 0 && <CardsWithDifferentStatus newStatusName='Limited Three' cards={newLimitedThree} numCards={numNewLimitedThree} />}
 				{!isFetchingContent() && numRemoved !== 0 && <CardsWithDifferentStatus newStatusName='Unlimited' cards={removedCards} numCards={numRemoved} />}
 			</Fragment>
 		)
