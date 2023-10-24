@@ -94,7 +94,7 @@ declare type SKCBanListContentNormalFormat = {
 	numSemiLimited: number
 }
 
-declare type SKCBanListRemovedCardsNormalFormat = {
+declare type SKCBanListRemovedCards = {
 	removedCards: SKCCardsPreviousBanListStatus[]
 	numRemoved: number
 }
@@ -108,7 +108,7 @@ declare type SKCBanListNewCardsNormalFormat = {
 	numNewSemiLimited: number
 }
 
-declare type SKCBanListDiffContentNormalFormat = SKCBanListRemovedCardsNormalFormat & SKCBanListNewCardsNormalFormat
+declare type SKCBanListDiffContentNormalFormat = SKCBanListRemovedCards & SKCBanListNewCardsNormalFormat
 
 declare type SKCBanListContentDuelLinksFormat = {
 	forbidden: SKCCard[]

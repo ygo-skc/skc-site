@@ -1,94 +1,37 @@
-import { useEffect, memo, FC, useReducer, useCallback } from 'react'
+import { memo, FC, lazy } from 'react'
 
-import { Button, Skeleton } from '@mui/material'
+import { Button } from '@mui/material'
 import Grid2 from '@mui/material/Unstable_Grid2'
-import { Hint, YGOCardWithImage } from 'skc-rcl'
+import { Hint } from 'skc-rcl'
+import { CardDisplayGridState, CardDisplayGridStateReducerAction } from '../../../helper/reducers/CardDisplayGridReducer'
+import CardGridItems from './CardGridItems'
 
-function getPlaceholderCardComponent() {
-	const placeHolder = []
+const PlaceHolderGridItems = lazy(() => import('./PlaceHolderGridItems'))
 
-	for (let i = 0; i < 10; i++) {
-		placeHolder.push(
-			<Grid2 key={`skeleton-${i}`} xs={6} sm={4} md={4} lg={3} xl={2} style={{ padding: '.3rem' }}>
-				<Skeleton variant='rectangular' height='170px' width='100%' style={{ borderRadius: '4rem', marginBottom: '1rem' }} />
-				<Skeleton variant='rectangular' width='100%' height='100px' />
-			</Grid2>
-		)
-	}
-
-	return placeHolder
+type CardDisplayGridProps = {
+	cardGridState: CardDisplayGridState
+	dispatch: React.Dispatch<CardDisplayGridStateReducerAction>
+	isLoading: boolean
 }
 
-type _CardDisplayGrid = {
-	cardJsonResults: any
-	numResultsDisplayed: number
-	numItemsToLoadWhenNeeded: number
-	loadMoreCallback: any
-	isLoadMoreOptionVisible: boolean
-	numResults: number
-	isDataLoaded: boolean
-}
-
-const CardDisplayGridItem: FC<{ card: SKCCard }> = ({ card }) => {
-	const handleCardClicked = useCallback(() => window.location.assign(`/card/${card.cardID}`), [card])
-
-	return (
-		<Grid2 className='ygo-card-grid-item' id={card.cardID} key={card.cardID} xs={6} sm={4} md={4} lg={3} xl={2} onClick={handleCardClicked}>
-			<YGOCardWithImage card={card} />
-		</Grid2>
-	)
-}
-
-const CardDisplayGrid: FC<_CardDisplayGrid> = memo(
-	({ cardJsonResults, numResultsDisplayed, numItemsToLoadWhenNeeded, loadMoreCallback, isLoadMoreOptionVisible, numResults, isDataLoaded }) => {
-		const [{ cardGridUI, updateGrid, cardGridUISkeleton }, cardGridDispatch] = useReducer(cardGridReducer, {
-			cardGridUI: [],
-			updateGrid: false,
-			cardGridUISkeleton: getPlaceholderCardComponent(),
-		})
-
-		function cardGridReducer(state: { cardGridUI: JSX.Element[]; updateGrid: boolean; cardGridUISkeleton: JSX.Element[] }, action: any) {
-			const renderCards = () => {
-				return cardJsonResults
-					.slice(numResultsDisplayed - numItemsToLoadWhenNeeded, numResultsDisplayed)
-					.map((card: SKCCard) => <CardDisplayGridItem key={card.cardID} card={card} />)
-			}
-			switch (action.type) {
-				case 'CLEAR_GRID':
-					return {
-						...state,
-						cardGridUI: [],
-						updateGrid: true,
-					}
-				case 'RENDER_GRID':
-					return {
-						...state,
-						cardGridUI: [...renderCards()],
-						updateGrid: false,
-					}
-				default:
-					return state
-			}
-		}
-
-		useEffect(() => {
-			cardGridDispatch({ type: 'RENDER_GRID' })
-		}, [updateGrid])
-
-		useEffect(() => {
-			cardGridDispatch({ type: 'CLEAR_GRID' })
-		}, [numResults])
-
+const CardDisplayGrid: FC<CardDisplayGridProps> = memo(
+	({ cardGridState, isLoading }) => {
 		return (
 			<div>
 				<Grid2 container>
-					{!isDataLoaded && cardGridUISkeleton}
-					{isDataLoaded && numResults === 0 && <Hint fullWidth={false}>{'No Content To Show'}</Hint>}
-					{isDataLoaded && numResults !== 0 && cardGridUI}
+					{isLoading && <PlaceHolderGridItems />}
+					{!isLoading && cardGridState.totalResults === 0 && <Hint fullWidth={false}>{'No Content To Show'}</Hint>}
+					{!isLoading && cardGridState.totalResults !== 0 && <CardGridItems cards={cardGridState.results.splice(0, cardGridState.totalDisplaying)} />}
 				</Grid2>
 
-				{!isDataLoaded ? undefined : (
-					<Button onClick={loadMoreCallback} style={isLoadMoreOptionVisible ? { padding: '1rem', margin: '0 auto', display: 'block' } : { display: 'none' }}>
+				{!isLoading && cardGridState.totalDisplaying >= cardGridState.totalResults ? undefined : (
+					<Button
+						style={{
+							padding: '1rem',
+							margin: '0 auto',
+							display: 'block',
+						}}
+					>
 						Load More
 					</Button>
 				)}
@@ -96,7 +39,7 @@ const CardDisplayGrid: FC<_CardDisplayGrid> = memo(
 		)
 	},
 	(prevProps, newProps) => {
-		if (prevProps.isDataLoaded !== newProps.isDataLoaded || prevProps.numResults !== newProps.numResults) return false
+		if (prevProps.isLoading !== newProps.isLoading || prevProps.cardGridState.totalResults !== newProps.cardGridState.totalResults) return false
 
 		return true
 	}

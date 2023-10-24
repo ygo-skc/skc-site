@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, Fragment } from 'react'
+import { useState, useEffect, lazy, Fragment, useReducer } from 'react'
 import { useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 
@@ -9,6 +9,7 @@ import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 import { Typography } from '@mui/material'
 import ProductStats from '../product/ProductStats'
 import { Section } from 'skc-rcl'
+import cardDisplayGridReducer, { CardDisplayGridStateReducerActionType } from '../../helper/reducers/CardDisplayGridReducer'
 
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 const CardDisplayGrid = lazy(() => import('../util/grid/CardDisplayGrid'))
@@ -27,9 +28,13 @@ export default function ProductInfo() {
 	const [productTotal, setProductTotal] = useState(0)
 	const [productRarityStats, setProductRarityStats] = useState<{ [key: string]: number }>({})
 
-	const [isDataLoaded, setIsDataLoaded] = useState(false)
-
-	const [cardJsonResults, setCardJsonResults] = useState<SKCCard[]>([])
+	const [cardGridState, cardDisplayGridDispatch] = useReducer(cardDisplayGridReducer, {
+		results: [],
+		totalResults: 0,
+		totalDisplaying: 0,
+		numItemsToLoadWhenNeeded: 0,
+		isLoading: true,
+	})
 
 	useEffect(() => {
 		FetchHandler.handleFetch<ProductInfo>(`${DownstreamServices.NAME_maps_ENDPOINT['productDetails']}/${productId}/en`, (json) => {
@@ -40,10 +45,16 @@ export default function ProductInfo() {
 			setProductSubType(json.productSubType)
 			setProductReleaseDate(json.productReleaseDate)
 
-			setCardJsonResults(json.productContent.map((item: SKCProductContent) => item.card))
 			setProductTotal(json.productTotal)
 			setProductRarityStats(json.productRarityStats)
-			setIsDataLoaded(true)
+
+			const cards = json.productContent.map((item: SKCProductContent) => item.card)
+			cardDisplayGridDispatch({
+				type: CardDisplayGridStateReducerActionType.INIT_GRID,
+				results: cards,
+				totalResults: cards.length,
+				totalDisplaying: cards.length,
+			})
 		})
 	}, [])
 
@@ -68,26 +79,18 @@ export default function ProductInfo() {
 							productSubType={productSubType}
 							productReleaseDate={productReleaseDate}
 							numUniqueCards={productTotal.toString()}
-							isDataLoaded={isDataLoaded}
+							isDataLoaded={!cardGridState.isLoading}
 						/>
 					</Section>
 				}
 				twoThirdComponent={
 					<Fragment>
-						<ProductStats isDataLoaded={isDataLoaded} cards={cardJsonResults} productTotal={+productTotal} productRarityStats={productRarityStats} />
+						<ProductStats isDataLoaded={!cardGridState.isLoading} cards={cardGridState.results} productTotal={+productTotal} productRarityStats={productRarityStats} />
 						<Section sectionName='Product Content'>
 							<div className='section-content'>
 								<Typography variant='h5'>Sorted By Pack Order</Typography>
 
-								<CardDisplayGrid
-									cardJsonResults={cardJsonResults}
-									numResultsDisplayed={productTotal}
-									numItemsToLoadWhenNeeded={productTotal}
-									numResults={productTotal}
-									loadMoreCallback={undefined}
-									isLoadMoreOptionVisible={false}
-									isDataLoaded={isDataLoaded}
-								/>
+								<CardDisplayGrid cardGridState={cardGridState} dispatch={cardDisplayGridDispatch} isLoading={cardGridState.isLoading!} />
 							</div>
 						</Section>
 					</Fragment>

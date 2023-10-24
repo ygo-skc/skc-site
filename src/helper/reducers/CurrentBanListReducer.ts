@@ -13,7 +13,7 @@ type BanListReducerAction =
 	| (SKCBanListContentDuelLinksFormat & {
 			type: BanListReducerType.UPDATE_LIST_CONTENT_DL_FORMAT
 	  })
-	| (SKCBanListRemovedCardsNormalFormat & { type: BanListReducerType.UPDATE_REMOVED_CONTENT })
+	| (SKCBanListRemovedCards & { type: BanListReducerType.UPDATE_REMOVED_CONTENT })
 	| (SKCBanListNewCardsNormalFormat & { type: BanListReducerType.UPDATE_NEW_CONTENT })
 	| (SKCBanListNewCardsDuelLinksFormat & { type: BanListReducerType.UPDATE_NEW_CONTENT_DL_FORMAT })
 

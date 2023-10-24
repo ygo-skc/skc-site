@@ -166,7 +166,7 @@ export default function BanList() {
 				}
 			)
 
-			FetchHandler.handleFetch<SKCBanListRemovedCardsNormalFormat>(banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List Removed Content'].href, (json) => {
+			FetchHandler.handleFetch<SKCBanListRemovedCards>(banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List Removed Content'].href, (json) => {
 				startTransition(() => {
 					currentBanListDispatch({
 						type: BanListReducerType.UPDATE_REMOVED_CONTENT,
