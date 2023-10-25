@@ -1,107 +1,89 @@
-import { FC, Fragment, memo } from 'react'
-import { AcceptableBanListFormat } from '../../../helper/BanListUtil'
-import BanListContentDuelLinksFormat from './BanListContentDuelLinksFormat'
-import BanListContentNormalFormat from './BanListContentNormalFormat'
-import BanListDiffContentDuelLinksFormat from './diff/BanListDiffContentDuelLinksFormat'
-import BanListDiffContentNormalFormat from './diff/BanListDiffContentNormalFormat'
+import { FC, memo } from 'react'
+import { Section } from 'skc-rcl'
+import BanListSection from '../BanListSection'
+import NormalFormatTabbedView from '../tab/NormalFormatTabbedView'
+import DuelLinksFormatTabbedView from '../tab/DuelLinksFormatTabbedView'
 
 type BanListContentProps = {
-	normalFormatContent: SKCBanListContentNormalFormat
-	normalFormatDiffContent: SKCBanListDiffContentNormalFormat
-	dlFormatContent: SKCBanListContentDuelLinksFormat
-	dlFormatDiffContent: SKCBanListDiffContentDuelLinksFormat
-	isFetchingBanListNewContent: boolean
-	isFetchingBanListRemovedContent: boolean
+	normalFormatContent?: SKCBanListContentNormalFormat
+	dlFormatContent?: SKCBanListContentDuelLinksFormat
 	isFetchingBanList: boolean
-	format: AcceptableBanListFormat
 }
 
 const BanListContent: FC<BanListContentProps> = memo(
-	({
-		normalFormatContent,
-		normalFormatDiffContent,
-		dlFormatContent,
-		dlFormatDiffContent,
-		isFetchingBanListNewContent,
-		isFetchingBanListRemovedContent,
-		isFetchingBanList,
-		format,
-	}) => {
+	({ normalFormatContent, dlFormatContent, isFetchingBanList }) => {
 		return (
-			<Fragment>
-				{format === 'DL' ? (
-					<Fragment>
-						{/* this div might seem useless but it is needed for css to work as expected on its children */}
-						<div>
-							<BanListDiffContentDuelLinksFormat
-								removedCards={dlFormatDiffContent.removedCards}
-								numRemoved={dlFormatDiffContent.numRemoved}
-								newForbidden={dlFormatDiffContent.newForbidden}
-								newLimitedTwo={dlFormatDiffContent.newLimitedTwo}
-								newLimitedOne={dlFormatDiffContent.newLimitedOne}
-								newLimitedThree={dlFormatDiffContent.newLimitedThree}
-								numNewForbidden={dlFormatDiffContent.numNewForbidden}
-								numNewLimitedOne={dlFormatDiffContent.numNewLimitedOne}
-								numNewLimitedTwo={dlFormatDiffContent.numNewLimitedTwo}
-								numNewLimitedThree={dlFormatDiffContent.numNewLimitedThree}
-								isFetchingBanListNewContent={isFetchingBanListNewContent}
-								isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
-							/>
-						</div>
-						<BanListContentDuelLinksFormat
-							forbidden={dlFormatContent.forbidden}
-							limitedOne={dlFormatContent.limitedOne}
-							limitedTwo={dlFormatContent.limitedTwo}
-							limitedThree={dlFormatContent.limitedThree}
+			<Section sectionHeaderBackground={'ban-list'} sectionName='Content'>
+				<div className='section-content'>
+					{normalFormatContent !== undefined && (
+						<NormalFormatTabbedView
+							numForbidden={normalFormatContent.numForbidden}
+							numLimited={normalFormatContent.numLimited}
+							numSemiLimited={normalFormatContent.numSemiLimited}
+							forbiddenContent={
+								<BanListSection
+									sectionExplanation='Forbidden cards cannot be used in Deck/Side Deck in the Advanced Format'
+									cards={normalFormatContent.forbidden}
+									isDataLoaded={!isFetchingBanList}
+								/>
+							}
+							limitedContent={
+								<BanListSection
+									sectionExplanation='Limited cards can be included in Deck/Side deck - max 1'
+									cards={normalFormatContent.limited}
+									isDataLoaded={!isFetchingBanList}
+								/>
+							}
+							semiLimitedContent={
+								<BanListSection
+									sectionExplanation='Semi-Limited cards can be included in Deck/Side deck - max 2'
+									cards={normalFormatContent.semiLimited}
+									isDataLoaded={!isFetchingBanList}
+								/>
+							}
+						/>
+					)}
+					{dlFormatContent !== undefined && (
+						<DuelLinksFormatTabbedView
 							numForbidden={dlFormatContent.numForbidden}
 							numLimitedOne={dlFormatContent.numLimitedOne}
 							numLimitedTwo={dlFormatContent.numLimitedTwo}
 							numLimitedThree={dlFormatContent.numLimitedThree}
-							isFetchingBanList={isFetchingBanList}
+							forbiddenContent={
+								<BanListSection sectionExplanation='Forbidden cards cannot be used in your deck' cards={dlFormatContent.forbidden} isDataLoaded={!isFetchingBanList} />
+							}
+							limitedOneContent={
+								<BanListSection
+									sectionExplanation='You can only use a maximum of one card in the Limited One list in your deck'
+									cards={dlFormatContent.limitedOne}
+									isDataLoaded={!isFetchingBanList}
+								/>
+							}
+							limitedTwoContent={
+								<BanListSection
+									sectionExplanation='You can only use a maximum of two card in the Limited Two list in your deck'
+									cards={dlFormatContent.limitedTwo}
+									isDataLoaded={!isFetchingBanList}
+								/>
+							}
+							limitedThreeContent={
+								<BanListSection
+									sectionExplanation='You can only use a maximum of three card in the Limited Three list in your deck'
+									cards={dlFormatContent.limitedThree}
+									isDataLoaded={!isFetchingBanList}
+								/>
+							}
 						/>
-					</Fragment>
-				) : (
-					<Fragment>
-						{/* this div might seem useless but it is needed for css to work as expected on its children */}
-						<div>
-							<BanListDiffContentNormalFormat
-								removedCards={normalFormatDiffContent.removedCards}
-								numRemoved={normalFormatDiffContent.numRemoved}
-								newForbidden={normalFormatDiffContent.newForbidden}
-								newLimited={normalFormatDiffContent.newLimited}
-								newSemiLimited={normalFormatDiffContent.newSemiLimited}
-								numNewForbidden={normalFormatDiffContent.numNewForbidden}
-								numNewLimited={normalFormatDiffContent.numNewLimited}
-								numNewSemiLimited={normalFormatDiffContent.numNewSemiLimited}
-								isFetchingBanListNewContent={isFetchingBanListNewContent}
-								isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
-							/>
-						</div>
-						<BanListContentNormalFormat
-							forbidden={normalFormatContent.forbidden}
-							limited={normalFormatContent.limited}
-							semiLimited={normalFormatContent.semiLimited}
-							numForbidden={normalFormatContent.numForbidden}
-							numLimited={normalFormatContent.numLimited}
-							numSemiLimited={normalFormatContent.numSemiLimited}
-							isFetchingBanList={isFetchingBanList}
-						/>
-					</Fragment>
-				)}
-			</Fragment>
+					)}
+				</div>
+			</Section>
 		)
 	},
 	(prevProps, nextProps) => {
-		if (
-			prevProps.format !== nextProps.format ||
-			prevProps.isFetchingBanList !== nextProps.isFetchingBanList ||
-			prevProps.isFetchingBanListNewContent !== nextProps.isFetchingBanListNewContent ||
-			prevProps.isFetchingBanListRemovedContent !== nextProps.isFetchingBanListRemovedContent
-		)
-			return false
+		if (prevProps.isFetchingBanList !== nextProps.isFetchingBanList) return false
 		return true
 	}
 )
 
-BanListContent.displayName = 'BanListContent'
+BanListContent.displayName = 'BanListContentNormalFormat'
 export default BanListContent
