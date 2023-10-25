@@ -1,0 +1,39 @@
+name: Build & Code Quality
+
+on:
+  push:
+    branches:
+      - release
+      - master
+    tags:
+      - v**
+  pull_request:
+    types:
+      - opened
+      - edited
+      - reopened
+      - synchronize
+
+jobs:
+  build-and-code-quality:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4.1.1
+
+      - name: Setup Node
+        uses: actions/setup-node@v4.0.0
+        with:
+          node-version: '20.x'
+
+      - name: Instal Dependencies
+        run: npm run fresh-install
+
+      - name: Build
+        run: npm run build
+
+      - name: Unit Test
+        run: npm run ci:test
+
+      - name: Check Syntax (ES Lint)
+        run: npm run lint
