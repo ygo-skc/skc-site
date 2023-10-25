@@ -29,9 +29,6 @@ type BanListDatesOutput = SKCBanListDates & {
 
 export default function BanList() {
 	const [selectedBanList, setSelectedBanList] = useState<string>('')
-	const [isFetchingBanList, setIsFetchingBanList] = useState(true)
-	const [isFetchingBanListNewContent, setFetchingBanListNewContent] = useState(true)
-	const [isFetchingBanListRemovedContent, setFetchingBanListRemovedContent] = useState(true)
 
 	const { specifiedFormat } = useParams<'specifiedFormat'>()
 	const [format, setFormat] = useState<AcceptableBanListFormat>(getValidFormat(specifiedFormat))
@@ -70,6 +67,9 @@ export default function BanList() {
 			numLimitedOne,
 			numLimitedTwo,
 			numLimitedThree,
+			isFetchingBanListNewContent,
+			isFetchingBanListContent,
+			isFetchingBanListRemovedContent,
 		},
 		currentBanListDispatch,
 	] = useReducer(currentBanListReducer, {
@@ -99,6 +99,9 @@ export default function BanList() {
 		numLimitedOne: 0,
 		numLimitedTwo: 0,
 		numLimitedThree: 0,
+		isFetchingBanListNewContent: true,
+		isFetchingBanListContent: true,
+		isFetchingBanListRemovedContent: true,
 	})
 
 	useEffect(() => {
@@ -108,9 +111,9 @@ export default function BanList() {
 			type: BanListDateReducerActionType.FETCHING_DATES,
 		})
 
-		setIsFetchingBanList(true)
-		setFetchingBanListNewContent(true)
-		setFetchingBanListRemovedContent(true)
+		currentBanListDispatch({
+			type: BanListReducerType.FETCHING_INFO,
+		})
 
 		startTransition(() => {
 			FetchHandler.handleFetch<BanListDatesOutput>(`${DownstreamServices.NAME_maps_ENDPOINT['banListsUrl']}?format=${format}`, (json) => {
@@ -133,9 +136,9 @@ export default function BanList() {
 
 	useEffect(() => {
 		if (selectedBanList && selectedBanList.length !== 0) {
-			setIsFetchingBanList(true)
-			setFetchingBanListNewContent(true)
-			setFetchingBanListRemovedContent(true)
+			currentBanListDispatch({
+				type: BanListReducerType.FETCHING_INFO,
+			})
 
 			FetchHandler.handleFetch<SKCBanListNewCardsNormalFormat & SKCBanListNewCardsDuelLinksFormat>(
 				banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List New Content'].href,
@@ -163,7 +166,6 @@ export default function BanList() {
 							numNewSemiLimited: json.numNewSemiLimited,
 						})
 					}
-					setFetchingBanListNewContent(false)
 				}
 			)
 
@@ -173,8 +175,6 @@ export default function BanList() {
 					removedCards: json.removedCards,
 					numRemoved: determineListSize(json.numRemoved),
 				})
-
-				setFetchingBanListRemovedContent(false)
 			})
 
 			FetchHandler.handleFetch<SKCBanListContentNormalFormat & SKCBanListContentDuelLinksFormat>(
@@ -203,8 +203,6 @@ export default function BanList() {
 							numSemiLimited: determineListSize(json.numSemiLimited),
 						})
 					}
-
-					setIsFetchingBanList(false)
 				}
 			)
 		}
@@ -242,7 +240,7 @@ export default function BanList() {
 									normalFormatDiffSpreads={{ numNewForbidden, numNewLimited, numNewSemiLimited, numRemoved }}
 									dlFormatSpreads={{ numForbidden, numLimitedOne, numLimitedTwo, numLimitedThree }}
 									dlFormatDiffSpreads={{ numNewForbidden, numNewLimitedOne, numNewLimitedTwo, numNewLimitedThree, numRemoved }}
-									isFetchingBanList={isFetchingBanList}
+									isFetchingBanList={isFetchingBanListContent}
 									isFetchingBanListNewContent={isFetchingBanListNewContent}
 									isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
 									format={format}
@@ -297,7 +295,7 @@ export default function BanList() {
 							format={format}
 							isFetchingBanListNewContent={isFetchingBanListNewContent}
 							isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
-							isFetchingBanList={isFetchingBanList}
+							isFetchingBanList={isFetchingBanListContent}
 						/>
 					</Suspense>
 				}

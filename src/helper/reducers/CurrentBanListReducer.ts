@@ -4,7 +4,10 @@ export enum BanListReducerType {
 	UPDATE_REMOVED_CONTENT,
 	UPDATE_NEW_CONTENT,
 	UPDATE_NEW_CONTENT_DL_FORMAT,
+	FETCHING_INFO,
 }
+
+type Fetching = { isFetchingBanListNewContent: boolean; isFetchingBanListContent: boolean; isFetchingBanListRemovedContent: boolean }
 
 type BanListReducerAction =
 	| (SKCBanListContentNormalFormat & {
@@ -16,9 +19,10 @@ type BanListReducerAction =
 	| (SKCBanListRemovedCards & { type: BanListReducerType.UPDATE_REMOVED_CONTENT })
 	| (SKCBanListNewCardsNormalFormat & { type: BanListReducerType.UPDATE_NEW_CONTENT })
 	| (SKCBanListNewCardsDuelLinksFormat & { type: BanListReducerType.UPDATE_NEW_CONTENT_DL_FORMAT })
+	| { type: BanListReducerType.FETCHING_INFO }
 
 export function currentBanListReducer(
-	state: SKCBanListContentNormalFormat & SKCBanListContentDuelLinksFormat & SKCBanListDiffContentNormalFormat & SKCBanListDiffContentDuelLinksFormat,
+	state: SKCBanListContentNormalFormat & SKCBanListContentDuelLinksFormat & SKCBanListDiffContentNormalFormat & SKCBanListDiffContentDuelLinksFormat & Fetching,
 	action: BanListReducerAction
 ) {
 	switch (action.type) {
@@ -37,6 +41,7 @@ export function currentBanListReducer(
 				numLimitedOne: 0,
 				numLimitedTwo: 0,
 				numLimitedThree: 0,
+				isFetchingBanListContent: false,
 			}
 		case BanListReducerType.UPDATE_LIST_CONTENT_DL_FORMAT:
 			return {
@@ -53,12 +58,14 @@ export function currentBanListReducer(
 				numLimitedOne: action.numLimitedOne,
 				numLimitedTwo: action.numLimitedTwo,
 				numLimitedThree: action.numLimitedThree,
+				isFetchingBanListContent: false,
 			}
 		case BanListReducerType.UPDATE_REMOVED_CONTENT:
 			return {
 				...state,
 				removedCards: action.removedCards,
 				numRemoved: action.numRemoved,
+				isFetchingBanListRemovedContent: false,
 			}
 		case BanListReducerType.UPDATE_NEW_CONTENT:
 			return {
@@ -75,6 +82,7 @@ export function currentBanListReducer(
 				numNewLimitedOne: 0,
 				numNewLimitedTwo: 0,
 				numNewLimitedThree: 0,
+				isFetchingBanListNewContent: false,
 			}
 		case BanListReducerType.UPDATE_NEW_CONTENT_DL_FORMAT:
 			return {
@@ -91,6 +99,14 @@ export function currentBanListReducer(
 				numNewLimitedOne: action.numNewLimitedOne,
 				numNewLimitedTwo: action.numNewLimitedTwo,
 				numNewLimitedThree: action.numNewLimitedThree,
+				isFetchingBanListNewContent: false,
+			}
+		case BanListReducerType.FETCHING_INFO:
+			return {
+				...state,
+				isFetchingBanListNewContent: true,
+				isFetchingBanListContent: true,
+				isFetchingBanListRemovedContent: true,
 			}
 		default:
 			return state
