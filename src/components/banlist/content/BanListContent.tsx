@@ -80,8 +80,12 @@ const BanListContent: FC<BanListContentProps> = memo(
 		)
 	},
 	(prevProps, nextProps) => {
-		if (prevProps.isFetchingBanList !== nextProps.isFetchingBanList) return false
-		return true
+		return (
+			prevProps.isFetchingBanList === nextProps.isFetchingBanList &&
+			prevProps.normalFormatContent?.numForbidden === nextProps.normalFormatContent?.numForbidden &&
+			prevProps.normalFormatContent?.numLimited === nextProps.normalFormatContent?.numLimited &&
+			prevProps.normalFormatContent?.numSemiLimited === nextProps.normalFormatContent?.numSemiLimited
+		)
 	}
 )
 

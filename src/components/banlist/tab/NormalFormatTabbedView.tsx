@@ -5,7 +5,7 @@ import LooksOneTwoToneIcon from '@mui/icons-material/LooksOneTwoTone'
 import LooksTwoTwoToneIcon from '@mui/icons-material/LooksTwoTwoTone'
 import { TabbedView, TabPanel, allyProps } from './TabbedView'
 
-type _NormalFormatTabbedView = {
+type NormalFormatTabbedViewProps = {
 	numForbidden: number
 	numLimited: number
 	numSemiLimited: number
@@ -14,7 +14,7 @@ type _NormalFormatTabbedView = {
 	semiLimitedContent: JSX.Element
 }
 
-const NormalFormatTabbedView: FC<_NormalFormatTabbedView> = ({ numForbidden, numLimited, numSemiLimited, forbiddenContent, limitedContent, semiLimitedContent }) => {
+const NormalFormatTabbedView: FC<NormalFormatTabbedViewProps> = ({ numForbidden, numLimited, numSemiLimited, forbiddenContent, limitedContent, semiLimitedContent }) => {
 	const [currentTab, setCurrentTab] = useState(0)
 
 	return (

@@ -3,12 +3,12 @@ import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mu
 import { AcceptableBanListFormat } from '../../helper/BanListUtil'
 import { scrollToTop } from '../../helper/Etc'
 
-type _BanListFormat = {
+type BanListFormatProps = {
 	format: AcceptableBanListFormat
 	setFormat: React.Dispatch<React.SetStateAction<AcceptableBanListFormat>>
 }
 
-const BanListFormat: FC<_BanListFormat> = memo(
+const BanListFormat: FC<BanListFormatProps> = memo(
 	({ format, setFormat }) => {
 		const handleFormatChanged = useCallback(
 			(_: React.ChangeEvent<HTMLInputElement>, value: string) => {
@@ -32,8 +32,7 @@ const BanListFormat: FC<_BanListFormat> = memo(
 		)
 	},
 	(prevProps, nextProps) => {
-		if (prevProps.format !== nextProps.format) return false
-		return true
+		return prevProps.format === nextProps.format
 	}
 )
 
