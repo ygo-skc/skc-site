@@ -13,20 +13,9 @@ import '../../css/main-pages/card-browse.css'
 import CardBrowse from '../util/search/CardBrowse'
 import { SKCTable, Section } from 'skc-rcl'
 import cardDisplayGridReducer, { CardDisplayGridStateReducerActionType } from '../../helper/reducers/CardDisplayGridReducer'
+import cardBrowseReducer from '../../helper/reducers/CardBrowseCriteriaReducer'
 
 const CardDisplayGrid = lazy(() => import('../util/grid/CardDisplayGrid'))
-
-function browseReducer(state: { selectedCriteria: BrowseCriteria[] }, action: any) {
-	switch (action.type) {
-		case 'UPDATE_SELECTED_CRITERIA':
-			return {
-				...state,
-				selectedCriteria: action.selectedCriteria,
-			}
-		default:
-			return state
-	}
-}
 
 function generateBrowseQueryURL(selectedCriteria: BrowseCriteria[]) {
 	const criteriaMap = new Map()
@@ -66,7 +55,7 @@ function generateBrowseQueryURL(selectedCriteria: BrowseCriteria[]) {
 }
 
 export default function BrowseCards() {
-	const [{ selectedCriteria }, browseCriteriaDispatch] = useReducer(browseReducer, { selectedCriteria: [] })
+	const [{ selectedCriteria }, browseCriteriaDispatch] = useReducer(cardBrowseReducer, { selectedCriteria: [] })
 
 	const [cardGridState, cardDisplayGridDispatch] = useReducer(cardDisplayGridReducer, {
 		results: [],

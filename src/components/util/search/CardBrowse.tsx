@@ -6,30 +6,15 @@ import { FC, Fragment, useCallback, useEffect, useReducer } from 'react'
 import SearchInput from './SearchInput'
 import Typography from '@mui/material/Typography'
 import SelectedCardBrowseCriteria from './SelectedCardBrowseCriteria'
-
-function browseCriteriaSearchReducer(state: { browseInput: string; browseCriteria: BrowseCriteria[] }, action: any) {
-	switch (action.type) {
-		case 'UPDATE_INPUT':
-			return {
-				...state,
-				browseInput: action.browseInput,
-			}
-		case 'UPDATE_BROWSE_CRITERIA':
-			return {
-				...state,
-				browseCriteria: action.browseCriteria,
-			}
-		default:
-			return state
-	}
-}
+import { CardBrowseReducerAction, CardBrowseReducerActionType } from '../../../helper/reducers/CardBrowseCriteriaReducer'
+import cardBrowseCriteriaSearchReducer, { CardBrowseCriteriaSearchReducerActionType } from '../../../helper/reducers/CardBrowseCriteriaSearchReducer'
 
 const CardBrowse: FC<{
 	skcCardBrowseCriteriaOutput: SKCCardBrowseCriteria
 	selectedCriteria: BrowseCriteria[]
-	browseCriteriaDispatch: React.Dispatch<{ type: string; selectedCriteria: readonly BrowseCriteria[] }>
+	browseCriteriaDispatch: React.Dispatch<CardBrowseReducerAction>
 }> = ({ skcCardBrowseCriteriaOutput, selectedCriteria, browseCriteriaDispatch }) => {
-	const [{ browseInput, browseCriteria }, browseCriteriaSearchDispatch] = useReducer(browseCriteriaSearchReducer, { browseInput: '', browseCriteria: [] })
+	const [{ browseInput, browseCriteria }, browseCriteriaSearchDispatch] = useReducer(cardBrowseCriteriaSearchReducer, { browseInput: '', browseCriteria: [] })
 
 	useEffect(() => {
 		const criteria: BrowseCriteria[] = []
@@ -54,13 +39,14 @@ const CardBrowse: FC<{
 			}
 		})
 
-		browseCriteriaSearchDispatch({ type: 'UPDATE_BROWSE_CRITERIA', browseCriteria: criteria })
+		browseCriteriaSearchDispatch({ type: CardBrowseCriteriaSearchReducerActionType.UPDATE_BROWSE_CRITERIA, browseCriteria: criteria })
 	}, [skcCardBrowseCriteriaOutput])
 
 	const handleGetOptionLabel = useCallback((option: BrowseCriteria) => option.value, [])
 	const handleGroupBy = useCallback((option: BrowseCriteria) => option.name, [])
 	const handleOnChange = useCallback(
-		(_event: React.SyntheticEvent, newValue: readonly BrowseCriteria[]) => browseCriteriaDispatch({ type: 'UPDATE_SELECTED_CRITERIA', selectedCriteria: newValue }),
+		(_event: React.SyntheticEvent, newValue: BrowseCriteria[]) =>
+			browseCriteriaDispatch({ type: CardBrowseReducerActionType.UPDATE_SELECTED_CRITERIA, selectedCriteria: newValue }),
 		[browseCriteriaDispatch]
 	)
 	const renderTags = useCallback(() => null, [])
