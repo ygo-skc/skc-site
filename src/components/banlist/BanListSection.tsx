@@ -34,7 +34,7 @@ const BanListSection: FC<BanListSectionProps> = ({ sectionExplanation, cards, is
 				})
 			}
 		})
-	}, [isDataLoaded])
+	}, [cards])
 
 	return (
 		<Fragment>
