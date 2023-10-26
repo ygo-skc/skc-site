@@ -11,7 +11,6 @@ import '../../css/main-pages/ban-list.css'
 import dateReducer, { BanListDateReducerActionType } from '../../helper/reducers/BanListDateReducer'
 import { useParams } from 'react-router-dom'
 import { AcceptableBanListFormat, determineListSize, getValidFormat } from '../../helper/BanListUtil'
-import { Section } from 'skc-rcl'
 import { BanListReducerType, currentBanListReducer } from '../../helper/reducers/CurrentBanListReducer'
 
 const BreadCrumb = lazy(() => import('../header-footer/Breadcrumb'))
@@ -21,6 +20,12 @@ const BanListFormat = lazy(() => import('../banlist/BanListFormat'))
 const BanListBreakdown = lazy(() => import('../banlist/breakdown/BanListBreakdown'))
 const BanListDiffContent = lazy(() => import('../banlist/content/BanListDiffContent'))
 const BanListContent = lazy(() => import('../banlist/content/BanListContent'))
+
+const Section = lazy(() =>
+	import('skc-rcl').then((module) => {
+		return { default: module.Section }
+	})
+)
 
 type BanListDatesOutput = SKCBanListDates & {
 	_links: {
@@ -255,67 +260,53 @@ export default function BanList() {
 						{/* this div might seem useless but it is needed for css to work as expected on its children */}
 						<div>
 							<BanListDiffContent
-								normalFormatDiffContent={
-									format === 'DL'
-										? undefined
-										: {
-												removedCards: removedCards,
-												numRemoved: numRemoved,
-												newForbidden: newForbidden,
-												newLimited: newLimited,
-												newSemiLimited: newSemiLimited,
-												numNewForbidden: numNewForbidden,
-												numNewLimited: numNewLimited,
-												numNewSemiLimited: numNewSemiLimited,
-										  }
-								}
-								dlFormatDiffContent={
-									format === 'DL'
-										? {
-												removedCards: removedCards,
-												numRemoved: numRemoved,
-												newForbidden: newForbidden,
-												newLimitedOne: newLimitedOne,
-												newLimitedTwo: newLimitedTwo,
-												newLimitedThree: newLimitedThree,
-												numNewForbidden: numNewForbidden,
-												numNewLimitedOne: numNewLimitedOne,
-												numNewLimitedTwo: numNewLimitedTwo,
-												numNewLimitedThree: numNewLimitedThree,
-										  }
-										: undefined
-								}
+								format={format}
+								normalFormatDiffContent={{
+									removedCards: removedCards,
+									numRemoved: numRemoved,
+									newForbidden: newForbidden,
+									newLimited: newLimited,
+									newSemiLimited: newSemiLimited,
+									numNewForbidden: numNewForbidden,
+									numNewLimited: numNewLimited,
+									numNewSemiLimited: numNewSemiLimited,
+								}}
+								dlFormatDiffContent={{
+									removedCards: removedCards,
+									numRemoved: numRemoved,
+									newForbidden: newForbidden,
+									newLimitedOne: newLimitedOne,
+									newLimitedTwo: newLimitedTwo,
+									newLimitedThree: newLimitedThree,
+									numNewForbidden: numNewForbidden,
+									numNewLimitedOne: numNewLimitedOne,
+									numNewLimitedTwo: numNewLimitedTwo,
+									numNewLimitedThree: numNewLimitedThree,
+								}}
 								isFetchingBanListNewContent={isFetchingBanListNewContent}
 								isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
 							/>
 						</div>
 						<BanListContent
-							normalFormatContent={
-								format === 'DL'
-									? undefined
-									: {
-											forbidden: forbidden,
-											limited: limited,
-											semiLimited: semiLimited,
-											numForbidden: numForbidden,
-											numLimited: numLimited,
-											numSemiLimited: numSemiLimited,
-									  }
-							}
-							dlFormatContent={
-								format === 'DL'
-									? {
-											forbidden: forbidden,
-											limitedOne: limitedOne,
-											limitedTwo: limitedTwo,
-											limitedThree: limitedThree,
-											numForbidden: numForbidden,
-											numLimitedOne: numLimitedOne,
-											numLimitedTwo: numLimitedTwo,
-											numLimitedThree: numLimitedThree,
-									  }
-									: undefined
-							}
+							format={format}
+							normalFormatContent={{
+								forbidden: forbidden,
+								limited: limited,
+								semiLimited: semiLimited,
+								numForbidden: numForbidden,
+								numLimited: numLimited,
+								numSemiLimited: numSemiLimited,
+							}}
+							dlFormatContent={{
+								forbidden: forbidden,
+								limitedOne: limitedOne,
+								limitedTwo: limitedTwo,
+								limitedThree: limitedThree,
+								numForbidden: numForbidden,
+								numLimitedOne: numLimitedOne,
+								numLimitedTwo: numLimitedTwo,
+								numLimitedThree: numLimitedThree,
+							}}
 							isFetchingBanList={isFetchingBanListContent}
 						/>
 					</Suspense>

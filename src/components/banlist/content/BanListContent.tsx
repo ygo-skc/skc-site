@@ -5,17 +5,18 @@ import NormalFormatTabbedView from '../tab/NormalFormatTabbedView'
 import DuelLinksFormatTabbedView from '../tab/DuelLinksFormatTabbedView'
 
 type BanListContentProps = {
-	normalFormatContent?: SKCBanListContentNormalFormat
-	dlFormatContent?: SKCBanListContentDuelLinksFormat
+	normalFormatContent: SKCBanListContentNormalFormat
+	dlFormatContent: SKCBanListContentDuelLinksFormat
+	format: string
 	isFetchingBanList: boolean
 }
 
 const BanListContent: FC<BanListContentProps> = memo(
-	({ normalFormatContent, dlFormatContent, isFetchingBanList }) => {
+	({ normalFormatContent, dlFormatContent, isFetchingBanList, format }) => {
 		return (
 			<Section sectionHeaderBackground={'ban-list'} sectionName='Content'>
 				<div className='section-content'>
-					{normalFormatContent !== undefined && (
+					{format !== 'DL' && (
 						<NormalFormatTabbedView
 							numForbidden={normalFormatContent.numForbidden}
 							numLimited={normalFormatContent.numLimited}
@@ -43,7 +44,7 @@ const BanListContent: FC<BanListContentProps> = memo(
 							}
 						/>
 					)}
-					{dlFormatContent !== undefined && (
+					{format === 'DL' && (
 						<DuelLinksFormatTabbedView
 							numForbidden={dlFormatContent.numForbidden}
 							numLimitedOne={dlFormatContent.numLimitedOne}
@@ -82,9 +83,22 @@ const BanListContent: FC<BanListContentProps> = memo(
 	(prevProps, nextProps) => {
 		return (
 			prevProps.isFetchingBanList === nextProps.isFetchingBanList &&
-			prevProps.normalFormatContent?.numForbidden === nextProps.normalFormatContent?.numForbidden &&
-			prevProps.normalFormatContent?.numLimited === nextProps.normalFormatContent?.numLimited &&
-			prevProps.normalFormatContent?.numSemiLimited === nextProps.normalFormatContent?.numSemiLimited
+			prevProps.format === nextProps.format &&
+			// if format is non DL - check to see if at least one of the content arrays changed - negate condition as falsy means component should re-render
+			!(
+				prevProps.format !== 'DL' &&
+				(prevProps.normalFormatContent.numForbidden !== nextProps.normalFormatContent.numForbidden ||
+					prevProps.normalFormatContent.numLimited !== nextProps.normalFormatContent.numLimited ||
+					prevProps.normalFormatContent.numSemiLimited !== nextProps.normalFormatContent.numSemiLimited)
+			) &&
+			// if format is DL - check to see if at least one of the content arrays changed - negate condition as falsy means component should re-render
+			!(
+				prevProps.format === 'DL' &&
+				(prevProps.dlFormatContent.numForbidden !== nextProps.dlFormatContent.numForbidden ||
+					prevProps.dlFormatContent.numLimitedOne !== nextProps.dlFormatContent.numLimitedOne ||
+					prevProps.dlFormatContent.numLimitedTwo !== nextProps.dlFormatContent.numLimitedTwo ||
+					prevProps.dlFormatContent.numLimitedThree !== nextProps.dlFormatContent.numLimitedThree)
+			)
 		)
 	}
 )
