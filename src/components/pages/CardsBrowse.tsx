@@ -79,7 +79,7 @@ export default function BrowseCards() {
 
 	useEffect(() => {
 		if (selectedCriteria === undefined || selectedCriteria.length === 0) {
-			cardDisplayGridDispatch({ type: CardDisplayGridStateReducerActionType.CLEAR_GRID, isLoading: false })
+			cardDisplayGridDispatch({ type: CardDisplayGridStateReducerActionType.CLEAR_GRID })
 		} else {
 			FetchHandler.handleFetch<SKCCardBrowseResults>(generateBrowseQueryURL(selectedCriteria), (json) => {
 				cardDisplayGridDispatch({

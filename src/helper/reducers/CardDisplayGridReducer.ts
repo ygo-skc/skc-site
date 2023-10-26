@@ -1,19 +1,21 @@
 export type CardDisplayGridState = { results: SKCCard[]; totalResults: number; totalDisplaying: number; numItemsToLoadWhenNeeded?: number; isLoading?: boolean }
 
 export enum CardDisplayGridStateReducerActionType {
-	CLEAR_GRID,
-	INIT_GRID,
-	CLEAR_GRID_WITH_PLACEHOLDER,
+	CLEAR_GRID = 'CLEAR GRID',
+	INIT_GRID = 'INIT GRID',
+	LOADING_GRID = 'LOADING',
 }
 
 export type CardDisplayGridStateReducerAction =
 	| {
 			type: CardDisplayGridStateReducerActionType.CLEAR_GRID
-			isLoading: boolean
 	  }
 	| (CardDisplayGridState & {
 			type: CardDisplayGridStateReducerActionType.INIT_GRID
 	  })
+	| {
+			type: CardDisplayGridStateReducerActionType.LOADING_GRID
+	  }
 
 export default function cardDisplayGridReducer(state: CardDisplayGridState, action: CardDisplayGridStateReducerAction) {
 	switch (action.type) {
@@ -23,7 +25,7 @@ export default function cardDisplayGridReducer(state: CardDisplayGridState, acti
 				results: [],
 				totalResults: 0,
 				totalDisplaying: 0,
-				isLoading: action.isLoading,
+				isLoading: false,
 			}
 		case CardDisplayGridStateReducerActionType.INIT_GRID:
 			return {
@@ -32,6 +34,11 @@ export default function cardDisplayGridReducer(state: CardDisplayGridState, acti
 				totalResults: action.totalResults,
 				totalDisplaying: action.totalDisplaying,
 				isLoading: false,
+			}
+		case CardDisplayGridStateReducerActionType.LOADING_GRID:
+			return {
+				...state,
+				isLoading: true,
 			}
 		default:
 			return state
