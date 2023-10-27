@@ -35,13 +35,13 @@
 }
 
 .communication-message-tag.MuiChip-root {
-	background: #543fdad9;
+	background: rgba(0, 0, 0, 0.7);
 	height: auto;
 }
 
 .communication-message-tag span.MuiChip-label {
 	font-weight: 400;
-	font-size: 0.95rem;
+	font-size: 1rem;
 	padding-left: 0.75rem;
 	padding-right: 0.75rem;
 	padding-top: 0.35rem;

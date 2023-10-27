@@ -27,11 +27,9 @@ const MessageItemComponent: FC<MessageItemComponentArgs> = ({ creationDate, mess
 					<ReactMarkdown>{message.content}</ReactMarkdown>
 				</Typography>
 
-				<div className='communication-message-tag-container'>
-					{message.tags.map((tag: string) => (
-						<Chip key={tag} className='communication-message-tag' label={tag} />
-					))}
-				</div>
+				{message.tags.map((tag: string) => (
+					<Chip key={tag} className='communication-message-tag' label={tag} />
+				))}
 			</div>
 			{isLastMessage ? <div /> : <Divider className='communication-divider' />}
 		</Fragment>
