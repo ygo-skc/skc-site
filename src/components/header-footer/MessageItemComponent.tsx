@@ -28,7 +28,7 @@ const MessageItemComponent: FC<MessageItemComponentArgs> = ({ creationDate, mess
 				</Typography>
 
 				{message.tags.map((tag: string) => (
-					<Chip key={tag} className='communication-message-tag' label={tag} />
+					<Chip key={tag} className='dark-chip' label={tag} />
 				))}
 			</div>
 			{isLastMessage ? <div /> : <Divider className='communication-divider' />}

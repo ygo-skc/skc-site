@@ -224,3 +224,34 @@ li {
 
 	background-color: rgba(0, 0, 0, 0.45);
 }
+
+.dark-translucent-divider-tight.MuiDivider-root {
+	margin: auto;
+	margin-top: 1rem;
+	height: 2px;
+	border-radius: 1000rem;
+	max-width: 97%;
+
+	background-color: rgba(0, 0, 0, 0.45);
+}
+
+.dark-chip.MuiChip-root,
+.dark-chip-condensed.MuiChip-root {
+	background: rgba(0, 0, 0, 0.7);
+	height: auto;
+}
+
+.dark-chip span.MuiChip-label,
+.dark-chip-condensed span.MuiChip-label {
+	font-weight: 600;
+}
+
+.dark-chip span.MuiChip-label {
+	padding: 0.3rem 0.6rem 0.3rem 0.6rem;
+	font-size: 0.98rem;
+}
+
+.dark-chip-condensed span.MuiChip-label {
+	padding: 0.2rem 0.4rem 0.2rem 0.4rem;
+	font-size: 0.9rem;
+}
