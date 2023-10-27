@@ -27,17 +27,13 @@ const BanListSection: FC<BanListSectionProps> = ({ sectionExplanation, cards, is
 					totalResults: cards.length,
 					totalDisplaying: cards.length,
 				})
+			} else {
+				cardDisplayGridDispatch({
+					type: CardDisplayGridStateReducerActionType.LOADING_GRID,
+				})
 			}
 		})
 	}, [isDataLoaded, cards])
-
-	useEffect(() => {
-		if (isDataLoaded) {
-			cardDisplayGridDispatch({
-				type: CardDisplayGridStateReducerActionType.LOADING_GRID,
-			})
-		}
-	}, [isDataLoaded])
 
 	return (
 		<Fragment>
