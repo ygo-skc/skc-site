@@ -29,7 +29,7 @@ const BanListSection: FC<BanListSectionProps> = ({ sectionExplanation, cards, is
 				})
 			}
 		})
-	}, [cards])
+	}, [isDataLoaded, cards])
 
 	useEffect(() => {
 		if (isDataLoaded) {

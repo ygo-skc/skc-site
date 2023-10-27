@@ -1,8 +1,9 @@
-import { FC, memo } from 'react'
+import { FC, Suspense, lazy, memo } from 'react'
 import { Section } from 'skc-rcl'
 import BanListSection from '../BanListSection'
-import NormalFormatTabbedView from '../tab/NormalFormatTabbedView'
-import DuelLinksFormatTabbedView from '../tab/DuelLinksFormatTabbedView'
+import { Skeleton } from '@mui/material'
+
+const BanListTabs = lazy(() => import('../BanListTabs'))
 
 type BanListContentProps = {
 	normalFormatContent: SKCBanListContentNormalFormat
@@ -16,11 +17,15 @@ const BanListContent: FC<BanListContentProps> = memo(
 		return (
 			<Section sectionHeaderBackground={'ban-list'} sectionName='Content'>
 				<div className='section-content'>
-					{format !== 'DL' && (
-						<NormalFormatTabbedView
+					<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='250px' />}>
+						<BanListTabs
+							format={format}
 							numForbidden={normalFormatContent.numForbidden}
 							numLimited={normalFormatContent.numLimited}
 							numSemiLimited={normalFormatContent.numSemiLimited}
+							numLimitedOne={dlFormatContent.numLimitedOne}
+							numLimitedTwo={dlFormatContent.numLimitedTwo}
+							numLimitedThree={dlFormatContent.numLimitedThree}
 							forbiddenContent={
 								<BanListSection
 									sectionExplanation='Forbidden cards cannot be used in Deck/Side Deck in the Advanced Format'
@@ -41,17 +46,6 @@ const BanListContent: FC<BanListContentProps> = memo(
 									cards={normalFormatContent.semiLimited}
 									isDataLoaded={!isFetchingBanList}
 								/>
-							}
-						/>
-					)}
-					{format === 'DL' && (
-						<DuelLinksFormatTabbedView
-							numForbidden={dlFormatContent.numForbidden}
-							numLimitedOne={dlFormatContent.numLimitedOne}
-							numLimitedTwo={dlFormatContent.numLimitedTwo}
-							numLimitedThree={dlFormatContent.numLimitedThree}
-							forbiddenContent={
-								<BanListSection sectionExplanation='Forbidden cards cannot be used in your deck' cards={dlFormatContent.forbidden} isDataLoaded={!isFetchingBanList} />
 							}
 							limitedOneContent={
 								<BanListSection
@@ -75,7 +69,7 @@ const BanListContent: FC<BanListContentProps> = memo(
 								/>
 							}
 						/>
-					)}
+					</Suspense>
 				</div>
 			</Section>
 		)
