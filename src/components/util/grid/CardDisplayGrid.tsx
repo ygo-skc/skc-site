@@ -11,20 +11,19 @@ const PlaceHolderGridItems = lazy(() => import('./PlaceHolderGridItems'))
 type CardDisplayGridProps = {
 	cardGridState: CardDisplayGridState
 	dispatch: React.Dispatch<CardDisplayGridStateReducerAction>
-	isLoading: boolean
 }
 
 const CardDisplayGrid: FC<CardDisplayGridProps> = memo(
-	({ cardGridState, isLoading }) => {
+	({ cardGridState }) => {
 		return (
 			<div>
 				<Grid2 container>
-					{isLoading && <PlaceHolderGridItems />}
-					{!isLoading && cardGridState.totalResults === 0 && <Hint fullWidth={false}>{'No Content To Show'}</Hint>}
-					{!isLoading && cardGridState.totalResults !== 0 && <CardGridItems cards={cardGridState.results.splice(0, cardGridState.totalDisplaying)} />}
+					{cardGridState.isLoading && <PlaceHolderGridItems />}
+					{!cardGridState.isLoading && cardGridState.totalResults === 0 && <Hint fullWidth={false}>{'No Content To Show'}</Hint>}
+					{!cardGridState.isLoading && cardGridState.totalResults !== 0 && <CardGridItems cards={cardGridState.results.splice(0, cardGridState.totalDisplaying)} />}
 				</Grid2>
 
-				{!isLoading && cardGridState.totalDisplaying >= cardGridState.totalResults ? undefined : (
+				{!cardGridState.isLoading && cardGridState.totalResults !== 0 && cardGridState.totalDisplaying < cardGridState.totalResults && (
 					<Button
 						style={{
 							padding: '1rem',
@@ -40,7 +39,7 @@ const CardDisplayGrid: FC<CardDisplayGridProps> = memo(
 	},
 	(prevProps, newProps) => {
 		return (
-			prevProps.isLoading === newProps.isLoading &&
+			prevProps.cardGridState.isLoading === newProps.cardGridState.isLoading &&
 			prevProps.cardGridState.totalResults === newProps.cardGridState.totalResults &&
 			prevProps.cardGridState.totalDisplaying === newProps.cardGridState.totalDisplaying &&
 			prevProps.cardGridState.results.every((prevCard: SKCCard, index: number) => prevCard === prevProps.cardGridState.results[index])

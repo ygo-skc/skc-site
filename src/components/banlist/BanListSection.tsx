@@ -36,7 +36,7 @@ const BanListSection: FC<BanListSectionProps> = ({ sectionExplanation, cards, is
 	return (
 		<Fragment>
 			<Hint>{sectionExplanation}</Hint>
-			<CardDisplayGrid cardGridState={cardGridState} dispatch={cardDisplayGridDispatch} isLoading={!isDataLoaded && cardGridState.isLoading!} />
+			<CardDisplayGrid cardGridState={cardGridState} dispatch={cardDisplayGridDispatch} />
 		</Fragment>
 	)
 }

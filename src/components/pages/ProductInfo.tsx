@@ -90,7 +90,7 @@ export default function ProductInfo() {
 							<div className='section-content'>
 								<Typography variant='h5'>Sorted By Pack Order</Typography>
 
-								<CardDisplayGrid cardGridState={cardGridState} dispatch={cardDisplayGridDispatch} isLoading={cardGridState.isLoading!} />
+								<CardDisplayGrid cardGridState={cardGridState} dispatch={cardDisplayGridDispatch} />
 							</div>
 						</Section>
 					</Fragment>

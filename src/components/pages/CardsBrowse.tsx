@@ -121,7 +121,7 @@ export default function BrowseCards() {
 					<Section sectionHeaderBackground='product' sectionName='Browse Results'>
 						<div className='section-content'>
 							<Typography variant='h5'>Results Are Sorted Alphabetically</Typography>
-							<CardDisplayGrid cardGridState={cardGridState} dispatch={cardDisplayGridDispatch} isLoading={cardGridState.isLoading!} />
+							<CardDisplayGrid cardGridState={cardGridState} dispatch={cardDisplayGridDispatch} />
 						</div>
 					</Section>
 				}
