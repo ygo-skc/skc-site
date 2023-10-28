@@ -1,5 +1,5 @@
 import '../../../css/card/ygo-card-suggestion.css'
-import { FC, Fragment, lazy, startTransition, Suspense, useEffect, useState, useCallback } from 'react'
+import { FC, Fragment, lazy, Suspense, useEffect, useState, useCallback } from 'react'
 import { Skeleton } from '@mui/material'
 
 import FetchHandler from '../../../helper/FetchHandler'
@@ -89,32 +89,30 @@ const CardSuggestions: FC<_CardSuggestion> = ({ cardID, cardColor, cardName }) =
 	const LoadingUI = <Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='380px' />
 
 	useEffect(() => {
-		startTransition(() => {
-			FetchHandler.handleFetch(
-				`${DownstreamServices.SKC_SUGGESTION_HOST_NAME}/api/v1/suggestions/card/${cardID}`,
-				(json: CardSuggestionOutput) => {
-					setMaterialSuggestions(transformReferences(json.namedMaterials))
-					setReferenceSuggestions(transformReferences(json.namedReferences))
-					setIsLoadingSuggestions(false)
-				},
-				false
-			)?.catch(() => {
+		FetchHandler.handleFetch(
+			`${DownstreamServices.SKC_SUGGESTION_HOST_NAME}/api/v1/suggestions/card/${cardID}`,
+			(json: CardSuggestionOutput) => {
+				setMaterialSuggestions(transformReferences(json.namedMaterials))
+				setReferenceSuggestions(transformReferences(json.namedReferences))
 				setIsLoadingSuggestions(false)
-				setSuggestionRequestHasError(true)
-			})
+			},
+			false
+		)?.catch(() => {
+			setIsLoadingSuggestions(false)
+			setSuggestionRequestHasError(true)
+		})
 
-			FetchHandler.handleFetch(
-				`${DownstreamServices.SKC_SUGGESTION_HOST_NAME}/api/v1/suggestions/card/${cardID}/support`,
-				(json: CardSupportOutput) => {
-					setMaterialFor(transformSupport(json.materialFor))
-					setReferencedBy(transformSupport(json.referencedBy))
-					setIsLoadingSupport(false)
-				},
-				false
-			)?.catch(() => {
+		FetchHandler.handleFetch(
+			`${DownstreamServices.SKC_SUGGESTION_HOST_NAME}/api/v1/suggestions/card/${cardID}/support`,
+			(json: CardSupportOutput) => {
+				setMaterialFor(transformSupport(json.materialFor))
+				setReferencedBy(transformSupport(json.referencedBy))
 				setIsLoadingSupport(false)
-				setSupportRequestHasError(true)
-			})
+			},
+			false
+		)?.catch(() => {
+			setIsLoadingSupport(false)
+			setSupportRequestHasError(true)
 		})
 	}, [cardID, transformSupport, transformReferences])
 
