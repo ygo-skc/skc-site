@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, useReducer } from 'react'
+import { useState, useEffect, lazy, useReducer, startTransition } from 'react'
 import { Typography } from '@mui/material'
 import { Helmet } from 'react-helmet'
 
@@ -62,7 +62,7 @@ export default function BrowseCards() {
 		totalResults: 0,
 		totalDisplaying: 0,
 		numItemsToLoadWhenNeeded: 50,
-		isLoading: true,
+		isLoading: false,
 	})
 
 	const [skcCardBrowseCriteriaOutput, setSkcCardBrowseCriteriaOutput] = useState<SKCCardBrowseCriteria>({} as SKCCardBrowseCriteria)
@@ -81,12 +81,15 @@ export default function BrowseCards() {
 		if (selectedCriteria === undefined || selectedCriteria.length === 0) {
 			cardDisplayGridDispatch({ type: CardDisplayGridStateReducerActionType.CLEAR_GRID })
 		} else {
-			FetchHandler.handleFetch<SKCCardBrowseResults>(generateBrowseQueryURL(selectedCriteria), (json) => {
-				cardDisplayGridDispatch({
-					type: CardDisplayGridStateReducerActionType.INIT_GRID,
-					results: json.results,
-					totalResults: json.numResults,
-					totalDisplaying: 50,
+			cardDisplayGridDispatch({ type: CardDisplayGridStateReducerActionType.LOADING_GRID })
+			startTransition(() => {
+				FetchHandler.handleFetch<SKCCardBrowseResults>(generateBrowseQueryURL(selectedCriteria), (json) => {
+					cardDisplayGridDispatch({
+						type: CardDisplayGridStateReducerActionType.INIT_GRID,
+						results: json.results,
+						totalResults: json.numResults,
+						totalDisplaying: 50,
+					})
 				})
 			})
 		}
