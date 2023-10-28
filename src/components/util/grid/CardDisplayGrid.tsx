@@ -1,9 +1,9 @@
-import { memo, FC, lazy } from 'react'
+import { memo, FC, lazy, useCallback } from 'react'
 
 import { Button } from '@mui/material'
 import Grid2 from '@mui/material/Unstable_Grid2'
 import { Hint } from 'skc-rcl'
-import { CardDisplayGridState, CardDisplayGridStateReducerAction } from '../../../helper/reducers/CardDisplayGridReducer'
+import { CardDisplayGridState, CardDisplayGridStateReducerAction, CardDisplayGridStateReducerActionType } from '../../../helper/reducers/CardDisplayGridReducer'
 import CardGridItems from './CardGridItems'
 
 const PlaceHolderGridItems = lazy(() => import('./PlaceHolderGridItems'))
@@ -14,17 +14,22 @@ type CardDisplayGridProps = {
 }
 
 const CardDisplayGrid: FC<CardDisplayGridProps> = memo(
-	({ cardGridState }) => {
+	({ cardGridState, dispatch }) => {
+		const loadMoreCB = useCallback(() => {
+			dispatch({ type: CardDisplayGridStateReducerActionType.LOAD_MORE })
+		}, [])
+
 		return (
 			<div>
 				<Grid2 container>
 					{cardGridState.isLoading && <PlaceHolderGridItems />}
 					{!cardGridState.isLoading && cardGridState.totalResults === 0 && <Hint fullWidth={false}>{'No Content To Show'}</Hint>}
-					{!cardGridState.isLoading && cardGridState.totalResults !== 0 && <CardGridItems cards={cardGridState.results.splice(0, cardGridState.totalDisplaying)} />}
+					{!cardGridState.isLoading && cardGridState.totalResults !== 0 && <CardGridItems cards={cardGridState.results.slice(0, cardGridState.totalDisplaying)} />}
 				</Grid2>
 
 				{!cardGridState.isLoading && cardGridState.totalResults !== 0 && cardGridState.totalDisplaying < cardGridState.totalResults && (
 					<Button
+						onClick={loadMoreCB}
 						style={{
 							padding: '1rem',
 							margin: '0 auto',

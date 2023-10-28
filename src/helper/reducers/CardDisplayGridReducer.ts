@@ -4,6 +4,7 @@ export enum CardDisplayGridStateReducerActionType {
 	CLEAR_GRID = 'CLEAR GRID',
 	INIT_GRID = 'INIT GRID',
 	LOADING_GRID = 'LOADING',
+	LOAD_MORE = 'LOAD MORE',
 }
 
 export type CardDisplayGridStateReducerAction =
@@ -15,6 +16,9 @@ export type CardDisplayGridStateReducerAction =
 	  })
 	| {
 			type: CardDisplayGridStateReducerActionType.LOADING_GRID
+	  }
+	| {
+			type: CardDisplayGridStateReducerActionType.LOAD_MORE
 	  }
 
 export default function cardDisplayGridReducer(state: CardDisplayGridState, action: CardDisplayGridStateReducerAction) {
@@ -32,8 +36,13 @@ export default function cardDisplayGridReducer(state: CardDisplayGridState, acti
 				...state,
 				results: action.results,
 				totalResults: action.totalResults,
-				totalDisplaying: action.totalDisplaying,
+				totalDisplaying: Math.min(action.totalDisplaying, action.totalResults),
 				isLoading: false,
+			}
+		case CardDisplayGridStateReducerActionType.LOAD_MORE:
+			return {
+				...state,
+				totalDisplaying: Math.min(state.totalResults, state.totalDisplaying + state.numItemsToLoadWhenNeeded!),
 			}
 		case CardDisplayGridStateReducerActionType.LOADING_GRID:
 			return {

@@ -61,7 +61,7 @@ export default function BrowseCards() {
 		results: [],
 		totalResults: 0,
 		totalDisplaying: 0,
-		numItemsToLoadWhenNeeded: 0,
+		numItemsToLoadWhenNeeded: 50,
 		isLoading: true,
 	})
 
