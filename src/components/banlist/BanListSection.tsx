@@ -1,4 +1,4 @@
-import { FC, Fragment, startTransition, useEffect, useReducer } from 'react'
+import { FC, Fragment, useEffect, useReducer } from 'react'
 import { Hint } from 'skc-rcl'
 import CardDisplayGrid from '../util/grid/CardDisplayGrid'
 import cardDisplayGridReducer, { CardDisplayGridStateReducerActionType } from '../../helper/reducers/CardDisplayGridReducer'
@@ -19,20 +19,18 @@ const BanListSection: FC<BanListSectionProps> = ({ sectionExplanation, cards, is
 	})
 
 	useEffect(() => {
-		startTransition(() => {
-			if (isDataLoaded) {
-				cardDisplayGridDispatch({
-					type: CardDisplayGridStateReducerActionType.INIT_GRID,
-					results: cards,
-					totalResults: cards.length,
-					totalDisplaying: cards.length,
-				})
-			} else {
-				cardDisplayGridDispatch({
-					type: CardDisplayGridStateReducerActionType.LOADING_GRID,
-				})
-			}
-		})
+		if (isDataLoaded) {
+			cardDisplayGridDispatch({
+				type: CardDisplayGridStateReducerActionType.INIT_GRID,
+				results: cards,
+				totalResults: cards.length,
+				totalDisplaying: cards.length,
+			})
+		} else {
+			cardDisplayGridDispatch({
+				type: CardDisplayGridStateReducerActionType.LOADING_GRID,
+			})
+		}
 	}, [isDataLoaded, cards])
 
 	return (

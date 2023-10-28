@@ -39,9 +39,12 @@ const CardDisplayGrid: FC<CardDisplayGridProps> = memo(
 		)
 	},
 	(prevProps, newProps) => {
-		if (prevProps.isLoading !== newProps.isLoading || prevProps.cardGridState.totalResults !== newProps.cardGridState.totalResults) return false
-
-		return true
+		return (
+			prevProps.isLoading === newProps.isLoading &&
+			prevProps.cardGridState.totalResults === newProps.cardGridState.totalResults &&
+			prevProps.cardGridState.totalDisplaying === newProps.cardGridState.totalDisplaying &&
+			prevProps.cardGridState.results.every((prevCard: SKCCard, index: number) => prevCard === prevProps.cardGridState.results[index])
+		)
 	}
 )
 
