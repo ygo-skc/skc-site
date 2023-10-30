@@ -1,22 +1,20 @@
 import { useEffect, useState, FunctionComponent, startTransition, Fragment, useCallback } from 'react'
 import { Button, ButtonGroup, Typography } from '@mui/material'
 
-import '../../../css/card/card-information-styles.css'
-
 import { Dates } from '../../../helper/Dates'
 
 import { AcceptableBanListFormat } from '../../../helper/BanListUtil'
-import { Hint, SKCTable } from 'skc-rcl'
+import { Hint, InlineDate } from 'skc-rcl'
 
-type Args = {
+type CardBanListInformationProps = {
 	isLoading: boolean
 	restrictedIn: RestrictedIn
 }
 
-type BanListFormatButtonArgs = {
+type BanListFormatButtonProps = {
 	format: AcceptableBanListFormat
 	restrictedIn: RestrictedIn
-	setFormat: any
+	setFormat: React.Dispatch<React.SetStateAction<AcceptableBanListFormat>>
 }
 
 function determineFormat(restrictedIn: RestrictedIn): AcceptableBanListFormat {
@@ -40,7 +38,7 @@ function transformFormat(format: AcceptableBanListFormat) {
 	}
 }
 
-const BanListFormatButton: FunctionComponent<BanListFormatButtonArgs> = ({ format, restrictedIn, setFormat }) => {
+const BanListFormatButton: FunctionComponent<BanListFormatButtonProps> = ({ format, restrictedIn, setFormat }) => {
 	const handleButtonClicked = useCallback(() => setFormat(format), [format, setFormat])
 
 	return (
@@ -50,21 +48,35 @@ const BanListFormatButton: FunctionComponent<BanListFormatButtonArgs> = ({ forma
 	)
 }
 
-const CardBanListInformation: FunctionComponent<Args> = ({ isLoading, restrictedIn }) => {
-	const [banListTable, setBanListTable] = useState<JSX.Element | undefined>(undefined)
+const CardBanListInformation: FunctionComponent<CardBanListInformationProps> = ({ isLoading, restrictedIn }) => {
+	const initNumItems = 10
+	const [banListContent, setBanListContent] = useState<JSX.Element[]>([])
 	const [format, setFormat] = useState<AcceptableBanListFormat>(determineFormat(restrictedIn))
+	const [loadAll, setLoadAll] = useState(restrictedIn[format].length <= initNumItems)
+
+	const loadAllCB = useCallback(() => {
+		setLoadAll(true)
+	}, [])
 
 	useEffect(() => {
 		if (isLoading) return
 
 		startTransition(() => {
-			const headerNames: string[] = ['Date', 'Status']
-			const rowValues: string[][] = restrictedIn[format].map((banList: SKCBanListInstance) => [Dates.fromYYYYMMDDToDateStr(banList.banListDate), banList.banStatus])
+			const content: JSX.Element[] = restrictedIn[format].slice(0, loadAll ? restrictedIn[format].length : initNumItems).map((banList: SKCBanListInstance) => {
+				const banListEffectiveDate = Dates.fromYYYYMMDDToDate(banList.banListDate)
+				return (
+					<div key={banList.banListDate} className='list-item-parent'>
+						<InlineDate month={Dates.getMonth(banListEffectiveDate)} day={+Dates.getDay(banListEffectiveDate)} year={+Dates.getYear(banListEffectiveDate)} />
+						<div className='list-item-text'>
+							<Typography variant='subtitle1'>{banList.banStatus}</Typography>
+						</div>
+					</div>
+				)
+			})
 
-			const table: JSX.Element = <SKCTable header={headerNames} rows={rowValues} />
-			setBanListTable(table)
+			setBanListContent(content)
 		})
-	}, [isLoading, format, restrictedIn])
+	}, [isLoading, format, restrictedIn, loadAll])
 
 	return (
 		<div className='group'>
@@ -78,8 +90,11 @@ const CardBanListInformation: FunctionComponent<Args> = ({ isLoading, restricted
 						<BanListFormatButton format={AcceptableBanListFormat.DL} setFormat={setFormat} restrictedIn={restrictedIn} />
 					</ButtonGroup>
 
-					<Typography variant='h5'>Selected Format — {transformFormat(format)}</Typography>
-					{banListTable}
+					<div>
+						<Typography variant='h5'>Selected Format — {transformFormat(format)}</Typography>
+						{banListContent}
+						{loadAll ? undefined : <Button onClick={loadAllCB}>Load All</Button>}
+					</div>
 				</Fragment>
 			)}
 			{!isLoading && restrictedIn[format].length === 0 && (

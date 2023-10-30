@@ -1,55 +1,107 @@
-import { useEffect, useState, FC, Fragment, startTransition } from 'react'
-import { Typography } from '@mui/material'
-
-import '../../../css/card/card-information-styles.css'
+import { useEffect, useState, FC, Fragment, startTransition, useCallback } from 'react'
+import { Typography, Divider, Chip, Button } from '@mui/material'
 
 import { Dates } from '../../../helper/Dates'
-import { Hint, SKCTable } from 'skc-rcl'
+import { DateComponent, Hint } from 'skc-rcl'
 
-type args = {
+type CardProductInformationProps = {
 	isLoading: boolean
 	cardID: string
+	cardName: string
 	productInfo: ProductInfo[]
 }
 
-const CardProductInformation: FC<args> = ({ isLoading, productInfo, cardID }) => {
-	const [productTable, setProductTable] = useState<JSX.Element | undefined>(undefined)
+const CardProductInformation: FC<CardProductInformationProps> = ({ isLoading, productInfo, cardID, cardName }) => {
+	const initNumItems = 5
+	const [productContents, setProductContents] = useState<JSX.Element[]>([])
+	const [uniqueProductsFeaturedIn, setUniqueProductsFeaturedIn] = useState(0)
+	const [uniqueRarityPrintings, setUniqueRarityPrintings] = useState<JSX.Element[]>([])
+	const [loadAll, setLoadAll] = useState(productInfo.length <= initNumItems)
+
+	const loadAllCB = useCallback(() => {
+		setLoadAll(true)
+	}, [])
+
+	const alphaSort = (a: string, b: string) => a.localeCompare(b)
 
 	useEffect(() => {
 		if (productInfo === null || productInfo === undefined || productInfo.length === 0) return
 
 		startTransition(() => {
-			const headerNames: string[] = ['ID', 'Pos', 'Release', 'Rarities']
-			const rowValues: string[][] = []
-			const rowOnClick: { (): void }[] = []
+			const contents: React.JSX.Element[] = []
+			const uniqueProductsFeaturedIn = new Set<string>()
+			let uniqueRarityPrintings = new Set<string>()
 
-			productInfo.forEach((product: ProductInfo) => {
+			productInfo.forEach((product: ProductInfo, index: number) => {
+				uniqueProductsFeaturedIn.add(product.productId)
+
 				product.productContent.forEach((productContent: SKCProductContent) => {
-					const row: [string, string, string, string] = [
-						product.productId,
-						productContent.productPosition,
-						Dates.fromYYYYMMDDToDateStr(product.productReleaseDate),
-						productContent.rarities.join(', '),
-					]
-					rowValues.push(row)
-					rowOnClick.push(() => setTimeout(() => window.location.assign(`/product/${product.productId}#${cardID}`), 150))
+					const productReleaseDate = Dates.fromYYYYMMDDToDate(product.productReleaseDate)
+					uniqueRarityPrintings = new Set([...uniqueRarityPrintings, ...productContent.rarities])
+
+					if (loadAll || index < initNumItems) {
+						productContent.rarities.sort(alphaSort)
+						const productContents = (
+							<div className='list-item-parent' onClick={() => window.location.assign(`/product/${product.productId}#${cardID}`)}>
+								<DateComponent month={Dates.getMonth(productReleaseDate)} day={+Dates.getDay(productReleaseDate)} year={+Dates.getYear(productReleaseDate)} variant='condensed' />
+								<div className='list-item-text'>
+									<Typography variant='body1'>
+										{product.productId}-{productContent.productPosition}
+									</Typography>
+									<Typography variant='subtitle1'>{product.productName}</Typography>
+									<div>
+										<Typography variant='body1' className='rarities'>
+											Rarities
+										</Typography>
+										{productContent.rarities.map((uniqueRarity) => (
+											<Chip className='dark-chip-condensed' key={uniqueRarity} label={uniqueRarity} />
+										))}
+									</div>
+								</div>
+							</div>
+						)
+						contents.push(productContents)
+					}
 				})
 			})
 
-			setProductTable(<SKCTable header={headerNames} rows={rowValues} rowActions={rowOnClick} />)
+			setProductContents(contents)
+			setUniqueProductsFeaturedIn(uniqueProductsFeaturedIn.size)
+
+			const sortedUniqueRarityPrintings = [...uniqueRarityPrintings]
+			sortedUniqueRarityPrintings.sort(alphaSort)
+			setUniqueRarityPrintings(sortedUniqueRarityPrintings.map((uniqueRarity) => <Chip className='dark-chip' key={uniqueRarity} label={uniqueRarity} />))
 		})
-	}, [productInfo, cardID])
+	}, [productInfo, cardID, loadAll])
 
 	return (
 		<div className='group'>
-			<Typography variant='h4'>YGO Products</Typography>
-
+			<Typography variant='h4'>Products</Typography>
 			{!isLoading && productInfo.length !== 0 && (
 				<Fragment>
 					<Hint backgroundColor='rgba(0, 0, 0, 0.7)' textColor='white' variant='tight'>
-						Last printing released {Dates.daysBetweenTwoDates(Dates.fromYYYYMMDDToDate(productInfo[0].productReleaseDate))} day(s) ago
+						Last printing released {Dates.daysBetweenTwoDates(Dates.fromYYYYMMDDToDate(productInfo[0].productReleaseDate)).toLocaleString()} day(s) ago
 					</Hint>
-					{productTable}
+					{productInfo.length >= 2 && (
+						<Hint backgroundColor='rgba(0, 0, 0, 0.7)' textColor='white' variant='tight'>
+							First printing released {Dates.daysBetweenTwoDates(Dates.fromYYYYMMDDToDate(productInfo[productInfo.length - 1].productReleaseDate)).toLocaleString()} day(s) ago
+						</Hint>
+					)}
+
+					<div className='summary'>
+						<Typography variant='h5'>Unique Products {uniqueProductsFeaturedIn}</Typography>
+						<Typography variant='h5'>Unique Rarities</Typography>
+						{uniqueRarityPrintings}
+						<Divider className='dark-translucent-divider' />
+					</div>
+					<br />
+					<div>
+						<Typography variant='subtitle1'>
+							<span className='prominent'>{cardName}</span> was printed in...
+						</Typography>
+						{productContents}
+						{loadAll ? undefined : <Button onClick={loadAllCB}>Load All</Button>}
+					</div>
 				</Fragment>
 			)}
 

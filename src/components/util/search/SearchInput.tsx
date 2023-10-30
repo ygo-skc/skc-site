@@ -2,11 +2,12 @@ import React, { FC, useCallback, useRef } from 'react'
 
 import { AutocompleteRenderInputParams, IconButton, TextField } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
+import { CardBrowseCriteriaSearchReducerAction, CardBrowseCriteriaSearchReducerActionType } from '../../../helper/reducers/CardBrowseCriteriaSearchReducer'
 
 const SearchInput: FC<{
 	searchParams: AutocompleteRenderInputParams
 	setSearchInput?: React.Dispatch<React.SetStateAction<string>>
-	setInput?: React.Dispatch<{ type: string; browseInput: string }>
+	setInput?: React.Dispatch<CardBrowseCriteriaSearchReducerAction>
 	placeholder: string
 }> = ({ searchParams, setSearchInput, placeholder, setInput }) => {
 	const inputRef = useRef<HTMLDivElement>(null)
@@ -16,7 +17,7 @@ const SearchInput: FC<{
 		(event: React.ChangeEvent<HTMLInputElement>) => {
 			// TODO: update to have one method
 			if (setSearchInput === undefined && setInput !== undefined) {
-				setInput({ type: 'UPDATE_INPUT', browseInput: event.target.value })
+				setInput({ type: CardBrowseCriteriaSearchReducerActionType.UPDATE_INPUT, browseInput: event.target.value })
 			} else if (setSearchInput !== undefined) {
 				setSearchInput(event.target.value)
 			}

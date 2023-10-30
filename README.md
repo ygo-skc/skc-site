@@ -1,5 +1,7 @@
 # SKC Site
 
+[![Build & Code Quality](https://github.com/ygo-skc/skc-site/actions/workflows/build-and-code-quality.yaml/badge.svg)](https://github.com/ygo-skc/skc-site/actions/workflows/build-and-code-quality.yaml)
+
 ## Purpose
 This repo serves up content to the web from SKC API and SKC Suggestion Engine.
 

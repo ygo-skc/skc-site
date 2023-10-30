@@ -4,20 +4,20 @@ import { Dates } from '../../helper/Dates'
 import { scrollToTop } from '../../helper/Etc'
 import { Hint } from 'skc-rcl'
 
-type _BanListDates = {
+type BanListDatesProps = {
 	isFetchingBanListDates: boolean
 	banListStartDates: string[]
 	selectedBanList: string
-	setSelectedBanList: { (ind: number): void }
+	setSelectedBanList: (ind: number) => void
 }
 
-const BanListDates: FC<_BanListDates> = memo(
+const BanListDates: FC<BanListDatesProps> = memo(
 	({ isFetchingBanListDates, banListStartDates, selectedBanList, setSelectedBanList }) => {
 		const [selectorItems, setSelectorItems] = useState<JSX.Element[]>()
 		const [selectedBanListInd, setSelectedBanListInd] = useState('0')
 
 		useEffect(() => {
-			let selectorItems: JSX.Element[] = banListStartDates.map((_: string, ind: number) => {
+			const selectorItems: JSX.Element[] = banListStartDates.map((_: string, ind: number) => {
 				return (
 					<MenuItem key={banListStartDates[ind]} className='ban-list-date-selector-menu-item' value={ind}>
 						{Dates.getCurrentBanListDate(banListStartDates[ind], banListStartDates)}
@@ -62,9 +62,9 @@ const BanListDates: FC<_BanListDates> = memo(
 		)
 	},
 	(prevProps, nextProps) => {
-		if (prevProps.selectedBanList !== nextProps.selectedBanList) return false
-		return true
+		return prevProps.selectedBanList === nextProps.selectedBanList
 	}
 )
 
+BanListDates.displayName = 'BanListDates'
 export default BanListDates

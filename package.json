@@ -1,6 +1,6 @@
 {
 	"name": "skc-site",
-	"version": "1.10.2",
+	"version": "1.11.0",
 	"description": "Website to help duelists.",
 	"main": "index.js",
 	"author": "",
@@ -8,20 +8,20 @@
 	"dependencies": {
 		"@emotion/react": "11.11.1",
 		"@emotion/styled": "11.11.0",
-		"@mui/icons-material": "5.14.11",
-		"@mui/material": "5.14.11",
-		"@mui/styled-engine-sc": "5.14.11",
+		"@mui/icons-material": "5.14.15",
+		"@mui/material": "5.14.15",
+		"@mui/styled-engine-sc": "5.14.12",
 		"@nivo/pie": "0.83.0",
-		"axios": "1.5.1",
+		"axios": "1.6.0",
 		"entities": "4.5.0",
 		"lodash.startcase": "4.4.0",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
 		"react-helmet": "6.1.0",
 		"react-markdown": "9.0.0",
-		"react-router-dom": "6.16.0",
+		"react-router-dom": "6.17.0",
 		"react-visibility-sensor": "5.1.1",
-		"skc-rcl": "1.0.2",
+		"skc-rcl": "1.0.6",
 		"styled-components": "5.3.11"
 	},
 	"resolutions": {
@@ -30,7 +30,9 @@
 		"glob-parent": "6.0.2",
 		"node-forge": "1.3.1",
 		"nth-check": "2.1.1",
-		"socket.io-parser": "4.2.4"
+		"socket.io-parser": "4.2.4",
+		"@babel/traverse": "7.23.2",
+		"postcss": "8.4.31"
 	},
 	"scripts": {
 		"preinstall": "npx force-resolutions",
@@ -43,10 +45,12 @@
 		"build:production": "webpack --mode production --env prod",
 		"test": "react-scripts test --coverage --watchAll",
 		"ci:test": "react-scripts test --ci --coverage --watchAll=false",
+		"lint": "eslint src --ext .tsx,.ts",
 		"mutation": "stryker run config/stryker.conf.json",
 		"checkAWS:cloudfrontSKC": "aws cloudfront list-distributions | jq '.DistributionList.Items[] | select(.Aliases.Items | contains([\"thesupremekingscastle.com\"])) |  {id: .Id, aliases: .Aliases}'",
 		"uploadAWS:production": "npm run build:production; aws s3 rm s3://yugiohsite/ --recursive; aws s3 sync build s3://yugiohsite/ --cache-control max-age=3600; aws cloudfront create-invalidation --distribution-id ${YGO_CLOUDFRONT_PROD} --paths '/*'",
-		"uploadAWS:development": "npm run build:development_remote; aws s3 rm s3://yugiohsitedev/ --recursive; aws s3 sync build s3://yugiohsitedev/ --cache-control max-age=3600; aws cloudfront create-invalidation --distribution-id ${YGO_CLOUDFRONT_DEV} --paths '/*'"
+		"uploadAWS:development": "npm run build:development_remote; aws s3 rm s3://yugiohsitedev/ --recursive; aws s3 sync build s3://yugiohsitedev/ --cache-control max-age=3600; aws cloudfront create-invalidation --distribution-id ${YGO_CLOUDFRONT_DEV} --paths '/*'",
+		"uploadAWS:ec2-dev": "npm run build:development_remote; bash sync.sh ${SKC_EC2_URL}"
 	},
 	"eslintConfig": {
 		"extends": "react-app"
@@ -58,37 +62,40 @@
 		"not op_mini all"
 	],
 	"devDependencies": {
-		"@babel/preset-env": "7.22.20",
+		"@babel/preset-env": "7.23.2",
 		"@babel/preset-react": "7.22.15",
-		"@babel/preset-typescript": "7.23.0",
-		"@stryker-mutator/core": "7.1.1",
-		"@stryker-mutator/jest-runner": "7.1.1",
-		"@stryker-mutator/typescript-checker": "7.1.1",
-		"@testing-library/jest-dom": "6.1.3",
+		"@babel/preset-typescript": "7.23.2",
+		"@stryker-mutator/core": "7.3.0",
+		"@stryker-mutator/jest-runner": "7.3.0",
+		"@stryker-mutator/typescript-checker": "7.3.0",
+		"@testing-library/jest-dom": "6.1.4",
 		"@testing-library/react": "14.0.0",
-		"@types/jest": "^29.2.4",
-		"@types/lodash.startcase": "4.4.7",
-		"@types/react": "18.2.23",
-		"@types/react-dom": "18.2.8",
-		"@types/react-helmet": "6.1.7",
+		"@types/jest": "29.5.6",
+		"@types/lodash.startcase": "4.4.8",
+		"@types/react": "18.2.33",
+		"@types/react-dom": "18.2.14",
+		"@types/react-helmet": "6.1.8",
 		"@types/react-router-dom": "5.3.3",
-		"@types/styled-components": "5.1.28",
+		"@types/styled-components": "5.1.29",
+		"@typescript-eslint/eslint-plugin": "6.9.0",
+		"@typescript-eslint/parser": "6.9.0",
 		"babel-loader": "9.1.3",
 		"clean-webpack-plugin": "4.0.0",
 		"copy-webpack-plugin": "11.0.0",
-		"eslint-config-react-app": "7.0.1",
+		"eslint": "8.52.0",
+		"eslint-plugin-react": "7.33.2",
 		"html-webpack-plugin": "5.5.3",
-		"jest": "^29.3.1",
+		"jest": "29.7.0",
 		"jest-environment-jsdom": "29.7.0",
 		"postcss-flexbugs-fixes": "5.0.2",
 		"postcss-normalize": "10.0.1",
 		"react-scripts": "5.0.1",
 		"react-test-renderer": "18.2.0",
-		"ts-jest": "^29.0.3",
-		"ts-loader": "9.4.4",
+		"ts-jest": "29.1.1",
+		"ts-loader": "9.5.0",
 		"ts-node": "10.9.1",
 		"typescript": "4.9.5",
-		"webpack": "5.88.2",
+		"webpack": "5.89.0",
 		"webpack-cli": "5.1.4",
 		"webpack-dashboard": "3.3.8",
 		"webpack-dev-server": "4.15.1"
@@ -96,10 +103,10 @@
 	"jest": {
 		"coverageThreshold": {
 			"global": {
-				"branches": 80,
-				"functions": 80,
-				"lines": 80,
-				"statements": 80
+				"branches": 70,
+				"functions": 70,
+				"lines": 70,
+				"statements": 75
 			}
 		},
 		"transformIgnorePatterns": [

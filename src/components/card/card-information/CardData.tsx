@@ -38,4 +38,5 @@ const CardData: FC<_CardData> = memo(
 	}
 )
 
+CardData.displayName = 'CardData'
 export default CardData

@@ -6,10 +6,23 @@ import ReactMarkdown from 'react-markdown'
 import { DateComponent } from 'skc-rcl'
 import { Dates } from '../../../helper/Dates'
 
-const EventItem: FC<{ event: HeartApiEventItem; showEventDialog?: any; setEventDialogEventData?: any }> = ({ event, showEventDialog, setEventDialogEventData }) => {
+type _EventItem =
+	| {
+			event: HeartApiEventItem
+			isWithinDialog: true
+			showEventDialog?: React.Dispatch<React.SetStateAction<boolean>>
+			setEventDialogEventData?: React.Dispatch<React.SetStateAction<HeartApiEventItem>>
+	  }
+	| {
+			event: HeartApiEventItem
+			isWithinDialog: false
+			showEventDialog: React.Dispatch<React.SetStateAction<boolean>>
+			setEventDialogEventData: React.Dispatch<React.SetStateAction<HeartApiEventItem>>
+	  }
+
+const EventItem: FC<_EventItem> = ({ event, showEventDialog, setEventDialogEventData, isWithinDialog }) => {
 	const eventDate = new Date(event.eventDate)
 
-	const isWithinDialog = showEventDialog === undefined && setEventDialogEventData === undefined ? true : false
 	let parentStyle, notesStyle
 	if (isWithinDialog) {
 		parentStyle = 'dialog-event-item'
@@ -20,14 +33,16 @@ const EventItem: FC<{ event: HeartApiEventItem; showEventDialog?: any; setEventD
 	}
 
 	const handleExpandEvent = useCallback(() => {
-		showEventDialog(true)
-		setEventDialogEventData(event)
-	}, [showEventDialog, setEventDialogEventData])
+		if (!isWithinDialog) {
+			showEventDialog(true)
+			setEventDialogEventData(event)
+		}
+	}, [showEventDialog, setEventDialogEventData, event])
 
 	return (
 		<div className={parentStyle}>
 			<div>
-				<DateComponent month={Dates.getMonth(eventDate)} day={+Dates.getDay(eventDate)} year={+Dates.getYear(eventDate)} />
+				<DateComponent month={Dates.getMonth(eventDate)} day={+Dates.getDay(eventDate)} year={+Dates.getYear(eventDate)} variant='normal' />
 				<div className='event-icon-container'>
 					<IconButton disabled={isWithinDialog} className='event-icon-button' aria-label='info' onClick={isWithinDialog ? undefined : handleExpandEvent}>
 						<InfoOutlinedIcon />
@@ -42,7 +57,7 @@ const EventItem: FC<{ event: HeartApiEventItem; showEventDialog?: any; setEventD
 					{event.name}
 				</Typography>
 				<Typography variant='body2'>
-					<ReactMarkdown className={notesStyle} children={`${event.notes}`} />
+					<ReactMarkdown className={notesStyle}>{event.notes}</ReactMarkdown>
 				</Typography>
 			</div>
 		</div>

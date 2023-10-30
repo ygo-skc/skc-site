@@ -4,14 +4,14 @@ export type BanListDateReducerState = {
 	isFetchingBanListDates?: boolean
 }
 
-export type BanListDateReducerAction = {
-	type: BanListDateReducerActionType
-	payload?: BanListDateReducerState
-}
-
 export enum BanListDateReducerActionType {
 	DATES_RECEIVED,
 	FETCHING_DATES,
+}
+
+export type BanListDateReducerAction = {
+	type: BanListDateReducerActionType
+	payload?: BanListDateReducerState
 }
 
 export default function dateReducer(state: BanListDateReducerState, action: BanListDateReducerAction) {

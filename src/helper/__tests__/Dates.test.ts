@@ -1,7 +1,7 @@
 import { Dates } from '../Dates'
 
-const myBday = new Date(746322027000)
-const becksBday = new Date(680664480000)
+const myBday = new Date(new Date(746322027000).toLocaleString('en-US', { timeZone: 'America/Chicago' }))
+const becksBday = new Date(new Date(680664480000).toLocaleString('en-US', { timeZone: 'America/Chicago' }))
 
 test('verify date gets formatted with {Day-Of-Week Month day, year}', () => {
 	expect(Dates.getNonLocalizedDateString(myBday)).toBe('Wed Aug 25 1993')

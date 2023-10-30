@@ -1,36 +1,42 @@
-import { useState, useEffect, FC, Fragment } from 'react'
+import { FC, Fragment, useEffect, useReducer } from 'react'
 import { Hint } from 'skc-rcl'
 import CardDisplayGrid from '../util/grid/CardDisplayGrid'
+import cardDisplayGridReducer, { CardDisplayGridStateReducerActionType } from '../../helper/reducers/CardDisplayGridReducer'
 
-type _BanListSection = {
+type BanListSectionProps = {
 	sectionExplanation: string
 	cards: SKCCard[]
 	isDataLoaded: boolean
 }
 
-const BanListSection: FC<_BanListSection> = ({ sectionExplanation, cards, isDataLoaded }) => {
-	const [cardTypeContentGrid, setCardTypeContentGrid] = useState<JSX.Element>()
+const BanListSection: FC<BanListSectionProps> = ({ sectionExplanation, cards, isDataLoaded }) => {
+	const [cardGridState, cardDisplayGridDispatch] = useReducer(cardDisplayGridReducer, {
+		results: [],
+		totalResults: 0,
+		totalDisplaying: 0,
+		numItemsToLoadWhenNeeded: 0,
+		isLoading: true,
+	})
 
 	useEffect(() => {
 		if (isDataLoaded) {
-			setCardTypeContentGrid(
-				<CardDisplayGrid
-					cardJsonResults={cards}
-					numResultsDisplayed={cards.length}
-					numItemsToLoadWhenNeeded={cards.length}
-					loadMoreCallback={undefined}
-					isLoadMoreOptionVisible={false}
-					numResults={cards.length}
-					isDataLoaded={isDataLoaded}
-				/>
-			)
-		} else setCardTypeContentGrid(undefined)
-	}, [isDataLoaded])
+			cardDisplayGridDispatch({
+				type: CardDisplayGridStateReducerActionType.INIT_GRID,
+				results: cards,
+				totalResults: cards.length,
+				totalDisplaying: cards.length,
+			})
+		} else {
+			cardDisplayGridDispatch({
+				type: CardDisplayGridStateReducerActionType.LOADING_GRID,
+			})
+		}
+	}, [isDataLoaded, cards])
 
 	return (
 		<Fragment>
 			<Hint>{sectionExplanation}</Hint>
-			{cardTypeContentGrid}
+			<CardDisplayGrid cardGridState={cardGridState} dispatch={cardDisplayGridDispatch} />
 		</Fragment>
 	)
 }

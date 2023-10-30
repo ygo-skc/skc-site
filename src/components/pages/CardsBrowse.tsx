@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, useReducer, useCallback } from 'react'
+import { useState, useEffect, lazy, useReducer, startTransition } from 'react'
 import { Typography } from '@mui/material'
 import { Helmet } from 'react-helmet'
 
@@ -12,20 +12,10 @@ import '../../css/util/database-info/database-search-styles.css'
 import '../../css/main-pages/card-browse.css'
 import CardBrowse from '../util/search/CardBrowse'
 import { SKCTable, Section } from 'skc-rcl'
+import cardDisplayGridReducer, { CardDisplayGridStateReducerActionType } from '../../helper/reducers/CardDisplayGridReducer'
+import cardBrowseReducer from '../../helper/reducers/CardBrowseCriteriaReducer'
 
 const CardDisplayGrid = lazy(() => import('../util/grid/CardDisplayGrid'))
-
-function browseReducer(state: { selectedCriteria: BrowseCriteria[] }, action: any) {
-	switch (action.type) {
-		case 'UPDATE_SELECTED_CRITERIA':
-			return {
-				...state,
-				selectedCriteria: action.selectedCriteria,
-			}
-		default:
-			return state
-	}
-}
 
 function generateBrowseQueryURL(selectedCriteria: BrowseCriteria[]) {
 	const criteriaMap = new Map()
@@ -38,14 +28,22 @@ function generateBrowseQueryURL(selectedCriteria: BrowseCriteria[]) {
 	criteriaMap.set('linkRatings', [])
 
 	selectedCriteria.forEach((criteria: BrowseCriteria) => {
-		if (criteria.name === 'cardColors' || criteria.name === 'attributes' || criteria.name === 'monsterTypes' || criteria.name === 'monsterSubTypes')
-			criteriaMap.get(criteria.name).push(criteria.value)
-		else if (criteria.name === 'levels') {
-			criteriaMap.get(criteria.name).push(criteria.value.replace('Level ', ''))
-		} else if (criteria.name === 'ranks') {
-			criteriaMap.get(criteria.name).push(criteria.value.replace('Rank ', ''))
-		} else if (criteria.name === 'linkRatings') {
-			criteriaMap.get(criteria.name).push(criteria.value.replace('Link Rating ', ''))
+		switch (criteria.name) {
+			case 'cardColors':
+			case 'attributes':
+			case 'monsterTypes':
+			case 'monsterSubTypes':
+				criteriaMap.get(criteria.name).push(criteria.value)
+				break
+			case 'levels':
+				criteriaMap.get(criteria.name).push(criteria.value.replace('Level ', ''))
+				break
+			case 'ranks':
+				criteriaMap.get(criteria.name).push(criteria.value.replace('Rank ', ''))
+				break
+			case 'linkRatings':
+				criteriaMap.get(criteria.name).push(criteria.value.replace('Link Rating ', ''))
+				break
 		}
 	})
 
@@ -57,46 +55,45 @@ function generateBrowseQueryURL(selectedCriteria: BrowseCriteria[]) {
 }
 
 export default function BrowseCards() {
-	const [{ selectedCriteria }, browseCriteriaDispatch] = useReducer(browseReducer, { selectedCriteria: [] })
+	const [{ selectedCriteria }, browseCriteriaDispatch] = useReducer(cardBrowseReducer, { selectedCriteria: [] })
+
+	const [cardGridState, cardDisplayGridDispatch] = useReducer(cardDisplayGridReducer, {
+		results: [],
+		totalResults: 0,
+		totalDisplaying: 0,
+		numItemsToLoadWhenNeeded: 50,
+		isLoading: false,
+	})
 
 	const [skcCardBrowseCriteriaOutput, setSkcCardBrowseCriteriaOutput] = useState<SKCCardBrowseCriteria>({} as SKCCardBrowseCriteria)
-	const [jsonResults, setJsonResults] = useState([])
-
-	const [numResults, setNumResults] = useState(0)
-	const [numResultsDisplayed, setNumResultsDisplayed] = useState(0)
-
-	const [isCardBrowseDataLoaded, setIsCardBrowseDataLoaded] = useState(true)
 
 	const browseSummaryStats: string[][] = []
-	browseSummaryStats.push(['Total', numResults.toString()])
-	browseSummaryStats.push(['Displaying', numResultsDisplayed.toString()])
+	browseSummaryStats.push(['Total', cardGridState.totalResults.toString()])
+	browseSummaryStats.push(['Displaying', cardGridState.totalDisplaying.toString()])
 
 	useEffect(() => {
-		FetchHandler.handleFetch(DownstreamServices.NAME_maps_ENDPOINT['browseCriteria'], (json) => {
+		FetchHandler.handleFetch<SKCCardBrowseCriteria>(DownstreamServices.NAME_maps_ENDPOINT['browseCriteria'], (json) => {
 			setSkcCardBrowseCriteriaOutput(json)
 		})
 	}, [])
 
 	useEffect(() => {
 		if (selectedCriteria === undefined || selectedCriteria.length === 0) {
-			setJsonResults([])
-			setNumResults(0)
-			setNumResultsDisplayed(0)
+			cardDisplayGridDispatch({ type: CardDisplayGridStateReducerActionType.CLEAR_GRID })
 		} else {
-			setIsCardBrowseDataLoaded(false)
-			setJsonResults([])
-
-			FetchHandler.handleFetch(generateBrowseQueryURL(selectedCriteria), (json) => {
-				setJsonResults(json.results)
-				setNumResults(json.numResults)
-				setNumResultsDisplayed(50)
-
-				setIsCardBrowseDataLoaded(true)
+			cardDisplayGridDispatch({ type: CardDisplayGridStateReducerActionType.LOADING_GRID })
+			startTransition(() => {
+				FetchHandler.handleFetch<SKCCardBrowseResults>(generateBrowseQueryURL(selectedCriteria), (json) => {
+					cardDisplayGridDispatch({
+						type: CardDisplayGridStateReducerActionType.INIT_GRID,
+						results: json.results,
+						totalResults: json.numResults,
+						totalDisplaying: 50,
+					})
+				})
 			})
 		}
 	}, [selectedCriteria])
-
-	const handleLoadMore = useCallback(() => {}, [])
 
 	return (
 		<div className='generic-container'>
@@ -127,16 +124,7 @@ export default function BrowseCards() {
 					<Section sectionHeaderBackground='product' sectionName='Browse Results'>
 						<div className='section-content'>
 							<Typography variant='h5'>Results Are Sorted Alphabetically</Typography>
-
-							<CardDisplayGrid
-								cardJsonResults={jsonResults}
-								numResultsDisplayed={numResultsDisplayed}
-								numItemsToLoadWhenNeeded={50}
-								loadMoreCallback={handleLoadMore}
-								isLoadMoreOptionVisible={true}
-								numResults={numResults}
-								isDataLoaded={isCardBrowseDataLoaded}
-							/>
+							<CardDisplayGrid cardGridState={cardGridState} dispatch={cardDisplayGridDispatch} />
 						</div>
 					</Section>
 				}

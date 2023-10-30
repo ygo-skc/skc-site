@@ -5,9 +5,9 @@ class FetchHandler {
 	static readonly CLIENT_ID = process.env.REACT_APP_CLIENT_ID as string
 	static readonly DEFAULT_TIMEOUT = 3000
 
-	static readonly handleFetch = (
+	static readonly handleFetch = <T>(
 		endPoint: string,
-		onJsonReceived: { (res: any): void },
+		onJsonReceived: (res: T) => void,
 		useDefaultErrorHandler = true,
 		fetchToken: CancelTokenSource | undefined = undefined
 	): Promise<void> | void => {

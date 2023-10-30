@@ -17,7 +17,7 @@ a {
 
 .breadcrumb {
 	display: flex;
-	font-weight: 500;
+	font-weight: 400;
 }
 
 .breadcrumb-icon {
@@ -34,4 +34,5 @@ a {
 
 .breadcrumb-text {
 	margin: auto;
+	font-size: 1rem;
 }

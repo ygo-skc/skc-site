@@ -2,13 +2,13 @@ import { Typography } from '@mui/material'
 import { FC, useEffect, useState } from 'react'
 import { YGOCardWithPreviousBanStatus } from 'skc-rcl'
 
-type _CardsWithDifferentStatus = {
+type CardsWithDifferentStatusProps = {
 	newStatusName: 'Forbidden' | 'Limited' | 'Semi Limited' | 'Unlimited' | 'Limited One' | 'Limited Two' | 'Limited Three'
 	cards: SKCCardsPreviousBanListStatus[]
 	numCards: number
 }
 
-const CardsWithDifferentStatus: FC<_CardsWithDifferentStatus> = ({ newStatusName, cards, numCards }) => {
+const CardsWithDifferentStatus: FC<CardsWithDifferentStatusProps> = ({ newStatusName, cards, numCards }) => {
 	const [cardsWithNewStatus, setCardsWithNewStatus] = useState<JSX.Element[]>([])
 
 	useEffect(() => {
@@ -21,7 +21,7 @@ const CardsWithDifferentStatus: FC<_CardsWithDifferentStatus> = ({ newStatusName
 		)
 	}, [cards])
 
-	return (
+	return numCards === 0 ? null : (
 		<div className='cards-with-different-status-parent very-light-shadow'>
 			<Typography variant='h4'>
 				Newly {newStatusName} ({numCards})

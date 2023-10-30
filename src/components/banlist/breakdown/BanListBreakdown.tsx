@@ -7,7 +7,7 @@ import BanListBreakdownNormalFormat from './normal/BanListBreakdownNormalFormat'
 import { _BanListDiffSpreadNormalFormat } from './normal/BanListDiffSpreadNormalFormat'
 import { _BanListSpreadNormalFormat } from './normal/BanListSpreadNormalFormat'
 
-type _BanListBreakdown = {
+type BanListBreakdownProps = {
 	normalFormatSpreads: _BanListSpreadNormalFormat
 	normalFormatDiffSpreads: _BanListDiffSpreadNormalFormat
 	dlFormatSpreads: _BanListSpreadDuelLinksFormat
@@ -18,7 +18,7 @@ type _BanListBreakdown = {
 	format: AcceptableBanListFormat
 }
 
-const BanListBreakdown: FC<_BanListBreakdown> = memo(
+const BanListBreakdown: FC<BanListBreakdownProps> = memo(
 	({
 		normalFormatSpreads,
 		normalFormatDiffSpreads,
@@ -52,15 +52,15 @@ const BanListBreakdown: FC<_BanListBreakdown> = memo(
 		)
 	},
 	(prevProps, nextProps) => {
-		if (
-			prevProps.format !== nextProps.format ||
-			prevProps.isFetchingBanList !== nextProps.isFetchingBanList ||
-			prevProps.isFetchingBanListNewContent !== nextProps.isFetchingBanListNewContent ||
-			prevProps.isFetchingBanListRemovedContent !== nextProps.isFetchingBanListRemovedContent
+		return (
+			prevProps.isFetchingBanList === nextProps.isFetchingBanList &&
+			prevProps.normalFormatSpreads === nextProps.normalFormatSpreads &&
+			prevProps.normalFormatDiffSpreads === nextProps.normalFormatDiffSpreads &&
+			prevProps.dlFormatSpreads === nextProps.dlFormatSpreads &&
+			prevProps.dlFormatDiffSpreads === nextProps.dlFormatDiffSpreads
 		)
-			return false
-		return true
 	}
 )
 
+BanListBreakdown.displayName = 'BanListBreakdown'
 export default BanListBreakdown

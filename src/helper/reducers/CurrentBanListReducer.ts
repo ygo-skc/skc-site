@@ -1,14 +1,32 @@
-export enum CurrentlySelectedBanListReducerActionType {
-	UPDATE_NORMAL_FORMAT_LIST,
-	UPDATE_DUEL_LINKS_FORMAT_LIST,
-	UPDATE_REMOVED,
-	UPDATE_NEW_ADDITIONS_NORMAL_FORMAT,
-	UPDATE_NEW_ADDITIONS_DUEL_LINKS_FORMAT,
+export enum BanListReducerType {
+	UPDATE_LIST_CONTENT,
+	UPDATE_LIST_CONTENT_DL_FORMAT,
+	UPDATE_REMOVED_CONTENT,
+	UPDATE_NEW_CONTENT,
+	UPDATE_NEW_CONTENT_DL_FORMAT,
+	FETCHING_INFO,
 }
 
-export default function currentlySelectedBanListReducer(state: any, action: any) {
+type Fetching = { isFetchingBanListNewContent: boolean; isFetchingBanListContent: boolean; isFetchingBanListRemovedContent: boolean }
+
+type BanListReducerAction =
+	| (SKCBanListContentNormalFormat & {
+			type: BanListReducerType.UPDATE_LIST_CONTENT
+	  })
+	| (SKCBanListContentDuelLinksFormat & {
+			type: BanListReducerType.UPDATE_LIST_CONTENT_DL_FORMAT
+	  })
+	| (SKCBanListRemovedCards & { type: BanListReducerType.UPDATE_REMOVED_CONTENT })
+	| (SKCBanListNewCardsNormalFormat & { type: BanListReducerType.UPDATE_NEW_CONTENT })
+	| (SKCBanListNewCardsDuelLinksFormat & { type: BanListReducerType.UPDATE_NEW_CONTENT_DL_FORMAT })
+	| { type: BanListReducerType.FETCHING_INFO }
+
+export function currentBanListReducer(
+	state: SKCBanListContentNormalFormat & SKCBanListContentDuelLinksFormat & SKCBanListDiffContentNormalFormat & SKCBanListDiffContentDuelLinksFormat & Fetching,
+	action: BanListReducerAction
+) {
 	switch (action.type) {
-		case CurrentlySelectedBanListReducerActionType.UPDATE_NORMAL_FORMAT_LIST:
+		case BanListReducerType.UPDATE_LIST_CONTENT:
 			return {
 				...state,
 				forbidden: action.forbidden,
@@ -23,8 +41,9 @@ export default function currentlySelectedBanListReducer(state: any, action: any)
 				numLimitedOne: 0,
 				numLimitedTwo: 0,
 				numLimitedThree: 0,
+				isFetchingBanListContent: false,
 			}
-		case CurrentlySelectedBanListReducerActionType.UPDATE_DUEL_LINKS_FORMAT_LIST:
+		case BanListReducerType.UPDATE_LIST_CONTENT_DL_FORMAT:
 			return {
 				...state,
 				forbidden: action.forbidden,
@@ -39,19 +58,21 @@ export default function currentlySelectedBanListReducer(state: any, action: any)
 				numLimitedOne: action.numLimitedOne,
 				numLimitedTwo: action.numLimitedTwo,
 				numLimitedThree: action.numLimitedThree,
+				isFetchingBanListContent: false,
 			}
-		case CurrentlySelectedBanListReducerActionType.UPDATE_REMOVED:
+		case BanListReducerType.UPDATE_REMOVED_CONTENT:
 			return {
 				...state,
 				removedCards: action.removedCards,
 				numRemoved: action.numRemoved,
+				isFetchingBanListRemovedContent: false,
 			}
-		case CurrentlySelectedBanListReducerActionType.UPDATE_NEW_ADDITIONS_NORMAL_FORMAT:
+		case BanListReducerType.UPDATE_NEW_CONTENT:
 			return {
 				...state,
-				newForbiddenCards: action.newForbiddenCards,
-				newLimitedCards: action.newLimitedCards,
-				newSemiLimitedCards: action.newSemiLimitedCards,
+				newForbidden: action.newForbidden,
+				newLimited: action.newLimited,
+				newSemiLimited: action.newSemiLimited,
 				newLimitedOne: [],
 				newLimitedTwo: [],
 				newLimitedThree: [],
@@ -61,22 +82,31 @@ export default function currentlySelectedBanListReducer(state: any, action: any)
 				numNewLimitedOne: 0,
 				numNewLimitedTwo: 0,
 				numNewLimitedThree: 0,
+				isFetchingBanListNewContent: false,
 			}
-		case CurrentlySelectedBanListReducerActionType.UPDATE_NEW_ADDITIONS_DUEL_LINKS_FORMAT:
+		case BanListReducerType.UPDATE_NEW_CONTENT_DL_FORMAT:
 			return {
 				...state,
-				newForbiddenCards: action.newForbiddenCards,
-				newLimitedCards: [],
-				newSemiLimitedCards: [],
-				newLimitedOneCards: action.newLimitedOneCards,
-				newLimitedTwoCards: action.newLimitedTwoCards,
-				newLimitedThreeCards: action.newLimitedThreeCards,
+				newForbidden: action.newForbidden,
+				newLimited: [],
+				newSemiLimited: [],
+				newLimitedOne: action.newLimitedOne,
+				newLimitedTwo: action.newLimitedTwo,
+				newLimitedThree: action.newLimitedThree,
 				numNewForbidden: action.numNewForbidden,
 				numNewLimited: 0,
 				numNewSemiLimited: 0,
 				numNewLimitedOne: action.numNewLimitedOne,
 				numNewLimitedTwo: action.numNewLimitedTwo,
 				numNewLimitedThree: action.numNewLimitedThree,
+				isFetchingBanListNewContent: false,
+			}
+		case BanListReducerType.FETCHING_INFO:
+			return {
+				...state,
+				isFetchingBanListNewContent: true,
+				isFetchingBanListContent: true,
+				isFetchingBanListRemovedContent: true,
 			}
 		default:
 			return state

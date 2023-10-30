@@ -3,6 +3,11 @@ import { Typography } from '@mui/material'
 import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 
+type HealthCheckOutput = {
+	version: string
+	status: string
+}
+
 const Footer: FunctionComponent = () => {
 	const [skcAPIVersion, setSkcAPIVersion] = useState('---')
 	const [heartAPIVersion, setHeartAPIVersion] = useState('---')
@@ -11,7 +16,7 @@ const Footer: FunctionComponent = () => {
 	useEffect(() => {
 		startTransition(() => {
 			// fetch version for SKC API
-			FetchHandler.handleFetch(
+			FetchHandler.handleFetch<HealthCheckOutput>(
 				DownstreamServices.NAME_maps_ENDPOINT['status'],
 				(json) => {
 					setSkcAPIVersion(json?.version)
@@ -20,7 +25,7 @@ const Footer: FunctionComponent = () => {
 			)?.catch(() => {})
 
 			// FetchHandler version for SKC API
-			FetchHandler.handleFetch(
+			FetchHandler.handleFetch<HealthCheckOutput>(
 				DownstreamServices.HEART_API_ENDPOINTS.status,
 				(json) => {
 					setHeartAPIVersion(json?.version)
@@ -29,7 +34,7 @@ const Footer: FunctionComponent = () => {
 			)?.catch(() => {})
 
 			// FetchHandler version for SKC Suggestion Engine
-			FetchHandler.handleFetch(
+			FetchHandler.handleFetch<HealthCheckOutput>(
 				DownstreamServices.SKC_SUGGESTION_ENDPOINTS.status,
 				(json) => {
 					setSkcSuggestionEngineVersion(json?.version)

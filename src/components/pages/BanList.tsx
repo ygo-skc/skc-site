@@ -1,4 +1,4 @@
-import { lazy, useState, useEffect, Suspense, useReducer, startTransition, useCallback } from 'react'
+import { lazy, useState, useEffect, Suspense, useReducer, useCallback } from 'react'
 import { Helmet } from 'react-helmet'
 
 import { Skeleton } from '@mui/material'
@@ -7,26 +7,34 @@ import DownstreamServices from '../../helper/DownstreamServices'
 
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 
-import BreadCrumb from '../header-footer/Breadcrumb'
-
 import '../../css/main-pages/ban-list.css'
 import dateReducer, { BanListDateReducerActionType } from '../../helper/reducers/BanListDateReducer'
-import currentlySelectedBanListReducer, { CurrentlySelectedBanListReducerActionType } from '../../helper/reducers/CurrentBanListReducer'
 import { useParams } from 'react-router-dom'
 import { AcceptableBanListFormat, determineListSize, getValidFormat } from '../../helper/BanListUtil'
-import { Section } from 'skc-rcl'
+import { BanListReducerType, currentBanListReducer } from '../../helper/reducers/CurrentBanListReducer'
+
+const BreadCrumb = lazy(() => import('../header-footer/Breadcrumb'))
 
 const BanListDates = lazy(() => import('../banlist/BanListDates'))
 const BanListFormat = lazy(() => import('../banlist/BanListFormat'))
-
 const BanListBreakdown = lazy(() => import('../banlist/breakdown/BanListBreakdown'))
+const BanListDiffContent = lazy(() => import('../banlist/content/BanListDiffContent'))
 const BanListContent = lazy(() => import('../banlist/content/BanListContent'))
+
+const Section = lazy(() =>
+	import('skc-rcl').then((module) => {
+		return { default: module.Section }
+	})
+)
+
+type BanListDatesOutput = SKCBanListDates & {
+	_links: {
+		self: HATEOAS
+	}
+}
 
 export default function BanList() {
 	const [selectedBanList, setSelectedBanList] = useState<string>('')
-	const [isFetchingBanList, setIsFetchingBanList] = useState(true)
-	const [isFetchingBanListNewContent, setFetchingBanListNewContent] = useState(true)
-	const [isFetchingBanListRemovedContent, setFetchingBanListRemovedContent] = useState(true)
 
 	const { specifiedFormat } = useParams<'specifiedFormat'>()
 	const [format, setFormat] = useState<AcceptableBanListFormat>(getValidFormat(specifiedFormat))
@@ -50,12 +58,12 @@ export default function BanList() {
 			numSemiLimited,
 			removedCards,
 			numRemoved,
-			newForbiddenCards,
-			newLimitedCards,
-			newSemiLimitedCards,
-			newLimitedOneCards,
-			newLimitedTwoCards,
-			newLimitedThreeCards,
+			newForbidden,
+			newLimited,
+			newSemiLimited,
+			newLimitedOne,
+			newLimitedTwo,
+			newLimitedThree,
 			numNewForbidden,
 			numNewLimited,
 			numNewSemiLimited,
@@ -65,9 +73,12 @@ export default function BanList() {
 			numLimitedOne,
 			numLimitedTwo,
 			numLimitedThree,
+			isFetchingBanListNewContent,
+			isFetchingBanListContent,
+			isFetchingBanListRemovedContent,
 		},
-		selectedBanListDispatch,
-	] = useReducer(currentlySelectedBanListReducer, {
+		currentBanListDispatch,
+	] = useReducer(currentBanListReducer, {
 		forbidden: [],
 		limited: [],
 		semiLimited: [],
@@ -79,21 +90,24 @@ export default function BanList() {
 		numSemiLimited: 0,
 		removedCards: [],
 		numRemoved: 0,
-		newForbiddenCards: [],
-		newLimitedCards: [],
-		newSemiLimitedCards: [],
-		newLimitedOneCards: [],
-		newLimitedTwoCards: [],
-		newLimitedThreeCards: [],
+		newForbidden: [],
+		newLimited: [],
+		newSemiLimited: [],
+		newLimitedOne: [],
+		newLimitedTwo: [],
+		newLimitedThree: [],
 		numNewForbidden: 0,
 		numNewLimited: 0,
 		numNewSemiLimited: 0,
-		numNewLimitedOneCards: 0,
-		numNewLimitedTwoCards: 0,
-		numNewLimitedThreeCards: 0,
+		numNewLimitedOne: 0,
+		numNewLimitedTwo: 0,
+		numNewLimitedThree: 0,
 		numLimitedOne: 0,
 		numLimitedTwo: 0,
 		numLimitedThree: 0,
+		isFetchingBanListNewContent: true,
+		isFetchingBanListContent: true,
+		isFetchingBanListRemovedContent: true,
 	})
 
 	useEffect(() => {
@@ -103,11 +117,11 @@ export default function BanList() {
 			type: BanListDateReducerActionType.FETCHING_DATES,
 		})
 
-		setIsFetchingBanList(true)
-		setFetchingBanListNewContent(true)
-		setFetchingBanListRemovedContent(true)
+		currentBanListDispatch({
+			type: BanListReducerType.FETCHING_INFO,
+		})
 
-		FetchHandler.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT['banListsUrl']}?format=${format}`, (json) => {
+		FetchHandler.handleFetch<BanListDatesOutput>(`${DownstreamServices.NAME_maps_ENDPOINT['banListsUrl']}?format=${format}`, (json) => {
 			dateDispatch({
 				type: BanListDateReducerActionType.DATES_RECEIVED,
 				payload: {
@@ -124,56 +138,53 @@ export default function BanList() {
 
 	useEffect(() => {
 		if (selectedBanList && selectedBanList.length !== 0) {
-			setIsFetchingBanList(true)
-			setFetchingBanListNewContent(true)
-			setFetchingBanListRemovedContent(true)
+			currentBanListDispatch({
+				type: BanListReducerType.FETCHING_INFO,
+			})
 
-			FetchHandler.handleFetch(banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List New Content'].href, (json) => {
-				startTransition(() => {
+			FetchHandler.handleFetch<SKCBanListNewCardsNormalFormat & SKCBanListNewCardsDuelLinksFormat>(
+				banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List New Content'].href,
+				(json) => {
 					if (format === 'DL') {
-						selectedBanListDispatch({
-							type: CurrentlySelectedBanListReducerActionType.UPDATE_NEW_ADDITIONS_DUEL_LINKS_FORMAT,
-							newForbiddenCards: json.newForbidden,
-							newLimitedOneCards: json.newLimitedOne,
-							newLimitedTwoCards: json.newLimitedTwo,
-							newLimitedThreeCards: json.newLimitedThree,
+						currentBanListDispatch({
+							type: BanListReducerType.UPDATE_NEW_CONTENT_DL_FORMAT,
+							newForbidden: json.newForbidden,
+							newLimitedOne: json.newLimitedOne,
+							newLimitedTwo: json.newLimitedTwo,
+							newLimitedThree: json.newLimitedThree,
 							numNewForbidden: json.numNewForbidden,
 							numNewLimitedOne: json.numNewLimitedOne,
 							numNewLimitedTwo: json.numNewLimitedTwo,
 							numNewLimitedThree: json.numNewLimitedThree,
 						})
 					} else {
-						selectedBanListDispatch({
-							type: CurrentlySelectedBanListReducerActionType.UPDATE_NEW_ADDITIONS_NORMAL_FORMAT,
-							newForbiddenCards: json.newForbidden,
-							newLimitedCards: json.newLimited,
-							newSemiLimitedCards: json.newSemiLimited,
+						currentBanListDispatch({
+							type: BanListReducerType.UPDATE_NEW_CONTENT,
+							newForbidden: json.newForbidden,
+							newLimited: json.newLimited,
+							newSemiLimited: json.newSemiLimited,
 							numNewForbidden: json.numNewForbidden,
 							numNewLimited: json.numNewLimited,
 							numNewSemiLimited: json.numNewSemiLimited,
 						})
 					}
-					setFetchingBanListNewContent(false)
+				}
+			)
+
+			FetchHandler.handleFetch<SKCBanListRemovedCards>(banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List Removed Content'].href, (json) => {
+				currentBanListDispatch({
+					type: BanListReducerType.UPDATE_REMOVED_CONTENT,
+					removedCards: json.removedCards,
+					numRemoved: determineListSize(json.numRemoved),
 				})
 			})
 
-			FetchHandler.handleFetch(banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List Removed Content'].href, (json) => {
-				startTransition(() => {
-					selectedBanListDispatch({
-						type: CurrentlySelectedBanListReducerActionType.UPDATE_REMOVED,
-						removedCards: json.removedCards,
-						numRemoved: determineListSize(json.numRemoved),
-					})
-
-					setFetchingBanListRemovedContent(false)
-				})
-			})
-
-			FetchHandler.handleFetch(banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List Content'].href, (json) => {
-				startTransition(() => {
+			FetchHandler.handleFetch<SKCBanListContentNormalFormat & SKCBanListContentDuelLinksFormat>(
+				banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List Content'].href,
+				(json) => {
 					if (format === 'DL') {
-						selectedBanListDispatch({
-							type: CurrentlySelectedBanListReducerActionType.UPDATE_DUEL_LINKS_FORMAT_LIST,
+						currentBanListDispatch({
+							type: BanListReducerType.UPDATE_LIST_CONTENT_DL_FORMAT,
 							forbidden: json.forbidden,
 							limitedOne: json.limitedOne,
 							limitedTwo: json.limitedTwo,
@@ -184,8 +195,8 @@ export default function BanList() {
 							numLimitedThree: determineListSize(json.numLimitedThree),
 						})
 					} else {
-						selectedBanListDispatch({
-							type: CurrentlySelectedBanListReducerActionType.UPDATE_NORMAL_FORMAT_LIST,
+						currentBanListDispatch({
+							type: BanListReducerType.UPDATE_LIST_CONTENT,
 							forbidden: json.forbidden,
 							limited: json.limited,
 							semiLimited: json.semiLimited,
@@ -194,10 +205,8 @@ export default function BanList() {
 							numSemiLimited: determineListSize(json.numSemiLimited),
 						})
 					}
-
-					setIsFetchingBanList(false)
-				})
-			})
+				}
+			)
 		}
 	}, [selectedBanList])
 
@@ -211,7 +220,9 @@ export default function BanList() {
 				<meta name='keywords' content={`YuGiOh, ban list, The Supreme Kings Castle, ${selectedBanList}`} />
 			</Helmet>
 
-			<BreadCrumb crumbs={['Home', 'Ban List']} />
+			<Suspense fallback={<Skeleton width='100%' height='1.3rem' />}>
+				<BreadCrumb crumbs={['Home', 'Ban List']} />
+			</Suspense>
 
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={
@@ -231,7 +242,7 @@ export default function BanList() {
 									normalFormatDiffSpreads={{ numNewForbidden, numNewLimited, numNewSemiLimited, numRemoved }}
 									dlFormatSpreads={{ numForbidden, numLimitedOne, numLimitedTwo, numLimitedThree }}
 									dlFormatDiffSpreads={{ numNewForbidden, numNewLimitedOne, numNewLimitedTwo, numNewLimitedThree, numRemoved }}
-									isFetchingBanList={isFetchingBanList}
+									isFetchingBanList={isFetchingBanListContent}
 									isFetchingBanListNewContent={isFetchingBanListNewContent}
 									isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
 									format={format}
@@ -242,7 +253,38 @@ export default function BanList() {
 				}
 				twoThirdComponent={
 					<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='500px' />}>
+						{/* this div might seem useless but it is needed for css to work as expected on its children */}
+						<div>
+							<BanListDiffContent
+								format={format}
+								normalFormatDiffContent={{
+									removedCards: removedCards,
+									numRemoved: numRemoved,
+									newForbidden: newForbidden,
+									newLimited: newLimited,
+									newSemiLimited: newSemiLimited,
+									numNewForbidden: numNewForbidden,
+									numNewLimited: numNewLimited,
+									numNewSemiLimited: numNewSemiLimited,
+								}}
+								dlFormatDiffContent={{
+									removedCards: removedCards,
+									numRemoved: numRemoved,
+									newForbidden: newForbidden,
+									newLimitedOne: newLimitedOne,
+									newLimitedTwo: newLimitedTwo,
+									newLimitedThree: newLimitedThree,
+									numNewForbidden: numNewForbidden,
+									numNewLimitedOne: numNewLimitedOne,
+									numNewLimitedTwo: numNewLimitedTwo,
+									numNewLimitedThree: numNewLimitedThree,
+								}}
+								isFetchingBanListNewContent={isFetchingBanListNewContent}
+								isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
+							/>
+						</div>
 						<BanListContent
+							format={format}
 							normalFormatContent={{
 								forbidden: forbidden,
 								limited: limited,
@@ -250,19 +292,6 @@ export default function BanList() {
 								numForbidden: numForbidden,
 								numLimited: numLimited,
 								numSemiLimited: numSemiLimited,
-								isFetchingBanList: isFetchingBanList,
-							}}
-							normalFormatDiffContent={{
-								removedCards: removedCards,
-								numRemoved: numRemoved,
-								newForbiddenCards: newForbiddenCards,
-								newLimitedCards: newLimitedCards,
-								newSemiLimitedCards: newSemiLimitedCards,
-								numNewForbidden: numNewForbidden,
-								numNewLimited: numNewLimited,
-								numNewSemiLimited: numNewSemiLimited,
-								isFetchingBanListNewContent: isFetchingBanListNewContent,
-								isFetchingBanListRemovedContent: isFetchingBanListRemovedContent,
 							}}
 							dlFormatContent={{
 								forbidden: forbidden,
@@ -273,26 +302,8 @@ export default function BanList() {
 								numLimitedOne: numLimitedOne,
 								numLimitedTwo: numLimitedTwo,
 								numLimitedThree: numLimitedThree,
-								isFetchingBanList: isFetchingBanList,
 							}}
-							dlFormatDiffContent={{
-								removedCards: removedCards,
-								numRemoved: numRemoved,
-								newForbiddenCards: newForbiddenCards,
-								newLimitedOneCards: newLimitedOneCards,
-								newLimitedTwoCards: newLimitedTwoCards,
-								newLimitedThreeCards: newLimitedThreeCards,
-								numNewForbidden: numNewForbidden,
-								numNewLimitedOne: numNewLimitedOne,
-								numNewLimitedTwo: numNewLimitedTwo,
-								numNewLimitedThree: numNewLimitedThree,
-								isFetchingBanListNewContent: isFetchingBanListNewContent,
-								isFetchingBanListRemovedContent: isFetchingBanListRemovedContent,
-							}}
-							format={format}
-							isFetchingBanListNewContent={isFetchingBanListNewContent}
-							isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
-							isFetchingBanList={isFetchingBanList}
+							isFetchingBanList={isFetchingBanListContent}
 						/>
 					</Suspense>
 				}

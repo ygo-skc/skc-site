@@ -13,11 +13,16 @@ const GenericNonBreakingErr = lazy(() =>
 )
 const YouTubeUploads = lazy(() => import('../util/social/YouTubeUploads'))
 
-type _YouTubeData = {
+type YouTubeChannelID = {
 	channel: 'skc' | 'btsc'
 }
 
-const channelIds = {
+type UploadsResponse = {
+	videos: HeartApiYouTubeUpload[]
+	total: number
+}
+
+const validChannelIds = {
 	skc: 'UCBZ_1wWyLQI3SV9IgLbyiNQ',
 	btsc: 'UCu0LlZ527i4NcXNhru67D1Q',
 }
@@ -32,22 +37,22 @@ const channelDescription = {
 	btsc: 'This is my secondary channel. Really, I only upload here if I see an interesting Pokemon TCG product I want to open.',
 }
 
-const YouTubeData: FC<_YouTubeData> = ({ channel }) => {
-	const channelId = channelIds[channel]
+const YouTubeData: FC<YouTubeChannelID> = ({ channel }) => {
+	const channelId = validChannelIds[channel]
 	const [youtubeUploadData, setYoutubeUploadData] = useState<HeartApiYouTubeUpload[]>([])
 	const [isFetchingData, setIsFetchingData] = useState(true)
 	const [errFetchingData, setErrFetchingData] = useState(false)
 
 	useEffect(() => {
 		startTransition(() => {
-			FetchHandler.handleFetch(
+			FetchHandler.handleFetch<UploadsResponse>(
 				`${DownstreamServices.HEART_API_HOST_NAME}/api/v1/yt/channel/uploads?channelId=${channelId}`,
 				(json) => {
 					setYoutubeUploadData(json.videos)
 					setIsFetchingData(false)
 				},
 				false
-			)?.catch((_err) => {
+			)?.catch(() => {
 				setErrFetchingData(true)
 				setIsFetchingData(false)
 			})
