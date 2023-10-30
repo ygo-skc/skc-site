@@ -1,3 +1,5 @@
+import '../../css/util/list.css'
+
 import { useState, useEffect, lazy, FunctionComponent, startTransition } from 'react'
 import { Helmet } from 'react-helmet'
 
@@ -5,14 +7,15 @@ import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 
 import { Dates } from '../../helper/Dates'
-import { Skeleton, Typography } from '@mui/material'
-import { SKCTable, Section } from 'skc-rcl'
+import { Chip, Skeleton, Typography } from '@mui/material'
+import { DateComponent, Section } from 'skc-rcl'
+import Grid2 from '@mui/material/Unstable_Grid2'
 
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 
 const ProductBrowse: FunctionComponent = () => {
 	const [productJson, setProductJson] = useState<ProductInfo[]>([])
-	const [productGridItems, setProductGridItems] = useState<JSX.Element | undefined>(undefined)
+	const [productGridItems, setProductGridItems] = useState<JSX.Element[]>([])
 	const [isDataLoaded, setIsDataLoaded] = useState(false)
 
 	useEffect(() => {
@@ -24,15 +27,32 @@ const ProductBrowse: FunctionComponent = () => {
 	}, [])
 
 	useEffect(() => {
-		const headers: string[] = ['Name', 'ID', 'Type', 'Sub-Type', 'Release']
-		const rowOnClick: (() => void)[] = []
-		const productRows: string[][] = productJson.map((product: ProductInfo): string[] => {
-			rowOnClick.push(() => window.location.assign(`/product/${product.productId}`))
-			return [product.productName!, product.productId, product.productType!, product.productSubType!, Dates.fromYYYYMMDDToDateStr(product.productReleaseDate)]
+		const x: JSX.Element[] = productJson.map((product: ProductInfo): JSX.Element => {
+			const productReleaseDate = Dates.fromYYYYMMDDToDate(product.productReleaseDate)
+
+			return (
+				<Grid2 key={product.productId} className='list-item-parent' onClick={() => window.location.assign(`/product/${product.productId}`)} xs={12} sm={6} md={4} lg={4} xl={3}>
+					{' '}
+					<DateComponent month={Dates.getMonth(productReleaseDate)} day={+Dates.getDay(productReleaseDate)} year={+Dates.getYear(productReleaseDate)} variant='condensed' />
+					<div className='list-item-text'>
+						<Typography variant='body1'>
+							{product.productId} &#x25cf; Total Cards - {product.productTotal}
+						</Typography>
+						<Typography variant='subtitle1'>{product.productName}</Typography>
+						<div>
+							<Typography variant='body1' className='rarities'>
+								Product Types
+							</Typography>
+							<Chip className='dark-chip-condensed' key={product.productType} label={product.productType} />
+							<Chip className='dark-chip-condensed' key={product.productSubType} label={product.productSubType} />
+						</div>
+					</div>
+				</Grid2>
+			)
 		})
 
 		startTransition(() => {
-			setProductGridItems(<SKCTable header={headers} rows={productRows} rowActions={rowOnClick} fullWidth />)
+			setProductGridItems(x)
 			setIsDataLoaded(true)
 		})
 	}, [productJson])
@@ -51,7 +71,7 @@ const ProductBrowse: FunctionComponent = () => {
 				<div className='section-content'>
 					<Typography variant='h5'>Sorted By Release Date</Typography>
 					{!isDataLoaded && <Skeleton variant='rectangular' height='500px' width='100%' className='rounded-skeleton' />}
-					{isDataLoaded && productGridItems}
+					{isDataLoaded && <Grid2 container>{productGridItems}</Grid2>}
 				</div>
 			</Section>
 		</div>
