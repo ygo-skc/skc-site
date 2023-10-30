@@ -1,8 +1,9 @@
+import '../../../css/util/database-search-styles.css'
+
 import { lazy, startTransition, useCallback, useEffect, useState } from 'react'
 
 import Grid2 from '@mui/material/Unstable_Grid2'
 
-import '../../../css/util/database-info/database-search-styles.css'
 import DownstreamServices from '../../../helper/DownstreamServices'
 import FetchHandler from '../../../helper/FetchHandler'
 import { Skeleton } from '@mui/material'

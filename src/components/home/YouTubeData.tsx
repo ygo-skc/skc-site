@@ -1,10 +1,10 @@
+import '../../css/util/youtube-data.css'
+
 import { useEffect, useState, lazy, FC, startTransition, Fragment, Suspense } from 'react'
 
 import DownstreamServices from '../../helper/DownstreamServices'
 import FetchHandler from '../../helper/FetchHandler'
 import { Skeleton } from '@mui/material'
-
-import '../../css/util/generic/youtube-data.css'
 
 const GenericNonBreakingErr = lazy(() =>
 	import('skc-rcl').then((module) => {

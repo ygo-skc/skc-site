@@ -1,9 +1,10 @@
+import '../../css/util/grids-and-containers.css'
+
 import { lazy, Suspense } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
 import SuspenseFallback from '../SuspenseFallback'
 
-import '../../css/util/grid/grids-and-containers.css'
 import AppRoutes from '../../helper/AppRoutes'
 
 const Home = lazy(() => import('./Home'))

@@ -38,12 +38,12 @@ change me
 
 /* overwrite date styles to prevent 'display: flex' from making height 100% of parent
 you can also surround component with a div */
-.date-parent {
+.list-item-parent .date-parent {
 	margin: auto;
 	margin-top: 0;
 }
 
-.inline-date {
+.list-item-parent .inline-date {
 	margin: auto;
 	margin-top: 0;
 }
