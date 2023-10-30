@@ -1,4 +1,6 @@
 import '../../../css/card/card-information-styles.css'
+import '../../../css/util/list.css'
+
 import { FC, memo } from 'react'
 import Grid2 from '@mui/material/Unstable_Grid2'
 
