@@ -47,10 +47,10 @@
 		"ci:test": "react-scripts test --ci --coverage --watchAll=false",
 		"lint": "eslint src --ext .tsx,.ts",
 		"mutation": "stryker run config/stryker.conf.json",
-		"checkAWS:cloudfrontSKC": "aws cloudfront list-distributions | jq '.DistributionList.Items[] | select(.Aliases.Items | contains([\"thesupremekingscastle.com\"])) |  {id: .Id, aliases: .Aliases}'",
-		"uploadAWS:production": "npm run build:production; aws s3 rm s3://yugiohsite/ --recursive; aws s3 sync build s3://yugiohsite/ --cache-control max-age=3600; aws cloudfront create-invalidation --distribution-id ${YGO_CLOUDFRONT_PROD} --paths '/*'",
-		"uploadAWS:development": "npm run build:development_remote; aws s3 rm s3://yugiohsitedev/ --recursive; aws s3 sync build s3://yugiohsitedev/ --cache-control max-age=3600; aws cloudfront create-invalidation --distribution-id ${YGO_CLOUDFRONT_DEV} --paths '/*'",
-		"uploadAWS:ec2-dev": "npm run build:development_remote; bash sync.sh ${SKC_EC2_URL}"
+		"aws:check-skc-cloudfront": "aws cloudfront list-distributions | jq '.DistributionList.Items[] | select(.Aliases.Items | contains([\"thesupremekingscastle.com\"])) |  {id: .Id, aliases: .Aliases}'",
+		"deploy:prod": "npm run build:production; aws s3 rm s3://yugiohsite/ --recursive; aws s3 sync build s3://yugiohsite/ --cache-control max-age=3600; aws cloudfront create-invalidation --distribution-id ${YGO_CLOUDFRONT_PROD} --paths '/*'",
+		"deploy:dev": "npm run build:development_remote; aws s3 rm s3://yugiohsitedev/ --recursive; aws s3 sync build s3://yugiohsitedev/ --cache-control max-age=3600; aws cloudfront create-invalidation --distribution-id ${YGO_CLOUDFRONT_DEV} --paths '/*'",
+		"deploy:ec2-dev": "npm run build:development_remote; bash sync.sh ${SKC_EC2_URL}"
 	},
 	"eslintConfig": {
 		"extends": "react-app"
