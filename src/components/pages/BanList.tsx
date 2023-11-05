@@ -238,10 +238,8 @@ export default function BanList() {
 								/>
 
 								<BanListBreakdown
-									normalFormatSpreads={{ numForbidden, numLimited, numSemiLimited }}
-									normalFormatDiffSpreads={{ numNewForbidden, numNewLimited, numNewSemiLimited, numRemoved }}
-									dlFormatSpreads={{ numForbidden, numLimitedOne, numLimitedTwo, numLimitedThree }}
-									dlFormatDiffSpreads={{ numNewForbidden, numNewLimitedOne, numNewLimitedTwo, numNewLimitedThree, numRemoved }}
+									spreads={{ numForbidden, numLimited, numSemiLimited, numLimitedOne, numLimitedTwo, numLimitedThree, format }}
+									diffSpreads={{ numNewForbidden, numNewLimited, numNewSemiLimited, numRemoved, numNewLimitedOne, numNewLimitedTwo, numNewLimitedThree, format }}
 									isFetchingBanList={isFetchingBanListContent}
 									isFetchingBanListNewContent={isFetchingBanListNewContent}
 									isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}

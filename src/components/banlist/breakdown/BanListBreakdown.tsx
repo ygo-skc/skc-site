@@ -1,17 +1,12 @@
-import { FC, Fragment, memo } from 'react'
+import { FC, memo } from 'react'
 import { AcceptableBanListFormat } from '../../../helper/BanListUtil'
-import BanListBreakdownDuelLinksFormat from './duel-links/BanListBreakdownDuelLinksFormat'
-import { _BanListDiffSpreadDuelLinksFormat } from './duel-links/BanListDiffSpreadDuelLinksFormat'
-import { _BanListSpreadDuelLinksFormat } from './duel-links/BanListSpreadDuelLinksFormat'
-import BanListBreakdownNormalFormat from './normal/BanListBreakdownNormalFormat'
-import { _BanListDiffSpreadNormalFormat } from './normal/BanListDiffSpreadNormalFormat'
-import { _BanListSpreadNormalFormat } from './normal/BanListSpreadNormalFormat'
+import BanListDiffSpread, { BanListDiffSpreadProps } from './BanListDiffSpread'
+import BanListSpread, { BanListSpreadProps } from './BanListSpread'
+import { Divider, Skeleton, Typography } from '@mui/material'
 
 type BanListBreakdownProps = {
-	normalFormatSpreads: _BanListSpreadNormalFormat
-	normalFormatDiffSpreads: _BanListDiffSpreadNormalFormat
-	dlFormatSpreads: _BanListSpreadDuelLinksFormat
-	dlFormatDiffSpreads: _BanListDiffSpreadDuelLinksFormat
+	spreads: BanListSpreadProps
+	diffSpreads: BanListDiffSpreadProps
 	isFetchingBanList: boolean
 	isFetchingBanListNewContent: boolean
 	isFetchingBanListRemovedContent: boolean
@@ -19,46 +14,46 @@ type BanListBreakdownProps = {
 }
 
 const BanListBreakdown: FC<BanListBreakdownProps> = memo(
-	({
-		normalFormatSpreads,
-		normalFormatDiffSpreads,
-		dlFormatSpreads,
-		dlFormatDiffSpreads,
-		isFetchingBanList,
-		isFetchingBanListNewContent,
-		isFetchingBanListRemovedContent,
-		format,
-	}) => {
+	({ spreads, diffSpreads, isFetchingBanList, isFetchingBanListNewContent, isFetchingBanListRemovedContent, format }) => {
 		return (
-			<Fragment>
-				{format === 'DL' ? (
-					<BanListBreakdownDuelLinksFormat
-						spreads={dlFormatSpreads}
-						diffSpreads={dlFormatDiffSpreads}
-						isFetchingBanList={isFetchingBanList}
-						isFetchingBanListNewContent={isFetchingBanListNewContent}
-						isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
-					/>
+			<div className='group'>
+				<Typography variant='h5'>Breakdown</Typography>
+
+				{isFetchingBanList ? (
+					<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='80px' />
 				) : (
-					<BanListBreakdownNormalFormat
-						spreads={normalFormatSpreads}
-						diffSpreads={normalFormatDiffSpreads}
-						isFetchingBanList={isFetchingBanList}
-						isFetchingBanListNewContent={isFetchingBanListNewContent}
-						isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
+					<BanListSpread
+						format={format}
+						numForbidden={spreads.numForbidden}
+						numLimited={spreads.numLimited}
+						numSemiLimited={spreads.numSemiLimited}
+						numLimitedOne={spreads.numLimitedOne}
+						numLimitedTwo={spreads.numLimitedTwo}
+						numLimitedThree={spreads.numLimitedThree}
 					/>
 				)}
-			</Fragment>
+
+				<Divider className='dark-translucent-divider' />
+
+				{isFetchingBanListNewContent || isFetchingBanListRemovedContent ? (
+					<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='80px' />
+				) : (
+					<BanListDiffSpread
+						format={format}
+						numNewForbidden={diffSpreads.numNewForbidden}
+						numNewLimited={diffSpreads.numNewLimited}
+						numNewSemiLimited={diffSpreads.numNewSemiLimited}
+						numRemoved={diffSpreads.numRemoved}
+						numNewLimitedOne={diffSpreads.numNewLimitedOne}
+						numNewLimitedTwo={diffSpreads.numNewLimitedTwo}
+						numNewLimitedThree={diffSpreads.numNewLimitedThree}
+					/>
+				)}
+			</div>
 		)
 	},
 	(prevProps, nextProps) => {
-		return (
-			prevProps.isFetchingBanList === nextProps.isFetchingBanList &&
-			prevProps.normalFormatSpreads === nextProps.normalFormatSpreads &&
-			prevProps.normalFormatDiffSpreads === nextProps.normalFormatDiffSpreads &&
-			prevProps.dlFormatSpreads === nextProps.dlFormatSpreads &&
-			prevProps.dlFormatDiffSpreads === nextProps.dlFormatDiffSpreads
-		)
+		return prevProps.isFetchingBanList === nextProps.isFetchingBanList && prevProps.format === nextProps.format && prevProps.diffSpreads === nextProps.diffSpreads
 	}
 )
 

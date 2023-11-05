@@ -15,7 +15,7 @@ function getValidFormat(userDefinedFormat: string | undefined): AcceptableBanLis
 }
 
 function determineListSize(size: number | undefined): number {
-	return size === undefined ? 0 : size
+	return size ?? 0
 }
 
 export { AcceptableBanListFormat, getValidFormat, determineListSize }
