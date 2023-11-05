@@ -1,12 +1,23 @@
 import { FC, memo } from 'react'
 import { AcceptableBanListFormat } from '../../../helper/BanListUtil'
-import BanListDiffSpread, { BanListDiffSpreadProps } from './BanListDiffSpread'
-import BanListSpread, { BanListSpreadProps } from './BanListSpread'
+import BanListDiffSpread from './BanListDiffSpread'
+import BanListSpread from './BanListSpread'
 import { Divider, Skeleton, Typography } from '@mui/material'
 
 type BanListBreakdownProps = {
-	spreads: BanListSpreadProps
-	diffSpreads: BanListDiffSpreadProps
+	numForbidden: number
+	numLimited: number
+	numSemiLimited: number
+	numLimitedOne: number
+	numLimitedTwo: number
+	numLimitedThree: number
+	numNewForbidden: number
+	numNewLimited: number
+	numNewSemiLimited: number
+	numRemoved: number
+	numNewLimitedOne: number
+	numNewLimitedTwo: number
+	numNewLimitedThree: number
 	isFetchingBanList: boolean
 	isFetchingBanListNewContent: boolean
 	isFetchingBanListRemovedContent: boolean
@@ -14,7 +25,25 @@ type BanListBreakdownProps = {
 }
 
 const BanListBreakdown: FC<BanListBreakdownProps> = memo(
-	({ spreads, diffSpreads, isFetchingBanList, isFetchingBanListNewContent, isFetchingBanListRemovedContent, format }) => {
+	({
+		numForbidden,
+		numLimited,
+		numSemiLimited,
+		numLimitedOne,
+		numLimitedTwo,
+		numLimitedThree,
+		numNewForbidden,
+		numNewLimited,
+		numNewSemiLimited,
+		numRemoved,
+		numNewLimitedOne,
+		numNewLimitedTwo,
+		numNewLimitedThree,
+		isFetchingBanList,
+		isFetchingBanListNewContent,
+		isFetchingBanListRemovedContent,
+		format,
+	}) => {
 		return (
 			<div className='group'>
 				<Typography variant='h5'>Breakdown</Typography>
@@ -24,12 +53,12 @@ const BanListBreakdown: FC<BanListBreakdownProps> = memo(
 				) : (
 					<BanListSpread
 						format={format}
-						numForbidden={spreads.numForbidden}
-						numLimited={spreads.numLimited}
-						numSemiLimited={spreads.numSemiLimited}
-						numLimitedOne={spreads.numLimitedOne}
-						numLimitedTwo={spreads.numLimitedTwo}
-						numLimitedThree={spreads.numLimitedThree}
+						numForbidden={numForbidden}
+						numLimited={numLimited}
+						numSemiLimited={numSemiLimited}
+						numLimitedOne={numLimitedOne}
+						numLimitedTwo={numLimitedTwo}
+						numLimitedThree={numLimitedThree}
 					/>
 				)}
 
@@ -40,20 +69,51 @@ const BanListBreakdown: FC<BanListBreakdownProps> = memo(
 				) : (
 					<BanListDiffSpread
 						format={format}
-						numNewForbidden={diffSpreads.numNewForbidden}
-						numNewLimited={diffSpreads.numNewLimited}
-						numNewSemiLimited={diffSpreads.numNewSemiLimited}
-						numRemoved={diffSpreads.numRemoved}
-						numNewLimitedOne={diffSpreads.numNewLimitedOne}
-						numNewLimitedTwo={diffSpreads.numNewLimitedTwo}
-						numNewLimitedThree={diffSpreads.numNewLimitedThree}
+						numNewForbidden={numNewForbidden}
+						numNewLimited={numNewLimited}
+						numNewSemiLimited={numNewSemiLimited}
+						numRemoved={numRemoved}
+						numNewLimitedOne={numNewLimitedOne}
+						numNewLimitedTwo={numNewLimitedTwo}
+						numNewLimitedThree={numNewLimitedThree}
 					/>
 				)}
 			</div>
 		)
 	},
 	(prevProps, nextProps) => {
-		return prevProps.isFetchingBanList === nextProps.isFetchingBanList && prevProps.format === nextProps.format && prevProps.diffSpreads === nextProps.diffSpreads
+		return (
+			prevProps.isFetchingBanList === nextProps.isFetchingBanList &&
+			prevProps.format === nextProps.format &&
+			// if format is non DL - check to see if at least one of the content arrays changed - negate condition as falsy means component should re-render
+			!(
+				prevProps.format !== 'DL' &&
+				(prevProps.numForbidden !== nextProps.numForbidden || prevProps.numLimited !== nextProps.numLimited || prevProps.numSemiLimited !== nextProps.numSemiLimited)
+			) &&
+			// if format is DL - check to see if at least one of the content arrays changed - negate condition as falsy means component should re-render
+			!(
+				prevProps.format === 'DL' &&
+				(prevProps.numForbidden !== nextProps.numForbidden ||
+					prevProps.numLimitedOne !== nextProps.numLimitedOne ||
+					prevProps.numLimitedTwo !== nextProps.numLimitedTwo ||
+					prevProps.numLimitedThree !== nextProps.numLimitedThree)
+			) &&
+			// if format is non DL - check to see if at least one of the content arrays changed - negate condition as falsy means component should re-render
+			!(
+				prevProps.format !== 'DL' &&
+				(prevProps.numNewForbidden !== nextProps.numNewForbidden ||
+					prevProps.numNewLimited !== nextProps.numNewLimited ||
+					prevProps.numNewSemiLimited !== nextProps.numNewSemiLimited)
+			) &&
+			// if format is DL - check to see if at least one of the content arrays changed - negate condition as falsy means component should re-render
+			!(
+				prevProps.format === 'DL' &&
+				(prevProps.numNewForbidden !== nextProps.numNewForbidden ||
+					prevProps.numNewLimitedOne !== nextProps.numNewLimitedOne ||
+					prevProps.numNewLimitedTwo !== nextProps.numNewLimitedTwo ||
+					prevProps.numNewLimitedThree !== nextProps.numNewLimitedThree)
+			)
+		)
 	}
 )
 

@@ -33,7 +33,6 @@ const BanListDiffSpread: FC<BanListDiffSpreadProps> = ({
 					<Chip className='breakdown-chip limited-one-breakdown-chip' variant='outlined' label={`${numNewLimitedOne} New Limited One`} />
 					<Chip className='breakdown-chip limited-two-breakdown-chip' variant='outlined' label={`${numNewLimitedTwo} New Limited Two`} />
 					<Chip className='breakdown-chip limited-three-breakdown-chip' variant='outlined' label={`${numNewLimitedThree} New Limited Three`} />
-					<Chip className='breakdown-chip removed-breakdown-chip' variant='outlined' label={`${numRemoved} New Unlimited`} />
 				</Fragment>
 			) : (
 				<Fragment>
