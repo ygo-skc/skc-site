@@ -1,15 +1,18 @@
-import { FC, Fragment, useEffect, useReducer } from 'react'
+import { FC, useEffect, useReducer } from 'react'
 import { Hint } from 'skc-rcl'
 import CardDisplayGrid from '../util/grid/CardDisplayGrid'
 import cardDisplayGridReducer, { CardDisplayGridStateReducerActionType } from '../../helper/reducers/CardDisplayGridReducer'
+import { Typography } from '@mui/material'
 
 type BanListSectionProps = {
 	sectionExplanation: string
 	cards: SKCCard[]
 	isFetchingBanList: boolean
+	value: number
+	index: number
 }
 
-const BanListSection: FC<BanListSectionProps> = ({ sectionExplanation, cards, isFetchingBanList }) => {
+const BanListSection: FC<BanListSectionProps> = ({ sectionExplanation, cards, isFetchingBanList, value, index }) => {
 	const [cardGridState, cardDisplayGridDispatch] = useReducer(cardDisplayGridReducer, {
 		results: [],
 		totalResults: 0,
@@ -34,10 +37,10 @@ const BanListSection: FC<BanListSectionProps> = ({ sectionExplanation, cards, is
 	}, [isFetchingBanList, cards])
 
 	return (
-		<Fragment>
+		<Typography component='div' role='tabpanel' hidden={value !== index} id={`full-width-tabpanel-${index}`} aria-labelledby={`full-width-tab-${index}`}>
 			<Hint>{sectionExplanation}</Hint>
 			<CardDisplayGrid cardGridState={cardGridState} dispatch={cardDisplayGridDispatch} />
-		</Fragment>
+		</Typography>
 	)
 }
 
