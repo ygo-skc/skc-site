@@ -16,7 +16,7 @@ const CardsWithDifferentStatus: FC<CardsWithDifferentStatusProps> = ({ newStatus
 			cards.map((newStatus: SKCCardsPreviousBanListStatus) => {
 				const card: SKCCard = newStatus.card
 
-				return <YGOCardWithPreviousBanStatus key={card.cardID} card={card} previousBanStatus={newStatus.previousBanStatus} />
+				return <YGOCardWithPreviousBanStatus key={`${newStatusName}-${card.cardID}`} card={card} previousBanStatus={newStatus.previousBanStatus} />
 			})
 		)
 	}, [cards])

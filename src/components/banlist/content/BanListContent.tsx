@@ -33,7 +33,7 @@ const BanListContent: FC<BanListContentProps> = memo(
 
 		const handleTabClicked = useCallback((_: React.SyntheticEvent, newValue: number) => setCurrentTab(newValue), [])
 
-		const isFetching = isFetchingBanList && isFetchingBanListNewContent && isFetchingBanListRemovedContent
+		const isFetching = isFetchingBanList || isFetchingBanListNewContent || isFetchingBanListRemovedContent
 
 		useEffect(() => {
 			if (format !== 'DL') {

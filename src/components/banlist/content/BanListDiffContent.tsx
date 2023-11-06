@@ -1,5 +1,5 @@
 import { Skeleton } from '@mui/material'
-import { FC, Fragment, memo } from 'react'
+import { FC, Fragment, memo, useEffect, useState } from 'react'
 import CardsWithDifferentStatus from './CardsWithDifferentStatus'
 
 type BanListDiffContentProps = {
@@ -12,28 +12,78 @@ type BanListDiffContentProps = {
 
 const BanListDiffContent: FC<BanListDiffContentProps> = memo(
 	({ format, normalFormatDiffContent, dlFormatDiffContent, isFetchingBanListNewContent, isFetchingBanListRemovedContent }) => {
-		const isFetchingContent = isFetchingBanListNewContent && isFetchingBanListRemovedContent
+		const [content, setContent] = useState<JSX.Element[]>([])
+		const [isFetchingContent, setIsFetchingContent] = useState(true)
+
+		useEffect(() => {
+			if (isFetchingContent) {
+				setContent([])
+			} else if (!isFetchingContent && format !== 'DL') {
+				setContent([
+					<CardsWithDifferentStatus
+						key={`${format}-Forbidden`}
+						newStatusName='Forbidden'
+						cards={normalFormatDiffContent.newForbidden}
+						numCards={normalFormatDiffContent.numNewForbidden}
+					/>,
+					<CardsWithDifferentStatus
+						key={`${format}-Limited`}
+						newStatusName='Limited'
+						cards={normalFormatDiffContent.newLimited}
+						numCards={normalFormatDiffContent.numNewLimited}
+					/>,
+					<CardsWithDifferentStatus
+						key={`${format}-SemiLimited`}
+						newStatusName='Semi Limited'
+						cards={normalFormatDiffContent.newSemiLimited}
+						numCards={normalFormatDiffContent.numNewSemiLimited}
+					/>,
+					<CardsWithDifferentStatus
+						key={`${format}-Unlimited`}
+						newStatusName='Unlimited'
+						cards={normalFormatDiffContent.removedCards}
+						numCards={normalFormatDiffContent.numRemoved}
+					/>,
+				])
+			} else if (!isFetchingContent && format === 'DL') {
+				setContent([
+					<CardsWithDifferentStatus
+						key={`${format}-Forbidden`}
+						newStatusName='Forbidden'
+						cards={dlFormatDiffContent.newForbidden}
+						numCards={dlFormatDiffContent.numNewForbidden}
+					/>,
+					<CardsWithDifferentStatus
+						key={`${format}-LimitedOne`}
+						newStatusName='Limited One'
+						cards={dlFormatDiffContent.newLimitedOne}
+						numCards={dlFormatDiffContent.numNewLimitedOne}
+					/>,
+					<CardsWithDifferentStatus
+						key={`${format}-LimitedTwo`}
+						newStatusName='Limited Two'
+						cards={dlFormatDiffContent.newLimitedTwo}
+						numCards={dlFormatDiffContent.numNewLimitedTwo}
+					/>,
+					<CardsWithDifferentStatus
+						key={`${format}-LimitedThree`}
+						newStatusName='Limited Three'
+						cards={dlFormatDiffContent.newLimitedThree}
+						numCards={dlFormatDiffContent.numNewLimitedThree}
+					/>,
+					<CardsWithDifferentStatus key={`${format}-Unlimited`} newStatusName='Unlimited' cards={dlFormatDiffContent.removedCards} numCards={dlFormatDiffContent.numRemoved} />,
+				])
+			}
+		}, [isFetchingContent, format, normalFormatDiffContent, dlFormatDiffContent])
+
+		useEffect(() => {
+			setIsFetchingContent(isFetchingBanListNewContent || isFetchingBanListRemovedContent)
+		}, [isFetchingBanListNewContent, isFetchingBanListRemovedContent])
 
 		return (
 			<Fragment>
 				{isFetchingContent && <Skeleton className='rounded-skeleton cards-with-diff-status-skeleton' variant='rectangular' height='30rem' width='100%' />}
-				{!isFetchingContent && format !== 'DL' && (
-					<Fragment>
-						<CardsWithDifferentStatus newStatusName='Forbidden' cards={normalFormatDiffContent.newForbidden} numCards={normalFormatDiffContent.numNewForbidden} />
-						<CardsWithDifferentStatus newStatusName='Limited' cards={normalFormatDiffContent.newLimited} numCards={normalFormatDiffContent.numNewLimited} />
-						<CardsWithDifferentStatus newStatusName='Semi Limited' cards={normalFormatDiffContent.newSemiLimited} numCards={normalFormatDiffContent.numNewSemiLimited} />
-						<CardsWithDifferentStatus newStatusName='Unlimited' cards={normalFormatDiffContent.removedCards} numCards={normalFormatDiffContent.numRemoved} />
-					</Fragment>
-				)}
-				{!isFetchingContent && format === 'DL' && (
-					<Fragment>
-						<CardsWithDifferentStatus newStatusName='Forbidden' cards={dlFormatDiffContent.newForbidden} numCards={dlFormatDiffContent.numNewForbidden} />
-						<CardsWithDifferentStatus newStatusName='Limited One' cards={dlFormatDiffContent.newLimitedOne} numCards={dlFormatDiffContent.numNewLimitedOne} />
-						<CardsWithDifferentStatus newStatusName='Limited Two' cards={dlFormatDiffContent.newLimitedTwo} numCards={dlFormatDiffContent.numNewLimitedTwo} />
-						<CardsWithDifferentStatus newStatusName='Limited Three' cards={dlFormatDiffContent.newLimitedThree} numCards={dlFormatDiffContent.numNewLimitedThree} />
-						<CardsWithDifferentStatus newStatusName='Unlimited' cards={dlFormatDiffContent.removedCards} numCards={dlFormatDiffContent.numRemoved} />
-					</Fragment>
-				)}
+				{content}
 			</Fragment>
 		)
 	},
