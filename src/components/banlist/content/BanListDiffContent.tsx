@@ -12,7 +12,7 @@ type BanListDiffContentProps = {
 
 const BanListDiffContent: FC<BanListDiffContentProps> = memo(
 	({ format, normalFormatDiffContent, dlFormatDiffContent, isFetchingBanListNewContent, isFetchingBanListRemovedContent }) => {
-		const isFetchingContent = isFetchingBanListNewContent || isFetchingBanListRemovedContent
+		const isFetchingContent = isFetchingBanListNewContent && isFetchingBanListRemovedContent
 
 		return (
 			<Fragment>

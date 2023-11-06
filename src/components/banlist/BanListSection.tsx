@@ -6,10 +6,10 @@ import cardDisplayGridReducer, { CardDisplayGridStateReducerActionType } from '.
 type BanListSectionProps = {
 	sectionExplanation: string
 	cards: SKCCard[]
-	isDataLoaded: boolean
+	isFetchingBanList: boolean
 }
 
-const BanListSection: FC<BanListSectionProps> = ({ sectionExplanation, cards, isDataLoaded }) => {
+const BanListSection: FC<BanListSectionProps> = ({ sectionExplanation, cards, isFetchingBanList }) => {
 	const [cardGridState, cardDisplayGridDispatch] = useReducer(cardDisplayGridReducer, {
 		results: [],
 		totalResults: 0,
@@ -19,19 +19,19 @@ const BanListSection: FC<BanListSectionProps> = ({ sectionExplanation, cards, is
 	})
 
 	useEffect(() => {
-		if (isDataLoaded) {
+		if (isFetchingBanList) {
+			cardDisplayGridDispatch({
+				type: CardDisplayGridStateReducerActionType.LOADING_GRID,
+			})
+		} else {
 			cardDisplayGridDispatch({
 				type: CardDisplayGridStateReducerActionType.INIT_GRID,
 				results: cards,
 				totalResults: cards.length,
 				totalDisplaying: cards.length,
 			})
-		} else {
-			cardDisplayGridDispatch({
-				type: CardDisplayGridStateReducerActionType.LOADING_GRID,
-			})
 		}
-	}, [isDataLoaded, cards])
+	}, [isFetchingBanList, cards])
 
 	return (
 		<Fragment>

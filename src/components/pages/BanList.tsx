@@ -262,36 +262,33 @@ export default function BanList() {
 				}
 				twoThirdComponent={
 					<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='500px' />}>
-						{/* this div might seem useless but it is needed for css to work as expected on its children */}
-						<div>
-							<BanListDiffContent
-								format={format}
-								normalFormatDiffContent={{
-									removedCards: removedCards,
-									numRemoved: numRemoved,
-									newForbidden: newForbidden,
-									newLimited: newLimited,
-									newSemiLimited: newSemiLimited,
-									numNewForbidden: numNewForbidden,
-									numNewLimited: numNewLimited,
-									numNewSemiLimited: numNewSemiLimited,
-								}}
-								dlFormatDiffContent={{
-									removedCards: removedCards,
-									numRemoved: numRemoved,
-									newForbidden: newForbidden,
-									newLimitedOne: newLimitedOne,
-									newLimitedTwo: newLimitedTwo,
-									newLimitedThree: newLimitedThree,
-									numNewForbidden: numNewForbidden,
-									numNewLimitedOne: numNewLimitedOne,
-									numNewLimitedTwo: numNewLimitedTwo,
-									numNewLimitedThree: numNewLimitedThree,
-								}}
-								isFetchingBanListNewContent={isFetchingBanListNewContent}
-								isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
-							/>
-						</div>
+						<BanListDiffContent
+							format={format}
+							normalFormatDiffContent={{
+								removedCards: removedCards,
+								numRemoved: numRemoved,
+								newForbidden: newForbidden,
+								newLimited: newLimited,
+								newSemiLimited: newSemiLimited,
+								numNewForbidden: numNewForbidden,
+								numNewLimited: numNewLimited,
+								numNewSemiLimited: numNewSemiLimited,
+							}}
+							dlFormatDiffContent={{
+								removedCards: removedCards,
+								numRemoved: numRemoved,
+								newForbidden: newForbidden,
+								newLimitedOne: newLimitedOne,
+								newLimitedTwo: newLimitedTwo,
+								newLimitedThree: newLimitedThree,
+								numNewForbidden: numNewForbidden,
+								numNewLimitedOne: numNewLimitedOne,
+								numNewLimitedTwo: numNewLimitedTwo,
+								numNewLimitedThree: numNewLimitedThree,
+							}}
+							isFetchingBanListNewContent={isFetchingBanListNewContent}
+							isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
+						/>
 						<BanListContent
 							format={format}
 							normalFormatContent={{
@@ -313,6 +310,8 @@ export default function BanList() {
 								numLimitedThree: numLimitedThree,
 							}}
 							isFetchingBanList={isFetchingBanListContent}
+							isFetchingBanListNewContent={isFetchingBanListNewContent}
+							isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
 						/>
 					</Suspense>
 				}
