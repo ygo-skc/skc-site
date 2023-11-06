@@ -84,6 +84,8 @@ const BanListBreakdown: FC<BanListBreakdownProps> = memo(
 	(prevProps, nextProps) => {
 		return (
 			prevProps.isFetchingBanList === nextProps.isFetchingBanList &&
+			prevProps.isFetchingBanListNewContent === nextProps.isFetchingBanListNewContent &&
+			prevProps.isFetchingBanListRemovedContent === nextProps.isFetchingBanListRemovedContent &&
 			prevProps.format === nextProps.format &&
 			// if format is non DL - check to see if at least one of the content arrays changed - negate condition as falsy means component should re-render
 			!(
