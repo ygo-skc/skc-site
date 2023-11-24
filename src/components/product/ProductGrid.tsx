@@ -1,8 +1,8 @@
 import { Chip, Skeleton, Typography } from '@mui/material'
 import Grid2 from '@mui/material/Unstable_Grid2'
-import { FC, Fragment, useEffect, useState } from 'react'
+import { FC, Fragment, SyntheticEvent, useEffect, useState } from 'react'
 import { Dates } from '../../helper/Dates'
-import { DateComponent } from 'skc-rcl'
+import { InlineDate } from 'skc-rcl'
 
 type ProductGridProps = {
 	section: string
@@ -19,8 +19,16 @@ const ProductGrid: FC<ProductGridProps> = ({ section, products }) => {
 				const productReleaseDate = Dates.fromYYYYMMDDToDate(product.productReleaseDate)
 				return (
 					<Grid2 key={product.productId} className='list-item-parent' onClick={() => window.location.assign(`/product/${product.productId}`)} xs={12} sm={6} md={4} lg={4} xl={3}>
-						<DateComponent month={Dates.getMonth(productReleaseDate)} day={+Dates.getDay(productReleaseDate)} year={+Dates.getYear(productReleaseDate)} variant='condensed' />
+						<div style={{ width: '30%', objectFit: 'contain' }}>
+							<img
+								style={{ objectFit: 'contain' }}
+								width={'100%'}
+								src={`https://images.thesupremekingscastle.com/products/original/${product.productId}.png`}
+								onError={(e: SyntheticEvent<HTMLImageElement, Event>) => (e.currentTarget.src = 'https://img.yugioh-card.com/en/wp-content/uploads/2023/06/RA01_550.png')}
+							/>
+						</div>
 						<div className='list-item-text'>
+							<InlineDate month={Dates.getMonth(productReleaseDate)} day={+Dates.getDay(productReleaseDate)} year={+Dates.getYear(productReleaseDate)} />
 							<Typography variant='body1'>
 								{product.productId} &#x25cf; {product.productTotal} Cards
 							</Typography>
