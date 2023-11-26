@@ -34,13 +34,16 @@ export default function CardOfTheDay() {
 
 	const suggestionClickedCB = useCallback(() => {
 		window.location.assign(`/card/${cardOfTheDay?.cardID}`)
-	}, [])
+	}, [cardOfTheDay])
 
-	const keyClickedCB = useCallback((event: React.KeyboardEvent<HTMLDivElement>) => {
-		if (event.key == 'Enter') {
-			suggestionClickedCB()
-		}
-	}, [])
+	const keyClickedCB = useCallback(
+		(event: React.KeyboardEvent<HTMLDivElement>) => {
+			if (event.key == 'Enter') {
+				suggestionClickedCB()
+			}
+		},
+		[suggestionClickedCB]
+	)
 
 	return (
 		<Section sectionName='Suggestions'>
