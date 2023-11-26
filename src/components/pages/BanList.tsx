@@ -238,10 +238,19 @@ export default function BanList() {
 								/>
 
 								<BanListBreakdown
-									normalFormatSpreads={{ numForbidden, numLimited, numSemiLimited }}
-									normalFormatDiffSpreads={{ numNewForbidden, numNewLimited, numNewSemiLimited, numRemoved }}
-									dlFormatSpreads={{ numForbidden, numLimitedOne, numLimitedTwo, numLimitedThree }}
-									dlFormatDiffSpreads={{ numNewForbidden, numNewLimitedOne, numNewLimitedTwo, numNewLimitedThree, numRemoved }}
+									numForbidden={numForbidden}
+									numLimited={numLimited}
+									numSemiLimited={numSemiLimited}
+									numLimitedOne={numLimitedOne}
+									numLimitedTwo={numLimitedTwo}
+									numLimitedThree={numLimitedThree}
+									numNewForbidden={numNewForbidden}
+									numNewLimited={numNewLimited}
+									numNewSemiLimited={numNewSemiLimited}
+									numRemoved={numRemoved}
+									numNewLimitedOne={numNewLimitedOne}
+									numNewLimitedTwo={numNewLimitedTwo}
+									numNewLimitedThree={numNewLimitedThree}
 									isFetchingBanList={isFetchingBanListContent}
 									isFetchingBanListNewContent={isFetchingBanListNewContent}
 									isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
@@ -253,36 +262,33 @@ export default function BanList() {
 				}
 				twoThirdComponent={
 					<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='500px' />}>
-						{/* this div might seem useless but it is needed for css to work as expected on its children */}
-						<div>
-							<BanListDiffContent
-								format={format}
-								normalFormatDiffContent={{
-									removedCards: removedCards,
-									numRemoved: numRemoved,
-									newForbidden: newForbidden,
-									newLimited: newLimited,
-									newSemiLimited: newSemiLimited,
-									numNewForbidden: numNewForbidden,
-									numNewLimited: numNewLimited,
-									numNewSemiLimited: numNewSemiLimited,
-								}}
-								dlFormatDiffContent={{
-									removedCards: removedCards,
-									numRemoved: numRemoved,
-									newForbidden: newForbidden,
-									newLimitedOne: newLimitedOne,
-									newLimitedTwo: newLimitedTwo,
-									newLimitedThree: newLimitedThree,
-									numNewForbidden: numNewForbidden,
-									numNewLimitedOne: numNewLimitedOne,
-									numNewLimitedTwo: numNewLimitedTwo,
-									numNewLimitedThree: numNewLimitedThree,
-								}}
-								isFetchingBanListNewContent={isFetchingBanListNewContent}
-								isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
-							/>
-						</div>
+						<BanListDiffContent
+							format={format}
+							normalFormatDiffContent={{
+								removedCards: removedCards,
+								numRemoved: numRemoved,
+								newForbidden: newForbidden,
+								newLimited: newLimited,
+								newSemiLimited: newSemiLimited,
+								numNewForbidden: numNewForbidden,
+								numNewLimited: numNewLimited,
+								numNewSemiLimited: numNewSemiLimited,
+							}}
+							dlFormatDiffContent={{
+								removedCards: removedCards,
+								numRemoved: numRemoved,
+								newForbidden: newForbidden,
+								newLimitedOne: newLimitedOne,
+								newLimitedTwo: newLimitedTwo,
+								newLimitedThree: newLimitedThree,
+								numNewForbidden: numNewForbidden,
+								numNewLimitedOne: numNewLimitedOne,
+								numNewLimitedTwo: numNewLimitedTwo,
+								numNewLimitedThree: numNewLimitedThree,
+							}}
+							isFetchingBanListNewContent={isFetchingBanListNewContent}
+							isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
+						/>
 						<BanListContent
 							format={format}
 							normalFormatContent={{
@@ -304,6 +310,8 @@ export default function BanList() {
 								numLimitedThree: numLimitedThree,
 							}}
 							isFetchingBanList={isFetchingBanListContent}
+							isFetchingBanListNewContent={isFetchingBanListNewContent}
+							isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
 						/>
 					</Suspense>
 				}

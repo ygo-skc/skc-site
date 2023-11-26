@@ -12,12 +12,6 @@ const CardData = lazy(() => import('../card/card-information/CardData'))
 const CardSuggestions = lazy(() => import('../card/suggestion/CardSuggestions'))
 const CardInformationRelatedContent = lazy(() => import('../card/card-information/CardInformationRelatedContent'))
 
-class Card {
-	static cardId: string | null = null
-	static cardImg: HTMLImageElement
-	static readonly crumbs = ['Home', 'Card Browse']
-}
-
 type CardInformationState = {
 	cardName: string
 	cardColor: cardColor
@@ -80,15 +74,9 @@ function cardInformationReducer(state: CardInformationState, action: CardInforma
 }
 
 const CardInformation = () => {
-	const { cardId } = useParams()
-
-	if (Card.cardId === null) {
-		Card.cardId = cardId as string
-
-		const cardImage = new Image()
-		cardImage.src = `https://images.thesupremekingscastle.com/cards/md/${Card.cardId}.jpg`
-		Card.cardImg = cardImage
-	}
+	let { cardId } = useParams()
+	cardId = cardId as string
+	const crumbs = ['Home', 'Card Browse']
 
 	const [isLoading, setIsLoading] = useState(true)
 
@@ -108,11 +96,11 @@ const CardInformation = () => {
 		}
 	)
 
-	const [dynamicCrumbs, setDynamicCrumbs] = useState([...Card.crumbs, ''])
+	const [dynamicCrumbs, setDynamicCrumbs] = useState([...crumbs, ''])
 
 	useEffect(() => {
-		FetchHandler.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT['cardInstanceUrl']}${Card.cardId}?allInfo=true`, (cardInfo: SKCCardInfo) => {
-			setDynamicCrumbs([...Card.crumbs, cardInfo.cardID])
+		FetchHandler.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT['cardInstanceUrl']}${cardId}?allInfo=true`, (cardInfo: SKCCardInfo) => {
+			setDynamicCrumbs([...crumbs, cardInfo.cardID])
 
 			cardDispatch({
 				type: CardInformationType.UPDATE_CARD,
@@ -143,15 +131,12 @@ const CardInformation = () => {
 	return (
 		<div className='generic-container'>
 			<Helmet>
-				<title>SKC - Card: {Card.cardId}</title>
-				<meta
-					name={`SKC - Card: ${Card.cardId}`}
-					content={`Information for YuGiOh card ${cardName} such as ban lists it was in, products it can be found in, effect/stats, etc.`}
-				/>
-				<meta name='keywords' content={`YuGiOh, The Supreme Kings Castle, card, ${cardName}, ${Card.cardId}, ${cardColor}`} />
+				<title>SKC - Card: {cardId}</title>
+				<meta name={`SKC - Card: ${cardId}`} content={`Information for YuGiOh card ${cardName} such as ban lists it was in, products it can be found in, effect/stats, etc.`} />
+				<meta name='keywords' content={`YuGiOh, The Supreme Kings Castle, card, ${cardName}, ${cardId}, ${cardColor}`} />
 
-				<meta property='og:title' content={`${cardName} - ${Card.cardId}`} />
-				<meta property='og:image' content={`https://images.thesupremekingscastle.com/cards/sm/${Card.cardId}.jpg`} />
+				<meta property='og:title' content={`${cardName} - ${cardId}`} />
+				<meta property='og:image' content={`https://images.thesupremekingscastle.com/cards/tn/${cardId}.jpg`} />
 				<meta property='og:type' content='website' />
 				<meta property='og:description' content={`Details For Yugioh Card - ${cardName}`} />
 			</Helmet>
@@ -173,21 +158,20 @@ const CardInformation = () => {
 							monsterAttack={monsterAtk}
 							monsterDefense={monsterDef}
 							monsterAssociation={monsterAssociation}
-							cardID={Card.cardId}
+							cardID={cardId}
 							isLoading={isLoading}
-							cardImg={Card.cardImg}
 						/>
 					</Suspense>
 				}
 				twoThirdComponent={
 					<Suspense fallback={<Skeleton width='100%' height='10rem' />}>
-						<CardSuggestions cardID={Card.cardId} cardColor={cardColor} cardName={cardName} />
+						<CardSuggestions cardID={cardId} cardColor={cardColor} cardName={cardName} />
 						{!isLoading && (
 							<CardInformationRelatedContent
 								cardName={cardName}
 								cardColor={cardColor?.replace(/Pendulum-/gi, '') as cardColor}
 								isLoading={isLoading}
-								cardID={Card.cardId}
+								cardID={cardId}
 								productInfo={productInfo}
 								restrictedIn={restrictionInfo}
 							/>

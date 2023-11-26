@@ -1,5 +1,5 @@
 import { Avatar, Typography } from '@mui/material'
-import { FC } from 'react'
+import { FC, SyntheticEvent, useCallback } from 'react'
 
 const DBSearchOptions: FC<{ props: React.HTMLAttributes<HTMLLIElement>; searchSubject: string; cardNameOption: string; cardIdOption: string; monsterTypeOption: string }> = ({
 	props,
@@ -14,9 +14,18 @@ const DBSearchOptions: FC<{ props: React.HTMLAttributes<HTMLLIElement>; searchSu
 	const INDEX_OF_SEARCH_TERM = UPPERCASE_CARD_NAME.indexOf(UPPERCASE_SEARCH_TERM)
 	const LENGTH_OF_SEARCH_TERM = UPPERCASE_SEARCH_TERM.length
 
+	const onAvatarImgLoadErrorCB = useCallback((e: SyntheticEvent<HTMLImageElement, Event>) => {
+		e.currentTarget.src = 'https://images.thesupremekingscastle.com/cards/tn/default-card-image.jpg'
+	}, [])
+
 	return (
 		<li {...props} className='search-suggestions-parent'>
-			<Avatar className='card-image-avatar' alt={`${cardNameOption}-Avatar`} src={`https://images.thesupremekingscastle.com/cards/tn/${cardIdOption}.jpg`} />
+			<Avatar
+				className='card-image-avatar'
+				alt={`${cardNameOption}-Avatar`}
+				src={`https://images.thesupremekingscastle.com/cards/tn/${cardIdOption}.jpg`}
+				imgProps={{ onError: onAvatarImgLoadErrorCB }}
+			/>
 			<div className='search-suggestions-info-parent'>
 				<Typography className='search-suggestion-text' variant='subtitle1'>
 					{cardNameOption.slice(0, INDEX_OF_SEARCH_TERM)}
