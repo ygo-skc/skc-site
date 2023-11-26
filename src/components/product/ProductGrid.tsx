@@ -19,11 +19,11 @@ const ProductGrid: FC<ProductGridProps> = ({ section, products }) => {
 				const productReleaseDate = Dates.fromYYYYMMDDToDate(product.productReleaseDate)
 				return (
 					<Grid2 key={product.productId} className='list-item-parent' onClick={() => window.location.assign(`/product/${product.productId}`)} xs={12} sm={6} md={4} lg={4} xl={3}>
-						<div style={{ width: '30%', objectFit: 'contain' }}>
+						<div style={{ width: '23%' }}>
 							<img
 								style={{ objectFit: 'contain' }}
 								width={'100%'}
-								src={`https://images.thesupremekingscastle.com/products/original/${product.productId}.png`}
+								src={`https://images.thesupremekingscastle.com/products/sm/${product.productId}.png`}
 								onError={(e: SyntheticEvent<HTMLImageElement, Event>) => (e.currentTarget.src = 'https://img.yugioh-card.com/en/wp-content/uploads/2023/06/RA01_550.png')}
 							/>
 						</div>
