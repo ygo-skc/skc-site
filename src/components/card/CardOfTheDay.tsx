@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useCallback, useEffect, useState } from 'react'
 import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 import { CardImageRounded, GenericNonBreakingErr, InlineDate, Section, YGOCardColorIndicator } from 'skc-rcl'
@@ -32,10 +32,21 @@ export default function CardOfTheDay() {
 		})
 	}, [])
 
+	const suggestionClickedCB = useCallback(() => {
+		window.location.assign(`/card/${cardOfTheDay?.cardID}`)
+	}, [])
+
+	const keyClickedCB = useCallback((event: React.KeyboardEvent<HTMLDivElement>) => {
+		if (event.key == 'Enter') {
+			suggestionClickedCB()
+		}
+	}, [])
+
 	return (
 		<Section sectionName='Suggestions'>
 			<div
-				onClick={hasError ? undefined : () => window.location.assign(`/card/${cardOfTheDay?.cardID}`)}
+				onClick={hasError ? undefined : suggestionClickedCB}
+				onKeyDown={keyClickedCB}
 				className={`section-content ${hasError ? '' : 'card-of-the-day-parent'}`}
 				id='card-of-the-day'
 			>
