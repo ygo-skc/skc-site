@@ -18,7 +18,7 @@ const CardGridItem: FC<{ card: SKCCard }> = ({ card }) => {
 
 	return (
 		<Grid2 className='ygo-card-grid-item' id={card.cardID} key={card.cardID} xs={6} sm={4} md={4} lg={3} xl={2} onClick={handleCardClicked}>
-			<YGOCardWithImage card={card} />
+			<YGOCardWithImage card={card} imgLoadingType='lazy' />
 		</Grid2>
 	)
 }

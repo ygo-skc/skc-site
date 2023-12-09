@@ -11,7 +11,7 @@ const CardData: FC<_CardData> = memo(
 		return (
 			<Section sectionHeaderBackground={cardColor !== undefined ? (cardColor?.replace(/Pendulum-/gi, '') as cardColor) : ''} sectionName='Information'>
 				<div className='section-content'>
-					<CardImageRounded cardImg={`https://images.thesupremekingscastle.com/cards/md/${cardID}.jpg`} defaultVisibility={true} />
+					<CardImageRounded variant='md' cardID={cardID} loading='eager' />
 
 					<YGOCard
 						cardName={cardName}
