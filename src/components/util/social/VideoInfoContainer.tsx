@@ -7,7 +7,7 @@ const VideoInfoContainer: FC<_YouTubeUploads> = ({ thumbnailImg, title, url }) =
 		<div className='yt-video-info-container'>
 			<div className='yt-yt-video-image-container'>
 				<a href={url}>
-					<img className='yt-video-image' src={thumbnailImg.src} alt={`Thumbnail for video ${url}`} width='100%' />
+					<img className='yt-video-image' src={thumbnailImg.src} alt={`Thumbnail for video ${url}`} width='100%' height='auto' loading='lazy' />
 				</a>
 			</div>
 
