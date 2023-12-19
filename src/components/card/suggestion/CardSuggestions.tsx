@@ -79,7 +79,7 @@ const CardSuggestions: FC<_CardSuggestion> = ({ cardID, cardColor, cardName }) =
 			? support.map((reference: SKCCard) => {
 					return (
 						<div key={reference.cardID} className='suggested-ygo-card-wrapper' onClick={() => window.location.assign(`/card/${reference.cardID}`)}>
-							<YGOCardWithImage key={reference.cardID} card={reference} />
+							<YGOCardWithImage key={reference.cardID} card={reference} imgLoadingType='lazy' />
 						</div>
 					)
 			  })
