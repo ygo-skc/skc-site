@@ -1,7 +1,7 @@
 import { FC, useEffect, useReducer } from 'react'
 import { Hint } from 'skc-rcl'
 import CardDisplayGrid from '../util/grid/CardDisplayGrid'
-import cardDisplayGridReducer, { CardDisplayGridStateReducerActionType } from '../../helper/reducers/CardDisplayGridReducer'
+import cardDisplayGridReducer, { CardDisplayGridStateReducerActionType } from '../../reducers/CardDisplayGridReducer'
 import { Typography } from '@mui/material'
 
 type BanListSectionProps = {

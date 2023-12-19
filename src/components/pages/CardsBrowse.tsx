@@ -13,8 +13,8 @@ import DownstreamServices from '../../helper/DownstreamServices'
 
 import CardBrowse from '../util/search/CardBrowse'
 import { SKCTable, Section } from 'skc-rcl'
-import cardDisplayGridReducer, { CardDisplayGridStateReducerActionType } from '../../helper/reducers/CardDisplayGridReducer'
-import cardBrowseReducer from '../../helper/reducers/CardBrowseCriteriaReducer'
+import cardDisplayGridReducer, { CardDisplayGridStateReducerActionType } from '../../reducers/CardDisplayGridReducer'
+import cardBrowseReducer from '../../reducers/CardBrowseCriteriaReducer'
 
 const CardDisplayGrid = lazy(() => import('../util/grid/CardDisplayGrid'))
 

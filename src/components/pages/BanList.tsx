@@ -8,10 +8,10 @@ import DownstreamServices from '../../helper/DownstreamServices'
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 
 import '../../css/main-pages/ban-list.css'
-import dateReducer, { BanListDateReducerActionType } from '../../helper/reducers/BanListDateReducer'
+import dateReducer, { BanListDateReducerActionType } from '../../reducers/BanListDateReducer'
 import { useParams } from 'react-router-dom'
 import { AcceptableBanListFormat, determineListSize, getValidFormat } from '../../helper/BanListUtil'
-import { BanListReducerType, currentBanListReducer } from '../../helper/reducers/CurrentBanListReducer'
+import { BanListReducerType, currentBanListReducer } from '../../reducers/CurrentBanListReducer'
 
 const BreadCrumb = lazy(() => import('../header-footer/Breadcrumb'))
 

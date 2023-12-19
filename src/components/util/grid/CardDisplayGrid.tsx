@@ -3,7 +3,7 @@ import { memo, FC, lazy, useCallback } from 'react'
 import { Button } from '@mui/material'
 import Grid2 from '@mui/material/Unstable_Grid2'
 import { Hint } from 'skc-rcl'
-import { CardDisplayGridState, CardDisplayGridStateReducerAction, CardDisplayGridStateReducerActionType } from '../../../helper/reducers/CardDisplayGridReducer'
+import { CardDisplayGridState, CardDisplayGridStateReducerAction, CardDisplayGridStateReducerActionType } from '../../../reducers/CardDisplayGridReducer'
 import CardGridItems from './CardGridItems'
 
 const PlaceHolderGridItems = lazy(() => import('./PlaceHolderGridItems'))

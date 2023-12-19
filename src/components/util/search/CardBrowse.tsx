@@ -6,8 +6,8 @@ import { FC, Fragment, useCallback, useEffect, useReducer } from 'react'
 import SearchInput from './SearchInput'
 import Typography from '@mui/material/Typography'
 import SelectedCardBrowseCriteria from './SelectedCardBrowseCriteria'
-import { CardBrowseReducerAction, CardBrowseReducerActionType } from '../../../helper/reducers/CardBrowseCriteriaReducer'
-import cardBrowseCriteriaSearchReducer, { CardBrowseCriteriaSearchReducerActionType } from '../../../helper/reducers/CardBrowseCriteriaSearchReducer'
+import { CardBrowseReducerAction, CardBrowseReducerActionType } from '../../../reducers/CardBrowseCriteriaReducer'
+import cardBrowseCriteriaSearchReducer, { CardBrowseCriteriaSearchReducerActionType } from '../../../reducers/CardBrowseCriteriaSearchReducer'
 
 const CardBrowse: FC<{
 	skcCardBrowseCriteriaOutput: SKCCardBrowseCriteria
