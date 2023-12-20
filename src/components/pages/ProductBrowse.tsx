@@ -1,3 +1,4 @@
+import '../../css/main-pages/product-browse.css'
 import '../../css/util/list.css'
 
 import { useState, useEffect, lazy, FunctionComponent, startTransition, Suspense } from 'react'

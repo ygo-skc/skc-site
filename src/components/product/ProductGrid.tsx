@@ -1,8 +1,9 @@
-import { Chip, Skeleton, Typography } from '@mui/material'
+import { Skeleton, Typography } from '@mui/material'
 import Grid2 from '@mui/material/Unstable_Grid2'
-import { FC, Fragment, useEffect, useState } from 'react'
+import { FC, Fragment, lazy, useEffect, useState } from 'react'
 import { Dates } from '../../helper/Dates'
-import { InlineDate, ProductImage } from 'skc-rcl'
+
+const ProductGridItem = lazy(() => import('./ProductGridItem'))
 
 type ProductGridProps = {
 	section: string
@@ -18,22 +19,15 @@ const ProductGrid: FC<ProductGridProps> = ({ section, products }) => {
 			products.map((product) => {
 				const productReleaseDate = Dates.fromYYYYMMDDToDate(product.productReleaseDate)
 				return (
-					<Grid2 key={product.productId} className='list-item-parent' onClick={() => window.location.assign(`/product/${product.productId}`)} xs={12} sm={6} md={4} lg={4} xl={3}>
-						<div style={{ width: '23%' }}>
-							<ProductImage variant='sm' productID={product.productId} loading='lazy' />
-						</div>
-						<div className='list-item-text'>
-							<InlineDate month={Dates.getMonth(productReleaseDate)} day={+Dates.getDay(productReleaseDate)} year={+Dates.getYear(productReleaseDate)} />
-							<Typography variant='body1'>
-								{product.productId} &#x25cf; {product.productTotal} Cards
-							</Typography>
-							<Typography variant='subtitle1'>{product.productName}</Typography>
-							<div>
-								<Chip className='dark-chip-condensed' key={product.productType} label={product.productType} />
-								<Chip className='dark-chip-condensed' key={product.productSubType} label={product.productSubType} />
-							</div>
-						</div>
-					</Grid2>
+					<ProductGridItem
+						key={product.productId}
+						id={product.productId}
+						name={product.productName}
+						type={product.productType}
+						subType={product.productSubType}
+						totalItems={product.productTotal}
+						releaseDate={productReleaseDate}
+					/>
 				)
 			})
 		)
@@ -41,11 +35,11 @@ const ProductGrid: FC<ProductGridProps> = ({ section, products }) => {
 	}, [])
 
 	return (
-		<div key={section} style={{ marginBottom: '3rem' }}>
+		<div key={section} className='product-browse-section'>
 			{!isDataLoaded && <Skeleton variant='rectangular' height='500px' width='100%' className='rounded-skeleton' />}
 			{isDataLoaded && (
 				<Fragment>
-					<Typography variant='h4'>
+					<Typography variant='h1'>
 						{section} • {products.length} Total
 					</Typography>
 					<Grid2 container>{gridItems}</Grid2>

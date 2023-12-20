@@ -5,11 +5,6 @@ you can also surround component with a div */
 	margin-top: 0;
 }
 
-.list-item-parent .inline-date {
-	margin: auto;
-	margin-top: 0;
-}
-
 .list-item-parent {
 	display: flex;
 	flex-direction: row;
