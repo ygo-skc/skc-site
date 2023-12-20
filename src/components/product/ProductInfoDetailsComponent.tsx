@@ -16,13 +16,7 @@ const ProductInfoDetailsComponent: FC<ProductDetails> = ({ productName, productI
 			<div style={{ width: '45%', marginLeft: 'auto', marginRight: 'auto', marginBottom: '1rem', display: 'block' }}>
 				<ProductImage productID={productId} variant={'lg'} loading='eager' />
 			</div>
-			{isDataLoaded ? (
-				<Typography variant='h4'>
-					{productName} • ({productId})
-				</Typography>
-			) : (
-				<Skeleton variant='text' height={40} width='100%' style={{ marginBottom: '.8rem' }} />
-			)}
+			{isDataLoaded ? <Typography variant='h4'>{productName}</Typography> : <Skeleton variant='text' height={40} width='100%' style={{ marginBottom: '.8rem' }} />}
 
 			<div className='group'>
 				<Typography variant='h5'>Summary</Typography>
