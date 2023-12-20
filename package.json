@@ -114,7 +114,7 @@
 		],
 		"coveragePathIgnorePatterns": [
 			"src/components/",
-			"src/helper/reducers/",
+			"src/reducers/",
 			"src/helper/DownstreamServices.ts"
 		]
 	}
