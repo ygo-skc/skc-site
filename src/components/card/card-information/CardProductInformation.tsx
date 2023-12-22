@@ -2,7 +2,7 @@ import { useEffect, useState, FC, Fragment, startTransition, useCallback } from 
 import { Typography, Divider, Chip, Button } from '@mui/material'
 
 import { Dates } from '../../../helper/Dates'
-import { DateComponent, Hint } from 'skc-rcl'
+import { DateBadge, Hint } from 'skc-rcl'
 
 type CardProductInformationProps = {
 	isLoading: boolean
@@ -43,7 +43,7 @@ const CardProductInformation: FC<CardProductInformationProps> = ({ isLoading, pr
 						productContent.rarities.sort(alphaSort)
 						const productContents = (
 							<div className='list-item-parent' onClick={() => window.location.assign(`/product/${product.productId}#${cardID}`)}>
-								<DateComponent month={Dates.getMonth(productReleaseDate)} day={+Dates.getDay(productReleaseDate)} year={+Dates.getYear(productReleaseDate)} variant='condensed' />
+								<DateBadge month={Dates.getMonth(productReleaseDate)} day={+Dates.getDay(productReleaseDate)} year={+Dates.getYear(productReleaseDate)} variant='condensed' />
 								<div className='list-item-text'>
 									<Typography variant='body1'>
 										{product.productId}-{productContent.productPosition}

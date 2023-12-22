@@ -7,7 +7,7 @@ import Grid2 from '@mui/material/Unstable_Grid2'
 import DownstreamServices from '../../../helper/DownstreamServices'
 import FetchHandler from '../../../helper/FetchHandler'
 import { Skeleton } from '@mui/material'
-import { Glance, Section } from 'skc-rcl'
+import { Tile, Section } from 'skc-rcl'
 
 const DatabaseSearch = lazy(() => import('../search/DBSearch'))
 
@@ -34,9 +34,9 @@ const DatabaseInfo = () => {
 		})
 	}, [])
 
-	const handleBrowseGlanceClicked = useCallback(() => window.location.assign('/browse/card'), [])
-	const handleBanListGlanceClicked = useCallback(() => window.location.assign('/ban_list'), [])
-	const handleProductsGlanceClicked = useCallback(() => window.location.assign('/browse/product'), [])
+	const handleBrowseTileClicked = useCallback(() => window.location.assign('/browse/card'), [])
+	const handleBanListTileClicked = useCallback(() => window.location.assign('/ban_list'), [])
+	const handleProductsTileClicked = useCallback(() => window.location.assign('/browse/product'), [])
 
 	return (
 		<Section sectionName='Content'>
@@ -50,15 +50,15 @@ const DatabaseInfo = () => {
 					<div className='database-summary-container'>
 						<Grid2 container spacing={3}>
 							<Grid2 xs={6} sm={6} md={4} lg={4} xl={4}>
-								<Glance variant='medium' total={cardTotal} subject='Cards' color='rgb(144, 13, 218)' action={handleBrowseGlanceClicked} />
+								<Tile variant='medium' total={cardTotal} subject='Cards' color='rgb(144, 13, 218)' action={handleBrowseTileClicked} />
 							</Grid2>
 
 							<Grid2 xs={6} sm={6} md={4} lg={4} xl={4}>
-								<Glance variant='medium' total={banListTotal} subject='Ban Lists' color='#FE6D6B' action={handleBanListGlanceClicked} />
+								<Tile variant='medium' total={banListTotal} subject='Ban Lists' color='#FE6D6B' action={handleBanListTileClicked} />
 							</Grid2>
 
 							<Grid2 xs={6} sm={6} md={4} lg={4} xl={4}>
-								<Glance variant='medium' total={productTotal} subject='Products' color='rgb(195, 47, 150)' action={handleProductsGlanceClicked} />
+								<Tile variant='medium' total={productTotal} subject='Products' color='rgb(195, 47, 150)' action={handleProductsTileClicked} />
 							</Grid2>
 						</Grid2>
 					</div>
