@@ -21,7 +21,7 @@
 		"react-markdown": "9.0.1",
 		"react-router-dom": "6.21.1",
 		"react-visibility-sensor": "5.1.1",
-		"skc-rcl": "1.1.0-4",
+		"skc-rcl": "1.1.0-5",
 		"styled-components": "5.3.11"
 	},
 	"resolutions": {
