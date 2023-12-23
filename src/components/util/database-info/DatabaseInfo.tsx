@@ -50,15 +50,15 @@ const DatabaseInfo = () => {
 					<div className='database-summary-container'>
 						<Grid2 container spacing={3}>
 							<Grid2 xs={6} sm={6} md={4} lg={4} xl={4}>
-								<Tile variant='medium' total={cardTotal} subject='Cards' color='rgb(144, 13, 218)' action={handleBrowseTileClicked} />
+								<Tile variant='full-width' total={cardTotal} subject='Cards' color='rgb(144, 13, 218)' action={handleBrowseTileClicked} />
 							</Grid2>
 
 							<Grid2 xs={6} sm={6} md={4} lg={4} xl={4}>
-								<Tile variant='medium' total={banListTotal} subject='Ban Lists' color='#FE6D6B' action={handleBanListTileClicked} />
+								<Tile variant='full-width' total={banListTotal} subject='Ban Lists' color='#FE6D6B' action={handleBanListTileClicked} />
 							</Grid2>
 
 							<Grid2 xs={6} sm={6} md={4} lg={4} xl={4}>
-								<Tile variant='medium' total={productTotal} subject='Products' color='rgb(195, 47, 150)' action={handleProductsTileClicked} />
+								<Tile variant='full-width' total={productTotal} subject='Products' color='rgb(195, 47, 150)' action={handleProductsTileClicked} />
 							</Grid2>
 						</Grid2>
 					</div>

@@ -139,21 +139,19 @@ export default function Overview() {
 						title='Watch Yu-Gi-Oh! Related Content'
 						subtitle='Subscribe On YouTube'
 						body={
-							<Fragment>
-								<Topic
-									header='My YouTube Channel'
-									details={
-										<Typography variant='body1' className='topic-details'>
-											Since this site is ad free and basically loses money, I started a YT channel to help fund the project. The channel has grown in size and has a wide array of
-											content. If you want to support this project without donating, you can simply{' '}
-											<Link className='link' color='secondary' href='https://www.youtube.com/channel/UCBZ_1wWyLQI3SV9IgLbyiNQ/videos'>
-												watch/subscribe
-											</Link>{' '}
-											to the channel!
-										</Typography>
-									}
-								/>
-							</Fragment>
+							<Topic
+								header='My YouTube Channel'
+								details={
+									<Typography variant='body1' className='topic-details'>
+										Since this site is ad free and basically loses money, I started a YT channel to help fund the project. The channel has grown in size and has a wide array of
+										content. If you want to support this project without donating, you can simply{' '}
+										<Link className='link' color='secondary' href='https://www.youtube.com/channel/UCBZ_1wWyLQI3SV9IgLbyiNQ/videos'>
+											watch/subscribe
+										</Link>{' '}
+										to the channel!
+									</Typography>
+								}
+							/>
 						}
 						imgName='yt_channel_icon.jpeg'
 						imgLink='https://www.youtube.com/channel/UCBZ_1wWyLQI3SV9IgLbyiNQ/videos'
