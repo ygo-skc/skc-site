@@ -42,7 +42,9 @@ const ProductGrid: FC<ProductGridProps> = ({ section, products }) => {
 					<Typography variant='h1'>
 						{section} • {products.length} Total
 					</Typography>
-					<Grid2 container>{gridItems}</Grid2>
+					<Grid2 container spacing={1}>
+						{gridItems}
+					</Grid2>
 				</Fragment>
 			)}
 		</div>

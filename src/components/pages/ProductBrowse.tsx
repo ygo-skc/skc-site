@@ -1,5 +1,5 @@
 import '../../css/main-pages/product-browse.css'
-import '../../css/util/list.css'
+import '../../css/product/product-grid.css'
 
 import { useState, useEffect, lazy, FunctionComponent, startTransition, Suspense } from 'react'
 import { Helmet } from 'react-helmet'
