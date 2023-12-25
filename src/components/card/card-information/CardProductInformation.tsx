@@ -42,7 +42,7 @@ const CardProductInformation: FC<CardProductInformationProps> = ({ isLoading, pr
 					if (loadAll || index < initNumItems) {
 						productContent.rarities.sort(alphaSort)
 						const productContents = (
-							<a href={`/product/${product.productId}#${cardID}`} className='list-item-parent'>
+							<a href={`/product/${product.productId}#${cardID}`} className='list-item-parent aggregate-anchor'>
 								<DateBadge month={Dates.getMonth(productReleaseDate)} day={+Dates.getDay(productReleaseDate)} year={+Dates.getYear(productReleaseDate)} variant='condensed' />
 								<div className='list-item-text'>
 									<Typography variant='body1'>

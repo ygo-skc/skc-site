@@ -34,7 +34,7 @@ export default function CardOfTheDay() {
 
 	return (
 		<Section sectionName='Suggestions'>
-			<a href={`/card/${cardOfTheDay?.cardID}`}>
+			<a href={`/card/${cardOfTheDay?.cardID}`} className='aggregate-anchor'>
 				<div className={`section-content ${hasError ? '' : 'card-of-the-day-parent'}`} id='card-of-the-day'>
 					{hasError && <GenericNonBreakingErr errExplanation='Come back at a different time to see todays card of the day!' />}
 					{!hasError && (
