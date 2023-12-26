@@ -2,7 +2,7 @@ import { useEffect, useState, FC, Fragment, startTransition, useCallback } from 
 import { Typography, Divider, Chip, Button } from '@mui/material'
 
 import { Dates } from '../../../helper/Dates'
-import { DateBadge, Hint } from 'skc-rcl'
+import { DatedListItem, Hint } from 'skc-rcl'
 
 type CardProductInformationProps = {
 	isLoading: boolean
@@ -41,26 +41,31 @@ const CardProductInformation: FC<CardProductInformationProps> = ({ isLoading, pr
 
 					if (loadAll || index < initNumItems) {
 						productContent.rarities.sort(alphaSort)
-						const productContents = (
-							<a href={`/product/${product.productId}#${cardID}`} className='list-item-parent aggregate-anchor'>
-								<DateBadge month={Dates.getMonth(productReleaseDate)} day={+Dates.getDay(productReleaseDate)} year={+Dates.getYear(productReleaseDate)} variant='condensed' />
-								<div className='list-item-text'>
+
+						contents.push(
+							<DatedListItem
+								link={`/product/${product.productId}#${cardID}`}
+								month={Dates.getMonth(productReleaseDate)}
+								day={+Dates.getDay(productReleaseDate)}
+								year={+Dates.getYear(productReleaseDate)}
+								className='aggregate-anchor'
+							>
+								<Fragment>
 									<Typography variant='body1'>
 										{product.productId}-{productContent.productPosition}
 									</Typography>
 									<Typography variant='subtitle1'>{product.productName}</Typography>
 									<div>
-										<Typography variant='body1' className='rarities'>
+										<Typography variant='body1' className='list-item-text-bold'>
 											Rarities
 										</Typography>
 										{productContent.rarities.map((uniqueRarity) => (
 											<Chip className='dark-chip-condensed' key={uniqueRarity} label={uniqueRarity} />
 										))}
 									</div>
-								</div>
-							</a>
+								</Fragment>
+							</DatedListItem>
 						)
-						contents.push(productContents)
 					}
 				})
 			})
