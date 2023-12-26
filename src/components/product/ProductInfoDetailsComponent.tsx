@@ -13,10 +13,8 @@ const ProductInfoDetailsComponent: FC<ProductDetails> = ({ productName, productI
 
 	return (
 		<div className='section-content'>
-			<div style={{ width: '45%', marginLeft: 'auto', marginRight: 'auto', marginBottom: '1rem', display: 'block' }}>
-				<ProductImage productID={productId} variant='md' loading='eager' />
-			</div>
-			{isDataLoaded ? <Typography variant='h4'>{productName}</Typography> : <Skeleton variant='text' height={40} width='100%' style={{ marginBottom: '.8rem' }} />}
+			<ProductImage className='product-info-img' productID={productId} variant='md' loading='eager' />
+			{isDataLoaded ? <Typography variant='h4'>{productName}</Typography> : <Skeleton variant='text' height={40} width='100%' />}
 
 			<div className='group'>
 				<Typography variant='h5'>Summary</Typography>

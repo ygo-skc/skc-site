@@ -1,0 +1,16 @@
+.product-img {
+	width: 26%;
+	height: auto;
+}
+
+.product-browse-section {
+	margin-bottom: 3rem;
+}
+
+.product-info-img {
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 1rem;
+	display: block;
+}

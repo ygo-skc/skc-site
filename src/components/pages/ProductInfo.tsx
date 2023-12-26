@@ -1,3 +1,5 @@
+import '../../css/main-pages/product.css'
+
 import { useState, useEffect, lazy, Fragment, useReducer } from 'react'
 import { useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet'

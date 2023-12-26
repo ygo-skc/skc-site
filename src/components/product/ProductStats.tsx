@@ -42,7 +42,7 @@ const ProductStats: FC<ProductStats & { isDataLoaded: boolean }> = ({ productRar
 
 	return (
 		<Section sectionName='Product Stats'>
-			<Grid2 className='section-content' container style={{ width: '100%' }}>
+			<Grid2 className='section-content' container>
 				<Grid2 xs={12} sm={12} md={6} lg={6} xl={6}>
 					<Pie legendTextColor='white' isDataLoaded={isDataLoaded} statName='Rarity Spread' data={raritySpreadData} />
 				</Grid2>
