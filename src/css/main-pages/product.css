@@ -1,5 +1,6 @@
 .product-img {
-	width: 26%;
+	min-width: 26%;
+	max-width: 26%;
 	height: auto;
 }
 
