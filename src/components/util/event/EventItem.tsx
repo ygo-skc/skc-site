@@ -3,7 +3,7 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined'
 import { FC, useCallback } from 'react'
 import ReactMarkdown from 'react-markdown'
-import { DateComponent } from 'skc-rcl'
+import { DateBadge } from 'skc-rcl'
 import { Dates } from '../../../helper/Dates'
 
 type _EventItem =
@@ -42,7 +42,7 @@ const EventItem: FC<_EventItem> = ({ event, showEventDialog, setEventDialogEvent
 	return (
 		<div className={parentStyle}>
 			<div>
-				<DateComponent month={Dates.getMonth(eventDate)} day={+Dates.getDay(eventDate)} year={+Dates.getYear(eventDate)} variant='normal' />
+				<DateBadge month={Dates.getMonth(eventDate)} day={+Dates.getDay(eventDate)} year={+Dates.getYear(eventDate)} variant='normal' />
 				<div className='event-icon-container'>
 					<IconButton disabled={isWithinDialog} className='event-icon-button' aria-label='info' onClick={isWithinDialog ? undefined : handleExpandEvent}>
 						<InfoOutlinedIcon />

@@ -34,40 +34,36 @@ export default function CardOfTheDay() {
 
 	return (
 		<Section sectionName='Suggestions'>
-			<div
-				onClick={hasError ? undefined : () => window.location.assign(`/card/${cardOfTheDay?.cardID}`)}
-				className={`section-content ${hasError ? '' : 'card-of-the-day-parent'}`}
-				id='card-of-the-day'
-			>
-				{hasError && <GenericNonBreakingErr errExplanation='Come back at a different time to see todays card of the day!' />}
-				{!hasError && (
-					<Fragment>
-						<Typography variant='h5'>Card of The Day</Typography>
-						<div className='card-of-the-day-wrapper'>
-							{(!isLoading && <CardImageRounded cardImg={`https://images.thesupremekingscastle.com/cards/tn/${cardOfTheDay?.cardID}.jpg`} />) || (
-								<Skeleton className='rounded-skeleton' variant='circular' />
-							)}
+			<a href={`/card/${cardOfTheDay?.cardID}`} className='aggregate-anchor'>
+				<div className={`section-content ${hasError ? '' : 'card-of-the-day-parent'}`} id='card-of-the-day'>
+					{hasError && <GenericNonBreakingErr errExplanation='Come back at a different time to see todays card of the day!' />}
+					{!hasError && (
+						<Fragment>
+							<Typography variant='h5'>Card of The Day</Typography>
+							<div className='card-of-the-day-wrapper'>
+								{(!isLoading && <CardImageRounded variant='tn' cardID={cardOfTheDay!.cardID} loading='eager' />) || <Skeleton className='rounded-skeleton' variant='circular' />}
 
-							<div className='card-of-the-day-data'>
-								{(!isLoading && (
-									<Fragment>
-										<InlineDate month={Dates.getMonth(date)} day={+Dates.getDay(date)} year={+Dates.getYear(date)} />
-										<Typography variant='h6' className='card-of-the-day-text'>
-											{cardOfTheDay?.cardName}
-										</Typography>
-										<div className='card-of-the-day-type-wrapper'>
-											<YGOCardColorIndicator cardColor={cardOfTheDay?.cardColor} variant={'small'} />
-											<Typography variant='subtitle1' className='card-of-the-day-text'>
-												{cardOfTheDay?.monsterType === undefined ? cardOfTheDay?.cardColor : cardOfTheDay.monsterType}
+								<div className='card-of-the-day-data'>
+									{(!isLoading && (
+										<Fragment>
+											<InlineDate month={Dates.getMonth(date)} day={+Dates.getDay(date)} year={+Dates.getYear(date)} />
+											<Typography variant='h6' className='card-of-the-day-text'>
+												{cardOfTheDay?.cardName}
 											</Typography>
-										</div>
-									</Fragment>
-								)) || <Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='7rem' />}
+											<div className='card-of-the-day-type-wrapper'>
+												<YGOCardColorIndicator cardColor={cardOfTheDay?.cardColor} variant={'small'} />
+												<Typography variant='subtitle1' className='card-of-the-day-text'>
+													{cardOfTheDay?.monsterType === undefined ? cardOfTheDay?.cardColor : cardOfTheDay.monsterType}
+												</Typography>
+											</div>
+										</Fragment>
+									)) || <Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='7rem' />}
+								</div>
 							</div>
-						</div>
-					</Fragment>
-				)}
-			</div>
+						</Fragment>
+					)}
+				</div>
+			</a>
 		</Section>
 	)
 }

@@ -255,3 +255,16 @@ li {
 	padding: 0.2rem 0.4rem 0.2rem 0.4rem;
 	font-size: 0.9rem;
 }
+
+.aggregate-anchor img {
+	pointer-events: none;
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-drag: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+}
+
+.aggregate-anchor {
+	text-decoration: none;
+}

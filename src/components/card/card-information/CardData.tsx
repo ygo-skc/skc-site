@@ -4,15 +4,14 @@ import { CardImageRounded, Section, YGOCard } from 'skc-rcl'
 
 type _CardData = SKCCard & {
 	isLoading: boolean
-	cardImg: HTMLImageElement
 }
 
 const CardData: FC<_CardData> = memo(
-	({ cardID, cardName, cardColor, cardEffect, cardAttribute, monsterType, monsterAttack, monsterDefense, monsterAssociation, isLoading, cardImg }) => {
+	({ cardID, cardName, cardColor, cardEffect, cardAttribute, monsterType, monsterAttack, monsterDefense, monsterAssociation, isLoading }) => {
 		return (
 			<Section sectionHeaderBackground={cardColor !== undefined ? (cardColor?.replace(/Pendulum-/gi, '') as cardColor) : ''} sectionName='Information'>
 				<div className='section-content'>
-					<CardImageRounded cardImg={cardImg.src} defaultVisibility={true} />
+					<CardImageRounded variant='md' cardID={cardID} loading='eager' />
 
 					<YGOCard
 						cardName={cardName}

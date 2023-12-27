@@ -1,7 +1,7 @@
-import { Skeleton, Typography, Box } from '@mui/material'
+import { Skeleton, Typography } from '@mui/material'
 import { FC } from 'react'
 import { Dates } from '../../helper/Dates'
-import { SKCTable } from 'skc-rcl'
+import { ProductImage, SKCTable } from 'skc-rcl'
 
 const ProductInfoDetailsComponent: FC<ProductDetails> = ({ productName, productId, productType, productSubType, productReleaseDate, isDataLoaded, numUniqueCards }) => {
 	const summaryRows = []
@@ -12,22 +12,15 @@ const ProductInfoDetailsComponent: FC<ProductDetails> = ({ productName, productI
 	summaryRows.push(['Total Unique Cards', numUniqueCards])
 
 	return (
-		<Box>
-			<div className='section-content'>
-				{isDataLoaded ? (
-					<Typography variant='h4'>
-						{productName} • ({productId})
-					</Typography>
-				) : (
-					<Skeleton variant='text' height={40} width='100%' style={{ marginBottom: '.8rem' }} />
-				)}
+		<div className='section-content'>
+			<ProductImage className='product-info-img' productID={productId} variant='md' loading='eager' />
+			{isDataLoaded ? <Typography variant='h4'>{productName}</Typography> : <Skeleton variant='text' height={40} width='100%' />}
 
-				<div className='group'>
-					<Typography variant='h5'>Summary</Typography>
-					{isDataLoaded ? <SKCTable header={[]} rows={summaryRows} /> : <Skeleton variant='rectangular' height='170px' />}
-				</div>
+			<div className='group'>
+				<Typography variant='h5'>Summary</Typography>
+				{isDataLoaded ? <SKCTable header={[]} rows={summaryRows} /> : <Skeleton variant='rectangular' height='170px' />}
 			</div>
-		</Box>
+		</div>
 	)
 }
 

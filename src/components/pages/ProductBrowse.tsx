@@ -1,41 +1,38 @@
-import { useState, useEffect, lazy, FunctionComponent, startTransition } from 'react'
+import '../../css/main-pages/product.css'
+import '../../css/product/product-grid.css'
+
+import { useState, useEffect, lazy, FunctionComponent, startTransition, Suspense } from 'react'
 import { Helmet } from 'react-helmet'
 
 import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 
 import { Dates } from '../../helper/Dates'
-import { Skeleton, Typography } from '@mui/material'
-import { SKCTable, Section } from 'skc-rcl'
+import { Skeleton } from '@mui/material'
+import { Section } from 'skc-rcl'
+import ProductGrid from '../product/ProductGrid'
 
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 
 const ProductBrowse: FunctionComponent = () => {
-	const [productJson, setProductJson] = useState<ProductInfo[]>([])
-	const [productGridItems, setProductGridItems] = useState<JSX.Element | undefined>(undefined)
-	const [isDataLoaded, setIsDataLoaded] = useState(false)
+	const [productGridItems, setProductGridItems] = useState<JSX.Element[]>([])
 
 	useEffect(() => {
-		FetchHandler.handleFetch<ProductBrowseResults>(DownstreamServices.NAME_maps_ENDPOINT['productBrowse'], (json) => {
-			startTransition(() => {
-				setProductJson(json.products)
+		startTransition(() => {
+			FetchHandler.handleFetch<ProductBrowseResults>(DownstreamServices.NAME_maps_ENDPOINT['productBrowse'], (json: ProductBrowseResults) => {
+				const productsByYear = json.products.reduce((map: Map<string, ProductInfo[]>, product: ProductInfo) => {
+					const productReleaseDate = Dates.fromYYYYMMDDToDate(product.productReleaseDate)
+
+					const yearStr = Dates.getYear(productReleaseDate)
+					map.set(yearStr, map.get(yearStr) ?? [])
+					map.get(yearStr)!.push(product)
+					return map
+				}, new Map<string, ProductInfo[]>())
+
+				setProductGridItems(Array.from(productsByYear.keys()).map((year: string) => <ProductGrid key={year} section={year} products={productsByYear.get(year)!} />))
 			})
 		})
 	}, [])
-
-	useEffect(() => {
-		const headers: string[] = ['Name', 'ID', 'Type', 'Sub-Type', 'Release']
-		const rowOnClick: (() => void)[] = []
-		const productRows: string[][] = productJson.map((product: ProductInfo): string[] => {
-			rowOnClick.push(() => window.location.assign(`/product/${product.productId}`))
-			return [product.productName!, product.productId, product.productType!, product.productSubType!, Dates.fromYYYYMMDDToDateStr(product.productReleaseDate)]
-		})
-
-		startTransition(() => {
-			setProductGridItems(<SKCTable header={headers} rows={productRows} rowActions={rowOnClick} fullWidth />)
-			setIsDataLoaded(true)
-		})
-	}, [productJson])
 
 	return (
 		<div className='generic-container'>
@@ -45,14 +42,12 @@ const ProductBrowse: FunctionComponent = () => {
 				<meta name='keywords' content={`YuGiOh, product browse, The Supreme Kings Castle`} />
 			</Helmet>
 
-			<Breadcrumb crumbs={['Home', 'Product Browse']} />
+			<Suspense fallback={<Skeleton width='100%' height='1.3rem' />}>
+				<Breadcrumb crumbs={['Home', 'Product Browse']} />
+			</Suspense>
 
 			<Section sectionHeaderBackground='product' sectionName='Products In Database'>
-				<div className='section-content'>
-					<Typography variant='h5'>Sorted By Release Date</Typography>
-					{!isDataLoaded && <Skeleton variant='rectangular' height='500px' width='100%' className='rounded-skeleton' />}
-					{isDataLoaded && productGridItems}
-				</div>
+				<div className='section-content'>{productGridItems}</div>
 			</Section>
 		</div>
 	)

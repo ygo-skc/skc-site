@@ -1,5 +1,5 @@
 import Grid2 from '@mui/material/Unstable_Grid2'
-import { FC, Fragment, useCallback, useEffect, useState } from 'react'
+import { FC, Fragment, useEffect, useState } from 'react'
 import { YGOCardWithImage } from 'skc-rcl'
 
 const CardGridItems: FC<{ cards: SKCCard[] }> = ({ cards }) => {
@@ -14,11 +14,11 @@ const CardGridItems: FC<{ cards: SKCCard[] }> = ({ cards }) => {
 }
 
 const CardGridItem: FC<{ card: SKCCard }> = ({ card }) => {
-	const handleCardClicked = useCallback(() => window.location.assign(`/card/${card.cardID}`), [card])
-
 	return (
-		<Grid2 className='ygo-card-grid-item' id={card.cardID} key={card.cardID} xs={6} sm={4} md={4} lg={3} xl={2} onClick={handleCardClicked}>
-			<YGOCardWithImage card={card} />
+		<Grid2 className='ygo-card-grid-item' id={card.cardID} key={card.cardID} xs={6} sm={4} md={4} lg={3} xl={2}>
+			<a href={`/card/${card.cardID}`} className='aggregate-anchor'>
+				<YGOCardWithImage card={card} imgLoadingType='lazy' />
+			</a>
 		</Grid2>
 	)
 }

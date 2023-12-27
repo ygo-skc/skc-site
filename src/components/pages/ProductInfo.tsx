@@ -1,3 +1,5 @@
+import '../../css/main-pages/product.css'
+
 import { useState, useEffect, lazy, Fragment, useReducer } from 'react'
 import { useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
@@ -9,7 +11,7 @@ import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 import { Typography } from '@mui/material'
 import ProductStats from '../product/ProductStats'
 import { Section } from 'skc-rcl'
-import cardDisplayGridReducer, { CardDisplayGridStateReducerActionType } from '../../helper/reducers/CardDisplayGridReducer'
+import cardDisplayGridReducer, { CardDisplayGridStateReducerActionType } from '../../reducers/CardDisplayGridReducer'
 
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 const CardDisplayGrid = lazy(() => import('../util/grid/CardDisplayGrid'))

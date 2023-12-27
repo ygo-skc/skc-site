@@ -2,7 +2,7 @@ import React, { FC, useCallback, useRef } from 'react'
 
 import { AutocompleteRenderInputParams, IconButton, TextField } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
-import { CardBrowseCriteriaSearchReducerAction, CardBrowseCriteriaSearchReducerActionType } from '../../../helper/reducers/CardBrowseCriteriaSearchReducer'
+import { CardBrowseCriteriaSearchReducerAction, CardBrowseCriteriaSearchReducerActionType } from '../../../reducers/CardBrowseCriteriaSearchReducer'
 
 const SearchInput: FC<{
 	searchParams: AutocompleteRenderInputParams

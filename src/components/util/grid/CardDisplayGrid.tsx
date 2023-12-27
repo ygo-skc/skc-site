@@ -3,7 +3,7 @@ import { memo, FC, lazy, useCallback } from 'react'
 import { Button } from '@mui/material'
 import Grid2 from '@mui/material/Unstable_Grid2'
 import { Hint } from 'skc-rcl'
-import { CardDisplayGridState, CardDisplayGridStateReducerAction, CardDisplayGridStateReducerActionType } from '../../../helper/reducers/CardDisplayGridReducer'
+import { CardDisplayGridState, CardDisplayGridStateReducerAction, CardDisplayGridStateReducerActionType } from '../../../reducers/CardDisplayGridReducer'
 import CardGridItems from './CardGridItems'
 
 const PlaceHolderGridItems = lazy(() => import('./PlaceHolderGridItems'))
@@ -47,7 +47,7 @@ const CardDisplayGrid: FC<CardDisplayGridProps> = memo(
 			prevProps.cardGridState.isLoading === newProps.cardGridState.isLoading &&
 			prevProps.cardGridState.totalResults === newProps.cardGridState.totalResults &&
 			prevProps.cardGridState.totalDisplaying === newProps.cardGridState.totalDisplaying &&
-			prevProps.cardGridState.results.every((prevCard: SKCCard, index: number) => prevCard === prevProps.cardGridState.results[index])
+			prevProps.cardGridState.results.every((prevCard: SKCCard, index: number) => prevCard.cardID === newProps.cardGridState.results[index].cardID)
 		)
 	}
 )

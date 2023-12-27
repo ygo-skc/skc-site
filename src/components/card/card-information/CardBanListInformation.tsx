@@ -4,7 +4,7 @@ import { Button, ButtonGroup, Typography } from '@mui/material'
 import { Dates } from '../../../helper/Dates'
 
 import { AcceptableBanListFormat } from '../../../helper/BanListUtil'
-import { Hint, InlineDate } from 'skc-rcl'
+import { DatedListItem, Hint } from 'skc-rcl'
 
 type CardBanListInformationProps = {
 	isLoading: boolean
@@ -65,12 +65,19 @@ const CardBanListInformation: FunctionComponent<CardBanListInformationProps> = (
 			const content: JSX.Element[] = restrictedIn[format].slice(0, loadAll ? restrictedIn[format].length : initNumItems).map((banList: SKCBanListInstance) => {
 				const banListEffectiveDate = Dates.fromYYYYMMDDToDate(banList.banListDate)
 				return (
-					<div key={banList.banListDate} className='list-item-parent'>
-						<InlineDate month={Dates.getMonth(banListEffectiveDate)} day={+Dates.getDay(banListEffectiveDate)} year={+Dates.getYear(banListEffectiveDate)} />
+					<DatedListItem
+						key={banList.banListDate}
+						link={''}
+						month={Dates.getMonth(banListEffectiveDate)}
+						day={+Dates.getDay(banListEffectiveDate)}
+						year={+Dates.getYear(banListEffectiveDate)}
+						variant='inline'
+						className='aggregate-anchor'
+					>
 						<div className='list-item-text'>
 							<Typography variant='subtitle1'>{banList.banStatus}</Typography>
 						</div>
-					</div>
+					</DatedListItem>
 				)
 			})
 

@@ -1,3 +1,6 @@
+import '../../css/util/database-search-styles.css'
+import '../../css/main-pages/card-browse.css'
+
 import { useState, useEffect, lazy, useReducer, startTransition } from 'react'
 import { Typography } from '@mui/material'
 import { Helmet } from 'react-helmet'
@@ -8,12 +11,10 @@ import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 
-import '../../css/util/database-info/database-search-styles.css'
-import '../../css/main-pages/card-browse.css'
 import CardBrowse from '../util/search/CardBrowse'
 import { SKCTable, Section } from 'skc-rcl'
-import cardDisplayGridReducer, { CardDisplayGridStateReducerActionType } from '../../helper/reducers/CardDisplayGridReducer'
-import cardBrowseReducer from '../../helper/reducers/CardBrowseCriteriaReducer'
+import cardDisplayGridReducer, { CardDisplayGridStateReducerActionType } from '../../reducers/CardDisplayGridReducer'
+import cardBrowseReducer from '../../reducers/CardBrowseCriteriaReducer'
 
 const CardDisplayGrid = lazy(() => import('../util/grid/CardDisplayGrid'))
 

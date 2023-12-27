@@ -41,11 +41,7 @@ const YouTubeUploads: FC<{ youtubeData: HeartApiYouTubeUpload[]; channelName: st
 			</Typography>
 
 			<br />
-			{isLoading === true ? (
-				<Skeleton width='100%' height='24rem' style={{ transform: 'none', borderRadius: '2rem' }} />
-			) : (
-				<div style={{ display: 'grid', gridAutoFlow: 'column', gridTemplateRows: 'auto', overflowX: 'scroll', maxWidth: '100%' }}>{videos}</div>
-			)}
+			{isLoading === true ? <Skeleton className='rounded-skeleton' width='100%' height='24rem' /> : <div className='yt-uploads-grid'>{videos}</div>}
 		</Fragment>
 	)
 }
