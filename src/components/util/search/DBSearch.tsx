@@ -75,7 +75,7 @@ export default function DBSearch() {
 		(props: React.HTMLAttributes<HTMLLIElement>, option: SKCCard) => (
 			<DBSearchOptions props={props} searchSubject={searchInput} cardNameOption={option.cardName} cardIdOption={option.cardID} monsterTypeOption={option.monsterType!} />
 		),
-		[]
+		[searchInput]
 	)
 	const handleFilterOptions = useCallback((options: DBSearchResults[]) => options, []) // this override is necessary as filtering happens at API level
 
