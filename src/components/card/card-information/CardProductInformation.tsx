@@ -95,7 +95,7 @@ const CardProductInformation: FC<CardProductInformationProps> = ({ isLoading, pr
 
 					<div className='unique-rarities'>
 						<Typography variant='subtitle1'>
-							<span className='prominent'>{cardName}</span> was printed in {uniqueRarityPrintings.length} unique rarities
+							<span className='prominent'>{cardName}</span> was printed in {uniqueRarityPrintings.length} unique {uniqueRarityPrintings.length == 1 ? 'rarity' : 'rarities'}
 						</Typography>
 						{uniqueRarityPrintings}
 						<Divider className='dark-translucent-divider' />
@@ -103,7 +103,7 @@ const CardProductInformation: FC<CardProductInformationProps> = ({ isLoading, pr
 					<br />
 					<div>
 						<Typography variant='subtitle1'>
-							<span className='prominent'>{cardName}</span> was printed in {uniqueProductsFeaturedIn} products
+							<span className='prominent'>{cardName}</span> was included in {uniqueProductsFeaturedIn} {uniqueProductsFeaturedIn == 1 ? 'product' : 'products'}
 						</Typography>
 						{productContents}
 						{loadAll ? undefined : <Button onClick={loadAllCB}>Load All</Button>}
