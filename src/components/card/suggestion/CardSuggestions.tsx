@@ -60,9 +60,9 @@ const CardSuggestions: FC<_CardSuggestion> = ({ cardID, cardColor, cardName }) =
 		return references !== null
 			? references.map((reference: CardReference) => {
 					return (
-						<div key={reference.card.cardID} className='suggested-ygo-card-wrapper' onClick={() => window.location.assign(`/card/${reference.card.cardID}`)}>
+						<a key={reference.card.cardID} href={`/card/${reference.card.cardID}`} className='suggested-ygo-card-wrapper aggregate-anchor'>
 							<YGOCardWithQuantity card={reference.card} occurrences={reference.occurrences} />
-						</div>
+						</a>
 					)
 			  })
 			: []
@@ -78,9 +78,9 @@ const CardSuggestions: FC<_CardSuggestion> = ({ cardID, cardColor, cardName }) =
 		return support !== null
 			? support.map((reference: SKCCard) => {
 					return (
-						<div key={reference.cardID} className='suggested-ygo-card-wrapper' onClick={() => window.location.assign(`/card/${reference.cardID}`)}>
+						<a key={reference.cardID} href={`/card/${reference.cardID}`} className='suggested-ygo-card-wrapper aggregate-anchor'>
 							<YGOCardWithImage key={reference.cardID} card={reference} imgLoadingType='lazy' />
-						</div>
+						</a>
 					)
 			  })
 			: []
