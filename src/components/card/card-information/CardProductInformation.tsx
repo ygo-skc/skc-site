@@ -93,16 +93,17 @@ const CardProductInformation: FC<CardProductInformationProps> = ({ isLoading, pr
 						</Hint>
 					)}
 
-					<div className='summary'>
-						<Typography variant='h5'>Unique Products {uniqueProductsFeaturedIn}</Typography>
-						<Typography variant='h5'>Unique Rarities</Typography>
+					<div className='unique-rarities'>
+						<Typography variant='subtitle1'>
+							<span className='prominent'>{cardName}</span> was printed in {uniqueRarityPrintings.length} unique rarities
+						</Typography>
 						{uniqueRarityPrintings}
 						<Divider className='dark-translucent-divider' />
 					</div>
 					<br />
 					<div>
 						<Typography variant='subtitle1'>
-							<span className='prominent'>{cardName}</span> was printed in...
+							<span className='prominent'>{cardName}</span> was printed in {uniqueProductsFeaturedIn} products
 						</Typography>
 						{productContents}
 						{loadAll ? undefined : <Button onClick={loadAllCB}>Load All</Button>}
