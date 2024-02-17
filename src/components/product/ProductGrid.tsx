@@ -1,9 +1,8 @@
 import { Skeleton, Typography } from '@mui/material'
 import Grid2 from '@mui/material/Unstable_Grid2'
-import { FC, Fragment, lazy, useEffect, useState } from 'react'
+import { FC, Fragment, useEffect, useState } from 'react'
 import { Dates } from '../../helper/Dates'
-
-const ProductGridItem = lazy(() => import('./ProductGridItem'))
+import ProductGridItem from './ProductGridItem'
 
 type ProductGridProps = {
 	section: string
