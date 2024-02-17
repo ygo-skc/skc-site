@@ -22,7 +22,7 @@ export default function Home() {
 				<meta name='keywords' content={`YuGiOh, ban list, card info, The Supreme Kings Castle`} />
 			</Helmet>
 
-			<Suspense fallback={<Skeleton width='100%' height='1.3rem' />}>
+			<Suspense fallback={<Skeleton className='breadcrumb-skeleton' variant='rectangular' width='100%' height='2.5rem' />}>
 				<Breadcrumb crumbs={['Home']} />
 			</Suspense>
 

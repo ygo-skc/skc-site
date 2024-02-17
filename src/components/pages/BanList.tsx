@@ -220,7 +220,7 @@ export default function BanList() {
 				<meta name='keywords' content={`YuGiOh, ban list, The Supreme Kings Castle, ${selectedBanList}`} />
 			</Helmet>
 
-			<Suspense fallback={<Skeleton width='100%' height='1.3rem' />}>
+			<Suspense fallback={<Skeleton className='breadcrumb-skeleton' variant='rectangular' width='100%' height='2.5rem' />}>
 				<BreadCrumb crumbs={['Home', 'Ban List']} />
 			</Suspense>
 

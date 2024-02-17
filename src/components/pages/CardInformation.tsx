@@ -141,7 +141,7 @@ const CardInformation = () => {
 				<meta property='og:description' content={`Details For Yugioh Card - ${cardName}`} />
 			</Helmet>
 
-			<Suspense fallback={<Skeleton width='100%' height='1.3rem' />}>
+			<Suspense fallback={<Skeleton className='breadcrumb-skeleton' variant='rectangular' width='100%' height='2.5rem' />}>
 				<Breadcrumb crumbs={dynamicCrumbs} />
 			</Suspense>
 
