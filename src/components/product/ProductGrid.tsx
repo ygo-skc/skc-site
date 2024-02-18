@@ -38,7 +38,7 @@ const ProductGrid: FC<ProductGridProps> = ({ section, products }) => {
 			{!isDataLoaded && <Skeleton variant='rectangular' height='500px' width='100%' className='rounded-skeleton' />}
 			{isDataLoaded && (
 				<Fragment>
-					<Typography variant='h1'>
+					<Typography variant='h2'>
 						{section} • {products.length} Total
 					</Typography>
 					<Grid2 container spacing={1}>
