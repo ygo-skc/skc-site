@@ -1,13 +1,13 @@
 import '../../css/main-pages/product.css'
 
-import { useState, useEffect, lazy, FunctionComponent, startTransition, Suspense, useCallback } from 'react'
+import { useState, useEffect, lazy, FunctionComponent, Suspense, useCallback, startTransition } from 'react'
 import { Helmet } from 'react-helmet'
 
 import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 
 import { Dates } from '../../helper/Dates'
-import { Button, Skeleton } from '@mui/material'
+import { Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Skeleton } from '@mui/material'
 
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 const ProductGrid = lazy(() => import('../product/ProductGrid'))
@@ -18,35 +18,62 @@ const Section = lazy(() =>
 )
 
 const ProductBrowse: FunctionComponent = () => {
+	const [products, setProducts] = useState<ProductInfo[]>([])
 	const [productGridItems, setProductGridItems] = useState<JSX.Element[]>([])
+
 	const [isDataLoaded, setIsDataLoaded] = useState(false)
 	const [showAllProducts, setShowAllProducts] = useState(false)
 
+	const [productTypes, setProductTypes] = useState<JSX.Element[]>([<FormControlLabel key='All' value='All' control={<Radio />} label='All' />])
+	const [productTypeFilter, setProductTypeFilter] = useState('')
+
+	useEffect(() => {
+		FetchHandler.handleFetch<ProductBrowseResults>(DownstreamServices.NAME_maps_ENDPOINT['productBrowse'], (json: ProductBrowseResults) => {
+			setProducts(json.products)
+		})
+	}, [])
+
+	useEffect(() => {
+		const pt = Array.from(new Set(products.map((product: ProductInfo) => product.productType))).map((productType: string) => (
+			<FormControlLabel key={productType} value={productType} control={<Radio />} label={productType} />
+		))
+
+		setProductTypes([...productTypes, ...pt])
+		setProductTypeFilter('All')
+	}, [products])
+
 	useEffect(() => {
 		startTransition(() => {
-			FetchHandler.handleFetch<ProductBrowseResults>(DownstreamServices.NAME_maps_ENDPOINT['productBrowse'], (json: ProductBrowseResults) => {
-				const productsByYear = json.products.reduce((map: Map<number, ProductInfo[]>, product: ProductInfo) => {
+			const filteredProducts = products
+				.filter((product: ProductInfo) => showAllProducts || +Dates.getYear(Dates.fromYYYYMMDDToDate(product.productReleaseDate)) > +Dates.getYear(new Date()) - 3)
+				.filter((product: ProductInfo) => productTypeFilter === 'All' || product.productType === productTypeFilter)
+				.reduce((map: Map<number, ProductInfo[]>, product: ProductInfo) => {
 					const productReleaseDate = Dates.fromYYYYMMDDToDate(product.productReleaseDate)
-
 					const year = +Dates.getYear(productReleaseDate)
+
 					map.set(year, map.get(year) ?? [])
 					map.get(year)!.push(product)
 					return map
 				}, new Map<number, ProductInfo[]>())
 
-				setProductGridItems(
-					Array.from(productsByYear.keys())
-						.filter((year: number) => showAllProducts || year > +Dates.getYear(new Date()) - 3)
-						.map((year: number) => <ProductGrid key={year} section={String(year)} products={productsByYear.get(year)!} />)
-				)
-				setIsDataLoaded(true)
-			})
+			setProductGridItems(Array.from(filteredProducts.keys()).map((year: number) => <ProductGrid key={year} section={String(year)} products={filteredProducts.get(year)!} />))
 		})
-	}, [showAllProducts])
+	}, [products, showAllProducts, productTypeFilter])
+
+	useEffect(() => {
+		setIsDataLoaded(true)
+	}, [productGridItems])
 
 	const loadAllCB = useCallback(() => {
 		setShowAllProducts(true)
 	}, [])
+
+	const handleFormatChanged = useCallback(
+		(_: React.ChangeEvent<HTMLInputElement>, value: string) => {
+			setProductTypeFilter(value)
+		},
+		[setProductTypeFilter]
+	)
 
 	return (
 		<div className='generic-container'>
@@ -64,6 +91,13 @@ const ProductBrowse: FunctionComponent = () => {
 				{isDataLoaded ? (
 					<Section sectionHeaderBackground='product' sectionName='Products In Database'>
 						<div className='section-content'>
+							<FormControl>
+								<FormLabel id='ban-list-format-label'>Product Type</FormLabel>
+								<RadioGroup value={productTypeFilter} onChange={handleFormatChanged} row aria-labelledby='ban-list-format-label' name='ban-list-format-buttons-group'>
+									{productTypes}
+								</RadioGroup>
+							</FormControl>
+
 							{productGridItems}
 							{showAllProducts ? undefined : <Button onClick={loadAllCB}>Display All Products</Button>}
 						</div>

@@ -31,7 +31,7 @@ const ProductGrid: FC<ProductGridProps> = ({ section, products }) => {
 			})
 		)
 		setIsDataLoaded(true)
-	}, [])
+	}, [section, products])
 
 	return (
 		<div key={section} className='product-browse-section'>
