@@ -182,6 +182,7 @@ const MuiTheme = createTheme({
 			fontWeight: 800,
 			color: 'black',
 			lineHeight: '2.4rem',
+			marginBottom: '1.2rem',
 			fontSize: '1.85rem',
 		},
 		h3: {
@@ -189,6 +190,7 @@ const MuiTheme = createTheme({
 			fontWeight: 800,
 			color: 'black',
 			lineHeight: '2.3rem',
+			marginBottom: '1.2rem',
 			fontSize: '1.7rem',
 		},
 		h4: {

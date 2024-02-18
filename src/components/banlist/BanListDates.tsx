@@ -39,7 +39,7 @@ const BanListDates: FC<BanListDatesProps> = memo(
 		)
 
 		return (
-			<div className='ban-list-date-section group'>
+			<div className='group'>
 				<Typography variant='h5'>Date Range</Typography>
 
 				{isFetchingBanListDates ? (
