@@ -22,7 +22,7 @@ const ProductBrowse: FunctionComponent = () => {
 	const [productGridItems, setProductGridItems] = useState<JSX.Element[]>([])
 
 	const [isDataLoaded, setIsDataLoaded] = useState(false)
-	const [showAllProducts, setShowAllProducts] = useState(false)
+	const [loadAll, setLoadAll] = useState(false)
 
 	const [productTypes, setProductTypes] = useState<JSX.Element[]>([])
 	const [productTypeFilter, setProductTypeFilter] = useState('All')
@@ -55,7 +55,7 @@ const ProductBrowse: FunctionComponent = () => {
 			).map((productSubType: string) => <FormControlLabel key={productSubType} value={productSubType} control={<Radio />} label={productSubType} />)
 
 			const filteredProducts = products
-				.filter((product: ProductInfo) => showAllProducts || +Dates.getYear(Dates.fromYYYYMMDDToDate(product.productReleaseDate)) > +Dates.getYear(new Date()) - 3)
+				.filter((product: ProductInfo) => loadAll || +Dates.getYear(Dates.fromYYYYMMDDToDate(product.productReleaseDate)) > +Dates.getYear(new Date()) - 3)
 				.filter((product: ProductInfo) => productTypeFilter === 'All' || product.productType === productTypeFilter)
 				.filter((product: ProductInfo) => productSubTypesFilter === 'All' || product.productSubType === productSubTypesFilter)
 				.reduce((map: Map<number, ProductInfo[]>, product: ProductInfo) => {
@@ -72,10 +72,10 @@ const ProductBrowse: FunctionComponent = () => {
 			setProductGridItems(Array.from(filteredProducts.keys()).map((year: number) => <ProductGrid key={year} section={String(year)} products={filteredProducts.get(year)!} />))
 			setIsDataLoaded(true)
 		})
-	}, [products, showAllProducts, productTypeFilter, productSubTypesFilter])
+	}, [products, loadAll, productTypeFilter, productSubTypesFilter])
 
 	const loadAllCB = useCallback(() => {
-		setShowAllProducts(true)
+		setLoadAll(true)
 	}, [])
 
 	const handleProductTypeFilterChangedCB = useCallback(
@@ -134,7 +134,7 @@ const ProductBrowse: FunctionComponent = () => {
 							</div>
 
 							{productGridItems}
-							{showAllProducts ? undefined : <Button onClick={loadAllCB}>Display All Products</Button>}
+							{loadAll ? undefined : <Button onClick={loadAllCB}>Load All</Button>}
 						</div>
 					) : undefined}
 				</Section>
