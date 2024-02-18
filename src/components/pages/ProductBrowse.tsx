@@ -120,7 +120,7 @@ const ProductBrowse: FunctionComponent = () => {
 
 							<div className='group'>
 								<FormControl>
-									<FormLabel id='product-sub-type-label'>Product Type</FormLabel>
+									<FormLabel id='product-sub-type-label'>Product Sub-type</FormLabel>
 									<RadioGroup
 										value={productSubTypesFilter}
 										onChange={handleProductSubTypeFilterChangedCB}
