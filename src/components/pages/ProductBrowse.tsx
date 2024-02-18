@@ -25,10 +25,10 @@ const ProductBrowse: FunctionComponent = () => {
 	const [showAllProducts, setShowAllProducts] = useState(false)
 
 	const [productTypes, setProductTypes] = useState<JSX.Element[]>([])
-	const [productTypeFilter, setProductTypeFilter] = useState('')
+	const [productTypeFilter, setProductTypeFilter] = useState('All')
 
 	const [productSubTypes, setProductSubTypes] = useState<JSX.Element[]>([])
-	const [productSubTypesFilter, setProductSubTypesFilter] = useState('')
+	const [productSubTypesFilter, setProductSubTypesFilter] = useState('All')
 
 	useEffect(() => {
 		startTransition(() => {
@@ -44,7 +44,6 @@ const ProductBrowse: FunctionComponent = () => {
 		))
 
 		setProductTypes([<FormControlLabel key='All' value='All' control={<Radio />} label='All' />, ...pt])
-		setProductTypeFilter('All')
 	}, [products])
 
 	useEffect(() => {
@@ -69,7 +68,6 @@ const ProductBrowse: FunctionComponent = () => {
 				}, new Map<number, ProductInfo[]>())
 
 			setProductSubTypes([<FormControlLabel key='All' value='All' control={<Radio />} label='All' />, ...pst])
-			setProductSubTypesFilter('All')
 
 			setProductGridItems(Array.from(filteredProducts.keys()).map((year: number) => <ProductGrid key={year} section={String(year)} products={filteredProducts.get(year)!} />))
 			setIsDataLoaded(true)
@@ -113,14 +111,8 @@ const ProductBrowse: FunctionComponent = () => {
 							<Typography variant='h2'>Filters</Typography>
 							<div className='group'>
 								<FormControl>
-									<FormLabel id='ban-list-format-label'>Product Type</FormLabel>
-									<RadioGroup
-										value={productTypeFilter}
-										onChange={handleProductTypeFilterChangedCB}
-										row
-										aria-labelledby='ban-list-format-label'
-										name='ban-list-format-buttons-group'
-									>
+									<FormLabel id='product-type-label'>Product Type</FormLabel>
+									<RadioGroup value={productTypeFilter} onChange={handleProductTypeFilterChangedCB} row aria-labelledby='product-type-label' name='product-type-radio-group'>
 										{productTypes}
 									</RadioGroup>
 								</FormControl>
@@ -128,13 +120,13 @@ const ProductBrowse: FunctionComponent = () => {
 
 							<div className='group'>
 								<FormControl>
-									<FormLabel id='ban-list-format-label'>Product Type</FormLabel>
+									<FormLabel id='product-sub-type-label'>Product Type</FormLabel>
 									<RadioGroup
 										value={productSubTypesFilter}
 										onChange={handleProductSubTypeFilterChangedCB}
 										row
-										aria-labelledby='ban-list-format-label'
-										name='ban-list-format-buttons-group'
+										aria-labelledby='product-sub-type-label'
+										name='product-sub-type-radio-group'
 									>
 										{productSubTypes}
 									</RadioGroup>
