@@ -16,10 +16,6 @@ span.prominent {
 	font-weight: 800;
 }
 
-.group > *:not(:last-child) {
-	margin-bottom: 1rem;
-}
-
 .unique-rarities > *:not(:last-child) {
 	margin-bottom: 0.2rem;
 }

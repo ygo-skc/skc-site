@@ -112,7 +112,7 @@ export default function BrowseCards() {
 				oneThirdComponent={
 					<Section sectionHeaderBackground='product' sectionName='Current Criteria' sticky={true}>
 						<div className='section-content'>
-							<div className='group card-browse-group'>
+							<div className='group'>
 								<CardBrowse browseCriteriaDispatch={browseCriteriaDispatch} selectedCriteria={selectedCriteria} skcCardBrowseCriteriaOutput={skcCardBrowseCriteriaOutput} />
 							</div>
 
