@@ -1,6 +1,6 @@
 import { Skeleton, Typography } from '@mui/material'
 import Grid2 from '@mui/material/Unstable_Grid2'
-import { FC, Fragment, useEffect, useState } from 'react'
+import { FC, Fragment, startTransition, useEffect, useState } from 'react'
 import { Dates } from '../../helper/Dates'
 import ProductGridItem from './ProductGridItem'
 
@@ -30,8 +30,13 @@ const ProductGrid: FC<ProductGridProps> = ({ section, products }) => {
 				)
 			})
 		)
-		setIsDataLoaded(true)
-	}, [section, products])
+	}, [products])
+
+	useEffect(() => {
+		startTransition(() => {
+			setIsDataLoaded(true)
+		})
+	}, [gridItems])
 
 	return (
 		<div key={section} className='product-browse-section'>
@@ -50,4 +55,5 @@ const ProductGrid: FC<ProductGridProps> = ({ section, products }) => {
 	)
 }
 
+ProductGrid.displayName = 'ProductGrid'
 export default ProductGrid

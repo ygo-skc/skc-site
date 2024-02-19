@@ -68,19 +68,24 @@ const ProductBrowse: FunctionComponent = () => {
 				}, new Map<number, ProductInfo[]>())
 
 			setProductSubTypes([<FormControlLabel key='All' value='All' control={<Radio />} label='All' />, ...pst])
-
 			setProductGridItems(Array.from(filteredProducts.keys()).map((year: number) => <ProductGrid key={year} section={String(year)} products={filteredProducts.get(year)!} />))
-			setIsDataLoaded(true)
 		})
 	}, [products, loadAll, productTypeFilter, productSubTypesFilter])
 
+	useEffect(() => {
+		startTransition(() => {
+			setIsDataLoaded(true)
+		})
+	}, [productGridItems])
+
 	const loadAllCB = useCallback(() => {
 		setLoadAll(true)
-	}, [])
+	}, [setLoadAll])
 
 	const handleProductTypeFilterChangedCB = useCallback(
 		(_: React.ChangeEvent<HTMLInputElement>, value: string) => {
 			setProductTypeFilter(value)
+			setProductSubTypesFilter('All')
 		},
 		[setProductTypeFilter]
 	)
