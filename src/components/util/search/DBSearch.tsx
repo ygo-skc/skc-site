@@ -66,14 +66,28 @@ export default function DBSearch() {
 			window.location.assign(`/card/${value.cardID}`)
 		}
 	}, [])
-	const handleRenderGroup = useCallback((option: AutocompleteRenderGroupParams) => <DBSearchGrouping group={option.group}>{option.children}</DBSearchGrouping>, [])
+	const handleRenderGroup = useCallback(
+		(option: AutocompleteRenderGroupParams) => (
+			<DBSearchGrouping key={option.group} group={option.group}>
+				{option.children}
+			</DBSearchGrouping>
+		),
+		[]
+	)
 	const handleRenderInput = useCallback(
 		(params: AutocompleteRenderInputParams) => <SearchInput searchParams={params} setSearchInput={setSearchInput} placeholder='Search database for specific card...' />,
 		[]
 	)
 	const handleRenderOption = useCallback(
 		(props: React.HTMLAttributes<HTMLLIElement>, option: SKCCard) => (
-			<DBSearchOptions props={props} searchSubject={searchInput} cardNameOption={option.cardName} cardIdOption={option.cardID} monsterTypeOption={option.monsterType!} />
+			<DBSearchOptions
+				key={option.cardID}
+				props={props}
+				searchSubject={searchInput}
+				cardNameOption={option.cardName}
+				cardIdOption={option.cardID}
+				monsterTypeOption={option.monsterType!}
+			/>
 		),
 		[searchInput]
 	)

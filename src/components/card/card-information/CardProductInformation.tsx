@@ -44,6 +44,7 @@ const CardProductInformation: FC<CardProductInformationProps> = ({ isLoading, pr
 
 						contents.push(
 							<DatedListItem
+								key={product.productId}
 								link={`/product/${product.productId}#${cardID}`}
 								month={Dates.getMonth(productReleaseDate)}
 								day={+Dates.getDay(productReleaseDate)}
