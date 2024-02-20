@@ -41,7 +41,7 @@ export default function Home() {
 				mirrored={true}
 				oneThirdComponent={
 					<Section sectionName='Social'>
-						<Suspense fallback={<Skeleton width='100%' height='7rem' />}>
+						<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='7rem' />}>
 							<SocialMedia />
 						</Suspense>
 					</Section>
@@ -53,7 +53,7 @@ export default function Home() {
 								<Welcome />
 							</div>
 							<div className='multi-section'>
-								<Suspense fallback={<Skeleton width='100%' height='7rem' />}>
+								<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='7rem' />}>
 									<YouTubeData channel='skc' />
 								</Suspense>
 							</div>
