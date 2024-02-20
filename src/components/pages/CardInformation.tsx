@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, Suspense, useReducer } from 'react'
+import { useState, useEffect, lazy, Suspense, useReducer, Fragment } from 'react'
 import { useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { Skeleton } from '@mui/material'
@@ -148,7 +148,7 @@ const CardInformation = () => {
 			<OneThirdTwoThirdsGrid
 				mirrored={false}
 				oneThirdComponent={
-					<Suspense fallback={<Skeleton width='100%' height='10rem' />}>
+					<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='20rem' />}>
 						<CardData
 							cardName={cardName}
 							cardColor={cardColor}
@@ -164,18 +164,24 @@ const CardInformation = () => {
 					</Suspense>
 				}
 				twoThirdComponent={
-					<Suspense fallback={<Skeleton width='100%' height='10rem' />}>
+					<Suspense
+						fallback={
+							<Fragment>
+								<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='20rem' />
+								<br />
+								<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='20rem' />
+							</Fragment>
+						}
+					>
 						<CardSuggestions cardID={cardId} cardColor={cardColor} cardName={cardName} />
-						{!isLoading && (
-							<CardInformationRelatedContent
-								cardName={cardName}
-								cardColor={cardColor?.replace(/Pendulum-/gi, '') as cardColor}
-								isLoading={isLoading}
-								cardID={cardId}
-								productInfo={productInfo}
-								restrictedIn={restrictionInfo}
-							/>
-						)}
+						<CardInformationRelatedContent
+							cardName={cardName}
+							cardColor={cardColor?.replace(/Pendulum-/gi, '') as cardColor}
+							isLoading={isLoading}
+							cardID={cardId}
+							productInfo={productInfo}
+							restrictedIn={restrictionInfo}
+						/>
 					</Suspense>
 				}
 			/>
