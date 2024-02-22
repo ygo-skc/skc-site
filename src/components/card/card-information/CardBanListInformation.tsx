@@ -7,7 +7,6 @@ import { AcceptableBanListFormat } from '../../../helper/BanListUtil'
 import { DatedListItem, Hint } from 'skc-rcl'
 
 type CardBanListInformationProps = {
-	isLoading: boolean
 	restrictedIn: RestrictedIn
 }
 
@@ -48,7 +47,7 @@ const BanListFormatButton: FunctionComponent<BanListFormatButtonProps> = ({ form
 	)
 }
 
-const CardBanListInformation: FunctionComponent<CardBanListInformationProps> = ({ isLoading, restrictedIn }) => {
+const CardBanListInformation: FunctionComponent<CardBanListInformationProps> = ({ restrictedIn }) => {
 	const initNumItems = 10
 	const [banListContent, setBanListContent] = useState<JSX.Element[]>([])
 	const [format, setFormat] = useState<AcceptableBanListFormat>(AcceptableBanListFormat.TCG)
@@ -67,8 +66,6 @@ const CardBanListInformation: FunctionComponent<CardBanListInformationProps> = (
 	}, [format])
 
 	useEffect(() => {
-		if (isLoading) return
-
 		startTransition(() => {
 			const content: JSX.Element[] = restrictedIn[format].slice(0, loadAll ? restrictedIn[format].length : initNumItems).map((banList: SKCBanListInstance) => {
 				const banListEffectiveDate = Dates.fromYYYYMMDDToDate(banList.banListDate)
@@ -91,13 +88,13 @@ const CardBanListInformation: FunctionComponent<CardBanListInformationProps> = (
 
 			setBanListContent(content)
 		})
-	}, [isLoading, format, restrictedIn, loadAll])
+	}, [format, restrictedIn, loadAll])
 
 	return (
 		<div className='group'>
 			<Typography variant='h4'>Ban Lists</Typography>
 
-			{!isLoading && restrictedIn[format].length !== 0 && (
+			{restrictedIn[format].length !== 0 && (
 				<Fragment>
 					<ButtonGroup className='ban-list-format-container' fullWidth disableElevation variant='contained' aria-label='Disabled elevation buttons'>
 						<BanListFormatButton format={AcceptableBanListFormat.TCG} setFormat={setFormat} restrictedIn={restrictedIn} />
@@ -112,7 +109,7 @@ const CardBanListInformation: FunctionComponent<CardBanListInformationProps> = (
 					</div>
 				</Fragment>
 			)}
-			{!isLoading && restrictedIn[format].length === 0 && (
+			{restrictedIn[format].length === 0 && (
 				<Hint backgroundColor='rgba(0, 0, 0, 0.7)' textColor='white'>
 					{'Not Found In Any Ban List'}
 				</Hint>

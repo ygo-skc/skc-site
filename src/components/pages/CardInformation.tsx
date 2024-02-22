@@ -174,14 +174,17 @@ const CardInformation = () => {
 						}
 					>
 						<CardSuggestions cardID={cardId} cardColor={cardColor} cardName={cardName} />
-						<CardInformationRelatedContent
-							cardName={cardName}
-							cardColor={cardColor?.replace(/Pendulum-/gi, '') as cardColor}
-							isLoading={isLoading}
-							cardID={cardId}
-							productInfo={productInfo}
-							restrictedIn={restrictionInfo}
-						/>
+						{isLoading ? (
+							<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='20rem' />
+						) : (
+							<CardInformationRelatedContent
+								cardName={cardName}
+								cardColor={cardColor?.replace(/Pendulum-/gi, '') as cardColor}
+								cardID={cardId}
+								productInfo={productInfo}
+								restrictedIn={restrictionInfo}
+							/>
+						)}
 					</Suspense>
 				}
 			/>

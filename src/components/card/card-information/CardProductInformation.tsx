@@ -5,13 +5,12 @@ import { Dates } from '../../../helper/Dates'
 import { DatedListItem, Hint } from 'skc-rcl'
 
 type CardProductInformationProps = {
-	isLoading: boolean
 	cardID: string
 	cardName: string
 	productInfo: ProductInfo[]
 }
 
-const CardProductInformation: FC<CardProductInformationProps> = ({ isLoading, productInfo, cardID, cardName }) => {
+const CardProductInformation: FC<CardProductInformationProps> = ({ productInfo, cardID, cardName }) => {
 	const initNumItems = 5
 	const [productContents, setProductContents] = useState<JSX.Element[]>([])
 	const [uniqueProductsFeaturedIn, setUniqueProductsFeaturedIn] = useState(0)
@@ -87,7 +86,7 @@ const CardProductInformation: FC<CardProductInformationProps> = ({ isLoading, pr
 	return (
 		<div className='group'>
 			<Typography variant='h4'>Products</Typography>
-			{!isLoading && productInfo.length !== 0 && (
+			{productInfo.length !== 0 && (
 				<Fragment>
 					<Hint backgroundColor='rgba(0, 0, 0, 0.7)' textColor='white' variant='tight'>
 						Last printing released {Dates.daysBetweenTwoDates(Dates.fromYYYYMMDDToDate(productInfo[0].productReleaseDate)).toLocaleString()} day(s) ago
@@ -116,7 +115,7 @@ const CardProductInformation: FC<CardProductInformationProps> = ({ isLoading, pr
 				</Fragment>
 			)}
 
-			{!isLoading && productInfo.length === 0 && (
+			{productInfo.length === 0 && (
 				<Hint backgroundColor='rgba(0, 0, 0, 0.7)' textColor='white'>
 					{'Not Found In Any Product'}
 				</Hint>
