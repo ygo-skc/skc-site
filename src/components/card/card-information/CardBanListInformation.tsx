@@ -51,12 +51,20 @@ const BanListFormatButton: FunctionComponent<BanListFormatButtonProps> = ({ form
 const CardBanListInformation: FunctionComponent<CardBanListInformationProps> = ({ isLoading, restrictedIn }) => {
 	const initNumItems = 10
 	const [banListContent, setBanListContent] = useState<JSX.Element[]>([])
-	const [format, setFormat] = useState<AcceptableBanListFormat>(determineFormat(restrictedIn))
-	const [loadAll, setLoadAll] = useState(restrictedIn[format].length <= initNumItems)
+	const [format, setFormat] = useState<AcceptableBanListFormat>(AcceptableBanListFormat.TCG)
+	const [loadAll, setLoadAll] = useState(false)
 
 	const loadAllCB = useCallback(() => {
 		setLoadAll(true)
 	}, [])
+
+	useEffect(() => {
+		setFormat(determineFormat(restrictedIn))
+	}, [restrictedIn])
+
+	useEffect(() => {
+		setLoadAll(restrictedIn[format].length <= initNumItems)
+	}, [format])
 
 	useEffect(() => {
 		if (isLoading) return

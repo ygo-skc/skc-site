@@ -16,11 +16,15 @@ const CardProductInformation: FC<CardProductInformationProps> = ({ isLoading, pr
 	const [productContents, setProductContents] = useState<JSX.Element[]>([])
 	const [uniqueProductsFeaturedIn, setUniqueProductsFeaturedIn] = useState(0)
 	const [uniqueRarityPrintings, setUniqueRarityPrintings] = useState<JSX.Element[]>([])
-	const [loadAll, setLoadAll] = useState(productInfo.length <= initNumItems)
+	const [loadAll, setLoadAll] = useState(false)
 
 	const loadAllCB = useCallback(() => {
 		setLoadAll(true)
 	}, [])
+
+	useEffect(() => {
+		setLoadAll(productInfo.length <= initNumItems)
+	}, [productInfo])
 
 	const alphaSort = (a: string, b: string) => a.localeCompare(b)
 
