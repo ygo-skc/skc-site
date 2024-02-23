@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, Suspense, useReducer, Fragment } from 'react'
+import { useState, useEffect, lazy, Suspense, useReducer } from 'react'
 import { useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { Skeleton } from '@mui/material'
@@ -6,11 +6,18 @@ import { Skeleton } from '@mui/material'
 import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
+import { CardImageRounded, Section } from 'skc-rcl'
+import { decodeHTML } from 'entities'
 
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
-const CardData = lazy(() => import('../card/card-information/CardData'))
 const CardSuggestions = lazy(() => import('../card/suggestion/CardSuggestions'))
 const CardInformationRelatedContent = lazy(() => import('../card/card-information/CardInformationRelatedContent'))
+
+const YGOCard = lazy(() =>
+	import('skc-rcl').then((module) => {
+		return { default: module.YGOCard }
+	})
+)
 
 type CardInformationState = {
 	cardName: string
@@ -74,8 +81,8 @@ function cardInformationReducer(state: CardInformationState, action: CardInforma
 }
 
 const CardInformation = () => {
-	let { cardId } = useParams()
-	cardId = cardId as string
+	let { cardId: cardID } = useParams()
+	cardID = cardID as string
 	const crumbs = ['Home', 'Card Browse']
 
 	const [isLoading, setIsLoading] = useState(true)
@@ -99,7 +106,7 @@ const CardInformation = () => {
 	const [dynamicCrumbs, setDynamicCrumbs] = useState([...crumbs, ''])
 
 	useEffect(() => {
-		FetchHandler.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT['cardInstanceUrl']}${cardId}?allInfo=true`, (cardInfo: SKCCardInfo) => {
+		FetchHandler.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT['cardInstanceUrl']}${cardID}?allInfo=true`, (cardInfo: SKCCardInfo) => {
 			setDynamicCrumbs([...crumbs, cardInfo.cardID])
 
 			cardDispatch({
@@ -131,12 +138,12 @@ const CardInformation = () => {
 	return (
 		<div className='generic-container'>
 			<Helmet>
-				<title>SKC - Card: {cardId}</title>
-				<meta name={`SKC - Card: ${cardId}`} content={`Information for YuGiOh card ${cardName} such as ban lists it was in, products it can be found in, effect/stats, etc.`} />
-				<meta name='keywords' content={`YuGiOh, The Supreme Kings Castle, card, ${cardName}, ${cardId}, ${cardColor}`} />
+				<title>SKC - Card: {cardID}</title>
+				<meta name={`SKC - Card: ${cardID}`} content={`Information for YuGiOh card ${cardName} such as ban lists it was in, products it can be found in, effect/stats, etc.`} />
+				<meta name='keywords' content={`YuGiOh, The Supreme Kings Castle, card, ${cardName}, ${cardID}, ${cardColor}`} />
 
-				<meta property='og:title' content={`${cardName} - ${cardId}`} />
-				<meta property='og:image' content={`https://images.thesupremekingscastle.com/cards/tn/${cardId}.jpg`} />
+				<meta property='og:title' content={`${cardName} - ${cardID}`} />
+				<meta property='og:image' content={`https://images.thesupremekingscastle.com/cards/tn/${cardID}.jpg`} />
 				<meta property='og:type' content='website' />
 				<meta property='og:description' content={`Details For Yugioh Card - ${cardName}`} />
 			</Helmet>
@@ -148,39 +155,41 @@ const CardInformation = () => {
 			<OneThirdTwoThirdsGrid
 				mirrored={false}
 				oneThirdComponent={
-					<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='20rem' />}>
-						<CardData
-							cardName={cardName}
-							cardColor={cardColor}
-							cardEffect={cardEffect}
-							cardAttribute={cardAttribute}
-							monsterType={monsterType}
-							monsterAttack={monsterAtk}
-							monsterDefense={monsterDef}
-							monsterAssociation={monsterAssociation}
-							cardID={cardId}
-							isLoading={isLoading}
-						/>
-					</Suspense>
+					<Section sectionHeaderBackground={cardColor !== undefined ? (cardColor?.replace(/Pendulum-/gi, '') as cardColor) : ''} sectionName='Information'>
+						<div className='section-content'>
+							<CardImageRounded variant='md' cardID={cardID} loading='eager' />
+							<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='10rem' />}>
+								{isLoading ? (
+									<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='10rem' />
+								) : (
+									<YGOCard
+										cardName={cardName}
+										cardColor={cardColor}
+										cardEffect={decodeHTML(cardEffect)}
+										cardAttribute={cardAttribute}
+										monsterType={monsterType}
+										monsterAttack={monsterAtk}
+										monsterDefense={monsterDef}
+										monsterAssociation={monsterAssociation}
+										cardID={cardID}
+										fullDetails={true}
+										isLoading={false}
+									/>
+								)}
+							</Suspense>
+						</div>
+					</Section>
 				}
 				twoThirdComponent={
-					<Suspense
-						fallback={
-							<Fragment>
-								<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='20rem' />
-								<br />
-								<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='20rem' />
-							</Fragment>
-						}
-					>
-						<CardSuggestions cardID={cardId} cardColor={cardColor} cardName={cardName} />
+					<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='20rem' />}>
+						<CardSuggestions cardID={cardID} cardColor={cardColor} cardName={cardName} />
 						{isLoading ? (
 							<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='20rem' />
 						) : (
 							<CardInformationRelatedContent
 								cardName={cardName}
 								cardColor={cardColor?.replace(/Pendulum-/gi, '') as cardColor}
-								cardID={cardId}
+								cardID={cardID}
 								productInfo={productInfo}
 								restrictedIn={restrictionInfo}
 							/>
