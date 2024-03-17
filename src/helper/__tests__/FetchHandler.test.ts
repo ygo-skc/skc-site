@@ -22,7 +22,7 @@ test('verify user is redirected to 503 page on Network Error', () => {
 
 test('verify user is redirected to 503 page on TypeError', () => {
 	const err = new AxiosError()
-	err.message = 'TypeError'
+	err.name = 'TypeError'
 	FetchHandler.handleError(err)
 
 	expect(location.href).toBe(AppRoutes.ServiceUnavailable)

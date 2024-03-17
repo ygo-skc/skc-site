@@ -42,8 +42,8 @@
 		"build": "webpack --mode production --env dev",
 		"build:development_remote": "webpack --mode production --env remote-dev",
 		"build:production": "webpack --mode production --env prod",
-		"test": "react-scripts test --coverage --watchAll",
-		"ci:test": "react-scripts test --ci --coverage --watchAll=false",
+		"test": "jest --coverage --watchAll",
+		"ci:test": "jest --ci --coverage --watchAll=false",
 		"lint": "eslint src --ext .tsx,.ts",
 		"mutation": "stryker run config/stryker.conf.json",
 		"aws:check-skc-cloudfront": "aws cloudfront list-distributions | jq '.DistributionList.Items[] | select(.Aliases.Items | contains([\"thesupremekingscastle.com\"])) |  {id: .Id, aliases: .Aliases}'",
@@ -88,7 +88,6 @@
 		"jest-environment-jsdom": "29.7.0",
 		"postcss-flexbugs-fixes": "5.0.2",
 		"postcss-normalize": "10.0.1",
-		"react-scripts": "5.0.1",
 		"react-test-renderer": "18.2.0",
 		"ts-jest": "29.1.2",
 		"ts-loader": "9.5.1",
@@ -100,19 +99,22 @@
 		"webpack-dev-server": "5.0.3"
 	},
 	"jest": {
+		"testEnvironment": "jsdom",
+		"setupFilesAfterEnv": [
+			"<rootDir>/src/setupTests.ts"
+		],
 		"coverageThreshold": {
 			"global": {
-				"branches": 60,
-				"functions": 60,
-				"lines": 60,
-				"statements": 70
+				"branches": 70,
+				"functions": 80,
+				"lines": 80,
+				"statements": 80
 			}
 		},
 		"transformIgnorePatterns": [
 			"node_modules/(?!axios)"
 		],
 		"coveragePathIgnorePatterns": [
-			"src/components/",
 			"src/reducers/",
 			"src/helper/DownstreamServices.ts"
 		]

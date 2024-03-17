@@ -5,7 +5,7 @@
 	"concurrency": 6,
 	"testRunner": "jest",
 	"jest": {
-		"projectType": "create-react-app",
+		"projectType": "custom",
 		"enableFindRelatedTests": true
 	},
 	"coverageAnalysis": "perTest",
