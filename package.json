@@ -116,6 +116,9 @@
 		"transformIgnorePatterns": [
 			"node_modules/(?!axios)"
 		],
+		"testPathIgnorePatterns": [
+			"<rootDir>/build/"
+		],
 		"coveragePathIgnorePatterns": [
 			"src/reducers/",
 			"src/helper/DownstreamServices.ts"
