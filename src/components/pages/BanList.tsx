@@ -121,6 +121,8 @@ export default function BanList() {
 			type: BanListReducerType.FETCHING_INFO,
 		})
 
+		setSelectedBanList('')
+
 		FetchHandler.handleFetch<BanListDatesOutput>(`${DownstreamServices.NAME_maps_ENDPOINT['banListsUrl']}?format=${format}`, (json) => {
 			dateDispatch({
 				type: BanListDateReducerActionType.DATES_RECEIVED,
