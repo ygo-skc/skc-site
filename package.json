@@ -32,7 +32,7 @@
 		"socket.io-parser": "4.2.4",
 		"@babel/traverse": "7.24.1",
 		"postcss": "8.4.38",
-		"@babel/core": "7.24.1"
+		"@babel/core": "7.24.3"
 	},
 	"scripts": {
 		"preinstall": "npx force-resolutions",
