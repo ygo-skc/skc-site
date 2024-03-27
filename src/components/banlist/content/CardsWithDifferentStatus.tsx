@@ -1,5 +1,6 @@
 import { Typography } from '@mui/material'
 import { FC, useEffect, useState } from 'react'
+import { decodeHTML } from 'entities'
 import { YGOCardWithPreviousBanStatus } from 'skc-rcl'
 
 type CardsWithDifferentStatusProps = {
@@ -15,6 +16,7 @@ const CardsWithDifferentStatus: FC<CardsWithDifferentStatusProps> = ({ newStatus
 		setCardsWithNewStatus(
 			cards.map((newStatus: SKCCardsPreviousBanListStatus) => {
 				const card: SKCCard = newStatus.card
+				card.cardEffect = decodeHTML(card.cardEffect)
 
 				return <YGOCardWithPreviousBanStatus key={`${newStatusName}-${card.cardID}`} card={card} previousBanStatus={newStatus.previousBanStatus} />
 			})
