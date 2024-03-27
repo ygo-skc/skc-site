@@ -14,7 +14,7 @@
 
 .card-of-the-day-wrapper .MuiSkeleton-root {
 	flex: 4;
-	height: auto;
+	padding-top: 20%;
 }
 
 .card-of-the-day-wrapper > *:not(:last-child) {

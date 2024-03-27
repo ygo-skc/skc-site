@@ -1,6 +1,6 @@
 import '../../css/main-pages/product.css'
 
-import { useState, useEffect, lazy, Fragment, useReducer } from 'react'
+import { useState, useEffect, lazy, Fragment, useReducer, Suspense } from 'react'
 import { useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 
@@ -8,7 +8,7 @@ import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
-import { Typography } from '@mui/material'
+import { Skeleton, Typography } from '@mui/material'
 import ProductStats from '../product/ProductStats'
 import { Section } from 'skc-rcl'
 import cardDisplayGridReducer, { CardDisplayGridStateReducerActionType } from '../../reducers/CardDisplayGridReducer'
@@ -68,7 +68,9 @@ export default function ProductInfo() {
 				<meta name='keywords' content={`YuGiOh, product browse, The Supreme Kings Castle`} />
 			</Helmet>
 
-			<Breadcrumb crumbs={dynamicBreadcrumbs} />
+			<Suspense fallback={<Skeleton className='breadcrumb-skeleton' variant='rectangular' width='100%' height='2.5rem' />}>
+				<Breadcrumb crumbs={dynamicBreadcrumbs} />
+			</Suspense>
 
 			<OneThirdTwoThirdsGrid
 				mirrored={false}

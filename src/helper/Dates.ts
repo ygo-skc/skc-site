@@ -21,7 +21,7 @@ class Dates {
 	}
 
 	static readonly isFutureDate = (d: Date): boolean => {
-		return d > new Date() ? true : false
+		return d > new Date()
 	}
 
 	static readonly getCurrentBanListDate = (selectedBanList?: string, banListStartDates?: string[]): string => {

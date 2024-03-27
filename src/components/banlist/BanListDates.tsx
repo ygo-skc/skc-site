@@ -14,7 +14,7 @@ type BanListDatesProps = {
 const BanListDates: FC<BanListDatesProps> = memo(
 	({ isFetchingBanListDates, banListStartDates, selectedBanList, setSelectedBanList }) => {
 		const [selectorItems, setSelectorItems] = useState<JSX.Element[]>()
-		const [selectedBanListInd, setSelectedBanListInd] = useState('0')
+		const [selectedBanListInd, setSelectedBanListInd] = useState<number>(0)
 
 		useEffect(() => {
 			const selectorItems: JSX.Element[] = banListStartDates.map((_: string, ind: number) => {
@@ -26,20 +26,20 @@ const BanListDates: FC<BanListDatesProps> = memo(
 			})
 
 			setSelectorItems(selectorItems)
-			setSelectedBanListInd('0')
+			setSelectedBanListInd(0)
 		}, [banListStartDates])
 
 		const handleBanListChanged = useCallback(
 			(event: SelectChangeEvent) => {
-				setSelectedBanListInd(event.target.value)
+				setSelectedBanListInd(+event.target.value)
 				setSelectedBanList(+event.target.value)
 				scrollToTop()
 			},
-			[selectedBanListInd, setSelectedBanList]
+			[setSelectedBanList]
 		)
 
 		return (
-			<div className='ban-list-date-section group'>
+			<div className='group'>
 				<Typography variant='h5'>Date Range</Typography>
 
 				{isFetchingBanListDates ? (
@@ -48,7 +48,7 @@ const BanListDates: FC<BanListDatesProps> = memo(
 					<Fragment>
 						<Typography variant='subtitle1'>There are {banListStartDates.length} ban lists for selected format currently in the database</Typography>
 
-						<Select className='ban-list-date-selector' value={selectedBanListInd} onChange={handleBanListChanged}>
+						<Select className='ban-list-date-selector' value={selectedBanListInd.toString()} onChange={handleBanListChanged}>
 							{selectorItems}
 						</Select>
 						{!isFetchingBanListDates && Dates.isFutureDate(Dates.fromYYYYMMDDToDate(selectedBanList)) && (
@@ -62,7 +62,9 @@ const BanListDates: FC<BanListDatesProps> = memo(
 		)
 	},
 	(prevProps, nextProps) => {
-		return prevProps.selectedBanList === nextProps.selectedBanList
+		return (
+			prevProps.selectedBanList === nextProps.selectedBanList && prevProps.banListStartDates.every((blDate: string, index: number) => blDate === nextProps.selectedBanList[index])
+		)
 	}
 )
 

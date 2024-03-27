@@ -188,10 +188,19 @@ li {
 	background: #f5f5f5;
 }
 
+.group:not(:last-child) {
+	margin-bottom: 1.5rem;
+}
+
 .group-dark {
 	padding: 1.25rem !important;
 	border-radius: 2rem;
 	background: rgba(0, 0, 0, 0.7);
+	margin-bottom: 1.5rem;
+}
+
+.group-dark > *:not(:last-child) {
+	margin-bottom: 1rem;
 }
 
 .rounded-skeleton {
@@ -201,6 +210,11 @@ li {
 .rounded-skeleton-light {
 	border-radius: 1rem;
 	background-color: rgba(255, 255, 255, 0.3) !important;
+}
+.breadcrumb-skeleton {
+	border-radius: 2rem;
+	margin-top: 1rem;
+	margin-bottom: 2.25rem;
 }
 
 .light-translucent-divider {

@@ -1,5 +1,6 @@
 import '../../../css/card/ygo-card-suggestion.css'
 import { FC, Fragment, lazy, Suspense, useEffect, useState, useCallback } from 'react'
+import { decodeHTML } from 'entities'
 import { Skeleton } from '@mui/material'
 
 import FetchHandler from '../../../helper/FetchHandler'
@@ -59,10 +60,11 @@ const CardSuggestions: FC<_CardSuggestion> = ({ cardID, cardColor, cardName }) =
 
 		return references !== null
 			? references.map((reference: CardReference) => {
+					reference.card.cardEffect = decodeHTML(reference.card.cardEffect)
 					return (
-						<div key={reference.card.cardID} className='suggested-ygo-card-wrapper' onClick={() => window.location.assign(`/card/${reference.card.cardID}`)}>
+						<a key={reference.card.cardID} href={`/card/${reference.card.cardID}`} className='suggested-ygo-card-wrapper aggregate-anchor'>
 							<YGOCardWithQuantity card={reference.card} occurrences={reference.occurrences} />
-						</div>
+						</a>
 					)
 			  })
 			: []
@@ -77,10 +79,11 @@ const CardSuggestions: FC<_CardSuggestion> = ({ cardID, cardColor, cardName }) =
 
 		return support !== null
 			? support.map((reference: SKCCard) => {
+					reference.cardEffect = decodeHTML(reference.cardEffect)
 					return (
-						<div key={reference.cardID} className='suggested-ygo-card-wrapper' onClick={() => window.location.assign(`/card/${reference.cardID}`)}>
+						<a key={reference.cardID} href={`/card/${reference.cardID}`} className='suggested-ygo-card-wrapper aggregate-anchor'>
 							<YGOCardWithImage key={reference.cardID} card={reference} imgLoadingType='lazy' />
-						</div>
+						</a>
 					)
 			  })
 			: []

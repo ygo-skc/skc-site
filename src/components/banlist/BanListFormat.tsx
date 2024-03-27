@@ -19,7 +19,7 @@ const BanListFormat: FC<BanListFormatProps> = memo(
 		)
 
 		return (
-			<div className='ban-list-format-section group'>
+			<div className='group'>
 				<FormControl>
 					<FormLabel id='ban-list-format-label'>Format</FormLabel>
 					<RadioGroup value={format} onChange={handleFormatChanged} row aria-labelledby='ban-list-format-label' name='ban-list-format-buttons-group'>

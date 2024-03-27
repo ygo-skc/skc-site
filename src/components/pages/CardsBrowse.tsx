@@ -1,11 +1,10 @@
 import '../../css/util/database-search-styles.css'
 import '../../css/main-pages/card-browse.css'
 
-import { useState, useEffect, lazy, useReducer, startTransition } from 'react'
-import { Typography } from '@mui/material'
+import { useState, useEffect, lazy, useReducer, startTransition, Suspense } from 'react'
+import { Skeleton, Typography } from '@mui/material'
 import { Helmet } from 'react-helmet'
 
-import Breadcrumb from '../header-footer/Breadcrumb'
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 
 import FetchHandler from '../../helper/FetchHandler'
@@ -17,6 +16,7 @@ import cardDisplayGridReducer, { CardDisplayGridStateReducerActionType } from '.
 import cardBrowseReducer from '../../reducers/CardBrowseCriteriaReducer'
 
 const CardDisplayGrid = lazy(() => import('../util/grid/CardDisplayGrid'))
+const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 
 function generateBrowseQueryURL(selectedCriteria: BrowseCriteria[]) {
 	const criteriaMap = new Map()
@@ -104,13 +104,15 @@ export default function BrowseCards() {
 				<meta name='keywords' content={`YuGiOh, card browse, The Supreme Kings Castle`} />
 			</Helmet>
 
-			<Breadcrumb crumbs={['Home', 'Card Browse Tool']} />
+			<Suspense fallback={<Skeleton className='breadcrumb-skeleton' variant='rectangular' width='100%' height='2.5rem' />}>
+				<Breadcrumb crumbs={['Home', 'Card Browse Tool']} />
+			</Suspense>
 
 			<OneThirdTwoThirdsGrid
 				oneThirdComponent={
 					<Section sectionHeaderBackground='product' sectionName='Current Criteria' sticky={true}>
 						<div className='section-content'>
-							<div className='group card-browse-group'>
+							<div className='group'>
 								<CardBrowse browseCriteriaDispatch={browseCriteriaDispatch} selectedCriteria={selectedCriteria} skcCardBrowseCriteriaOutput={skcCardBrowseCriteriaOutput} />
 							</div>
 

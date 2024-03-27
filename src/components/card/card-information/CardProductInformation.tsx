@@ -5,22 +5,25 @@ import { Dates } from '../../../helper/Dates'
 import { DatedListItem, Hint } from 'skc-rcl'
 
 type CardProductInformationProps = {
-	isLoading: boolean
 	cardID: string
 	cardName: string
 	productInfo: ProductInfo[]
 }
 
-const CardProductInformation: FC<CardProductInformationProps> = ({ isLoading, productInfo, cardID, cardName }) => {
+const CardProductInformation: FC<CardProductInformationProps> = ({ productInfo, cardID, cardName }) => {
 	const initNumItems = 5
 	const [productContents, setProductContents] = useState<JSX.Element[]>([])
 	const [uniqueProductsFeaturedIn, setUniqueProductsFeaturedIn] = useState(0)
 	const [uniqueRarityPrintings, setUniqueRarityPrintings] = useState<JSX.Element[]>([])
-	const [loadAll, setLoadAll] = useState(productInfo.length <= initNumItems)
+	const [loadAll, setLoadAll] = useState(false)
 
 	const loadAllCB = useCallback(() => {
 		setLoadAll(true)
 	}, [])
+
+	useEffect(() => {
+		setLoadAll(productInfo.length <= initNumItems)
+	}, [productInfo])
 
 	const alphaSort = (a: string, b: string) => a.localeCompare(b)
 
@@ -44,6 +47,7 @@ const CardProductInformation: FC<CardProductInformationProps> = ({ isLoading, pr
 
 						contents.push(
 							<DatedListItem
+								key={product.productId}
 								link={`/product/${product.productId}#${cardID}`}
 								month={Dates.getMonth(productReleaseDate)}
 								day={+Dates.getDay(productReleaseDate)}
@@ -82,7 +86,7 @@ const CardProductInformation: FC<CardProductInformationProps> = ({ isLoading, pr
 	return (
 		<div className='group'>
 			<Typography variant='h4'>Products</Typography>
-			{!isLoading && productInfo.length !== 0 && (
+			{productInfo.length !== 0 && (
 				<Fragment>
 					<Hint backgroundColor='rgba(0, 0, 0, 0.7)' textColor='white' variant='tight'>
 						Last printing released {Dates.daysBetweenTwoDates(Dates.fromYYYYMMDDToDate(productInfo[0].productReleaseDate)).toLocaleString()} day(s) ago
@@ -93,16 +97,17 @@ const CardProductInformation: FC<CardProductInformationProps> = ({ isLoading, pr
 						</Hint>
 					)}
 
-					<div className='summary'>
-						<Typography variant='h5'>Unique Products {uniqueProductsFeaturedIn}</Typography>
-						<Typography variant='h5'>Unique Rarities</Typography>
+					<div className='unique-rarities'>
+						<Typography variant='subtitle1'>
+							<span className='prominent'>{cardName}</span> was printed in {uniqueRarityPrintings.length} unique {uniqueRarityPrintings.length == 1 ? 'rarity' : 'rarities'}
+						</Typography>
 						{uniqueRarityPrintings}
 						<Divider className='dark-translucent-divider' />
 					</div>
 					<br />
 					<div>
 						<Typography variant='subtitle1'>
-							<span className='prominent'>{cardName}</span> was printed in...
+							<span className='prominent'>{cardName}</span> was included in {uniqueProductsFeaturedIn} {uniqueProductsFeaturedIn == 1 ? 'product' : 'products'}
 						</Typography>
 						{productContents}
 						{loadAll ? undefined : <Button onClick={loadAllCB}>Load All</Button>}
@@ -110,7 +115,7 @@ const CardProductInformation: FC<CardProductInformationProps> = ({ isLoading, pr
 				</Fragment>
 			)}
 
-			{!isLoading && productInfo.length === 0 && (
+			{productInfo.length === 0 && (
 				<Hint backgroundColor='rgba(0, 0, 0, 0.7)' textColor='white'>
 					{'Not Found In Any Product'}
 				</Hint>

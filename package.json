@@ -1,26 +1,26 @@
 {
 	"name": "skc-site",
-	"version": "1.12.1",
+	"version": "1.13.0",
 	"description": "Website to help duelists.",
 	"main": "index.js",
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
-		"@emotion/react": "11.11.3",
+		"@emotion/react": "11.11.4",
 		"@emotion/styled": "11.11.0",
-		"@mui/icons-material": "5.15.2",
-		"@mui/material": "5.15.2",
+		"@mui/icons-material": "5.15.14",
+		"@mui/material": "5.15.14",
 		"@mui/styled-engine-sc": "5.14.12",
-		"@nivo/pie": "0.84.0",
-		"axios": "1.6.3",
+		"@nivo/pie": "0.85.1",
+		"axios": "1.6.8",
 		"entities": "4.5.0",
 		"lodash.startcase": "4.4.0",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
 		"react-helmet": "6.1.0",
 		"react-markdown": "9.0.1",
-		"react-router-dom": "6.21.1",
-		"skc-rcl": "1.1.0",
+		"react-router-dom": "6.22.3",
+		"skc-rcl": "1.1.4",
 		"styled-components": "5.3.11"
 	},
 	"resolutions": {
@@ -30,26 +30,27 @@
 		"node-forge": "1.3.1",
 		"nth-check": "2.1.1",
 		"socket.io-parser": "4.2.4",
-		"@babel/traverse": "7.23.7",
-		"postcss": "8.4.32"
+		"@babel/traverse": "7.24.1",
+		"postcss": "8.4.38",
+		"@babel/core": "7.24.1"
 	},
 	"scripts": {
 		"preinstall": "npx force-resolutions",
 		"postinstall": "npm dedupe",
-		"fresh-install": "rm -rf node_modules package-lock.json && npm install --no-optional && npx browserslist@latest --update-db",
+		"fresh-install": "rm -rf node_modules package-lock.json && npm install --omit=optional && npx browserslist@latest --update-db",
 		"start": "webpack-dev-server --mode development --env dev",
 		"start:dashboard": "webpack-dashboard -- webpack serve --mode development --env dev",
 		"build": "webpack --mode production --env dev",
 		"build:development_remote": "webpack --mode production --env remote-dev",
 		"build:production": "webpack --mode production --env prod",
-		"test": "react-scripts test --coverage --watchAll",
-		"ci:test": "react-scripts test --ci --coverage --watchAll=false",
+		"test": "jest --coverage --watchAll",
+		"ci:test": "jest --ci --coverage --watchAll=false",
 		"lint": "eslint src --ext .tsx,.ts",
 		"mutation": "stryker run config/stryker.conf.json",
 		"aws:check-skc-cloudfront": "aws cloudfront list-distributions | jq '.DistributionList.Items[] | select(.Aliases.Items | contains([\"thesupremekingscastle.com\"])) |  {id: .Id, aliases: .Aliases}'",
 		"deploy:prod": "npm run build:production; aws s3 rm s3://yugiohsite/ --recursive; aws s3 sync build s3://yugiohsite/ --cache-control max-age=3600; aws cloudfront create-invalidation --distribution-id ${YGO_CLOUDFRONT_PROD} --paths '/*'",
 		"deploy:dev": "npm run build:development_remote; aws s3 rm s3://yugiohsitedev/ --recursive; aws s3 sync build s3://yugiohsitedev/ --cache-control max-age=3600; aws cloudfront create-invalidation --distribution-id ${YGO_CLOUDFRONT_DEV} --paths '/*'",
-		"deploy:ec2-dev": "npm run build:development_remote; bash sync.sh ${SKC_EC2_URL}"
+		"deploy:ec2-dev": "npm run build:development_remote; bash deploy.sh ${SKC_SERVER}"
 	},
 	"eslintConfig": {
 		"extends": "react-app"
@@ -61,58 +62,65 @@
 		"not op_mini all"
 	],
 	"devDependencies": {
-		"@babel/preset-env": "7.23.7",
-		"@babel/preset-react": "7.23.3",
-		"@babel/preset-typescript": "7.23.3",
-		"@stryker-mutator/core": "8.0.0",
-		"@stryker-mutator/jest-runner": "8.0.0",
-		"@stryker-mutator/typescript-checker": "8.0.0",
-		"@testing-library/jest-dom": "6.1.6",
-		"@testing-library/react": "14.1.2",
-		"@types/jest": "29.5.11",
+		"@babel/preset-env": "7.24.3",
+		"@babel/preset-react": "7.24.1",
+		"@babel/preset-typescript": "7.24.1",
+		"@stryker-mutator/core": "8.2.6",
+		"@stryker-mutator/jest-runner": "8.2.6",
+		"@stryker-mutator/typescript-checker": "8.2.6",
+		"@testing-library/jest-dom": "6.4.2",
+		"@testing-library/react": "14.2.2",
+		"@types/jest": "29.5.12",
 		"@types/lodash.startcase": "4.4.9",
-		"@types/react": "18.2.46",
-		"@types/react-dom": "18.2.18",
+		"@types/react": "18.2.72",
+		"@types/react-dom": "18.2.22",
 		"@types/react-helmet": "6.1.11",
 		"@types/react-router-dom": "5.3.3",
 		"@types/styled-components": "5.1.34",
-		"@typescript-eslint/eslint-plugin": "6.16.0",
-		"@typescript-eslint/parser": "6.16.0",
+		"@typescript-eslint/eslint-plugin": "7.4.0",
+		"@typescript-eslint/parser": "7.4.0",
 		"babel-loader": "9.1.3",
 		"clean-webpack-plugin": "4.0.0",
-		"copy-webpack-plugin": "11.0.0",
-		"eslint": "8.56.0",
-		"eslint-plugin-react": "7.33.2",
+		"copy-webpack-plugin": "12.0.2",
+		"css-loader": "^6.10.0",
+		"eslint": "8.57.0",
+		"eslint-plugin-react": "7.34.1",
 		"html-webpack-plugin": "5.6.0",
 		"jest": "29.7.0",
 		"jest-environment-jsdom": "29.7.0",
 		"postcss-flexbugs-fixes": "5.0.2",
 		"postcss-normalize": "10.0.1",
-		"react-scripts": "5.0.1",
 		"react-test-renderer": "18.2.0",
-		"ts-jest": "29.1.1",
+		"style-loader": "^3.3.4",
+		"ts-jest": "29.1.2",
 		"ts-loader": "9.5.1",
 		"ts-node": "10.9.2",
-		"typescript": "4.9.5",
-		"webpack": "5.89.0",
+		"typescript": "5.4.3",
+		"webpack": "5.91.0",
 		"webpack-cli": "5.1.4",
 		"webpack-dashboard": "3.3.8",
-		"webpack-dev-server": "4.15.1"
+		"webpack-dev-server": "5.0.4"
 	},
 	"jest": {
+		"testEnvironment": "jsdom",
+		"setupFilesAfterEnv": [
+			"<rootDir>/src/setupTests.ts"
+		],
 		"coverageThreshold": {
 			"global": {
 				"branches": 70,
-				"functions": 70,
-				"lines": 70,
-				"statements": 75
+				"functions": 80,
+				"lines": 80,
+				"statements": 80
 			}
 		},
 		"transformIgnorePatterns": [
 			"node_modules/(?!axios)"
 		],
+		"testPathIgnorePatterns": [
+			"<rootDir>/build/"
+		],
 		"coveragePathIgnorePatterns": [
-			"src/components/",
 			"src/reducers/",
 			"src/helper/DownstreamServices.ts"
 		]
