@@ -91,7 +91,7 @@
 		"postcss-flexbugs-fixes": "5.0.2",
 		"postcss-normalize": "10.0.1",
 		"react-test-renderer": "18.2.0",
-		"style-loader": "^3.3.4",
+		"style-loader": "^4.0.0",
 		"ts-jest": "29.1.2",
 		"ts-loader": "9.5.1",
 		"ts-node": "10.9.2",
