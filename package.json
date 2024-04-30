@@ -15,12 +15,12 @@
 		"axios": "1.6.8",
 		"entities": "4.5.0",
 		"lodash.startcase": "4.4.0",
-		"react": "18.2.0",
-		"react-dom": "18.2.0",
+		"react": "18.3.1",
+		"react-dom": "18.3.1",
 		"react-helmet": "6.1.0",
 		"react-markdown": "9.0.1",
 		"react-router-dom": "6.23.0",
-		"skc-rcl": "1.1.4",
+		"skc-rcl": "1.1.5",
 		"styled-components": "5.3.11"
 	},
 	"resolutions": {
