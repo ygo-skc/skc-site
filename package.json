@@ -20,7 +20,7 @@
 		"react-helmet": "6.1.0",
 		"react-markdown": "9.0.1",
 		"react-router-dom": "6.23.0",
-		"skc-rcl": "1.1.5",
+		"skc-rcl": "1.1.6",
 		"styled-components": "5.3.11"
 	},
 	"resolutions": {
@@ -32,12 +32,11 @@
 		"socket.io-parser": "4.2.4",
 		"@babel/traverse": "7.24.5",
 		"postcss": "8.4.38",
-		"@babel/core": "7.24.5"
+		"@babel/core": "7.24.5",
+		"browserslist": "4.23.0"
 	},
 	"scripts": {
-		"preinstall": "npx force-resolutions",
-		"postinstall": "npm dedupe",
-		"fresh-install": "rm -rf node_modules package-lock.json && npm install --omit=optional && npx browserslist@latest --update-db",
+		"fresh-install": "rm -rf node_modules yarn.lock && yarn install --ignore-optional && npx browserslist@latest --update-db",
 		"start": "webpack-dev-server --mode development --env dev",
 		"start:dashboard": "webpack-dashboard -- webpack serve --mode development --env dev",
 		"build": "webpack --mode production --env dev",
@@ -48,9 +47,9 @@
 		"lint": "eslint src --ext .tsx,.ts",
 		"mutation": "stryker run config/stryker.conf.json",
 		"aws:check-skc-cloudfront": "aws cloudfront list-distributions | jq '.DistributionList.Items[] | select(.Aliases.Items | contains([\"thesupremekingscastle.com\"])) |  {id: .Id, aliases: .Aliases}'",
-		"deploy:prod": "npm run build:production; aws s3 rm s3://yugiohsite/ --recursive; aws s3 sync build s3://yugiohsite/ --cache-control max-age=3600; aws cloudfront create-invalidation --distribution-id ${YGO_CLOUDFRONT_PROD} --paths '/*'",
-		"deploy:dev": "npm run build:development_remote; aws s3 rm s3://yugiohsitedev/ --recursive; aws s3 sync build s3://yugiohsitedev/ --cache-control max-age=3600; aws cloudfront create-invalidation --distribution-id ${YGO_CLOUDFRONT_DEV} --paths '/*'",
-		"deploy:ec2-dev": "npm run build:development_remote; bash deploy.sh ${SKC_SERVER}"
+		"deploy:prod": "yarn run build:production; aws s3 rm s3://yugiohsite/ --recursive; aws s3 sync build s3://yugiohsite/ --cache-control max-age=3600; aws cloudfront create-invalidation --distribution-id ${YGO_CLOUDFRONT_PROD} --paths '/*'",
+		"deploy:dev": "yarn run build:development_remote; aws s3 rm s3://yugiohsitedev/ --recursive; aws s3 sync build s3://yugiohsitedev/ --cache-control max-age=3600; aws cloudfront create-invalidation --distribution-id ${YGO_CLOUDFRONT_DEV} --paths '/*'",
+		"deploy:ec2-dev": "yarn run build:development_remote; bash deploy.sh ${SKC_SERVER}"
 	},
 	"eslintConfig": {
 		"extends": "react-app"
