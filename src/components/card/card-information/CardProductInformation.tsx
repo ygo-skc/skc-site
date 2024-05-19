@@ -1,5 +1,5 @@
 import { useEffect, useState, FC, Fragment, startTransition, useCallback } from 'react'
-import { Typography, Divider, Chip, Button } from '@mui/material'
+import { Typography, Divider, Chip, Button, Avatar } from '@mui/material'
 
 import { Dates } from '../../../helper/Dates'
 import { DatedListItem, Hint } from 'skc-rcl'
@@ -55,10 +55,20 @@ const CardProductInformation: FC<CardProductInformationProps> = ({ productInfo, 
 								className='aggregate-anchor'
 							>
 								<Fragment>
-									<Typography variant='body1'>
-										{product.productId}-{productContent.productPosition}
-									</Typography>
-									<Typography variant='subtitle1'>{product.productName}</Typography>
+									<div style={{ display: 'flex' }}>
+										<Avatar
+											// alt={`${cardNameOption}-Avatar`}
+											src={`https://images.thesupremekingscastle.com/products/tn/${product.productId}.png`}
+											// slotProps={{ img: { onError: onAvatarImgLoadErrorCB } }}
+											sx={{ width: 70, height: 70 }}
+										/>
+										<div style={{ flex: '1' }}>
+											<Typography variant='body1'>
+												{product.productId}-{productContent.productPosition}
+											</Typography>
+											<Typography variant='subtitle1'>{product.productName}</Typography>
+										</div>
+									</div>
 									<div>
 										<Typography variant='body1' className='list-item-text-bold'>
 											Rarities
