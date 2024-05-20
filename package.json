@@ -12,7 +12,7 @@
 		"@mui/material": "5.15.18",
 		"@mui/styled-engine-sc": "5.14.12",
 		"@nivo/pie": "0.87.0",
-		"axios": "1.6.8",
+		"axios": "1.7.1",
 		"entities": "4.5.0",
 		"lodash.startcase": "4.4.0",
 		"react": "18.3.1",
