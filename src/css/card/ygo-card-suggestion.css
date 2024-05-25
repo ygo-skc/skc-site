@@ -29,16 +29,14 @@
 }
 
 .suggested-ygo-card-wrapper {
-	width: 19rem;
-	max-width: 19rem;
-	min-width: 19rem;
+	width: 16rem;
+	max-width: 16rem;
+	min-width: 16rem;
 	cursor: pointer;
-	background-color: #eee;
-	padding: 1rem;
-	border-radius: 2.5rem;
 	box-sizing: border-box;
+	padding-bottom: 0.75rem;
 }
 
 .suggested-ygo-card-wrapper:not(:last-child) {
-	margin-right: 2rem;
+	margin-right: 1rem;
 }
