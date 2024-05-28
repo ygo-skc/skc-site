@@ -1,8 +1,9 @@
-import { useEffect, useState, FC, Fragment, startTransition, useCallback } from 'react'
-import { Typography, Divider, Chip, Button, Avatar } from '@mui/material'
+import { useEffect, useState, FC, Fragment, useCallback } from 'react'
+import { Typography, Divider, Chip, Button } from '@mui/material'
 
 import { Dates } from '../../../helper/Dates'
-import { DatedListItem, Hint } from 'skc-rcl'
+import { Hint } from 'skc-rcl'
+import CardProductListItem from '../../product/CardProductListItem'
 
 type CardProductInformationProps = {
 	cardID: string
@@ -30,67 +31,39 @@ const CardProductInformation: FC<CardProductInformationProps> = ({ productInfo, 
 	useEffect(() => {
 		if (productInfo === null || productInfo === undefined || productInfo.length === 0) return
 
-		startTransition(() => {
-			const contents: React.JSX.Element[] = []
-			const uniqueProductsFeaturedIn = new Set<string>()
-			let uniqueRarityPrintings = new Set<string>()
+		const contents: React.JSX.Element[] = []
+		const uniqueProductsFeaturedIn = new Set<string>()
+		let uniqueRarityPrintings = new Set<string>()
 
-			productInfo.forEach((product: ProductInfo, index: number) => {
-				uniqueProductsFeaturedIn.add(product.productId)
+		productInfo.forEach((product: ProductInfo, index: number) => {
+			uniqueProductsFeaturedIn.add(product.productId)
 
-				product.productContent.forEach((productContent: SKCProductContent) => {
-					const productReleaseDate = Dates.fromYYYYMMDDToDate(product.productReleaseDate)
-					uniqueRarityPrintings = new Set([...uniqueRarityPrintings, ...productContent.rarities])
+			product.productContent.forEach((productContent: SKCProductContent) => {
+				const productReleaseDate = Dates.fromYYYYMMDDToDate(product.productReleaseDate)
+				uniqueRarityPrintings = new Set([...uniqueRarityPrintings, ...productContent.rarities])
 
-					if (loadAll || index < initNumItems) {
-						productContent.rarities.sort(alphaSort)
+				if (loadAll || index < initNumItems) {
+					productContent.rarities.sort(alphaSort)
 
-						contents.push(
-							<DatedListItem
-								key={product.productId}
-								link={`/product/${product.productId}#${cardID}`}
-								month={Dates.getMonth(productReleaseDate)}
-								day={+Dates.getDay(productReleaseDate)}
-								year={+Dates.getYear(productReleaseDate)}
-								className='aggregate-anchor'
-							>
-								<Fragment>
-									<div style={{ display: 'flex' }}>
-										<Avatar
-											// alt={`${cardNameOption}-Avatar`}
-											src={`https://images.thesupremekingscastle.com/products/tn/${product.productId}.png`}
-											// slotProps={{ img: { onError: onAvatarImgLoadErrorCB } }}
-											sx={{ width: 70, height: 70 }}
-										/>
-										<div style={{ flex: '1' }}>
-											<Typography variant='body1'>
-												{product.productId}-{productContent.productPosition}
-											</Typography>
-											<Typography variant='subtitle1'>{product.productName}</Typography>
-										</div>
-									</div>
-									<div>
-										<Typography variant='body1' className='list-item-text-bold'>
-											Rarities
-										</Typography>
-										{productContent.rarities.map((uniqueRarity) => (
-											<Chip className='dark-chip-condensed' key={uniqueRarity} label={uniqueRarity} />
-										))}
-									</div>
-								</Fragment>
-							</DatedListItem>
-						)
-					}
-				})
+					contents.push(
+						<CardProductListItem
+							cardID={cardID}
+							productID={product.productId}
+							productName={product.productName}
+							productReleaseDate={productReleaseDate}
+							productContent={productContent}
+						/>
+					)
+				}
 			})
-
-			setProductContents(contents)
-			setUniqueProductsFeaturedIn(uniqueProductsFeaturedIn.size)
-
-			const sortedUniqueRarityPrintings = [...uniqueRarityPrintings]
-			sortedUniqueRarityPrintings.sort(alphaSort)
-			setUniqueRarityPrintings(sortedUniqueRarityPrintings.map((uniqueRarity) => <Chip className='dark-chip' key={uniqueRarity} label={uniqueRarity} />))
 		})
+
+		setProductContents(contents)
+		setUniqueProductsFeaturedIn(uniqueProductsFeaturedIn.size)
+
+		const sortedUniqueRarityPrintings = [...uniqueRarityPrintings]
+		sortedUniqueRarityPrintings.sort(alphaSort)
+		setUniqueRarityPrintings(sortedUniqueRarityPrintings.map((uniqueRarity) => <Chip className='dark-chip' key={uniqueRarity} label={uniqueRarity} />))
 	}, [productInfo, cardID, loadAll])
 
 	return (
