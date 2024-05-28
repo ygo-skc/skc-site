@@ -7,7 +7,7 @@
 	display: flex;
 }
 
-.card-of-the-day-wrapper #rounded-img-outer-container {
+.card-of-the-day-wrapper .rounded-img-outer-container {
 	flex: 4;
 	margin: 0 auto; /* override parent default */
 }

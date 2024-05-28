@@ -157,7 +157,7 @@ const CardInformation = () => {
 				oneThirdComponent={
 					<Section sectionHeaderBackground={cardColor !== undefined ? (cardColor?.replace(/Pendulum-/gi, '') as cardColor) : ''} sectionName='Information'>
 						<div className='section-content'>
-							<CardImageRounded variant='md' cardID={cardID} loading='eager' />
+							<CardImageRounded size='md' cardID={cardID} loading='eager' />
 							<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='10rem' />}>
 								{isLoading ? (
 									<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='10rem' />

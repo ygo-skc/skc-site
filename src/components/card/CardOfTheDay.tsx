@@ -41,7 +41,9 @@ export default function CardOfTheDay() {
 						<Fragment>
 							<Typography variant='h5'>Card of The Day</Typography>
 							<div className='card-of-the-day-wrapper'>
-								{(!isLoading && <CardImageRounded variant='tn' cardID={cardOfTheDay!.cardID} loading='eager' />) || <Skeleton className='rounded-skeleton' variant='circular' />}
+								{(!isLoading && <CardImageRounded size='tn' variant='circle' cardID={cardOfTheDay!.cardID} loading='eager' />) || (
+									<Skeleton className='rounded-skeleton' variant='circular' />
+								)}
 
 								<div className='card-of-the-day-data'>
 									{(!isLoading && (

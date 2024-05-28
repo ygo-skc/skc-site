@@ -106,7 +106,7 @@ const CardSuggestions: FC<_CardSuggestion> = ({ cardID, cardColor, cardName }) =
 		})
 
 		FetchHandler.handleFetch(
-			`${DownstreamServices.SKC_SUGGESTION_HOST_NAME}/api/v1/suggestions/card/${cardID}/support`,
+			`${DownstreamServices.SKC_SUGGESTION_HOST_NAME}/api/v1/suggestions/card/support/${cardID}`,
 			(json: CardSupportOutput) => {
 				setMaterialFor(transformSupport(json.materialFor))
 				setReferencedBy(transformSupport(json.referencedBy))
