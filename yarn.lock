@@ -8844,10 +8844,10 @@ sisteransi@^1.0.5:
   resolved "https://registry.yarnpkg.com/sisteransi/-/sisteransi-1.0.5.tgz#134d681297756437cc05ca01370d3a7a571075ed"
   integrity sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==
 
-skc-rcl@1.1.7-2:
-  version "1.1.7-2"
-  resolved "https://registry.yarnpkg.com/skc-rcl/-/skc-rcl-1.1.7-2.tgz#833fa35d7f65630fb36d5f93a5491b3c9badef61"
-  integrity sha512-UP1LGG2EQqElWr8pvbLk4sFGws0s1GVHGkAAl2kJ+QyXhCJhszE3D+nM/23Te9/B4ZKRn8SI5hgLvw8jENGifw==
+skc-rcl@1.1.7:
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/skc-rcl/-/skc-rcl-1.1.7.tgz#168daafc525d8360a333fbe998fa37d5b456a0be"
+  integrity sha512-MmMp/7s0IA78oW+ewuzJK4J3nx1P5AcTYwzMF+padL8sSM7KoMID8u290WQm20ieWZquk2x2gv9A27iKnw0uGA==
 
 slash@^3.0.0:
   version "3.0.0"
