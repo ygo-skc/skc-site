@@ -18,7 +18,7 @@ const ProductGridItem: FC<ProductGridItemProps> = ({ id, name, type, subType, to
 		<Grid2 key={id} xs={12} sm={6} md={4} lg={4} xl={3}>
 			<a href={`/product/${id}`} className='product-grid-item-parent aggregate-anchor'>
 				<div className='product-img'>
-					<ProductImage variant='sm' productID={id} loading='lazy' />
+					<ProductImage size='sm' productID={id} loading='lazy' />
 				</div>
 
 				<div className='product-grid-item-text'>
