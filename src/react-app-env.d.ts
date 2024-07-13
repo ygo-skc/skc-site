@@ -257,8 +257,8 @@ declare type CardSuggestionOutput = {
 
 declare type CardSupportOutput = {
 	card: SKCCard
-	referencedBy: SKCCard[]
-	materialFor: SKCCard[]
+	referencedBy: CardReference[]
+	materialFor: CardReference[]
 }
 
 declare type SKCBanListInstance = {

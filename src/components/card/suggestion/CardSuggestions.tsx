@@ -70,7 +70,7 @@ const CardSuggestions: FC<_CardSuggestion> = ({ cardID, cardColor, cardName }) =
 			: []
 	}, [])
 
-	const transformSupport = useCallback((support: SKCCard[]): React.JSX.Element[] => {
+	const transformSupport = useCallback((support: CardReference[]): React.JSX.Element[] => {
 		const YGOCardWithImage = lazy(() =>
 			import('skc-rcl').then((module) => {
 				return { default: module.YGOCardWithImage }
@@ -78,11 +78,12 @@ const CardSuggestions: FC<_CardSuggestion> = ({ cardID, cardColor, cardName }) =
 		)
 
 		return support !== null
-			? support.map((reference: SKCCard) => {
-					reference.cardEffect = decodeHTML(reference.cardEffect)
+			? support.map((reference: CardReference) => {
+					const card = reference.card
+					card.cardEffect = decodeHTML(card.cardEffect)
 					return (
-						<a key={reference.cardID} href={`/card/${reference.cardID}`} className='suggested-ygo-card-wrapper aggregate-anchor'>
-							<YGOCardWithImage key={reference.cardID} card={reference} imgLoadingType='lazy' />
+						<a key={card.cardID} href={`/card/${card.cardID}`} className='suggested-ygo-card-wrapper aggregate-anchor'>
+							<YGOCardWithImage key={card.cardID} card={card} imgLoadingType='lazy' />
 						</a>
 					)
 			  })
@@ -106,7 +107,7 @@ const CardSuggestions: FC<_CardSuggestion> = ({ cardID, cardColor, cardName }) =
 		})
 
 		FetchHandler.handleFetch(
-			`${DownstreamServices.SKC_SUGGESTION_HOST_NAME}/api/v1/suggestions/card/${cardID}/support`,
+			`${DownstreamServices.SKC_SUGGESTION_HOST_NAME}/api/v1/suggestions/card/support/${cardID}`,
 			(json: CardSupportOutput) => {
 				setMaterialFor(transformSupport(json.materialFor))
 				setReferencedBy(transformSupport(json.referencedBy))
