@@ -32,7 +32,7 @@
 		"socket.io-parser": "4.2.4",
 		"@babel/traverse": "7.24.8",
 		"postcss": "8.4.39",
-		"@babel/core": "7.24.8",
+		"@babel/core": "7.24.9",
 		"browserslist": "4.23.2",
 		"react-is": "18.3.1",
 		"ws": "8.18.0"
