@@ -33,7 +33,7 @@
 		"@babel/traverse": "7.25.3",
 		"postcss": "8.4.40",
 		"@babel/core": "7.25.2",
-		"browserslist": "4.23.2",
+		"browserslist": "4.23.3",
 		"react-is": "18.3.1",
 		"ws": "8.18.0"
 	},
