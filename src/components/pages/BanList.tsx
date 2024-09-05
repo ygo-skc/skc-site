@@ -27,21 +27,14 @@ const Section = lazy(() =>
 	})
 )
 
-type BanListDatesOutput = SKCBanListDates & {
-	_links: {
-		self: HATEOAS
-	}
-}
-
 export default function BanList() {
 	const [selectedBanList, setSelectedBanList] = useState<string>('')
 
 	const { specifiedFormat } = useParams<'specifiedFormat'>()
 	const [format, setFormat] = useState<AcceptableBanListFormat>(getValidFormat(specifiedFormat))
 
-	const [{ banListStartDates, banContentLinks, isFetchingBanListDates }, dateDispatch] = useReducer(dateReducer, {
+	const [{ banListStartDates, isFetchingBanListDates }, dateDispatch] = useReducer(dateReducer, {
 		banListStartDates: [],
-		banContentLinks: [],
 		isFetchingBanListDates: true,
 	})
 
@@ -123,11 +116,10 @@ export default function BanList() {
 
 		setSelectedBanList('')
 
-		FetchHandler.handleFetch<BanListDatesOutput>(`${DownstreamServices.NAME_maps_ENDPOINT['banListsUrl']}?format=${format}`, (json) => {
+		FetchHandler.handleFetch<SKCBanListDates>(`${DownstreamServices.NAME_maps_ENDPOINT.banListsUrl}?format=${format}`, (json) => {
 			dateDispatch({
 				type: BanListDateReducerActionType.DATES_RECEIVED,
 				payload: {
-					banContentLinks: json.banListDates.map((item: SKCBanListDate) => item._links),
 					banListStartDates: json.banListDates.map((item: SKCBanListDate) => item.effectiveDate),
 				},
 			})
@@ -135,8 +127,8 @@ export default function BanList() {
 	}, [format])
 
 	useEffect(() => {
-		if (banContentLinks.length !== 0) setSelectedBanList(banListStartDates[0])
-	}, [banListStartDates, banContentLinks])
+		if (banListStartDates.length !== 0) setSelectedBanList(banListStartDates[0])
+	}, [banListStartDates])
 
 	useEffect(() => {
 		if (selectedBanList && selectedBanList.length !== 0) {
@@ -145,7 +137,7 @@ export default function BanList() {
 			})
 
 			FetchHandler.handleFetch<SKCBanListNewCardsNormalFormat & SKCBanListNewCardsDuelLinksFormat>(
-				banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List New Content'].href,
+				`${DownstreamServices.NAME_maps_ENDPOINT.banListUrl}/${selectedBanList}/new?format=${format}`,
 				(json) => {
 					if (format === 'DL') {
 						currentBanListDispatch({
@@ -173,7 +165,7 @@ export default function BanList() {
 				}
 			)
 
-			FetchHandler.handleFetch<SKCBanListRemovedCards>(banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List Removed Content'].href, (json) => {
+			FetchHandler.handleFetch<SKCBanListRemovedCards>(`${DownstreamServices.NAME_maps_ENDPOINT.banListUrl}/${selectedBanList}/removed?format=${format}`, (json) => {
 				currentBanListDispatch({
 					type: BanListReducerType.UPDATE_REMOVED_CONTENT,
 					removedCards: json.removedCards,
@@ -182,7 +174,7 @@ export default function BanList() {
 			})
 
 			FetchHandler.handleFetch<SKCBanListContentNormalFormat & SKCBanListContentDuelLinksFormat>(
-				banContentLinks[banListStartDates.indexOf(selectedBanList)]['Ban List Content'].href,
+				`${DownstreamServices.NAME_maps_ENDPOINT.banListUrl}/${selectedBanList}/cards?format=${format}`,
 				(json) => {
 					if (format === 'DL') {
 						currentBanListDispatch({

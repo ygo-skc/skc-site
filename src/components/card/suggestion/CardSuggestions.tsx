@@ -94,7 +94,7 @@ const CardSuggestions: FC<_CardSuggestion> = ({ cardID, cardColor, cardName }) =
 
 	useEffect(() => {
 		FetchHandler.handleFetch(
-			`${DownstreamServices.SKC_SUGGESTION_HOST_NAME}/api/v1/suggestions/card/${cardID}`,
+			`${DownstreamServices.SKC_SUGGESTION_ENDPOINTS.cardSuggestions}/${cardID}`,
 			(json: CardSuggestionOutput) => {
 				setMaterialSuggestions(transformReferences(json.namedMaterials))
 				setReferenceSuggestions(transformReferences(json.namedReferences))
@@ -107,7 +107,7 @@ const CardSuggestions: FC<_CardSuggestion> = ({ cardID, cardColor, cardName }) =
 		})
 
 		FetchHandler.handleFetch(
-			`${DownstreamServices.SKC_SUGGESTION_HOST_NAME}/api/v1/suggestions/card/support/${cardID}`,
+			`${DownstreamServices.SKC_SUGGESTION_ENDPOINTS.cardSupport}/${cardID}`,
 			(json: CardSupportOutput) => {
 				setMaterialFor(transformSupport(json.materialFor))
 				setReferencedBy(transformSupport(json.referencedBy))

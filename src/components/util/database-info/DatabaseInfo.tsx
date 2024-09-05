@@ -24,7 +24,7 @@ const DatabaseInfo = () => {
 	const [isFetchingData, setIsFetchingData] = useState(true)
 
 	useEffect(() => {
-		FetchHandler.handleFetch<DatabaseInfoProps>(DownstreamServices.NAME_maps_ENDPOINT['databaseStats'], (json) => {
+		FetchHandler.handleFetch<DatabaseInfoProps>(DownstreamServices.NAME_maps_ENDPOINT.databaseStats, (json) => {
 			startTransition(() => {
 				setCardTotal(json.cardTotal)
 				setBanListTotal(json.banListTotal)

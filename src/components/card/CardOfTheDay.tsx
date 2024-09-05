@@ -20,7 +20,7 @@ export default function CardOfTheDay() {
 
 	useEffect(() => {
 		FetchHandler.handleFetch(
-			`${DownstreamServices.SKC_SUGGESTION_HOST_NAME}/api/v1/suggestions/card-of-the-day`,
+			DownstreamServices.SKC_SUGGESTION_ENDPOINTS.cardOfTheDay,
 			(json: CardOfTheDayOutput) => {
 				setCardOfTheDay(json.card)
 				setDate(Dates.fromYYYYMMDDToDate(json.date))

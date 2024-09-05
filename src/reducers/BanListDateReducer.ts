@@ -1,6 +1,5 @@
 export type BanListDateReducerState = {
 	banListStartDates: string[]
-	banContentLinks: SKCBanListDateLinks[]
 	isFetchingBanListDates?: boolean
 }
 
@@ -19,7 +18,6 @@ export default function dateReducer(state: BanListDateReducerState, action: BanL
 		case BanListDateReducerActionType.DATES_RECEIVED:
 			return {
 				banListStartDates: action.payload!.banListStartDates,
-				banContentLinks: action.payload!.banContentLinks,
 				isFetchingBanListDates: false,
 			}
 		case BanListDateReducerActionType.FETCHING_DATES:

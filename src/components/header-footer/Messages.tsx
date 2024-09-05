@@ -25,7 +25,7 @@ function Messages() {
 	useEffect(() => {
 		startTransition(() => {
 			FetchHandler.handleFetch(
-				`${DownstreamServices.HEART_API_HOST_NAME}/api/v1/message?service=skc&tags=skc-site,skc-api`,
+				`${DownstreamServices.HEART_API_ENDPOINTS.messages}?service=skc&tags=skc-site,skc-api`,
 				(messageData: HeartApiMessageOutput) => {
 					const totalMessages = messageData.messages.length
 
