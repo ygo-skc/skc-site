@@ -1,7 +1,7 @@
 import '../../../css/card/card-information-styles.css'
 
 import { FC } from 'react'
-import Grid2 from '@mui/material/Unstable_Grid2'
+import Grid from '@mui/material/Grid2'
 
 import CardProductInformation from './CardProductInformation'
 import CardBanListInformation from './CardBanListInformation'
@@ -19,15 +19,15 @@ const CardInformationRelatedContent: FC<CardInformationRelatedContentType> = ({ 
 	return (
 		<Section sectionHeaderBackground={cardColor} sectionName='Explore'>
 			<div className='section-content'>
-				<Grid2 container spacing={3}>
-					<Grid2 xs={12} sm={12} md={12} lg={6} xl={6}>
+				<Grid container spacing={3}>
+					<Grid size={{ xs: 12, sm: 12, md: 12, lg: 6, xl: 6 }}>
 						<CardProductInformation cardID={cardID} cardName={cardName} productInfo={productInfo} />
-					</Grid2>
+					</Grid>
 
-					<Grid2 xs={12} sm={12} md={12} lg={6} xl={6}>
+					<Grid size={{ xs: 12, sm: 12, md: 12, lg: 6, xl: 6 }}>
 						<CardBanListInformation restrictedIn={restrictedIn} />
-					</Grid2>
-				</Grid2>
+					</Grid>
+				</Grid>
 			</div>
 		</Section>
 	)

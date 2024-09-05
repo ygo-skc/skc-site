@@ -1,4 +1,4 @@
-import Grid2 from '@mui/material/Unstable_Grid2'
+import Grid from '@mui/material/Grid2'
 import { FC, lazy } from 'react'
 import { Section } from 'skc-rcl'
 
@@ -42,14 +42,14 @@ const ProductStats: FC<ProductStats & { isDataLoaded: boolean }> = ({ productRar
 
 	return (
 		<Section sectionName='Product Stats'>
-			<Grid2 className='section-content' container>
-				<Grid2 xs={12} sm={12} md={6} lg={6} xl={6}>
+			<Grid className='section-content' container>
+				<Grid size={{ xs: 12, sm: 12, md: 6, lg: 6, xl: 6 }}>
 					<Pie legendTextColor='white' isDataLoaded={isDataLoaded} statName='Rarity Spread' data={raritySpreadData} />
-				</Grid2>
-				<Grid2 xs={12} sm={12} md={6} lg={6} xl={6}>
+				</Grid>
+				<Grid size={{ xs: 12, sm: 12, md: 6, lg: 6, xl: 6 }}>
 					<Pie legendTextColor='white' isDataLoaded={isDataLoaded} statName='Card Type Spread' data={cardTypeSpreadData} />
-				</Grid2>
-			</Grid2>
+				</Grid>
+			</Grid>
 		</Section>
 	)
 }

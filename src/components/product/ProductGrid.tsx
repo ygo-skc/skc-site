@@ -1,5 +1,5 @@
 import { Skeleton, Typography } from '@mui/material'
-import Grid2 from '@mui/material/Unstable_Grid2'
+import Grid from '@mui/material/Grid2'
 import { FC, Fragment, startTransition, useEffect, useState } from 'react'
 import { Dates } from '../../helper/Dates'
 import ProductGridItem from './ProductGridItem'
@@ -46,9 +46,9 @@ const ProductGrid: FC<ProductGridProps> = ({ section, products }) => {
 					<Typography variant='h2'>
 						{section} • {products.length} Total
 					</Typography>
-					<Grid2 container spacing={1}>
+					<Grid container spacing={1}>
 						{gridItems}
-					</Grid2>
+					</Grid>
 				</Fragment>
 			)}
 		</div>

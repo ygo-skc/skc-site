@@ -1,7 +1,7 @@
 import { memo, FC, lazy, useCallback } from 'react'
 
 import { Button } from '@mui/material'
-import Grid2 from '@mui/material/Unstable_Grid2'
+import Grid from '@mui/material/Grid2'
 import { Hint } from 'skc-rcl'
 import { CardDisplayGridState, CardDisplayGridStateReducerAction, CardDisplayGridStateReducerActionType } from '../../../reducers/CardDisplayGridReducer'
 import CardGridItems from './CardGridItems'
@@ -21,11 +21,11 @@ const CardDisplayGrid: FC<CardDisplayGridProps> = memo(
 
 		return (
 			<div>
-				<Grid2 container>
+				<Grid container>
 					{cardGridState.isLoading && <PlaceHolderGridItems />}
 					{!cardGridState.isLoading && cardGridState.totalResults === 0 && <Hint fullWidth={false}>{'No Content To Show'}</Hint>}
 					{!cardGridState.isLoading && cardGridState.totalResults !== 0 && <CardGridItems cards={cardGridState.results.slice(0, cardGridState.totalDisplaying)} />}
-				</Grid2>
+				</Grid>
 
 				{!cardGridState.isLoading && cardGridState.totalResults !== 0 && cardGridState.totalDisplaying < cardGridState.totalResults && (
 					<Button

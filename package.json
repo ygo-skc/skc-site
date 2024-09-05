@@ -8,9 +8,9 @@
 	"dependencies": {
 		"@emotion/react": "11.13.3",
 		"@emotion/styled": "11.13.0",
-		"@mui/icons-material": "5.16.7",
-		"@mui/material": "5.16.7",
-		"@mui/styled-engine-sc": "5.14.12",
+		"@mui/icons-material": "6.0.0",
+		"@mui/material": "6.0.0",
+		"@mui/styled-engine-sc": "6.0.0",
 		"@nivo/pie": "0.87.0",
 		"axios": "1.7.5",
 		"entities": "5.0.0",
@@ -20,7 +20,7 @@
 		"react-helmet": "6.1.0",
 		"react-markdown": "9.0.1",
 		"react-router-dom": "6.26.1",
-		"skc-rcl": "1.1.9",
+		"skc-rcl": "1.1.11",
 		"styled-components": "5.3.11"
 	},
 	"resolutions": {
