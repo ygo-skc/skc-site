@@ -17,7 +17,7 @@ const Footer: FunctionComponent = () => {
 		startTransition(() => {
 			// fetch version for SKC API
 			FetchHandler.handleFetch<HealthCheckOutput>(
-				DownstreamServices.NAME_maps_ENDPOINT['status'],
+				DownstreamServices.NAME_maps_ENDPOINT.status,
 				(json) => {
 					setSkcAPIVersion(json?.version)
 				},

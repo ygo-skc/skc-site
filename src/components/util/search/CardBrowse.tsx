@@ -22,21 +22,18 @@ const CardBrowse: FC<{
 		Object.keys(skcCardBrowseCriteriaOutput).forEach((criteriaName: string) => {
 			const criteriaNameKey = criteriaName as keyof typeof skcCardBrowseCriteriaOutput
 
-			// ignoring HATEOAS links
-			if (criteriaNameKey !== ('_links' as const)) {
-				const criteriaList: string[] | number[] = skcCardBrowseCriteriaOutput[criteriaNameKey]
+			const criteriaList: string[] | number[] = skcCardBrowseCriteriaOutput[criteriaNameKey]
 
-				criteriaList.forEach((value: string | number) => {
-					if (criteriaName === 'levels') value = `Level ${value}`
-					else if (criteriaName === 'ranks') value = `Rank ${value}`
-					else if (criteriaName === 'linkRatings') value = `Link Rating ${value}`
+			criteriaList.forEach((value: string | number) => {
+				if (criteriaName === 'levels') value = `Level ${value}`
+				else if (criteriaName === 'ranks') value = `Rank ${value}`
+				else if (criteriaName === 'linkRatings') value = `Link Rating ${value}`
 
-					criteria.push({
-						name: criteriaName,
-						value: value as string,
-					})
+				criteria.push({
+					name: criteriaName,
+					value: value as string,
 				})
-			}
+			})
 		})
 
 		browseCriteriaSearchDispatch({ type: CardBrowseCriteriaSearchReducerActionType.UPDATE_BROWSE_CRITERIA, browseCriteria: criteria })

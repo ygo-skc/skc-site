@@ -32,7 +32,7 @@ const ProductBrowse: FunctionComponent = () => {
 
 	useEffect(() => {
 		startTransition(() => {
-			FetchHandler.handleFetch<ProductBrowseResults>(DownstreamServices.NAME_maps_ENDPOINT['productBrowse'], (json: ProductBrowseResults) => {
+			FetchHandler.handleFetch<ProductBrowseResults>(DownstreamServices.NAME_maps_ENDPOINT.productBrowse, (json: ProductBrowseResults) => {
 				setProducts(json.products)
 			})
 		})

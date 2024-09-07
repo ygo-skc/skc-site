@@ -16,6 +16,16 @@ services:
       - skc-network
     environment:
       NODE_ENV: production
+    labels:
+      com.datadoghq.ad.init_configs: '[{}]'
+      com.datadoghq.ad.instances: '[{"host":"%%host%%", "port": "%%port%%"}]'
+      com.datadoghq.ad.logs: >-
+        [{
+          "source": "nginx",
+          "service": "skc-site"
+        }]
+      com.datadoghq.tags.env: 'dev'
+      com.datadoghq.tags.service: 'skc-site'
 
 networks:
   skc-network:

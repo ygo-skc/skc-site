@@ -37,10 +37,6 @@ li {
 	height: 0px !important;
 }
 
-.MuiAppBar-colorPrimary {
-	background-color: #3b4968 !important;
-}
-
 .root {
 	display: flex;
 	flex-direction: column;
@@ -86,8 +82,7 @@ li {
 }
 
 .app-bar-container {
-	background-color: #3f1286;
-	background: radial-gradient(89.53% 145.96% at 60% 100.79%, #461495 0, #5418b3 17.58%, #461495 50.31%, #3f1286 97.03%);
+	background-image: radial-gradient(89.53% 145.96% at 60% 100.79%, #461495 0, #5418b3 17.58%, #461495 50.31%, #3f1286 97.03%) !important;
 	padding-left: 0.8rem;
 	padding-right: 0.8rem;
 	box-shadow: none !important;

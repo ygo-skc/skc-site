@@ -46,7 +46,7 @@ const YouTubeData: FC<YouTubeChannelID> = ({ channel }) => {
 	useEffect(() => {
 		startTransition(() => {
 			FetchHandler.handleFetch<UploadsResponse>(
-				`${DownstreamServices.HEART_API_HOST_NAME}/api/v1/yt/channel/uploads?channelId=${channelId}`,
+				`${DownstreamServices.HEART_API_ENDPOINTS.ytUploads}?channelId=${channelId}`,
 				(json) => {
 					setYoutubeUploadData(json.videos)
 					setIsFetchingData(false)

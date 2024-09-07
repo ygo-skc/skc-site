@@ -10,17 +10,16 @@ declare type ProductBrowseResults = {
 	products: ProductInfo[]
 }
 
-declare type ProductInfo = ProductStats &
-	HATEOAS & {
-		productId: string
-		productLocale: string
-		productName: string
-		productType: string
-		productSubType: string
-		productReleaseDate: string
-		productTotal: number
-		productContent: SKCProductContent[]
-	}
+declare type ProductInfo = ProductStats & {
+	productId: string
+	productLocale: string
+	productName: string
+	productType: string
+	productSubType: string
+	productReleaseDate: string
+	productTotal: number
+	productContent: SKCProductContent[]
+}
 
 declare type ProductDetails = {
 	productId: string
@@ -63,22 +62,10 @@ declare type _YouTubeUploads = {
 	url: string
 }
 
-declare type HATEOAS = {
-	rel: string
-	href: string
-}
-
 // SKC API related type declarations
 
 declare type SKCBanListDate = {
 	effectiveDate: string
-	_links: SKCBanListDateLinks
-}
-
-declare type SKCBanListDateLinks = {
-	'Ban List Content': HATEOAS
-	'Ban List New Content': HATEOAS
-	'Ban List Removed Content': HATEOAS
 }
 
 declare type SKCBanListDates = {
@@ -159,9 +146,6 @@ declare type SKCCardBrowseCriteria = {
 	levels: number[]
 	ranks: number[]
 	linkRatings: number[]
-	_links: {
-		self: HATEOAS
-	}
 }
 
 declare type SKCCardBrowseResults = {
@@ -265,7 +249,6 @@ declare type SKCBanListInstance = {
 	banListDate: string
 	cardID: string
 	banStatus: string
-	_links: SKCBanListDateLinks
 }
 
 declare type RestrictedIn = {

@@ -1,5 +1,5 @@
 import { Typography, Link } from '@mui/material'
-import Grid2 from '@mui/material/Unstable_Grid2'
+import Grid from '@mui/material/Grid2'
 import AboutInfoCard from './AboutInfoCard'
 
 import { Fragment } from 'react'
@@ -10,8 +10,8 @@ export default function Overview() {
 		<div className='section-content'>
 			<Typography variant='h4'>SKC API, Donate, Contact Info, And More!</Typography>
 
-			<Grid2 container spacing={2}>
-				<Grid2 className='grid' xs={12} sm={12} md={6} lg={4} xl={4}>
+			<Grid container spacing={2}>
+				<Grid className='grid' size={{ xs: 12, sm: 12, md: 6, lg: 4, xl: 4 }}>
 					<AboutInfoCard
 						title='SKC API'
 						subtitle='The Backend'
@@ -34,7 +34,7 @@ export default function Overview() {
 											Other than for curiosity or educational purposes you cannot use the API. This means that if you want to build your own site or have other commercial uses for
 											the API, you cannot use it. The reason is due to having no available bandwidth. This site makes no money through ads or otherwise and I cannot add more
 											instances to accommodate traffic that isn&apos;t in the immediate vision. The API itself is{' '}
-											<Link className='link' color='secondary' href={`${process.env.REACT_APP_API_HOST}/api/v1/swagger-ui/index.html`}>
+											<Link className='link' color='secondary' href={`${process.env.REACT_APP_API_HOST}/api/v1/swagger-ui.html`}>
 												documented
 											</Link>
 											.
@@ -46,9 +46,9 @@ export default function Overview() {
 						imgName='backend.png'
 						imgLink={`${process.env.REACT_APP_API_HOST}/api/v1/swagger-ui/index.html`}
 					/>
-				</Grid2>
+				</Grid>
 
-				<Grid2 className='grid' xs={12} sm={12} md={6} lg={4} xl={4}>
+				<Grid className='grid' size={{ xs: 12, sm: 12, md: 6, lg: 4, xl: 4 }}>
 					<AboutInfoCard
 						title='Contributions'
 						subtitle='Donations To Website'
@@ -93,9 +93,9 @@ export default function Overview() {
 						imgName='monetary_contribution.png'
 						imgLink='https://www.paypal.com/donate?token=cqxHbHEXK6-mxQeeArpzXbPNCngsNwSscv3vVARXBwyFL6NWebDRaj4Xze7jEZ1OYi9BtmxjfsKRGeEI'
 					/>
-				</Grid2>
+				</Grid>
 
-				<Grid2 className='grid' xs={12} sm={12} md={6} lg={4} xl={4}>
+				<Grid className='grid' size={{ xs: 12, sm: 12, md: 6, lg: 4, xl: 4 }}>
 					<AboutInfoCard
 						title='Other Information'
 						subtitle='Contact & Other Stuff'
@@ -132,9 +132,9 @@ export default function Overview() {
 						imgName='information.png'
 						imgLink='https://twitter.com/supreme_king_yt'
 					/>
-				</Grid2>
+				</Grid>
 
-				<Grid2 className='grid' xs={12} sm={12} md={6} lg={4} xl={4}>
+				<Grid className='grid' size={{ xs: 12, sm: 12, md: 6, lg: 4, xl: 4 }}>
 					<AboutInfoCard
 						title='Watch Yu-Gi-Oh! Related Content'
 						subtitle='Subscribe On YouTube'
@@ -156,8 +156,8 @@ export default function Overview() {
 						imgName='yt_channel_icon.jpeg'
 						imgLink='https://www.youtube.com/channel/UCBZ_1wWyLQI3SV9IgLbyiNQ/videos'
 					/>
-				</Grid2>
-			</Grid2>
+				</Grid>
+			</Grid>
 		</div>
 	)
 }

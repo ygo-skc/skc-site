@@ -1,4 +1,4 @@
-import Grid2 from '@mui/material/Unstable_Grid2'
+import Grid from '@mui/material/Grid2'
 import { FC, Fragment, useEffect, useState } from 'react'
 import { decodeHTML } from 'entities'
 import { YGOCardWithImage } from 'skc-rcl'
@@ -18,11 +18,11 @@ const CardGridItem: FC<{ card: SKCCard }> = ({ card }) => {
 	card.cardEffect = decodeHTML(card.cardEffect)
 
 	return (
-		<Grid2 className='ygo-card-grid-item' id={card.cardID} key={card.cardID} xs={6} sm={4} md={4} lg={3} xl={2}>
+		<Grid className='ygo-card-grid-item' id={card.cardID} key={card.cardID} size={{ xs: 6, sm: 4, md: 4, lg: 3, xl: 2 }}>
 			<a href={`/card/${card.cardID}`} className='aggregate-anchor'>
 				<YGOCardWithImage card={card} imgLoadingType='lazy' />
 			</a>
-		</Grid2>
+		</Grid>
 	)
 }
 

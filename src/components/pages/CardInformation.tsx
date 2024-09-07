@@ -106,7 +106,7 @@ const CardInformation = () => {
 	const [dynamicCrumbs, setDynamicCrumbs] = useState([...crumbs, ''])
 
 	useEffect(() => {
-		FetchHandler.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT['cardInstanceUrl']}${cardID}?allInfo=true`, (cardInfo: SKCCardInfo) => {
+		FetchHandler.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT.cardInstanceUrl}/${cardID}?allInfo=true`, (cardInfo: SKCCardInfo) => {
 			setDynamicCrumbs([...crumbs, cardInfo.cardID])
 
 			cardDispatch({

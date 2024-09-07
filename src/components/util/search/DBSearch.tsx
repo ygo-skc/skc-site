@@ -11,7 +11,6 @@ import DBSearchOptions from './DBSearchOptions'
 
 type DBSearchResults = SKCCard & {
 	cardColor: string // override cardColor field from SKCCard to prevent undefined
-	links: HATEOAS[]
 }
 
 class DatabaseSearchStatic {
@@ -22,7 +21,7 @@ class DatabaseSearchStatic {
 		setIsFetching: React.Dispatch<React.SetStateAction<boolean>>
 	) => {
 		FetchHandler.handleFetch<DBSearchResults[]>(
-			`${DownstreamServices.NAME_maps_ENDPOINT['search']}?limit=10&cName=${searchSubject}`,
+			`${DownstreamServices.NAME_maps_ENDPOINT.search}?limit=10&cName=${searchSubject}`,
 			(json) => {
 				setSearchOptions(json)
 				setIsFetching(false)

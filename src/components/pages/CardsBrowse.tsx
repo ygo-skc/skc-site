@@ -48,7 +48,7 @@ function generateBrowseQueryURL(selectedCriteria: BrowseCriteria[]) {
 		}
 	})
 
-	return `${DownstreamServices.NAME_maps_ENDPOINT['browse']}?cardColors=${criteriaMap.get('cardColors').join(',')}&attributes=${criteriaMap
+	return `${DownstreamServices.NAME_maps_ENDPOINT.browse}?cardColors=${criteriaMap.get('cardColors').join(',')}&attributes=${criteriaMap
 		.get('attributes')
 		.join(',')}&monsterTypes=${criteriaMap.get('monsterTypes').join(',')}&monsterSubTypes=${criteriaMap.get('monsterSubTypes').join(',')}&levels=${criteriaMap
 		.get('levels')
@@ -73,7 +73,7 @@ export default function BrowseCards() {
 	browseSummaryStats.push(['Displaying', cardGridState.totalDisplaying.toString()])
 
 	useEffect(() => {
-		FetchHandler.handleFetch<SKCCardBrowseCriteria>(DownstreamServices.NAME_maps_ENDPOINT['browseCriteria'], (json) => {
+		FetchHandler.handleFetch<SKCCardBrowseCriteria>(DownstreamServices.NAME_maps_ENDPOINT.browseCriteria, (json) => {
 			setSkcCardBrowseCriteriaOutput(json)
 		})
 	}, [])
