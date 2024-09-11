@@ -20,7 +20,7 @@
 		"react-helmet": "6.1.0",
 		"react-markdown": "9.0.1",
 		"react-router-dom": "6.26.2",
-		"skc-rcl": "1.1.11",
+		"skc-rcl": "1.1.12",
 		"styled-components": "5.3.11"
 	},
 	"resolutions": {
