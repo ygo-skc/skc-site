@@ -34,7 +34,7 @@ export default function Overview() {
 											Other than for curiosity or educational purposes you cannot use the API. This means that if you want to build your own site or have other commercial uses for
 											the API, you cannot use it. The reason is due to having no available bandwidth. This site makes no money through ads or otherwise and I cannot add more
 											instances to accommodate traffic that isn&apos;t in the immediate vision. The API itself is{' '}
-											<Link className='link' color='secondary' href={`${process.env.REACT_APP_API_HOST}/api/v1/swagger-ui.html`}>
+											<Link className='link' color='secondary' href={`${process.env.REACT_APP_API_HOST}/api/v1/webjars/swagger-ui/index.html`}>
 												documented
 											</Link>
 											.
