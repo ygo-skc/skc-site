@@ -20,8 +20,12 @@ class DatabaseSearchStatic {
 		fetchToken: CancelTokenSource,
 		setIsFetching: React.Dispatch<React.SetStateAction<boolean>>
 	) => {
+		// if there are only digits in search term, also include the search term in query params using cId param
+		searchSubject = searchSubject.trim()
+		const searchQuery = /^\d+$/.test(searchSubject) ? `cName=${searchSubject}&cId=${searchSubject}` : `cName=${searchSubject}`
+
 		FetchHandler.handleFetch<DBSearchResults[]>(
-			`${DownstreamServices.NAME_maps_ENDPOINT.search}?limit=10&cName=${searchSubject}`,
+			`${DownstreamServices.NAME_maps_ENDPOINT.search}?limit=10&${searchQuery}`,
 			(json) => {
 				setSearchOptions(json)
 				setIsFetching(false)

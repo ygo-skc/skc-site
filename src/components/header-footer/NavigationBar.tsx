@@ -20,7 +20,7 @@ const NavigationBar = () => {
 			<Toolbar className='app-bar'>
 				<Link underline='none' color='inherit' href={AppRoutes.Home}>
 					<Typography className='app-bar-button' color='inherit'>
-						SKC (BETA)
+						SKC
 					</Typography>
 				</Link>
 

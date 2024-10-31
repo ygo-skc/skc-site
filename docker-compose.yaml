@@ -13,7 +13,7 @@ services:
         limits:
           memory: 50M
     networks:
-      - skc-network
+      - skc
     environment:
       NODE_ENV: production
     labels:
@@ -28,7 +28,7 @@ services:
       com.datadoghq.tags.service: 'skc-site'
 
 networks:
-  skc-network:
-    name: skc-network
+  skc:
+    name: skc
     driver: bridge
-    external: false
+    external: true # network was alredy created, if you need to recreate the network - make this false
