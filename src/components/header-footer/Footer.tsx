@@ -1,5 +1,5 @@
 import { FunctionComponent, startTransition, useEffect, useState } from 'react'
-import { Typography } from '@mui/material'
+import { Link, Typography } from '@mui/material'
 import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 
@@ -48,11 +48,14 @@ const Footer: FunctionComponent = () => {
 		<div className='footer'>
 			<div className='footer-wrapper'>
 				<Typography className='footer-font' variant='body1' align='center'>
-					Copyright 2023
+					Copyright 2024
 				</Typography>
 
 				<Typography className='footer-font' variant='body1' align='center'>
-					Konami Digital Entertainment owns all rights to Yu-Gi-Oh!
+					Konami owns all rights to Yu-Gi-Oh! and all card images used in this website.
+				</Typography>
+				<Typography className='footer-font' variant='body1' align='center'>
+					This site is not affiliated with Konami and all assets are used under Fair Use.
 				</Typography>
 
 				<br />
@@ -71,6 +74,14 @@ const Footer: FunctionComponent = () => {
 				</Typography>
 				<Typography className='footer-font' variant='body1' align='center'>
 					<strong>SKC Suggestion Engine:</strong> v{skcSuggestionEngineVersion}
+				</Typography>
+
+				<br />
+
+				<Typography className='footer-font' variant='h6' align='center'>
+					<Link className='footer-link' href='/privacy'>
+						Privacy Policy ➡️
+					</Link>
 				</Typography>
 			</div>
 		</div>
