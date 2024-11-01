@@ -106,7 +106,7 @@ export default function Overview() {
 									details={
 										<Typography variant='body1' className='topic-details'>
 											If you have questions or want to submit a bug/feature request you can always{' '}
-											<Link className='link' color='secondary' href='mailto:thesupremeking25@gmail.com'>
+											<Link className='link' color='secondary' href='mailto:admin@skc.cards'>
 												email me
 											</Link>
 											. Otherwise, feel free to follow me on{' '}
