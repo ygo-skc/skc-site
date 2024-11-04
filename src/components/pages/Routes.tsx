@@ -18,6 +18,7 @@ const Browse = lazy(() => import('./CardsBrowse'))
 const CardInformation = lazy(() => import('./CardInformation'))
 
 const About = lazy(() => import('./About'))
+const Privacy = lazy(() => import('./Privacy'))
 const HttpErr = lazy(() => import('./HttpErr'))
 
 export default function SKCSiteRoutes() {
@@ -39,6 +40,7 @@ export default function SKCSiteRoutes() {
 					<Route path={AppRoutes.ProductInformation} element={<ProductInfo />} />
 
 					<Route path={AppRoutes.About} element={<About />} />
+					<Route path={AppRoutes.Privacy} element={<Privacy />} />
 
 					{/* Routes specifically for errs */}
 					<Route path={AppRoutes.BadRequest} element={<HttpErr httpErr={'400'} />} />

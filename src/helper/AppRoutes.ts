@@ -2,6 +2,7 @@ enum AppRoutes {
 	Home = '/',
 	BanList = '/ban_list',
 	About = '/about',
+	Privacy = '/privacy',
 	Card = '/card/:cardId',
 	CardBrowse = '/browse/card',
 	ProductBrowse = '/browse/product',

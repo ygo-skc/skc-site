@@ -1,6 +1,6 @@
 {
 	"name": "skc-site",
-	"version": "1.14.1",
+	"version": "1.14.2",
 	"description": "Website to help duelists.",
 	"main": "index.js",
 	"author": "",
@@ -71,7 +71,7 @@
 		"@stryker-mutator/jest-runner": "8.6.0",
 		"@stryker-mutator/typescript-checker": "8.6.0",
 		"@testing-library/dom": "10.4.0",
-		"@testing-library/jest-dom": "6.6.2",
+		"@testing-library/jest-dom": "6.6.3",
 		"@testing-library/react": "16.0.1",
 		"@types/jest": "29.5.14",
 		"@types/lodash.startcase": "4.4.9",
@@ -99,7 +99,7 @@
 		"ts-loader": "9.5.1",
 		"ts-node": "10.9.2",
 		"typescript": "5.6.3",
-		"webpack": "5.95.0",
+		"webpack": "5.96.1",
 		"webpack-cli": "5.1.4",
 		"webpack-dashboard": "3.3.8",
 		"webpack-dev-server": "5.1.0"
