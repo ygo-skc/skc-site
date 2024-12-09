@@ -1,4 +1,4 @@
-import { FC, Suspense, memo, useCallback, useEffect, useState } from 'react'
+import { FC, JSX, Suspense, memo, useCallback, useEffect, useState } from 'react'
 import { Section } from 'skc-rcl'
 import BanListSection from '../BanListSection'
 import { AppBar, Skeleton, Tab, Tabs } from '@mui/material'

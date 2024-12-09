@@ -1,5 +1,4 @@
 import { lazy, useState, useEffect, Suspense, useReducer, useCallback } from 'react'
-import { Helmet } from 'react-helmet'
 
 import { Skeleton } from '@mui/material'
 import FetchHandler from '../../helper/FetchHandler'
@@ -208,11 +207,9 @@ export default function BanList() {
 
 	return (
 		<div className='generic-container'>
-			<Helmet>
-				<title>{`SKC - Ban List: ${selectedBanList}`}</title>
-				<meta name={`SKC - Ban List: ${selectedBanList}`} content={`Ban list content/info for list effective ${selectedBanList}`} />
-				<meta name='keywords' content={`YuGiOh, ban list, The Supreme Kings Castle, ${selectedBanList}`} />
-			</Helmet>
+			<title>{`SKC - Ban List: ${selectedBanList}`}</title>
+			<meta name={`SKC - Ban List: ${selectedBanList}`} content={`Ban list content/info for list effective ${selectedBanList}`} />
+			<meta name='keywords' content={`YuGiOh, ban list, The Supreme Kings Castle, ${selectedBanList}`} />
 
 			<Suspense fallback={<Skeleton className='breadcrumb-skeleton' variant='rectangular' width='100%' height='2.5rem' />}>
 				<BreadCrumb crumbs={['Home', 'Ban List']} />

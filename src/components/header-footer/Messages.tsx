@@ -1,7 +1,7 @@
 import '../../css/header-footer/navigation-icon.css'
 import '../../css/header-footer/messages.css'
 
-import { useState, useEffect, Fragment, startTransition, useCallback } from 'react'
+import { useState, useEffect, Fragment, startTransition, useCallback, JSX } from 'react'
 import { Typography, IconButton, Popover, Badge } from '@mui/material'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 

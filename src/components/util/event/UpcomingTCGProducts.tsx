@@ -1,5 +1,5 @@
 import '../../../css/util/event.css'
-import { useCallback, lazy, startTransition, useEffect, useState } from 'react'
+import { useCallback, lazy, startTransition, useEffect, useState, JSX } from 'react'
 import { Alert, Dialog, DialogContent, DialogTitle, IconButton, Skeleton, Snackbar, Typography } from '@mui/material'
 import DownstreamServices from '../../../helper/DownstreamServices'
 import FetchHandler from '../../../helper/FetchHandler'
