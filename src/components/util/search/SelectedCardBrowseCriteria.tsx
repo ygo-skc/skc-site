@@ -1,6 +1,6 @@
 import Chip from '@mui/material/Chip'
 import Typography from '@mui/material/Typography'
-import { FC, useEffect, useState } from 'react'
+import { FC, JSX, useEffect, useState } from 'react'
 
 const SelectedCardBrowseCriteria: FC<{ selectedCriteria: BrowseCriteria[] }> = ({ selectedCriteria }) => {
 	const [selectedCriteriaChips, setSelectedCriteriaChips] = useState<JSX.Element[]>([])

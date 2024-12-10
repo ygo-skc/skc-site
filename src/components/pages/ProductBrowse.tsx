@@ -1,7 +1,6 @@
 import '../../css/main-pages/product.css'
 
-import { useState, useEffect, lazy, FunctionComponent, Suspense, useCallback, startTransition } from 'react'
-import { Helmet } from 'react-helmet'
+import { useState, useEffect, lazy, FunctionComponent, Suspense, useCallback, startTransition, JSX } from 'react'
 
 import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
@@ -99,11 +98,9 @@ const ProductBrowse: FunctionComponent = () => {
 
 	return (
 		<div className='generic-container'>
-			<Helmet>
-				<title>{`SKC - Product Browser`}</title>
-				<meta name={`SKC - Product Browser`} content={`Browse all products in database to check the progression of YuGiOh.`} />
-				<meta name='keywords' content={`YuGiOh, product browse, The Supreme Kings Castle`} />
-			</Helmet>
+			<title>{`SKC - Product Browser`}</title>
+			<meta name={`SKC - Product Browser`} content={`Browse all products in database to check the progression of YuGiOh.`} />
+			<meta name='keywords' content={`YuGiOh, product browse, The Supreme Kings Castle`} />
 
 			<Suspense fallback={<Skeleton className='breadcrumb-skeleton' variant='rectangular' width='100%' height='2.5rem' />}>
 				<Breadcrumb crumbs={['Home', 'Product Browse']} />

@@ -1,5 +1,5 @@
 import Grid from '@mui/material/Grid2'
-import { FC, Fragment, useEffect, useState } from 'react'
+import { FC, Fragment, JSX, useEffect, useState } from 'react'
 import { decodeHTML } from 'entities'
 import { YGOCardWithImage } from 'skc-rcl'
 

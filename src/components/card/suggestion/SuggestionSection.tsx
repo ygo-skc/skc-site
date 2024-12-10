@@ -1,5 +1,5 @@
 import { ClickAwayListener, IconButton, Tooltip, Typography } from '@mui/material'
-import { FC, Fragment, useCallback, useState } from 'react'
+import { FC, Fragment, JSX, useCallback, useState } from 'react'
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark'
 
 type _SuggestionSection = {

@@ -1,4 +1,4 @@
-import { FunctionComponent, memo, startTransition, useEffect, useState } from 'react'
+import { FunctionComponent, JSX, memo, startTransition, useEffect, useState } from 'react'
 
 import { Breadcrumbs, Link, Box, Typography, Skeleton } from '@mui/material'
 

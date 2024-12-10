@@ -1,5 +1,5 @@
 import { Avatar, Typography } from '@mui/material'
-import React, { FC, Fragment, memo, useCallback, useEffect, useState } from 'react'
+import React, { FC, Fragment, JSX, memo, useCallback, useEffect, useState } from 'react'
 
 type DBSearchOptionsProps = {
 	props: React.HTMLAttributes<HTMLLIElement>

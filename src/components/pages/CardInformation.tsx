@@ -1,6 +1,5 @@
 import { useState, useEffect, lazy, Suspense, useReducer } from 'react'
 import { useParams } from 'react-router-dom'
-import { Helmet } from 'react-helmet'
 import { Skeleton } from '@mui/material'
 
 import FetchHandler from '../../helper/FetchHandler'
@@ -137,16 +136,14 @@ const CardInformation = () => {
 
 	return (
 		<div className='generic-container'>
-			<Helmet>
-				<title>SKC - Card: {cardID}</title>
-				<meta name={`SKC - Card: ${cardID}`} content={`Information for YuGiOh card ${cardName} such as ban lists it was in, products it can be found in, effect/stats, etc.`} />
-				<meta name='keywords' content={`YuGiOh, The Supreme Kings Castle, card, ${cardName}, ${cardID}, ${cardColor}`} />
+			<title>SKC - Card: {cardID}</title>
+			<meta name={`SKC - Card: ${cardID}`} content={`Information for YuGiOh card ${cardName} such as ban lists it was in, products it can be found in, effect/stats, etc.`} />
+			<meta name='keywords' content={`YuGiOh, The Supreme Kings Castle, card, ${cardName}, ${cardID}, ${cardColor}`} />
 
-				<meta property='og:title' content={`${cardName} - ${cardID}`} />
-				<meta property='og:image' content={`https://images.thesupremekingscastle.com/cards/tn/${cardID}.jpg`} />
-				<meta property='og:type' content='website' />
-				<meta property='og:description' content={`Details For Yugioh Card - ${cardName}`} />
-			</Helmet>
+			<meta property='og:title' content={`${cardName} - ${cardID}`} />
+			<meta property='og:image' content={`https://images.thesupremekingscastle.com/cards/tn/${cardID}.jpg`} />
+			<meta property='og:type' content='website' />
+			<meta property='og:description' content={`Details For Yugioh Card - ${cardName}`} />
 
 			<Suspense fallback={<Skeleton className='breadcrumb-skeleton' variant='rectangular' width='100%' height='2.5rem' />}>
 				<Breadcrumb crumbs={dynamicCrumbs} />
