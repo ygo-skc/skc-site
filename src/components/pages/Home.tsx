@@ -1,4 +1,3 @@
-import { Helmet } from 'react-helmet'
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 
 import DatabaseInfo from '../util/database-info/DatabaseInfo'
@@ -16,11 +15,9 @@ const YouTubeData = lazy(() => import('../home/YouTubeData'))
 export default function Home() {
 	return (
 		<div className='generic-container'>
-			<Helmet>
-				<title>The Supreme Kings Castle</title>
-				<meta name={`The Supreme Kings Castle`} content={`YuGiOh Site for checking; card information, current and past ban lists, search cards, and browse cards.`} />
-				<meta name='keywords' content={`YuGiOh, ban list, card info, The Supreme Kings Castle`} />
-			</Helmet>
+			<title>The Supreme Kings Castle</title>
+			<meta name={`The Supreme Kings Castle`} content={`YuGiOh Site for checking; card information, current and past ban lists, search cards, and browse cards.`} />
+			<meta name='keywords' content={`YuGiOh, ban list, card info, The Supreme Kings Castle`} />
 
 			<Suspense fallback={<Skeleton className='breadcrumb-skeleton' variant='rectangular' width='100%' height='2.5rem' />}>
 				<Breadcrumb crumbs={['Home']} />

@@ -1,5 +1,5 @@
 import { Skeleton } from '@mui/material'
-import { FC, Fragment, memo, useEffect, useState } from 'react'
+import { FC, Fragment, JSX, memo, useEffect, useState } from 'react'
 import CardsWithDifferentStatus from './CardsWithDifferentStatus'
 
 type BanListDiffContentProps = {

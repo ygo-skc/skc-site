@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material'
-import { FC, useEffect, useState } from 'react'
+import { FC, JSX, useEffect, useState } from 'react'
 import { decodeHTML } from 'entities'
 import { YGOCardWithPreviousBanStatus } from 'skc-rcl'
 

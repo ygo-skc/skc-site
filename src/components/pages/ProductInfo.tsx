@@ -2,7 +2,6 @@ import '../../css/main-pages/product.css'
 
 import { useState, useEffect, lazy, Fragment, useReducer, Suspense } from 'react'
 import { useParams } from 'react-router-dom'
-import { Helmet } from 'react-helmet'
 
 import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
@@ -62,11 +61,9 @@ export default function ProductInfo() {
 
 	return (
 		<div className='generic-container'>
-			<Helmet>
-				<title>{`SKC - Product: ${productName}`}</title>
-				<meta name={`SKC - Product: ${productName}`} content={`Contents, info, dates, etc for ${productName}`} />
-				<meta name='keywords' content={`YuGiOh, product browse, The Supreme Kings Castle`} />
-			</Helmet>
+			<title>{`SKC - Product: ${productName}`}</title>
+			<meta name={`SKC - Product: ${productName}`} content={`Contents, info, dates, etc for ${productName}`} />
+			<meta name='keywords' content={`YuGiOh, product browse, The Supreme Kings Castle`} />
 
 			<Suspense fallback={<Skeleton className='breadcrumb-skeleton' variant='rectangular' width='100%' height='2.5rem' />}>
 				<Breadcrumb crumbs={dynamicBreadcrumbs} />

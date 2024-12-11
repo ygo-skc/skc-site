@@ -1,5 +1,4 @@
 import { FunctionComponent, Suspense, lazy } from 'react'
-import { Helmet } from 'react-helmet'
 
 import { Link, Skeleton, Typography } from '@mui/material'
 import { Section } from 'skc-rcl'
@@ -10,11 +9,9 @@ const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 const Privacy: FunctionComponent = () => {
 	return (
 		<div className='generic-container'>
-			<Helmet>
-				<title>{`SKC - About`}</title>
-				<meta name={`SKC - Privacy`} content={`Privacy policy for site and mobile app`} />
-				<meta name='keywords' content={`YuGiOh, YGO-API, support, The Supreme Kings Castle`} />
-			</Helmet>
+			<title>{`SKC - About`}</title>
+			<meta name={`SKC - Privacy`} content={`Privacy policy for site and mobile app`} />
+			<meta name='keywords' content={`YuGiOh, YGO-API, support, The Supreme Kings Castle`} />
 
 			<Suspense fallback={<Skeleton className='breadcrumb-skeleton' variant='rectangular' width='100%' height='2.5rem' />}>
 				<Breadcrumb crumbs={['Home', 'Privacy']} />

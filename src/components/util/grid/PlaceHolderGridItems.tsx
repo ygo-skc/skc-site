@@ -1,6 +1,6 @@
 import { Skeleton } from '@mui/material'
 import Grid from '@mui/material/Grid2'
-import { FC, Fragment, useEffect, useState } from 'react'
+import { FC, Fragment, JSX, useEffect, useState } from 'react'
 
 const PlaceHolderGridItems: FC<{ totalPlaceHolders?: number }> = ({ totalPlaceHolders = 10 }) => {
 	const [placeHolderUI, setPlaceHolderUI] = useState<JSX.Element[]>([])

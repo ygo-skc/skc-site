@@ -3,7 +3,6 @@ import '../../css/main-pages/card-browse.css'
 
 import { useState, useEffect, lazy, useReducer, startTransition, Suspense } from 'react'
 import { Skeleton, Typography } from '@mui/material'
-import { Helmet } from 'react-helmet'
 
 import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 
@@ -98,11 +97,9 @@ export default function BrowseCards() {
 
 	return (
 		<div className='generic-container'>
-			<Helmet>
-				<title>{`SKC - Card Browser`}</title>
-				<meta name={`SKC - Card Browser`} content={`Browse all cards in database to find the right card you want.`} />
-				<meta name='keywords' content={`YuGiOh, card browse, The Supreme Kings Castle`} />
-			</Helmet>
+			<title>{`SKC - Card Browser`}</title>
+			<meta name={`SKC - Card Browser`} content={`Browse all cards in database to find the right card you want.`} />
+			<meta name='keywords' content={`YuGiOh, card browse, The Supreme Kings Castle`} />
 
 			<Suspense fallback={<Skeleton className='breadcrumb-skeleton' variant='rectangular' width='100%' height='2.5rem' />}>
 				<Breadcrumb crumbs={['Home', 'Card Browse Tool']} />

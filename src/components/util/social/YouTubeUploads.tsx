@@ -1,4 +1,4 @@
-import { FC, Fragment, useEffect, useState } from 'react'
+import { FC, Fragment, JSX, useEffect, useState } from 'react'
 import { Typography, Link, Skeleton } from '@mui/material'
 
 import VideoInfoContainer from './VideoInfoContainer'
