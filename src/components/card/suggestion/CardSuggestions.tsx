@@ -90,7 +90,7 @@ const CardSuggestions: FC<_CardSuggestion> = ({ cardID, cardColor, cardName }) =
 			: []
 	}, [])
 
-	const LoadingUI = <Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='380px' />
+	const LoadingUI = <Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='50rem' />
 
 	useEffect(() => {
 		FetchHandler.handleFetch(

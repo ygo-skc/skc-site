@@ -4,7 +4,6 @@ import { Skeleton } from '@mui/material'
 
 import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
-import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 import { CardImageRounded, Section } from 'skc-rcl'
 import { decodeHTML } from 'entities'
 
@@ -149,51 +148,47 @@ const CardInformation = () => {
 				<Breadcrumb crumbs={dynamicCrumbs} />
 			</Suspense>
 
-			<OneThirdTwoThirdsGrid
-				mirrored={false}
-				oneThirdComponent={
-					<Section sectionHeaderBackground={cardColor !== undefined ? (cardColor?.replace(/Pendulum-/gi, '') as cardColor) : ''} sectionName='Information'>
-						<div className='section-content'>
-							<CardImageRounded size='md' cardID={cardID} loading='eager' />
-							<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='10rem' />}>
-								{isLoading ? (
-									<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='10rem' />
-								) : (
-									<YGOCard
-										cardName={cardName}
-										cardColor={cardColor}
-										cardEffect={decodeHTML(cardEffect)}
-										cardAttribute={cardAttribute}
-										monsterType={monsterType}
-										monsterAttack={monsterAtk}
-										monsterDefense={monsterDef}
-										monsterAssociation={monsterAssociation}
-										cardID={cardID}
-										fullDetails={true}
-										isLoading={false}
-									/>
-								)}
-							</Suspense>
-						</div>
-					</Section>
-				}
-				twoThirdComponent={
-					<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='20rem' />}>
-						<CardSuggestions cardID={cardID} cardColor={cardColor} cardName={cardName} />
-						{isLoading ? (
-							<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='20rem' />
-						) : (
-							<CardInformationRelatedContent
-								cardName={cardName}
-								cardColor={cardColor?.replace(/Pendulum-/gi, '') as cardColor}
-								cardID={cardID}
-								productInfo={productInfo}
-								restrictedIn={restrictionInfo}
-							/>
-						)}
-					</Suspense>
-				}
-			/>
+			<div style={{ maxWidth: '35rem', margin: 'auto' }}>
+				<Section sectionHeaderBackground={cardColor !== undefined ? (cardColor?.replace(/Pendulum-/gi, '') as cardColor) : ''} sectionName='Information'>
+					<div className='section-content'>
+						<CardImageRounded size='md' cardID={cardID} loading='eager' />
+						<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='10rem' />}>
+							{isLoading ? (
+								<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='10rem' />
+							) : (
+								<YGOCard
+									cardName={cardName}
+									cardColor={cardColor}
+									cardEffect={decodeHTML(cardEffect)}
+									cardAttribute={cardAttribute}
+									monsterType={monsterType}
+									monsterAttack={monsterAtk}
+									monsterDefense={monsterDef}
+									monsterAssociation={monsterAssociation}
+									cardID={cardID}
+									fullDetails={true}
+									isLoading={false}
+								/>
+							)}
+						</Suspense>
+					</div>
+				</Section>
+			</div>
+
+			<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='40rem' />}>
+				<CardSuggestions cardID={cardID} cardColor={cardColor} cardName={cardName} />
+				{isLoading ? (
+					<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='20rem' />
+				) : (
+					<CardInformationRelatedContent
+						cardName={cardName}
+						cardColor={cardColor?.replace(/Pendulum-/gi, '') as cardColor}
+						cardID={cardID}
+						productInfo={productInfo}
+						restrictedIn={restrictionInfo}
+					/>
+				)}
+			</Suspense>
 		</div>
 	)
 }
