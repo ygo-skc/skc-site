@@ -20,7 +20,7 @@ export default function AboutSKC() {
 						</Typography>
 						<Typography variant='body1' className='topic-details'>
 							I graduated college some time in 2018 and got a job in my field. Through it, I got more money and slightly more time! In my field there is always something new to
-							learn. Learning on the job is a hinderance in most cases. I figured I&apos;d learn new technologies by building this web site and some web API&apos;s to support the
+							learn. Learning on the job is a hindrance in most cases. I figured I&apos;d learn new technologies by building this web site and some web API&apos;s to support the
 							backend. I was right about this too since everything I&apos;m learning to build this site has helped me stay ahead of my colleagues.
 						</Typography>
 					</Fragment>

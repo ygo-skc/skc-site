@@ -22,27 +22,27 @@ const UpcomingTCGProducts = () => {
 	const [eventDialogEventData, setEventDialogEventData] = useState<HeartApiEventItem>({} as HeartApiEventItem)
 
 	useEffect(() => {
-		startTransition(() => {
-			FetchHandler.handleFetch(
-				`${DownstreamServices.HEART_API_ENDPOINTS.events}?service=skc&tags=product-release`,
-				(eventOutput: HeartApiEventOutput) => {
-					const eUI = eventOutput.events.map((event: HeartApiEventItem) => (
-						<EventItem
-							key={`${event.name} ${event.createdAt}`}
-							isWithinDialog={false}
-							event={event}
-							showEventDialog={setEventDialogIsOpen}
-							setEventDialogEventData={setEventDialogEventData}
-						/>
-					))
+		FetchHandler.handleFetch(
+			`${DownstreamServices.HEART_API_ENDPOINTS.events}?service=skc&tags=product-release`,
+			(eventOutput: HeartApiEventOutput) => {
+				const eUI = eventOutput.events.map((event: HeartApiEventItem) => (
+					<EventItem
+						key={`${event.name} ${event.createdAt}`}
+						isWithinDialog={false}
+						event={event}
+						showEventDialog={setEventDialogIsOpen}
+						setEventDialogEventData={setEventDialogEventData}
+					/>
+				))
 
-					startTransition(() => {
-						setEventsUI(eUI)
-						setIsFetchingData(false)
-					})
-				},
-				false
-			)?.catch(() => {
+				startTransition(() => {
+					setEventsUI(eUI)
+					setIsFetchingData(false)
+				})
+			},
+			false
+		)?.catch(() => {
+			startTransition(() => {
 				setErrFetchingData(true)
 				setIsFetchingData(false)
 			})

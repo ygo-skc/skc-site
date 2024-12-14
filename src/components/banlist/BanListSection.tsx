@@ -26,7 +26,11 @@ const BanListSection: FC<BanListSectionProps> = ({ sectionExplanation, cards, is
 			cardDisplayGridDispatch({
 				type: CardDisplayGridStateReducerActionType.LOADING_GRID,
 			})
-		} else {
+		}
+	}, [isFetchingBanList])
+
+	useEffect(() => {
+		if (!isFetchingBanList) {
 			cardDisplayGridDispatch({
 				type: CardDisplayGridStateReducerActionType.INIT_GRID,
 				results: cards,
