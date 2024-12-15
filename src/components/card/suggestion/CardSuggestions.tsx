@@ -1,5 +1,5 @@
 import '../../../css/card/ygo-card-suggestion.css'
-import { FC, Fragment, lazy, Suspense, useEffect, useState, useCallback } from 'react'
+import { FC, Fragment, lazy, Suspense, useEffect, useCallback, useReducer } from 'react'
 import { decodeHTML } from 'entities'
 import { Skeleton } from '@mui/material'
 
@@ -7,7 +7,8 @@ import FetchHandler from '../../../helper/FetchHandler'
 import DownstreamServices from '../../../helper/DownstreamServices'
 import SuggestionSection from './SuggestionSection'
 
-import { Section } from 'skc-rcl'
+import { Section, YGOCardWithImage, YGOCardWithQuantity } from 'skc-rcl'
+import { cardSuggestionReducer, CardSuggestionType } from '../../../reducers/CardSuggestionReducer'
 
 const Hint = lazy(() =>
 	import('skc-rcl').then((module) => {
@@ -21,22 +22,26 @@ const GenericNonBreakingErr = lazy(() =>
 	})
 )
 
-type _CardSuggestion = {
+type CardSuggestionProps = {
 	cardID: string
 	cardColor: cardColor
 	cardName: string
 }
 
-const CardSuggestions: FC<_CardSuggestion> = ({ cardID, cardColor, cardName }) => {
-	const [materialSuggestions, setMaterialSuggestions] = useState<React.JSX.Element[]>([])
-	const [referenceSuggestions, setReferenceSuggestions] = useState<React.JSX.Element[]>([])
-	const [isLoadingSuggestions, setIsLoadingSuggestions] = useState<boolean>(true)
-	const [suggestionRequestHasError, setSuggestionRequestHasError] = useState<boolean>(false)
-
-	const [materialFor, setMaterialFor] = useState<React.JSX.Element[]>([])
-	const [referencedBy, setReferencedBy] = useState<React.JSX.Element[]>([])
-	const [isLoadingSupport, setIsLoadingSupport] = useState<boolean>(true)
-	const [supportRequestHasError, setSupportRequestHasError] = useState<boolean>(false)
+const CardSuggestions: FC<CardSuggestionProps> = ({ cardID, cardColor, cardName }) => {
+	const [
+		{ namedMaterials, namedReferences, referencedBy, materialFor, isLoadingSuggestions, isLoadingSupport, suggestionRequestHasError, supportRequestHasError },
+		suggestionDispatch,
+	] = useReducer(cardSuggestionReducer, {
+		namedMaterials: [],
+		namedReferences: [],
+		referencedBy: [],
+		materialFor: [],
+		isLoadingSuggestions: true,
+		isLoadingSupport: true,
+		suggestionRequestHasError: false,
+		supportRequestHasError: false,
+	})
 
 	const isLoading = useCallback((): boolean => {
 		return isLoadingSuggestions || isLoadingSupport
@@ -48,16 +53,10 @@ const CardSuggestions: FC<_CardSuggestion> = ({ cardID, cardColor, cardName }) =
 	}, [suggestionRequestHasError, supportRequestHasError])
 
 	const hasNoContent = useCallback(() => {
-		return materialSuggestions.length === 0 && referenceSuggestions.length === 0 && materialFor.length === 0 && referencedBy.length === 0
-	}, [materialFor.length, materialSuggestions.length, referenceSuggestions.length, referencedBy.length])
+		return namedMaterials.length === 0 && namedReferences.length === 0 && materialFor.length === 0 && referencedBy.length === 0
+	}, [materialFor, materialFor, namedReferences, referencedBy])
 
 	const transformReferences = useCallback((references: CardReference[]): React.JSX.Element[] => {
-		const YGOCardWithQuantity = lazy(() =>
-			import('skc-rcl').then((module) => {
-				return { default: module.YGOCardWithQuantity }
-			})
-		)
-
 		return references !== null
 			? references.map((reference: CardReference) => {
 					reference.card.cardEffect = decodeHTML(reference.card.cardEffect)
@@ -71,12 +70,6 @@ const CardSuggestions: FC<_CardSuggestion> = ({ cardID, cardColor, cardName }) =
 	}, [])
 
 	const transformSupport = useCallback((support: CardReference[]): React.JSX.Element[] => {
-		const YGOCardWithImage = lazy(() =>
-			import('skc-rcl').then((module) => {
-				return { default: module.YGOCardWithImage }
-			})
-		)
-
 		return support !== null
 			? support.map((reference: CardReference) => {
 					const card = reference.card
@@ -96,27 +89,33 @@ const CardSuggestions: FC<_CardSuggestion> = ({ cardID, cardColor, cardName }) =
 		FetchHandler.handleFetch(
 			`${DownstreamServices.SKC_SUGGESTION_ENDPOINTS.cardSuggestions}/${cardID}`,
 			(json: CardSuggestionOutput) => {
-				setMaterialSuggestions(transformReferences(json.namedMaterials))
-				setReferenceSuggestions(transformReferences(json.namedReferences))
-				setIsLoadingSuggestions(false)
+				suggestionDispatch({
+					type: CardSuggestionType.UPDATE_SUGGESTIONS,
+					namedMaterials: json.namedMaterials,
+					namedReferences: json.namedReferences,
+				})
 			},
 			false
 		)?.catch(() => {
-			setIsLoadingSuggestions(false)
-			setSuggestionRequestHasError(true)
+			suggestionDispatch({
+				type: CardSuggestionType.FETCH_SUGGESTIONS_ERROR,
+			})
 		})
 
 		FetchHandler.handleFetch(
 			`${DownstreamServices.SKC_SUGGESTION_ENDPOINTS.cardSupport}/${cardID}`,
 			(json: CardSupportOutput) => {
-				setMaterialFor(transformSupport(json.materialFor))
-				setReferencedBy(transformSupport(json.referencedBy))
-				setIsLoadingSupport(false)
+				suggestionDispatch({
+					type: CardSuggestionType.UPDATE_SUPPORT,
+					referencedBy: json.referencedBy,
+					materialFor: json.materialFor,
+				})
 			},
 			false
 		)?.catch(() => {
-			setIsLoadingSupport(false)
-			setSupportRequestHasError(true)
+			suggestionDispatch({
+				type: CardSuggestionType.FETCH_SUPPORT_ERROR,
+			})
 		})
 	}, [cardID, transformSupport, transformReferences])
 
@@ -129,18 +128,22 @@ const CardSuggestions: FC<_CardSuggestion> = ({ cardID, cardColor, cardName }) =
 					{!isLoading() && !hasError() && (
 						<Fragment>
 							<SuggestionSection
-								suggestions={materialSuggestions}
+								suggestions={transformReferences(namedMaterials)}
 								sectionName='Named Materials'
 								sectionExplanation={`Other cards that are directly referenced as summoning material by ${cardName} card. Currently, only extra deck summonsing materials are suggested.`}
 							/>
-							<SuggestionSection suggestions={materialFor} sectionName='Material For' sectionExplanation={`${cardName} can be used as a material for the cards in this section.`} />
 							<SuggestionSection
-								suggestions={referenceSuggestions}
+								suggestions={transformSupport(materialFor)}
+								sectionName='Material For'
+								sectionExplanation={`${cardName} can be used as a material for the cards in this section.`}
+							/>
+							<SuggestionSection
+								suggestions={transformReferences(namedReferences)}
 								sectionName='References'
 								sectionExplanation={`${cardName} is referencing the below cards. If ${cardName} is an extra deck monster, its named summoning materials are omitted here.`}
 							/>
 							<SuggestionSection
-								suggestions={referencedBy}
+								suggestions={transformSupport(referencedBy)}
 								sectionName='Referenced By'
 								sectionExplanation={`Cards that directly reference ${cardName}. Omits extra deck monsters that reference ${cardName} as a summoning material.`}
 							/>

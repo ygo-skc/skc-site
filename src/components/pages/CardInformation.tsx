@@ -1,11 +1,12 @@
 import { useState, useEffect, lazy, Suspense, useReducer } from 'react'
 import { useParams } from 'react-router-dom'
-import { Skeleton } from '@mui/material'
+import { Skeleton, Typography } from '@mui/material'
 
 import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
-import { CardImageRounded, Section } from 'skc-rcl'
+import { CardImageRounded, Hint, Section } from 'skc-rcl'
 import { decodeHTML } from 'entities'
+import { cardInformationReducer, CardInformationType } from '../../reducers/CardInformationReducer'
 
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 const CardSuggestions = lazy(() => import('../card/suggestion/CardSuggestions'))
@@ -17,67 +18,6 @@ const YGOCard = lazy(() =>
 	})
 )
 
-type CardInformationState = {
-	cardName: string
-	cardColor: cardColor
-	cardAttribute?: string
-	monsterType?: string
-	monsterAssociation?: SKCMonsterAssociation
-	monsterAtk?: string
-	monsterDef?: string
-	cardEffect: string
-	productInfo: ProductInfo[]
-	restrictionInfo: RestrictedIn
-}
-
-enum CardInformationType {
-	UPDATE_CARD = 'UPDATE CARD',
-	UPDATE_PRODUCTS = 'UPDATE PRODUCTS',
-	UPDATE_RESTRICTIONS = 'UPDATE RESTRICTIONS',
-}
-
-type CardInformationAction =
-	| {
-			type: CardInformationType.UPDATE_CARD
-			cardName: string
-			cardEffect: string
-			cardColor: cardColor
-			cardAttribute?: string
-			monsterType?: string
-			monsterAssociation?: SKCMonsterAssociation
-			monsterAtk?: string
-			monsterDef?: string
-	  }
-	| { type: CardInformationType.UPDATE_PRODUCTS; productInfo: ProductInfo[] }
-	| { type: CardInformationType.UPDATE_RESTRICTIONS; restrictionInfo: RestrictedIn }
-
-function cardInformationReducer(state: CardInformationState, action: CardInformationAction): CardInformationState {
-	switch (action.type) {
-		case CardInformationType.UPDATE_CARD:
-			return {
-				...state,
-				cardName: action.cardName,
-				cardColor: action.cardColor,
-				cardEffect: action.cardEffect,
-				cardAttribute: action.cardAttribute,
-				monsterType: action.monsterType,
-				monsterAtk: action.monsterAtk,
-				monsterDef: action.monsterDef,
-				monsterAssociation: action.monsterAssociation,
-			}
-		case CardInformationType.UPDATE_PRODUCTS:
-			return {
-				...state,
-				productInfo: action.productInfo,
-			}
-		case CardInformationType.UPDATE_RESTRICTIONS:
-			return {
-				...state,
-				restrictionInfo: action.restrictionInfo,
-			}
-	}
-}
-
 const CardInformation = () => {
 	let { cardId: cardID } = useParams()
 	cardID = cardID as string
@@ -85,21 +25,19 @@ const CardInformation = () => {
 
 	const [isLoading, setIsLoading] = useState(true)
 
-	const [{ cardName, cardColor, cardEffect, cardAttribute, monsterType, monsterAtk, monsterDef, monsterAssociation, productInfo, restrictionInfo }, cardDispatch] = useReducer(
-		cardInformationReducer,
-		{
+	const [{ cardName, cardColor, cardEffect, cardAttribute, monsterType, monsterAttack, monsterDefense, monsterAssociation, productInfo, restrictionInfo }, cardDispatch] =
+		useReducer(cardInformationReducer, {
 			cardName: '',
 			cardColor: undefined,
 			cardEffect: '',
 			cardAttribute: '',
 			monsterType: '',
-			monsterAtk: '',
-			monsterDef: '',
+			monsterAttack: '',
+			monsterDefense: '',
 			monsterAssociation: undefined,
 			productInfo: [],
 			restrictionInfo: { TCG: [], MD: [], DL: [] },
-		}
-	)
+		})
 
 	const [dynamicCrumbs, setDynamicCrumbs] = useState([...crumbs, ''])
 
@@ -148,7 +86,7 @@ const CardInformation = () => {
 				<Breadcrumb crumbs={dynamicCrumbs} />
 			</Suspense>
 
-			<div style={{ maxWidth: '35rem', margin: 'auto' }}>
+			<div style={{ maxWidth: '50%', margin: 'auto', display: 'grid', gridTemplateColumns: '47% 53%', gap: '2rem' }}>
 				<Section sectionHeaderBackground={cardColor !== undefined ? (cardColor?.replace(/Pendulum-/gi, '') as cardColor) : ''} sectionName='Information'>
 					<div className='section-content'>
 						<CardImageRounded size='md' cardID={cardID} loading='eager' />
@@ -162,8 +100,8 @@ const CardInformation = () => {
 									cardEffect={decodeHTML(cardEffect)}
 									cardAttribute={cardAttribute}
 									monsterType={monsterType}
-									monsterAttack={monsterAtk}
-									monsterDefense={monsterDef}
+									monsterAttack={monsterAttack}
+									monsterDefense={monsterDefense}
 									monsterAssociation={monsterAssociation}
 									cardID={cardID}
 									fullDetails={true}
@@ -173,6 +111,10 @@ const CardInformation = () => {
 						</Suspense>
 					</div>
 				</Section>
+				<div className='group' style={{ alignSelf: 'start', background: 'white', border: '3px solid gray' }}>
+					<Typography variant='h4'>Archetypes</Typography>
+					<Hint>Not tied to any archetype</Hint>
+				</div>
 			</div>
 
 			<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='40rem' />}>
