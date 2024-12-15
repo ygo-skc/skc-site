@@ -1,4 +1,4 @@
-type CardSuggestionState = {
+export type CardSuggestionState = {
 	namedMaterials: CardReference[]
 	namedReferences: CardReference[]
 	referencedBy: CardReference[]

@@ -1,4 +1,4 @@
-type CardInformationState = Omit<SKCCard, 'cardID'> & {
+export type CardInformationState = Omit<SKCCard, 'cardID'> & {
 	productInfo: ProductInfo[]
 	restrictionInfo: RestrictedIn
 	isLoadingData: boolean

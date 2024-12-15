@@ -7,6 +7,7 @@ import DownstreamServices from '../../helper/DownstreamServices'
 import { CardImageRounded, Hint, Section } from 'skc-rcl'
 import { decodeHTML } from 'entities'
 import { cardInformationReducer, CardInformationType } from '../../reducers/CardInformationReducer'
+import { cardSuggestionReducer, CardSuggestionType } from '../../reducers/CardSuggestionReducer'
 
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 const CardSuggestions = lazy(() => import('../card/suggestion/CardSuggestions'))
@@ -36,6 +37,16 @@ const CardInformation = () => {
 		restrictionInfo: { TCG: [], MD: [], DL: [] },
 		isLoadingData: true,
 	})
+	const [cardSuggestionState, suggestionDispatch] = useReducer(cardSuggestionReducer, {
+		namedMaterials: [],
+		namedReferences: [],
+		referencedBy: [],
+		materialFor: [],
+		isLoadingSuggestions: true,
+		isLoadingSupport: true,
+		suggestionRequestHasError: false,
+		supportRequestHasError: false,
+	})
 
 	const [dynamicCrumbs, setDynamicCrumbs] = useState([...crumbs, ''])
 
@@ -55,6 +66,39 @@ const CardInformation = () => {
 				monsterAssociation: cardInfo.monsterAssociation,
 				productInfo: cardInfo.foundIn ?? [],
 				restrictionInfo: cardInfo.restrictedIn ?? { TCG: [], MD: [], DL: [] },
+			})
+		})
+
+		// fetch suggestions
+		FetchHandler.handleFetch(
+			`${DownstreamServices.SKC_SUGGESTION_ENDPOINTS.cardSuggestions}/${cardID}`,
+			(json: CardSuggestionOutput) => {
+				suggestionDispatch({
+					type: CardSuggestionType.UPDATE_SUGGESTIONS,
+					namedMaterials: json.namedMaterials,
+					namedReferences: json.namedReferences,
+				})
+			},
+			false
+		)?.catch(() => {
+			suggestionDispatch({
+				type: CardSuggestionType.FETCH_SUGGESTIONS_ERROR,
+			})
+		})
+
+		FetchHandler.handleFetch(
+			`${DownstreamServices.SKC_SUGGESTION_ENDPOINTS.cardSupport}/${cardID}`,
+			(json: CardSupportOutput) => {
+				suggestionDispatch({
+					type: CardSuggestionType.UPDATE_SUPPORT,
+					referencedBy: json.referencedBy,
+					materialFor: json.materialFor,
+				})
+			},
+			false
+		)?.catch(() => {
+			suggestionDispatch({
+				type: CardSuggestionType.FETCH_SUPPORT_ERROR,
 			})
 		})
 	}, [])
@@ -108,8 +152,10 @@ const CardInformation = () => {
 				</div>
 			</div>
 
+			<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='22rem' />}>
+				<CardSuggestions cardSuggestionState={cardSuggestionState} cardColor={cardState.cardColor} cardName={cardState.cardName} />
+			</Suspense>
 			<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='40rem' />}>
-				<CardSuggestions cardID={cardID} cardColor={cardState.cardColor} cardName={cardState.cardName} />
 				{cardState.isLoadingData ? (
 					<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='20rem' />
 				) : (
