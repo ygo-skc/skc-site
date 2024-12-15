@@ -29,10 +29,7 @@ type CardSuggestionProps = {
 }
 
 const CardSuggestions: FC<CardSuggestionProps> = ({ cardID, cardColor, cardName }) => {
-	const [
-		{ namedMaterials, namedReferences, referencedBy, materialFor, isLoadingSuggestions, isLoadingSupport, suggestionRequestHasError, supportRequestHasError },
-		suggestionDispatch,
-	] = useReducer(cardSuggestionReducer, {
+	const [cardSuggestionsState, suggestionDispatch] = useReducer(cardSuggestionReducer, {
 		namedMaterials: [],
 		namedReferences: [],
 		referencedBy: [],
@@ -44,17 +41,22 @@ const CardSuggestions: FC<CardSuggestionProps> = ({ cardID, cardColor, cardName 
 	})
 
 	const isLoading = useCallback((): boolean => {
-		return isLoadingSuggestions || isLoadingSupport
-	}, [isLoadingSuggestions, isLoadingSupport])
+		return cardSuggestionsState.isLoadingSuggestions || cardSuggestionsState.isLoadingSupport
+	}, [cardSuggestionsState.isLoadingSuggestions, cardSuggestionsState.isLoadingSupport])
 
 	// if both requests fail, then we will consider it an error
 	const hasError = useCallback((): boolean => {
-		return suggestionRequestHasError && supportRequestHasError
-	}, [suggestionRequestHasError, supportRequestHasError])
+		return cardSuggestionsState.suggestionRequestHasError && cardSuggestionsState.supportRequestHasError
+	}, [cardSuggestionsState.suggestionRequestHasError, cardSuggestionsState.supportRequestHasError])
 
 	const hasNoContent = useCallback(() => {
-		return namedMaterials.length === 0 && namedReferences.length === 0 && materialFor.length === 0 && referencedBy.length === 0
-	}, [materialFor, materialFor, namedReferences, referencedBy])
+		return (
+			cardSuggestionsState.namedMaterials.length === 0 &&
+			cardSuggestionsState.namedReferences.length === 0 &&
+			cardSuggestionsState.materialFor.length === 0 &&
+			cardSuggestionsState.referencedBy.length === 0
+		)
+	}, [cardSuggestionsState.materialFor, cardSuggestionsState.materialFor, cardSuggestionsState.namedReferences, cardSuggestionsState.referencedBy])
 
 	const transformReferences = useCallback((references: CardReference[]): React.JSX.Element[] => {
 		return references !== null
@@ -117,7 +119,7 @@ const CardSuggestions: FC<CardSuggestionProps> = ({ cardID, cardColor, cardName 
 				type: CardSuggestionType.FETCH_SUPPORT_ERROR,
 			})
 		})
-	}, [cardID, transformSupport, transformReferences])
+	}, [cardID])
 
 	return (
 		<Section sectionHeaderBackground={cardColor !== undefined ? (cardColor?.replace(/Pendulum-/gi, '') as cardColor) : ''} sectionName='Suggestions'>
@@ -128,22 +130,22 @@ const CardSuggestions: FC<CardSuggestionProps> = ({ cardID, cardColor, cardName 
 					{!isLoading() && !hasError() && (
 						<Fragment>
 							<SuggestionSection
-								suggestions={transformReferences(namedMaterials)}
+								suggestions={transformReferences(cardSuggestionsState.namedMaterials)}
 								sectionName='Named Materials'
 								sectionExplanation={`Other cards that are directly referenced as summoning material by ${cardName} card. Currently, only extra deck summonsing materials are suggested.`}
 							/>
 							<SuggestionSection
-								suggestions={transformSupport(materialFor)}
+								suggestions={transformSupport(cardSuggestionsState.materialFor)}
 								sectionName='Material For'
 								sectionExplanation={`${cardName} can be used as a material for the cards in this section.`}
 							/>
 							<SuggestionSection
-								suggestions={transformReferences(namedReferences)}
+								suggestions={transformReferences(cardSuggestionsState.namedReferences)}
 								sectionName='References'
 								sectionExplanation={`${cardName} is referencing the below cards. If ${cardName} is an extra deck monster, its named summoning materials are omitted here.`}
 							/>
 							<SuggestionSection
-								suggestions={transformSupport(referencedBy)}
+								suggestions={transformSupport(cardSuggestionsState.referencedBy)}
 								sectionName='Referenced By'
 								sectionExplanation={`Cards that directly reference ${cardName}. Omits extra deck monsters that reference ${cardName} as a summoning material.`}
 							/>

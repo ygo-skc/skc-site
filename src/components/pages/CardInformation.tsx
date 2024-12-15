@@ -23,21 +23,19 @@ const CardInformation = () => {
 	cardID = cardID as string
 	const crumbs = ['Home', 'Card Browse']
 
-	const [isLoading, setIsLoading] = useState(true)
-
-	const [{ cardName, cardColor, cardEffect, cardAttribute, monsterType, monsterAttack, monsterDefense, monsterAssociation, productInfo, restrictionInfo }, cardDispatch] =
-		useReducer(cardInformationReducer, {
-			cardName: '',
-			cardColor: undefined,
-			cardEffect: '',
-			cardAttribute: '',
-			monsterType: '',
-			monsterAttack: '',
-			monsterDefense: '',
-			monsterAssociation: undefined,
-			productInfo: [],
-			restrictionInfo: { TCG: [], MD: [], DL: [] },
-		})
+	const [cardState, cardDispatch] = useReducer(cardInformationReducer, {
+		cardName: '',
+		cardColor: undefined,
+		cardEffect: '',
+		cardAttribute: '',
+		monsterType: '',
+		monsterAttack: '',
+		monsterDefense: '',
+		monsterAssociation: undefined,
+		productInfo: [],
+		restrictionInfo: { TCG: [], MD: [], DL: [] },
+		isLoadingData: true,
+	})
 
 	const [dynamicCrumbs, setDynamicCrumbs] = useState([...crumbs, ''])
 
@@ -55,54 +53,47 @@ const CardInformation = () => {
 				monsterAtk: cardInfo.monsterAttack,
 				monsterDef: cardInfo.monsterDefense,
 				monsterAssociation: cardInfo.monsterAssociation,
-			})
-
-			cardDispatch({
-				type: CardInformationType.UPDATE_PRODUCTS,
 				productInfo: cardInfo.foundIn ?? [],
-			})
-
-			cardDispatch({
-				type: CardInformationType.UPDATE_RESTRICTIONS,
 				restrictionInfo: cardInfo.restrictedIn ?? { TCG: [], MD: [], DL: [] },
 			})
-
-			setIsLoading(false)
 		})
 	}, [])
 
 	return (
 		<div className='generic-container'>
 			<title>SKC - Card: {cardID}</title>
-			<meta name={`SKC - Card: ${cardID}`} content={`Information for YuGiOh card ${cardName} such as ban lists it was in, products it can be found in, effect/stats, etc.`} />
-			<meta name='keywords' content={`YuGiOh, The Supreme Kings Castle, card, ${cardName}, ${cardID}, ${cardColor}`} />
+			<meta
+				name={`SKC - Card: ${cardID}`}
+				content={`Information for YuGiOh card ${cardState.cardName} such as ban lists it was in, products it can be found in, effect/stats, etc.`}
+			/>
+			<meta name='keywords' content={`YuGiOh, The Supreme Kings Castle, card, ${cardState.cardName}, ${cardID}, ${cardState.cardColor}`} />
 
-			<meta property='og:title' content={`${cardName} - ${cardID}`} />
+			<meta property='og:title' content={`${cardState.cardName} - ${cardID}`} />
 			<meta property='og:image' content={`https://images.thesupremekingscastle.com/cards/tn/${cardID}.jpg`} />
 			<meta property='og:type' content='website' />
-			<meta property='og:description' content={`Details For Yugioh Card - ${cardName}`} />
+			<meta property='og:description' content={`Details For Yugioh Card - ${cardState.cardName}`} />
 
 			<Suspense fallback={<Skeleton className='breadcrumb-skeleton' variant='rectangular' width='100%' height='2.5rem' />}>
 				<Breadcrumb crumbs={dynamicCrumbs} />
 			</Suspense>
 
 			<div style={{ maxWidth: '50%', margin: 'auto', display: 'grid', gridTemplateColumns: '47% 53%', gap: '2rem' }}>
-				<Section sectionHeaderBackground={cardColor !== undefined ? (cardColor?.replace(/Pendulum-/gi, '') as cardColor) : ''} sectionName='Information'>
+				<Section sectionHeaderBackground={cardState.cardColor !== undefined ? (cardState.cardColor?.replace(/Pendulum-/gi, '') as cardColor) : ''} sectionName='Information'>
 					<div className='section-content'>
 						<CardImageRounded size='md' cardID={cardID} loading='eager' />
 						<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='10rem' />}>
-							{isLoading ? (
+							{cardState.isLoadingData ? (
 								<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='10rem' />
 							) : (
 								<YGOCard
-									cardName={cardName}
-									cardColor={cardColor}
-									cardEffect={decodeHTML(cardEffect)}
-									cardAttribute={cardAttribute}
-									monsterType={monsterType}
-									monsterAttack={monsterAttack}
-									monsterDefense={monsterDefense}
-									monsterAssociation={monsterAssociation}
+									cardName={cardState.cardName}
+									cardColor={cardState.cardColor}
+									cardEffect={decodeHTML(cardState.cardEffect)}
+									cardAttribute={cardState.cardAttribute}
+									monsterType={cardState.monsterType}
+									monsterAttack={cardState.monsterAttack}
+									monsterDefense={cardState.monsterDefense}
+									monsterAssociation={cardState.monsterAssociation}
 									cardID={cardID}
 									fullDetails={true}
 									isLoading={false}
@@ -118,16 +109,16 @@ const CardInformation = () => {
 			</div>
 
 			<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='40rem' />}>
-				<CardSuggestions cardID={cardID} cardColor={cardColor} cardName={cardName} />
-				{isLoading ? (
+				<CardSuggestions cardID={cardID} cardColor={cardState.cardColor} cardName={cardState.cardName} />
+				{cardState.isLoadingData ? (
 					<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='20rem' />
 				) : (
 					<CardInformationRelatedContent
-						cardName={cardName}
-						cardColor={cardColor?.replace(/Pendulum-/gi, '') as cardColor}
+						cardName={cardState.cardName}
+						cardColor={cardState.cardColor?.replace(/Pendulum-/gi, '') as cardColor}
 						cardID={cardID}
-						productInfo={productInfo}
-						restrictedIn={restrictionInfo}
+						productInfo={cardState.productInfo}
+						restrictedIn={cardState.restrictionInfo}
 					/>
 				)}
 			</Suspense>
