@@ -1,6 +1,8 @@
+import '../../css/card/card-information.css'
+
 import { useState, useEffect, lazy, Suspense, useReducer } from 'react'
 import { useParams } from 'react-router-dom'
-import { Skeleton, Typography } from '@mui/material'
+import { Chip, Skeleton, Typography } from '@mui/material'
 
 import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
@@ -8,6 +10,9 @@ import { CardImageRounded, Hint, Section } from 'skc-rcl'
 import { decodeHTML } from 'entities'
 import { cardInformationReducer, CardInformationType } from '../../reducers/CardInformationReducer'
 import { cardSuggestionReducer, CardSuggestionType } from '../../reducers/CardSuggestionReducer'
+import { Dates } from '../../helper/Dates'
+
+import CalendarMonthTwoToneIcon from '@mui/icons-material/CalendarMonthTwoTone'
 
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 const CardSuggestions = lazy(() => import('../card/suggestion/CardSuggestions'))
@@ -36,6 +41,7 @@ const CardInformation = () => {
 		productInfo: [],
 		restrictionInfo: { TCG: [], MD: [], DL: [] },
 		isLoadingData: true,
+		uniqueRarities: [],
 	})
 	const [cardSuggestionState, suggestionDispatch] = useReducer(cardSuggestionReducer, {
 		namedMaterials: [],
@@ -149,6 +155,32 @@ const CardInformation = () => {
 				<div className='group' style={{ alignSelf: 'start', background: 'white', border: '3px solid gray' }}>
 					<Typography variant='h4'>Archetypes</Typography>
 					<Hint>Not tied to any archetype</Hint>
+
+					<Typography variant='h4'>Releases</Typography>
+
+					<div style={{ display: 'flex' }}>
+						<CalendarMonthTwoToneIcon />
+						<div>
+							{cardState.productInfo.length !== 0 && (
+								<Typography variant='subtitle1'>
+									{Dates.daysBetweenTwoDates(Dates.fromYYYYMMDDToDate(cardState.productInfo[0].productReleaseDate)).toLocaleString()} day(s) since last printing
+								</Typography>
+							)}
+							{cardState.productInfo.length >= 2 && (
+								<Typography variant='subtitle1'>
+									{Dates.daysBetweenTwoDates(Dates.fromYYYYMMDDToDate(cardState.productInfo[cardState.productInfo.length - 1].productReleaseDate)).toLocaleString()} day since
+									initial release
+								</Typography>
+							)}
+						</div>
+					</div>
+
+					<Typography variant='subtitle1'>
+						<span className='prominent'>{cardState.cardName}</span> has {cardState.uniqueRarities.length} unique {cardState.uniqueRarities.length == 1 ? 'rarity' : 'rarities'}
+					</Typography>
+					{cardState.uniqueRarities.map((uniqueRarity) => (
+						<Chip className='dark-chip' key={uniqueRarity} label={uniqueRarity} />
+					))}
 				</div>
 			</div>
 

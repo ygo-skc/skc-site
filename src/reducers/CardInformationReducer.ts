@@ -2,6 +2,7 @@ export type CardInformationState = Omit<SKCCard, 'cardID'> & {
 	productInfo: ProductInfo[]
 	restrictionInfo: RestrictedIn
 	isLoadingData: boolean
+	uniqueRarities: string[]
 }
 
 export enum CardInformationType {
@@ -38,6 +39,9 @@ export function cardInformationReducer(state: CardInformationState, action: Card
 				productInfo: action.productInfo,
 				restrictionInfo: action.restrictionInfo,
 				isLoadingData: false,
+				uniqueRarities: Array.from(
+					new Set(action.productInfo.flatMap((product: ProductInfo) => product.productContent.flatMap((productContent: SKCProductContent) => productContent.rarities)))
+				),
 			}
 	}
 }
