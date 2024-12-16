@@ -41,7 +41,7 @@ export function cardInformationReducer(state: CardInformationState, action: Card
 				isLoadingData: false,
 				uniqueRarities: Array.from(
 					new Set(action.productInfo.flatMap((product: ProductInfo) => product.productContent.flatMap((productContent: SKCProductContent) => productContent.rarities)))
-				),
+				).sort((a, b) => a.localeCompare(b)),
 			}
 	}
 }
