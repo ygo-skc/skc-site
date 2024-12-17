@@ -127,8 +127,8 @@ const CardInformation = () => {
 				<Breadcrumb crumbs={dynamicCrumbs} />
 			</Suspense>
 
-			<div style={{ maxWidth: '50%', margin: 'auto', display: 'grid', gridTemplateColumns: '47% 53%', gap: '2rem' }}>
-				<Section sectionHeaderBackground={cardState.cardColor !== undefined ? (cardState.cardColor?.replace(/Pendulum-/gi, '') as cardColor) : ''} sectionName='Information'>
+			<div className='headline'>
+				<Section sectionHeaderBackground={cardState.cardColor !== undefined ? (cardState.cardColor?.replace(/Pendulum-/gi, '') as cardColor) : ''} sectionName='Card Stats'>
 					<div className='section-content'>
 						<CardImageRounded size='md' cardID={cardID} loading='eager' />
 						<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='10rem' />}>
@@ -152,31 +152,37 @@ const CardInformation = () => {
 						</Suspense>
 					</div>
 				</Section>
-				<div className='group' style={{ alignSelf: 'start', background: 'white', border: '3px solid gray' }}>
-					<Typography variant='h4'>Archetypes</Typography>
-					<Hint>Not tied to any archetype</Hint>
 
-					<Typography variant='h4'>Releases</Typography>
+				<div className='group'>
+					<Typography variant='h4' align='center'>
+						Information
+					</Typography>
 
-					<div style={{ display: 'flex' }}>
+					<Typography variant='h6'>Archetypes</Typography>
+					<Hint variant='tight' fullWidth={false}>
+						Not tied to any archetype
+					</Hint>
+
+					<Typography variant='h6'>Releases</Typography>
+					<div className='card-printing-info-container'>
 						<CalendarMonthTwoToneIcon />
 						<div>
 							{cardState.productInfo.length !== 0 && (
-								<Typography variant='subtitle1'>
+								<Typography variant='subtitle2'>
 									{Dates.daysBetweenTwoDates(Dates.fromYYYYMMDDToDate(cardState.productInfo[0].productReleaseDate)).toLocaleString()} day(s) since last printing
 								</Typography>
 							)}
 							{cardState.productInfo.length >= 2 && (
-								<Typography variant='subtitle1'>
-									{Dates.daysBetweenTwoDates(Dates.fromYYYYMMDDToDate(cardState.productInfo[cardState.productInfo.length - 1].productReleaseDate)).toLocaleString()} day since
+								<Typography variant='subtitle2'>
+									{Dates.daysBetweenTwoDates(Dates.fromYYYYMMDDToDate(cardState.productInfo[cardState.productInfo.length - 1].productReleaseDate)).toLocaleString()} days since
 									initial release
 								</Typography>
 							)}
 						</div>
 					</div>
-
-					<Typography variant='subtitle1'>
-						<span className='prominent'>{cardState.cardName}</span> has {cardState.uniqueRarities.length} unique {cardState.uniqueRarities.length == 1 ? 'rarity' : 'rarities'}
+					<br />
+					<Typography variant='subtitle2'>
+						{cardState.uniqueRarities.length} unique {cardState.uniqueRarities.length == 1 ? 'rarity' : 'rarities'}
 					</Typography>
 					{cardState.uniqueRarities.map((uniqueRarity) => (
 						<Chip className='dark-chip' key={uniqueRarity} label={uniqueRarity} />
