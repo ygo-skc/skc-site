@@ -237,6 +237,9 @@ declare type CardReference = {
 declare type CardSuggestionOutput = {
 	namedMaterials: CardReference[]
 	namedReferences: CardReference[]
+	hasSelfReference: boolean
+	materialArchetypes: string[]
+	referencedArchetypes: string[]
 }
 
 declare type CardSupportOutput = {

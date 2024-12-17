@@ -77,20 +77,29 @@ span.prominent {
 	border: 3px solid gray;
 }
 
-.card-summary {
+.card-summary-section {
 	margin-left: 0.5rem;
 	margin-right: 0.5rem;
 }
 
 @media (min-width: 950px) and (not (aspect-ratio: 3/4)) {
-	.card-summary {
+	.card-summary-section {
 		margin-left: 1rem;
 		margin-right: 1rem;
 	}
 }
 
-.card-summary > div:not(.MuiChip-root) {
+.card-summary-section > div:not(.MuiChip-root) {
 	margin-bottom: 0.5rem;
+}
+
+.card-summary-section:not(:last-child) {
+	margin-bottom: 2.25rem;
+}
+
+.MuiTypography-root:has(+ .MuiChip-root),
+.MuiTypography-root:has(+ .card-summary-section) {
+	margin-bottom: 0rem;
 }
 
 .card-printing-info-container {

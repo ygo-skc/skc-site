@@ -46,8 +46,10 @@ const CardInformation = () => {
 	const [cardSuggestionState, suggestionDispatch] = useReducer(cardSuggestionReducer, {
 		namedMaterials: [],
 		namedReferences: [],
+		hasSelfReference: false,
 		referencedBy: [],
 		materialFor: [],
+		archetypes: new Set<string>(),
 		isLoadingSuggestions: true,
 		isLoadingSupport: true,
 		suggestionRequestHasError: false,
@@ -78,11 +80,10 @@ const CardInformation = () => {
 		// fetch suggestions
 		FetchHandler.handleFetch(
 			`${DownstreamServices.SKC_SUGGESTION_ENDPOINTS.cardSuggestions}/${cardID}`,
-			(json: CardSuggestionOutput) => {
+			(cardSuggestionOutput: CardSuggestionOutput) => {
 				suggestionDispatch({
 					type: CardSuggestionType.UPDATE_SUGGESTIONS,
-					namedMaterials: json.namedMaterials,
-					namedReferences: json.namedReferences,
+					suggestions: cardSuggestionOutput,
 				})
 			},
 			false
@@ -94,11 +95,10 @@ const CardInformation = () => {
 
 		FetchHandler.handleFetch(
 			`${DownstreamServices.SKC_SUGGESTION_ENDPOINTS.cardSupport}/${cardID}`,
-			(json: CardSupportOutput) => {
+			(cardSupportOutput: CardSupportOutput) => {
 				suggestionDispatch({
 					type: CardSuggestionType.UPDATE_SUPPORT,
-					referencedBy: json.referencedBy,
-					materialFor: json.materialFor,
+					support: cardSupportOutput,
 				})
 			},
 			false
@@ -159,12 +159,18 @@ const CardInformation = () => {
 					</Typography>
 
 					<Typography variant='h6'>Archetypes</Typography>
-					<Hint variant='tight' fullWidth={false}>
-						Not tied to any archetype
-					</Hint>
+					<div className='card-summary-section'>
+						{cardSuggestionState.archetypes.size !== 0 ? (
+							[...cardSuggestionState.archetypes].map((archetype) => <Chip className='dark-chip' key={archetype} label={archetype} />)
+						) : (
+							<Hint variant='tight' fullWidth={false}>
+								Not tied to any archetype
+							</Hint>
+						)}
+					</div>
 
 					<Typography variant='h6'>Releases</Typography>
-					<div className='card-summary'>
+					<div className='card-summary-section'>
 						{cardState.productInfo.length !== 0 && (
 							<div className='card-printing-info-container'>
 								<CalendarMonthTwoToneIcon />

@@ -1,13 +1,11 @@
-export type CardSuggestionState = {
-	namedMaterials: CardReference[]
-	namedReferences: CardReference[]
-	referencedBy: CardReference[]
-	materialFor: CardReference[]
-	isLoadingSuggestions: boolean
-	isLoadingSupport: boolean
-	suggestionRequestHasError: boolean
-	supportRequestHasError: boolean
-}
+export type CardSuggestionState = Omit<CardSuggestionOutput, 'card' | 'materialArchetypes' | 'referencedArchetypes'> &
+	Omit<CardSupportOutput, 'card'> & {
+		archetypes: Set<string>
+		isLoadingSuggestions: boolean
+		isLoadingSupport: boolean
+		suggestionRequestHasError: boolean
+		supportRequestHasError: boolean
+	}
 
 export enum CardSuggestionType {
 	UPDATE_SUGGESTIONS,
@@ -19,13 +17,11 @@ export enum CardSuggestionType {
 type CardSuggestionAction =
 	| {
 			type: CardSuggestionType.UPDATE_SUGGESTIONS
-			namedMaterials: CardReference[]
-			namedReferences: CardReference[]
+			suggestions: CardSuggestionOutput
 	  }
 	| {
 			type: CardSuggestionType.UPDATE_SUPPORT
-			referencedBy: CardReference[]
-			materialFor: CardReference[]
+			support: CardSupportOutput
 	  }
 	| {
 			type: CardSuggestionType.FETCH_SUGGESTIONS_ERROR
@@ -39,16 +35,17 @@ export function cardSuggestionReducer(state: CardSuggestionState, action: CardSu
 		case CardSuggestionType.UPDATE_SUGGESTIONS:
 			return {
 				...state,
-				namedMaterials: action.namedMaterials,
-				namedReferences: action.namedReferences,
+				namedMaterials: action.suggestions.namedMaterials,
+				namedReferences: action.suggestions.namedReferences,
+				archetypes: new Set([...action.suggestions.materialArchetypes, ...action.suggestions.referencedArchetypes]),
 				suggestionRequestHasError: false,
 				isLoadingSuggestions: false,
 			}
 		case CardSuggestionType.UPDATE_SUPPORT:
 			return {
 				...state,
-				referencedBy: action.referencedBy,
-				materialFor: action.materialFor,
+				referencedBy: action.support.referencedBy,
+				materialFor: action.support.materialFor,
 				supportRequestHasError: false,
 				isLoadingSupport: false,
 			}
