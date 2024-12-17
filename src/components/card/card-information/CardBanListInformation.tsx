@@ -92,7 +92,7 @@ const CardBanListInformation: FunctionComponent<CardBanListInformationProps> = (
 
 	return (
 		<div className='group'>
-			<Typography variant='h4'>Ban Lists</Typography>
+			<Typography variant='h4'>Ban Lists ({restrictedIn.TCG.length + restrictedIn.MD.length + restrictedIn.DL.length})</Typography>
 
 			{restrictedIn[format].length !== 0 && (
 				<Fragment>
