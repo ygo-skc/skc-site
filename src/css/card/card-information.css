@@ -65,7 +65,7 @@ span.prominent {
 		max-width: 85%;
 		margin: 0 auto;
 		display: grid;
-		grid-template-columns: 400px 1fr;
+		grid-template-columns: 400px 600px;
 		column-gap: 3rem;
 		justify-content: center;
 	}
@@ -75,6 +75,22 @@ span.prominent {
 	align-self: start;
 	background: white;
 	border: 3px solid gray;
+}
+
+.card-summary {
+	margin-left: 0.5rem;
+	margin-right: 0.5rem;
+}
+
+.card-summary > div:not(.MuiChip-root) {
+	margin-bottom: 0.5rem;
+}
+
+@media (min-width: 950px) and (not (aspect-ratio: 3/4)) {
+	.card-summary {
+		margin-left: 1rem;
+		margin-right: 1rem;
+	}
 }
 
 .card-printing-info-container {
