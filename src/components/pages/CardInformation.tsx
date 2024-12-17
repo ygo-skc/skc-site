@@ -165,22 +165,22 @@ const CardInformation = () => {
 
 					<Typography variant='h6'>Releases</Typography>
 					<div className='card-summary'>
-						<div className='card-printing-info-container'>
-							<CalendarMonthTwoToneIcon />
-							<div>
-								{cardState.productInfo.length !== 0 && (
+						{cardState.productInfo.length !== 0 && (
+							<div className='card-printing-info-container'>
+								<CalendarMonthTwoToneIcon />
+								<div>
 									<Typography variant='subtitle2'>
 										{Dates.daysBetweenTwoDates(Dates.fromYYYYMMDDToDate(cardState.productInfo[0].productReleaseDate)).toLocaleString()} day(s) since last printing
 									</Typography>
-								)}
-								{cardState.productInfo.length >= 2 && (
-									<Typography variant='subtitle2'>
-										{Dates.daysBetweenTwoDates(Dates.fromYYYYMMDDToDate(cardState.productInfo[cardState.productInfo.length - 1].productReleaseDate)).toLocaleString()} days since
-										initial release
-									</Typography>
-								)}
+									{cardState.productInfo.length >= 2 && (
+										<Typography variant='subtitle2'>
+											{Dates.daysBetweenTwoDates(Dates.fromYYYYMMDDToDate(cardState.productInfo[cardState.productInfo.length - 1].productReleaseDate)).toLocaleString()} days since
+											initial release
+										</Typography>
+									)}
+								</div>
 							</div>
-						</div>
+						)}
 
 						<Typography variant='subtitle2'>
 							{cardState.uniqueRarities.length} unique {cardState.uniqueRarities.length == 1 ? 'rarity' : 'rarities'}

@@ -110,7 +110,7 @@ const CardBanListInformation: FunctionComponent<CardBanListInformationProps> = (
 				</Fragment>
 			)}
 			{restrictedIn[format].length === 0 && (
-				<Hint backgroundColor='rgba(0, 0, 0, 0.7)' textColor='white'>
+				<Hint backgroundColor='rgba(0, 0, 0, 0.7)' textColor='white' fullWidth={false}>
 					{'Not Found In Any Ban List'}
 				</Hint>
 			)}

@@ -71,7 +71,7 @@ const CardProductInformation: FC<CardProductInformationProps> = ({ productInfo, 
 			)}
 
 			{productInfo.length === 0 && (
-				<Hint backgroundColor='rgba(0, 0, 0, 0.7)' textColor='white'>
+				<Hint backgroundColor='rgba(0, 0, 0, 0.7)' textColor='white' fullWidth={false}>
 					{'Not Found In Any Product'}
 				</Hint>
 			)}

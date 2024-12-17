@@ -82,15 +82,15 @@ span.prominent {
 	margin-right: 0.5rem;
 }
 
-.card-summary > div:not(.MuiChip-root) {
-	margin-bottom: 0.5rem;
-}
-
 @media (min-width: 950px) and (not (aspect-ratio: 3/4)) {
 	.card-summary {
 		margin-left: 1rem;
 		margin-right: 1rem;
 	}
+}
+
+.card-summary > div:not(.MuiChip-root) {
+	margin-bottom: 0.5rem;
 }
 
 .card-printing-info-container {
