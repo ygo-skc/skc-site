@@ -158,7 +158,7 @@ const CardInformation = () => {
 						Summary
 					</Typography>
 
-					<Typography variant='h6'>Archetypes</Typography>
+					<Typography variant='h6'>Archetypes (BETA)</Typography>
 					<div className='card-summary-section'>
 						{cardSuggestionState.archetypes.size !== 0 ? (
 							[...cardSuggestionState.archetypes].map((archetype) => <Chip className='dark-chip' key={archetype} label={archetype} />)
