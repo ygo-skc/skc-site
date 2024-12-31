@@ -154,7 +154,7 @@ const CardInformation = () => {
 					</div>
 				</Section>
 
-				<div className='group'>
+				<div className='group light-shadow'>
 					<Typography variant='h3' align='center'>
 						Summary
 					</Typography>

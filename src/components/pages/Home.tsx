@@ -26,7 +26,7 @@ export default function Home() {
 			<div className='headline-v2'>
 				<DatabaseInfo />
 
-				<div className='group'>
+				<div className='group light-shadow'>
 					<Typography variant='h3' align='center'>
 						Suggestions
 					</Typography>

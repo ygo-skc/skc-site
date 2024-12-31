@@ -11,7 +11,6 @@
 [class^='headline-v'] .group {
 	align-self: start;
 	background: white;
-	box-shadow: rgba(0, 0, 0, 0.2) 0.2rem 0.2rem 0.75rem;
 }
 
 [class^='headline-v'] .group .MuiTypography-h3 {
