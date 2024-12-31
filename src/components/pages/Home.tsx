@@ -27,7 +27,7 @@ export default function Home() {
 				<DatabaseInfo />
 
 				<div className='group'>
-					<Typography variant='h4' align='center'>
+					<Typography variant='h3' align='center'>
 						Suggestions
 					</Typography>
 
@@ -35,7 +35,7 @@ export default function Home() {
 						<CardOfTheDay />
 					</div>
 					<div className='headline-section'>
-						<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='7rem' />}>
+						<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='33rem' />}>
 							<SocialMedia />
 						</Suspense>
 					</div>

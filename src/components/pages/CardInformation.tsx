@@ -155,12 +155,12 @@ const CardInformation = () => {
 				</Section>
 
 				<div className='group'>
-					<Typography variant='h4' align='center'>
+					<Typography variant='h3' align='center'>
 						Summary
 					</Typography>
 
 					<div className='headline-section'>
-						<Typography variant='h6'>Archetypes (BETA)</Typography>
+						<Typography variant='h5'>Archetypes (BETA)</Typography>
 						{cardSuggestionState.archetypes.size !== 0 ? (
 							[...cardSuggestionState.archetypes].map((archetype) => <Chip className='dark-chip' key={archetype} label={archetype} />)
 						) : (
@@ -171,7 +171,7 @@ const CardInformation = () => {
 					</div>
 
 					<div className='headline-section'>
-						<Typography variant='h6'>Releases</Typography>
+						<Typography variant='h5'>Releases</Typography>
 						{cardState.productInfo.length !== 0 && (
 							<div className='card-printing-info-container'>
 								<CalendarMonthTwoToneIcon />

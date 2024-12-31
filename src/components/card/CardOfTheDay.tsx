@@ -34,7 +34,7 @@ export default function CardOfTheDay() {
 
 	return (
 		<Fragment>
-			<Typography variant='h6'>Card of The Day</Typography>
+			<Typography variant='h5'>Card of The Day</Typography>
 			<a href={`/card/${cardOfTheDay?.cardID}`} className='aggregate-anchor'>
 				<div className={`${hasError ? '' : 'card-of-the-day-parent'}`} id='card-of-the-day'>
 					{hasError && <GenericNonBreakingErr errExplanation='Come back at a different time to see todays card of the day!' />}
