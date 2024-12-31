@@ -1,3 +1,8 @@
+.card-of-the-day-parent {
+	padding: 1rem;
+	border-radius: 0.75rem;
+}
+
 .card-of-the-day-parent:hover {
 	background: #eee;
 	cursor: pointer;

@@ -49,15 +49,15 @@ const DatabaseInfo = () => {
 				{!isFetchingData && (
 					<div className='database-summary-container'>
 						<Grid container spacing={3}>
-							<Grid size={{ xs: 6, sm: 6, md: 4, lg: 4, xl: 4 }}>
+							<Grid size={{ xs: 6, sm: 6, md: 6, lg: 4, xl: 4 }}>
 								<Tile variant='full-width' total={cardTotal} subject='Cards' color='rgb(144, 13, 218)' action={handleBrowseTileClicked} />
 							</Grid>
 
-							<Grid size={{ xs: 6, sm: 6, md: 4, lg: 4, xl: 4 }}>
+							<Grid size={{ xs: 6, sm: 6, md: 6, lg: 4, xl: 4 }}>
 								<Tile variant='full-width' total={banListTotal} subject='Ban Lists' color='#FE6D6B' action={handleBanListTileClicked} />
 							</Grid>
 
-							<Grid size={{ xs: 6, sm: 6, md: 4, lg: 4, xl: 4 }}>
+							<Grid size={{ xs: 6, sm: 6, md: 6, lg: 4, xl: 4 }}>
 								<Tile variant='full-width' total={productTotal} subject='Products' color='rgb(195, 47, 150)' action={handleProductsTileClicked} />
 							</Grid>
 						</Grid>

@@ -1,4 +1,5 @@
 import '../../css/card/card-information.css'
+import '../../css/util/headline.css'
 
 import { useState, useEffect, lazy, Suspense, useReducer } from 'react'
 import { useParams } from 'react-router-dom'
@@ -127,7 +128,7 @@ const CardInformation = () => {
 				<Breadcrumb crumbs={dynamicCrumbs} />
 			</Suspense>
 
-			<div className='headline'>
+			<div className='headline-v1'>
 				<Section sectionHeaderBackground={cardState.cardColor !== undefined ? (cardState.cardColor?.replace(/Pendulum-/gi, '') as cardColor) : ''} sectionName='Card Stats'>
 					<div className='section-content'>
 						<CardImageRounded size='md' cardID={cardID} loading='eager' />
@@ -158,8 +159,8 @@ const CardInformation = () => {
 						Summary
 					</Typography>
 
-					<Typography variant='h6'>Archetypes (BETA)</Typography>
-					<div className='card-summary-section'>
+					<div className='headline-section'>
+						<Typography variant='h6'>Archetypes (BETA)</Typography>
 						{cardSuggestionState.archetypes.size !== 0 ? (
 							[...cardSuggestionState.archetypes].map((archetype) => <Chip className='dark-chip' key={archetype} label={archetype} />)
 						) : (
@@ -169,8 +170,8 @@ const CardInformation = () => {
 						)}
 					</div>
 
-					<Typography variant='h6'>Releases</Typography>
-					<div className='card-summary-section'>
+					<div className='headline-section'>
+						<Typography variant='h6'>Releases</Typography>
 						{cardState.productInfo.length !== 0 && (
 							<div className='card-printing-info-container'>
 								<CalendarMonthTwoToneIcon />
