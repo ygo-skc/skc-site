@@ -6,7 +6,7 @@ import Welcome from '../home/Welcome'
 import { Section } from 'skc-rcl'
 import CardOfTheDay from '../card/CardOfTheDay'
 import { Suspense, lazy } from 'react'
-import { Skeleton, Typography } from '@mui/material'
+import { Divider, Skeleton, Typography } from '@mui/material'
 
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 const SocialMedia = lazy(() => import('../util/social/SocialMedia'))
@@ -33,7 +33,9 @@ export default function Home() {
 
 					<div className='headline-section'>
 						<CardOfTheDay />
+						<Divider className='dark-translucent-divider' />
 					</div>
+
 					<div className='headline-section'>
 						<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='33rem' />}>
 							<SocialMedia />

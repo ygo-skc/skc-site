@@ -48,17 +48,17 @@ export default function CardOfTheDay() {
 								{(!isLoading && (
 									<Fragment>
 										<InlineDate month={Dates.getMonth(date)} day={+Dates.getDay(date)} year={+Dates.getYear(date)} />
-										<Typography variant='h6' className='card-of-the-day-text'>
+										<Typography variant='h6' className='card-of-the-day-name'>
 											{cardOfTheDay?.cardName}
 										</Typography>
 										<div className='card-of-the-day-type-wrapper'>
 											<YGOCardColorIndicator cardColor={cardOfTheDay?.cardColor} variant={'small'} />
-											<Typography variant='subtitle1' className='card-of-the-day-text'>
-												{cardOfTheDay?.monsterType === undefined ? cardOfTheDay?.cardColor : cardOfTheDay.monsterType}
+											<Typography variant='subtitle1' className='card-of-the-day-type'>
+												{cardOfTheDay?.monsterType === undefined ? cardOfTheDay?.cardColor : cardOfTheDay.monsterType.replace(/\//g, '/\u200B')}
 											</Typography>
 										</div>
 									</Fragment>
-								)) || <Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='7rem' />}
+								)) || <Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='3rem' />}
 							</div>
 						</div>
 					)}
