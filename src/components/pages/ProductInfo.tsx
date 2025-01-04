@@ -1,20 +1,20 @@
 import '../../css/main-pages/product.css'
+import '../../css/util/headline.css'
 
-import { useState, useEffect, lazy, Fragment, useReducer, Suspense } from 'react'
+import { useState, useEffect, lazy, useReducer, Suspense } from 'react'
 import { useParams } from 'react-router-dom'
 
 import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 
-import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 import { Skeleton, Typography } from '@mui/material'
 import ProductStats from '../product/ProductStats'
-import { Section } from 'skc-rcl'
+import { ProductImage, Section, SKCTable } from 'skc-rcl'
 import cardDisplayGridReducer, { CardDisplayGridStateReducerActionType } from '../../reducers/CardDisplayGridReducer'
+import { Dates } from '../../helper/Dates'
 
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 const CardDisplayGrid = lazy(() => import('../util/grid/CardDisplayGrid'))
-const ProductInfoDetailsComponent = lazy(() => import('../product/ProductInfoDetailsComponent'))
 
 export default function ProductInfo() {
 	const { productId } = useParams()
@@ -23,11 +23,10 @@ export default function ProductInfo() {
 
 	const [productName, setProductName] = useState('')
 
-	const [productType, setProductType] = useState('')
-	const [productSubType, setProductSubType] = useState('')
-	const [productReleaseDate, setProductReleaseDate] = useState('')
 	const [productTotal, setProductTotal] = useState(0)
 	const [productRarityStats, setProductRarityStats] = useState<{ [key: string]: number }>({})
+
+	const [productSummary, setProductSummary] = useState<string[][]>([])
 
 	const [cardGridState, cardDisplayGridDispatch] = useReducer(cardDisplayGridReducer, {
 		results: [],
@@ -42,12 +41,17 @@ export default function ProductInfo() {
 			setDynamicBreadcrumbs(['Home', 'Product Browse', `${json.productId}`])
 
 			setProductName(json.productName)
-			setProductType(json.productType)
-			setProductSubType(json.productSubType)
-			setProductReleaseDate(json.productReleaseDate)
 
 			setProductTotal(json.productTotal)
 			setProductRarityStats(json.productRarityStats)
+
+			setProductSummary([
+				['Product ID', json.productId],
+				['Product Type', json.productType],
+				['Product Sub-Type', json.productSubType],
+				['American Release', Dates.fromYYYYMMDDToDateStr(json.productReleaseDate)],
+				['Total Unique Cards', json.productTotal.toString()],
+			])
 
 			const cards = json.productContent.map((item: SKCProductContent) => item.card)
 			cardDisplayGridDispatch({
@@ -69,34 +73,39 @@ export default function ProductInfo() {
 				<Breadcrumb crumbs={dynamicBreadcrumbs} />
 			</Suspense>
 
-			<OneThirdTwoThirdsGrid
-				mirrored={false}
-				oneThirdComponent={
-					<Section sectionHeaderBackground='product' sectionName='Product' sticky={true}>
-						<ProductInfoDetailsComponent
-							productName={productName}
-							productId={productId as string}
-							productType={productType}
-							productSubType={productSubType}
-							productReleaseDate={productReleaseDate}
-							numUniqueCards={productTotal.toString()}
-							isDataLoaded={!cardGridState.isLoading}
-						/>
-					</Section>
-				}
-				twoThirdComponent={
-					<Fragment>
-						<ProductStats isDataLoaded={!cardGridState.isLoading} cards={cardGridState.results} productTotal={+productTotal} productRarityStats={productRarityStats} />
-						<Section sectionName='Product Content'>
-							<div className='section-content'>
-								<Typography variant='h5'>Sorted By Pack Order</Typography>
+			<div className='headline-v1'>
+				<Section sectionHeaderBackground='product' sectionName='Product'>
+					<div className='section-content'>
+						{!cardGridState.isLoading ? (
+							<Typography variant='h4' align='center'>
+								{productName}
+							</Typography>
+						) : (
+							<Skeleton variant='text' height={40} width='100%' />
+						)}
+						<ProductImage className='product-info-img' productID={productId as string} size='lg' loading='eager' />
+					</div>
+				</Section>
 
-								<CardDisplayGrid cardGridState={cardGridState} dispatch={cardDisplayGridDispatch} />
-							</div>
-						</Section>
-					</Fragment>
-				}
-			/>
+				<div className='group light-shadow'>
+					<Typography variant='h3' align='center'>
+						Summary
+					</Typography>
+					<div className='headline-section'>
+						<Typography variant='h5'>Information</Typography>
+						{!cardGridState.isLoading ? <SKCTable header={[]} rows={productSummary} /> : <Skeleton variant='rectangular' height='170px' />}
+					</div>
+				</div>
+			</div>
+
+			<ProductStats isDataLoaded={!cardGridState.isLoading} cards={cardGridState.results} productTotal={+productTotal} productRarityStats={productRarityStats} />
+
+			<Section sectionName='Product Content'>
+				<div className='section-content'>
+					<Typography variant='h5'>Sorted By Pack Order</Typography>
+					<CardDisplayGrid cardGridState={cardGridState} dispatch={cardDisplayGridDispatch} />
+				</div>
+			</Section>
 		</div>
 	)
 }
