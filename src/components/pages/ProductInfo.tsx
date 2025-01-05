@@ -74,18 +74,7 @@ export default function ProductInfo() {
 			</Suspense>
 
 			<div className='headline-v1'>
-				<Section sectionHeaderBackground='product' sectionName='Product'>
-					<div className='section-content'>
-						{!cardGridState.isLoading ? (
-							<Typography variant='h4' align='center'>
-								{productName}
-							</Typography>
-						) : (
-							<Skeleton variant='text' height={40} width='100%' />
-						)}
-						<ProductImage className='product-info-img' productID={productId as string} size='lg' loading='eager' />
-					</div>
-				</Section>
+				<ProductImage className='product-info-img' productID={productId as string} size='lg' loading='eager' />
 
 				<div className='group light-shadow'>
 					<Typography variant='h3' align='center'>
