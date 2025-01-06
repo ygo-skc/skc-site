@@ -16,7 +16,7 @@ import { Dates } from '../../helper/Dates'
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 const CardDisplayGrid = lazy(() => import('../util/grid/CardDisplayGrid'))
 
-export default function ProductInfo() {
+export default function ProductInformation() {
 	const { productId } = useParams()
 
 	const [dynamicBreadcrumbs, setDynamicBreadcrumbs] = useState(['Home', 'Product Browse', ''])
