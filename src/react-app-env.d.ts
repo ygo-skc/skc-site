@@ -32,7 +32,6 @@ declare type ProductDetails = {
 }
 
 declare type ProductStats = {
-	productTotal: number
 	productRarityStats: { [key: string]: number }
 	cards: SKCCard[]
 }

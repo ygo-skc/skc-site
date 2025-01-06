@@ -1,7 +1,7 @@
 import '../../css/main-pages/product.css'
 import '../../css/util/headline.css'
 
-import { useState, useEffect, lazy, useReducer, Suspense } from 'react'
+import { useEffect, lazy, useReducer, Suspense } from 'react'
 import { useParams } from 'react-router-dom'
 
 import FetchHandler from '../../helper/FetchHandler'
@@ -11,7 +11,7 @@ import { Skeleton, Typography } from '@mui/material'
 import ProductStats from '../product/ProductStats'
 import { ProductImage, Section, SKCTable } from 'skc-rcl'
 import cardDisplayGridReducer, { CardDisplayGridStateReducerActionType } from '../../reducers/CardDisplayGridReducer'
-import { Dates } from '../../helper/Dates'
+import { productInformationReducer, ProductInformationActionType } from '../../reducers/ProductInformationReducer'
 
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 const CardDisplayGrid = lazy(() => import('../util/grid/CardDisplayGrid'))
@@ -19,14 +19,12 @@ const CardDisplayGrid = lazy(() => import('../util/grid/CardDisplayGrid'))
 export default function ProductInformation() {
 	const { productId } = useParams()
 
-	const [dynamicBreadcrumbs, setDynamicBreadcrumbs] = useState(['Home', 'Product Browse', ''])
-
-	const [productName, setProductName] = useState('')
-
-	const [productTotal, setProductTotal] = useState(0)
-	const [productRarityStats, setProductRarityStats] = useState<{ [key: string]: number }>({})
-
-	const [productSummary, setProductSummary] = useState<string[][]>([])
+	const [productInformationState, productInformationDispatch] = useReducer(productInformationReducer, {
+		pageBreadcrumbs: ['Home', 'Product Browse', ''],
+		productName: '',
+		productRarityStats: {},
+		productSummary: [],
+	})
 
 	const [cardGridState, cardDisplayGridDispatch] = useReducer(cardDisplayGridReducer, {
 		results: [],
@@ -38,20 +36,10 @@ export default function ProductInformation() {
 
 	useEffect(() => {
 		FetchHandler.handleFetch<ProductInfo>(`${DownstreamServices.NAME_maps_ENDPOINT.productDetails}/${productId}/en`, (json) => {
-			setDynamicBreadcrumbs(['Home', 'Product Browse', `${json.productId}`])
-
-			setProductName(json.productName)
-
-			setProductTotal(json.productTotal)
-			setProductRarityStats(json.productRarityStats)
-
-			setProductSummary([
-				['Product ID', json.productId],
-				['Product Type', json.productType],
-				['Product Sub-Type', json.productSubType],
-				['American Release', Dates.fromYYYYMMDDToDateStr(json.productReleaseDate)],
-				['Total Unique Cards', json.productTotal.toString()],
-			])
+			productInformationDispatch({
+				type: ProductInformationActionType.UPDATE_PRODUCT,
+				productInformation: json,
+			})
 
 			const cards = json.productContent.map((item: SKCProductContent) => item.card)
 			cardDisplayGridDispatch({
@@ -65,12 +53,12 @@ export default function ProductInformation() {
 
 	return (
 		<div className='generic-container'>
-			<title>{`SKC - Product: ${productName}`}</title>
-			<meta name={`SKC - Product: ${productName}`} content={`Contents, info, dates, etc for ${productName}`} />
+			<title>{`SKC - Product: ${productInformationState.productName}`}</title>
+			<meta name={`SKC - Product: ${productInformationState.productName}`} content={`Contents, info, dates, etc for ${productInformationState.productName}`} />
 			<meta name='keywords' content={`YuGiOh, product browse, The Supreme Kings Castle`} />
 
 			<Suspense fallback={<Skeleton className='breadcrumb-skeleton' variant='rectangular' width='100%' height='2.5rem' />}>
-				<Breadcrumb crumbs={dynamicBreadcrumbs} />
+				<Breadcrumb crumbs={productInformationState.pageBreadcrumbs} />
 			</Suspense>
 
 			<div className='headline-v1'>
@@ -82,12 +70,12 @@ export default function ProductInformation() {
 					</Typography>
 					<div className='headline-section'>
 						<Typography variant='h5'>Information</Typography>
-						{!cardGridState.isLoading ? <SKCTable header={[]} rows={productSummary} /> : <Skeleton variant='rectangular' height='170px' />}
+						{!cardGridState.isLoading ? <SKCTable header={[]} rows={productInformationState.productSummary} /> : <Skeleton variant='rectangular' height='170px' />}
 					</div>
 				</div>
 			</div>
 
-			<ProductStats isDataLoaded={!cardGridState.isLoading} cards={cardGridState.results} productTotal={+productTotal} productRarityStats={productRarityStats} />
+			<ProductStats isDataLoaded={!cardGridState.isLoading} cards={cardGridState.results} productRarityStats={productInformationState.productRarityStats} />
 
 			<Section sectionName='Product Content'>
 				<div className='section-content'>
