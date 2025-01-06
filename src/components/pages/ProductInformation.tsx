@@ -35,13 +35,13 @@ export default function ProductInformation() {
 	})
 
 	useEffect(() => {
-		FetchHandler.handleFetch<ProductInfo>(`${DownstreamServices.NAME_maps_ENDPOINT.productDetails}/${productId}/en`, (json) => {
+		FetchHandler.handleFetch<ProductInfo>(`${DownstreamServices.NAME_maps_ENDPOINT.productDetails}/${productId}/en`, (productInfo: ProductInfo) => {
 			productInformationDispatch({
 				type: ProductInformationActionType.UPDATE_PRODUCT,
-				productInformation: json,
+				productInformation: productInfo,
 			})
 
-			const cards = json.productContent.map((item: SKCProductContent) => item.card)
+			const cards = productInfo.productContent.map((item: SKCProductContent) => item.card)
 			cardDisplayGridDispatch({
 				type: CardDisplayGridStateReducerActionType.INIT_GRID,
 				results: cards,

@@ -49,7 +49,7 @@ export function cardInformationReducer(state: CardInformationState, action: Card
 		case CardInformationType.UPDATE_CARD:
 			return {
 				...state,
-				pageBreadcrumbs: [...state.pageBreadcrumbs, action.cardInfo.cardID],
+				pageBreadcrumbs: ['Home', 'Product Browse', action.cardInfo.cardID],
 				card: { ...action.cardInfo },
 				productInfo: action.cardInfo.foundIn ?? [],
 				restrictionInfo: action.cardInfo.restrictedIn ?? { TCG: [], MD: [], DL: [] },
