@@ -19,14 +19,14 @@ const CardDisplayGrid = lazy(() => import('../util/grid/CardDisplayGrid'))
 export default function ProductInformation() {
 	const { productId } = useParams()
 
-	const [productInformationState, productInformationDispatch] = useReducer(productInformationReducer, {
+	const [state, productInformationDispatch] = useReducer(productInformationReducer, {
 		pageBreadcrumbs: ['Home', 'Product Browse', ''],
 		productName: '',
 		productRarityStats: {},
 		productSummary: [],
 	})
 
-	const [cardGridState, cardDisplayGridDispatch] = useReducer(cardDisplayGridReducer, {
+	const [gridState, cardDisplayGridDispatch] = useReducer(cardDisplayGridReducer, {
 		results: [],
 		totalResults: 0,
 		totalDisplaying: 0,
@@ -53,12 +53,12 @@ export default function ProductInformation() {
 
 	return (
 		<div className='generic-container'>
-			<title>{`SKC - Product: ${productInformationState.productName}`}</title>
-			<meta name={`SKC - Product: ${productInformationState.productName}`} content={`Contents, info, dates, etc for ${productInformationState.productName}`} />
+			<title>{`SKC - Product: ${state.productName}`}</title>
+			<meta name={`SKC - Product: ${state.productName}`} content={`Contents, info, dates, etc for ${state.productName}`} />
 			<meta name='keywords' content={`YuGiOh, product browse, The Supreme Kings Castle`} />
 
 			<Suspense fallback={<Skeleton className='breadcrumb-skeleton' variant='rectangular' width='100%' height='2.5rem' />}>
-				<Breadcrumb crumbs={productInformationState.pageBreadcrumbs} />
+				<Breadcrumb crumbs={state.pageBreadcrumbs} />
 			</Suspense>
 
 			<div className='headline-v1'>
@@ -70,17 +70,17 @@ export default function ProductInformation() {
 					</Typography>
 					<div className='headline-section'>
 						<Typography variant='h5'>Information</Typography>
-						{!cardGridState.isLoading ? <SKCTable header={[]} rows={productInformationState.productSummary} /> : <Skeleton variant='rectangular' height='170px' />}
+						{!gridState.isLoading ? <SKCTable header={[]} rows={state.productSummary} /> : <Skeleton variant='rectangular' height='170px' />}
 					</div>
 				</div>
 			</div>
 
-			<ProductStats isDataLoaded={!cardGridState.isLoading} cards={cardGridState.results} productRarityStats={productInformationState.productRarityStats} />
+			<ProductStats isDataLoaded={!gridState.isLoading} cards={gridState.results} productRarityStats={state.productRarityStats} />
 
 			<Section sectionName='Product Content'>
 				<div className='section-content'>
 					<Typography variant='h5'>Sorted By Pack Order</Typography>
-					<CardDisplayGrid cardGridState={cardGridState} dispatch={cardDisplayGridDispatch} />
+					<CardDisplayGrid cardGridState={gridState} dispatch={cardDisplayGridDispatch} />
 				</div>
 			</Section>
 		</div>
