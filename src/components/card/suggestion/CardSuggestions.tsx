@@ -6,7 +6,6 @@ import { Skeleton } from '@mui/material'
 import SuggestionSection from './SuggestionSection'
 
 import { Section, YGOCardWithImage, YGOCardWithQuantity } from 'skc-rcl'
-import { CardSuggestionState } from '../../../reducers/CardSuggestionReducer'
 
 const Hint = lazy(() =>
 	import('skc-rcl').then((module) => {
@@ -20,30 +19,40 @@ const GenericNonBreakingErr = lazy(() =>
 	})
 )
 
-type CardSuggestionProps = {
-	cardSuggestionState: CardSuggestionState
-	cardColor: cardColor
-	cardName: string
-}
+type CardSuggestionProps = Omit<CardSuggestionOutput, 'card' | 'materialArchetypes' | 'referencedArchetypes' | 'hasSelfReference'> &
+	Omit<CardSupportOutput, 'card'> & {
+		cardColor: cardColor
+		cardName: string
+		isFetchingSuggestions: boolean
+		isFetchingSupport: boolean
+		suggestionRequestHasError: boolean
+		supportRequestHasError: boolean
+	}
 
-const CardSuggestions: FC<CardSuggestionProps> = ({ cardSuggestionState: cardSuggestionsState, cardColor, cardName }) => {
+const CardSuggestions: FC<CardSuggestionProps> = ({
+	namedMaterials,
+	namedReferences,
+	materialFor,
+	referencedBy,
+	isFetchingSuggestions,
+	isFetchingSupport,
+	suggestionRequestHasError,
+	supportRequestHasError,
+	cardColor,
+	cardName,
+}) => {
 	const isLoading = useCallback((): boolean => {
-		return cardSuggestionsState.isLoadingSuggestions || cardSuggestionsState.isLoadingSupport
-	}, [cardSuggestionsState.isLoadingSuggestions, cardSuggestionsState.isLoadingSupport])
+		return isFetchingSuggestions || isFetchingSupport
+	}, [isFetchingSuggestions, isFetchingSupport])
 
 	// if both requests fail, then we will consider it an error
 	const hasError = useCallback((): boolean => {
-		return cardSuggestionsState.suggestionRequestHasError && cardSuggestionsState.supportRequestHasError
-	}, [cardSuggestionsState.suggestionRequestHasError, cardSuggestionsState.supportRequestHasError])
+		return suggestionRequestHasError && supportRequestHasError
+	}, [suggestionRequestHasError, supportRequestHasError])
 
 	const hasNoContent = useCallback(() => {
-		return (
-			cardSuggestionsState.namedMaterials.length === 0 &&
-			cardSuggestionsState.namedReferences.length === 0 &&
-			cardSuggestionsState.materialFor.length === 0 &&
-			cardSuggestionsState.referencedBy.length === 0
-		)
-	}, [cardSuggestionsState.materialFor, cardSuggestionsState.materialFor, cardSuggestionsState.namedReferences, cardSuggestionsState.referencedBy])
+		return namedMaterials.length === 0 && namedReferences.length === 0 && materialFor.length === 0 && referencedBy.length === 0
+	}, [namedMaterials, materialFor, namedReferences, referencedBy])
 
 	const transformReferences = useCallback((references: CardReference[]): React.JSX.Element[] => {
 		return references !== null
@@ -85,22 +94,22 @@ const CardSuggestions: FC<CardSuggestionProps> = ({ cardSuggestionState: cardSug
 				{!isLoading() && !hasError() && (
 					<Fragment>
 						<SuggestionSection
-							suggestions={transformReferences(cardSuggestionsState.namedMaterials)}
+							suggestions={transformReferences(namedMaterials)}
 							sectionName='Named Materials'
 							sectionExplanation={`Other cards that are directly referenced as summoning material by ${cardName} card. Currently, only extra deck summonsing materials are suggested.`}
 						/>
 						<SuggestionSection
-							suggestions={transformSupport(cardSuggestionsState.materialFor)}
+							suggestions={transformSupport(materialFor)}
 							sectionName='Material For'
 							sectionExplanation={`${cardName} can be used as a material for the cards in this section.`}
 						/>
 						<SuggestionSection
-							suggestions={transformReferences(cardSuggestionsState.namedReferences)}
+							suggestions={transformReferences(namedReferences)}
 							sectionName='References'
 							sectionExplanation={`${cardName} is referencing the below cards. If ${cardName} is an extra deck monster, its named summoning materials are omitted here.`}
 						/>
 						<SuggestionSection
-							suggestions={transformSupport(cardSuggestionsState.referencedBy)}
+							suggestions={transformSupport(referencedBy)}
 							sectionName='Referenced By'
 							sectionExplanation={`Cards that directly reference ${cardName}. Omits extra deck monsters that reference ${cardName} as a summoning material.`}
 						/>
