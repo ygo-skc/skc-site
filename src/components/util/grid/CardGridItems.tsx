@@ -18,7 +18,7 @@ const CardGridItem: FC<{ card: SKCCard }> = ({ card }) => {
 	card.cardEffect = decodeHTML(card.cardEffect)
 
 	return (
-		<Grid className='ygo-card-grid-item' id={card.cardID} key={card.cardID} size={{ xs: 6, sm: 4, md: 4, lg: 3, xl: 2 }}>
+		<Grid className='ygo-card-grid-item' id={card.cardID} key={card.cardID} size={{ xs: 6, sm: 4, md: 3, lg: 2, xl: 1.5 }}>
 			<a href={`/card/${card.cardID}`} className='aggregate-anchor'>
 				<YGOCardWithImage card={card} imgLoadingType='lazy' />
 			</a>

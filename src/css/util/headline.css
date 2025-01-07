@@ -11,6 +11,7 @@
 [class^='headline-v'] .group {
 	align-self: start;
 	background: white;
+	margin-bottom: 2rem;
 }
 
 [class^='headline-v'] .group .MuiTypography-h3 {

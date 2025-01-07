@@ -7,7 +7,7 @@ import { Chip, Skeleton, Typography } from '@mui/material'
 
 import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
-import { CardImageRounded, Hint, Section } from 'skc-rcl'
+import { CardImageRounded, Section } from 'skc-rcl'
 import { decodeHTML } from 'entities'
 import { cardInformationReducer, CardInformationType } from '../../reducers/CardInformationReducer'
 import { Dates } from '../../helper/Dates'
@@ -21,6 +21,12 @@ const CardInformationRelatedContent = lazy(() => import('../card/card-informatio
 const YGOCard = lazy(() =>
 	import('skc-rcl').then((module) => {
 		return { default: module.YGOCard }
+	})
+)
+
+const Hint = lazy(() =>
+	import('skc-rcl').then((module) => {
+		return { default: module.Hint }
 	})
 )
 
@@ -141,12 +147,16 @@ const CardInformation = () => {
 
 					<div className='headline-section'>
 						<Typography variant='h5'>Archetypes (BETA)</Typography>
-						{state.archetypes.size !== 0 ? (
-							[...state.archetypes].map((archetype) => <Chip className='dark-chip' key={archetype} label={archetype} />)
-						) : (
-							<Hint variant='tight' fullWidth={false}>
-								Not tied to any archetype
-							</Hint>
+						{state.isFetchingSuggestions && <Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='5rem' />}
+						{!state.isFetchingSuggestions &&
+							state.archetypes.size !== 0 &&
+							[...state.archetypes].map((archetype) => <Chip className='dark-chip' key={archetype} label={archetype} />)}
+						{!state.isFetchingSuggestions && state.archetypes.size === 0 && (
+							<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='3rem' />}>
+								<Hint variant='tight' fullWidth={false}>
+									Not tied to any archetype
+								</Hint>
+							</Suspense>
 						)}
 					</div>
 
