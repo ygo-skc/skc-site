@@ -21,6 +21,7 @@ class DownstreamServices {
 		cardOfTheDay: `${DownstreamServices.SKC_SUGGESTION_HOST_NAME}/api/v1/suggestions/card-of-the-day`,
 		cardSuggestions: `${DownstreamServices.SKC_SUGGESTION_HOST_NAME}/api/v1/suggestions/card`,
 		cardSupport: `${DownstreamServices.SKC_SUGGESTION_HOST_NAME}/api/v1/suggestions/card/support`,
+		productCardSuggestions: `${DownstreamServices.SKC_SUGGESTION_HOST_NAME}/api/v1/suggestions/product`,
 	}
 
 	// Heart API

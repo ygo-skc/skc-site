@@ -1,7 +1,7 @@
 import '../../css/main-pages/product.css'
 import '../../css/util/headline.css'
 
-import { useEffect, lazy, useReducer, Suspense } from 'react'
+import { useEffect, lazy, useReducer, Suspense, startTransition } from 'react'
 import { useParams } from 'react-router-dom'
 
 import FetchHandler from '../../helper/FetchHandler'
@@ -15,15 +15,21 @@ import { productInformationReducer, ProductInformationActionType } from '../../r
 
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 const CardDisplayGrid = lazy(() => import('../util/grid/CardDisplayGrid'))
+const CardSuggestions = lazy(() => import('../card/suggestion/CardSuggestions'))
 
 export default function ProductInformation() {
-	const { productId } = useParams()
-
 	const [state, productInformationDispatch] = useReducer(productInformationReducer, {
 		pageBreadcrumbs: ['Home', 'Product Browse', ''],
+		productId: useParams<{ productId: string }>().productId ?? '',
 		productName: '',
 		productRarityStats: {},
 		productSummary: [],
+		productCardSuggestions: {
+			suggestions: { namedMaterials: [], namedReferences: [], materialArchetypes: [], referencedArchetypes: [] },
+			support: { referencedBy: [], materialFor: [] },
+			isFetchingData: true,
+			requestHasError: false,
+		},
 	})
 
 	const [gridState, cardDisplayGridDispatch] = useReducer(cardDisplayGridReducer, {
@@ -35,7 +41,7 @@ export default function ProductInformation() {
 	})
 
 	useEffect(() => {
-		FetchHandler.handleFetch<ProductInfo>(`${DownstreamServices.NAME_maps_ENDPOINT.productDetails}/${productId}/en`, (productInfo: ProductInfo) => {
+		FetchHandler.handleFetch<ProductInfo>(`${DownstreamServices.NAME_maps_ENDPOINT.productDetails}/${state.productId}/en`, (productInfo: ProductInfo) => {
 			productInformationDispatch({
 				type: ProductInformationActionType.UPDATE_PRODUCT,
 				productInformation: productInfo,
@@ -47,6 +53,23 @@ export default function ProductInformation() {
 				results: cards,
 				totalResults: cards.length,
 				totalDisplaying: cards.length,
+			})
+		})
+
+		FetchHandler.handleFetch(
+			`${DownstreamServices.SKC_SUGGESTION_ENDPOINTS.productCardSuggestions}/${state.productId}`,
+			(productCardSuggestions: ProductCardSuggestionOutput) => {
+				startTransition(() => {
+					productInformationDispatch({
+						type: ProductInformationActionType.UPDATE_PRODUCT_CARD_SUGGESTIONS,
+						productCardSuggestion: productCardSuggestions,
+					})
+				})
+			},
+			false
+		)?.catch(() => {
+			productInformationDispatch({
+				type: ProductInformationActionType.FETCH_PRODUCT_CARD_SUGGESTIONS_ERROR,
 			})
 		})
 	}, [])
@@ -62,7 +85,7 @@ export default function ProductInformation() {
 			</Suspense>
 
 			<div className='headline-v1'>
-				<ProductImage className='product-info-img' productID={productId as string} size='lg' loading='eager' />
+				<ProductImage className='product-info-img' productID={state.productId} size='lg' loading='eager' />
 
 				<div className='group light-shadow'>
 					<Typography variant='h3' align='center'>
@@ -76,6 +99,21 @@ export default function ProductInformation() {
 			</div>
 
 			<ProductStats isDataLoaded={!gridState.isLoading} cards={gridState.results} productRarityStats={state.productRarityStats} />
+
+			<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='22rem' />}>
+				<CardSuggestions
+					namedMaterials={state.productCardSuggestions.suggestions.namedMaterials}
+					namedReferences={state.productCardSuggestions.suggestions.namedReferences}
+					materialFor={state.productCardSuggestions.support.materialFor}
+					referencedBy={state.productCardSuggestions.support.referencedBy}
+					isFetchingSuggestions={state.productCardSuggestions.isFetchingData}
+					isFetchingSupport={state.productCardSuggestions.isFetchingData}
+					suggestionRequestHasError={state.productCardSuggestions.requestHasError}
+					supportRequestHasError={state.productCardSuggestions.requestHasError}
+					cardColor={'xyz'}
+					cardName={state.productName}
+				/>
+			</Suspense>
 
 			<Section sectionName='Product Content'>
 				<div className='section-content'>

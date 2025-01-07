@@ -247,6 +247,11 @@ declare type CardSupportOutput = {
 	materialFor: CardReference[]
 }
 
+declare type ProductCardSuggestionOutput = {
+	suggestions: CardSuggestionOutput
+	support: CardSupportOutput
+}
+
 declare type SKCBanListInstance = {
 	banListDate: string
 	cardID: string
