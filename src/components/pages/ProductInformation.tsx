@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom'
 import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 
-import { Skeleton, Typography } from '@mui/material'
+import { Chip, Skeleton, Typography } from '@mui/material'
 import ProductStats from '../product/ProductStats'
 import { ProductImage, Section, SKCTable } from 'skc-rcl'
 import cardDisplayGridReducer, { CardDisplayGridStateReducerActionType } from '../../reducers/CardDisplayGridReducer'
@@ -16,6 +16,12 @@ import { productInformationReducer, ProductInformationActionType } from '../../r
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 const CardDisplayGrid = lazy(() => import('../util/grid/CardDisplayGrid'))
 const CardSuggestions = lazy(() => import('../card/suggestion/CardSuggestions'))
+
+const Hint = lazy(() =>
+	import('skc-rcl').then((module) => {
+		return { default: module.Hint }
+	})
+)
 
 export default function ProductInformation() {
 	const [state, productInformationDispatch] = useReducer(productInformationReducer, {
@@ -27,6 +33,7 @@ export default function ProductInformation() {
 		productCardSuggestions: {
 			suggestions: { namedMaterials: [], namedReferences: [], materialArchetypes: [], referencedArchetypes: [] },
 			support: { referencedBy: [], materialFor: [] },
+			associatedArchetypes: new Set<string>(),
 			isFetchingData: true,
 			requestHasError: false,
 		},
@@ -94,6 +101,21 @@ export default function ProductInformation() {
 					<div className='headline-section'>
 						<Typography variant='h5'>Information</Typography>
 						{!gridState.isLoading ? <SKCTable header={[]} rows={state.productSummary} /> : <Skeleton variant='rectangular' height='170px' />}
+					</div>
+
+					<div className='headline-section'>
+						<Typography variant='h5'>Archetypes (BETA)</Typography>
+						{state.productCardSuggestions.isFetchingData && <Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='5rem' />}
+						{!state.productCardSuggestions.isFetchingData &&
+							state.productCardSuggestions.associatedArchetypes.size !== 0 &&
+							[...state.productCardSuggestions.associatedArchetypes].map((archetype) => <Chip className='dark-chip' key={archetype} label={archetype} />)}
+						{!state.productCardSuggestions.isFetchingData && state.productCardSuggestions.associatedArchetypes.size === 0 && (
+							<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='3rem' />}>
+								<Hint variant='tight' fullWidth={false}>
+									Not tied to any archetype
+								</Hint>
+							</Suspense>
+						)}
 					</div>
 				</div>
 			</div>

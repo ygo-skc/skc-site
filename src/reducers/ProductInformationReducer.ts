@@ -9,6 +9,7 @@ type ProductInformationState = {
 	productCardSuggestions: {
 		suggestions: Omit<CardSuggestionOutput, 'hasSelfReference'>
 		support: Omit<CardSupportOutput, 'card'>
+		associatedArchetypes: Set<string>
 		isFetchingData: boolean
 		requestHasError: boolean
 	}
@@ -56,6 +57,7 @@ export function productInformationReducer(state: ProductInformationState, action
 					...state.productCardSuggestions,
 					suggestions: { ...action.productCardSuggestion.suggestions },
 					support: { ...action.productCardSuggestion.support },
+					associatedArchetypes: new Set([...action.productCardSuggestion.suggestions.materialArchetypes, ...action.productCardSuggestion.suggestions.referencedArchetypes]),
 					isFetchingData: false,
 					requestHasError: false,
 				},
