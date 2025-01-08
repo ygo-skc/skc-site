@@ -7,6 +7,7 @@ import { Section } from 'skc-rcl'
 import CardOfTheDay from '../card/CardOfTheDay'
 import { Suspense, lazy } from 'react'
 import { Divider, Skeleton, Typography } from '@mui/material'
+import Trending from '../util/Trending'
 
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 const SocialMedia = lazy(() => import('../util/social/SocialMedia'))
@@ -22,6 +23,8 @@ export default function Home() {
 			<Suspense fallback={<Skeleton className='breadcrumb-skeleton' variant='rectangular' width='100%' height='2.5rem' />}>
 				<Breadcrumb crumbs={['Home']} />
 			</Suspense>
+
+			<Trending />
 
 			<div className='headline-v2'>
 				<DatabaseInfo />

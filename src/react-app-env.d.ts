@@ -10,7 +10,7 @@ declare type ProductBrowseResults = {
 	products: ProductInfo[]
 }
 
-declare type ProductInfo = ProductStats & {
+declare type YGOProduct = {
 	productId: string
 	productLocale: string
 	productName: string
@@ -18,8 +18,12 @@ declare type ProductInfo = ProductStats & {
 	productSubType: string
 	productReleaseDate: string
 	productTotal: number
-	productContent: SKCProductContent[]
 }
+
+declare type ProductInfo = ProductStats &
+	YGOProduct & {
+		productContent: SKCProductContent[]
+	}
 
 declare type ProductDetails = {
 	productId: string
@@ -130,11 +134,11 @@ declare type SKCCard = {
 	cardName: string
 	cardColor: cardColor
 	cardAttribute?: string
+	cardEffect: string
 	monsterType?: string
 	monsterAssociation?: SKCMonsterAssociation
 	monsterAttack?: string
 	monsterDefense?: string
-	cardEffect: string
 }
 
 declare type SKCCardBrowseCriteria = {

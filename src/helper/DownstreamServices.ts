@@ -22,6 +22,7 @@ class DownstreamServices {
 		cardSuggestions: `${DownstreamServices.SKC_SUGGESTION_HOST_NAME}/api/v1/suggestions/card`,
 		cardSupport: `${DownstreamServices.SKC_SUGGESTION_HOST_NAME}/api/v1/suggestions/card/support`,
 		productCardSuggestions: `${DownstreamServices.SKC_SUGGESTION_HOST_NAME}/api/v1/suggestions/product`,
+		trending: `${DownstreamServices.SKC_SUGGESTION_HOST_NAME}/api/v1/suggestions/trending`,
 	}
 
 	// Heart API
