@@ -1,6 +1,6 @@
 import '../../css/util/headline.css'
 
-import DatabaseInfo from '../util/database-info/DatabaseInfo'
+import DatabaseInfo from '../util/DatabaseInfo'
 import UpcomingTCGProducts from '../util/event/UpcomingTCGProducts'
 import Welcome from '../home/Welcome'
 import { Section } from 'skc-rcl'

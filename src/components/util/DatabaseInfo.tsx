@@ -1,15 +1,15 @@
-import '../../../css/util/database-search-styles.css'
+import '../../css/util/database-search-styles.css'
 
 import { lazy, startTransition, useCallback, useEffect, useState } from 'react'
 
 import Grid from '@mui/material/Grid2'
 
-import DownstreamServices from '../../../helper/DownstreamServices'
-import FetchHandler from '../../../helper/FetchHandler'
+import DownstreamServices from '../../helper/DownstreamServices'
+import FetchHandler from '../../helper/FetchHandler'
 import { Skeleton } from '@mui/material'
 import { Tile, Section } from 'skc-rcl'
 
-const DatabaseSearch = lazy(() => import('../search/DBSearch'))
+const DatabaseSearch = lazy(() => import('./search/DBSearch'))
 
 type DatabaseInfoProps = {
 	cardTotal: number
