@@ -5,9 +5,9 @@ declare type BrowseCriteria = {
 	value: string
 }
 
-declare type ProductBrowseResults = {
+declare type YGOProductBrowseResults = {
 	locale: string
-	products: ProductInfo[]
+	products: YGOProductInfo[]
 }
 
 declare type YGOProduct = {
@@ -20,27 +20,17 @@ declare type YGOProduct = {
 	productTotal: number
 }
 
-declare type ProductInfo = ProductStats &
+declare type YGOProductInfo = YGOProductStats &
 	YGOProduct & {
 		productContent: SKCProductContent[]
 	}
 
-declare type ProductDetails = {
-	productId: string
-	productName: string
-	productType: string
-	productSubType: string
-	productReleaseDate: string
-	numUniqueCards: string
-	isDataLoaded: boolean
-}
-
-declare type ProductStats = {
+declare type YGOProductStats = {
 	productRarityStats: { [key: string]: number }
 	cards: SKCCard[]
 }
 
-declare type cardColor =
+declare type YGOCardColor =
 	| 'normal'
 	| 'effect'
 	| 'ritual'
@@ -59,7 +49,7 @@ declare type cardColor =
 	| 'err'
 	| undefined
 
-declare type _YouTubeUploads = {
+declare type YouTubeUploads = {
 	thumbnailImg: HTMLImageElement
 	title: string
 	url: string
@@ -132,7 +122,7 @@ declare type SKCBanListDiffContentDuelLinksFormat = SKCBanListRemovedCardsDuelLi
 declare type SKCCard = {
 	cardID: string
 	cardName: string
-	cardColor: cardColor
+	cardColor: YGOCardColor
 	cardAttribute?: string
 	cardEffect: string
 	monsterType?: string
@@ -270,5 +260,5 @@ declare type RestrictedIn = {
 
 declare type SKCCardInfo = SKCCard & {
 	restrictedIn: RestrictedIn
-	foundIn: ProductInfo[]
+	foundIn: YGOProductInfo[]
 }

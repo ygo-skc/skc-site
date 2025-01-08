@@ -48,7 +48,7 @@ export default function ProductInformation() {
 	})
 
 	useEffect(() => {
-		FetchHandler.handleFetch<ProductInfo>(`${DownstreamServices.NAME_maps_ENDPOINT.productDetails}/${state.productId}/en`, (productInfo: ProductInfo) => {
+		FetchHandler.handleFetch<YGOProductInfo>(`${DownstreamServices.NAME_maps_ENDPOINT.productDetails}/${state.productId}/en`, (productInfo: YGOProductInfo) => {
 			productInformationDispatch({
 				type: ProductInformationActionType.UPDATE_PRODUCT,
 				productInformation: productInfo,

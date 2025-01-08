@@ -8,7 +8,7 @@ const Pie = lazy(() =>
 	})
 )
 
-const ProductStats: FC<ProductStats & { isDataLoaded: boolean }> = ({ productRarityStats, cards, isDataLoaded }) => {
+const ProductStats: FC<YGOProductStats & { isDataLoaded: boolean }> = ({ productRarityStats, cards, isDataLoaded }) => {
 	const raritySpreadData = Object.keys(productRarityStats).map((key: string) => {
 		return {
 			id: key,

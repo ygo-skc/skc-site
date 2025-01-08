@@ -21,7 +21,7 @@ const GenericNonBreakingErr = lazy(() =>
 
 type CardSuggestionProps = Omit<CardSuggestionOutput, 'card' | 'materialArchetypes' | 'referencedArchetypes' | 'hasSelfReference'> &
 	Omit<CardSupportOutput, 'card'> & {
-		cardColor: cardColor
+		cardColor: YGOCardColor
 		cardName: string
 		isFetchingSuggestions: boolean
 		isFetchingSupport: boolean
@@ -84,7 +84,7 @@ const CardSuggestions: FC<CardSuggestionProps> = ({
 	const LoadingUI = <Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='50rem' />
 
 	return (
-		<Section sectionHeaderBackground={cardColor !== undefined ? (cardColor?.replace(/Pendulum-/gi, '') as cardColor) : ''} sectionName='Suggestions'>
+		<Section sectionHeaderBackground={cardColor !== undefined ? (cardColor?.replace(/Pendulum-/gi, '') as YGOCardColor) : ''} sectionName='Suggestions'>
 			<div className='section-content'>
 				<Suspense fallback={LoadingUI}>
 					{!isLoading() && !hasError() && hasNoContent() && <Hint fullWidth={false}>Nothing here 🤔</Hint>}

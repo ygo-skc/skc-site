@@ -2,7 +2,7 @@ import { Typography } from '@mui/material'
 import { FC } from 'react'
 import { decodeHTML } from 'entities'
 
-const VideoInfoContainer: FC<_YouTubeUploads> = ({ thumbnailImg, title, url }) => {
+const VideoInfoContainer: FC<YouTubeUploads> = ({ thumbnailImg, title, url }) => {
 	return (
 		<a href={url} className='aggregate-anchor yt-video-info-container'>
 			<div className='yt-video-image-container'>

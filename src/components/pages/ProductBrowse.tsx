@@ -17,7 +17,7 @@ const Section = lazy(() =>
 )
 
 const ProductBrowse: FunctionComponent = () => {
-	const [products, setProducts] = useState<ProductInfo[]>([])
+	const [products, setProducts] = useState<YGOProductInfo[]>([])
 	const [productGridItems, setProductGridItems] = useState<JSX.Element[]>([])
 
 	const [isDataLoaded, setIsDataLoaded] = useState(false)
@@ -31,14 +31,14 @@ const ProductBrowse: FunctionComponent = () => {
 
 	useEffect(() => {
 		startTransition(() => {
-			FetchHandler.handleFetch<ProductBrowseResults>(DownstreamServices.NAME_maps_ENDPOINT.productBrowse, (json: ProductBrowseResults) => {
+			FetchHandler.handleFetch<YGOProductBrowseResults>(DownstreamServices.NAME_maps_ENDPOINT.productBrowse, (json: YGOProductBrowseResults) => {
 				setProducts(json.products)
 			})
 		})
 	}, [])
 
 	useEffect(() => {
-		const pt = Array.from(new Set(products.map((product: ProductInfo) => product.productType))).map((productType: string) => (
+		const pt = Array.from(new Set(products.map((product: YGOProductInfo) => product.productType))).map((productType: string) => (
 			<FormControlLabel key={productType} value={productType} control={<Radio />} label={productType} />
 		))
 
@@ -49,22 +49,24 @@ const ProductBrowse: FunctionComponent = () => {
 		startTransition(() => {
 			const pst = Array.from(
 				new Set(
-					products.filter((product: ProductInfo) => productTypeFilter === 'All' || product.productType === productTypeFilter).map((product: ProductInfo) => product.productSubType)
+					products
+						.filter((product: YGOProductInfo) => productTypeFilter === 'All' || product.productType === productTypeFilter)
+						.map((product: YGOProductInfo) => product.productSubType)
 				)
 			).map((productSubType: string) => <FormControlLabel key={productSubType} value={productSubType} control={<Radio />} label={productSubType} />)
 
 			const filteredProducts = products
-				.filter((product: ProductInfo) => loadAll || +Dates.getYear(Dates.fromYYYYMMDDToDate(product.productReleaseDate)) > +Dates.getYear(new Date()) - 3)
-				.filter((product: ProductInfo) => productTypeFilter === 'All' || product.productType === productTypeFilter)
-				.filter((product: ProductInfo) => productSubTypesFilter === 'All' || product.productSubType === productSubTypesFilter)
-				.reduce((map: Map<number, ProductInfo[]>, product: ProductInfo) => {
+				.filter((product: YGOProductInfo) => loadAll || +Dates.getYear(Dates.fromYYYYMMDDToDate(product.productReleaseDate)) > +Dates.getYear(new Date()) - 3)
+				.filter((product: YGOProductInfo) => productTypeFilter === 'All' || product.productType === productTypeFilter)
+				.filter((product: YGOProductInfo) => productSubTypesFilter === 'All' || product.productSubType === productSubTypesFilter)
+				.reduce((map: Map<number, YGOProductInfo[]>, product: YGOProductInfo) => {
 					const productReleaseDate = Dates.fromYYYYMMDDToDate(product.productReleaseDate)
 					const year = +Dates.getYear(productReleaseDate)
 
 					map.set(year, map.get(year) ?? [])
 					map.get(year)!.push(product)
 					return map
-				}, new Map<number, ProductInfo[]>())
+				}, new Map<number, YGOProductInfo[]>())
 
 			setProductSubTypes([<FormControlLabel key='All' value='All' control={<Radio />} label='All' />, ...pst])
 			setProductGridItems(Array.from(filteredProducts.keys()).map((year: number) => <ProductGrid key={year} section={String(year)} products={filteredProducts.get(year)!} />))

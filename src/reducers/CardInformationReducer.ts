@@ -3,7 +3,7 @@ type CardSuggestions = Omit<CardSuggestionOutput, 'card' | 'materialArchetypes' 
 type CardInformationState = {
 	pageBreadcrumbs: string[]
 	card: SKCCard
-	productInfo: ProductInfo[]
+	productInfo: YGOProductInfo[]
 	restrictionInfo: RestrictedIn
 	isFetchingCardData: boolean
 	uniqueRarities: string[]
@@ -55,7 +55,7 @@ export function cardInformationReducer(state: CardInformationState, action: Card
 				restrictionInfo: action.cardInfo.restrictedIn ?? { TCG: [], MD: [], DL: [] },
 				isFetchingCardData: false,
 				uniqueRarities: Array.from(
-					new Set(action.cardInfo.foundIn.flatMap((product: ProductInfo) => product.productContent.flatMap((productContent: SKCProductContent) => productContent.rarities)))
+					new Set(action.cardInfo.foundIn.flatMap((product: YGOProductInfo) => product.productContent.flatMap((productContent: SKCProductContent) => productContent.rarities)))
 				).sort((a, b) => a.localeCompare(b)),
 			}
 		case CardInformationType.UPDATE_SUGGESTIONS:

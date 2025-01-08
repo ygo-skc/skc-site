@@ -24,7 +24,7 @@ export enum ProductInformationActionType {
 type ProductInformationAction =
 	| {
 			type: ProductInformationActionType.UPDATE_PRODUCT
-			productInformation: ProductInfo
+			productInformation: YGOProductInfo
 	  }
 	| {
 			type: ProductInformationActionType.UPDATE_PRODUCT_CARD_SUGGESTIONS

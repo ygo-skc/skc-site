@@ -7,7 +7,7 @@ import CardProductListItem from '../../product/CardProductListItem'
 
 type CardProductInformationProps = {
 	cardID: string
-	productInfo: ProductInfo[]
+	productInfo: YGOProductInfo[]
 }
 
 const CardProductInformation: FC<CardProductInformationProps> = ({ productInfo, cardID }) => {
@@ -33,7 +33,7 @@ const CardProductInformation: FC<CardProductInformationProps> = ({ productInfo, 
 		const uniqueProductsFeaturedIn = new Set<string>()
 		let uniqueRarityPrintings = new Set<string>()
 
-		productInfo.forEach((product: ProductInfo, index: number) => {
+		productInfo.forEach((product: YGOProductInfo, index: number) => {
 			uniqueProductsFeaturedIn.add(product.productId)
 
 			product.productContent.forEach((productContent: SKCProductContent) => {

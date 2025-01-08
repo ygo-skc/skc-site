@@ -115,7 +115,7 @@ const CardInformation = () => {
 			</Suspense>
 
 			<div className='headline-v1'>
-				<Section sectionHeaderBackground={state.card.cardColor !== undefined ? (state.card.cardColor?.replace(/Pendulum-/gi, '') as cardColor) : ''} sectionName='Card Stats'>
+				<Section sectionHeaderBackground={state.card.cardColor !== undefined ? (state.card.cardColor?.replace(/Pendulum-/gi, '') as YGOCardColor) : ''} sectionName='Card Stats'>
 					<div className='section-content'>
 						<CardImageRounded size='md' cardID={state.card.cardID} loading='eager' />
 						<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='10rem' />}>
@@ -209,7 +209,7 @@ const CardInformation = () => {
 				) : (
 					<CardInformationRelatedContent
 						cardName={state.card.cardName}
-						cardColor={state.card.cardColor?.replace(/Pendulum-/gi, '') as cardColor}
+						cardColor={state.card.cardColor?.replace(/Pendulum-/gi, '') as YGOCardColor}
 						cardID={state.card.cardID}
 						productInfo={state.productInfo}
 						restrictedIn={state.restrictionInfo}

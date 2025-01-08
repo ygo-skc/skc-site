@@ -6,7 +6,7 @@ import ProductGridItem from './ProductGridItem'
 
 type ProductGridProps = {
 	section: string
-	products: ProductInfo[]
+	products: YGOProductInfo[]
 }
 
 const ProductGrid: FC<ProductGridProps> = ({ section, products }) => {

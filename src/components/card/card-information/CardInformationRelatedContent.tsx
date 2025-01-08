@@ -6,11 +6,11 @@ import CardBanListInformation from './CardBanListInformation'
 import { Section } from 'skc-rcl'
 
 type CardInformationRelatedContentType = {
-	productInfo: ProductInfo[]
+	productInfo: YGOProductInfo[]
 	restrictedIn: RestrictedIn
 	cardName: string
 	cardID: string
-	cardColor: cardColor //should remove "pendulum" suffix for Pendulum cards
+	cardColor: YGOCardColor //should remove "pendulum" suffix for Pendulum cards
 }
 
 const CardInformationRelatedContent: FC<CardInformationRelatedContentType> = ({ cardColor, productInfo, restrictedIn, cardID }) => {
