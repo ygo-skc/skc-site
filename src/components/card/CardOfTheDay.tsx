@@ -9,11 +9,11 @@ import { Dates } from '../../helper/Dates'
 type CardOfTheDayOutput = {
 	date: string
 	version: number
-	card: SKCCard
+	card: YGOCard
 }
 
 export default function CardOfTheDay() {
-	const [cardOfTheDay, setCardOfTheDay] = useState<SKCCard | undefined>(undefined)
+	const [cardOfTheDay, setCardOfTheDay] = useState<YGOCard | undefined>(undefined)
 	const [date, setDate] = useState(new Date())
 	const [isLoading, setIsLoading] = useState(true)
 	const [hasError, setHasError] = useState(false)

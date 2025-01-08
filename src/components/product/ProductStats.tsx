@@ -19,7 +19,7 @@ const ProductStats: FC<YGOProductStats & { isDataLoaded: boolean }> = ({ product
 
 	const cardColors = new Map<string, number>()
 
-	cards.forEach((card: SKCCard) => {
+	cards.forEach((card: YGOCard) => {
 		const cardColor = card.cardColor!
 
 		const value = cardColors.get(cardColor)

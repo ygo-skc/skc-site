@@ -2,7 +2,7 @@ type CardSuggestions = Omit<CardSuggestionOutput, 'card' | 'materialArchetypes' 
 
 type CardInformationState = {
 	pageBreadcrumbs: string[]
-	card: SKCCard
+	card: YGOCard
 	productInfo: YGOProductInfo[]
 	restrictionInfo: RestrictedIn
 	isFetchingCardData: boolean

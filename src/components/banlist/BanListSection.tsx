@@ -6,7 +6,7 @@ import { Typography } from '@mui/material'
 
 type BanListSectionProps = {
 	sectionExplanation: string
-	cards: SKCCard[]
+	cards: YGOCard[]
 	isFetchingBanList: boolean
 	value: number
 	index: number

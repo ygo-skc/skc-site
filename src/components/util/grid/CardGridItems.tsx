@@ -3,7 +3,7 @@ import { FC, Fragment, JSX, useEffect, useState } from 'react'
 import { decodeHTML } from 'entities'
 import { YGOCardWithImage } from 'skc-rcl'
 
-const CardGridItems: FC<{ cards: SKCCard[] }> = ({ cards }) => {
+const CardGridItems: FC<{ cards: YGOCard[] }> = ({ cards }) => {
 	const [cardGridItems, setCardGridItems] = useState<JSX.Element[]>([])
 
 	useEffect(() => {
@@ -14,7 +14,7 @@ const CardGridItems: FC<{ cards: SKCCard[] }> = ({ cards }) => {
 	return <Fragment>{cardGridItems}</Fragment>
 }
 
-const CardGridItem: FC<{ card: SKCCard }> = ({ card }) => {
+const CardGridItem: FC<{ card: YGOCard }> = ({ card }) => {
 	card.cardEffect = decodeHTML(card.cardEffect)
 
 	return (

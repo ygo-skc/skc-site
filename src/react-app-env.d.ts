@@ -1,5 +1,17 @@
 /// <reference types="react-scripts" />
 
+declare type YGOCard = {
+	cardID: string
+	cardName: string
+	cardColor: YGOCardColor
+	cardAttribute?: string
+	cardEffect: string
+	monsterType?: string
+	monsterAssociation?: SKCMonsterAssociation
+	monsterAttack?: string
+	monsterDefense?: string
+}
+
 declare type BrowseCriteria = {
 	name: string
 	value: string
@@ -27,7 +39,7 @@ declare type YGOProductInfo = YGOProductStats &
 
 declare type YGOProductStats = {
 	productRarityStats: { [key: string]: number }
-	cards: SKCCard[]
+	cards: YGOCard[]
 }
 
 declare type YGOCardColor =
@@ -66,9 +78,9 @@ declare type SKCBanListDates = {
 }
 
 declare type SKCBanListContentNormalFormat = {
-	forbidden: SKCCard[]
-	limited: SKCCard[]
-	semiLimited: SKCCard[]
+	forbidden: YGOCard[]
+	limited: YGOCard[]
+	semiLimited: YGOCard[]
 	numForbidden: number
 	numLimited: number
 	numSemiLimited: number
@@ -91,10 +103,10 @@ declare type SKCBanListNewCardsNormalFormat = {
 declare type SKCBanListDiffContentNormalFormat = SKCBanListRemovedCards & SKCBanListNewCardsNormalFormat
 
 declare type SKCBanListContentDuelLinksFormat = {
-	forbidden: SKCCard[]
-	limitedOne: SKCCard[]
-	limitedTwo: SKCCard[]
-	limitedThree: SKCCard[]
+	forbidden: YGOCard[]
+	limitedOne: YGOCard[]
+	limitedTwo: YGOCard[]
+	limitedThree: YGOCard[]
 	numForbidden: number
 	numLimitedOne: number
 	numLimitedTwo: number
@@ -119,18 +131,6 @@ declare type SKCBanListNewCardsDuelLinksFormat = {
 
 declare type SKCBanListDiffContentDuelLinksFormat = SKCBanListRemovedCardsDuelLinksFormat & SKCBanListNewCardsDuelLinksFormat
 
-declare type SKCCard = {
-	cardID: string
-	cardName: string
-	cardColor: YGOCardColor
-	cardAttribute?: string
-	cardEffect: string
-	monsterType?: string
-	monsterAssociation?: SKCMonsterAssociation
-	monsterAttack?: string
-	monsterDefense?: string
-}
-
 declare type SKCCardBrowseCriteria = {
 	cardColors: string[]
 	attributes: string[]
@@ -142,13 +142,13 @@ declare type SKCCardBrowseCriteria = {
 }
 
 declare type SKCCardBrowseResults = {
-	results: SKCCard[]
+	results: YGOCard[]
 	numResults: number
 	requestedCriteria: SKCCardBrowseCriteria
 }
 
 declare type SKCCardsPreviousBanListStatus = {
-	card: SKCCard
+	card: YGOCard
 	previousBanStatus: string
 }
 
@@ -163,7 +163,7 @@ declare type SKCMonsterAssociation = {
 declare type SKCProductContent = {
 	productPosition: string
 	rarities: string[]
-	card: SKCCard
+	card: YGOCard
 }
 
 // Heart API related type declarations
@@ -224,7 +224,7 @@ declare type Deck = {
 
 declare type CardReference = {
 	occurrences: number
-	card: SKCCard
+	card: YGOCard
 }
 
 declare type CardSuggestionOutput = {
@@ -236,7 +236,7 @@ declare type CardSuggestionOutput = {
 }
 
 declare type CardSupportOutput = {
-	card: SKCCard
+	card: YGOCard
 	referencedBy: CardReference[]
 	materialFor: CardReference[]
 }
@@ -258,7 +258,7 @@ declare type RestrictedIn = {
 	DL: SKCBanListInstance[]
 }
 
-declare type SKCCardInfo = SKCCard & {
+declare type SKCCardInfo = YGOCard & {
 	restrictedIn: RestrictedIn
 	foundIn: YGOProductInfo[]
 }

@@ -47,7 +47,7 @@ const CardDisplayGrid: FC<CardDisplayGridProps> = memo(
 			prevProps.cardGridState.isLoading === newProps.cardGridState.isLoading &&
 			prevProps.cardGridState.totalResults === newProps.cardGridState.totalResults &&
 			prevProps.cardGridState.totalDisplaying === newProps.cardGridState.totalDisplaying &&
-			prevProps.cardGridState.results.every((prevCard: SKCCard, index: number) => prevCard.cardID === newProps.cardGridState.results[index].cardID)
+			prevProps.cardGridState.results.every((prevCard: YGOCard, index: number) => prevCard.cardID === newProps.cardGridState.results[index].cardID)
 		)
 	}
 )

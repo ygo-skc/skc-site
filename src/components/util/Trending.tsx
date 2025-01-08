@@ -16,7 +16,7 @@ const Trending = () => {
 	useEffect(() => {
 		FetchHandler.handleFetch(
 			`${DownstreamServices.SKC_SUGGESTION_ENDPOINTS.trending}/card`,
-			(trendingData: TrendingData<Omit<SKCCard, 'monsterType' | 'monsterAssociation' | 'monsterAttack' | 'monsterDefense'>>) => {
+			(trendingData: TrendingData<Omit<YGOCard, 'monsterType' | 'monsterAssociation' | 'monsterAttack' | 'monsterDefense'>>) => {
 				console.log(trendingData)
 			},
 			false
