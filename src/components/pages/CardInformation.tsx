@@ -57,7 +57,7 @@ const CardInformation = () => {
 	})
 
 	useEffect(() => {
-		FetchHandler.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT.cardInstanceUrl}/${state.card.cardID}?allInfo=true`, (cardInfo: SKCCardInfo) => {
+		FetchHandler.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT.cardInstanceUrl}/${state.card.cardID}?allInfo=true`, (cardInfo: YGOCardInfo) => {
 			cardInformationDispatch({
 				type: CardInformationType.UPDATE_CARD,
 				cardInfo: cardInfo,
@@ -67,7 +67,7 @@ const CardInformation = () => {
 		// fetch suggestions
 		FetchHandler.handleFetch(
 			`${DownstreamServices.SKC_SUGGESTION_ENDPOINTS.cardSuggestions}/${state.card.cardID}`,
-			(cardSuggestionOutput: CardSuggestionOutput) => {
+			(cardSuggestionOutput: YGOCardSuggestion) => {
 				cardInformationDispatch({
 					type: CardInformationType.UPDATE_SUGGESTIONS,
 					suggestions: cardSuggestionOutput,
@@ -82,7 +82,7 @@ const CardInformation = () => {
 
 		FetchHandler.handleFetch(
 			`${DownstreamServices.SKC_SUGGESTION_ENDPOINTS.cardSupport}/${state.card.cardID}`,
-			(cardSupportOutput: CardSupportOutput) => {
+			(cardSupportOutput: YGOCardSupport) => {
 				cardInformationDispatch({
 					type: CardInformationType.UPDATE_SUPPORT,
 					support: cardSupportOutput,

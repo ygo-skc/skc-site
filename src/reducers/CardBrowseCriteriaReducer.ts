@@ -1,4 +1,4 @@
-export type CardBrowseReducerState = { selectedCriteria: BrowseCriteria[] }
+export type CardBrowseReducerState = { selectedCriteria: YGOCardBrowseCriteria[] }
 
 export enum CardBrowseReducerActionType {
 	UPDATE_SELECTED_CRITERIA = 'UPDATE SELECTED CRITERIA',

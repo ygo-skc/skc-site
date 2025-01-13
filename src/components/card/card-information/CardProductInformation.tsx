@@ -36,7 +36,7 @@ const CardProductInformation: FC<CardProductInformationProps> = ({ productInfo, 
 		productInfo.forEach((product: YGOProductInfo, index: number) => {
 			uniqueProductsFeaturedIn.add(product.productId)
 
-			product.productContent.forEach((productContent: SKCProductContent) => {
+			product.productContent.forEach((productContent: YGOProductContent) => {
 				const productReleaseDate = Dates.fromYYYYMMDDToDate(product.productReleaseDate)
 				uniqueRarityPrintings = new Set([...uniqueRarityPrintings, ...productContent.rarities])
 

@@ -10,8 +10,8 @@ import LooksOneTwoToneIcon from '@mui/icons-material/LooksOneTwoTone'
 import LooksTwoTwoToneIcon from '@mui/icons-material/LooksTwoTwoTone'
 
 type BanListContentProps = {
-	normalFormatContent: SKCBanListContentNormalFormat
-	dlFormatContent: SKCBanListContentDuelLinksFormat
+	normalFormatContent: YGOBanListContentNormalFormat
+	dlFormatContent: YGOBanListContentDLFormat
 	format: string
 	isFetchingBanList: boolean
 	isFetchingBanListNewContent: boolean

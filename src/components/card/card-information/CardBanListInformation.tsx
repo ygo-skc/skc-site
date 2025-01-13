@@ -7,16 +7,16 @@ import { AcceptableBanListFormat } from '../../../helper/BanListUtil'
 import { DatedListItem, Hint } from 'skc-rcl'
 
 type CardBanListInformationProps = {
-	restrictedIn: RestrictedIn
+	restrictedIn: Restrictions
 }
 
 type BanListFormatButtonProps = {
 	format: AcceptableBanListFormat
-	restrictedIn: RestrictedIn
+	restrictedIn: Restrictions
 	setFormat: React.Dispatch<React.SetStateAction<AcceptableBanListFormat>>
 }
 
-function determineFormat(restrictedIn: RestrictedIn): AcceptableBanListFormat {
+function determineFormat(restrictedIn: Restrictions): AcceptableBanListFormat {
 	if (restrictedIn['TCG'].length !== 0) {
 		return AcceptableBanListFormat.TCG
 	} else if (restrictedIn['MD'].length !== 0) {
@@ -67,7 +67,7 @@ const CardBanListInformation: FunctionComponent<CardBanListInformationProps> = (
 
 	useEffect(() => {
 		startTransition(() => {
-			const content: JSX.Element[] = restrictedIn[format].slice(0, loadAll ? restrictedIn[format].length : initNumItems).map((banList: SKCBanListInstance) => {
+			const content: JSX.Element[] = restrictedIn[format].slice(0, loadAll ? restrictedIn[format].length : initNumItems).map((banList: YGOCardRestrictionStatus) => {
 				const banListEffectiveDate = Dates.fromYYYYMMDDToDate(banList.banListDate)
 				return (
 					<DatedListItem

@@ -24,7 +24,7 @@ const UpcomingTCGProducts = () => {
 	useEffect(() => {
 		FetchHandler.handleFetch(
 			`${DownstreamServices.HEART_API_ENDPOINTS.events}?service=skc&tags=product-release`,
-			(eventOutput: HeartApiEventOutput) => {
+			(eventOutput: HeartApiEvent) => {
 				const eUI = eventOutput.events.map((event: HeartApiEventItem) => (
 					<EventItem
 						key={`${event.name} ${event.createdAt}`}

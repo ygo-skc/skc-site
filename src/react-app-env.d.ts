@@ -1,46 +1,6 @@
 /// <reference types="react-scripts" />
 
-declare type YGOCard = {
-	cardID: string
-	cardName: string
-	cardColor: YGOCardColor
-	cardAttribute?: string
-	cardEffect: string
-	monsterType?: string
-	monsterAssociation?: SKCMonsterAssociation
-	monsterAttack?: string
-	monsterDefense?: string
-}
-
-declare type BrowseCriteria = {
-	name: string
-	value: string
-}
-
-declare type YGOProductBrowseResults = {
-	locale: string
-	products: YGOProductInfo[]
-}
-
-declare type YGOProduct = {
-	productId: string
-	productLocale: string
-	productName: string
-	productType: string
-	productSubType: string
-	productReleaseDate: string
-	productTotal: number
-}
-
-declare type YGOProductInfo = YGOProductStats &
-	YGOProduct & {
-		productContent: SKCProductContent[]
-	}
-
-declare type YGOProductStats = {
-	productRarityStats: { [key: string]: number }
-	cards: YGOCard[]
-}
+// yugioh card and suggestions
 
 declare type YGOCardColor =
 	| 'normal'
@@ -61,75 +21,91 @@ declare type YGOCardColor =
 	| 'err'
 	| undefined
 
-declare type YouTubeUploads = {
-	thumbnailImg: HTMLImageElement
-	title: string
-	url: string
+declare type YGOCard = {
+	cardID: string
+	cardName: string
+	cardColor: YGOCardColor
+	cardAttribute?: string
+	cardEffect: string
+	monsterType?: string
+	monsterAssociation?: MonsterAssociation
+	monsterAttack?: string
+	monsterDefense?: string
 }
 
-// SKC API related type declarations
-
-declare type SKCBanListDate = {
-	effectiveDate: string
+declare type MonsterAssociation = {
+	level: number
+	rank: number
+	scaleRating: number
+	linkRating: number
+	linkArrows: string[]
 }
 
-declare type SKCBanListDates = {
-	banListDates: SKCBanListDate[]
+declare type YGOCardInfo = YGOCard & {
+	restrictedIn: Restrictions
+	foundIn: YGOProductInfo[]
 }
 
-declare type SKCBanListContentNormalFormat = {
-	forbidden: YGOCard[]
-	limited: YGOCard[]
-	semiLimited: YGOCard[]
-	numForbidden: number
-	numLimited: number
-	numSemiLimited: number
+declare type YGOCardRestrictionStatus = {
+	banListDate: string
+	cardID: string
+	banStatus: string
 }
 
-declare type SKCBanListRemovedCards = {
-	removedCards: SKCCardsPreviousBanListStatus[]
-	numRemoved: number
+declare type Restrictions = {
+	TCG: YGOCardRestrictionStatus[]
+	MD: YGOCardRestrictionStatus[]
+	DL: YGOCardRestrictionStatus[]
 }
 
-declare type SKCBanListNewCardsNormalFormat = {
-	newForbidden: SKCCardsPreviousBanListStatus[]
-	newLimited: SKCCardsPreviousBanListStatus[]
-	newSemiLimited: SKCCardsPreviousBanListStatus[]
-	numNewForbidden: number
-	numNewLimited: number
-	numNewSemiLimited: number
+declare type YGOCardReference = {
+	occurrences: number
+	card: YGOCard
 }
 
-declare type SKCBanListDiffContentNormalFormat = SKCBanListRemovedCards & SKCBanListNewCardsNormalFormat
-
-declare type SKCBanListContentDuelLinksFormat = {
-	forbidden: YGOCard[]
-	limitedOne: YGOCard[]
-	limitedTwo: YGOCard[]
-	limitedThree: YGOCard[]
-	numForbidden: number
-	numLimitedOne: number
-	numLimitedTwo: number
-	numLimitedThree: number
+declare type YGOCardSuggestion = {
+	namedMaterials: YGOCardReference[]
+	namedReferences: YGOCardReference[]
+	hasSelfReference: boolean
+	materialArchetypes: string[]
+	referencedArchetypes: string[]
 }
 
-declare type SKCBanListRemovedCardsDuelLinksFormat = {
-	removedCards: SKCCardsPreviousBanListStatus[]
-	numRemoved: number
+declare type YGOCardSupport = {
+	card: YGOCard
+	referencedBy: YGOCardReference[]
+	materialFor: YGOCardReference[]
 }
 
-declare type SKCBanListNewCardsDuelLinksFormat = {
-	newForbidden: SKCCardsPreviousBanListStatus[]
-	newLimitedOne: SKCCardsPreviousBanListStatus[]
-	newLimitedTwo: SKCCardsPreviousBanListStatus[]
-	newLimitedThree: SKCCardsPreviousBanListStatus[]
-	numNewForbidden: number
-	numNewLimitedOne: number
-	numNewLimitedTwo: number
-	numNewLimitedThree: number
+// yugioh deck
+
+declare type YGODeck = {
+	id: string
+	name: string
+	listContent: string
+	VideoUrl: string
+	uniqueCards: number
+	deckMascots: string[]
+	numMainDeckCards: number
+	numExtraDeckCards: number
+	tags: string[]
+	createdAt: Date
+	updatedAt: Date
+	mainDeck: null
+	extraDeck: null
 }
 
-declare type SKCBanListDiffContentDuelLinksFormat = SKCBanListRemovedCardsDuelLinksFormat & SKCBanListNewCardsDuelLinksFormat
+// yugioh card browse and search
+
+declare type YGOCardBrowseCriteria = {
+	name: string
+	value: string
+}
+
+declare type YGOProductBrowseResults = {
+	locale: string
+	products: YGOProductInfo[]
+}
 
 declare type SKCCardBrowseCriteria = {
 	cardColors: string[]
@@ -147,28 +123,111 @@ declare type SKCCardBrowseResults = {
 	requestedCriteria: SKCCardBrowseCriteria
 }
 
-declare type SKCCardsPreviousBanListStatus = {
-	card: YGOCard
-	previousBanStatus: string
+// yugioh product
+
+declare type YGOProduct = {
+	productId: string
+	productLocale: string
+	productName: string
+	productType: string
+	productSubType: string
+	productReleaseDate: string
+	productTotal: number
 }
 
-declare type SKCMonsterAssociation = {
-	level: number
-	rank: number
-	scaleRating: number
-	linkRating: number
-	linkArrows: string[]
+declare type YGOProductInfo = YGOProductStats &
+	YGOProduct & {
+		productContent: YGOProductContent[]
+	}
+
+declare type YGOProductStats = {
+	productRarityStats: { [key: string]: number }
+	cards: YGOCard[]
 }
 
-declare type SKCProductContent = {
+declare type YGOProductContent = {
 	productPosition: string
 	rarities: string[]
 	card: YGOCard
 }
 
-// Heart API related type declarations
+declare type ProductCardSuggestion = {
+	suggestions: YGOCardSuggestion
+	support: YGOCardSupport
+}
 
-declare type HeartApiYouTubeUpload = {
+// yugioh ban list
+
+declare type YGOBanListDate = {
+	effectiveDate: string
+}
+
+declare type YGOBanListDates = {
+	banListDates: YGOBanListDate[]
+}
+
+declare type YGOBanListContentNormalFormat = {
+	forbidden: YGOCard[]
+	limited: YGOCard[]
+	semiLimited: YGOCard[]
+	numForbidden: number
+	numLimited: number
+	numSemiLimited: number
+}
+
+declare type YGOBanListRemovedCards = {
+	removedCards: YGOCardsPreviousBanListStatus[]
+	numRemoved: number
+}
+
+declare type YGOBanListNewCardsNormalFormat = {
+	newForbidden: YGOCardsPreviousBanListStatus[]
+	newLimited: YGOCardsPreviousBanListStatus[]
+	newSemiLimited: YGOCardsPreviousBanListStatus[]
+	numNewForbidden: number
+	numNewLimited: number
+	numNewSemiLimited: number
+}
+
+declare type YGOBanListDiffContentNormalFormat = YGOBanListRemovedCards & YGOBanListNewCardsNormalFormat
+
+declare type YGOBanListContentDLFormat = {
+	forbidden: YGOCard[]
+	limitedOne: YGOCard[]
+	limitedTwo: YGOCard[]
+	limitedThree: YGOCard[]
+	numForbidden: number
+	numLimitedOne: number
+	numLimitedTwo: number
+	numLimitedThree: number
+}
+
+declare type YGOBanListRemovedCardsDLFormat = {
+	removedCards: YGOCardsPreviousBanListStatus[]
+	numRemoved: number
+}
+
+declare type YGOBanListNewCardsDLFormat = {
+	newForbidden: YGOCardsPreviousBanListStatus[]
+	newLimitedOne: YGOCardsPreviousBanListStatus[]
+	newLimitedTwo: YGOCardsPreviousBanListStatus[]
+	newLimitedThree: YGOCardsPreviousBanListStatus[]
+	numNewForbidden: number
+	numNewLimitedOne: number
+	numNewLimitedTwo: number
+	numNewLimitedThree: number
+}
+
+declare type YGOBanListDiffContentDLFormat = YGOBanListRemovedCardsDLFormat & YGOBanListNewCardsDLFormat
+
+declare type YGOCardsPreviousBanListStatus = {
+	card: YGOCard
+	previousBanStatus: string
+}
+
+// heart api
+
+declare type YouTubeUpload = {
 	id: string
 	title: string
 	description: string
@@ -177,20 +236,13 @@ declare type HeartApiYouTubeUpload = {
 	url: string
 }
 
-declare type HeartApiMessageOutput = {
-	service: string
-	messages: HeartApiMessageItem[]
-}
-
-declare type HeartApiMessageItem = {
+declare type YouTubeUploads = {
+	thumbnailImg: HTMLImageElement
 	title: string
-	content: string
-	tags: string[]
-	createdAt: string
-	updatedAt: string
+	url: string
 }
 
-declare type HeartApiEventOutput = {
+declare type HeartApiEvent = {
 	service: string
 	events: HeartApiEventItem[]
 }
@@ -206,59 +258,15 @@ declare type HeartApiEventItem = {
 	updatedAt: string
 }
 
-declare type Deck = {
-	id: string
-	name: string
-	listContent: string
-	VideoUrl: string
-	uniqueCards: number
-	deckMascots: string[]
-	numMainDeckCards: number
-	numExtraDeckCards: number
+declare type HeartApiMessage = {
+	service: string
+	messages: HeartApiMessageItem[]
+}
+
+declare type HeartApiMessageItem = {
+	title: string
+	content: string
 	tags: string[]
-	createdAt: Date
-	updatedAt: Date
-	mainDeck: null
-	extraDeck: null
-}
-
-declare type CardReference = {
-	occurrences: number
-	card: YGOCard
-}
-
-declare type CardSuggestionOutput = {
-	namedMaterials: CardReference[]
-	namedReferences: CardReference[]
-	hasSelfReference: boolean
-	materialArchetypes: string[]
-	referencedArchetypes: string[]
-}
-
-declare type CardSupportOutput = {
-	card: YGOCard
-	referencedBy: CardReference[]
-	materialFor: CardReference[]
-}
-
-declare type ProductCardSuggestionOutput = {
-	suggestions: CardSuggestionOutput
-	support: CardSupportOutput
-}
-
-declare type SKCBanListInstance = {
-	banListDate: string
-	cardID: string
-	banStatus: string
-}
-
-declare type RestrictedIn = {
-	TCG: SKCBanListInstance[]
-	MD: SKCBanListInstance[]
-	DL: SKCBanListInstance[]
-}
-
-declare type SKCCardInfo = YGOCard & {
-	restrictedIn: RestrictedIn
-	foundIn: YGOProductInfo[]
+	createdAt: string
+	updatedAt: string
 }

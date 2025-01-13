@@ -11,13 +11,13 @@ import cardBrowseCriteriaSearchReducer, { CardBrowseCriteriaSearchReducerActionT
 
 const CardBrowse: FC<{
 	skcCardBrowseCriteriaOutput: SKCCardBrowseCriteria
-	selectedCriteria: BrowseCriteria[]
+	selectedCriteria: YGOCardBrowseCriteria[]
 	browseCriteriaDispatch: React.Dispatch<CardBrowseReducerAction>
 }> = ({ skcCardBrowseCriteriaOutput, selectedCriteria, browseCriteriaDispatch }) => {
 	const [{ browseInput, browseCriteria }, browseCriteriaSearchDispatch] = useReducer(cardBrowseCriteriaSearchReducer, { browseInput: '', browseCriteria: [] })
 
 	useEffect(() => {
-		const criteria: BrowseCriteria[] = []
+		const criteria: YGOCardBrowseCriteria[] = []
 
 		Object.keys(skcCardBrowseCriteriaOutput).forEach((criteriaName: string) => {
 			const criteriaNameKey = criteriaName as keyof typeof skcCardBrowseCriteriaOutput
@@ -39,10 +39,10 @@ const CardBrowse: FC<{
 		browseCriteriaSearchDispatch({ type: CardBrowseCriteriaSearchReducerActionType.UPDATE_BROWSE_CRITERIA, browseCriteria: criteria })
 	}, [skcCardBrowseCriteriaOutput])
 
-	const handleGetOptionLabel = useCallback((option: BrowseCriteria) => option.value, [])
-	const handleGroupBy = useCallback((option: BrowseCriteria) => option.name, [])
+	const handleGetOptionLabel = useCallback((option: YGOCardBrowseCriteria) => option.value, [])
+	const handleGroupBy = useCallback((option: YGOCardBrowseCriteria) => option.name, [])
 	const handleOnChange = useCallback(
-		(_event: React.SyntheticEvent, newValue: BrowseCriteria[]) =>
+		(_event: React.SyntheticEvent, newValue: YGOCardBrowseCriteria[]) =>
 			browseCriteriaDispatch({ type: CardBrowseReducerActionType.UPDATE_SELECTED_CRITERIA, selectedCriteria: newValue }),
 		[browseCriteriaDispatch]
 	)
@@ -53,7 +53,7 @@ const CardBrowse: FC<{
 		[]
 	)
 	const handleRenderOption = useCallback(
-		(props: React.HTMLAttributes<HTMLLIElement>, option: BrowseCriteria) => (
+		(props: React.HTMLAttributes<HTMLLIElement>, option: YGOCardBrowseCriteria) => (
 			<li {...props} className='search-suggestions-parent'>
 				<Typography className='search-suggestion-text search-suggestion-header' variant='body1'>
 					{option.value}

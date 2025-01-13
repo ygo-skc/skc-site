@@ -22,7 +22,7 @@ function Messages() {
 
 	const isDisplayingNotifications = Boolean(messagesAnchor)
 
-	const onMessageDataReceived = (messageData: HeartApiMessageOutput) => {
+	const onMessageDataReceived = (messageData: HeartApiMessage) => {
 		const totalMessages = messageData.messages.length
 
 		let _numNewMessages = 0

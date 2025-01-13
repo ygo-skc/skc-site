@@ -7,7 +7,7 @@ import { Section } from 'skc-rcl'
 
 type CardInformationRelatedContentType = {
 	productInfo: YGOProductInfo[]
-	restrictedIn: RestrictedIn
+	restrictedIn: Restrictions
 	cardName: string
 	cardID: string
 	cardColor: YGOCardColor //should remove "pendulum" suffix for Pendulum cards

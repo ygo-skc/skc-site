@@ -17,7 +17,7 @@ import cardBrowseReducer from '../../reducers/CardBrowseCriteriaReducer'
 const CardDisplayGrid = lazy(() => import('../util/grid/CardDisplayGrid'))
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 
-function generateBrowseQueryURL(selectedCriteria: BrowseCriteria[]) {
+function generateBrowseQueryURL(selectedCriteria: YGOCardBrowseCriteria[]) {
 	const criteriaMap = new Map()
 	criteriaMap.set('cardColors', [])
 	criteriaMap.set('attributes', [])
@@ -27,7 +27,7 @@ function generateBrowseQueryURL(selectedCriteria: BrowseCriteria[]) {
 	criteriaMap.set('ranks', [])
 	criteriaMap.set('linkRatings', [])
 
-	selectedCriteria.forEach((criteria: BrowseCriteria) => {
+	selectedCriteria.forEach((criteria: YGOCardBrowseCriteria) => {
 		switch (criteria.name) {
 			case 'cardColors':
 			case 'attributes':

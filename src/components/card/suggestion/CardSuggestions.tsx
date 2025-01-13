@@ -19,8 +19,8 @@ const GenericNonBreakingErr = lazy(() =>
 	})
 )
 
-type CardSuggestionProps = Omit<CardSuggestionOutput, 'card' | 'materialArchetypes' | 'referencedArchetypes' | 'hasSelfReference'> &
-	Omit<CardSupportOutput, 'card'> & {
+type CardSuggestionProps = Omit<YGOCardSuggestion, 'card' | 'materialArchetypes' | 'referencedArchetypes' | 'hasSelfReference'> &
+	Omit<YGOCardSupport, 'card'> & {
 		cardColor: YGOCardColor
 		cardName: string
 		isFetchingSuggestions: boolean
@@ -54,9 +54,9 @@ const CardSuggestions: FC<CardSuggestionProps> = ({
 		return namedMaterials.length === 0 && namedReferences.length === 0 && materialFor.length === 0 && referencedBy.length === 0
 	}, [namedMaterials, materialFor, namedReferences, referencedBy])
 
-	const transformReferences = useCallback((references: CardReference[]): React.JSX.Element[] => {
+	const transformReferences = useCallback((references: YGOCardReference[]): React.JSX.Element[] => {
 		return references !== null
-			? references.map((reference: CardReference) => {
+			? references.map((reference: YGOCardReference) => {
 					reference.card.cardEffect = decodeHTML(reference.card.cardEffect)
 					return (
 						<a key={reference.card.cardID} href={`/card/${reference.card.cardID}`} className='suggested-ygo-card-wrapper aggregate-anchor'>
@@ -67,9 +67,9 @@ const CardSuggestions: FC<CardSuggestionProps> = ({
 			: []
 	}, [])
 
-	const transformSupport = useCallback((support: CardReference[]): React.JSX.Element[] => {
+	const transformSupport = useCallback((support: YGOCardReference[]): React.JSX.Element[] => {
 		return support !== null
-			? support.map((reference: CardReference) => {
+			? support.map((reference: YGOCardReference) => {
 					const card = reference.card
 					card.cardEffect = decodeHTML(card.cardEffect)
 					return (
