@@ -1,30 +1,69 @@
 /// <reference types="react-scripts" />
 
-// yugioh card and suggestions
+declare namespace YGOCard {
+	type Color =
+		| 'normal'
+		| 'effect'
+		| 'ritual'
+		| 'fusion'
+		| 'synchro'
+		| 'xyz'
+		| 'pendulum-normal'
+		| 'pendulum-effect'
+		| 'pendulum-fusion'
+		| 'pendulum-xyz'
+		| 'pendulum-synchro'
+		| 'token'
+		| 'link'
+		| 'spell'
+		| 'trap'
+		| 'err'
+		| undefined
 
-declare type YGOCardColor =
-	| 'normal'
-	| 'effect'
-	| 'ritual'
-	| 'fusion'
-	| 'synchro'
-	| 'xyz'
-	| 'pendulum-normal'
-	| 'pendulum-effect'
-	| 'pendulum-fusion'
-	| 'pendulum-xyz'
-	| 'pendulum-synchro'
-	| 'token'
-	| 'link'
-	| 'spell'
-	| 'trap'
-	| 'err'
-	| undefined
+	type MonsterAssociation = {
+		level: number
+		rank: number
+		scaleRating: number
+		linkRating: number
+		linkArrows: string[]
+	}
+
+	type RestrictionStatus = {
+		banListDate: string
+		cardID: string
+		banStatus: string
+	}
+
+	declare type Restrictions = {
+		TCG: YGOCard.RestrictionStatus[]
+		MD: YGOCard.RestrictionStatus[]
+		DL: YGOCard.RestrictionStatus[]
+	}
+
+	type Reference = {
+		occurrences: number
+		card: YGOCard
+	}
+
+	type Suggestion = {
+		namedMaterials: YGOCard.Reference[]
+		namedReferences: YGOCard.Reference[]
+		hasSelfReference: boolean
+		materialArchetypes: string[]
+		referencedArchetypes: string[]
+	}
+
+	type Support = {
+		card: YGOCard
+		referencedBy: YGOCard.Reference[]
+		materialFor: YGOCard.Reference[]
+	}
+}
 
 declare type YGOCard = {
 	cardID: string
 	cardName: string
-	cardColor: YGOCardColor
+	cardColor: YGOCard.Color
 	cardAttribute?: string
 	cardEffect: string
 	monsterType?: string
@@ -33,51 +72,10 @@ declare type YGOCard = {
 	monsterDefense?: string
 }
 
-declare type MonsterAssociation = {
-	level: number
-	rank: number
-	scaleRating: number
-	linkRating: number
-	linkArrows: string[]
-}
-
 declare type YGOCardInfo = YGOCard & {
 	restrictedIn: Restrictions
 	foundIn: YGOProductInfo[]
 }
-
-declare type YGOCardRestrictionStatus = {
-	banListDate: string
-	cardID: string
-	banStatus: string
-}
-
-declare type Restrictions = {
-	TCG: YGOCardRestrictionStatus[]
-	MD: YGOCardRestrictionStatus[]
-	DL: YGOCardRestrictionStatus[]
-}
-
-declare type YGOCardReference = {
-	occurrences: number
-	card: YGOCard
-}
-
-declare type YGOCardSuggestion = {
-	namedMaterials: YGOCardReference[]
-	namedReferences: YGOCardReference[]
-	hasSelfReference: boolean
-	materialArchetypes: string[]
-	referencedArchetypes: string[]
-}
-
-declare type YGOCardSupport = {
-	card: YGOCard
-	referencedBy: YGOCardReference[]
-	materialFor: YGOCardReference[]
-}
-
-// yugioh deck
 
 declare type YGODeck = {
 	id: string
@@ -225,48 +223,48 @@ declare type YGOCardsPreviousBanListStatus = {
 	previousBanStatus: string
 }
 
-// heart api
+declare namespace HeartAPI {
+	type YouTubeUpload = {
+		id: string
+		title: string
+		description: string
+		publishedAt: Date
+		thumbnailUrl: string
+		url: string
+	}
 
-declare type YouTubeUpload = {
-	id: string
-	title: string
-	description: string
-	publishedAt: Date
-	thumbnailUrl: string
-	url: string
-}
+	type YouTubeUploads = {
+		thumbnailImg: HTMLImageElement
+		title: string
+		url: string
+	}
 
-declare type YouTubeUploads = {
-	thumbnailImg: HTMLImageElement
-	title: string
-	url: string
-}
+	type Event = {
+		service: string
+		events: HeartAPI.EventItem[]
+	}
 
-declare type HeartApiEvent = {
-	service: string
-	events: HeartApiEventItem[]
-}
+	type EventItem = {
+		name: string
+		notes: string
+		location: string
+		eventDate: string
+		url: string
+		tags: string[]
+		createdAt: string
+		updatedAt: string
+	}
 
-declare type HeartApiEventItem = {
-	name: string
-	notes: string
-	location: string
-	eventDate: string
-	url: string
-	tags: string[]
-	createdAt: string
-	updatedAt: string
-}
+	type Message = {
+		service: string
+		messages: HeartApiMessageItem[]
+	}
 
-declare type HeartApiMessage = {
-	service: string
-	messages: HeartApiMessageItem[]
-}
-
-declare type HeartApiMessageItem = {
-	title: string
-	content: string
-	tags: string[]
-	createdAt: string
-	updatedAt: string
+	type MessageInstance = {
+		title: string
+		content: string
+		tags: string[]
+		createdAt: string
+		updatedAt: string
+	}
 }

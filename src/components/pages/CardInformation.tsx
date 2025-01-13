@@ -67,7 +67,7 @@ const CardInformation = () => {
 		// fetch suggestions
 		FetchHandler.handleFetch(
 			`${DownstreamServices.SKC_SUGGESTION_ENDPOINTS.cardSuggestions}/${state.card.cardID}`,
-			(cardSuggestionOutput: YGOCardSuggestion) => {
+			(cardSuggestionOutput: YGOCard.Suggestion) => {
 				cardInformationDispatch({
 					type: CardInformationType.UPDATE_SUGGESTIONS,
 					suggestions: cardSuggestionOutput,
@@ -82,7 +82,7 @@ const CardInformation = () => {
 
 		FetchHandler.handleFetch(
 			`${DownstreamServices.SKC_SUGGESTION_ENDPOINTS.cardSupport}/${state.card.cardID}`,
-			(cardSupportOutput: YGOCardSupport) => {
+			(cardSupportOutput: YGOCard.Support) => {
 				cardInformationDispatch({
 					type: CardInformationType.UPDATE_SUPPORT,
 					support: cardSupportOutput,
@@ -115,7 +115,7 @@ const CardInformation = () => {
 			</Suspense>
 
 			<div className='headline-v1'>
-				<Section sectionHeaderBackground={state.card.cardColor !== undefined ? (state.card.cardColor?.replace(/Pendulum-/gi, '') as YGOCardColor) : ''} sectionName='Card Stats'>
+				<Section sectionHeaderBackground={state.card.cardColor !== undefined ? (state.card.cardColor?.replace(/Pendulum-/gi, '') as YGOCard.Color) : ''} sectionName='Card Stats'>
 					<div className='section-content'>
 						<CardImageRounded size='md' cardID={state.card.cardID} loading='eager' />
 						<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='10rem' />}>
@@ -209,7 +209,7 @@ const CardInformation = () => {
 				) : (
 					<CardInformationRelatedContent
 						cardName={state.card.cardName}
-						cardColor={state.card.cardColor?.replace(/Pendulum-/gi, '') as YGOCardColor}
+						cardColor={state.card.cardColor?.replace(/Pendulum-/gi, '') as YGOCard.Color}
 						cardID={state.card.cardID}
 						productInfo={state.productInfo}
 						restrictedIn={state.restrictionInfo}

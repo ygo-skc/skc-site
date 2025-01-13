@@ -7,10 +7,10 @@ import { Section } from 'skc-rcl'
 
 type CardInformationRelatedContentType = {
 	productInfo: YGOProductInfo[]
-	restrictedIn: Restrictions
+	restrictedIn: YGOCard.Restrictions
 	cardName: string
 	cardID: string
-	cardColor: YGOCardColor //should remove "pendulum" suffix for Pendulum cards
+	cardColor: YGOCard.Color //should remove "pendulum" suffix for Pendulum cards
 }
 
 const CardInformationRelatedContent: FC<CardInformationRelatedContentType> = ({ cardColor, productInfo, restrictedIn, cardID }) => {

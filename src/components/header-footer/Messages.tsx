@@ -22,7 +22,7 @@ function Messages() {
 
 	const isDisplayingNotifications = Boolean(messagesAnchor)
 
-	const onMessageDataReceived = (messageData: HeartApiMessage) => {
+	const onMessageDataReceived = (messageData: HeartAPI.Message) => {
 		const totalMessages = messageData.messages.length
 
 		let _numNewMessages = 0
@@ -31,7 +31,7 @@ function Messages() {
 
 		startTransition(() => {
 			setMessagesList(
-				messageData.messages.map((message: HeartApiMessageItem, index: number) => {
+				messageData.messages.map((message: HeartAPI.MessageInstance, index: number) => {
 					const creationDate = new Date(message.createdAt)
 
 					if (previousNewestMessageDate < creationDate) {

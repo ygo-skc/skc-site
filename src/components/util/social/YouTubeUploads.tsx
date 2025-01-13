@@ -3,7 +3,7 @@ import { Typography, Link, Skeleton } from '@mui/material'
 
 import VideoInfoContainer from './VideoInfoContainer'
 
-const YouTubeUploads: FC<{ youtubeData: YouTubeUpload[]; channelName: string; channelId: string; channelDescription: string }> = ({
+const YouTubeUploads: FC<{ youtubeData: HeartAPI.YouTubeUpload[]; channelName: string; channelId: string; channelDescription: string }> = ({
 	youtubeData,
 	channelName,
 	channelId,
@@ -15,7 +15,7 @@ const YouTubeUploads: FC<{ youtubeData: YouTubeUpload[]; channelName: string; ch
 	useEffect(() => {
 		if (youtubeData !== undefined) {
 			setVideos(
-				youtubeData.map((item: YouTubeUpload) => {
+				youtubeData.map((item: HeartAPI.YouTubeUpload) => {
 					const img = new Image()
 					img.src = item.thumbnailUrl
 					return <VideoInfoContainer key={item.title} thumbnailImg={img} title={item.title} url={item.url} />

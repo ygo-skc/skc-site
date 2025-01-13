@@ -18,7 +18,7 @@ type YouTubeChannelID = {
 }
 
 type UploadsResponse = {
-	videos: YouTubeUpload[]
+	videos: HeartAPI.YouTubeUpload[]
 	total: number
 }
 
@@ -39,7 +39,7 @@ const channelDescription = {
 
 const YouTubeData: FC<YouTubeChannelID> = ({ channel }) => {
 	const channelId = validChannelIds[channel]
-	const [youtubeUploadData, setYoutubeUploadData] = useState<YouTubeUpload[]>([])
+	const [youtubeUploadData, setYoutubeUploadData] = useState<HeartAPI.YouTubeUpload[]>([])
 	const [isFetchingData, setIsFetchingData] = useState(true)
 	const [errFetchingData, setErrFetchingData] = useState(false)
 

@@ -8,7 +8,7 @@ import { Dates } from '../../helper/Dates'
 
 type MessageItemComponentArgs = {
 	creationDate: Date
-	message: HeartApiMessageItem
+	message: HeartAPI.MessageInstance
 	isLastMessage: boolean
 }
 

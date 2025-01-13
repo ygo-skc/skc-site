@@ -19,9 +19,9 @@ const GenericNonBreakingErr = lazy(() =>
 	})
 )
 
-type CardSuggestionProps = Omit<YGOCardSuggestion, 'card' | 'materialArchetypes' | 'referencedArchetypes' | 'hasSelfReference'> &
-	Omit<YGOCardSupport, 'card'> & {
-		cardColor: YGOCardColor
+type CardSuggestionProps = Omit<YGOCard.Suggestion, 'card' | 'materialArchetypes' | 'referencedArchetypes' | 'hasSelfReference'> &
+	Omit<YGOCard.Support, 'card'> & {
+		cardColor: YGOCard.Color
 		cardName: string
 		isFetchingSuggestions: boolean
 		isFetchingSupport: boolean
@@ -54,9 +54,9 @@ const CardSuggestions: FC<CardSuggestionProps> = ({
 		return namedMaterials.length === 0 && namedReferences.length === 0 && materialFor.length === 0 && referencedBy.length === 0
 	}, [namedMaterials, materialFor, namedReferences, referencedBy])
 
-	const transformReferences = useCallback((references: YGOCardReference[]): React.JSX.Element[] => {
+	const transformReferences = useCallback((references: YGOCard.Reference[]): React.JSX.Element[] => {
 		return references !== null
-			? references.map((reference: YGOCardReference) => {
+			? references.map((reference: YGOCard.Reference) => {
 					reference.card.cardEffect = decodeHTML(reference.card.cardEffect)
 					return (
 						<a key={reference.card.cardID} href={`/card/${reference.card.cardID}`} className='suggested-ygo-card-wrapper aggregate-anchor'>
@@ -67,9 +67,9 @@ const CardSuggestions: FC<CardSuggestionProps> = ({
 			: []
 	}, [])
 
-	const transformSupport = useCallback((support: YGOCardReference[]): React.JSX.Element[] => {
+	const transformSupport = useCallback((support: YGOCard.Reference[]): React.JSX.Element[] => {
 		return support !== null
-			? support.map((reference: YGOCardReference) => {
+			? support.map((reference: YGOCard.Reference) => {
 					const card = reference.card
 					card.cardEffect = decodeHTML(card.cardEffect)
 					return (
@@ -84,7 +84,7 @@ const CardSuggestions: FC<CardSuggestionProps> = ({
 	const LoadingUI = <Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='50rem' />
 
 	return (
-		<Section sectionHeaderBackground={cardColor !== undefined ? (cardColor?.replace(/Pendulum-/gi, '') as YGOCardColor) : ''} sectionName='Suggestions'>
+		<Section sectionHeaderBackground={cardColor !== undefined ? (cardColor?.replace(/Pendulum-/gi, '') as YGOCard.Color) : ''} sectionName='Suggestions'>
 			<div className='section-content'>
 				<Suspense fallback={LoadingUI}>
 					{!isLoading() && !hasError() && hasNoContent() && <Hint fullWidth={false}>Nothing here 🤔</Hint>}

@@ -19,13 +19,13 @@ const UpcomingTCGProducts = () => {
 	const [errFetchingData, setErrFetchingData] = useState(false)
 
 	const [eventDialogIsOpen, setEventDialogIsOpen] = useState(false)
-	const [eventDialogEventData, setEventDialogEventData] = useState<HeartApiEventItem>({} as HeartApiEventItem)
+	const [eventDialogEventData, setEventDialogEventData] = useState<HeartAPI.EventItem>({} as HeartAPI.EventItem)
 
 	useEffect(() => {
 		FetchHandler.handleFetch(
 			`${DownstreamServices.HEART_API_ENDPOINTS.events}?service=skc&tags=product-release`,
-			(eventOutput: HeartApiEvent) => {
-				const eUI = eventOutput.events.map((event: HeartApiEventItem) => (
+			(eventOutput: HeartAPI.Event) => {
+				const eUI = eventOutput.events.map((event: HeartAPI.EventItem) => (
 					<EventItem
 						key={`${event.name} ${event.createdAt}`}
 						isWithinDialog={false}
