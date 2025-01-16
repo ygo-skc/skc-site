@@ -10,19 +10,19 @@ export enum BanListReducerType {
 type Fetching = { isFetchingBanListNewContent: boolean; isFetchingBanListContent: boolean; isFetchingBanListRemovedContent: boolean }
 
 type BanListReducerAction =
-	| (YGOBanListContentNormalFormat & {
+	| (YGOBanList.NormalFormatContent & {
 			type: BanListReducerType.UPDATE_LIST_CONTENT
 	  })
-	| (YGOBanListContentDLFormat & {
+	| (YGOBanList.DLFormatContent & {
 			type: BanListReducerType.UPDATE_LIST_CONTENT_DL_FORMAT
 	  })
-	| (YGOBanListRemovedCards & { type: BanListReducerType.UPDATE_REMOVED_CONTENT })
-	| (YGOBanListNewCardsNormalFormat & { type: BanListReducerType.UPDATE_NEW_CONTENT })
-	| (YGOBanListNewCardsDLFormat & { type: BanListReducerType.UPDATE_NEW_CONTENT_DL_FORMAT })
+	| (YGOBanList.NormalFormatRemovedCards & { type: BanListReducerType.UPDATE_REMOVED_CONTENT })
+	| (YGOBanList.NormalFormatNewlyAdded & { type: BanListReducerType.UPDATE_NEW_CONTENT })
+	| (YGOBanList.DLFormatNewlyAdded & { type: BanListReducerType.UPDATE_NEW_CONTENT_DL_FORMAT })
 	| { type: BanListReducerType.FETCHING_INFO }
 
 export function currentBanListReducer(
-	state: YGOBanListContentNormalFormat & YGOBanListContentDLFormat & YGOBanListDiffContentNormalFormat & YGOBanListDiffContentDLFormat & Fetching,
+	state: YGOBanList.NormalFormatContent & YGOBanList.DLFormatContent & YGOBanList.NormalFormatDiff & YGOBanList.DLFormatDiff & Fetching,
 	action: BanListReducerAction
 ) {
 	switch (action.type) {

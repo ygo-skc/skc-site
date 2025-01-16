@@ -10,8 +10,8 @@ import LooksOneTwoToneIcon from '@mui/icons-material/LooksOneTwoTone'
 import LooksTwoTwoToneIcon from '@mui/icons-material/LooksTwoTwoTone'
 
 type BanListContentProps = {
-	normalFormatContent: YGOBanListContentNormalFormat
-	dlFormatContent: YGOBanListContentDLFormat
+	normalFormatContent: YGOBanList.NormalFormatContent
+	dlFormatContent: YGOBanList.DLFormatContent
 	format: string
 	isFetchingBanList: boolean
 	isFetchingBanListNewContent: boolean

@@ -5,7 +5,7 @@ import { YGOCardWithPreviousBanStatus } from 'skc-rcl'
 
 type CardsWithDifferentStatusProps = {
 	newStatusName: 'Forbidden' | 'Limited' | 'Semi Limited' | 'Unlimited' | 'Limited One' | 'Limited Two' | 'Limited Three'
-	cards: YGOCardsPreviousBanListStatus[]
+	cards: YGOBanList.PreviousBanListStatus[]
 	numCards: number
 }
 
@@ -14,7 +14,7 @@ const CardsWithDifferentStatus: FC<CardsWithDifferentStatusProps> = ({ newStatus
 
 	useEffect(() => {
 		setCardsWithNewStatus(
-			cards.map((newStatus: YGOCardsPreviousBanListStatus) => {
+			cards.map((newStatus: YGOBanList.PreviousBanListStatus) => {
 				const card: YGOCard.Deets = newStatus.card
 				card.cardEffect = decodeHTML(card.cardEffect)
 

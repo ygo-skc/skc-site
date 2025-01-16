@@ -153,73 +153,73 @@ declare namespace YGOProduct {
 	}
 }
 
-// yugioh ban list
+declare namespace YGOBanList {
+	type Date = {
+		effectiveDate: string
+	}
 
-declare type YGOBanListDate = {
-	effectiveDate: string
-}
+	type Dates = {
+		banListDates: YGOBanList.Date[]
+	}
 
-declare type YGOBanListDates = {
-	banListDates: YGOBanListDate[]
-}
+	type NormalFormatContent = {
+		forbidden: YGOCard.Deets[]
+		limited: YGOCard.Deets[]
+		semiLimited: YGOCard.Deets[]
+		numForbidden: number
+		numLimited: number
+		numSemiLimited: number
+	}
 
-declare type YGOBanListContentNormalFormat = {
-	forbidden: Deets[]
-	limited: Deets[]
-	semiLimited: Deets[]
-	numForbidden: number
-	numLimited: number
-	numSemiLimited: number
-}
+	type NormalFormatRemovedCards = {
+		removedCards: YGOBanList.PreviousBanListStatus[]
+		numRemoved: number
+	}
 
-declare type YGOBanListRemovedCards = {
-	removedCards: YGOCardsPreviousBanListStatus[]
-	numRemoved: number
-}
+	type NormalFormatNewlyAdded = {
+		newForbidden: YGOBanList.PreviousBanListStatus[]
+		newLimited: YGOBanList.PreviousBanListStatus[]
+		newSemiLimited: YGOBanList.PreviousBanListStatus[]
+		numNewForbidden: number
+		numNewLimited: number
+		numNewSemiLimited: number
+	}
 
-declare type YGOBanListNewCardsNormalFormat = {
-	newForbidden: YGOCardsPreviousBanListStatus[]
-	newLimited: YGOCardsPreviousBanListStatus[]
-	newSemiLimited: YGOCardsPreviousBanListStatus[]
-	numNewForbidden: number
-	numNewLimited: number
-	numNewSemiLimited: number
-}
+	type NormalFormatDiff = YGOBanList.NormalFormatRemovedCards & YGOBanList.NormalFormatNewlyAdded
 
-declare type YGOBanListDiffContentNormalFormat = YGOBanListRemovedCards & YGOBanListNewCardsNormalFormat
+	type DLFormatContent = {
+		forbidden: YGOCard.Deets[]
+		limitedOne: YGOCard.Deets[]
+		limitedTwo: YGOCard.Deets[]
+		limitedThree: YGOCard.Deets[]
+		numForbidden: number
+		numLimitedOne: number
+		numLimitedTwo: number
+		numLimitedThree: number
+	}
 
-declare type YGOBanListContentDLFormat = {
-	forbidden: Deets[]
-	limitedOne: Deets[]
-	limitedTwo: Deets[]
-	limitedThree: Deets[]
-	numForbidden: number
-	numLimitedOne: number
-	numLimitedTwo: number
-	numLimitedThree: number
-}
+	type DLFormatRemovedCards = {
+		removedCards: YGOBanList.PreviousBanListStatus[]
+		numRemoved: number
+	}
 
-declare type YGOBanListRemovedCardsDLFormat = {
-	removedCards: YGOCardsPreviousBanListStatus[]
-	numRemoved: number
-}
+	type DLFormatNewlyAdded = {
+		newForbidden: YGOBanList.PreviousBanListStatus[]
+		newLimitedOne: YGOBanList.PreviousBanListStatus[]
+		newLimitedTwo: YGOBanList.PreviousBanListStatus[]
+		newLimitedThree: YGOBanList.PreviousBanListStatus[]
+		numNewForbidden: number
+		numNewLimitedOne: number
+		numNewLimitedTwo: number
+		numNewLimitedThree: number
+	}
 
-declare type YGOBanListNewCardsDLFormat = {
-	newForbidden: YGOCardsPreviousBanListStatus[]
-	newLimitedOne: YGOCardsPreviousBanListStatus[]
-	newLimitedTwo: YGOCardsPreviousBanListStatus[]
-	newLimitedThree: YGOCardsPreviousBanListStatus[]
-	numNewForbidden: number
-	numNewLimitedOne: number
-	numNewLimitedTwo: number
-	numNewLimitedThree: number
-}
+	type DLFormatDiff = DLFormatRemovedCards & DLFormatNewlyAdded
 
-declare type YGOBanListDiffContentDLFormat = YGOBanListRemovedCardsDLFormat & YGOBanListNewCardsDLFormat
-
-declare type YGOCardsPreviousBanListStatus = {
-	card: Deets
-	previousBanStatus: string
+	declare type PreviousBanListStatus = {
+		card: Deets
+		previousBanStatus: string
+	}
 }
 
 declare namespace HeartAPI {

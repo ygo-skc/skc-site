@@ -115,11 +115,11 @@ export default function BanList() {
 
 		setSelectedBanList('')
 
-		FetchHandler.handleFetch<YGOBanListDates>(`${DownstreamServices.NAME_maps_ENDPOINT.banListsUrl}?format=${format}`, (json) => {
+		FetchHandler.handleFetch<YGOBanList.Dates>(`${DownstreamServices.NAME_maps_ENDPOINT.banListsUrl}?format=${format}`, (json) => {
 			dateDispatch({
 				type: BanListDateReducerActionType.DATES_RECEIVED,
 				payload: {
-					banListStartDates: json.banListDates.map((item: YGOBanListDate) => item.effectiveDate),
+					banListStartDates: json.banListDates.map((item: YGOBanList.Date) => item.effectiveDate),
 				},
 			})
 		})
@@ -135,7 +135,7 @@ export default function BanList() {
 				type: BanListReducerType.FETCHING_INFO,
 			})
 
-			FetchHandler.handleFetch<YGOBanListNewCardsNormalFormat & YGOBanListNewCardsDLFormat>(
+			FetchHandler.handleFetch<YGOBanList.NormalFormatNewlyAdded & YGOBanList.DLFormatNewlyAdded>(
 				`${DownstreamServices.NAME_maps_ENDPOINT.banListUrl}/${selectedBanList}/new?format=${format}`,
 				(json) => {
 					if (format === 'DL') {
@@ -164,7 +164,7 @@ export default function BanList() {
 				}
 			)
 
-			FetchHandler.handleFetch<YGOBanListRemovedCards>(`${DownstreamServices.NAME_maps_ENDPOINT.banListUrl}/${selectedBanList}/removed?format=${format}`, (json) => {
+			FetchHandler.handleFetch<YGOBanList.NormalFormatRemovedCards>(`${DownstreamServices.NAME_maps_ENDPOINT.banListUrl}/${selectedBanList}/removed?format=${format}`, (json) => {
 				currentBanListDispatch({
 					type: BanListReducerType.UPDATE_REMOVED_CONTENT,
 					removedCards: json.removedCards,
@@ -172,7 +172,7 @@ export default function BanList() {
 				})
 			})
 
-			FetchHandler.handleFetch<YGOBanListContentNormalFormat & YGOBanListContentDLFormat>(
+			FetchHandler.handleFetch<YGOBanList.NormalFormatContent & YGOBanList.DLFormatContent>(
 				`${DownstreamServices.NAME_maps_ENDPOINT.banListUrl}/${selectedBanList}/cards?format=${format}`,
 				(json) => {
 					if (format === 'DL') {
