@@ -1,4 +1,4 @@
-export type CardBrowseCriteriaReducerSearchState = { browseInput: string; browseCriteria: YGOCardBrowseCriteria[] }
+export type CardBrowseCriteriaReducerSearchState = { browseInput: string; browseCriteria: YGOData.CardBrowseValues[] }
 
 export enum CardBrowseCriteriaSearchReducerActionType {
 	UPDATE_INPUT = 'UPDATE INPUT',
@@ -6,7 +6,7 @@ export enum CardBrowseCriteriaSearchReducerActionType {
 }
 
 export type CardBrowseCriteriaSearchReducerAction =
-	| ({ browseCriteria: YGOCardBrowseCriteria[] } & {
+	| ({ browseCriteria: YGOData.CardBrowseValues[] } & {
 			type: CardBrowseCriteriaSearchReducerActionType.UPDATE_BROWSE_CRITERIA
 	  })
 	| ({ browseInput: string } & {

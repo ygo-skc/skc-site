@@ -1,4 +1,4 @@
-export type CardDisplayGridState = { results: YGOCard[]; totalResults: number; totalDisplaying: number; numItemsToLoadWhenNeeded?: number; isLoading?: boolean }
+export type CardDisplayGridState = { results: YGOCard.Deets[]; totalResults: number; totalDisplaying: number; numItemsToLoadWhenNeeded?: number; isLoading?: boolean }
 
 export enum CardDisplayGridStateReducerActionType {
 	CLEAR_GRID = 'CLEAR GRID',

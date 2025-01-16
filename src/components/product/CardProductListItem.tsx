@@ -8,7 +8,7 @@ type CardProductListItemProps = {
 	productID: string
 	productName: string
 	productReleaseDate: Date
-	productContent: YGOProductContent
+	productContent: YGOProduct.Content
 }
 
 const CardProductListItem: FC<CardProductListItemProps> = ({ cardID, productID, productName, productReleaseDate, productContent }) => {

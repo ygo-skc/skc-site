@@ -17,7 +17,7 @@ import cardBrowseReducer from '../../reducers/CardBrowseCriteriaReducer'
 const CardDisplayGrid = lazy(() => import('../util/grid/CardDisplayGrid'))
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 
-function generateBrowseQueryURL(selectedCriteria: YGOCardBrowseCriteria[]) {
+function generateBrowseQueryURL(selectedCriteria: YGOData.CardBrowseValues[]) {
 	const criteriaMap = new Map()
 	criteriaMap.set('cardColors', [])
 	criteriaMap.set('attributes', [])
@@ -27,7 +27,7 @@ function generateBrowseQueryURL(selectedCriteria: YGOCardBrowseCriteria[]) {
 	criteriaMap.set('ranks', [])
 	criteriaMap.set('linkRatings', [])
 
-	selectedCriteria.forEach((criteria: YGOCardBrowseCriteria) => {
+	selectedCriteria.forEach((criteria: YGOData.CardBrowseValues) => {
 		switch (criteria.name) {
 			case 'cardColors':
 			case 'attributes':
@@ -65,14 +65,14 @@ export default function BrowseCards() {
 		isLoading: false,
 	})
 
-	const [skcCardBrowseCriteriaOutput, setSkcCardBrowseCriteriaOutput] = useState<SKCCardBrowseCriteria>({} as SKCCardBrowseCriteria)
+	const [skcCardBrowseCriteriaOutput, setSkcCardBrowseCriteriaOutput] = useState<YGOData.CardBrowseCriteria>({} as YGOData.CardBrowseCriteria)
 
 	const browseSummaryStats: string[][] = []
 	browseSummaryStats.push(['Total', cardGridState.totalResults.toString()])
 	browseSummaryStats.push(['Displaying', cardGridState.totalDisplaying.toString()])
 
 	useEffect(() => {
-		FetchHandler.handleFetch<SKCCardBrowseCriteria>(DownstreamServices.NAME_maps_ENDPOINT.browseCriteria, (json) => {
+		FetchHandler.handleFetch<YGOData.CardBrowseCriteria>(DownstreamServices.NAME_maps_ENDPOINT.browseCriteria, (json) => {
 			setSkcCardBrowseCriteriaOutput(json)
 		})
 	}, [])
@@ -83,7 +83,7 @@ export default function BrowseCards() {
 		} else {
 			cardDisplayGridDispatch({ type: CardDisplayGridStateReducerActionType.LOADING_GRID })
 			startTransition(() => {
-				FetchHandler.handleFetch<SKCCardBrowseResults>(generateBrowseQueryURL(selectedCriteria), (json) => {
+				FetchHandler.handleFetch<YGOData.CardBrowseResults>(generateBrowseQueryURL(selectedCriteria), (json) => {
 					cardDisplayGridDispatch({
 						type: CardDisplayGridStateReducerActionType.INIT_GRID,
 						results: json.results,

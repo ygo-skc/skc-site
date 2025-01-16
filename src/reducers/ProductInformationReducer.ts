@@ -7,8 +7,8 @@ type ProductInformationState = {
 	productSummary: string[][]
 	productRarityStats: { [key: string]: number }
 	productCardSuggestions: {
-		suggestions: Omit<YGOCardSuggestion, 'hasSelfReference'>
-		support: Omit<YGOCardSupport, 'card'>
+		suggestions: Omit<YGOCard.Suggestion, 'hasSelfReference'>
+		support: Omit<YGOCard.Support, 'card'>
 		associatedArchetypes: Set<string>
 		isFetchingData: boolean
 		requestHasError: boolean
@@ -24,11 +24,11 @@ export enum ProductInformationActionType {
 type ProductInformationAction =
 	| {
 			type: ProductInformationActionType.UPDATE_PRODUCT
-			productInformation: YGOProductInfo
+			productInformation: YGOProduct.Info
 	  }
 	| {
 			type: ProductInformationActionType.UPDATE_PRODUCT_CARD_SUGGESTIONS
-			productCardSuggestion: ProductCardSuggestion
+			productCardSuggestion: YGOProduct.SuggestionData
 	  }
 	| {
 			type: ProductInformationActionType.FETCH_PRODUCT_CARD_SUGGESTIONS_ERROR

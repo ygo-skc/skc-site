@@ -57,7 +57,7 @@ const CardInformation = () => {
 	})
 
 	useEffect(() => {
-		FetchHandler.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT.cardInstanceUrl}/${state.card.cardID}?allInfo=true`, (cardInfo: YGOCardInfo) => {
+		FetchHandler.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT.cardInstanceUrl}/${state.card.cardID}?allInfo=true`, (cardInfo: YGOCard.Info) => {
 			cardInformationDispatch({
 				type: CardInformationType.UPDATE_CARD,
 				cardInfo: cardInfo,
@@ -208,7 +208,6 @@ const CardInformation = () => {
 					<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='20rem' />
 				) : (
 					<CardInformationRelatedContent
-						cardName={state.card.cardName}
 						cardColor={state.card.cardColor?.replace(/Pendulum-/gi, '') as YGOCard.Color}
 						cardID={state.card.cardID}
 						productInfo={state.productInfo}

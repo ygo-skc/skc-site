@@ -15,7 +15,7 @@ const CardsWithDifferentStatus: FC<CardsWithDifferentStatusProps> = ({ newStatus
 	useEffect(() => {
 		setCardsWithNewStatus(
 			cards.map((newStatus: YGOCardsPreviousBanListStatus) => {
-				const card: YGOCard = newStatus.card
+				const card: YGOCard.Deets = newStatus.card
 				card.cardEffect = decodeHTML(card.cardEffect)
 
 				return <YGOCardWithPreviousBanStatus key={`${newStatusName}-${card.cardID}`} card={card} previousBanStatus={newStatus.previousBanStatus} />

@@ -16,7 +16,7 @@ const Trending = () => {
 	useEffect(() => {
 		FetchHandler.handleFetch(
 			`${DownstreamServices.SKC_SUGGESTION_ENDPOINTS.trending}/card`,
-			(trendingData: TrendingData<Omit<YGOCard, 'monsterType' | 'monsterAssociation' | 'monsterAttack' | 'monsterDefense'>>) => {
+			(trendingData: TrendingData<Omit<YGOCard.Deets, 'monsterType' | 'monsterAssociation' | 'monsterAttack' | 'monsterDefense'>>) => {
 				console.log(trendingData)
 			},
 			false
@@ -24,7 +24,7 @@ const Trending = () => {
 
 		FetchHandler.handleFetch(
 			`${DownstreamServices.SKC_SUGGESTION_ENDPOINTS.trending}/product`,
-			(trendingData: YGOProduct) => {
+			(trendingData: YGOProduct.Deets) => {
 				console.log(trendingData)
 			},
 			false

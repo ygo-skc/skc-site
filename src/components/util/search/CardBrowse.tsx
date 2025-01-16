@@ -10,14 +10,14 @@ import { CardBrowseReducerAction, CardBrowseReducerActionType } from '../../../r
 import cardBrowseCriteriaSearchReducer, { CardBrowseCriteriaSearchReducerActionType } from '../../../reducers/CardBrowseCriteriaSearchReducer'
 
 const CardBrowse: FC<{
-	skcCardBrowseCriteriaOutput: SKCCardBrowseCriteria
-	selectedCriteria: YGOCardBrowseCriteria[]
+	skcCardBrowseCriteriaOutput: YGOData.CardBrowseCriteria
+	selectedCriteria: YGOData.CardBrowseValues[]
 	browseCriteriaDispatch: React.Dispatch<CardBrowseReducerAction>
 }> = ({ skcCardBrowseCriteriaOutput, selectedCriteria, browseCriteriaDispatch }) => {
 	const [{ browseInput, browseCriteria }, browseCriteriaSearchDispatch] = useReducer(cardBrowseCriteriaSearchReducer, { browseInput: '', browseCriteria: [] })
 
 	useEffect(() => {
-		const criteria: YGOCardBrowseCriteria[] = []
+		const criteria: YGOData.CardBrowseValues[] = []
 
 		Object.keys(skcCardBrowseCriteriaOutput).forEach((criteriaName: string) => {
 			const criteriaNameKey = criteriaName as keyof typeof skcCardBrowseCriteriaOutput
@@ -39,10 +39,10 @@ const CardBrowse: FC<{
 		browseCriteriaSearchDispatch({ type: CardBrowseCriteriaSearchReducerActionType.UPDATE_BROWSE_CRITERIA, browseCriteria: criteria })
 	}, [skcCardBrowseCriteriaOutput])
 
-	const handleGetOptionLabel = useCallback((option: YGOCardBrowseCriteria) => option.value, [])
-	const handleGroupBy = useCallback((option: YGOCardBrowseCriteria) => option.name, [])
+	const handleGetOptionLabel = useCallback((option: YGOData.CardBrowseValues) => option.value, [])
+	const handleGroupBy = useCallback((option: YGOData.CardBrowseValues) => option.name, [])
 	const handleOnChange = useCallback(
-		(_event: React.SyntheticEvent, newValue: YGOCardBrowseCriteria[]) =>
+		(_event: React.SyntheticEvent, newValue: YGOData.CardBrowseValues[]) =>
 			browseCriteriaDispatch({ type: CardBrowseReducerActionType.UPDATE_SELECTED_CRITERIA, selectedCriteria: newValue }),
 		[browseCriteriaDispatch]
 	)
@@ -53,7 +53,7 @@ const CardBrowse: FC<{
 		[]
 	)
 	const handleRenderOption = useCallback(
-		(props: React.HTMLAttributes<HTMLLIElement>, option: YGOCardBrowseCriteria) => (
+		(props: React.HTMLAttributes<HTMLLIElement>, option: YGOData.CardBrowseValues) => (
 			<li {...props} className='search-suggestions-parent'>
 				<Typography className='search-suggestion-text search-suggestion-header' variant='body1'>
 					{option.value}

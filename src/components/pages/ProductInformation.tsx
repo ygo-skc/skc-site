@@ -48,13 +48,13 @@ export default function ProductInformation() {
 	})
 
 	useEffect(() => {
-		FetchHandler.handleFetch<YGOProductInfo>(`${DownstreamServices.NAME_maps_ENDPOINT.productDetails}/${state.productId}/en`, (productInfo: YGOProductInfo) => {
+		FetchHandler.handleFetch<YGOProduct.Info>(`${DownstreamServices.NAME_maps_ENDPOINT.productDetails}/${state.productId}/en`, (productInfo: YGOProduct.Info) => {
 			productInformationDispatch({
 				type: ProductInformationActionType.UPDATE_PRODUCT,
 				productInformation: productInfo,
 			})
 
-			const cards = productInfo.productContent.map((item: YGOProductContent) => item.card)
+			const cards = productInfo.productContent.map((item: YGOProduct.Content) => item.card)
 			cardDisplayGridDispatch({
 				type: CardDisplayGridStateReducerActionType.INIT_GRID,
 				results: cards,
@@ -65,7 +65,7 @@ export default function ProductInformation() {
 
 		FetchHandler.handleFetch(
 			`${DownstreamServices.SKC_SUGGESTION_ENDPOINTS.productCardSuggestions}/${state.productId}`,
-			(productCardSuggestions: ProductCardSuggestion) => {
+			(productCardSuggestions: YGOProduct.SuggestionData) => {
 				startTransition(() => {
 					productInformationDispatch({
 						type: ProductInformationActionType.UPDATE_PRODUCT_CARD_SUGGESTIONS,

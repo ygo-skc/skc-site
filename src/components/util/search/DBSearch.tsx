@@ -9,7 +9,7 @@ import axios, { CancelTokenSource } from 'axios'
 import SearchInput from './SearchInput'
 import DBSearchOptions from './DBSearchOptions'
 
-type DBSearchResults = YGOCard & {
+type DBSearchResults = YGOCard.Deets & {
 	cardColor: string // override cardColor field from SKCCard to prevent undefined
 }
 
@@ -62,9 +62,9 @@ export default function DBSearch() {
 		}
 	}, [fetchToken])
 
-	const handleGetOptionLabel = useCallback((option: YGOCard) => option.cardName, [])
+	const handleGetOptionLabel = useCallback((option: YGOCard.Deets) => option.cardName, [])
 	const handleGroupBy = useCallback((option: DBSearchResults) => option.cardColor, [])
-	const handleOnChange = useCallback((_event: React.SyntheticEvent, value: YGOCard | null, reason: string) => {
+	const handleOnChange = useCallback((_event: React.SyntheticEvent, value: YGOCard.Deets | null, reason: string) => {
 		if (reason === 'selectOption' && value != null) {
 			window.location.assign(`/card/${value.cardID}`)
 		}
@@ -82,7 +82,7 @@ export default function DBSearch() {
 		[]
 	)
 	const handleRenderOption = useCallback(
-		(props: React.HTMLAttributes<HTMLLIElement>, option: YGOCard) => (
+		(props: React.HTMLAttributes<HTMLLIElement>, option: YGOCard.Deets) => (
 			<DBSearchOptions
 				key={option.cardID}
 				props={props}

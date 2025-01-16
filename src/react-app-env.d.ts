@@ -20,6 +20,22 @@ declare namespace YGOCard {
 		| 'err'
 		| undefined
 
+	type Deets = {
+		cardID: string
+		cardName: string
+		cardColor: YGOCard.Color
+		cardAttribute?: string
+		cardEffect: string
+		monsterType?: string
+		monsterAssociation?: MonsterAssociation
+		monsterAttack?: string
+		monsterDefense?: string
+	}
+
+	type Info = Deets & {
+		restrictedIn: Restrictions
+		foundIn: YGOProduct.Info[]
+	}
 	type MonsterAssociation = {
 		level: number
 		rank: number
@@ -34,7 +50,7 @@ declare namespace YGOCard {
 		banStatus: string
 	}
 
-	declare type Restrictions = {
+	type Restrictions = {
 		TCG: YGOCard.RestrictionStatus[]
 		MD: YGOCard.RestrictionStatus[]
 		DL: YGOCard.RestrictionStatus[]
@@ -42,7 +58,7 @@ declare namespace YGOCard {
 
 	type Reference = {
 		occurrences: number
-		card: YGOCard
+		card: Deets
 	}
 
 	type Suggestion = {
@@ -54,27 +70,10 @@ declare namespace YGOCard {
 	}
 
 	type Support = {
-		card: YGOCard
+		card: Deets
 		referencedBy: YGOCard.Reference[]
 		materialFor: YGOCard.Reference[]
 	}
-}
-
-declare type YGOCard = {
-	cardID: string
-	cardName: string
-	cardColor: YGOCard.Color
-	cardAttribute?: string
-	cardEffect: string
-	monsterType?: string
-	monsterAssociation?: MonsterAssociation
-	monsterAttack?: string
-	monsterDefense?: string
-}
-
-declare type YGOCardInfo = YGOCard & {
-	restrictedIn: Restrictions
-	foundIn: YGOProductInfo[]
 }
 
 declare type YGODeck = {
@@ -93,65 +92,65 @@ declare type YGODeck = {
 	extraDeck: null
 }
 
-// yugioh card browse and search
-
-declare type YGOCardBrowseCriteria = {
-	name: string
-	value: string
-}
-
-declare type YGOProductBrowseResults = {
-	locale: string
-	products: YGOProductInfo[]
-}
-
-declare type SKCCardBrowseCriteria = {
-	cardColors: string[]
-	attributes: string[]
-	monsterTypes: string[]
-	monsterSubTypes: string[]
-	levels: number[]
-	ranks: number[]
-	linkRatings: number[]
-}
-
-declare type SKCCardBrowseResults = {
-	results: YGOCard[]
-	numResults: number
-	requestedCriteria: SKCCardBrowseCriteria
-}
-
-// yugioh product
-
-declare type YGOProduct = {
-	productId: string
-	productLocale: string
-	productName: string
-	productType: string
-	productSubType: string
-	productReleaseDate: string
-	productTotal: number
-}
-
-declare type YGOProductInfo = YGOProductStats &
-	YGOProduct & {
-		productContent: YGOProductContent[]
+declare namespace YGOData {
+	type CardBrowseValues = {
+		name: string
+		value: string
 	}
 
-declare type YGOProductStats = {
-	productRarityStats: { [key: string]: number }
-	cards: YGOCard[]
+	type CardBrowseCriteria = {
+		cardColors: string[]
+		attributes: string[]
+		monsterTypes: string[]
+		monsterSubTypes: string[]
+		levels: number[]
+		ranks: number[]
+		linkRatings: number[]
+	}
+
+	type CardBrowseResults = {
+		results: Deets[]
+		numResults: number
+		requestedCriteria: CardBrowseCriteria
+	}
+
+	type ProductBrowseResult = {
+		locale: string
+		products: Info[]
+	}
 }
 
-declare type YGOProductContent = {
-	productPosition: string
-	rarities: string[]
-	card: YGOCard
-}
+declare namespace YGOProduct {
+	type Deets = {
+		productId: string
+		productLocale: string
+		productName: string
+		productType: string
+		productSubType: string
+		productReleaseDate: string
+		productTotal: number
+	}
 
-declare type ProductCardSuggestion = {
-	suggestions: YGOCardSuggestion
-	support: YGOCardSupport
+	type Info = Stats &
+		YGOProduct.Deets & {
+			productContent: Content[]
+		}
+
+	type Stats = {
+		productRarityStats: { [key: string]: number }
+		cards: YGOCard.Deets[]
+	}
+
+	type Content = {
+		productPosition: string
+		rarities: string[]
+		card: YGOCard.Deets
+	}
+
+	type SuggestionData = {
+		suggestions: YGOCardSuggestion
+		support: YGOCardSupport
+	}
 }
 
 // yugioh ban list
@@ -165,9 +164,9 @@ declare type YGOBanListDates = {
 }
 
 declare type YGOBanListContentNormalFormat = {
-	forbidden: YGOCard[]
-	limited: YGOCard[]
-	semiLimited: YGOCard[]
+	forbidden: Deets[]
+	limited: Deets[]
+	semiLimited: Deets[]
 	numForbidden: number
 	numLimited: number
 	numSemiLimited: number
@@ -190,10 +189,10 @@ declare type YGOBanListNewCardsNormalFormat = {
 declare type YGOBanListDiffContentNormalFormat = YGOBanListRemovedCards & YGOBanListNewCardsNormalFormat
 
 declare type YGOBanListContentDLFormat = {
-	forbidden: YGOCard[]
-	limitedOne: YGOCard[]
-	limitedTwo: YGOCard[]
-	limitedThree: YGOCard[]
+	forbidden: Deets[]
+	limitedOne: Deets[]
+	limitedTwo: Deets[]
+	limitedThree: Deets[]
 	numForbidden: number
 	numLimitedOne: number
 	numLimitedTwo: number
@@ -219,7 +218,7 @@ declare type YGOBanListNewCardsDLFormat = {
 declare type YGOBanListDiffContentDLFormat = YGOBanListRemovedCardsDLFormat & YGOBanListNewCardsDLFormat
 
 declare type YGOCardsPreviousBanListStatus = {
-	card: YGOCard
+	card: Deets
 	previousBanStatus: string
 }
 

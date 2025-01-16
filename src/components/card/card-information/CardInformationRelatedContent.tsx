@@ -6,9 +6,8 @@ import CardBanListInformation from './CardBanListInformation'
 import { Section } from 'skc-rcl'
 
 type CardInformationRelatedContentType = {
-	productInfo: YGOProductInfo[]
+	productInfo: YGOProduct.Info[]
 	restrictedIn: YGOCard.Restrictions
-	cardName: string
 	cardID: string
 	cardColor: YGOCard.Color //should remove "pendulum" suffix for Pendulum cards
 }

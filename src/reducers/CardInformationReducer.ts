@@ -1,10 +1,10 @@
-type CardSuggestions = Omit<YGOCardSuggestion, 'card' | 'materialArchetypes' | 'referencedArchetypes'> & Omit<YGOCardSupport, 'card'>
+type CardSuggestions = Omit<YGOCard.Suggestion, 'card' | 'materialArchetypes' | 'referencedArchetypes'> & Omit<YGOCard.Support, 'card'>
 
 type CardInformationState = {
 	pageBreadcrumbs: string[]
-	card: YGOCard
-	productInfo: YGOProductInfo[]
-	restrictionInfo: Restrictions
+	card: YGOCard.Deets
+	productInfo: YGOProduct.Info[]
+	restrictionInfo: YGOCard.Restrictions
 	isFetchingCardData: boolean
 	uniqueRarities: string[]
 	// card suggestion state
@@ -27,15 +27,15 @@ export enum CardInformationType {
 type CardInformationAction =
 	| {
 			type: CardInformationType.UPDATE_CARD
-			cardInfo: YGOCardInfo
+			cardInfo: YGOCard.Info
 	  }
 	| {
 			type: CardInformationType.UPDATE_SUGGESTIONS
-			suggestions: YGOCardSuggestion
+			suggestions: YGOCard.Suggestion
 	  }
 	| {
 			type: CardInformationType.UPDATE_SUPPORT
-			support: YGOCardSupport
+			support: YGOCard.Support
 	  }
 	| {
 			type: CardInformationType.FETCH_SUGGESTIONS_ERROR
@@ -55,7 +55,7 @@ export function cardInformationReducer(state: CardInformationState, action: Card
 				restrictionInfo: action.cardInfo.restrictedIn ?? { TCG: [], MD: [], DL: [] },
 				isFetchingCardData: false,
 				uniqueRarities: Array.from(
-					new Set(action.cardInfo.foundIn.flatMap((product: YGOProductInfo) => product.productContent.flatMap((productContent: YGOProductContent) => productContent.rarities)))
+					new Set(action.cardInfo.foundIn.flatMap((product: YGOProduct.Info) => product.productContent.flatMap((productContent: YGOProduct.Content) => productContent.rarities)))
 				).sort((a, b) => a.localeCompare(b)),
 			}
 		case CardInformationType.UPDATE_SUGGESTIONS:

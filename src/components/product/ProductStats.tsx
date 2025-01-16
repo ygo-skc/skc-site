@@ -8,7 +8,7 @@ const Pie = lazy(() =>
 	})
 )
 
-const ProductStats: FC<YGOProductStats & { isDataLoaded: boolean }> = ({ productRarityStats, cards, isDataLoaded }) => {
+const ProductStats: FC<YGOProduct.Stats & { isDataLoaded: boolean }> = ({ productRarityStats, cards, isDataLoaded }) => {
 	const raritySpreadData = Object.keys(productRarityStats).map((key: string) => {
 		return {
 			id: key,
@@ -19,7 +19,7 @@ const ProductStats: FC<YGOProductStats & { isDataLoaded: boolean }> = ({ product
 
 	const cardColors = new Map<string, number>()
 
-	cards.forEach((card: YGOCard) => {
+	cards.forEach((card: YGOCard.Deets) => {
 		const cardColor = card.cardColor!
 
 		const value = cardColors.get(cardColor)
