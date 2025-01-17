@@ -11,6 +11,7 @@ import Trending from '../util/Trending'
 import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 import { HomePageActionType, homePageReducer } from '../../reducers/HomePageReducer'
+import { YouTubeChannelID } from '../home/YouTubeData'
 
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 const SocialMedia = lazy(() => import('../util/social/SocialMedia'))
@@ -116,7 +117,7 @@ export default function Home() {
 					</div>
 					<div className='multi-section'>
 						<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='7rem' />}>
-							<YouTubeData channel='skc' />
+							<YouTubeData channel={YouTubeChannelID.SKC} />
 						</Suspense>
 					</div>
 				</div>

@@ -13,32 +13,33 @@ const GenericNonBreakingErr = lazy(() =>
 )
 const YouTubeUploads = lazy(() => import('../util/social/YouTubeUploads'))
 
-type YouTubeChannelID = {
-	channel: 'skc' | 'btsc'
-}
-
 type UploadsResponse = {
 	videos: HeartAPI.YouTubeUpload[]
 	total: number
 }
 
-const validChannelIds = {
-	skc: 'UCBZ_1wWyLQI3SV9IgLbyiNQ',
-	btsc: 'UCu0LlZ527i4NcXNhru67D1Q',
+export enum YouTubeChannelID {
+	SKC = 'SKC',
+	BTSC = 'BTSC',
 }
 
-const channelNames = {
-	skc: 'Supreme King YT',
-	btsc: 'Blaziken The Spicy Chicken',
-}
+const validChannelIds = new Map<YouTubeChannelID, string>([
+	[YouTubeChannelID.SKC, 'UCBZ_1wWyLQI3SV9IgLbyiNQ'],
+	[YouTubeChannelID.BTSC, 'UCu0LlZ527i4NcXNhru67D1Q'],
+])
 
-const channelDescription = {
-	skc: 'Yu-Gi-Oh! product unboxing, market watch and other commentary. Generally, we just have fun in this channel. This is my main YouTube channel.',
-	btsc: 'This is my secondary channel. Really, I only upload here if I see an interesting Pokemon TCG product I want to open.',
-}
+const channelNames = new Map<YouTubeChannelID, string>([
+	[YouTubeChannelID.SKC, 'Supreme King YT'],
+	[YouTubeChannelID.BTSC, 'Blaziken The Spicy Chicken'],
+])
 
-const YouTubeData: FC<YouTubeChannelID> = ({ channel }) => {
-	const channelId = validChannelIds[channel]
+const channelDescription = new Map<YouTubeChannelID, string>([
+	[YouTubeChannelID.SKC, 'Yu-Gi-Oh! product unboxing, market watch and other commentary. Generally, we just have fun in this channel. This is my main YouTube channel.'],
+	[YouTubeChannelID.BTSC, 'This is my secondary channel. Really, I only upload here if I see an interesting Pokemon TCG product I want to open.'],
+])
+
+const YouTubeData: FC<{ channel: YouTubeChannelID }> = ({ channel }) => {
+	const channelId = validChannelIds.get(channel)
 	const [youtubeUploadData, setYoutubeUploadData] = useState<HeartAPI.YouTubeUpload[]>([])
 	const [isFetchingData, setIsFetchingData] = useState(true)
 	const [errFetchingData, setErrFetchingData] = useState(false)
@@ -62,7 +63,12 @@ const YouTubeData: FC<YouTubeChannelID> = ({ channel }) => {
 	return (
 		<Suspense fallback={<Skeleton variant='rectangular' height='375px' width='100%' className='rounded-skeleton' />}>
 			{!isFetchingData && (
-				<YouTubeUploads youtubeData={youtubeUploadData} channelName={channelNames[channel]} channelId={channelId} channelDescription={channelDescription[channel]} />
+				<YouTubeUploads
+					youtubeData={youtubeUploadData}
+					channelName={channelNames.get(channel)!}
+					channelId={channelId!.toString()}
+					channelDescription={channelDescription.get(channel)!}
+				/>
 			)}
 			{!isFetchingData && errFetchingData && <GenericNonBreakingErr errExplanation='Come back at a different time to see recent YouTube uploads 🎥!' />}
 			{isFetchingData && <Skeleton variant='rectangular' height='375' width='100%' className='rounded-skeleton' />}
