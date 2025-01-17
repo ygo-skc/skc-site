@@ -1,53 +1,34 @@
 import '../../../css/util/event.css'
-import { useCallback, lazy, startTransition, useEffect, useState, JSX } from 'react'
+import { useCallback, lazy, useEffect, useState, JSX, FC, Suspense } from 'react'
 import { Alert, Dialog, DialogContent, DialogTitle, IconButton, Skeleton, Snackbar, Typography } from '@mui/material'
-import DownstreamServices from '../../../helper/DownstreamServices'
-import FetchHandler from '../../../helper/FetchHandler'
 import LinkIcon from '@mui/icons-material/Link'
+import EventItem from './EventItem'
 
 const GenericNonBreakingErr = lazy(() =>
 	import('skc-rcl').then((module) => {
 		return { default: module.GenericNonBreakingErr }
 	})
 )
-const EventItem = lazy(() => import('./EventItem'))
 
-const UpcomingTCGProducts = () => {
+const UpcomingTCGProducts: FC<{ upcomingTCGProducts: APIRequest<HeartAPI.Event> }> = ({ upcomingTCGProducts }) => {
 	const [eventsUI, setEventsUI] = useState<JSX.Element[]>([])
 	const [isSnackbarOpen, setIsSnackbarOpen] = useState<boolean>(false)
-	const [isFetchingData, setIsFetchingData] = useState(true)
-	const [errFetchingData, setErrFetchingData] = useState(false)
 
 	const [eventDialogIsOpen, setEventDialogIsOpen] = useState(false)
 	const [eventDialogEventData, setEventDialogEventData] = useState<HeartAPI.EventItem>({} as HeartAPI.EventItem)
 
 	useEffect(() => {
-		FetchHandler.handleFetch(
-			`${DownstreamServices.HEART_API_ENDPOINTS.events}?service=skc&tags=product-release`,
-			(eventOutput: HeartAPI.Event) => {
-				const eUI = eventOutput.events.map((event: HeartAPI.EventItem) => (
-					<EventItem
-						key={`${event.name} ${event.createdAt}`}
-						isWithinDialog={false}
-						event={event}
-						showEventDialog={setEventDialogIsOpen}
-						setEventDialogEventData={setEventDialogEventData}
-					/>
-				))
-
-				startTransition(() => {
-					setEventsUI(eUI)
-					setIsFetchingData(false)
-				})
-			},
-			false
-		)?.catch(() => {
-			startTransition(() => {
-				setErrFetchingData(true)
-				setIsFetchingData(false)
-			})
-		})
-	}, [])
+		const eUI = upcomingTCGProducts.events.map((event: HeartAPI.EventItem) => (
+			<EventItem
+				key={`${event.name} ${event.createdAt}`}
+				isWithinDialog={false}
+				event={event}
+				showEventDialog={setEventDialogIsOpen}
+				setEventDialogEventData={setEventDialogEventData}
+			/>
+		))
+		setEventsUI(eUI)
+	}, [upcomingTCGProducts])
 
 	const handleSnackbarIsClosed = useCallback(() => setIsSnackbarOpen(false), [])
 
@@ -70,13 +51,15 @@ const UpcomingTCGProducts = () => {
 				</IconButton>
 			</div>
 
-			{!isFetchingData && <div className='event-container'>{eventsUI}</div>}
-			{!isFetchingData && errFetchingData && (
-				<div style={{ backgroundColor: 'white', maxWidth: '60rem', padding: '1rem', borderRadius: '1rem' }}>
-					<GenericNonBreakingErr errExplanation='Come back at a different time to see upcoming TCG products!' />
+			{!upcomingTCGProducts.isFetchingData && <div className='event-container'>{eventsUI}</div>}
+			{!upcomingTCGProducts.isFetchingData && upcomingTCGProducts.requestHasError && (
+				<div style={{ backgroundColor: 'white', maxWidth: '60rem', padding: '1rem', borderRadius: '1rem', margin: 'auto' }}>
+					<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='7rem' />}>
+						<GenericNonBreakingErr errExplanation='Come back at a different time to see upcoming TCG products!' />
+					</Suspense>
 				</div>
 			)}
-			{isFetchingData && <Skeleton variant='rectangular' height='280px' width='100%' className='rounded-skeleton' />}
+			{upcomingTCGProducts.isFetchingData && <Skeleton variant='rectangular' height='200px' width='100%' className='rounded-skeleton' />}
 
 			<Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} open={isSnackbarOpen} autoHideDuration={3000} onClose={handleSnackbarIsClosed}>
 				<Alert onClose={handleSnackbarIsClosed} severity='success'>

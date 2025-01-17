@@ -1,39 +1,15 @@
 import '../../css/util/database-search-styles.css'
 
-import { lazy, startTransition, useCallback, useEffect, useState } from 'react'
+import { FC, lazy, useCallback } from 'react'
 
 import Grid from '@mui/material/Grid2'
 
-import DownstreamServices from '../../helper/DownstreamServices'
-import FetchHandler from '../../helper/FetchHandler'
 import { Skeleton } from '@mui/material'
 import { Tile, Section } from 'skc-rcl'
 
 const DatabaseSearch = lazy(() => import('./search/DBSearch'))
 
-type DatabaseInfoProps = {
-	cardTotal: number
-	banListTotal: number
-	productTotal: number
-}
-
-const DatabaseInfo = () => {
-	const [cardTotal, setCardTotal] = useState(0)
-	const [banListTotal, setBanListTotal] = useState(0)
-	const [productTotal, setProductTotal] = useState(0)
-	const [isFetchingData, setIsFetchingData] = useState(true)
-
-	useEffect(() => {
-		FetchHandler.handleFetch<DatabaseInfoProps>(DownstreamServices.NAME_maps_ENDPOINT.databaseStats, (json) => {
-			startTransition(() => {
-				setCardTotal(json.cardTotal)
-				setBanListTotal(json.banListTotal)
-				setProductTotal(json.productTotal)
-				setIsFetchingData(false)
-			})
-		})
-	}, [])
-
+const DatabaseInfo: FC<{ stats: SKC.DBStats & { isFetchingData: boolean } }> = ({ stats }) => {
 	const handleBrowseTileClicked = useCallback(() => window.location.assign('/browse/card'), [])
 	const handleBanListTileClicked = useCallback(() => window.location.assign('/ban_list'), [])
 	const handleProductsTileClicked = useCallback(() => window.location.assign('/browse/product'), [])
@@ -45,20 +21,20 @@ const DatabaseInfo = () => {
 					<DatabaseSearch />
 				</div>
 
-				{isFetchingData && <Skeleton variant='rectangular' height='170px' width='100%' className='rounded-skeleton' />}
-				{!isFetchingData && (
+				{stats.isFetchingData && <Skeleton variant='rectangular' height='170px' width='100%' className='rounded-skeleton' />}
+				{!stats.isFetchingData && (
 					<div className='database-summary-container'>
 						<Grid container spacing={3}>
 							<Grid size={{ xs: 6, sm: 6, md: 6, lg: 4, xl: 4 }}>
-								<Tile variant='full-width' total={cardTotal} subject='Cards' color='rgb(144, 13, 218)' action={handleBrowseTileClicked} />
+								<Tile variant='full-width' total={stats.cardTotal} subject='Cards' color='rgb(144, 13, 218)' action={handleBrowseTileClicked} />
 							</Grid>
 
 							<Grid size={{ xs: 6, sm: 6, md: 6, lg: 4, xl: 4 }}>
-								<Tile variant='full-width' total={banListTotal} subject='Ban Lists' color='#FE6D6B' action={handleBanListTileClicked} />
+								<Tile variant='full-width' total={stats.banListTotal} subject='Ban Lists' color='#FE6D6B' action={handleBanListTileClicked} />
 							</Grid>
 
 							<Grid size={{ xs: 6, sm: 6, md: 6, lg: 4, xl: 4 }}>
-								<Tile variant='full-width' total={productTotal} subject='Products' color='rgb(195, 47, 150)' action={handleProductsTileClicked} />
+								<Tile variant='full-width' total={stats.productTotal} subject='Products' color='rgb(195, 47, 150)' action={handleProductsTileClicked} />
 							</Grid>
 						</Grid>
 					</div>

@@ -267,3 +267,22 @@ declare namespace HeartAPI {
 		updatedAt: string
 	}
 }
+
+declare namespace SKC {
+	type DBStats = {
+		cardTotal: number
+		banListTotal: number
+		productTotal: number
+	}
+
+	type CardOfTheDay = {
+		date: string
+		version: number
+		card: YGOCard.Deets
+	}
+}
+
+declare type APIRequest<T> = T & {
+	isFetchingData: boolean
+	requestHasError: boolean
+}
