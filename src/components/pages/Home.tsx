@@ -11,14 +11,13 @@ import Trending from '../util/Trending'
 import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 import { HomePageActionType, homePageReducer } from '../../reducers/HomePageReducer'
-import { YouTubeChannelID } from '../home/YouTubeData'
+import YouTubeData, { channelIDs, YouTubeChannelID } from '../home/YouTubeData'
 
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 const SocialMedia = lazy(() => import('../util/social/SocialMedia'))
-const YouTubeData = lazy(() => import('../home/YouTubeData'))
 
 export default function Home() {
-	const [{ dbStats, cotd, upcomingTCGProducts }, dispatch] = useReducer(homePageReducer, {
+	const [{ dbStats, cotd, upcomingTCGProducts, skcYTUploads }, dispatch] = useReducer(homePageReducer, {
 		dbStats: { cardTotal: 0, productTotal: 0, banListTotal: 0, isFetchingData: true, requestHasError: false },
 		cotd: {
 			date: '',
@@ -40,6 +39,12 @@ export default function Home() {
 		upcomingTCGProducts: {
 			service: '',
 			events: [],
+			isFetchingData: true,
+			requestHasError: false,
+		},
+		skcYTUploads: {
+			videos: [],
+			total: 0,
 			isFetchingData: true,
 			requestHasError: false,
 		},
@@ -71,6 +76,17 @@ export default function Home() {
 			false
 		)?.catch(() => {
 			dispatch({ type: HomePageActionType.FETCH_UPCOMING_TCG_ERROR })
+		})
+
+		// fetch skc yt channel videos
+		FetchHandler.handleFetch<HeartAPI.YouTubeUploadsResponse>(
+			`${DownstreamServices.HEART_API_ENDPOINTS.ytUploads}?channelId=${channelIDs.get(YouTubeChannelID.SKC)!.toString()}`,
+			(skcYTUploads: HeartAPI.YouTubeUploadsResponse) => {
+				dispatch({ type: HomePageActionType.UPDATE_SKC_YOUTUBE_UPLOADS, skcYTUploads: skcYTUploads })
+			},
+			false
+		)?.catch(() => {
+			dispatch({ type: HomePageActionType.FETCH_SKC_YOUTUBE_UPLOADS_ERROR })
 		})
 	}, [])
 
@@ -116,9 +132,7 @@ export default function Home() {
 						<Welcome />
 					</div>
 					<div className='multi-section'>
-						<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='7rem' />}>
-							<YouTubeData channel={YouTubeChannelID.SKC} />
-						</Suspense>
+						<YouTubeData channel={YouTubeChannelID.SKC} uploadsData={skcYTUploads} />
 					</div>
 				</div>
 			</Section>

@@ -232,6 +232,11 @@ declare namespace HeartAPI {
 		url: string
 	}
 
+	type YouTubeUploadsResponse = {
+		videos: HeartAPI.YouTubeUpload[]
+		total: number
+	}
+
 	type YouTubeUploads = {
 		thumbnailImg: HTMLImageElement
 		title: string
