@@ -7,7 +7,7 @@ import { Section } from 'skc-rcl'
 import CardOfTheDay from '../card/CardOfTheDay'
 import { Suspense, lazy, useEffect, useReducer } from 'react'
 import { Divider, Skeleton, Typography } from '@mui/material'
-import Trending from '../util/Trending'
+import Trends from '../util/Trending'
 import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 import { HomePageActionType, homePageReducer } from '../../reducers/HomePageReducer'
@@ -100,7 +100,7 @@ export default function Home() {
 				<Breadcrumb crumbs={['Home']} />
 			</Suspense>
 
-			<Trending />
+			<Trends />
 
 			<div className='headline-v2'>
 				<DatabaseInfo stats={dbStats} />

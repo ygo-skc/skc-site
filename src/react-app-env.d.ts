@@ -74,6 +74,20 @@ declare namespace YGOCard {
 		referencedBy: YGOCard.Reference[]
 		materialFor: YGOCard.Reference[]
 	}
+
+	type TrendingData<T> = {
+		metrics: TrendingResource<T>[]
+	}
+
+	type TrendingResource<T> = {
+		resource: T
+		occurrences: number
+		change: number
+	}
+
+	type CardTrendData = YGOCard.TrendingData<Omit<YGOCard.Deets, 'monsterType' | 'monsterAssociation' | 'monsterAttack' | 'monsterDefense'>>
+
+	type ProductTrendData = YGOCard.TrendingData<YGOProduct.Deets>
 }
 
 declare type YGODeck = {
