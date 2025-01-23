@@ -76,7 +76,7 @@ declare namespace YGOCard {
 	}
 
 	type TrendingData<T> = {
-		metrics: TrendingResource<T>[]
+		metrics: YGOCard.TrendingResource<T>[]
 	}
 
 	type TrendingResource<T> = {
@@ -86,8 +86,10 @@ declare namespace YGOCard {
 	}
 
 	type CardTrendData = YGOCard.TrendingData<Omit<YGOCard.Deets, 'monsterType' | 'monsterAssociation' | 'monsterAttack' | 'monsterDefense'>>
+	type CardTrendResource = YGOCard.TrendingResource<Omit<YGOCard.Deets, 'monsterType' | 'monsterAssociation' | 'monsterAttack' | 'monsterDefense'>>
 
 	type ProductTrendData = YGOCard.TrendingData<YGOProduct.Deets>
+	type ProductTrendResource = YGOCard.TrendingResource<YGOProduct.Deets>
 }
 
 declare type YGODeck = {

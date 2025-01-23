@@ -1,0 +1,55 @@
+.stock-ticker {
+	padding-block: 8px;
+	overflow: hidden;
+	user-select: none;
+
+	--gap: 3rem;
+	display: flex;
+	gap: var(--gap);
+
+	position: relative;
+}
+
+.stock-ticker > div {
+	flex-shrink: 0;
+	min-width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: var(--gap);
+
+	animation: scroll 30s linear infinite;
+	will-change: transform; /* Force hardware acceleration */
+}
+
+.stock-ticker:hover > div {
+	animation-play-state: paused;
+}
+
+@keyframes scroll {
+	to {
+		transform: translateX(calc(-100% - var(--gap)));
+	}
+}
+
+/* Add blurred edges using pseudo-elements */
+.stock-ticker::before,
+.stock-ticker::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 50px; /* Width of the blurred area */
+	pointer-events: none;
+	z-index: 1;
+}
+
+.stock-ticker::before {
+	left: 0;
+	background: linear-gradient(to right, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+}
+
+.stock-ticker::after {
+	right: 0;
+	background: linear-gradient(to left, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+}
