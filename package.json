@@ -29,9 +29,9 @@
 		"node-forge": "1.3.1",
 		"nth-check": "2.1.1",
 		"socket.io-parser": "4.2.4",
-		"@babel/traverse": "7.26.5",
+		"@babel/traverse": "7.26.7",
 		"postcss": "8.5.1",
-		"@babel/core": "7.26.0",
+		"@babel/core": "7.26.7",
 		"browserslist": "4.24.4",
 		"react-is": "19.0.0",
 		"ws": "8.18.0",
@@ -64,7 +64,7 @@
 		"not op_mini all"
 	],
 	"devDependencies": {
-		"@babel/preset-env": "7.26.0",
+		"@babel/preset-env": "7.26.7",
 		"@babel/preset-react": "7.26.3",
 		"@babel/preset-typescript": "7.26.0",
 		"@stryker-mutator/core": "8.7.1",
