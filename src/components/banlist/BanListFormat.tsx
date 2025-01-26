@@ -25,7 +25,6 @@ const BanListFormat: FC<BanListFormatProps> = memo(
 					<RadioGroup value={format} onChange={handleFormatChanged} row aria-labelledby='ban-list-format-label' name='ban-list-format-buttons-group'>
 						<FormControlLabel value='TCG' control={<Radio />} label='TCG' />
 						<FormControlLabel value='MD' control={<Radio />} label='Master Duel' />
-						<FormControlLabel value='DL' control={<Radio />} label='Duel Links' />
 					</RadioGroup>
 				</FormControl>
 			</div>

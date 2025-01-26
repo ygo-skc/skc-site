@@ -280,33 +280,36 @@ export default function BanList() {
 							isFetchingBanListNewContent={isFetchingBanListNewContent}
 							isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
 						/>
-						<BanListContent
-							format={format}
-							normalFormatContent={{
-								forbidden: forbidden,
-								limited: limited,
-								semiLimited: semiLimited,
-								numForbidden: numForbidden,
-								numLimited: numLimited,
-								numSemiLimited: numSemiLimited,
-							}}
-							dlFormatContent={{
-								forbidden: forbidden,
-								limitedOne: limitedOne,
-								limitedTwo: limitedTwo,
-								limitedThree: limitedThree,
-								numForbidden: numForbidden,
-								numLimitedOne: numLimitedOne,
-								numLimitedTwo: numLimitedTwo,
-								numLimitedThree: numLimitedThree,
-							}}
-							isFetchingBanList={isFetchingBanListContent}
-							isFetchingBanListNewContent={isFetchingBanListNewContent}
-							isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
-						/>
 					</Suspense>
 				}
 			/>
+
+			<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='15rem' />}>
+				<BanListContent
+					format={format}
+					normalFormatContent={{
+						forbidden: forbidden,
+						limited: limited,
+						semiLimited: semiLimited,
+						numForbidden: numForbidden,
+						numLimited: numLimited,
+						numSemiLimited: numSemiLimited,
+					}}
+					dlFormatContent={{
+						forbidden: forbidden,
+						limitedOne: limitedOne,
+						limitedTwo: limitedTwo,
+						limitedThree: limitedThree,
+						numForbidden: numForbidden,
+						numLimitedOne: numLimitedOne,
+						numLimitedTwo: numLimitedTwo,
+						numLimitedThree: numLimitedThree,
+					}}
+					isFetchingBanList={isFetchingBanListContent}
+					isFetchingBanListNewContent={isFetchingBanListNewContent}
+					isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
+				/>
+			</Suspense>
 		</div>
 	)
 }
