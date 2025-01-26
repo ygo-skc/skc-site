@@ -4,8 +4,6 @@ import '../../css/main-pages/card-browse.css'
 import { useState, useEffect, lazy, useReducer, startTransition, Suspense } from 'react'
 import { Skeleton, Typography } from '@mui/material'
 
-import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
-
 import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 
@@ -13,6 +11,8 @@ import CardBrowse from '../util/search/CardBrowse'
 import { SKCTable, Section } from 'skc-rcl'
 import cardDisplayGridReducer, { CardDisplayGridStateReducerActionType } from '../../reducers/CardDisplayGridReducer'
 import cardBrowseReducer from '../../reducers/CardBrowseCriteriaReducer'
+
+import '../../css/util/headline.css'
 
 const CardDisplayGrid = lazy(() => import('../util/grid/CardDisplayGrid'))
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
@@ -105,30 +105,27 @@ export default function BrowseCards() {
 				<Breadcrumb crumbs={['Home', 'Card Browse Tool']} />
 			</Suspense>
 
-			<OneThirdTwoThirdsGrid
-				oneThirdComponent={
-					<Section sectionHeaderBackground='product' sectionName='Current Criteria' sticky={true}>
-						<div className='section-content'>
-							<div className='group'>
-								<CardBrowse browseCriteriaDispatch={browseCriteriaDispatch} selectedCriteria={selectedCriteria} skcCardBrowseCriteriaOutput={skcCardBrowseCriteriaOutput} />
-							</div>
+			<div className='headline-v1'>
+				<Section sectionHeaderBackground='product' sectionName='Current Criteria'>
+					<div className='section-content'>
+						<CardBrowse browseCriteriaDispatch={browseCriteriaDispatch} selectedCriteria={selectedCriteria} skcCardBrowseCriteriaOutput={skcCardBrowseCriteriaOutput} />
+					</div>
+				</Section>
 
-							<div className='group'>
-								<Typography variant='h5'>Results</Typography>
-								{<SKCTable header={[]} rows={browseSummaryStats} />}
-							</div>
-						</div>
-					</Section>
-				}
-				twoThirdComponent={
-					<Section sectionHeaderBackground='product' sectionName='Browse Results'>
-						<div className='section-content'>
-							<Typography variant='h5'>Results Are Sorted Alphabetically</Typography>
-							<CardDisplayGrid cardGridState={cardGridState} dispatch={cardDisplayGridDispatch} />
-						</div>
-					</Section>
-				}
-			/>
+				<div className='group light-shadow'>
+					<Typography variant='h3' align='center'>
+						Results
+					</Typography>
+					{<SKCTable header={[]} rows={browseSummaryStats} />}
+				</div>
+			</div>
+
+			<Section sectionHeaderBackground='product' sectionName='Browse Results'>
+				<div className='section-content'>
+					<Typography variant='h5'>Results Are Sorted Alphabetically</Typography>
+					<CardDisplayGrid cardGridState={cardGridState} dispatch={cardDisplayGridDispatch} />
+				</div>
+			</Section>
 		</div>
 	)
 }

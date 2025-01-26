@@ -1,5 +1,3 @@
-import '../../css/util/headline.css'
-
 import DatabaseInfo from '../util/DatabaseInfo'
 import UpcomingTCGProducts from '../util/event/UpcomingTCGProducts'
 import Welcome from '../home/Welcome'
@@ -12,6 +10,8 @@ import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 import { HomePageActionType, homePageReducer } from '../../reducers/HomePageReducer'
 import YouTubeData, { channelIDs, YouTubeChannelID } from '../home/YouTubeData'
+
+import '../../css/util/headline.css'
 
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 const SocialMedia = lazy(() => import('../util/social/SocialMedia'))
