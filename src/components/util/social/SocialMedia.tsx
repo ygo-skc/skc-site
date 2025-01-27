@@ -1,9 +1,9 @@
-import { FunctionComponent } from 'react'
+import { Fragment, FunctionComponent } from 'react'
 import { Typography } from '@mui/material'
 
 const SocialMedia: FunctionComponent = () => {
 	return (
-		<div className='section-content'>
+		<Fragment>
 			<Typography variant='h5'>Join The Discord</Typography>
 			<Typography variant='body1'>
 				Use Discord to chat with others within the community. This is my personal server I use with friends. There are chats for you fine people there too! Lets grow the community!
@@ -12,13 +12,12 @@ const SocialMedia: FunctionComponent = () => {
 
 			<iframe
 				title='Discord Widget'
-				style={{ borderStyle: 'solid', borderRadius: '1rem' }}
+				style={{ borderRadius: '1rem', height: '30rem' }}
 				src='https://discord.com/widget?id=659477868799197185&theme=light'
 				width='100%'
-				height='300'
 				sandbox='allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts'
 			/>
-		</div>
+		</Fragment>
 	)
 }
 

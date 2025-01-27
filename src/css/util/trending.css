@@ -1,0 +1,21 @@
+.trending {
+	margin-bottom: 2rem;
+}
+
+.trending-item {
+	display: flex;
+}
+
+.trending-item > *:not(:last-child) {
+	margin-right: 0.5rem;
+}
+
+.trending-item .rounded-img-outer-container {
+	width: 3.5rem;
+}
+
+.trending-product {
+	width: auto;
+	height: 3.5rem;
+	object-fit: cover;
+}

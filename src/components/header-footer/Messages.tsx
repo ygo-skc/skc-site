@@ -22,34 +22,34 @@ function Messages() {
 
 	const isDisplayingNotifications = Boolean(messagesAnchor)
 
-	useEffect(() => {
+	const onMessageDataReceived = (messageData: HeartAPI.Message) => {
+		const totalMessages = messageData.messages.length
+
+		let _numNewMessages = 0
+		const previousNewestMessageTimeStamp = localStorage.getItem('previousNewestMessage') as string
+		const previousNewestMessageDate = new Date(previousNewestMessageTimeStamp)
+
 		startTransition(() => {
-			FetchHandler.handleFetch(
-				`${DownstreamServices.HEART_API_ENDPOINTS.messages}?service=skc&tags=skc-site,skc-api`,
-				(messageData: HeartApiMessageOutput) => {
-					const totalMessages = messageData.messages.length
+			setMessagesList(
+				messageData.messages.map((message: HeartAPI.MessageInstance, index: number) => {
+					const creationDate = new Date(message.createdAt)
 
-					let _numNewMessages = 0
-					const previousNewestMessageTimeStamp = localStorage.getItem('previousNewestMessage') as string
-					const previousNewestMessageDate = new Date(previousNewestMessageTimeStamp)
+					if (previousNewestMessageDate < creationDate) {
+						_numNewMessages++
+					}
 
-					setMessagesList(
-						messageData.messages.map((message: HeartApiMessageItem, index: number) => {
-							const creationDate = new Date(message.createdAt)
+					return <MessageItemComponent key={message.createdAt} creationDate={creationDate} message={message} isLastMessage={index === totalMessages - 1} />
+				})
+			)
+			setNumNewMessages(_numNewMessages)
+			setNumMessages(totalMessages)
+			setNewestMessageSeen(messageData.messages[0].createdAt)
+		})
+	}
 
-							if (previousNewestMessageDate < creationDate) {
-								_numNewMessages++
-							}
-
-							return <MessageItemComponent key={message.createdAt} creationDate={creationDate} message={message} isLastMessage={index === totalMessages - 1} />
-						})
-					)
-					setNumNewMessages(_numNewMessages)
-					setNumMessages(totalMessages)
-					setNewestMessageSeen(messageData.messages[0].createdAt)
-				},
-				false
-			)?.catch(() => {
+	useEffect(() => {
+		FetchHandler.handleFetch(`${DownstreamServices.HEART_API_ENDPOINTS.messages}?service=skc&tags=skc-site,skc-api`, onMessageDataReceived, false)?.catch(() => {
+			startTransition(() => {
 				setErrorFetchingMessages(true)
 			})
 		})

@@ -31,8 +31,10 @@ const SuggestionSection: FC<_SuggestionSection> = ({ suggestions, sectionName, s
 						<ClickAwayListener onClickAway={handleDismissTooltip}>
 							<div>
 								<Tooltip
-									PopperProps={{
-										disablePortal: true,
+									slotProps={{
+										popper: {
+											disablePortal: true,
+										},
 									}}
 									onClose={handleDismissTooltip}
 									open={isTooltipOpen}

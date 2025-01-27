@@ -7,16 +7,16 @@ import { AcceptableBanListFormat } from '../../../helper/BanListUtil'
 import { DatedListItem, Hint } from 'skc-rcl'
 
 type CardBanListInformationProps = {
-	restrictedIn: RestrictedIn
+	restrictedIn: YGOCard.Restrictions
 }
 
 type BanListFormatButtonProps = {
 	format: AcceptableBanListFormat
-	restrictedIn: RestrictedIn
+	restrictedIn: YGOCard.Restrictions
 	setFormat: React.Dispatch<React.SetStateAction<AcceptableBanListFormat>>
 }
 
-function determineFormat(restrictedIn: RestrictedIn): AcceptableBanListFormat {
+function determineFormat(restrictedIn: YGOCard.Restrictions): AcceptableBanListFormat {
 	if (restrictedIn['TCG'].length !== 0) {
 		return AcceptableBanListFormat.TCG
 	} else if (restrictedIn['MD'].length !== 0) {
@@ -67,7 +67,7 @@ const CardBanListInformation: FunctionComponent<CardBanListInformationProps> = (
 
 	useEffect(() => {
 		startTransition(() => {
-			const content: JSX.Element[] = restrictedIn[format].slice(0, loadAll ? restrictedIn[format].length : initNumItems).map((banList: SKCBanListInstance) => {
+			const content: JSX.Element[] = restrictedIn[format].slice(0, loadAll ? restrictedIn[format].length : initNumItems).map((banList: YGOCard.RestrictionStatus) => {
 				const banListEffectiveDate = Dates.fromYYYYMMDDToDate(banList.banListDate)
 				return (
 					<DatedListItem
@@ -92,7 +92,7 @@ const CardBanListInformation: FunctionComponent<CardBanListInformationProps> = (
 
 	return (
 		<div className='group'>
-			<Typography variant='h4'>Ban Lists</Typography>
+			<Typography variant='h4'>Ban Lists ({restrictedIn.TCG.length + restrictedIn.MD.length + restrictedIn.DL.length})</Typography>
 
 			{restrictedIn[format].length !== 0 && (
 				<Fragment>
@@ -110,7 +110,7 @@ const CardBanListInformation: FunctionComponent<CardBanListInformationProps> = (
 				</Fragment>
 			)}
 			{restrictedIn[format].length === 0 && (
-				<Hint backgroundColor='rgba(0, 0, 0, 0.7)' textColor='white'>
+				<Hint backgroundColor='rgba(0, 0, 0, 0.7)' textColor='white' fullWidth={false}>
 					{'Not Found In Any Ban List'}
 				</Hint>
 			)}

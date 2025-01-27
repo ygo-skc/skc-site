@@ -1,5 +1,3 @@
-import '../../../css/card/card-information-styles.css'
-
 import { FC } from 'react'
 import Grid from '@mui/material/Grid2'
 
@@ -8,20 +6,19 @@ import CardBanListInformation from './CardBanListInformation'
 import { Section } from 'skc-rcl'
 
 type CardInformationRelatedContentType = {
-	productInfo: ProductInfo[]
-	restrictedIn: RestrictedIn
-	cardName: string
+	productInfo: YGOProduct.Info[]
+	restrictedIn: YGOCard.Restrictions
 	cardID: string
-	cardColor: cardColor //should remove "pendulum" suffix for Pendulum cards
+	cardColor: YGOCard.Color //should remove "pendulum" suffix for Pendulum cards
 }
 
-const CardInformationRelatedContent: FC<CardInformationRelatedContentType> = ({ cardName, cardColor, productInfo, restrictedIn, cardID }) => {
+const CardInformationRelatedContent: FC<CardInformationRelatedContentType> = ({ cardColor, productInfo, restrictedIn, cardID }) => {
 	return (
 		<Section sectionHeaderBackground={cardColor} sectionName='Explore'>
 			<div className='section-content'>
 				<Grid container spacing={3}>
 					<Grid size={{ xs: 12, sm: 12, md: 12, lg: 6, xl: 6 }}>
-						<CardProductInformation cardID={cardID} cardName={cardName} productInfo={productInfo} />
+						<CardProductInformation cardID={cardID} productInfo={productInfo} />
 					</Grid>
 
 					<Grid size={{ xs: 12, sm: 12, md: 12, lg: 6, xl: 6 }}>

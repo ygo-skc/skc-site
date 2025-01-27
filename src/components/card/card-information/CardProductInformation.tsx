@@ -1,5 +1,5 @@
-import { useEffect, useState, FC, Fragment, useCallback, JSX } from 'react'
-import { Typography, Divider, Chip, Button } from '@mui/material'
+import { useEffect, useState, FC, useCallback, JSX } from 'react'
+import { Typography, Button } from '@mui/material'
 
 import { Dates } from '../../../helper/Dates'
 import { Hint } from 'skc-rcl'
@@ -7,15 +7,13 @@ import CardProductListItem from '../../product/CardProductListItem'
 
 type CardProductInformationProps = {
 	cardID: string
-	cardName: string
-	productInfo: ProductInfo[]
+	productInfo: YGOProduct.Info[]
 }
 
-const CardProductInformation: FC<CardProductInformationProps> = ({ productInfo, cardID, cardName }) => {
+const CardProductInformation: FC<CardProductInformationProps> = ({ productInfo, cardID }) => {
 	const initNumItems = 5
 	const [productContents, setProductContents] = useState<JSX.Element[]>([])
 	const [uniqueProductsFeaturedIn, setUniqueProductsFeaturedIn] = useState(0)
-	const [uniqueRarityPrintings, setUniqueRarityPrintings] = useState<JSX.Element[]>([])
 	const [loadAll, setLoadAll] = useState(false)
 
 	const loadAllCB = useCallback(() => {
@@ -35,10 +33,10 @@ const CardProductInformation: FC<CardProductInformationProps> = ({ productInfo, 
 		const uniqueProductsFeaturedIn = new Set<string>()
 		let uniqueRarityPrintings = new Set<string>()
 
-		productInfo.forEach((product: ProductInfo, index: number) => {
+		productInfo.forEach((product: YGOProduct.Info, index: number) => {
 			uniqueProductsFeaturedIn.add(product.productId)
 
-			product.productContent.forEach((productContent: SKCProductContent) => {
+			product.productContent.forEach((productContent: YGOProduct.Content) => {
 				const productReleaseDate = Dates.fromYYYYMMDDToDate(product.productReleaseDate)
 				uniqueRarityPrintings = new Set([...uniqueRarityPrintings, ...productContent.rarities])
 
@@ -60,46 +58,20 @@ const CardProductInformation: FC<CardProductInformationProps> = ({ productInfo, 
 
 		setProductContents(contents)
 		setUniqueProductsFeaturedIn(uniqueProductsFeaturedIn.size)
-
-		const sortedUniqueRarityPrintings = [...uniqueRarityPrintings]
-		sortedUniqueRarityPrintings.sort(alphaSort)
-		setUniqueRarityPrintings(sortedUniqueRarityPrintings.map((uniqueRarity) => <Chip className='dark-chip' key={uniqueRarity} label={uniqueRarity} />))
 	}, [productInfo, cardID, loadAll])
 
 	return (
 		<div className='group'>
-			<Typography variant='h4'>Products</Typography>
+			<Typography variant='h4'>Products ({uniqueProductsFeaturedIn})</Typography>
 			{productInfo.length !== 0 && (
-				<Fragment>
-					<Hint backgroundColor='rgba(0, 0, 0, 0.7)' textColor='white' variant='tight'>
-						Last printing released {Dates.daysBetweenTwoDates(Dates.fromYYYYMMDDToDate(productInfo[0].productReleaseDate)).toLocaleString()} day(s) ago
-					</Hint>
-					{productInfo.length >= 2 && (
-						<Hint backgroundColor='rgba(0, 0, 0, 0.7)' textColor='white' variant='tight'>
-							First printing released {Dates.daysBetweenTwoDates(Dates.fromYYYYMMDDToDate(productInfo[productInfo.length - 1].productReleaseDate)).toLocaleString()} day(s) ago
-						</Hint>
-					)}
-
-					<div className='unique-rarities'>
-						<Typography variant='subtitle1'>
-							<span className='prominent'>{cardName}</span> was printed in {uniqueRarityPrintings.length} unique {uniqueRarityPrintings.length == 1 ? 'rarity' : 'rarities'}
-						</Typography>
-						{uniqueRarityPrintings}
-						<Divider className='dark-translucent-divider' />
-					</div>
-					<br />
-					<div>
-						<Typography variant='subtitle1'>
-							<span className='prominent'>{cardName}</span> was included in {uniqueProductsFeaturedIn} {uniqueProductsFeaturedIn == 1 ? 'product' : 'products'}
-						</Typography>
-						{productContents}
-						{loadAll ? undefined : <Button onClick={loadAllCB}>Load All</Button>}
-					</div>
-				</Fragment>
+				<div>
+					{productContents}
+					{loadAll ? undefined : <Button onClick={loadAllCB}>Load All</Button>}
+				</div>
 			)}
 
 			{productInfo.length === 0 && (
-				<Hint backgroundColor='rgba(0, 0, 0, 0.7)' textColor='white'>
+				<Hint backgroundColor='rgba(0, 0, 0, 0.7)' textColor='white' fullWidth={false}>
 					{'Not Found In Any Product'}
 				</Hint>
 			)}

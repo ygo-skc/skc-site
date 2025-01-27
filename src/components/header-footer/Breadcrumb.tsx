@@ -61,7 +61,7 @@ const Breadcrumb: FunctionComponent<BreadcrumbProps> = memo(
 )
 
 class BreadcrumbStaticFields {
-	static BREADCRUMB_maps_ICON = BreadcrumbStaticFields.getBreadcrumbIcons()
+	static readonly BREADCRUMB_maps_ICON = BreadcrumbStaticFields.getBreadcrumbIcons()
 
 	static getBreadcrumbIcons(): Map<string, JSX.Element> {
 		const BREADCRUMB_maps_ICON = new Map()

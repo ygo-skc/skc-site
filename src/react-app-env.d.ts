@@ -1,219 +1,98 @@
 /// <reference types="react-scripts" />
 
-declare type BrowseCriteria = {
-	name: string
-	value: string
+declare namespace YGOCard {
+	type Color =
+		| 'normal'
+		| 'effect'
+		| 'ritual'
+		| 'fusion'
+		| 'synchro'
+		| 'xyz'
+		| 'pendulum-normal'
+		| 'pendulum-effect'
+		| 'pendulum-fusion'
+		| 'pendulum-xyz'
+		| 'pendulum-synchro'
+		| 'token'
+		| 'link'
+		| 'spell'
+		| 'trap'
+		| 'err'
+		| undefined
+
+	type Deets = {
+		cardID: string
+		cardName: string
+		cardColor: YGOCard.Color
+		cardAttribute?: string
+		cardEffect: string
+		monsterType?: string
+		monsterAssociation?: MonsterAssociation
+		monsterAttack?: string
+		monsterDefense?: string
+	}
+
+	type Info = Deets & {
+		restrictedIn: Restrictions
+		foundIn: YGOProduct.Info[]
+	}
+	type MonsterAssociation = {
+		level: number
+		rank: number
+		scaleRating: number
+		linkRating: number
+		linkArrows: string[]
+	}
+
+	type RestrictionStatus = {
+		banListDate: string
+		cardID: string
+		banStatus: string
+	}
+
+	type Restrictions = {
+		TCG: YGOCard.RestrictionStatus[]
+		MD: YGOCard.RestrictionStatus[]
+		DL: YGOCard.RestrictionStatus[]
+	}
+
+	type Reference = {
+		occurrences: number
+		card: Deets
+	}
+
+	type Suggestion = {
+		namedMaterials: YGOCard.Reference[]
+		namedReferences: YGOCard.Reference[]
+		hasSelfReference: boolean
+		materialArchetypes: string[]
+		referencedArchetypes: string[]
+	}
+
+	type Support = {
+		card: Deets
+		referencedBy: YGOCard.Reference[]
+		materialFor: YGOCard.Reference[]
+	}
+
+	type TrendingData<T> = {
+		metrics: YGOCard.TrendingResource<T>[]
+	}
+
+	type TrendingResource<T> = {
+		resource: T
+		occurrences: number
+		change: number
+	}
+
+	type CardTrendData = YGOCard.TrendingData<Omit<YGOCard.Deets, 'monsterType' | 'monsterAssociation' | 'monsterAttack' | 'monsterDefense'>>
+	type CardTrendResource = YGOCard.TrendingResource<Omit<YGOCard.Deets, 'monsterType' | 'monsterAssociation' | 'monsterAttack' | 'monsterDefense'>>
+
+	type ProductTrendData = YGOCard.TrendingData<YGOProduct.Deets>
+	type ProductTrendResource = YGOCard.TrendingResource<YGOProduct.Deets>
 }
 
-declare type ProductBrowseResults = {
-	locale: string
-	products: ProductInfo[]
-}
-
-declare type ProductInfo = ProductStats & {
-	productId: string
-	productLocale: string
-	productName: string
-	productType: string
-	productSubType: string
-	productReleaseDate: string
-	productTotal: number
-	productContent: SKCProductContent[]
-}
-
-declare type ProductDetails = {
-	productId: string
-	productName: string
-	productType: string
-	productSubType: string
-	productReleaseDate: string
-	numUniqueCards: string
-	isDataLoaded: boolean
-}
-
-declare type ProductStats = {
-	productTotal: number
-	productRarityStats: { [key: string]: number }
-	cards: SKCCard[]
-}
-
-declare type cardColor =
-	| 'normal'
-	| 'effect'
-	| 'ritual'
-	| 'fusion'
-	| 'synchro'
-	| 'xyz'
-	| 'pendulum-normal'
-	| 'pendulum-effect'
-	| 'pendulum-fusion'
-	| 'pendulum-xyz'
-	| 'pendulum-synchro'
-	| 'token'
-	| 'link'
-	| 'spell'
-	| 'trap'
-	| 'err'
-	| undefined
-
-declare type _YouTubeUploads = {
-	thumbnailImg: HTMLImageElement
-	title: string
-	url: string
-}
-
-// SKC API related type declarations
-
-declare type SKCBanListDate = {
-	effectiveDate: string
-}
-
-declare type SKCBanListDates = {
-	banListDates: SKCBanListDate[]
-}
-
-declare type SKCBanListContentNormalFormat = {
-	forbidden: SKCCard[]
-	limited: SKCCard[]
-	semiLimited: SKCCard[]
-	numForbidden: number
-	numLimited: number
-	numSemiLimited: number
-}
-
-declare type SKCBanListRemovedCards = {
-	removedCards: SKCCardsPreviousBanListStatus[]
-	numRemoved: number
-}
-
-declare type SKCBanListNewCardsNormalFormat = {
-	newForbidden: SKCCardsPreviousBanListStatus[]
-	newLimited: SKCCardsPreviousBanListStatus[]
-	newSemiLimited: SKCCardsPreviousBanListStatus[]
-	numNewForbidden: number
-	numNewLimited: number
-	numNewSemiLimited: number
-}
-
-declare type SKCBanListDiffContentNormalFormat = SKCBanListRemovedCards & SKCBanListNewCardsNormalFormat
-
-declare type SKCBanListContentDuelLinksFormat = {
-	forbidden: SKCCard[]
-	limitedOne: SKCCard[]
-	limitedTwo: SKCCard[]
-	limitedThree: SKCCard[]
-	numForbidden: number
-	numLimitedOne: number
-	numLimitedTwo: number
-	numLimitedThree: number
-}
-
-declare type SKCBanListRemovedCardsDuelLinksFormat = {
-	removedCards: SKCCardsPreviousBanListStatus[]
-	numRemoved: number
-}
-
-declare type SKCBanListNewCardsDuelLinksFormat = {
-	newForbidden: SKCCardsPreviousBanListStatus[]
-	newLimitedOne: SKCCardsPreviousBanListStatus[]
-	newLimitedTwo: SKCCardsPreviousBanListStatus[]
-	newLimitedThree: SKCCardsPreviousBanListStatus[]
-	numNewForbidden: number
-	numNewLimitedOne: number
-	numNewLimitedTwo: number
-	numNewLimitedThree: number
-}
-
-declare type SKCBanListDiffContentDuelLinksFormat = SKCBanListRemovedCardsDuelLinksFormat & SKCBanListNewCardsDuelLinksFormat
-
-declare type SKCCard = {
-	cardID: string
-	cardName: string
-	cardColor: cardColor
-	cardAttribute?: string
-	monsterType?: string
-	monsterAssociation?: SKCMonsterAssociation
-	monsterAttack?: string
-	monsterDefense?: string
-	cardEffect: string
-}
-
-declare type SKCCardBrowseCriteria = {
-	cardColors: string[]
-	attributes: string[]
-	monsterTypes: string[]
-	monsterSubTypes: string[]
-	levels: number[]
-	ranks: number[]
-	linkRatings: number[]
-}
-
-declare type SKCCardBrowseResults = {
-	results: SKCCard[]
-	numResults: number
-	requestedCriteria: SKCCardBrowseCriteria
-}
-
-declare type SKCCardsPreviousBanListStatus = {
-	card: SKCCard
-	previousBanStatus: string
-}
-
-declare type SKCMonsterAssociation = {
-	level: number
-	rank: number
-	scaleRating: number
-	linkRating: number
-	linkArrows: string[]
-}
-
-declare type SKCProductContent = {
-	productPosition: string
-	rarities: string[]
-	card: SKCCard
-}
-
-// Heart API related type declarations
-
-declare type HeartApiYouTubeUpload = {
-	id: string
-	title: string
-	description: string
-	publishedAt: Date
-	thumbnailUrl: string
-	url: string
-}
-
-declare type HeartApiMessageOutput = {
-	service: string
-	messages: HeartApiMessageItem[]
-}
-
-declare type HeartApiMessageItem = {
-	title: string
-	content: string
-	tags: string[]
-	createdAt: string
-	updatedAt: string
-}
-
-declare type HeartApiEventOutput = {
-	service: string
-	events: HeartApiEventItem[]
-}
-
-declare type HeartApiEventItem = {
-	name: string
-	notes: string
-	location: string
-	eventDate: string
-	url: string
-	tags: string[]
-	createdAt: string
-	updatedAt: string
-}
-
-declare type Deck = {
+declare type YGODeck = {
 	id: string
 	name: string
 	listContent: string
@@ -229,35 +108,202 @@ declare type Deck = {
 	extraDeck: null
 }
 
-declare type CardReference = {
-	occurrences: number
-	card: SKCCard
+declare namespace YGOData {
+	type CardBrowseValues = {
+		name: string
+		value: string
+	}
+
+	type CardBrowseCriteria = {
+		cardColors: string[]
+		attributes: string[]
+		monsterTypes: string[]
+		monsterSubTypes: string[]
+		levels: number[]
+		ranks: number[]
+		linkRatings: number[]
+	}
+
+	type CardBrowseResults = {
+		results: Deets[]
+		numResults: number
+		requestedCriteria: CardBrowseCriteria
+	}
+
+	type ProductBrowseResult = {
+		locale: string
+		products: Info[]
+	}
 }
 
-declare type CardSuggestionOutput = {
-	namedMaterials: CardReference[]
-	namedReferences: CardReference[]
+declare namespace YGOProduct {
+	type Deets = {
+		productId: string
+		productLocale: string
+		productName: string
+		productType: string
+		productSubType: string
+		productReleaseDate: string
+		productTotal: number
+	}
+
+	type Info = Stats &
+		YGOProduct.Deets & {
+			productContent: Content[]
+		}
+
+	type Stats = {
+		productRarityStats: { [key: string]: number }
+		cards: YGOCard.Deets[]
+	}
+
+	type Content = {
+		productPosition: string
+		rarities: string[]
+		card: YGOCard.Deets
+	}
+
+	type SuggestionData = {
+		suggestions: YGOCardSuggestion
+		support: YGOCardSupport
+	}
 }
 
-declare type CardSupportOutput = {
-	card: SKCCard
-	referencedBy: CardReference[]
-	materialFor: CardReference[]
+declare namespace YGOBanList {
+	type Date = {
+		effectiveDate: string
+	}
+
+	type Dates = {
+		banListDates: YGOBanList.Date[]
+	}
+
+	type NormalFormatContent = {
+		forbidden: YGOCard.Deets[]
+		limited: YGOCard.Deets[]
+		semiLimited: YGOCard.Deets[]
+		numForbidden: number
+		numLimited: number
+		numSemiLimited: number
+	}
+
+	type NormalFormatRemovedCards = {
+		removedCards: YGOBanList.PreviousBanListStatus[]
+		numRemoved: number
+	}
+
+	type NormalFormatNewlyAdded = {
+		newForbidden: YGOBanList.PreviousBanListStatus[]
+		newLimited: YGOBanList.PreviousBanListStatus[]
+		newSemiLimited: YGOBanList.PreviousBanListStatus[]
+		numNewForbidden: number
+		numNewLimited: number
+		numNewSemiLimited: number
+	}
+
+	type NormalFormatDiff = YGOBanList.NormalFormatRemovedCards & YGOBanList.NormalFormatNewlyAdded
+
+	type DLFormatContent = {
+		forbidden: YGOCard.Deets[]
+		limitedOne: YGOCard.Deets[]
+		limitedTwo: YGOCard.Deets[]
+		limitedThree: YGOCard.Deets[]
+		numForbidden: number
+		numLimitedOne: number
+		numLimitedTwo: number
+		numLimitedThree: number
+	}
+
+	type DLFormatRemovedCards = {
+		removedCards: YGOBanList.PreviousBanListStatus[]
+		numRemoved: number
+	}
+
+	type DLFormatNewlyAdded = {
+		newForbidden: YGOBanList.PreviousBanListStatus[]
+		newLimitedOne: YGOBanList.PreviousBanListStatus[]
+		newLimitedTwo: YGOBanList.PreviousBanListStatus[]
+		newLimitedThree: YGOBanList.PreviousBanListStatus[]
+		numNewForbidden: number
+		numNewLimitedOne: number
+		numNewLimitedTwo: number
+		numNewLimitedThree: number
+	}
+
+	type DLFormatDiff = DLFormatRemovedCards & DLFormatNewlyAdded
+
+	declare type PreviousBanListStatus = {
+		card: Deets
+		previousBanStatus: string
+	}
 }
 
-declare type SKCBanListInstance = {
-	banListDate: string
-	cardID: string
-	banStatus: string
+declare namespace HeartAPI {
+	type YouTubeUpload = {
+		id: string
+		title: string
+		description: string
+		publishedAt: Date
+		thumbnailUrl: string
+		url: string
+	}
+
+	type YouTubeUploadsResponse = {
+		videos: HeartAPI.YouTubeUpload[]
+		total: number
+	}
+
+	type YouTubeUploads = {
+		thumbnailImg: HTMLImageElement
+		title: string
+		url: string
+	}
+
+	type Event = {
+		service: string
+		events: HeartAPI.EventItem[]
+	}
+
+	type EventItem = {
+		name: string
+		notes: string
+		location: string
+		eventDate: string
+		url: string
+		tags: string[]
+		createdAt: string
+		updatedAt: string
+	}
+
+	type Message = {
+		service: string
+		messages: HeartApiMessageItem[]
+	}
+
+	type MessageInstance = {
+		title: string
+		content: string
+		tags: string[]
+		createdAt: string
+		updatedAt: string
+	}
 }
 
-declare type RestrictedIn = {
-	TCG: SKCBanListInstance[]
-	MD: SKCBanListInstance[]
-	DL: SKCBanListInstance[]
+declare namespace SKC {
+	type DBStats = {
+		cardTotal: number
+		banListTotal: number
+		productTotal: number
+	}
+
+	type CardOfTheDay = {
+		date: string
+		version: number
+		card: YGOCard.Deets
+	}
 }
 
-declare type SKCCardInfo = SKCCard & {
-	restrictedIn: RestrictedIn
-	foundIn: ProductInfo[]
+declare type APIRequest<T> = T & {
+	isFetchingData: boolean
+	requestHasError: boolean
 }

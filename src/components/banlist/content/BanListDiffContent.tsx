@@ -6,8 +6,8 @@ type BanListDiffContentProps = {
 	format: string
 	isFetchingBanListNewContent: boolean
 	isFetchingBanListRemovedContent: boolean
-	normalFormatDiffContent: SKCBanListDiffContentNormalFormat
-	dlFormatDiffContent: SKCBanListDiffContentDuelLinksFormat
+	normalFormatDiffContent: YGOBanList.NormalFormatDiff
+	dlFormatDiffContent: YGOBanList.DLFormatDiff
 }
 
 const BanListDiffContent: FC<BanListDiffContentProps> = memo(

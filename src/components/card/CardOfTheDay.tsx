@@ -1,71 +1,46 @@
-import { Fragment, useEffect, useState } from 'react'
-import FetchHandler from '../../helper/FetchHandler'
-import DownstreamServices from '../../helper/DownstreamServices'
-import { CardImageRounded, GenericNonBreakingErr, InlineDate, Section, YGOCardColorIndicator } from 'skc-rcl'
+import { FC, Fragment } from 'react'
+import { CardImageRounded, GenericNonBreakingErr, InlineDate, YGOCardColorIndicator } from 'skc-rcl'
 import { Skeleton, Typography } from '@mui/material'
 import '../../css/card/card-of-the-day.css'
 import { Dates } from '../../helper/Dates'
 
-type CardOfTheDayOutput = {
-	date: string
-	version: number
-	card: SKCCard
-}
-
-export default function CardOfTheDay() {
-	const [cardOfTheDay, setCardOfTheDay] = useState<SKCCard | undefined>(undefined)
-	const [date, setDate] = useState(new Date())
-	const [isLoading, setIsLoading] = useState(true)
-	const [hasError, setHasError] = useState(false)
-
-	useEffect(() => {
-		FetchHandler.handleFetch(
-			DownstreamServices.SKC_SUGGESTION_ENDPOINTS.cardOfTheDay,
-			(json: CardOfTheDayOutput) => {
-				setCardOfTheDay(json.card)
-				setDate(Dates.fromYYYYMMDDToDate(json.date))
-				setIsLoading(false)
-			},
-			false
-		)?.catch(() => {
-			setHasError(true)
-		})
-	}, [])
+const CardOfTheDay: FC<{ cardOfTheDayData: APIRequest<SKC.CardOfTheDay> }> = ({ cardOfTheDayData }) => {
+	const date = Dates.fromYYYYMMDDToDate(cardOfTheDayData.date)
 
 	return (
-		<Section sectionName='Suggestions'>
-			<a href={`/card/${cardOfTheDay?.cardID}`} className='aggregate-anchor'>
-				<div className={`section-content ${hasError ? '' : 'card-of-the-day-parent'}`} id='card-of-the-day'>
-					{hasError && <GenericNonBreakingErr errExplanation='Come back at a different time to see todays card of the day!' />}
-					{!hasError && (
-						<Fragment>
-							<Typography variant='h5'>Card of The Day</Typography>
-							<div className='card-of-the-day-wrapper'>
-								{(!isLoading && <CardImageRounded size='tn' variant='circle' cardID={cardOfTheDay!.cardID} loading='eager' />) || (
-									<Skeleton className='rounded-skeleton' variant='circular' />
-								)}
+		<Fragment>
+			<Typography variant='h5'>Card of The Day</Typography>
+			<a href={`/card/${cardOfTheDayData.card?.cardID}`} className='aggregate-anchor'>
+				<div className={`${cardOfTheDayData.requestHasError ? '' : 'card-of-the-day-parent'}`} id='card-of-the-day'>
+					{cardOfTheDayData.requestHasError && <GenericNonBreakingErr errExplanation='Come back at a different time to see todays card of the day!' />}
+					{!cardOfTheDayData.requestHasError && (
+						<div className='card-of-the-day-wrapper'>
+							{(!cardOfTheDayData.isFetchingData && <CardImageRounded size='tn' variant='circle' cardID={cardOfTheDayData.card!.cardID} loading='eager' />) || (
+								<Skeleton className='rounded-skeleton' variant='circular' />
+							)}
 
-								<div className='card-of-the-day-data'>
-									{(!isLoading && (
-										<Fragment>
-											<InlineDate month={Dates.getMonth(date)} day={+Dates.getDay(date)} year={+Dates.getYear(date)} />
-											<Typography variant='h6' className='card-of-the-day-text'>
-												{cardOfTheDay?.cardName}
+							<div className='card-of-the-day-data'>
+								{(!cardOfTheDayData.isFetchingData && (
+									<Fragment>
+										<InlineDate month={Dates.getMonth(date)} day={+Dates.getDay(date)} year={+Dates.getYear(date)} />
+										<Typography variant='h6' className='card-of-the-day-name'>
+											{cardOfTheDayData.card?.cardName}
+										</Typography>
+										<div className='card-of-the-day-type-wrapper'>
+											<YGOCardColorIndicator cardColor={cardOfTheDayData.card?.cardColor} variant={'small'} />
+											<Typography variant='subtitle1' className='card-of-the-day-type'>
+												{cardOfTheDayData.card?.monsterType === undefined ? cardOfTheDayData.card?.cardColor : cardOfTheDayData.card.monsterType.replace(/\//g, '/\u200B')}
 											</Typography>
-											<div className='card-of-the-day-type-wrapper'>
-												<YGOCardColorIndicator cardColor={cardOfTheDay?.cardColor} variant={'small'} />
-												<Typography variant='subtitle1' className='card-of-the-day-text'>
-													{cardOfTheDay?.monsterType === undefined ? cardOfTheDay?.cardColor : cardOfTheDay.monsterType}
-												</Typography>
-											</div>
-										</Fragment>
-									)) || <Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='7rem' />}
-								</div>
+										</div>
+									</Fragment>
+								)) || <Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='3rem' />}
 							</div>
-						</Fragment>
+						</div>
 					)}
 				</div>
 			</a>
-		</Section>
+		</Fragment>
 	)
 }
+
+export default CardOfTheDay

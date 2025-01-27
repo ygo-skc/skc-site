@@ -115,11 +115,11 @@ export default function BanList() {
 
 		setSelectedBanList('')
 
-		FetchHandler.handleFetch<SKCBanListDates>(`${DownstreamServices.NAME_maps_ENDPOINT.banListsUrl}?format=${format}`, (json) => {
+		FetchHandler.handleFetch<YGOBanList.Dates>(`${DownstreamServices.NAME_maps_ENDPOINT.banListsUrl}?format=${format}`, (json) => {
 			dateDispatch({
 				type: BanListDateReducerActionType.DATES_RECEIVED,
 				payload: {
-					banListStartDates: json.banListDates.map((item: SKCBanListDate) => item.effectiveDate),
+					banListStartDates: json.banListDates.map((item: YGOBanList.Date) => item.effectiveDate),
 				},
 			})
 		})
@@ -135,7 +135,7 @@ export default function BanList() {
 				type: BanListReducerType.FETCHING_INFO,
 			})
 
-			FetchHandler.handleFetch<SKCBanListNewCardsNormalFormat & SKCBanListNewCardsDuelLinksFormat>(
+			FetchHandler.handleFetch<YGOBanList.NormalFormatNewlyAdded & YGOBanList.DLFormatNewlyAdded>(
 				`${DownstreamServices.NAME_maps_ENDPOINT.banListUrl}/${selectedBanList}/new?format=${format}`,
 				(json) => {
 					if (format === 'DL') {
@@ -164,7 +164,7 @@ export default function BanList() {
 				}
 			)
 
-			FetchHandler.handleFetch<SKCBanListRemovedCards>(`${DownstreamServices.NAME_maps_ENDPOINT.banListUrl}/${selectedBanList}/removed?format=${format}`, (json) => {
+			FetchHandler.handleFetch<YGOBanList.NormalFormatRemovedCards>(`${DownstreamServices.NAME_maps_ENDPOINT.banListUrl}/${selectedBanList}/removed?format=${format}`, (json) => {
 				currentBanListDispatch({
 					type: BanListReducerType.UPDATE_REMOVED_CONTENT,
 					removedCards: json.removedCards,
@@ -172,7 +172,7 @@ export default function BanList() {
 				})
 			})
 
-			FetchHandler.handleFetch<SKCBanListContentNormalFormat & SKCBanListContentDuelLinksFormat>(
+			FetchHandler.handleFetch<YGOBanList.NormalFormatContent & YGOBanList.DLFormatContent>(
 				`${DownstreamServices.NAME_maps_ENDPOINT.banListUrl}/${selectedBanList}/cards?format=${format}`,
 				(json) => {
 					if (format === 'DL') {
@@ -280,33 +280,36 @@ export default function BanList() {
 							isFetchingBanListNewContent={isFetchingBanListNewContent}
 							isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
 						/>
-						<BanListContent
-							format={format}
-							normalFormatContent={{
-								forbidden: forbidden,
-								limited: limited,
-								semiLimited: semiLimited,
-								numForbidden: numForbidden,
-								numLimited: numLimited,
-								numSemiLimited: numSemiLimited,
-							}}
-							dlFormatContent={{
-								forbidden: forbidden,
-								limitedOne: limitedOne,
-								limitedTwo: limitedTwo,
-								limitedThree: limitedThree,
-								numForbidden: numForbidden,
-								numLimitedOne: numLimitedOne,
-								numLimitedTwo: numLimitedTwo,
-								numLimitedThree: numLimitedThree,
-							}}
-							isFetchingBanList={isFetchingBanListContent}
-							isFetchingBanListNewContent={isFetchingBanListNewContent}
-							isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
-						/>
 					</Suspense>
 				}
 			/>
+
+			<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='15rem' />}>
+				<BanListContent
+					format={format}
+					normalFormatContent={{
+						forbidden: forbidden,
+						limited: limited,
+						semiLimited: semiLimited,
+						numForbidden: numForbidden,
+						numLimited: numLimited,
+						numSemiLimited: numSemiLimited,
+					}}
+					dlFormatContent={{
+						forbidden: forbidden,
+						limitedOne: limitedOne,
+						limitedTwo: limitedTwo,
+						limitedThree: limitedThree,
+						numForbidden: numForbidden,
+						numLimitedOne: numLimitedOne,
+						numLimitedTwo: numLimitedTwo,
+						numLimitedThree: numLimitedThree,
+					}}
+					isFetchingBanList={isFetchingBanListContent}
+					isFetchingBanListNewContent={isFetchingBanListNewContent}
+					isFetchingBanListRemovedContent={isFetchingBanListRemovedContent}
+				/>
+			</Suspense>
 		</div>
 	)
 }

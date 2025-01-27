@@ -1,12 +1,18 @@
-import { useState, useEffect, lazy, Suspense, useReducer } from 'react'
+import '../../css/card/card-information.css'
+import '../../css/util/headline.css'
+
+import { useEffect, lazy, Suspense, useReducer } from 'react'
 import { useParams } from 'react-router-dom'
-import { Skeleton } from '@mui/material'
+import { Chip, Skeleton, Typography } from '@mui/material'
 
 import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
-import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 import { CardImageRounded, Section } from 'skc-rcl'
 import { decodeHTML } from 'entities'
+import { cardInformationReducer, CardInformationType } from '../../reducers/CardInformationReducer'
+import { Dates } from '../../helper/Dates'
+
+import CalendarMonthTwoToneIcon from '@mui/icons-material/CalendarMonthTwoTone'
 
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 const CardSuggestions = lazy(() => import('../card/suggestion/CardSuggestions'))
@@ -18,182 +24,197 @@ const YGOCard = lazy(() =>
 	})
 )
 
-type CardInformationState = {
-	cardName: string
-	cardColor: cardColor
-	cardAttribute?: string
-	monsterType?: string
-	monsterAssociation?: SKCMonsterAssociation
-	monsterAtk?: string
-	monsterDef?: string
-	cardEffect: string
-	productInfo: ProductInfo[]
-	restrictionInfo: RestrictedIn
-}
-
-enum CardInformationType {
-	UPDATE_CARD = 'UPDATE CARD',
-	UPDATE_PRODUCTS = 'UPDATE PRODUCTS',
-	UPDATE_RESTRICTIONS = 'UPDATE RESTRICTIONS',
-}
-
-type CardInformationAction =
-	| {
-			type: CardInformationType.UPDATE_CARD
-			cardName: string
-			cardEffect: string
-			cardColor: cardColor
-			cardAttribute?: string
-			monsterType?: string
-			monsterAssociation?: SKCMonsterAssociation
-			monsterAtk?: string
-			monsterDef?: string
-	  }
-	| { type: CardInformationType.UPDATE_PRODUCTS; productInfo: ProductInfo[] }
-	| { type: CardInformationType.UPDATE_RESTRICTIONS; restrictionInfo: RestrictedIn }
-
-function cardInformationReducer(state: CardInformationState, action: CardInformationAction): CardInformationState {
-	switch (action.type) {
-		case CardInformationType.UPDATE_CARD:
-			return {
-				...state,
-				cardName: action.cardName,
-				cardColor: action.cardColor,
-				cardEffect: action.cardEffect,
-				cardAttribute: action.cardAttribute,
-				monsterType: action.monsterType,
-				monsterAtk: action.monsterAtk,
-				monsterDef: action.monsterDef,
-				monsterAssociation: action.monsterAssociation,
-			}
-		case CardInformationType.UPDATE_PRODUCTS:
-			return {
-				...state,
-				productInfo: action.productInfo,
-			}
-		case CardInformationType.UPDATE_RESTRICTIONS:
-			return {
-				...state,
-				restrictionInfo: action.restrictionInfo,
-			}
-	}
-}
+const Hint = lazy(() =>
+	import('skc-rcl').then((module) => {
+		return { default: module.Hint }
+	})
+)
 
 const CardInformation = () => {
-	let { cardId: cardID } = useParams()
-	cardID = cardID as string
-	const crumbs = ['Home', 'Card Browse']
-
-	const [isLoading, setIsLoading] = useState(true)
-
-	const [{ cardName, cardColor, cardEffect, cardAttribute, monsterType, monsterAtk, monsterDef, monsterAssociation, productInfo, restrictionInfo }, cardDispatch] = useReducer(
-		cardInformationReducer,
-		{
+	const [state, cardInformationDispatch] = useReducer(cardInformationReducer, {
+		pageBreadcrumbs: ['Home', 'Card Browse', ''],
+		card: {
+			cardID: useParams<{ cardId: string }>().cardId ?? '',
 			cardName: '',
 			cardColor: undefined,
 			cardEffect: '',
 			cardAttribute: '',
 			monsterType: '',
-			monsterAtk: '',
-			monsterDef: '',
+			monsterAttack: '',
+			monsterDefense: '',
 			monsterAssociation: undefined,
-			productInfo: [],
-			restrictionInfo: { TCG: [], MD: [], DL: [] },
-		}
-	)
-
-	const [dynamicCrumbs, setDynamicCrumbs] = useState([...crumbs, ''])
+		},
+		productInfo: [],
+		restrictionInfo: { TCG: [], MD: [], DL: [] },
+		isFetchingCardData: true,
+		uniqueRarities: [],
+		suggestions: { namedMaterials: [], namedReferences: [], referencedBy: [], materialFor: [], hasSelfReference: false },
+		archetypes: new Set<string>(),
+		isFetchingSuggestions: true,
+		isFetchingSupport: true,
+		suggestionRequestHasError: false,
+		supportRequestHasError: false,
+	})
 
 	useEffect(() => {
-		FetchHandler.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT.cardInstanceUrl}/${cardID}?allInfo=true`, (cardInfo: SKCCardInfo) => {
-			setDynamicCrumbs([...crumbs, cardInfo.cardID])
-
-			cardDispatch({
+		FetchHandler.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT.cardInstanceUrl}/${state.card.cardID}?allInfo=true`, (cardInfo: YGOCard.Info) => {
+			cardInformationDispatch({
 				type: CardInformationType.UPDATE_CARD,
-				cardName: cardInfo.cardName,
-				cardColor: cardInfo.cardColor,
-				cardEffect: cardInfo.cardEffect,
-				cardAttribute: cardInfo.cardAttribute,
-				monsterType: cardInfo.monsterType,
-				monsterAtk: cardInfo.monsterAttack,
-				monsterDef: cardInfo.monsterDefense,
-				monsterAssociation: cardInfo.monsterAssociation,
+				cardInfo: cardInfo,
 			})
+		})
 
-			cardDispatch({
-				type: CardInformationType.UPDATE_PRODUCTS,
-				productInfo: cardInfo.foundIn ?? [],
+		// fetch suggestions
+		FetchHandler.handleFetch(
+			`${DownstreamServices.SKC_SUGGESTION_ENDPOINTS.cardSuggestions}/${state.card.cardID}`,
+			(cardSuggestionOutput: YGOCard.Suggestion) => {
+				cardInformationDispatch({
+					type: CardInformationType.UPDATE_SUGGESTIONS,
+					suggestions: cardSuggestionOutput,
+				})
+			},
+			false
+		)?.catch(() => {
+			cardInformationDispatch({
+				type: CardInformationType.FETCH_SUGGESTIONS_ERROR,
 			})
+		})
 
-			cardDispatch({
-				type: CardInformationType.UPDATE_RESTRICTIONS,
-				restrictionInfo: cardInfo.restrictedIn ?? { TCG: [], MD: [], DL: [] },
+		FetchHandler.handleFetch(
+			`${DownstreamServices.SKC_SUGGESTION_ENDPOINTS.cardSupport}/${state.card.cardID}`,
+			(cardSupportOutput: YGOCard.Support) => {
+				cardInformationDispatch({
+					type: CardInformationType.UPDATE_SUPPORT,
+					support: cardSupportOutput,
+				})
+			},
+			false
+		)?.catch(() => {
+			cardInformationDispatch({
+				type: CardInformationType.FETCH_SUPPORT_ERROR,
 			})
-
-			setIsLoading(false)
 		})
 	}, [])
 
 	return (
 		<div className='generic-container'>
-			<title>SKC - Card: {cardID}</title>
-			<meta name={`SKC - Card: ${cardID}`} content={`Information for YuGiOh card ${cardName} such as ban lists it was in, products it can be found in, effect/stats, etc.`} />
-			<meta name='keywords' content={`YuGiOh, The Supreme Kings Castle, card, ${cardName}, ${cardID}, ${cardColor}`} />
+			<title>SKC - Card: {state.card.cardID}</title>
+			<meta
+				name={`SKC - Card: ${state.card.cardID}`}
+				content={`Information for YuGiOh card ${state.card.cardName} such as ban lists it was in, products it can be found in, effect/stats, etc.`}
+			/>
+			<meta name='keywords' content={`YuGiOh, The Supreme Kings Castle, card, ${state.card.cardName}, ${state.card.cardID}, ${state.card.cardColor}`} />
 
-			<meta property='og:title' content={`${cardName} - ${cardID}`} />
-			<meta property='og:image' content={`https://images.thesupremekingscastle.com/cards/tn/${cardID}.jpg`} />
+			<meta property='og:title' content={`${state.card.cardName} - ${state.card.cardID}`} />
+			<meta property='og:image' content={`https://images.thesupremekingscastle.com/cards/tn/${state.card.cardID}.jpg`} />
 			<meta property='og:type' content='website' />
-			<meta property='og:description' content={`Details For Yugioh Card - ${cardName}`} />
+			<meta property='og:description' content={`Details For Yugioh Card - ${state.card.cardName}`} />
 
 			<Suspense fallback={<Skeleton className='breadcrumb-skeleton' variant='rectangular' width='100%' height='2.5rem' />}>
-				<Breadcrumb crumbs={dynamicCrumbs} />
+				<Breadcrumb crumbs={state.pageBreadcrumbs} />
 			</Suspense>
 
-			<OneThirdTwoThirdsGrid
-				mirrored={false}
-				oneThirdComponent={
-					<Section sectionHeaderBackground={cardColor !== undefined ? (cardColor?.replace(/Pendulum-/gi, '') as cardColor) : ''} sectionName='Information'>
-						<div className='section-content'>
-							<CardImageRounded size='md' cardID={cardID} loading='eager' />
-							<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='10rem' />}>
-								{isLoading ? (
-									<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='10rem' />
-								) : (
-									<YGOCard
-										cardName={cardName}
-										cardColor={cardColor}
-										cardEffect={decodeHTML(cardEffect)}
-										cardAttribute={cardAttribute}
-										monsterType={monsterType}
-										monsterAttack={monsterAtk}
-										monsterDefense={monsterDef}
-										monsterAssociation={monsterAssociation}
-										cardID={cardID}
-										fullDetails={true}
-										isLoading={false}
-									/>
-								)}
+			<div className='headline-v1'>
+				<Section sectionHeaderBackground={state.card.cardColor !== undefined ? (state.card.cardColor?.replace(/Pendulum-/gi, '') as YGOCard.Color) : ''} sectionName='Card Stats'>
+					<div className='section-content'>
+						<CardImageRounded size='md' cardID={state.card.cardID} loading='eager' />
+						<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='10rem' />}>
+							{state.isFetchingCardData ? (
+								<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='10rem' />
+							) : (
+								<YGOCard
+									cardName={state.card.cardName}
+									cardColor={state.card.cardColor}
+									cardEffect={decodeHTML(state.card.cardEffect)}
+									cardAttribute={state.card.cardAttribute}
+									monsterType={state.card.monsterType}
+									monsterAttack={state.card.monsterAttack}
+									monsterDefense={state.card.monsterDefense}
+									monsterAssociation={state.card.monsterAssociation}
+									cardID={state.card.cardID}
+									fullDetails={true}
+									isLoading={false}
+								/>
+							)}
+						</Suspense>
+					</div>
+				</Section>
+
+				<div className='group light-shadow'>
+					<Typography variant='h3' align='center'>
+						Summary
+					</Typography>
+
+					<div className='headline-section'>
+						<Typography variant='h5'>Archetypes (BETA)</Typography>
+						{state.isFetchingSuggestions && <Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='5rem' />}
+						{!state.isFetchingSuggestions &&
+							state.archetypes.size !== 0 &&
+							[...state.archetypes].map((archetype) => <Chip className='dark-chip' key={archetype} label={archetype} />)}
+						{!state.isFetchingSuggestions && state.archetypes.size === 0 && (
+							<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='3rem' />}>
+								<Hint variant='tight' fullWidth={false}>
+									Not tied to any archetype
+								</Hint>
 							</Suspense>
-						</div>
-					</Section>
-				}
-				twoThirdComponent={
-					<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='20rem' />}>
-						<CardSuggestions cardID={cardID} cardColor={cardColor} cardName={cardName} />
-						{isLoading ? (
-							<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='20rem' />
-						) : (
-							<CardInformationRelatedContent
-								cardName={cardName}
-								cardColor={cardColor?.replace(/Pendulum-/gi, '') as cardColor}
-								cardID={cardID}
-								productInfo={productInfo}
-								restrictedIn={restrictionInfo}
-							/>
 						)}
-					</Suspense>
-				}
-			/>
+					</div>
+
+					<div className='headline-section'>
+						<Typography variant='h5'>Releases</Typography>
+						{state.productInfo.length !== 0 && (
+							<div className='card-printing-info-container'>
+								<CalendarMonthTwoToneIcon />
+								<div>
+									<Typography variant='subtitle2'>
+										{Dates.daysBetweenTwoDates(Dates.fromYYYYMMDDToDate(state.productInfo[0].productReleaseDate)).toLocaleString()} day(s) since last printing
+									</Typography>
+									{state.productInfo.length >= 2 && (
+										<Typography variant='subtitle2'>
+											{Dates.daysBetweenTwoDates(Dates.fromYYYYMMDDToDate(state.productInfo[state.productInfo.length - 1].productReleaseDate)).toLocaleString()} days since initial
+											release
+										</Typography>
+									)}
+								</div>
+							</div>
+						)}
+
+						<Typography variant='subtitle2'>
+							{state.uniqueRarities.length} unique {state.uniqueRarities.length == 1 ? 'rarity' : 'rarities'}
+						</Typography>
+						{state.uniqueRarities.map((uniqueRarity) => (
+							<Chip className='dark-chip' key={uniqueRarity} label={uniqueRarity} />
+						))}
+					</div>
+				</div>
+			</div>
+
+			<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='22rem' />}>
+				<CardSuggestions
+					namedMaterials={state.suggestions.namedMaterials}
+					namedReferences={state.suggestions.namedReferences}
+					materialFor={state.suggestions.materialFor}
+					referencedBy={state.suggestions.referencedBy}
+					isFetchingSuggestions={state.isFetchingSuggestions}
+					isFetchingSupport={state.isFetchingSupport}
+					suggestionRequestHasError={state.suggestionRequestHasError}
+					supportRequestHasError={state.supportRequestHasError}
+					cardColor={state.card.cardColor}
+					cardName={state.card.cardName}
+				/>
+			</Suspense>
+			<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='40rem' />}>
+				{state.isFetchingCardData ? (
+					<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='20rem' />
+				) : (
+					<CardInformationRelatedContent
+						cardColor={state.card.cardColor?.replace(/Pendulum-/gi, '') as YGOCard.Color}
+						cardID={state.card.cardID}
+						productInfo={state.productInfo}
+						restrictedIn={state.restrictionInfo}
+					/>
+				)}
+			</Suspense>
 		</div>
 	)
 }

@@ -8,16 +8,16 @@ import { Dates } from '../../../helper/Dates'
 
 type _EventItem =
 	| {
-			event: HeartApiEventItem
+			event: HeartAPI.EventItem
 			isWithinDialog: true
 			showEventDialog?: React.Dispatch<React.SetStateAction<boolean>>
-			setEventDialogEventData?: React.Dispatch<React.SetStateAction<HeartApiEventItem>>
+			setEventDialogEventData?: React.Dispatch<React.SetStateAction<HeartAPI.EventItem>>
 	  }
 	| {
-			event: HeartApiEventItem
+			event: HeartAPI.EventItem
 			isWithinDialog: false
 			showEventDialog: React.Dispatch<React.SetStateAction<boolean>>
-			setEventDialogEventData: React.Dispatch<React.SetStateAction<HeartApiEventItem>>
+			setEventDialogEventData: React.Dispatch<React.SetStateAction<HeartAPI.EventItem>>
 	  }
 
 const EventItem: FC<_EventItem> = ({ event, showEventDialog, setEventDialogEventData, isWithinDialog }) => {

@@ -12,7 +12,7 @@ const Home = lazy(() => import('./Home'))
 const BanList = lazy(() => import('./BanList'))
 
 const ProductBrowse = lazy(() => import('./ProductBrowse'))
-const ProductInfo = lazy(() => import('./ProductInfo'))
+const ProductInformation = lazy(() => import('./ProductInformation'))
 
 const Browse = lazy(() => import('./CardsBrowse'))
 const CardInformation = lazy(() => import('./CardInformation'))
@@ -37,7 +37,7 @@ export default function SKCSiteRoutes() {
 						<Route path='product' element={<ProductBrowse />} />
 					</Route>
 
-					<Route path={AppRoutes.ProductInformation} element={<ProductInfo />} />
+					<Route path={AppRoutes.ProductInformation} element={<ProductInformation />} />
 
 					<Route path={AppRoutes.About} element={<About />} />
 					<Route path={AppRoutes.Privacy} element={<Privacy />} />
