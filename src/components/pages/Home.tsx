@@ -114,7 +114,7 @@ export default function Home() {
 						<CardOfTheDay cardOfTheDayData={cotd} />
 					</div>
 
-					<Divider className='dark-translucent-divider' />
+					<Divider className='dark-translucent-divider-minimal' />
 
 					<div className='headline-section'>
 						<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='33rem' />}>
