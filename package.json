@@ -30,7 +30,7 @@
 		"nth-check": "2.1.1",
 		"socket.io-parser": "4.2.4",
 		"@babel/traverse": "7.27.3",
-		"postcss": "8.5.3",
+		"postcss": "8.5.4",
 		"@babel/core": "7.27.3",
 		"browserslist": "4.25.0",
 		"react-is": "19.1.0",
