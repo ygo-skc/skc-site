@@ -1,5 +1,5 @@
 import { Skeleton } from '@mui/material'
-import Grid from '@mui/material/Grid2'
+import Grid from '@mui/material/Grid'
 import { FC, Fragment, JSX, useEffect, useState } from 'react'
 
 const PlaceHolderGridItems: FC<{ totalPlaceHolders?: number }> = ({ totalPlaceHolders = 10 }) => {

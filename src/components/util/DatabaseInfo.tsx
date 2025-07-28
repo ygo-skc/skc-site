@@ -2,7 +2,7 @@ import '../../css/util/database-search-styles.css'
 
 import { FC, lazy, useCallback } from 'react'
 
-import Grid from '@mui/material/Grid2'
+import Grid from '@mui/material/Grid'
 
 import { Skeleton } from '@mui/material'
 import { Tile, Section } from 'skc-rcl'

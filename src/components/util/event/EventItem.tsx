@@ -2,9 +2,9 @@ import { IconButton, Typography } from '@mui/material'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined'
 import { FC, useCallback } from 'react'
-import ReactMarkdown from 'react-markdown'
 import { DateBadge } from 'skc-rcl'
 import { Dates } from '../../../helper/Dates'
+import Markdown from 'react-markdown'
 
 type _EventItem =
 	| {
@@ -56,8 +56,8 @@ const EventItem: FC<_EventItem> = ({ event, showEventDialog, setEventDialogEvent
 				<Typography className='event-name' variant='h6'>
 					{event.name}
 				</Typography>
-				<Typography variant='body2'>
-					<ReactMarkdown className={notesStyle}>{event.notes}</ReactMarkdown>
+				<Typography variant='body2' className={notesStyle}>
+					<Markdown>{event.notes}</Markdown>
 				</Typography>
 			</div>
 		</div>
