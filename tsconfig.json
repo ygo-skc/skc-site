@@ -20,10 +20,10 @@
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"incremental": true,
-		"noFallthroughCasesInSwitch": true
+		"noFallthroughCasesInSwitch": true,
+		"types": ["node", "jest"]
 	},
 	"exclude": ["node_modules", "build", "scripts", "acceptance-tests", "webpack", "jest", "src/setupTests.ts"],
-	"types": ["typePatches"],
 	"include": ["src"],
 	"ts-node": {
 		// these options are overrides used only by ts-node
