@@ -1,5 +1,5 @@
 import { Chip, Typography } from '@mui/material'
-import Grid from '@mui/material/Grid2'
+import Grid from '@mui/material/Grid'
 import { FC } from 'react'
 import { Dates } from '../../helper/Dates'
 import { InlineDate, ProductImage } from 'skc-rcl'

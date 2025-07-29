@@ -1,5 +1,5 @@
 import { Skeleton, Typography } from '@mui/material'
-import Grid from '@mui/material/Grid2'
+import Grid from '@mui/material/Grid'
 import { FC, Fragment, JSX, startTransition, useEffect, useState } from 'react'
 import { Dates } from '../../helper/Dates'
 import ProductGridItem from './ProductGridItem'

@@ -25,7 +25,7 @@ const Trends = () => {
 
 	useEffect(() => {
 		FetchHandler.handleFetch<YGOCard.CardTrendData>(
-			`${DownstreamServices.SKC_SUGGESTION_ENDPOINTS.trending}/card`,
+			`${DownstreamServices.SKC_SUGGESTION_ENDPOINTS.trending}/CARD`,
 			(trendingData: YGOCard.CardTrendData) => {
 				dispatch({ type: TrendActionType.UPDATE_CARD_TRENDS, cardTrendData: trendingData })
 			},
@@ -35,7 +35,7 @@ const Trends = () => {
 		})
 
 		FetchHandler.handleFetch<YGOCard.ProductTrendData>(
-			`${DownstreamServices.SKC_SUGGESTION_ENDPOINTS.trending}/product`,
+			`${DownstreamServices.SKC_SUGGESTION_ENDPOINTS.trending}/PRODUCT`,
 			(trendingData: YGOCard.ProductTrendData) => {
 				dispatch({ type: TrendActionType.UPDATE_PRODUCT_TRENDS, productTrendData: trendingData })
 			},
