@@ -19,7 +19,7 @@
 		"react-dom": "19.2.0",
 		"react-markdown": "10.1.0",
 		"react-router-dom": "7.9.4",
-		"skc-rcl": "1.2.3",
+		"skc-rcl": "1.2.4",
 		"styled-components": "5.3.11"
 	},
 	"resolutions": {
