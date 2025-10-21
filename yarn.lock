@@ -8920,10 +8920,10 @@ signal-exit@^4.0.1, signal-exit@^4.1.0:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-4.1.0.tgz#952188c1cbd546070e2dd20d0f41c0ae0530cb04"
   integrity sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==
 
-skc-rcl@1.2.3:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/skc-rcl/-/skc-rcl-1.2.3.tgz#9a69fd8ce351592bbc9ed76ec5c40481681ee7bc"
-  integrity sha512-NdrpfxfaFptClSdIjFKTEniQGY6eE9P77KWZ9B93IGzUKPyCBdsovA3KprpDRJ7xUAgRMyeJgepSywphrKAcew==
+skc-rcl@1.2.4:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/skc-rcl/-/skc-rcl-1.2.4.tgz#3589d2b45fa56c96ff2b6a296e6c360dcf3d37e1"
+  integrity sha512-Vf4+8X6Zc3rqxGg+e1g8k+p0VC8o+i17mXUkXxA8/pQdGfAlQ/QR4TSYgrMS13LqW8V7yke9psz6rK73C6OXrQ==
 
 slash@^3.0.0:
   version "3.0.0"
