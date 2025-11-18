@@ -78,7 +78,7 @@
 		"@types/react": "19.2.6",
 		"@types/react-dom": "19.2.3",
 		"@types/react-router-dom": "5.3.3",
-		"@types/styled-components": "5.1.35",
+		"@types/styled-components": "5.1.36",
 		"@typescript-eslint/eslint-plugin": "8.46.4",
 		"@typescript-eslint/parser": "8.46.4",
 		"babel-loader": "10.0.0",
