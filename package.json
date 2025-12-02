@@ -19,7 +19,7 @@
 		"react-dom": "19.2.0",
 		"react-markdown": "10.1.0",
 		"react-router-dom": "7.9.6",
-		"skc-rcl": "1.2.4",
+		"skc-rcl": "1.2.5",
 		"styled-components": "5.3.11"
 	},
 	"resolutions": {
@@ -36,7 +36,10 @@
 		"react-is": "19.2.0",
 		"ws": "8.18.3",
 		"send": "1.2.0",
-		"cross-spawn": "7.0.6"
+		"cross-spawn": "7.0.6",
+		"js-yaml": "4.1.1",
+		"express": "5.2.1",
+		"mdast-util-to-hast": "13.2.1"
 	},
 	"scripts": {
 		"fresh-install": "rm -rf node_modules yarn.lock && yarn install --ignore-optional && npx browserslist@latest --update-db",
