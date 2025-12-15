@@ -35,7 +35,7 @@
 		"browserslist": "4.28.1",
 		"react-is": "19.2.3",
 		"ws": "8.18.3",
-		"send": "1.2.0",
+		"send": "1.2.1",
 		"cross-spawn": "7.0.6",
 		"js-yaml": "4.1.1",
 		"express": "5.2.1",
