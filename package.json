@@ -13,7 +13,7 @@
 		"@mui/styled-engine-sc": "7.3.7",
 		"@nivo/pie": "0.99.0",
 		"axios": "1.13.2",
-		"entities": "7.0.0",
+		"entities": "7.0.1",
 		"lodash.startcase": "4.4.0",
 		"react": "19.2.3",
 		"react-dom": "19.2.3",
