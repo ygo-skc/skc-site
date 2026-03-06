@@ -12,7 +12,6 @@
 		"@mui/material": "7.3.9",
 		"@mui/styled-engine-sc": "7.3.9",
 		"@nivo/pie": "0.99.0",
-		"@tootallnate/once": "3.0.1",
 		"axios": "1.13.6",
 		"entities": "7.0.1",
 		"lodash.startcase": "4.4.0",
@@ -40,7 +39,8 @@
 		"cross-spawn": "7.0.6",
 		"js-yaml": "4.1.1",
 		"express": "5.2.1",
-		"mdast-util-to-hast": "13.2.1"
+		"mdast-util-to-hast": "13.2.1",
+		"@tootallnate/once": "3.0.1"
 	},
 	"scripts": {
 		"fresh-install": "rm -rf node_modules yarn.lock && yarn install --ignore-optional && npx browserslist@latest --update-db",
