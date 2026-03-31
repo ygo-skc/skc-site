@@ -32,7 +32,7 @@
 		"@babel/traverse": "7.29.0",
 		"postcss": "8.5.8",
 		"@babel/core": "7.29.0",
-		"browserslist": "4.28.1",
+		"browserslist": "4.28.2",
 		"react-is": "19.2.4",
 		"ws": "8.20.0",
 		"send": "1.2.1",
