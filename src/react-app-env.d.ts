@@ -1,5 +1,7 @@
 /// <reference types="react-scripts" />
 
+declare module '*.css' {}
+
 declare namespace YGOCard {
 	type Color =
 		| 'normal'
