@@ -78,7 +78,7 @@ const CardBrowse: FC<{
 				groupBy={handleGroupBy}
 				autoHighlight
 				onChange={handleOnChange}
-				renderTags={renderTags}
+				renderValue={renderTags}
 				renderGroup={handleRenderGroup}
 				renderInput={handleRenderInput}
 				renderOption={handleRenderOption}
