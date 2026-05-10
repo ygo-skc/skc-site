@@ -105,6 +105,7 @@ li {
 	text-transform: none !important;
 	padding: 0.7rem;
 	border-radius: 1rem;
+	color: white !important;
 }
 
 .app-bar-button:hover {
