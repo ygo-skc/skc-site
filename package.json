@@ -34,7 +34,7 @@
 		"@babel/core": "7.29.0",
 		"browserslist": "4.28.2",
 		"react-is": "19.2.6",
-		"ws": "8.20.0",
+		"ws": "8.20.1",
 		"send": "1.2.1",
 		"cross-spawn": "7.0.6",
 		"js-yaml": "4.1.1",
