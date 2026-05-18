@@ -1,13 +1,15 @@
 .stock-ticker {
-	padding-block: 8px;
+	padding: 0.85rem 1rem;
 	overflow: hidden;
 	user-select: none;
-
 	--gap: 3rem;
 	display: flex;
 	gap: var(--gap);
-
 	position: relative;
+	background: linear-gradient(180deg, #ffffff, #f7f9fb);
+	border: 1px solid rgba(148, 163, 184, 0.24);
+	border-radius: 1.1rem;
+	box-shadow: 0 14px 28px rgba(15, 23, 42, 0.08);
 }
 
 .stock-ticker > div {
@@ -17,9 +19,8 @@
 	justify-content: space-between;
 	align-items: center;
 	gap: var(--gap);
-
 	animation: scroll 30s linear infinite;
-	will-change: transform; /* Force hardware acceleration */
+	will-change: transform;
 }
 
 .stock-ticker:hover > div {
@@ -32,14 +33,13 @@
 	}
 }
 
-/* Add blurred edges using pseudo-elements */
 .stock-ticker::before,
 .stock-ticker::after {
 	content: '';
 	position: absolute;
 	top: 0;
 	bottom: 0;
-	width: 50px; /* Width of the blurred area */
+	width: 3rem;
 	pointer-events: none;
 	z-index: 1;
 }
