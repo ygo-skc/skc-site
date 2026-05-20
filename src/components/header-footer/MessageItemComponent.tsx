@@ -1,6 +1,6 @@
 import '../../css/header-footer/messages.css'
 
-import { FC, ReactElement } from 'react'
+import { memo } from 'react'
 import { Typography, Chip } from '@mui/material'
 import ReactMarkdown from 'react-markdown'
 
@@ -11,7 +11,7 @@ type MessageItemComponentArgs = {
 	message: HeartAPI.MessageInstance
 }
 
-const MessageItemComponent: FC<MessageItemComponentArgs> = ({ creationDate, message }): ReactElement => {
+const MessageItemComponent = memo(({ creationDate, message }: MessageItemComponentArgs) => {
 	return (
 		<div className='communication-message-item'>
 			<Typography className='communication-message-header' variant='h6'>
@@ -32,6 +32,7 @@ const MessageItemComponent: FC<MessageItemComponentArgs> = ({ creationDate, mess
 			</div>
 		</div>
 	)
-}
+})
 
+MessageItemComponent.displayName = 'MessageItemComponent'
 export default MessageItemComponent
