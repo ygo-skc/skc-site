@@ -1,7 +1,6 @@
 import { FunctionComponent, Suspense, lazy } from 'react'
 
 import { Link, Skeleton, Typography } from '@mui/material'
-import { Section } from 'skc-rcl'
 
 import '../../css/main-pages/privacy.css'
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
@@ -9,7 +8,7 @@ const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 const Privacy: FunctionComponent = () => {
 	return (
 		<div className='generic-container'>
-			<title>{`SKC - About`}</title>
+			<title>{`SKC - Privacy Policy`}</title>
 			<meta name={`SKC - Privacy`} content={`Privacy policy for site and mobile app`} />
 			<meta name='keywords' content={`YuGiOh, YGO-API, support, The Supreme Kings Castle`} />
 
@@ -17,8 +16,15 @@ const Privacy: FunctionComponent = () => {
 				<Breadcrumb crumbs={['Home', 'Privacy']} />
 			</Suspense>
 
-			<Section sectionName='Privacy Policy - Updated November 1, 2024'>
-				<div className='section-content policy'>
+			<div className='privacy-page'>
+				<div className='privacy-hero'>
+					<Typography variant='h1'>Privacy Policy</Typography>
+					<Typography variant='body2' className='privacy-date'>
+						Updated November 1, 2024
+					</Typography>
+				</div>
+
+				<div className='privacy-content policy'>
 					<Typography variant='body1'>
 						The <strong>SKC Website</strong> and the mobile app <strong>SKC - Yugioh Card Database</strong> is committed to protecting and respecting your privacy. This Privacy
 						Policy explains how we collect, use, and disclose information about you when you use our app.
@@ -96,13 +102,13 @@ const Privacy: FunctionComponent = () => {
 
 					<Typography variant='h4'>7. Contact Us</Typography>
 					<Typography>
-						If you have any questions about this Privacy Policy, please contact us via email:
+						If you have any questions about this Privacy Policy, please contact us via email:{' '}
 						<Link className='link' color='secondary' href='mailto:admin@skc.cards'>
 							admin@skc.cards
 						</Link>
 					</Typography>
 				</div>
-			</Section>
+			</div>
 		</div>
 	)
 }
