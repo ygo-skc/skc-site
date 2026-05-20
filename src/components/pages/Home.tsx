@@ -105,7 +105,7 @@ export default function Home() {
 			<div className='headline-v2'>
 				<DatabaseInfo stats={dbStats} />
 
-				<div className='group light-shadow'>
+				<div className='group'>
 					<Typography variant='h3' align='center'>
 						Suggestions
 					</Typography>
