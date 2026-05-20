@@ -14,31 +14,19 @@ const Footer: FunctionComponent = () => {
 	const [skcSuggestionEngineVersion, setSkcSuggestionEngineVersion] = useState('---')
 
 	useEffect(() => {
-		startTransition(() => {
-			FetchHandler.handleFetch<HealthCheckOutput>(
-				DownstreamServices.NAME_maps_ENDPOINT.status,
-				(json) => {
-					setSkcAPIVersion(json?.version)
-				},
-				false
-			)?.catch(() => {})
+		FetchHandler.handleFetch<HealthCheckOutput>(DownstreamServices.NAME_maps_ENDPOINT.status, (json) => startTransition(() => setSkcAPIVersion(json?.version)), false)?.catch(
+			() => {}
+		)
 
-			FetchHandler.handleFetch<HealthCheckOutput>(
-				DownstreamServices.HEART_API_ENDPOINTS.status,
-				(json) => {
-					setHeartAPIVersion(json?.version)
-				},
-				false
-			)?.catch(() => {})
+		FetchHandler.handleFetch<HealthCheckOutput>(DownstreamServices.HEART_API_ENDPOINTS.status, (json) => startTransition(() => setHeartAPIVersion(json?.version)), false)?.catch(
+			() => {}
+		)
 
-			FetchHandler.handleFetch<HealthCheckOutput>(
-				DownstreamServices.SKC_SUGGESTION_ENDPOINTS.status,
-				(json) => {
-					setSkcSuggestionEngineVersion(json?.version)
-				},
-				false
-			)?.catch(() => {})
-		})
+		FetchHandler.handleFetch<HealthCheckOutput>(
+			DownstreamServices.SKC_SUGGESTION_ENDPOINTS.status,
+			(json) => startTransition(() => setSkcSuggestionEngineVersion(json?.version)),
+			false
+		)?.catch(() => {})
 	}, [])
 
 	const versions = [

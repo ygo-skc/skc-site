@@ -1,5 +1,4 @@
 import { Link, Typography } from '@mui/material'
-import { Fragment } from 'react'
 
 import Topic from './Topic'
 
@@ -11,7 +10,7 @@ export default function AboutSKC() {
 			<Topic
 				header='My Background'
 				details={
-					<Fragment>
+					<>
 						<Typography variant='body1' className='topic-details'>
 							I started playing Yu-Gi-Oh! when I was about 8 years old. I would do some tournaments when I was in middle school and always found it fun to open packs. Starting high
 							school I was less interested in tournaments and more into collecting, but around my Sophomore/Junior year It was hard to be into the hobby. I got back into it
@@ -23,7 +22,7 @@ export default function AboutSKC() {
 							learn. Learning on the job is a hindrance in most cases. I figured I&apos;d learn new technologies by building this web site and some web API&apos;s to support the
 							backend. I was right about this too since everything I&apos;m learning to build this site has helped me stay ahead of my colleagues.
 						</Typography>
-					</Fragment>
+					</>
 				}
 			/>
 
@@ -42,7 +41,7 @@ export default function AboutSKC() {
 			<Topic
 				header='Future Features'
 				details={
-					<Fragment>
+					<>
 						<Typography variant='body1' className='topic-details'>
 							I have some more plans for the website so please stay tuned. Something I wanted to start learning was Machine Learning / AI. The first step I see myself taking is
 							creating a robust suggestion engine that uses card information (parsing text) to help Duelists find related cards easier. I haven&apos;t seen a good engine yet...
@@ -55,7 +54,7 @@ export default function AboutSKC() {
 							</Link>{' '}
 							for what I mean) and, one day, the best Yu-Gi-Oh! DB!
 						</Typography>
-					</Fragment>
+					</>
 				}
 			/>
 		</div>

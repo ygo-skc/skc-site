@@ -2,7 +2,6 @@ import { Typography, Link } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import AboutInfoCard from './AboutInfoCard'
 
-import { Fragment } from 'react'
 import Topic from './Topic'
 
 export default function Overview() {
@@ -16,7 +15,7 @@ export default function Overview() {
 						title='SKC API'
 						subtitle='The Backend'
 						body={
-							<Fragment>
+							<>
 								<Topic
 									header='How Is Data Retrieved?'
 									details={
@@ -41,7 +40,7 @@ export default function Overview() {
 										</Typography>
 									}
 								/>
-							</Fragment>
+							</>
 						}
 						imgName='backend.png'
 						imgLink={`${process.env.REACT_APP_API_HOST}/api/v1/swagger-ui/index.html`}
@@ -53,7 +52,7 @@ export default function Overview() {
 						title='Contributions'
 						subtitle='Donations To Website'
 						body={
-							<Fragment>
+							<>
 								<Typography variant='body1'>As you can tell, this site has no ads and no trackers trying to get information about you. This has two intended effects:</Typography>
 								<ol>
 									<li>The interface is fast, clean and intuitive.</li>
@@ -88,7 +87,7 @@ export default function Overview() {
 										<img alt='' src='https://www.paypal.com/en_US/i/scr/pixel.gif' width='1' height='1' />
 									</form>
 								</div>
-							</Fragment>
+							</>
 						}
 						imgName='monetary_contribution.png'
 						imgLink='https://www.paypal.com/donate?token=cqxHbHEXK6-mxQeeArpzXbPNCngsNwSscv3vVARXBwyFL6NWebDRaj4Xze7jEZ1OYi9BtmxjfsKRGeEI'
@@ -100,7 +99,7 @@ export default function Overview() {
 						title='Other Information'
 						subtitle='Contact & Other Stuff'
 						body={
-							<Fragment>
+							<>
 								<Topic
 									header='Contact'
 									details={
@@ -127,7 +126,7 @@ export default function Overview() {
 										</Typography>
 									}
 								/>
-							</Fragment>
+							</>
 						}
 						imgName='information.png'
 						imgLink='https://twitter.com/supreme_king_yt'

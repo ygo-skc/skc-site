@@ -1,13 +1,12 @@
 import { FunctionComponent, Suspense, lazy } from 'react'
 
-import AboutSKC from '../about/AboutSKC'
-import Overview from '../about/Overview'
-
 import '../../css/main-pages/about.css'
 import { Section } from 'skc-rcl'
 import { Skeleton } from '@mui/material'
 
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
+const AboutSKC = lazy(() => import('../about/AboutSKC'))
+const Overview = lazy(() => import('../about/Overview'))
 
 const About: FunctionComponent = () => {
 	return (
@@ -21,10 +20,14 @@ const About: FunctionComponent = () => {
 			</Suspense>
 
 			<Section maxWidth='1000px' sectionName='About SKC'>
-				<AboutSKC />
+				<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='20rem' />}>
+					<AboutSKC />
+				</Suspense>
 			</Section>
 			<Section sectionName='Everything You Might Want To Know'>
-				<Overview />
+				<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='40rem' />}>
+					<Overview />
+				</Suspense>
 			</Section>
 		</div>
 	)

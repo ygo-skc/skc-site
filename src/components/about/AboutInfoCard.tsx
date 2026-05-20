@@ -1,4 +1,4 @@
-import { FunctionComponent, JSX } from 'react'
+import { FunctionComponent, JSX, memo } from 'react'
 
 import { Typography } from '@mui/material'
 import { LinkPhoto } from 'skc-rcl'
@@ -11,7 +11,7 @@ type AboutInfoCardProps = {
 	imgLink: string
 }
 
-const AboutInfoCard: FunctionComponent<AboutInfoCardProps> = ({ title, subtitle, body, imgName, imgLink }) => (
+const AboutInfoCard: FunctionComponent<AboutInfoCardProps> = memo(({ title, subtitle, body, imgName, imgLink }) => (
 	<div className='info-card'>
 		<div className='info-card-header-container'>
 			<div className='centered-image'>
@@ -27,6 +27,7 @@ const AboutInfoCard: FunctionComponent<AboutInfoCardProps> = ({ title, subtitle,
 
 		<div className='info-card-body'>{body}</div>
 	</div>
-)
+))
 
+AboutInfoCard.displayName = 'AboutInfoCard'
 export default AboutInfoCard

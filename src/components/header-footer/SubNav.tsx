@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { Typography, Link } from '@mui/material'
 import AppRoutes from '../../helper/AppRoutes'
 
@@ -9,7 +10,7 @@ const navLinks = [
 	{ href: AppRoutes.About, label: 'About' },
 ]
 
-export default function SubNav() {
+const SubNav = memo(function SubNav() {
 	const pathname = window.location.pathname
 
 	const navClass = (route: string) => {
@@ -28,4 +29,7 @@ export default function SubNav() {
 			))}
 		</div>
 	)
-}
+})
+
+SubNav.displayName = 'SubNav'
+export default SubNav

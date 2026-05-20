@@ -6,8 +6,9 @@ import GitHubIcon from '@mui/icons-material/GitHub'
 import YouTube from '@mui/icons-material/YouTube'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 
-import SubNav from './SubNav'
 import AppRoutes from '../../helper/AppRoutes'
+
+import SubNav from './SubNav'
 
 const Messages = lazy(() => import('./Messages'))
 
