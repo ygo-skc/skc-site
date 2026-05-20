@@ -83,10 +83,12 @@ function Messages() {
 				}}
 			>
 				<div className='communication-popper-container'>
-					<Typography className='communication-message-body' variant='h2'>
-						🚨 Messages {errorFetchingMessages ? '⁉️' : `(${numMessages})`}
-					</Typography>
-					<br />
+					<div className='communication-popper-header'>
+						<Typography variant='h6'>Messages</Typography>
+						<Typography variant='body2' className='communication-message-count'>
+							{errorFetchingMessages ? 'unavailable' : `${numMessages} total`}
+						</Typography>
+					</div>
 
 					{errorFetchingMessages ? <GenericNonBreakingErr errExplanation='No meaningful impact to the site functionality expected.' /> : messagesList}
 				</div>

@@ -1,8 +1,5 @@
 .communication-message-badge span.MuiBadge-badge {
 	padding: 0.9rem;
-	padding-right: 0.9rem;
-	padding-bottom: 0.9rem;
-	padding-left: 0.9rem;
 	height: 0px;
 	width: 0px;
 	top: 3;
@@ -11,14 +8,59 @@
 	color: white;
 }
 
-.communication-message-header.MuiTypography-root {
-	margin-bottom: 0.7rem;
-	font-weight: 600;
+.communication-popper-container {
+	padding: 1.5rem 1.5rem;
+	width: 440px;
+	max-width: 90vw;
+	max-height: 560px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	background: rgba(255, 255, 255, 0.97);
+	box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+	.popover .MuiPaper-root {
+		max-width: calc(100vw - 1.5rem) !important;
+		right: 0.75rem !important;
+		left: auto !important;
+	}
+
+	.communication-popper-container {
+		width: 100%;
+		padding: 1.25rem 1.25rem;
+	}
+}
+
+.communication-popper-container::-webkit-scrollbar {
+	width: 4px;
+}
+
+.communication-popper-container::-webkit-scrollbar-thumb {
+	background: rgba(var(--skc-purple-rgb), 0.3);
+	border-radius: 999px;
+}
+
+.communication-popper-header {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 1rem;
+	padding-bottom: 1rem;
+	margin-bottom: 1.25rem;
+	border-bottom: 1px solid rgba(var(--skc-purple-rgb), 0.15);
+}
+
+.communication-message-count {
+	color: rgba(0, 0, 0, 0.45) !important;
 }
 
 .communication-message-sub-header.MuiTypography-root {
-	margin-bottom: 0.75rem;
-	color: rgba(0, 0, 0, 0.8);
+	color: rgba(0, 0, 0, 0.5);
+}
+
+.communication-message-body {
+	word-break: break-word;
 }
 
 .communication-message-body p {
@@ -29,27 +71,17 @@
 .communication-message-body a:hover {
 	text-decoration: none;
 }
-.communication-message-content {
-	margin-left: 1rem;
-	margin-right: 1rem;
-}
 
-.communication-popper-container {
-	padding-right: 1.2rem;
-	padding-left: 1.2rem;
-	padding-top: 1.75rem;
-	padding-bottom: 1.75rem;
-	max-width: 500px;
-	max-height: 550px;
-	background: rgb(255, 255, 255, 0.85);
-	overflow-x: hidden;
+.communication-message-content {
+	padding-left: 1rem;
+	border-left: 2px solid rgba(var(--skc-purple-rgb), 0.2);
+	margin-bottom: 0.25rem;
 }
 
 .communication-divider.MuiDivider-root {
-	margin-top: 1rem;
-	margin-bottom: 1.5rem;
-	background: rgba(0, 0, 0, 0.2);
-	backdrop-filter: blur(60px);
+	margin-top: 1.25rem;
+	margin-bottom: 1.25rem;
+	background: rgba(var(--skc-purple-rgb), 0.12);
 }
 
 .popover {
