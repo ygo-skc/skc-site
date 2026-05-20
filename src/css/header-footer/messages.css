@@ -52,14 +52,15 @@
 
 .communication-popper-header .MuiTypography-h6 {
 	color: var(--skc-purple) !important;
+	margin-bottom: 0 !important;
 }
 
 .communication-message-count {
-	color: rgba(var(--skc-purple-rgb), 0.5) !important;
+	color: rgba(0, 0, 0, 0.8) !important;
 }
 
 .communication-message-sub-header.MuiTypography-root {
-	color: rgba(var(--skc-purple-rgb), 0.55) !important;
+	color: rgba(0, 0, 0, 0.7) !important;
 }
 
 .communication-message-body {
@@ -76,12 +77,24 @@
 }
 
 .communication-year-label {
-	display: block;
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
 	color: var(--skc-purple) !important;
 	margin-bottom: 0.75rem;
 	margin-top: 0.25rem;
-	padding-bottom: 0.4rem;
-	border-bottom: 2px solid rgba(var(--skc-purple-rgb), 0.2);
+}
+
+.communication-year-label::before,
+.communication-year-label::after {
+	content: '';
+	flex: 1;
+	height: 1px;
+	background: linear-gradient(to right, rgba(var(--skc-purple-rgb), 0), rgba(var(--skc-purple-rgb), 0.3));
+}
+
+.communication-year-label::after {
+	background: linear-gradient(to left, rgba(var(--skc-purple-rgb), 0), rgba(var(--skc-purple-rgb), 0.3));
 }
 
 .communication-message-item {
