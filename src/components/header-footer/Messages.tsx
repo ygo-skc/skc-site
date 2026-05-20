@@ -23,26 +23,37 @@ function Messages() {
 	const isDisplayingNotifications = Boolean(messagesAnchor)
 
 	const onMessageDataReceived = (messageData: HeartAPI.Message) => {
-		const totalMessages = messageData.messages.length
-
 		let _numNewMessages = 0
 		const previousNewestMessageTimeStamp = localStorage.getItem('previousNewestMessage') as string
 		const previousNewestMessageDate = new Date(previousNewestMessageTimeStamp)
 
-		startTransition(() => {
-			setMessagesList(
-				messageData.messages.map((message: HeartAPI.MessageInstance, index: number) => {
-					const creationDate = new Date(message.createdAt)
+		const messagesByYear = new Map<number, { message: HeartAPI.MessageInstance; creationDate: Date }[]>()
+		messageData.messages.forEach((message: HeartAPI.MessageInstance) => {
+			const creationDate = new Date(message.createdAt)
+			if (previousNewestMessageDate < creationDate) _numNewMessages++
 
-					if (previousNewestMessageDate < creationDate) {
-						_numNewMessages++
-					}
+			const year = creationDate.getFullYear()
+			if (!messagesByYear.has(year)) messagesByYear.set(year, [])
+			messagesByYear.get(year)!.push({ message, creationDate })
+		})
 
-					return <MessageItemComponent key={message.createdAt} creationDate={creationDate} message={message} isLastMessage={index === totalMessages - 1} />
-				})
+		const messagesList: JSX.Element[] = []
+		messagesByYear.forEach((messages, year) => {
+			// every iteration is a new year, push header for year
+			messagesList.push(
+				<Typography key={`year-${year}`} className='communication-year-label' variant='subtitle2'>
+					{year}
+				</Typography>
 			)
+			messages.forEach(({ message, creationDate }) => {
+				messagesList.push(<MessageItemComponent key={message.createdAt} creationDate={creationDate} message={message} />)
+			})
+		})
+
+		startTransition(() => {
+			setMessagesList(messagesList)
 			setNumNewMessages(_numNewMessages)
-			setNumMessages(totalMessages)
+			setNumMessages(messageData.messages.length)
 			setNewestMessageSeen(messageData.messages[0].createdAt)
 		})
 	}
