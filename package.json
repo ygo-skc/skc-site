@@ -107,7 +107,7 @@
 		"webpack": "5.107.2",
 		"webpack-cli": "7.0.3",
 		"webpack-dashboard": "3.3.8",
-		"webpack-dev-server": "5.2.4"
+		"webpack-dev-server": "5.2.5"
 	},
 	"jest": {
 		"testEnvironment": "jsdom",
