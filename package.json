@@ -100,7 +100,7 @@
 		"postcss-normalize": "13.0.1",
 		"react-test-renderer": "19.2.8",
 		"style-loader": "4.0.0",
-		"ts-jest": "29.4.11",
+		"ts-jest": "29.4.12",
 		"ts-loader": "9.6.2",
 		"ts-node": "10.9.2",
 		"typescript": "6.0.3",
