@@ -37,7 +37,7 @@
 		"ws": "8.21.2",
 		"send": "1.2.1",
 		"cross-spawn": "7.0.6",
-		"js-yaml": "4.3.1",
+		"js-yaml": "5.4.1",
 		"express": "5.2.1",
 		"mdast-util-to-hast": "13.2.1",
 		"@tootallnate/once": "3.0.1",
