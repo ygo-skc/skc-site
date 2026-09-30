@@ -46,30 +46,33 @@ Two facts to keep straight:
 
 The default branch is `release`. Run from an up-to-date checkout of it.
 
+Read the version first. It decides whether there is a release to cut at all, and running the gates
+before that question is settled wastes them on a release you may be told not to cut.
+
 ```bash
 git fetch --tags --prune
-git status --porcelain                  # must print nothing
+git status --porcelain
 grep -n '"version"' package.json
 PREV=$(git tag --list 'v*' --sort=-v:refname | head -1)
-git log --oneline "$PREV"..HEAD
-git diff --stat "$PREV"..HEAD
-yarn ci:test
-yarn lint
-yarn build:production
 ```
 
 **`git fetch --tags --prune` comes first and is not optional.** `git tag --list` reads local refs
 only, so on a checkout that hasn't fetched recently `$PREV` silently resolves behind.
 (`git ls-remote --tags origin` answers the same question without writing to `.git`.)
 
-**Keep the `'v*'` glob.** This repo has tags that are not releases — one missing its `v` prefix, and
-a `backup/` marker created after the newest release. Sorting across all tags would surface the wrong
-`$PREV`.
+**Keep the `'v*'` glob.** This repo carries tags that are not releases — one missing its `v` prefix,
+and a local-only `backup/` marker pointing into the unreleased range. `--sort=-v:refname` happens to
+rank them below the real releases today, so dropping the glob would currently still work; the glob
+is there so that stays true when someone adds a tag that sorts differently. It is cheap insurance,
+not a live bug being dodged.
 
-**`git status --porcelain` must be empty, and re-check it immediately before tagging.** The gate
-commands run against the working tree, but a tag captures only committed state — so a dirty tree
-lets every check pass on code that will not be in the release. This checkout is edited often; treat
-a clean tree as a precondition, not a formality.
+**`git status --porcelain` must be clean before you tag, and re-check it immediately before
+tagging.** The gate commands run against the working tree, but a tag captures only committed state —
+so uncommitted work lets every check pass on code that will not be in the release. **Entries under
+`.claude/` are the exception** — this skill itself, tracked or not; nothing there reaches the bundle.
+Anything else blocks the tag, including any untracked file under `src/`: it compiles into the bundle
+you just verified and is absent from the commit you are about to tag. This checkout is edited frequently and has moved
+mid-release more than once, so treat this as a precondition, not a formality.
 
 Then confirm the tag and release you are about to create don't already exist:
 
@@ -90,13 +93,26 @@ is the established subject), and push. Tagging ahead of the bump means the next 
 footer reporting the previous version on every page. Don't make that edit yourself as part of
 cutting a release.
 
+Only once the version is settled, run the gates:
+
+```bash
+git log --oneline "$PREV"..HEAD
+git diff --stat "$PREV"..HEAD
+yarn ci:test
+yarn lint
+yarn build:production
+```
+
 Four things about the gate:
 
 - **Never run `yarn test`.** It is `jest --coverage --watchAll` — watch mode, which never exits.
   `yarn ci:test` is the non-interactive variant.
-- `yarn ci:test` enforces hard global coverage thresholds from the `jest.coverageThreshold` block in
-  `package.json`, against very few test files — so it can fail on coverage alone with every
-  assertion passing. Read that block for the current floors rather than assuming them.
+- `yarn ci:test` applies the global floors in the `jest.coverageThreshold` block of `package.json`,
+  but there is **no `collectCoverageFrom`** — so coverage is measured only over files a test actually
+  imports, and untested source is invisible to the metric rather than dragging it down. The
+  thresholds therefore rarely bite, and a passing coverage number says nothing about the code this
+  release is shipping. Don't read it as a safety net; read the block for the current floors if a
+  failure does appear.
 - **`.ts` files are never typechecked here.** `ts-loader`'s rule matches `.tsx` only, and jest
   transpiles through babel, so a type error in `src/helper/*.ts` or `src/reducers/*.ts` fails
   neither the build nor the tests. Only `yarn mutation` typechecks them, and it is too slow for a
