@@ -34,10 +34,6 @@ and `src/components/header-footer/Footer.tsx` renders it:
 <strong>SKC Web:</strong> v{process.env.REACT_APP_VERSION}
 ```
 
-It sits in a System Info block beside the SKC API, Heart API and Suggestion Engine versions, which
-are fetched live from each service's `/status`. So this footer is where every SKC repo's release
-becomes publicly visible, and the number chosen here is what a visitor reads on every page.
-
 Two facts to keep straight:
 
 - **Pushing a `v**` tag re-runs `Build & Code Quality` and nothing else.** It does not deploy. The
