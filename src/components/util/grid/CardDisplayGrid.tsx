@@ -1,5 +1,3 @@
-import '../../../css/util/card-grid.css'
-
 import { memo, FC, lazy, useCallback } from 'react'
 
 import { Button } from '@mui/material'
@@ -23,14 +21,21 @@ const CardDisplayGrid: FC<CardDisplayGridProps> = memo(
 
 		return (
 			<div>
-				<Grid container spacing={1}>
+				<Grid container>
 					{cardGridState.isLoading && <PlaceHolderGridItems />}
 					{!cardGridState.isLoading && cardGridState.totalResults === 0 && <Hint fullWidth={false}>{'No Content To Show'}</Hint>}
 					{!cardGridState.isLoading && cardGridState.totalResults !== 0 && <CardGridItems cards={cardGridState.results.slice(0, cardGridState.totalDisplaying)} />}
 				</Grid>
 
 				{!cardGridState.isLoading && cardGridState.totalResults !== 0 && cardGridState.totalDisplaying < cardGridState.totalResults && (
-					<Button className='card-grid-load-more' onClick={loadMoreCB}>
+					<Button
+						onClick={loadMoreCB}
+						style={{
+							padding: '1rem',
+							margin: '0 auto',
+							display: 'block',
+						}}
+					>
 						Load More
 					</Button>
 				)}

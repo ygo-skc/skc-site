@@ -3,42 +3,36 @@ a {
 }
 
 .breadcrumb-parent {
-	display: inline-flex;
-	padding: 0.5rem 1.25rem;
-	margin: 1rem 0 2rem;
-	border-radius: 999px;
-	background: rgba(var(--skc-purple-rgb), 0.06);
-	border: 1px solid rgba(var(--skc-purple-rgb), 0.16);
+	padding-top: 0.75rem;
+	padding-bottom: 0.75rem;
+	padding-left: 1rem;
+	padding-right: 1rem;
+	margin: auto;
+	margin-top: 1rem;
+	margin-bottom: 2.25rem;
+	border-radius: 2rem;
+
+	background-color: white;
 }
 
 .breadcrumb {
 	display: flex;
-	align-items: center;
-	gap: 0.3rem;
-	color: rgba(0, 0, 0, 0.7);
-	transition: color 0.15s ease;
-}
-
-.breadcrumb:hover {
-	color: var(--skc-purple);
+	font-weight: 400;
 }
 
 .breadcrumb-icon {
-	width: 1.25rem !important;
-	height: 1.25rem !important;
-	vertical-align: middle;
+	margin-right: 3px;
+}
+
+.breadcrumb-item {
+	color: white !important;
+	width: 1.7rem;
+	height: 1.7rem;
+	margin-right: 5px;
+	color: rgba(68, 68, 68, 0.68);
 }
 
 .breadcrumb-text {
-	margin: 0;
-	display: inline !important;
-}
-
-.MuiBreadcrumbs-separator {
-	color: rgba(var(--skc-purple-rgb), 0.65);
-	font-size: 1.2rem;
-}
-
-.breadcrumb-parent .MuiBreadcrumbs-ol li:last-child .breadcrumb {
-	color: var(--skc-purple);
+	margin: auto;
+	font-size: 1rem;
 }

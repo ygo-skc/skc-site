@@ -11,18 +11,11 @@ const navLinks = [
 ]
 
 const SubNav = memo(function SubNav() {
-	const pathname = window.location.pathname
-
-	const navClass = (route: string) => {
-		const active = route === AppRoutes.Home ? pathname === AppRoutes.Home : pathname.startsWith(route)
-		return active ? 'nav-button nav-button-active' : 'nav-button'
-	}
-
 	return (
 		<div className='scrollable-nav'>
 			{navLinks.map(({ href, label }) => (
 				<Link key={href} underline='none' color='inherit' href={href}>
-					<Typography className={navClass(href)} variant='button' color='inherit'>
+					<Typography className='nav-button' color='inherit'>
 						{label}
 					</Typography>
 				</Link>

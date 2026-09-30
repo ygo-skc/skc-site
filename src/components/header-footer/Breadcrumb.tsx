@@ -25,22 +25,18 @@ const Breadcrumb: FunctionComponent<BreadcrumbProps> = memo(
 						return item === '' ? (
 							<Skeleton key={item} variant='text' width={50} />
 						) : (
-							<Link className='breadcrumb' color='inherit' key={item} underline='none'>
+							<Link className='breadcrumb' variant='subtitle2' color='inherit' key={item} underline='none'>
 								{BreadcrumbStaticFields.BREADCRUMB_maps_ICON.get(item)}
-								<Typography className='breadcrumb breadcrumb-text' variant='body1'>
-									{item}
-								</Typography>
+								<Typography className='breadcrumb breadcrumb-text'>{item}</Typography>
 							</Link>
 						)
 					}
 
 					const link = item.replace(' ', '')
 					return (
-						<Link underline='none' className='breadcrumb' color='inherit' href={AppRoutes[link as keyof typeof AppRoutes]} key={item}>
+						<Link underline='none' className='breadcrumb' variant='subtitle2' color='inherit' href={AppRoutes[link as keyof typeof AppRoutes]} key={item}>
 							{BreadcrumbStaticFields.BREADCRUMB_maps_ICON.get(item)}
-							<Typography className='breadcrumb breadcrumb-text' variant='body1'>
-								{item}
-							</Typography>
+							<Typography className='breadcrumb breadcrumb-text'>{item}</Typography>
 						</Link>
 					)
 				})
@@ -49,8 +45,8 @@ const Breadcrumb: FunctionComponent<BreadcrumbProps> = memo(
 		}, [crumbs])
 
 		return (
-			<Box className='breadcrumb-parent'>
-				<Breadcrumbs separator='›' aria-label='breadcrumb'>
+			<Box className='breadcrumb-parent light-shadow'>
+				<Breadcrumbs separator={'/'} aria-label='breadcrumb'>
 					{crumbUI.length !== 0 && crumbUI}
 					{crumbUI.length === 0 && <Skeleton variant='text' height={22} width={200} />}
 				</Breadcrumbs>

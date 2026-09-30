@@ -1,6 +1,7 @@
 import { FunctionComponent, Suspense, lazy } from 'react'
 
 import { Link, Skeleton, Typography } from '@mui/material'
+import { Section } from 'skc-rcl'
 
 import '../../css/main-pages/privacy.css'
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
@@ -16,15 +17,8 @@ const Privacy: FunctionComponent = () => {
 				<Breadcrumb crumbs={['Home', 'Privacy']} />
 			</Suspense>
 
-			<div className='privacy-page'>
-				<div className='privacy-hero'>
-					<Typography variant='h1'>Privacy Policy</Typography>
-					<Typography variant='body2' className='privacy-date'>
-						Updated November 1, 2024
-					</Typography>
-				</div>
-
-				<div className='privacy-content policy'>
+			<Section sectionName='Privacy Policy - Updated November 1, 2024'>
+				<div className='section-content policy'>
 					<Typography variant='body1'>
 						The <strong>SKC Website</strong> and the mobile app <strong>SKC - Yugioh Card Database</strong> is committed to protecting and respecting your privacy. This Privacy
 						Policy explains how we collect, use, and disclose information about you when you use our app.
@@ -108,7 +102,7 @@ const Privacy: FunctionComponent = () => {
 						</Link>
 					</Typography>
 				</div>
-			</div>
+			</Section>
 		</div>
 	)
 }

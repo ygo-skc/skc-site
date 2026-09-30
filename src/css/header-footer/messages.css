@@ -1,5 +1,8 @@
 .communication-message-badge span.MuiBadge-badge {
 	padding: 0.9rem;
+	padding-right: 0.9rem;
+	padding-bottom: 0.9rem;
+	padding-left: 0.9rem;
 	height: 0px;
 	width: 0px;
 	top: 3;
@@ -8,63 +11,14 @@
 	color: white;
 }
 
-.communication-popper-container {
-	padding: 1.5rem 1.5rem;
-	width: 440px;
-	max-width: 90vw;
-	max-height: 560px;
-	overflow-y: auto;
-	overflow-x: hidden;
-	background: rgba(255, 255, 255, 0.97);
-	box-sizing: border-box;
-}
-
-@media (max-width: 600px) {
-	.popover .MuiPaper-root {
-		max-width: calc(100vw - 1.5rem) !important;
-		right: 0.75rem !important;
-		left: auto !important;
-	}
-
-	.communication-popper-container {
-		width: 100%;
-		padding: 1.25rem 1.25rem;
-	}
-}
-
-.communication-popper-container::-webkit-scrollbar {
-	width: 4px;
-}
-
-.communication-popper-container::-webkit-scrollbar-thumb {
-	background: rgba(var(--skc-purple-rgb), 0.3);
-	border-radius: 999px;
-}
-
-.communication-popper-header {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	gap: 1rem;
-	padding-bottom: 0;
-	margin-bottom: 0.5rem;
-}
-
-.communication-popper-header .MuiTypography-h6 {
-	color: var(--skc-purple) !important;
-	margin-bottom: 0 !important;
-}
-
-.communication-message-count {
-	color: rgba(0, 0, 0, 0.8) !important;
+.communication-message-header.MuiTypography-root {
+	margin-bottom: 0.7rem;
+	font-weight: 600;
 }
 
 .communication-message-sub-header.MuiTypography-root {
-	color: rgba(0, 0, 0, 0.7) !important;
-}
-
-.communication-message-body {
-	word-break: break-word;
+	margin-bottom: 0.75rem;
+	color: rgba(0, 0, 0, 0.8);
 }
 
 .communication-message-body p {
@@ -75,43 +29,27 @@
 .communication-message-body a:hover {
 	text-decoration: none;
 }
-
-.communication-year-label {
-	display: flex;
-	align-items: center;
-	gap: 0.75rem;
-	color: var(--skc-purple) !important;
-	margin-bottom: 0.75rem;
-	margin-top: 0.25rem;
-}
-
-.communication-year-label::before,
-.communication-year-label::after {
-	content: '';
-	flex: 1;
-	height: 1px;
-	background: linear-gradient(to right, rgba(var(--skc-purple-rgb), 0), rgba(var(--skc-purple-rgb), 0.3));
-}
-
-.communication-year-label::after {
-	background: linear-gradient(to left, rgba(var(--skc-purple-rgb), 0), rgba(var(--skc-purple-rgb), 0.3));
-}
-
-.communication-message-item {
-	background: rgba(var(--skc-purple-rgb), 0.04);
-	border: 1px solid rgba(var(--skc-purple-rgb), 0.12);
-	border-left: 3px solid var(--skc-orange);
-	border-radius: 0.75rem;
-	padding: 1rem;
-}
-
-.communication-message-item:not(:last-child) {
-	margin-bottom: 0.75rem;
-}
-
 .communication-message-content {
-	padding-left: 0.25rem;
-	margin-bottom: 0.25rem;
+	margin-left: 1rem;
+	margin-right: 1rem;
+}
+
+.communication-popper-container {
+	padding-right: 1.2rem;
+	padding-left: 1.2rem;
+	padding-top: 1.75rem;
+	padding-bottom: 1.75rem;
+	max-width: 500px;
+	max-height: 550px;
+	background: rgb(255, 255, 255, 0.85);
+	overflow-x: hidden;
+}
+
+.communication-divider.MuiDivider-root {
+	margin-top: 1rem;
+	margin-bottom: 1.5rem;
+	background: rgba(0, 0, 0, 0.2);
+	backdrop-filter: blur(60px);
 }
 
 .popover {

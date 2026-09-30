@@ -29,60 +29,47 @@ const Footer: FunctionComponent = () => {
 		)?.catch(() => {})
 	}, [])
 
-	const versions = [
-		{ label: 'SKC Web', value: `v${process.env.REACT_APP_VERSION}` },
-		{ label: 'SKC API', value: `v${skcAPIVersion}` },
-		{ label: 'Heart API', value: `v${heartAPIVersion}` },
-		{ label: 'SKC Suggestion Engine', value: `v${skcSuggestionEngineVersion}` },
-	]
-
 	return (
-		<footer className='footer'>
+		<div className='footer'>
 			<div className='footer-wrapper'>
-				<div className='footer-grid'>
-					<div className='footer-col'>
-						<Typography className='footer-col-label' variant='h6'>
-							The Supreme King's Castle
-						</Typography>
-						<Typography className='footer-font' variant='body1'>
-							Copyright 2026
-						</Typography>
-						<Typography className='footer-font' variant='body1'>
-							Konami owns all rights to Yu-Gi-Oh! and all card images used in this website.
-						</Typography>
-						<Typography className='footer-font' variant='body1'>
-							This site is not affiliated with Konami and all assets are used under Fair Use.
-						</Typography>
-					</div>
+				<Typography className='footer-font' variant='body1' align='center'>
+					Copyright 2026
+				</Typography>
 
-					<div className='footer-col'>
-						<Typography className='footer-col-label' variant='h6'>
-							System Info
-						</Typography>
-						<div className='footer-versions'>
-							{versions.map(({ label, value }) => (
-								<div key={label} className='footer-version-row'>
-									<Typography className='footer-font footer-version-label' variant='body1'>
-										{label}
-									</Typography>
-									<Typography className='footer-font' variant='body1'>
-										{value}
-									</Typography>
-								</div>
-							))}
-						</div>
-					</div>
-				</div>
+				<Typography className='footer-font' variant='body1' align='center'>
+					Konami owns all rights to Yu-Gi-Oh! and all card images used in this website.
+				</Typography>
+				<Typography className='footer-font' variant='body1' align='center'>
+					This site is not affiliated with Konami and all assets are used under Fair Use.
+				</Typography>
 
-				<div className='footer-bottom'>
-					<Link className='footer-link' href='/privacy' underline='none'>
-						<Typography className='footer-font' variant='body1'>
-							Privacy Policy &rarr;
-						</Typography>
+				<br />
+
+				<Typography className='footer-font' variant='h6' align='center'>
+					System Info
+				</Typography>
+				<Typography className='footer-font' variant='body1' align='center'>
+					<strong>SKC Web:</strong> v{process.env.REACT_APP_VERSION}
+				</Typography>
+				<Typography className='footer-font' variant='body1' align='center'>
+					<strong>SKC API:</strong> v{skcAPIVersion}
+				</Typography>
+				<Typography className='footer-font' variant='body1' align='center'>
+					<strong>Heart API:</strong> v{heartAPIVersion}
+				</Typography>
+				<Typography className='footer-font' variant='body1' align='center'>
+					<strong>SKC Suggestion Engine:</strong> v{skcSuggestionEngineVersion}
+				</Typography>
+
+				<br />
+
+				<Typography className='footer-font' variant='h6' align='center'>
+					<Link className='footer-link' href='/privacy'>
+						Privacy Policy ➡️
 					</Link>
-				</div>
+				</Typography>
 			</div>
-		</footer>
+		</div>
 	)
 }
 

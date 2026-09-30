@@ -1,7 +1,7 @@
 import '../../css/header-footer/messages.css'
 
 import { memo } from 'react'
-import { Typography, Chip } from '@mui/material'
+import { Typography, Chip, Divider } from '@mui/material'
 import ReactMarkdown from 'react-markdown'
 
 import { Dates } from '../../helper/Dates'
@@ -9,17 +9,18 @@ import { Dates } from '../../helper/Dates'
 type MessageItemComponentArgs = {
 	creationDate: Date
 	message: HeartAPI.MessageInstance
+	isLastMessage: boolean
 }
 
-const MessageItemComponent = memo(({ creationDate, message }: MessageItemComponentArgs) => {
+const MessageItemComponent = memo(({ creationDate, message, isLastMessage }: MessageItemComponentArgs) => {
 	return (
-		<div className='communication-message-item'>
+		<>
 			<Typography className='communication-message-header' variant='h6'>
 				{message.title}
 			</Typography>
 
 			<div className='communication-message-content'>
-				<Typography className='communication-message-sub-header' variant='body2'>
+				<Typography className='communication-message-sub-header' variant='subtitle1'>
 					{Dates.getDateString(creationDate)} {Dates.getTimeString(creationDate)}
 				</Typography>
 				<Typography className='communication-message-body link-container' variant='body1'>
@@ -27,10 +28,11 @@ const MessageItemComponent = memo(({ creationDate, message }: MessageItemCompone
 				</Typography>
 
 				{message.tags.map((tag: string) => (
-					<Chip key={tag} className='dark-chip-condensed' label={tag} />
+					<Chip key={tag} className='dark-chip' label={tag} />
 				))}
 			</div>
-		</div>
+			{isLastMessage ? <div /> : <Divider className='communication-divider' />}
+		</>
 	)
 })
 

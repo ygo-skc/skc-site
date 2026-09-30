@@ -26,34 +26,22 @@ function Messages() {
 		FetchHandler.handleFetch(
 			`${DownstreamServices.HEART_API_ENDPOINTS.messages}?service=skc&tags=skc-site,skc-api`,
 			(messageData: HeartAPI.Message) => {
+				const totalMessages = messageData.messages.length
+
 				let _numNewMessages = 0
 				const previousNewestMessageDate = new Date(localStorage.getItem('previousNewestMessage') as string)
 
-				const messagesByYear = new Map<number, { message: HeartAPI.MessageInstance; creationDate: Date }[]>()
-				messageData.messages.forEach((message: HeartAPI.MessageInstance) => {
+				const _messagesList = messageData.messages.map((message: HeartAPI.MessageInstance, index: number) => {
 					const creationDate = new Date(message.createdAt)
 					if (previousNewestMessageDate < creationDate) _numNewMessages++
-					const year = creationDate.getFullYear()
-					if (!messagesByYear.has(year)) messagesByYear.set(year, [])
-					messagesByYear.get(year)!.push({ message, creationDate })
-				})
 
-				const _messagesList: JSX.Element[] = []
-				messagesByYear.forEach((messages, year) => {
-					_messagesList.push(
-						<Typography key={`year-${year}`} className='communication-year-label' variant='subtitle2'>
-							{year}
-						</Typography>
-					)
-					messages.forEach(({ message, creationDate }) => {
-						_messagesList.push(<MessageItemComponent key={message.createdAt} creationDate={creationDate} message={message} />)
-					})
+					return <MessageItemComponent key={message.createdAt} creationDate={creationDate} message={message} isLastMessage={index === totalMessages - 1} />
 				})
 
 				startTransition(() => {
 					setMessagesList(_messagesList)
 					setNumNewMessages(_numNewMessages)
-					setNumMessages(messageData.messages.length)
+					setNumMessages(totalMessages)
 					setNewestMessageSeen(messageData.messages[0].createdAt)
 				})
 			},
@@ -91,12 +79,10 @@ function Messages() {
 				}}
 			>
 				<div className='communication-popper-container'>
-					<div className='communication-popper-header'>
-						<Typography variant='h6'>Messages</Typography>
-						<Typography variant='body2' className='communication-message-count'>
-							{errorFetchingMessages ? 'unavailable' : `${numMessages} total`}
-						</Typography>
-					</div>
+					<Typography className='communication-message-body' variant='h2'>
+						🚨 Messages {errorFetchingMessages ? '⁉️' : `(${numMessages})`}
+					</Typography>
+					<br />
 
 					{errorFetchingMessages ? <GenericNonBreakingErr errExplanation='No meaningful impact to the site functionality expected.' /> : messagesList}
 				</div>
