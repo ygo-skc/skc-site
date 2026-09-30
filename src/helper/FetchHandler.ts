@@ -32,17 +32,17 @@ class FetchHandler {
 
 	static readonly handleError = (err: AxiosError) => {
 		if (err.name === 'TypeError' || err.message === 'Network Error') {
-			window.location.href = AppRoutes.ServiceUnavailable
+			window.location.assign(AppRoutes.ServiceUnavailable)
 		} else if (err.code === 'ECONNABORTED') {
 			// request timeout
-			window.location.href = AppRoutes.RequestTimeout
+			window.location.assign(AppRoutes.RequestTimeout)
 		} else if (err.response) {
 			if (err.response.status === 404) {
-				window.location.href = AppRoutes.Server404Error
+				window.location.assign(AppRoutes.Server404Error)
 			} else if (err.response.status === 400) {
-				window.location.href = AppRoutes.BadRequest
+				window.location.assign(AppRoutes.BadRequest)
 			} else {
-				window.location.href = AppRoutes.GenericServerError
+				window.location.assign(AppRoutes.GenericServerError)
 			}
 		} else if (axios.isCancel(err)) {
 			console.log('Request cancelled')

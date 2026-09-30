@@ -2,14 +2,10 @@ import axios, { AxiosError, AxiosResponse } from 'axios'
 import AppRoutes from '../AppRoutes'
 import FetchHandler from '../FetchHandler'
 
+// jest-location-mock (wired up in setupTests) spies on window.location.assign in a beforeAll hook,
+// so call history has to be cleared between tests
 beforeEach(() => {
-	// below line is needed in certain node versions...
-	// global.window = Object.create(window)
-	Object.defineProperty(window, 'location', {
-		value: {
-			href: '',
-		},
-	})
+	jest.clearAllMocks()
 })
 
 test('verify user is redirected to 503 page on Network Error', () => {
@@ -17,7 +13,7 @@ test('verify user is redirected to 503 page on Network Error', () => {
 	err.message = 'Network Error'
 	FetchHandler.handleError(err)
 
-	expect(location.href).toBe(AppRoutes.ServiceUnavailable)
+	expect(window.location.assign).toHaveBeenCalledWith(AppRoutes.ServiceUnavailable)
 })
 
 test('verify user is redirected to 503 page on TypeError', () => {
@@ -25,7 +21,7 @@ test('verify user is redirected to 503 page on TypeError', () => {
 	err.name = 'TypeError'
 	FetchHandler.handleError(err)
 
-	expect(location.href).toBe(AppRoutes.ServiceUnavailable)
+	expect(window.location.assign).toHaveBeenCalledWith(AppRoutes.ServiceUnavailable)
 })
 
 test('verify user is redirected to 408 page on Request Aborted Error', () => {
@@ -33,13 +29,15 @@ test('verify user is redirected to 408 page on Request Aborted Error', () => {
 	err.code = 'ECONNABORTED'
 	FetchHandler.handleError(err)
 
-	expect(location.href).toBe(AppRoutes.RequestTimeout)
+	expect(window.location.assign).toHaveBeenCalledWith(AppRoutes.RequestTimeout)
 })
 
 test('handle request cancelled', () => {
 	const err = new axios.CanceledError('aborted')
 
 	FetchHandler.handleError(err)
+
+	expect(window.location.assign).not.toHaveBeenCalled()
 })
 
 test('verify user is redirected to 404-Server page on 404 error from API call', () => {
@@ -47,7 +45,7 @@ test('verify user is redirected to 404-Server page on 404 error from API call', 
 	err.response = { status: 404 } as AxiosResponse
 	FetchHandler.handleError(err)
 
-	expect(location.href).toBe(AppRoutes.Server404Error)
+	expect(window.location.assign).toHaveBeenCalledWith(AppRoutes.Server404Error)
 })
 
 test('verify user is redirected to 400 page on 400 error from API call', () => {
@@ -55,7 +53,7 @@ test('verify user is redirected to 400 page on 400 error from API call', () => {
 	err.response = { status: 400 } as AxiosResponse
 	FetchHandler.handleError(err)
 
-	expect(location.href).toBe(AppRoutes.BadRequest)
+	expect(window.location.assign).toHaveBeenCalledWith(AppRoutes.BadRequest)
 })
 
 test('verify user is redirected to GenericServerPage when server returns with non 400 or 404 error', () => {
@@ -63,5 +61,5 @@ test('verify user is redirected to GenericServerPage when server returns with no
 	err.response = { status: 500 } as AxiosResponse
 	FetchHandler.handleError(err)
 
-	expect(location.href).toBe(AppRoutes.GenericServerError)
+	expect(window.location.assign).toHaveBeenCalledWith(AppRoutes.GenericServerError)
 })
