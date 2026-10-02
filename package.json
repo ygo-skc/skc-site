@@ -46,7 +46,7 @@
 		"qs": "6.15.2"
 	},
 	"scripts": {
-		"fresh-install": "rm -rf node_modules yarn.lock && yarn install --ignore-optional && npx browserslist@latest --update-db",
+		"fresh-install": "rm -rf node_modules yarn.lock && yarn install && npx browserslist@latest --update-db",
 		"start": "webpack-dev-server --mode development --env dev",
 		"start:dashboard": "webpack-dashboard -- webpack serve --mode development --env dev",
 		"build": "webpack --mode production --env dev",
@@ -116,6 +116,10 @@
 		"setupFilesAfterEnv": [
 			"<rootDir>/src/setupTests.ts"
 		],
+		"moduleNameMapper": {
+			"\\.(css|less|scss|sass)$": "<rootDir>/config/jest/styleMock.js",
+			"^entities$": "<rootDir>/config/jest/entitiesMock.js"
+		},
 		"coverageThreshold": {
 			"global": {
 				"branches": 70,
