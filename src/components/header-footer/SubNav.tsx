@@ -14,7 +14,7 @@ const SubNav = memo(function SubNav() {
 	return (
 		<div className='scrollable-nav'>
 			{navLinks.map(({ href, label }) => (
-				<Link key={href} underline='none' color='inherit' href={href}>
+				<Link key={href} href={href} underline='none' color='inherit'>
 					<Typography className='nav-button' color='inherit'>
 						{label}
 					</Typography>

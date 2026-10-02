@@ -8,8 +8,9 @@ import OneThirdTwoThirdsGrid from '../util/grid/OneThirdTwoThirdsGrid'
 
 import '../../css/main-pages/ban-list.css'
 import dateReducer, { BanListDateReducerActionType } from '../../reducers/BanListDateReducer'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { AcceptableBanListFormat, determineListSize, getValidFormat } from '../../helper/BanListUtil'
+import AppRoutes from '../../helper/AppRoutes'
 import { BanListReducerType, currentBanListReducer } from '../../reducers/CurrentBanListReducer'
 
 const BreadCrumb = lazy(() => import('../header-footer/Breadcrumb'))
@@ -27,6 +28,8 @@ const Section = lazy(() =>
 )
 
 export default function BanList() {
+	const navigate = useNavigate()
+
 	const [selectedBanList, setSelectedBanList] = useState<string>('')
 
 	const { specifiedFormat } = useParams<'specifiedFormat'>()
@@ -103,7 +106,9 @@ export default function BanList() {
 	})
 
 	useEffect(() => {
-		window.history.replaceState(null, '', `/ban_list/${format}`)
+		// keep the URL in sync with the chosen format via the router, so router state
+		// and the address bar cannot drift apart the way history.replaceState allowed
+		navigate(`${AppRoutes.BanList}/${format}`, { replace: true })
 
 		dateDispatch({
 			type: BanListDateReducerActionType.FETCHING_DATES,
@@ -123,7 +128,7 @@ export default function BanList() {
 				},
 			})
 		})
-	}, [format])
+	}, [format, navigate])
 
 	useEffect(() => {
 		if (banListStartDates.length !== 0) setSelectedBanList(banListStartDates[0])

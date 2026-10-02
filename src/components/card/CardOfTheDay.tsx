@@ -1,4 +1,5 @@
 import { FC, Fragment } from 'react'
+import { Link } from 'react-router-dom'
 import { CardImageRounded, GenericNonBreakingErr, InlineDate, YGOCardColorIndicator } from 'skc-rcl'
 import { Skeleton, Typography } from '@mui/material'
 import '../../css/card/card-of-the-day.css'
@@ -10,7 +11,7 @@ const CardOfTheDay: FC<{ cardOfTheDayData: APIRequest<SKC.CardOfTheDay> }> = ({ 
 	return (
 		<Fragment>
 			<Typography variant='h5'>Card of The Day</Typography>
-			<a href={`/card/${cardOfTheDayData.card?.cardID}`} className='aggregate-anchor'>
+			<Link to={`/card/${cardOfTheDayData.card?.cardID}`} className='aggregate-anchor'>
 				<div className={`${cardOfTheDayData.requestHasError ? '' : 'card-of-the-day-parent'}`} id='card-of-the-day'>
 					{cardOfTheDayData.requestHasError && <GenericNonBreakingErr errExplanation='Come back at a different time to see todays card of the day!' />}
 					{!cardOfTheDayData.requestHasError && (
@@ -38,7 +39,7 @@ const CardOfTheDay: FC<{ cardOfTheDayData: APIRequest<SKC.CardOfTheDay> }> = ({ 
 						</div>
 					)}
 				</div>
-			</a>
+			</Link>
 		</Fragment>
 	)
 }

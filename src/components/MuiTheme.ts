@@ -1,4 +1,5 @@
 import { createTheme } from '@mui/material/styles'
+import LinkBehavior from './LinkBehavior'
 
 const MuiTheme = createTheme({
 	palette: {
@@ -15,6 +16,11 @@ const MuiTheme = createTheme({
 		},
 	},
 	components: {
+		MuiLink: {
+			defaultProps: {
+				component: LinkBehavior,  // handles external links as usual but internal links will now route through React Router and not refresh page
+			},
+		},
 		MuiButtonGroup: {
 			styleOverrides: {
 				grouped: {

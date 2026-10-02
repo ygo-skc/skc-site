@@ -1,6 +1,7 @@
 import { Link, Typography } from '@mui/material'
 
 import Topic from './Topic'
+import AppRoutes from '../../helper/AppRoutes'
 
 export default function AboutSKC() {
 	return (
@@ -49,7 +50,7 @@ export default function AboutSKC() {
 						<Typography variant='body1' className='topic-details'>
 							I have also recently started selling cards online. I don&apos;t like the models sites like TCGPlayer or EBay have for sellers (or the UI they have for that matter)
 							and want to have my own site where I can keep all the profit I make. Essentially, this site will be a hub for my Yu-Gi-Oh! related endeavors (see the{' '}
-							<Link color='secondary' className='link' href='/'>
+							<Link color='secondary' className='link' href={AppRoutes.Home}>
 								home page
 							</Link>{' '}
 							for what I mean) and, one day, the best Yu-Gi-Oh! DB!

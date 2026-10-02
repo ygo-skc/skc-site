@@ -1,18 +1,23 @@
 import '../../css/util/database-search-styles.css'
 
 import { FC, lazy, useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import Grid from '@mui/material/Grid'
 
 import { Skeleton } from '@mui/material'
 import { Tile, Section } from 'skc-rcl'
 
+import AppRoutes from '../../helper/AppRoutes'
+
 const DatabaseSearch = lazy(() => import('./search/DBSearch'))
 
 const DatabaseInfo: FC<{ stats: SKC.DBStats & { isFetchingData: boolean } }> = ({ stats }) => {
-	const handleBrowseTileClicked = useCallback(() => window.location.assign('/browse/card'), [])
-	const handleBanListTileClicked = useCallback(() => window.location.assign('/ban_list'), [])
-	const handleProductsTileClicked = useCallback(() => window.location.assign('/browse/product'), [])
+	const navigate = useNavigate()
+
+	const handleBrowseTileClicked = useCallback(() => navigate(AppRoutes.CardBrowse), [navigate])
+	const handleBanListTileClicked = useCallback(() => navigate(AppRoutes.BanList), [navigate])
+	const handleProductsTileClicked = useCallback(() => navigate(AppRoutes.ProductBrowse), [navigate])
 
 	return (
 		<Section sectionName='Content'>

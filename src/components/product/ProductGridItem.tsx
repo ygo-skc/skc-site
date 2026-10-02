@@ -1,6 +1,7 @@
 import { Chip, Typography } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import { FC } from 'react'
+import { Link } from 'react-router-dom'
 import { Dates } from '../../helper/Dates'
 import { InlineDate, ProductImage } from 'skc-rcl'
 
@@ -16,7 +17,7 @@ type ProductGridItemProps = {
 const ProductGridItem: FC<ProductGridItemProps> = ({ id, name, type, subType, totalItems, releaseDate }) => {
 	return (
 		<Grid key={id} size={{ xs: 12, sm: 6, md: 4, lg: 4, xl: 3 }}>
-			<a href={`/product/${id}`} className='product-grid-item-parent aggregate-anchor'>
+			<Link to={`/product/${id}`} className='product-grid-item-parent aggregate-anchor'>
 				<div className='product-img'>
 					<ProductImage size='sm' productID={id} loading='lazy' />
 				</div>
@@ -32,7 +33,7 @@ const ProductGridItem: FC<ProductGridItemProps> = ({ id, name, type, subType, to
 						<Chip className='dark-chip-condensed' key={subType} label={subType} />
 					</div>
 				</div>
-			</a>
+			</Link>
 		</Grid>
 	)
 }

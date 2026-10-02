@@ -1,6 +1,8 @@
 import { Link, Typography } from '@mui/material'
 import { Fragment } from 'react'
 
+import AppRoutes from '../../helper/AppRoutes'
+
 export default function Welcome() {
 	return (
 		<Fragment>
@@ -18,7 +20,7 @@ export default function Welcome() {
 			<Typography variant='body1'>
 				Yugioh is ever expanding and evolving. New products are continuously released and new ban lists established. As such this website will also be continuously updated to
 				accommodate. Want to learn more? Check out the{' '}
-				<Link className='link' color='secondary' href='/about'>
+				<Link className='link' color='secondary' href={AppRoutes.About}>
 					About
 				</Link>{' '}
 				section

@@ -2,6 +2,7 @@ import { FunctionComponent, startTransition, useEffect, useState } from 'react'
 import { Link, Typography } from '@mui/material'
 import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
+import AppRoutes from '../../helper/AppRoutes'
 
 type HealthCheckOutput = {
 	version: string
@@ -64,7 +65,7 @@ const Footer: FunctionComponent = () => {
 				<br />
 
 				<Typography className='footer-font' variant='h6' align='center'>
-					<Link className='footer-link' href='/privacy'>
+					<Link className='footer-link' href={AppRoutes.Privacy}>
 						Privacy Policy ➡️
 					</Link>
 				</Typography>

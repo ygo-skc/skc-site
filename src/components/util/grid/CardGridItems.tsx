@@ -1,5 +1,6 @@
 import Grid from '@mui/material/Grid'
 import { FC, Fragment, JSX, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { decodeHTML } from 'entities'
 import { YGOCardWithImage } from 'skc-rcl'
 
@@ -19,9 +20,9 @@ const CardGridItem: FC<{ card: YGOCard.Deets }> = ({ card }) => {
 
 	return (
 		<Grid className='ygo-card-grid-item' id={card.cardID} key={card.cardID} size={{ xs: 6, sm: 4, md: 3, lg: 2, xl: 1.5 }}>
-			<a href={`/card/${card.cardID}`} className='aggregate-anchor'>
+			<Link to={`/card/${card.cardID}`} className='aggregate-anchor'>
 				<YGOCardWithImage card={card} imgLoadingType='lazy' />
-			</a>
+			</Link>
 		</Grid>
 	)
 }

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { Autocomplete, AutocompleteRenderGroupParams, AutocompleteRenderInputParams } from '@mui/material'
 import FetchHandler from '../../../helper/FetchHandler'
@@ -40,6 +41,8 @@ class DatabaseSearchStatic {
 }
 
 export default function DBSearch() {
+	const navigate = useNavigate()
+
 	const [searchInput, setSearchInput] = useState<string>('')
 	const [searchOptions, setSearchOptions] = useState<DBSearchResults[]>([])
 	const [fetchToken, setFetchToken] = useState<CancelTokenSource>(axios.CancelToken.source())
@@ -64,11 +67,14 @@ export default function DBSearch() {
 
 	const handleGetOptionLabel = useCallback((option: YGOCard.Deets) => option.cardName, [])
 	const handleGroupBy = useCallback((option: DBSearchResults) => option.cardColor, [])
-	const handleOnChange = useCallback((_event: React.SyntheticEvent, value: YGOCard.Deets | null, reason: string) => {
-		if (reason === 'selectOption' && value != null) {
-			window.location.assign(`/card/${value.cardID}`)
-		}
-	}, [])
+	const handleOnChange = useCallback(
+		(_event: React.SyntheticEvent, value: YGOCard.Deets | null, reason: string) => {
+			if (reason === 'selectOption' && value != null) {
+				navigate(`/card/${value.cardID}`)
+			}
+		},
+		[navigate]
+	)
 	const handleRenderGroup = useCallback(
 		(option: AutocompleteRenderGroupParams) => (
 			<DBSearchGrouping key={option.group} group={option.group}>
