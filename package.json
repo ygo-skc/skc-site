@@ -43,7 +43,7 @@
 		"@tootallnate/once": "3.0.1",
 		"handlebars": "4.7.10",
 		"fast-uri": "4.2.2",
-		"qs": "6.16.0"
+		"qs": "6.16.1"
 	},
 	"scripts": {
 		"fresh-install": "rm -rf node_modules yarn.lock && yarn install --ignore-optional && npx browserslist@latest --update-db",
