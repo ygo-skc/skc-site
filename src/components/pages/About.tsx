@@ -15,7 +15,7 @@ const About: FunctionComponent = () => {
 			<meta name={`SKC - About`} content={`Find how to use API backed by site, how to support, etc.`} />
 			<meta name='keywords' content={`YuGiOh, about, YGO-API, support, The Supreme Kings Castle`} />
 
-			<Suspense fallback={<Skeleton className='breadcrumb-skeleton' variant='rectangular' width='100%' height='2.5rem' />}>
+			<Suspense fallback={<Skeleton className='breadcrumb breadcrumb__loading' variant='rectangular' width={260} height={30} />}>
 				<Breadcrumb crumbs={['Home', 'About']} />
 			</Suspense>
 

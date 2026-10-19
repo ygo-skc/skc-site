@@ -87,7 +87,7 @@ export default function ProductInformation() {
 			<meta name={`SKC - Product: ${state.productName}`} content={`Contents, info, dates, etc for ${state.productName}`} />
 			<meta name='keywords' content={`YuGiOh, product browse, The Supreme Kings Castle`} />
 
-			<Suspense fallback={<Skeleton className='breadcrumb-skeleton' variant='rectangular' width='100%' height='2.5rem' />}>
+			<Suspense fallback={<Skeleton className='breadcrumb breadcrumb__loading' variant='rectangular' width={260} height={30} />}>
 				<Breadcrumb crumbs={state.pageBreadcrumbs} />
 			</Suspense>
 

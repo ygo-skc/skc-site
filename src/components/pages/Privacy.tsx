@@ -13,7 +13,7 @@ const Privacy: FunctionComponent = () => {
 			<meta name={`SKC - Privacy`} content={`Privacy policy for site and mobile app`} />
 			<meta name='keywords' content={`YuGiOh, YGO-API, support, The Supreme Kings Castle`} />
 
-			<Suspense fallback={<Skeleton className='breadcrumb-skeleton' variant='rectangular' width='100%' height='2.5rem' />}>
+			<Suspense fallback={<Skeleton className='breadcrumb breadcrumb__loading' variant='rectangular' width={260} height={30} />}>
 				<Breadcrumb crumbs={['Home', 'Privacy']} />
 			</Suspense>
 

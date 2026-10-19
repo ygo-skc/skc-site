@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, screen } from '@testing-library/react'
+import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import { ThemeProvider } from '@mui/material/styles'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { ReactNode } from 'react'
@@ -51,4 +51,33 @@ test('verify breadcrumb leaves the current page unlinked', async () => {
 	await screen.findByRole('link', { name: /Home/ })
 
 	expect(screen.queryByRole('link', { name: /Ban List/ })).not.toBeInTheDocument()
+})
+
+test('verify breadcrumb is a labelled landmark listing each crumb in order', async () => {
+	renderWithProviders(<Breadcrumb crumbs={['Home', 'Card Browse', 'Blue-Eyes White Dragon']} />)
+
+	const trail = screen.getByRole('navigation', { name: 'Breadcrumb' })
+	const crumbs = within(trail).getAllByRole('listitem')
+	expect(crumbs.map((crumb) => crumb.textContent)).toEqual(['Home', 'Card Browse', 'Blue-Eyes White Dragon'])
+})
+
+test('verify breadcrumb links every parent crumb to its page', async () => {
+	renderWithProviders(<Breadcrumb crumbs={['Home', 'Product Browse', 'LOB']} />)
+
+	expect(await screen.findByRole('link', { name: 'Home' })).toHaveAttribute('href', AppRoutes.Home)
+	expect(screen.getByRole('link', { name: 'Product Browse' })).toHaveAttribute('href', AppRoutes.ProductBrowse)
+})
+
+test('verify breadcrumb marks the last crumb as the current page', async () => {
+	renderWithProviders(<Breadcrumb crumbs={['Home', 'Ban List']} />, AppRoutes.BanList)
+
+	expect(screen.getByText('Ban List')).toHaveAttribute('aria-current', 'page')
+	expect(screen.getByText('Home')).not.toHaveAttribute('aria-current')
+})
+
+test('verify breadcrumb keeps parent crumbs while the current page name is loading', async () => {
+	renderWithProviders(<Breadcrumb crumbs={['Home', 'Card Browse', '']} />)
+
+	expect(await screen.findByRole('link', { name: 'Card Browse' })).toBeInTheDocument()
+	expect(document.querySelector('[aria-current="page"]')).toBeNull()
 })

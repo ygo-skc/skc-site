@@ -96,7 +96,7 @@ export default function Home() {
 			<meta name={`The Supreme Kings Castle`} content={`YuGiOh Site for checking; card information, current and past ban lists, search cards, and browse cards.`} />
 			<meta name='keywords' content={`YuGiOh, ban list, card info, The Supreme Kings Castle`} />
 
-			<Suspense fallback={<Skeleton className='breadcrumb-skeleton' variant='rectangular' width='100%' height='2.5rem' />}>
+			<Suspense fallback={<Skeleton className='breadcrumb breadcrumb__loading' variant='rectangular' width={260} height={30} />}>
 				<Breadcrumb crumbs={['Home']} />
 			</Suspense>
 

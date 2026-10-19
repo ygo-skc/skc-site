@@ -110,7 +110,7 @@ const CardInformation = () => {
 			<meta property='og:type' content='website' />
 			<meta property='og:description' content={`Details For Yugioh Card - ${state.card.cardName}`} />
 
-			<Suspense fallback={<Skeleton className='breadcrumb-skeleton' variant='rectangular' width='100%' height='2.5rem' />}>
+			<Suspense fallback={<Skeleton className='breadcrumb breadcrumb__loading' variant='rectangular' width={260} height={30} />}>
 				<Breadcrumb crumbs={state.pageBreadcrumbs} />
 			</Suspense>
 

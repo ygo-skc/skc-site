@@ -1,38 +1,98 @@
-a {
-	margin-bottom: 0 !important;
-}
-
-.breadcrumb-parent {
-	padding-top: 0.75rem;
-	padding-bottom: 0.75rem;
-	padding-left: 1rem;
-	padding-right: 1rem;
-	margin: auto;
-	margin-top: 1rem;
-	margin-bottom: 2.25rem;
-	border-radius: 2rem;
-
-	background-color: white;
-}
-
+/*
+ * Stepping stones - each crumb is a flat stone with a notched arrow edge. Parents are pale lavender, the current page is sky.
+ * On narrow screens only the parent page is kept, as a back stone, since the page heading already names where you are.
+ */
 .breadcrumb {
+	--stone-notch: 9px;
+
+	margin: 1rem 0 1.75rem;
+	font-family: open sans, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif;
+	font-size: 13px;
+	line-height: 18px;
+}
+
+.breadcrumb__trail {
 	display: flex;
-	font-weight: 400;
+	align-items: center;
+	gap: 4px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
 }
 
-.breadcrumb-icon {
-	margin-right: 3px;
+.breadcrumb__crumb {
+	display: flex;
+	flex: none;
+	white-space: nowrap;
 }
 
-.breadcrumb-item {
-	color: white !important;
-	width: 1.7rem;
-	height: 1.7rem;
-	margin-right: 5px;
-	color: rgba(68, 68, 68, 0.68);
+/* only the current page gives up room, so parent stones stay whole and tappable */
+.breadcrumb__crumb:last-child {
+	flex: 0 1 auto;
+	min-width: 0;
 }
 
-.breadcrumb-text {
-	margin: auto;
-	font-size: 1rem;
+.breadcrumb__stone {
+	display: block;
+	padding: 6px 16px 6px 14px;
+	clip-path: polygon(0 0, calc(100% - var(--stone-notch)) 0, 100% 50%, calc(100% - var(--stone-notch)) 100%, 0 100%, var(--stone-notch) 50%);
+}
+
+.breadcrumb__crumb:first-child .breadcrumb__stone {
+	padding-left: 12px;
+	border-radius: 4px 0 0 4px;
+	clip-path: polygon(0 0, calc(100% - var(--stone-notch)) 0, 100% 50%, calc(100% - var(--stone-notch)) 100%, 0 100%);
+}
+
+a.breadcrumb__stone {
+	background: var(--stone);
+	color: var(--stone-text);
+	font-weight: 500;
+	text-decoration: none;
+	transition: background-color 120ms ease;
+}
+
+a.breadcrumb__stone:hover {
+	background: var(--stone-hover);
+}
+
+/* clip-path would cut an outline off, so focus is drawn inside the stone */
+a.breadcrumb__stone:focus-visible {
+	outline: none;
+	box-shadow: inset 0 0 0 2px var(--lava-crest);
+}
+
+.breadcrumb__stone[aria-current='page'] {
+	overflow: hidden;
+	padding-right: 18px;
+	text-overflow: ellipsis;
+	background: var(--sky);
+	color: var(--on-dark-strong);
+	font-weight: 600;
+}
+
+.breadcrumb__loading {
+	clip-path: polygon(0 0, calc(100% - var(--stone-notch)) 0, 100% 50%, calc(100% - var(--stone-notch)) 100%, 0 100%, var(--stone-notch) 50%);
+}
+
+@media (max-width: 600px) {
+	.breadcrumb__crumb {
+		display: none;
+	}
+
+	/* the parent page becomes a back stone; a lone crumb (Home) still shows itself */
+	.breadcrumb__crumb:nth-last-child(2),
+	.breadcrumb__crumb:only-child {
+		display: flex;
+	}
+
+	.breadcrumb__crumb:nth-last-child(2) .breadcrumb__stone {
+		padding: 6px 12px;
+		border-radius: 4px;
+		clip-path: none;
+	}
+
+	.breadcrumb__crumb:nth-last-child(2) .breadcrumb__stone::before {
+		content: '‹ ';
+	}
 }

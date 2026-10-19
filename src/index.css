@@ -20,6 +20,9 @@
 	--on-dark-strong: #fff;
 	--on-dark-hover: rgba(12, 6, 34, 0.35);
 	--ember: #ffb23e;
+	--stone: #e9e3fa;
+	--stone-hover: #ddd3f7;
+	--stone-text: #3b2d7a;
 }
 
 html {
