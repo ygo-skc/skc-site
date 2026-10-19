@@ -1,6 +1,6 @@
 import { FunctionComponent, memo } from 'react'
 import { Link } from 'react-router-dom'
-import { Skeleton } from '@mui/material'
+import { Skeleton, Typography } from '@mui/material'
 
 import '../../css/header-footer/breadcrumb.css'
 import AppRoutes from '../../helper/AppRoutes'
@@ -37,9 +37,9 @@ const Breadcrumb: FunctionComponent<BreadcrumbProps> = memo(
 						{current === '' ? (
 							<Skeleton className='breadcrumb__loading' variant='rectangular' width={160} height={30} />
 						) : (
-							<span className='breadcrumb__stone' aria-current='page'>
+							<Typography variant='inherit' className='breadcrumb__stone' aria-current='page'>
 								{current}
-							</span>
+							</Typography>
 						)}
 					</li>
 				</ol>

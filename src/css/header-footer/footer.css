@@ -12,7 +12,11 @@
 	margin: 2rem auto 0;
 	border-radius: 0.5rem 0.5rem 0 0;
 	background: var(--basalt);
-	color: var(--on-dark-text);
+
+	/* solid lavender tints - pale enough to read on basalt, still a step below the white values and links */
+	--footer-text: #e0d8fa;
+	--footer-muted: #c9bfee;
+	color: var(--footer-text);
 	font-family: open sans, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif;
 }
 
@@ -73,7 +77,8 @@
 	color: var(--on-dark-strong);
 }
 
-.site-footer__heading {
+/* doubled class so these win over Typography's own root styles regardless of stylesheet order */
+.site-footer .site-footer__heading {
 	margin: 0 0 10px;
 	font-size: 11.5px;
 	font-weight: 600;
@@ -96,7 +101,7 @@
 }
 
 .site-footer__versions dt {
-	color: rgba(241, 236, 255, 0.6);
+	color: var(--footer-muted);
 }
 
 .site-footer__versions dd {

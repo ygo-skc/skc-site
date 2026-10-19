@@ -2,6 +2,7 @@ import '../../css/header-footer/footer.css'
 
 import { FunctionComponent, startTransition, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Typography } from '@mui/material'
 import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 import AppRoutes from '../../helper/AppRoutes'
@@ -64,10 +65,7 @@ const Footer: FunctionComponent = () => {
 		<footer className='site-footer'>
 			<div className='site-footer__scene' aria-hidden='true'>
 				<svg className='site-footer__rim' viewBox='0 0 1200 12' preserveAspectRatio='none'>
-					<path
-						fill='var(--lava)'
-						d='M0 0H1200V4l-40 3-60-2-70 4-50-3-80 3-60-2-70 4-60-3-80 3-50-2-70 3-60-3-80 4-50-3-70 2-60-3-80 4-50-2-70 3-60-3-40 2z'
-					/>
+					<path fill='var(--lava)' d='M0 0H1200V4l-40 3-60-2-70 4-50-3-80 3-60-2-70 4-60-3-80 3-50-2-70 3-60-3-80 4-50-3-70 2-60-3-80 4-50-2-70 3-60-3-40 2z' />
 				</svg>
 				<svg className='site-footer__embers' viewBox='0 0 1200 300' preserveAspectRatio='xMidYMax slice'>
 					{embers.map(([cx, cy, r, opacity]) => (
@@ -79,29 +77,39 @@ const Footer: FunctionComponent = () => {
 
 			<div className='site-footer__content'>
 				<section className='site-footer__about'>
-					<p className='site-footer__brand'>SKC</p>
-					<p>© 2026. Konami owns all rights to Yu-Gi-Oh! and all card images used on this site.</p>
-					<p>Not affiliated with Konami; assets used under Fair Use.</p>
+					<Typography variant='inherit' component='p' className='site-footer__brand'>
+						SKC
+					</Typography>
+					<Typography variant='inherit' component='p'>
+						© 2026. Konami owns all rights to Yu-Gi-Oh! and all card images used on this site.
+					</Typography>
+					<Typography variant='inherit' component='p'>
+						Not affiliated with Konami; assets used under Fair Use.
+					</Typography>
 				</section>
 
 				<section aria-labelledby='site-footer-system-info'>
-					<h2 id='site-footer-system-info' className='site-footer__heading'>
+					<Typography variant='inherit' component='h2' id='site-footer-system-info' className='site-footer__heading'>
 						System Info
-					</h2>
+					</Typography>
 					<dl className='site-footer__versions'>
 						{systemInfo.map(({ name, version }) => (
 							<div key={name} className='site-footer__version'>
-								<dt>{name}</dt>
-								<dd>v{version}</dd>
+								<Typography variant='inherit' component='dt'>
+									{name}
+								</Typography>
+								<Typography variant='inherit' component='dd'>
+									v{version}
+								</Typography>
 							</div>
 						))}
 					</dl>
 				</section>
 
 				<nav aria-labelledby='site-footer-explore'>
-					<h2 id='site-footer-explore' className='site-footer__heading'>
+					<Typography variant='inherit' component='h2' id='site-footer-explore' className='site-footer__heading'>
 						Explore
-					</h2>
+					</Typography>
 					<ul className='site-footer__links'>
 						{exploreLinks.map(({ to, label }) => (
 							<li key={to}>
