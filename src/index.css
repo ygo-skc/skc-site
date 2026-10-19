@@ -81,67 +81,6 @@ li {
 	margin-bottom: 0.1rem !important;
 }
 
-.app-bar-container {
-	background-image: radial-gradient(89.53% 145.96% at 60% 100.79%, #461495 0, #5418b3 17.58%, #461495 50.31%, #3f1286 97.03%) !important;
-	padding-left: 0.8rem;
-	padding-right: 0.8rem;
-	box-shadow: none !important;
-}
-
-.app-bar {
-	width: 100%;
-	max-width: 1850px;
-	margin: auto;
-}
-
-.MuiToolbar-gutters {
-	padding-left: 0rem !important;
-	padding-right: 0rem !important;
-}
-
-.app-bar-button {
-	font-weight: 600 !important;
-	font-size: 1.4rem !important;
-	text-transform: none !important;
-	padding: 0.7rem;
-	border-radius: 1rem;
-}
-
-.app-bar-button:hover {
-	background: rgb(255, 255, 255, 0.4);
-	backdrop-filter: blur(60px);
-}
-
-.nav-button {
-	font-weight: 400 !important;
-	font-size: 1.05rem !important;
-	padding: 0.7rem;
-	border-radius: 1rem;
-	color: rgba(255, 255, 255, 0.85) !important;
-}
-
-.nav-button:hover {
-	background: rgb(255, 255, 255, 0.4);
-	backdrop-filter: blur(60px);
-}
-
-.scrollable-nav {
-	white-space: nowrap;
-	overflow: auto;
-	padding-left: 1rem;
-	padding-right: 1rem;
-	display: flex;
-	width: 100%;
-	max-width: 1850px;
-	margin: auto;
-	margin-bottom: 0.25rem;
-	padding: 0rem !important;
-}
-
-.scrollable-nav::-webkit-scrollbar {
-	display: none;
-}
-
 .sticky {
 	position: -webkit-sticky;
 	position: sticky;

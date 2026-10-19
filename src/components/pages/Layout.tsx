@@ -17,7 +17,7 @@ export default function Layout() {
 		<>
 			<ScrollRestoration />
 			<div className='content'>
-				<Suspense fallback={<Skeleton variant='rectangular' width='100%' height='7rem' />}>
+				<Suspense fallback={<Skeleton variant='rectangular' width='100%' height='108px' />}>
 					<NavigationBar />
 				</Suspense>
 				<div className='routes'>

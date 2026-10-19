@@ -64,3 +64,23 @@ test('verify sub nav navigates client-side without reloading page', () => {
 
 	expect(window.location.assign).not.toHaveBeenCalled()
 })
+
+test('verify sub nav marks only the link for the current page', () => {
+	renderWithProviders(<SubNav />, AppRoutes.BanList)
+
+	expect(screen.getByRole('link', { name: 'Ban List' })).toHaveAttribute('aria-current', 'page')
+	expect(screen.getAllByRole('link').filter((link) => link.hasAttribute('aria-current'))).toHaveLength(1)
+})
+
+test('verify sub nav only marks home on the root path', () => {
+	renderWithProviders(<SubNav />, AppRoutes.About)
+
+	expect(screen.getByRole('link', { name: 'Home' })).not.toHaveAttribute('aria-current')
+	expect(screen.getByRole('link', { name: 'About' })).toHaveAttribute('aria-current', 'page')
+})
+
+test('verify sub nav marks nothing on a page without its own link', () => {
+	renderWithProviders(<SubNav />, '/card/12345')
+
+	expect(screen.getAllByRole('link').filter((link) => link.hasAttribute('aria-current'))).toHaveLength(0)
+})

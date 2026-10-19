@@ -1,0 +1,201 @@
+/*
+ * Purple storm over a lava sea. Every color is a flat fill - the scene's depth comes from layering, not gradients or blur.
+ * Tokens are scoped to the header so the inline SVG in NavScene can reference them.
+ */
+.site-nav {
+	--nav-sky: #2a1d62;
+	--nav-sky-high: #33257a;
+	--nav-sky-low: #231752;
+	--nav-bolt: #e2c4ff;
+	--nav-bolt-halo: #8a4dff;
+	--nav-rock: #3f3d7a;
+	--nav-rock-shade: #2c2a5c;
+	--nav-rock-light: #56548f;
+	--nav-gate: #6c6a9a;
+	--nav-gate-light: #8987b5;
+	--nav-gate-shade: #57557f;
+	--nav-gate-door: #141033;
+	--nav-shore: #17113a;
+	--nav-lava: #ff6a1a;
+	--nav-lava-crest: #ffc84a;
+	--nav-lava-crack: #b5300b;
+	--nav-text: rgba(241, 236, 255, 0.74);
+	--nav-text-strong: #fff;
+	--nav-hover: rgba(12, 6, 34, 0.35);
+	--nav-active: #ffb23e;
+
+	position: relative;
+	isolation: isolate;
+	overflow: hidden;
+	padding-bottom: 48px;
+	background: var(--nav-sky);
+	color: var(--nav-text-strong);
+	font-family: open sans, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif;
+}
+
+/* scene */
+
+.site-nav__scene {
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	pointer-events: none;
+}
+
+.site-nav__scene svg {
+	position: absolute;
+	display: block;
+}
+
+.site-nav__sky {
+	inset: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.site-nav__bolt {
+	top: 0;
+	right: 9%;
+	width: 230px;
+	height: 70px;
+}
+
+.site-nav__spire {
+	right: 25%;
+	bottom: 8px;
+	width: 74px;
+	height: 100px;
+}
+
+.site-nav__lava {
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 22px;
+}
+
+/* content */
+
+.site-nav__bar {
+	display: grid;
+	grid-template-columns: auto 1fr auto;
+	grid-template-areas: 'brand links actions';
+	align-items: center;
+	column-gap: 24px;
+	max-width: 1850px;
+	min-height: 60px;
+	margin-inline: auto;
+	padding-inline: 20px;
+}
+
+.site-nav__brand {
+	grid-area: brand;
+	margin-left: -8px;
+	padding: 6px 8px;
+	border-radius: 6px;
+	font-size: 22px;
+	font-weight: 700;
+	letter-spacing: 0.02em;
+	color: inherit;
+	text-decoration: none;
+}
+
+.site-nav__links {
+	grid-area: links;
+	/* grid items default to min-width: auto, which would let the links stretch the track instead of scrolling */
+	min-width: 0;
+	display: flex;
+	gap: 2px;
+	overflow-x: auto;
+	scrollbar-width: none;
+}
+
+.site-nav__links::-webkit-scrollbar {
+	display: none;
+}
+
+.site-nav__link {
+	position: relative;
+	padding: 8px 12px;
+	border-radius: 6px;
+	font-size: 14.5px;
+	font-weight: 500;
+	white-space: nowrap;
+	color: var(--nav-text);
+	text-decoration: none;
+	transition:
+		color 120ms ease,
+		background-color 120ms ease;
+}
+
+.site-nav__link[aria-current='page'] {
+	color: var(--nav-text-strong);
+}
+
+.site-nav__link[aria-current='page']::after {
+	content: '';
+	position: absolute;
+	inset-inline: 12px;
+	bottom: 2px;
+	height: 2px;
+	border-radius: 2px;
+	background: var(--nav-active);
+}
+
+.site-nav__actions {
+	grid-area: actions;
+	display: flex;
+	align-items: center;
+	gap: 2px;
+}
+
+.site-nav__brand:hover,
+.site-nav__link:hover {
+	background: var(--nav-hover);
+	color: var(--nav-text-strong);
+}
+
+.site-nav :focus-visible {
+	outline: 2px solid var(--nav-lava-crest);
+	outline-offset: 2px;
+}
+
+/* phones - links drop to their own scrolling row under the brand and actions */
+
+@media (max-width: 720px) {
+	.site-nav {
+		padding-bottom: 16px;
+	}
+
+	.site-nav__bar {
+		grid-template-columns: 1fr auto;
+		grid-template-areas:
+			'brand actions'
+			'links links';
+		min-height: 52px;
+		padding-inline: 12px;
+	}
+
+	.site-nav__links {
+		margin-inline: -12px;
+		padding: 2px 4px 6px;
+	}
+
+	/* keeps the strike clear of the action icons that share its row */
+	.site-nav__bolt {
+		right: 136px;
+		width: 120px;
+		height: 44px;
+	}
+
+	.site-nav__spire {
+		right: 30%;
+		bottom: 6px;
+		width: 60px;
+		height: 84px;
+	}
+
+	.site-nav__lava {
+		height: 16px;
+	}
+}
