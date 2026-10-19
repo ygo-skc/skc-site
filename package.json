@@ -112,7 +112,7 @@
 		"webpack-dev-server": "6.0.0"
 	},
 	"jest": {
-		"testEnvironment": "jsdom",
+		"testEnvironment": "<rootDir>/config/jest/jsdomWithFetchEnvironment.js",
 		"setupFilesAfterEnv": [
 			"<rootDir>/src/setupTests.ts"
 		],
@@ -136,7 +136,8 @@
 		],
 		"coveragePathIgnorePatterns": [
 			"src/reducers/",
-			"src/helper/DownstreamServices.ts"
+			"src/helper/DownstreamServices.ts",
+			"config/jest/"
 		],
 		"watchPathIgnorePatterns": [
 			"/node_modules/"
