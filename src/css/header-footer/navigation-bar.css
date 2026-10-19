@@ -1,35 +1,14 @@
 /*
- * Purple storm over a lava sea. Every color is a flat fill - the scene's depth comes from layering, not gradients or blur.
- * Tokens are scoped to the header so the inline SVG in NavScene can reference them.
+ * Purple storm over a lava sea. Every color is a flat fill from the site palette in index.css - the scene's depth comes
+ * from layering, not gradients or blur.
  */
 .site-nav {
-	--nav-sky: #2a1d62;
-	--nav-sky-high: #33257a;
-	--nav-sky-low: #231752;
-	--nav-bolt: #e2c4ff;
-	--nav-bolt-halo: #8a4dff;
-	--nav-rock: #3f3d7a;
-	--nav-rock-shade: #2c2a5c;
-	--nav-rock-light: #56548f;
-	--nav-gate: #6c6a9a;
-	--nav-gate-light: #8987b5;
-	--nav-gate-shade: #57557f;
-	--nav-gate-door: #141033;
-	--nav-shore: #17113a;
-	--nav-lava: #ff6a1a;
-	--nav-lava-crest: #ffc84a;
-	--nav-lava-crack: #b5300b;
-	--nav-text: rgba(241, 236, 255, 0.74);
-	--nav-text-strong: #fff;
-	--nav-hover: rgba(12, 6, 34, 0.35);
-	--nav-active: #ffb23e;
-
 	position: relative;
 	isolation: isolate;
 	overflow: hidden;
 	padding-bottom: 48px;
-	background: var(--nav-sky);
-	color: var(--nav-text-strong);
+	background: var(--sky);
+	color: var(--on-dark-strong);
 	font-family: open sans, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif;
 }
 
@@ -121,7 +100,7 @@
 	font-size: 14.5px;
 	font-weight: 500;
 	white-space: nowrap;
-	color: var(--nav-text);
+	color: var(--on-dark-text);
 	text-decoration: none;
 	transition:
 		color 120ms ease,
@@ -129,7 +108,7 @@
 }
 
 .site-nav__link[aria-current='page'] {
-	color: var(--nav-text-strong);
+	color: var(--on-dark-strong);
 }
 
 .site-nav__link[aria-current='page']::after {
@@ -139,7 +118,7 @@
 	bottom: 2px;
 	height: 2px;
 	border-radius: 2px;
-	background: var(--nav-active);
+	background: var(--ember);
 }
 
 .site-nav__actions {
@@ -151,12 +130,12 @@
 
 .site-nav__brand:hover,
 .site-nav__link:hover {
-	background: var(--nav-hover);
-	color: var(--nav-text-strong);
+	background: var(--on-dark-hover);
+	color: var(--on-dark-strong);
 }
 
 .site-nav :focus-visible {
-	outline: 2px solid var(--nav-lava-crest);
+	outline: 2px solid var(--lava-crest);
 	outline-offset: 2px;
 }
 

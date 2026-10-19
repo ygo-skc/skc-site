@@ -1,3 +1,27 @@
+:root {
+	/* site palette - purple storm over a volcano. flat fills only; depth comes from layering shapes */
+	--sky: #2a1d62;
+	--sky-high: #33257a;
+	--sky-low: #231752;
+	--bolt: #e2c4ff;
+	--bolt-halo: #8a4dff;
+	--rock: #3f3d7a;
+	--rock-shade: #2c2a5c;
+	--rock-light: #56548f;
+	--gate: #6c6a9a;
+	--gate-light: #8987b5;
+	--gate-shade: #57557f;
+	--gate-door: #141033;
+	--basalt: #17113a;
+	--lava: #ff6a1a;
+	--lava-crest: #ffc84a;
+	--lava-crack: #b5300b;
+	--on-dark-text: rgba(241, 236, 255, 0.74);
+	--on-dark-strong: #fff;
+	--on-dark-hover: rgba(12, 6, 34, 0.35);
+	--ember: #ffb23e;
+}
+
 html {
 	font-synthesis: none;
 
@@ -59,28 +83,6 @@ li {
 	padding-right: 0.8rem;
 }
 
-.footer {
-	width: 100%;
-	max-width: 1850px;
-	margin: 0 auto !important;
-
-	background-color: #282666;
-
-	border-top-left-radius: 0.5rem;
-	border-top-right-radius: 0.5rem;
-	margin-top: 2rem !important;
-}
-
-.footer-wrapper {
-	padding: 2.5rem;
-}
-
-.footer-font {
-	font-weight: 400;
-	color: rgba(255, 255, 255, 0.95) !important;
-	margin-bottom: 0.1rem !important;
-}
-
 .sticky {
 	position: -webkit-sticky;
 	position: sticky;
@@ -94,15 +96,6 @@ li {
 	padding: 0.2rem;
 	color: #ff6600 !important;
 	text-decoration: none !important;
-}
-
-.footer-link {
-	color: #ffe0cc !important;
-	text-decoration: none !important;
-}
-
-.empty-space {
-	flex-grow: 1;
 }
 
 .heavy-shadow {
