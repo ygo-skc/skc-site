@@ -192,7 +192,6 @@ li {
 
 .dark-chip.MuiChip-root,
 .dark-chip-condensed.MuiChip-root {
-	background: rgba(0, 0, 0, 0.7);
 	height: auto;
 }
 

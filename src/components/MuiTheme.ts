@@ -60,12 +60,13 @@ const MuiTheme = createTheme({
 		},
 		MuiChip: {
 			styleOverrides: {
+				// soft tags - pale lavender with indigo text, using the site palette from index.css
 				root: {
-					fontFamily: 'open sans,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 					marginRight: '.55rem',
 					marginTop: '.5rem',
-					backgroundColor: 'rgba(0, 0, 0, .23)',
-					color: 'white',
+					borderRadius: '6px',
+					backgroundColor: 'var(--stone)',
+					color: 'var(--stone-text)',
 				},
 				label: {
 					fontWeight: 600,
@@ -73,10 +74,12 @@ const MuiTheme = createTheme({
 				},
 				clickable: {
 					'&:hover': {
-						backgroundColor: 'rgba(0, 0, 0, .5)',
+						backgroundColor: 'var(--stone-hover)',
 					},
-					'&:focus': {
-						backgroundColor: 'rgba(0, 0, 0, .6)',
+					'&:focus-visible': {
+						backgroundColor: 'var(--stone-hover)',
+						outline: '2px solid var(--stone-text)',
+						outlineOffset: '2px',
 					},
 				},
 			},
