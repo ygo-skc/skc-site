@@ -47,7 +47,7 @@
 a.breadcrumb__stone {
 	background: var(--stone);
 	color: var(--stone-text);
-	font-weight: 500;
+	font-weight: 400;
 	text-decoration: none;
 	transition: background-color 120ms ease;
 }
