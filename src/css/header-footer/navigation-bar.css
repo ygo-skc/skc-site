@@ -10,9 +10,6 @@
 	background: var(--sky);
 	color: var(--on-dark-strong);
 	font-family: open sans, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif;
-
-	/* solid tint rather than translucent white - translucent text takes on each sky band behind it and dims over the darker ones */
-	--nav-link-text: #ebe4ff;
 }
 
 /* scene */
@@ -103,7 +100,8 @@
 	font-size: 14.5px;
 	font-weight: 400;
 	white-space: nowrap;
-	color: var(--nav-link-text);
+	/* solid stone rather than translucent white - translucent text takes on each sky band behind it and dims over the darker ones */
+	color: var(--stone);
 	text-decoration: none;
 	transition:
 		color 120ms ease,

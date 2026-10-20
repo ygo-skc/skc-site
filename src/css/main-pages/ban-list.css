@@ -38,8 +38,8 @@
 
 .limited-breakdown-chip.MuiChip-root,
 .limited-one-breakdown-chip.MuiChip-root {
-	background-color: #fff0dc;
-	color: #9a4b00;
+	background-color: color-mix(in srgb, var(--ember) 20%, #fff);
+	color: var(--lava-crack);
 }
 
 .semi-limited-breakdown-chip.MuiChip-root,
@@ -54,8 +54,8 @@
 }
 
 .removed-breakdown-chip.MuiChip-root {
-	background-color: #ececf0;
-	color: #33334a;
+	background-color: var(--stone);
+	color: var(--stone-text);
 }
 
 .cards-with-different-status-parent {
