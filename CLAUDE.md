@@ -24,7 +24,9 @@ Yu-Gi-Oh! card database front end (thesupremekingscastle.com). React 19, react-r
 - Keep react-router `Link`/`NavLink` for links.
 - Use MUI components where one fits (e.g. `Chip` for tags/flags, not a styled span).
 - **Do not change the MUI theme (`src/components/MuiTheme.ts`) without asking first.** Fix things locally in component CSS and offer the theme change as a question.
-- Style overrides of MUI go in local CSS; beat emotion specificity with a doubled class (`.messages__new.MuiChip-root`, `.site-footer .site-footer__heading`), not `!important`.
+- The theme's text follows a stepped scale (h1 2.8rem down to body2 1.05rem), em margins, unitless line heights, palette text colours (`var(--basalt)`, `--rock`, `--gate-shade`), solid popovers (no blur). `MuiTheme.test.ts` guards these - keep it green when the theme changes.
+- Style overrides of MUI go in local CSS; beat emotion specificity with a doubled class (`.messages__new.MuiChip-root`, `.site-footer .site-footer__heading`), not `!important`. Size MUI text on the component root (e.g. chip root, not `.MuiChip-label`) so local classes can still resize it.
+- skc-rcl's injected CSS loads at runtime, so stylesheet order can't be relied on to override it - use a doubled class (see `src/css/util/section.css`, which recolours rcl's `Section` headers with the palette).
 
 ## Visual direction
 
@@ -37,21 +39,39 @@ Theme: purple storm sky over an active volcano.
 - Fonts: Open Sans loaded at 400/600/800 only with `font-synthesis: none` - use only those weights. Root font size is ~12.3-13px by breakpoint, so prefer px in local component CSS.
 - Idiomatic modern CSS is welcome: BEM-ish class names, container/media queries, `clip-path`, `:is()`.
 - Must work at phone width.
+- **Card frame colours (normal, effect, fusion, spell...) and ATK/DEF colours are skc-rcl's, exactly.** Never darken, lighten or `color-mix` them, even for contrast - pick the text colour instead (skc-rcl pairs `#fffbeb` / `#333`), and say so if contrast still falls short. Black text on the yellow normal frame is fine.
+
+## skc-rcl (`../skc-rcl`)
+
+The shared component library (Section, SKCTable, YGOCard*, YGOCardPreview, YGOCardAttribute...). See its own CLAUDE.md.
+
+- Reusable card UI (previews, attribute/level icons, frame-coloured chips) belongs in rcl - don't copy rcl svgs or card colours into this repo.
+- rcl is consumer-agnostic: never give it this site's palette. Theme rcl components from here through their `--<component>-*` custom properties (e.g. `.search-palette.MuiPaper-root { --ygo-card-preview-text: var(--basalt) }`).
+- To try unpublished rcl changes: `yarn build` in rcl, then copy `../skc-rcl/dist/*` into `node_modules/skc-rcl/dist/` (no package.json change). Restart `yarn start` afterwards - webpack caches `node_modules`, so a running server keeps the old rcl. `yarn install` restores the published version.
+- The local API (`localhost:9999`) only allows CORS from port 3000.
 
 ## Established components
 
 - Breadcrumbs (`Breadcrumb.tsx`, `breadcrumb.css`): "stepping stones" trail; phones show only the parent crumb as a back stone.
 - Chips: "soft tags" (theme `MuiChip` + status tints in `ban-list.css`).
 - Messages popup (`Messages.tsx`, `MessageItemComponent.tsx`, `messages.css`): changelog with a date gutter and rail; day of month in lava; unread posts get a lava node and a "New" chip.
+- About page cards (`AboutInfoCard.tsx`, `about.css`): open columns with the icon beside the title (option "5C"); each card's badge ring takes a palette colour by position. Contributions use `WalletAddress.tsx` (copy button with a "Copied" status).
+- Section headers: rcl's `Section` only accepts named header styles, so `src/css/util/section.css` maps default / ban-list / product headers to `--sky` / `--lava-crack` / `--rock`.
+- Search palette (`src/components/util/search/`: `SiteSearch.tsx` provider in `Layout`, `SearchPalette.tsx`, `SearchTrigger.tsx` nav button, `SearchField.tsx` home field, `useSearchShortcut.ts`; `search-palette.css`): cmd/ctrl + k or `/` from any page; the nav button and home field open it too. The card preview (art, attribute, level/rank/scale, type chip in its frame colour, ATK/DEF, effect) is skc-rcl's `YGOCardPreview` - card colours and icons live in skc-rcl, themed here through `--ygo-card-preview-*` custom properties. Cards by name or passcode plus "Jump to" page shortcuts - no product, ban list or page search yet. Desktop previews the highlighted card beside the list; below md it's full screen with an inline peek per card.
 - Nav bar and footer: SVG scene backgrounds (sky, bolt, spire, lava) in `navigation-bar.css` / `footer.css`.
 
 ## Testing notes
 
-- Jest can't load ESM-only `react-markdown` and `skc-rcl` (pulls in @nivo/d3). Mock them in test files that render components using them (see `src/components/header-footer/__tests__/Messages.test.tsx`).
+- Jest can't load ESM-only `react-markdown` and `skc-rcl` (pulls in @nivo/d3). Mock them in test files that render components using them (see `src/components/header-footer/__tests__/Messages.test.tsx`). Anything that can open the search popup needs `jest.mock('skc-rcl', () => ({ YGOCardPreview: ... }))`.
 - Wrap renders in `ThemeProvider theme={MuiTheme}` and `MemoryRouter` when needed.
+- Responsive behaviour: mock `window.matchMedia` with live listeners to simulate a resize (see `resizeTo` in `SearchPalette.test.tsx`).
+- jsdom puts spaces around `<mark>` when computing accessible names - give options with highlighted text a plain `aria-label`.
+- For visual checks, a headless Chrome screenshot of localhost:3000 works; run screenshot scripts one at a time (a shared debugging port mixes runs). The dev server's type checker can keep reporting deleted files until `yarn start` is restarted - `npx tsc` is the source of truth.
 
 ## Open items
 
-- About page cards (`src/components/about/AboutInfoCard.tsx`): redesign in progress; three richer directions were mocked (trading-card frame, scene header, editorial badge) - awaiting a pick.
-- `src/css/main-pages/about.css` leaks a global `li { word-break: break-all }`.
+- skc-rcl 1.4.0 (`YGOCardPreview`, `YGOCardAttribute`) is committed on rcl's `card-preview` branch but not published. This site's search popup needs it: until 1.4.0 is published and `package.json` bumped, it only works with the local rcl build copied into `node_modules`.
+- The search API (`/api/v1/card/search`) doesn't return `monsterAssociation`, so the preview's level/rank/scale/link items never show from search results.
+- SKCTable redesign: leaning towards splitting it into a general `SKCTable` (tinted header, hairline rows) and a new `SKCStatGrid` (label/value tiles, `<dl>`) for summaries like product info. Pairings are mocked on the "SKC Table" design canvas - awaiting a pick.
 - Forbidden / semi-limited / limited-three status colours aren't in the palette yet.
+- `MuiTheme.ts` and `NavScene.tsx` already fail prettier on `release`; leave unrelated lines alone.
