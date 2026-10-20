@@ -42,7 +42,7 @@ Theme: purple storm sky over an active volcano.
 
 - Breadcrumbs (`Breadcrumb.tsx`, `breadcrumb.css`): "stepping stones" trail; phones show only the parent crumb as a back stone.
 - Chips: "soft tags" (theme `MuiChip` + status tints in `ban-list.css`).
-- Messages popup (`Messages.tsx`, `MessageItemComponent.tsx`, `messages.css`): changelog with a date gutter and rail; day of month in lava; unread posts get a lava node and a "New" chip. Popover paper is made solid locally because the theme popover is translucent + blurred.
+- Messages popup (`Messages.tsx`, `MessageItemComponent.tsx`, `messages.css`): changelog with a date gutter and rail; day of month in lava; unread posts get a lava node and a "New" chip.
 - Nav bar and footer: SVG scene backgrounds (sky, bolt, spire, lava) in `navigation-bar.css` / `footer.css`.
 
 ## Testing notes
@@ -53,6 +53,5 @@ Theme: purple storm sky over an active volcano.
 ## Open items
 
 - About page cards (`src/components/about/AboutInfoCard.tsx`): redesign in progress; three richer directions were mocked (trading-card frame, scene header, editorial badge) - awaiting a pick.
-- Should the theme `MuiPopover` blur/transparency change globally? (Needs the user's OK.)
 - `src/css/main-pages/about.css` leaks a global `li { word-break: break-all }`.
 - Forbidden / semi-limited / limited-three status colours aren't in the palette yet.

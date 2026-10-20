@@ -17,13 +17,7 @@
 .messages.MuiPaper-root {
 	width: min(520px, calc(100vw - 24px));
 	max-height: min(640px, calc(100vh - 96px));
-	border-radius: 12px;
-	/* the theme's popover paper is near transparent and blurred - long posts need a solid page to read on */
-	background: #fff;
-	backdrop-filter: none;
-	box-shadow: 0 8px 28px color-mix(in srgb, var(--basalt) 22%, transparent);
 	font-family: open sans, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif;
-	color: var(--basalt);
 }
 
 .messages__header {
