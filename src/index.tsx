@@ -1,4 +1,5 @@
 import './index.css'
+import './css/util/section.css'
 import { createRoot } from 'react-dom/client'
 import { ThemeProvider } from '@mui/material/styles'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'

@@ -1,0 +1,28 @@
+/*
+ * skc-rcl's Section maps each header style to a hard-coded colour. These rules re-point them at the site palette in index.css.
+ * Doubled classes win over the package's own rules whichever stylesheet loads last. Card-coloured headers keep their card colours.
+ */
+.section-header-container.default-section-header-container {
+	background: var(--sky);
+}
+
+.section-header-container.ban-list-section-header-container {
+	background: var(--lava-crack);
+}
+
+.section-header-container.product-section-header-container {
+	background: var(--rock);
+}
+
+.section-header-container .section-header-text {
+	color: var(--on-dark-strong);
+}
+
+.section-parent.default-border {
+	border-color: color-mix(in srgb, var(--gate-light) 60%, #fff);
+}
+
+/* every other block in a multi-part section gets a faint stone band instead of grey */
+.section-content .multi-section:nth-child(even) {
+	background: color-mix(in srgb, var(--stone) 40%, #fff);
+}
