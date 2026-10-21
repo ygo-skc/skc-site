@@ -1,26 +1,27 @@
 import { memo } from 'react'
-import { Typography, Link } from '@mui/material'
+import { NavLink } from 'react-router-dom'
 import AppRoutes from '../../helper/AppRoutes'
 
 const navLinks = [
-	{ href: AppRoutes.Home, label: 'Home' },
-	{ href: AppRoutes.BanList, label: 'Ban List' },
-	{ href: AppRoutes.CardBrowse, label: 'Card Browse' },
-	{ href: AppRoutes.ProductBrowse, label: 'Product Browse' },
-	{ href: AppRoutes.About, label: 'About' },
+	{ to: AppRoutes.Home, label: 'Home', end: true },
+	{ to: AppRoutes.BanList, label: 'Ban List' },
+	{ to: AppRoutes.CardBrowse, label: 'Card Browse' },
+	{ to: AppRoutes.ProductBrowse, label: 'Product Browse' },
+	{ to: AppRoutes.About, label: 'About' },
 ]
 
+/*
+ * NavLink sets aria-current='page' on the link for the current route, which the stylesheet keys off of for the active state
+ */
 const SubNav = memo(function SubNav() {
 	return (
-		<div className='scrollable-nav'>
-			{navLinks.map(({ href, label }) => (
-				<Link key={href} underline='none' color='inherit' href={href}>
-					<Typography className='nav-button' color='inherit'>
-						{label}
-					</Typography>
-				</Link>
+		<nav className='site-nav__links' aria-label='Main'>
+			{navLinks.map(({ to, label, end }) => (
+				<NavLink key={to} to={to} end={end} className='site-nav__link'>
+					{label}
+				</NavLink>
 			))}
-		</div>
+		</nav>
 	)
 })
 

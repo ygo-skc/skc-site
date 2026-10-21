@@ -9,7 +9,9 @@ type _Topic = {
 const Topic: FC<_Topic> = memo(({ header, details }) => {
 	return (
 		<div className='topic'>
-			<Typography variant='h6'>{header}</Typography>
+			<Typography variant='h6' className='topic__header'>
+				{header}
+			</Typography>
 			{details}
 		</div>
 	)

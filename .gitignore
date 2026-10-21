@@ -10,3 +10,5 @@ coverage/
 .stryker-tmp
 stryker.log
 mutation.html
+
+.superpowers/

@@ -22,7 +22,7 @@
 		"noUnusedParameters": true,
 		"incremental": true,
 		"noFallthroughCasesInSwitch": true,
-		"types": ["node", "jest"]
+		"types": ["node", "jest", "@testing-library/jest-dom"]
 	},
 	"exclude": ["node_modules", "build", "scripts", "acceptance-tests", "webpack", "jest", "src/setupTests.ts"],
 	"include": ["src"],

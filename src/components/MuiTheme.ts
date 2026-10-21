@@ -1,4 +1,5 @@
 import { createTheme } from '@mui/material/styles'
+import LinkBehavior from './LinkBehavior'
 
 const MuiTheme = createTheme({
 	palette: {
@@ -15,6 +16,11 @@ const MuiTheme = createTheme({
 		},
 	},
 	components: {
+		MuiLink: {
+			defaultProps: {
+				component: LinkBehavior,  // handles external links as usual but internal links will now route through React Router and not refresh page
+			},
+		},
 		MuiButtonGroup: {
 			styleOverrides: {
 				grouped: {
@@ -30,7 +36,7 @@ const MuiTheme = createTheme({
 			styleOverrides: {
 				root: {
 					background: '#eee',
-					color: 'black',
+					color: 'var(--basalt)',
 				},
 			},
 		},
@@ -44,33 +50,33 @@ const MuiTheme = createTheme({
 		MuiFormLabel: {
 			styleOverrides: {
 				root: {
-					fontFamily: 'open sans,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 					fontWeight: 600,
-					lineHeight: '1.8rem',
-					color: '#555',
-					fontSize: '1.45rem',
+					lineHeight: 1.4,
+					color: 'var(--gate-shade)',
+					fontSize: '1.3rem',
 				},
 			},
 		},
 		MuiChip: {
 			styleOverrides: {
+				// soft tags - pale lavender with indigo text, using the site palette from index.css
 				root: {
-					fontFamily: 'open sans,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 					marginRight: '.55rem',
 					marginTop: '.5rem',
-					backgroundColor: 'rgba(0, 0, 0, .23)',
-					color: 'white',
-				},
-				label: {
+					borderRadius: '6px',
+					backgroundColor: 'var(--stone)',
+					color: 'var(--stone-text)',
+					fontSize: '1.05rem',
 					fontWeight: 600,
-					fontSize: '1rem',
 				},
 				clickable: {
 					'&:hover': {
-						backgroundColor: 'rgba(0, 0, 0, .5)',
+						backgroundColor: 'var(--stone-hover)',
 					},
-					'&:focus': {
-						backgroundColor: 'rgba(0, 0, 0, .6)',
+					'&:focus-visible': {
+						backgroundColor: 'var(--stone-hover)',
+						outline: '2px solid var(--stone-text)',
+						outlineOffset: '2px',
 					},
 				},
 			},
@@ -81,7 +87,6 @@ const MuiTheme = createTheme({
 					fontSize: '1.0rem',
 					marginTop: '.4rem',
 					marginRight: '.5rem',
-					fontFamily: 'open sans,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 				},
 				root: {
 					minHeight: '0rem',
@@ -91,10 +96,11 @@ const MuiTheme = createTheme({
 		MuiPopover: {
 			styleOverrides: {
 				paper: {
-					backgroundColor: 'rgba(255, 255, 255, .05)',
-					backdropFilter: 'blur(20px)',
-					borderRadius: '2rem',
-					boxShadow: '0 0 10px rgba(0, 0, 0, .25)',
+					backgroundColor: '#fff',
+					color: 'var(--basalt)',
+					borderRadius: '12px',
+					border: '1px solid var(--stone)',
+					boxShadow: '0 8px 28px color-mix(in srgb, var(--basalt) 22%, transparent)',
 				},
 			},
 		},
@@ -109,7 +115,7 @@ const MuiTheme = createTheme({
 				},
 				option: {
 					paddingLeft: '0rem',
-					paddingReft: '0rem',
+					paddingRight: '0rem',
 					paddingBottom: '.4rem',
 				},
 				listbox: {
@@ -120,16 +126,15 @@ const MuiTheme = createTheme({
 		MuiTooltip: {
 			styleOverrides: {
 				tooltip: {
-					fontFamily: 'open sans,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 					fontWeight: 400,
-					lineHeight: '1.3rem',
-					fontSize: '1em',
+					lineHeight: 1.45,
+					fontSize: '1.05rem',
 					padding: '.75rem',
-					backgroundColor: '#4d4a59',
+					backgroundColor: 'var(--basalt)',
 					borderRadius: '1rem',
 				},
 				arrow: {
-					color: '#4d4a59',
+					color: 'var(--basalt)',
 				},
 			},
 		},
@@ -141,14 +146,13 @@ const MuiTheme = createTheme({
 				},
 				head: {
 					fontWeight: 800,
-					fontSize: '1.1em',
+					fontSize: '1.1rem',
 				},
 				body: {
-					fontWeight: 600,
+					fontWeight: 400,
 					fontSize: '1.05rem',
 				},
 				root: {
-					fontFamily: 'open sans',
 					padding: '.4rem',
 					borderBottom: '0rem',
 				},
@@ -164,88 +168,86 @@ const MuiTheme = createTheme({
 		},
 	},
 	typography: {
+		fontFamily: 'open sans,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
+		// index.html only downloads 400, 600 and 800 and font-synthesis is off, so other weights would render as a neighbour
+		fontWeightLight: 400,
+		fontWeightRegular: 400,
+		fontWeightMedium: 600,
+		fontWeightBold: 800,
+		// line heights are unitless so they keep their ratio when css resizes the text - roomy for reading text, tighter as headings grow
 		button: {
-			fontFamily: 'open sans,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
-			lineHeight: '1.3rem',
+			lineHeight: 1.13,
 			fontSize: '1.15rem',
 			textTransform: 'none',
 		},
+		// sizes step up by roughly 1.15-1.2x per level from ~15px body text, so each heading level reads as distinct
+		// margins are in em so the space under a heading grows with the heading
 		h1: {
-			fontFamily: 'open sans,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 800,
-			color: 'black',
-			lineHeight: '2.8rem',
-			fontSize: '2rem',
+			color: 'var(--basalt)',
+			lineHeight: 1.15,
+			fontSize: '2.8rem',
 		},
 		h2: {
-			fontFamily: 'open sans,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 800,
-			color: 'black',
-			lineHeight: '2.4rem',
-			marginBottom: '1.2rem',
-			fontSize: '1.85rem',
+			color: 'var(--basalt)',
+			lineHeight: 1.2,
+			marginBottom: '0.5em',
+			fontSize: '2.4rem',
 		},
 		h3: {
-			fontFamily: 'open sans,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 800,
-			color: 'black',
-			lineHeight: '2.3rem',
-			marginBottom: '1.2rem',
-			fontSize: '1.7rem',
+			color: 'var(--basalt)',
+			lineHeight: 1.25,
+			marginBottom: '0.55em',
+			fontSize: '2rem',
 		},
 		h4: {
-			fontFamily: 'open sans,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 600,
-			color: '#444',
-			lineHeight: '2rem',
-			marginBottom: '1rem',
-			fontSize: '1.55rem',
+			color: 'var(--rock)',
+			lineHeight: 1.3,
+			marginBottom: '0.5em',
+			fontSize: '1.75rem',
 		},
 		h5: {
-			fontFamily: 'open sans,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 600,
-			lineHeight: '1.8rem',
-			marginBottom: '1rem',
-			color: '#555',
-			fontSize: '1.4rem',
+			lineHeight: 1.3,
+			marginBottom: '0.5em',
+			color: 'var(--gate-shade)',
+			fontSize: '1.5rem',
 		},
 		h6: {
-			fontFamily: 'open sans',
 			fontWeight: 600,
-			lineHeight: '1.7rem',
-			marginBottom: '.8rem',
-			color: '#555',
-			fontSize: '1.25rem',
+			lineHeight: 1.35,
+			marginBottom: '0.5em',
+			color: 'var(--gate-shade)',
+			fontSize: '1.3rem',
 		},
 		subtitle1: {
-			fontFamily: 'open sans,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 600,
-			lineHeight: '1.4rem',
-			marginBottom: '.8rem',
-			color: 'black',
-			fontSize: '1.2rem',
+			lineHeight: 1.4,
+			marginBottom: '0.6em',
+			color: 'var(--basalt)',
+			fontSize: '1.25rem',
 		},
 		subtitle2: {
-			fontFamily: 'open sans',
 			fontWeight: 600,
-			lineHeight: '1.4rem',
-			marginBottom: '.75rem',
-			color: 'black',
-			fontSize: '1.15rem',
+			lineHeight: 1.4,
+			marginBottom: '0.65em',
+			color: 'var(--basalt)',
+			fontSize: '1.1rem',
 		},
 		body1: {
-			fontFamily: 'open sans,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 400,
-			lineHeight: '1.35rem',
-			color: 'black',
-			fontSize: '1.05em',
+			color: 'var(--basalt)',
+			lineHeight: 1.55,
+			fontSize: '1.15rem',
 		},
 		body2: {
-			fontFamily: 'open sans,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji',
 			fontWeight: 400,
-			lineHeight: '1.25rem',
-			color: 'black',
-			fontSize: '.98rem',
+			color: 'var(--basalt)',
+			lineHeight: 1.5,
+			fontSize: '1.05rem',
 		},
 	},
 })

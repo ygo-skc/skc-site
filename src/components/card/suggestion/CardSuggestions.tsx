@@ -1,5 +1,6 @@
 import '../../../css/card/ygo-card-suggestion.css'
 import { FC, Fragment, lazy, Suspense, useCallback } from 'react'
+import { Link } from 'react-router-dom'
 import { decodeHTML } from 'entities'
 import { Skeleton } from '@mui/material'
 
@@ -59,9 +60,9 @@ const CardSuggestions: FC<CardSuggestionProps> = ({
 			? references.map((reference: YGOCard.Reference) => {
 					reference.card.cardEffect = decodeHTML(reference.card.cardEffect)
 					return (
-						<a key={reference.card.cardID} href={`/card/${reference.card.cardID}`} className='suggested-ygo-card-wrapper aggregate-anchor'>
+						<Link key={reference.card.cardID} to={`/card/${reference.card.cardID}`} className='suggested-ygo-card-wrapper aggregate-anchor'>
 							<YGOCardWithQuantity card={reference.card} occurrences={reference.occurrences} />
-						</a>
+						</Link>
 					)
 			  })
 			: []
@@ -73,9 +74,9 @@ const CardSuggestions: FC<CardSuggestionProps> = ({
 					const card = reference.card
 					card.cardEffect = decodeHTML(card.cardEffect)
 					return (
-						<a key={card.cardID} href={`/card/${card.cardID}`} className='suggested-ygo-card-wrapper aggregate-anchor'>
+						<Link key={card.cardID} to={`/card/${card.cardID}`} className='suggested-ygo-card-wrapper aggregate-anchor'>
 							<YGOCardWithImage key={card.cardID} card={card} imgLoadingType='lazy' />
-						</a>
+						</Link>
 					)
 			  })
 			: []

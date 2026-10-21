@@ -18,39 +18,40 @@
 	margin: auto;
 }
 
-.ban-list-date-selector .MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper {
-	background-color: black;
-}
-
 .ban-list-date-selector-menu-item {
 	padding: 0.85rem;
 }
 
+/* soft tags tinted with each status colour - the tint carries the meaning, the dark text stays readable */
 .breakdown-chip.MuiChip-root {
-	color: black;
-	background-color: white;
+	border-color: transparent;
 }
 
 .forbidden-breakdown-chip.MuiChip-root {
-	border: 1px solid rgb(245, 0, 87);
+	background-color: color-mix(in srgb, var(--forbidden) 12%, #fff);
+	color: var(--forbidden-ink);
 }
 
 .limited-breakdown-chip.MuiChip-root,
 .limited-one-breakdown-chip.MuiChip-root {
-	border: 1px solid rgb(255, 145, 0);
+	background-color: color-mix(in srgb, var(--ember) 20%, #fff);
+	color: var(--lava-crack);
 }
 
 .semi-limited-breakdown-chip.MuiChip-root,
 .limited-two-breakdown-chip.MuiChip-root {
-	border: 1px solid rgb(76, 175, 80);
+	background-color: color-mix(in srgb, var(--semi-limited) 12%, #fff);
+	color: var(--semi-limited-ink);
 }
 
 .limited-three-breakdown-chip.MuiChip-root {
-	border: 1px solid #00b5e2;
+	background-color: color-mix(in srgb, var(--limited-three) 12%, #fff);
+	color: var(--limited-three-ink);
 }
 
 .removed-breakdown-chip.MuiChip-root {
-	border: 1px solid black;
+	background-color: var(--stone);
+	color: var(--stone-text);
 }
 
 .cards-with-different-status-parent {
@@ -75,7 +76,7 @@
 }
 
 .forbidden-icon.MuiSvgIcon-root {
-	color: red;
+	color: var(--forbidden);
 	font-size: 1.8rem;
 }
 
@@ -87,11 +88,11 @@
 
 .semi-limited-icon.MuiSvgIcon-root,
 .limited-two-icon.MuiSvgIcon-root {
-	color: #4caf50;
+	color: var(--semi-limited);
 	font-size: 1.8rem;
 }
 
 .limited-three-icon.MuiSvgIcon-root {
-	color: #00b5e2;
+	color: var(--limited-three);
 	font-size: 1.8rem;
 }

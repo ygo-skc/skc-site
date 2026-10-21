@@ -104,7 +104,7 @@ const ProductBrowse: FunctionComponent = () => {
 			<meta name={`SKC - Product Browser`} content={`Browse all products in database to check the progression of YuGiOh.`} />
 			<meta name='keywords' content={`YuGiOh, product browse, The Supreme Kings Castle`} />
 
-			<Suspense fallback={<Skeleton className='breadcrumb-skeleton' variant='rectangular' width='100%' height='2.5rem' />}>
+			<Suspense fallback={<Skeleton className='breadcrumb breadcrumb__loading' variant='rectangular' width={260} height={30} />}>
 				<Breadcrumb crumbs={['Home', 'Product Browse']} />
 			</Suspense>
 

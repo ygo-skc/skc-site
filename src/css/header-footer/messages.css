@@ -11,47 +11,182 @@
 	color: white;
 }
 
-.communication-message-header.MuiTypography-root {
-	margin-bottom: 0.7rem;
+/*
+ * Changelog popup - posts on a vertical rail with their dates in a gutter column. Unread posts get an ember node and a lava day.
+ */
+.messages.MuiPaper-root {
+	width: min(520px, calc(100vw - 24px));
+	max-height: min(640px, calc(100vh - 96px));
+	font-family: open sans, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif;
+}
+
+.messages__header {
+	position: sticky;
+	top: 0;
+	z-index: 2;
+	display: flex;
+	align-items: baseline;
+	gap: 8px;
+	padding: 14px 18px;
+	border-bottom: 1px solid var(--stone);
+	background: #fff;
+}
+
+.messages .messages__heading {
+	margin: 0;
+	font-size: 16px;
+	font-weight: 600;
+	color: var(--basalt);
+}
+
+.messages__count {
+	margin-left: auto;
+	font-size: 12px;
+	color: var(--gate);
+}
+
+.messages__timeline {
+	margin: 0;
+	padding: 14px 18px 4px 10px;
+	list-style: none;
+}
+
+/* date gutter | node | post. the rail is drawn per post so it can stop at the last one */
+.messages__post {
+	position: relative;
+	display: grid;
+	grid-template-columns: 44px 12px minmax(0, 1fr);
+	column-gap: 10px;
+	padding-bottom: 18px;
+}
+
+.messages__post::before {
+	content: '';
+	position: absolute;
+	top: 14px;
+	bottom: 0;
+	left: 59px;
+	width: 2px;
+	background: var(--stone);
+}
+
+.messages__post:last-child::before {
+	display: none;
+}
+
+.messages__date {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	line-height: 1.15;
+}
+
+.messages__month {
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: var(--gate);
+}
+
+.messages__day {
+	font-size: 20px;
+	font-weight: 800;
+	color: var(--lava);
+}
+
+.messages__year {
+	font-size: 10.5px;
+	color: var(--gate-light);
+}
+
+.messages__node {
+	position: relative;
+	z-index: 1;
+	box-sizing: border-box;
+	width: 12px;
+	height: 12px;
+	margin-top: 3px;
+	border: 2px solid var(--gate-light);
+	border-radius: 50%;
+	background: #fff;
+}
+
+.messages__post--new .messages__node {
+	border-color: var(--lava);
+	background: var(--lava);
+}
+
+/* doubled class beats the theme's soft tag chip styles */
+.messages__new.MuiChip-root {
+	display: flex;
+	width: fit-content;
+	height: 20px;
+	margin: 0 0 4px;
+	border-radius: 5px;
+	background: color-mix(in srgb, var(--ember) 20%, #fff);
+	color: var(--lava-crack);
+	font-size: 11px;
 	font-weight: 600;
 }
 
-.communication-message-sub-header.MuiTypography-root {
-	margin-bottom: 0.75rem;
-	color: rgba(0, 0, 0, 0.8);
+.messages__new .MuiChip-label {
+	padding-inline: 7px;
 }
 
-.communication-message-body p {
-	margin-block-start: 0rem;
-	margin-block-end: 0.75rem;
+.messages .messages__title {
+	margin: 0 0 4px;
+	font-size: 14.5px;
+	font-weight: 600;
+	line-height: 1.35;
+	color: var(--basalt);
 }
 
-.communication-message-body a:hover {
-	text-decoration: none;
-}
-.communication-message-content {
-	margin-left: 1rem;
-	margin-right: 1rem;
+.messages__body {
+	font-size: 13.5px;
+	line-height: 1.55;
+	overflow-wrap: anywhere;
 }
 
-.communication-popper-container {
-	padding-right: 1.2rem;
-	padding-left: 1.2rem;
-	padding-top: 1.75rem;
-	padding-bottom: 1.75rem;
-	max-width: 500px;
-	max-height: 550px;
-	background: rgb(255, 255, 255, 0.85);
-	overflow-x: hidden;
+.messages__body :is(h1, h2, h3, h4, h5, h6) {
+	margin: 10px 0 4px;
+	font-size: 13.5px;
+	font-weight: 600;
+	color: var(--basalt);
 }
 
-.communication-divider.MuiDivider-root {
-	margin-top: 1rem;
-	margin-bottom: 1.5rem;
-	background: rgba(0, 0, 0, 0.2);
-	backdrop-filter: blur(60px);
+.messages__body :is(p, ul, ol) {
+	margin: 0 0 8px;
 }
 
-.popover {
-	overflow: hidden;
+.messages__body :is(ul, ol) {
+	padding-left: 20px;
+}
+
+.messages__body a {
+	color: var(--bolt-halo);
+	text-decoration: underline;
+	text-decoration-color: var(--bolt);
+	text-underline-offset: 2px;
+}
+
+.messages__body a:hover {
+	text-decoration-color: currentColor;
+}
+
+.messages__body code {
+	padding: 1px 4px;
+	border-radius: 4px;
+	background: var(--stone);
+	font-size: 12px;
+}
+
+.messages__tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 5px;
+}
+
+.messages__tags .MuiChip-root {
+	margin: 0;
 }

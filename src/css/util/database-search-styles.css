@@ -4,6 +4,97 @@
 	max-width: 750px;
 }
 
+/* home page search - a button dressed as a field that opens the site search popup. wears the popup's ember colours */
+.search-field.MuiButtonBase-root {
+	--field-paper: color-mix(in srgb, var(--ember) 5%, #fff);
+	--field-line: color-mix(in srgb, var(--ember) 30%, var(--field-paper));
+	--field-muted: color-mix(in srgb, var(--lava-crack) 55%, var(--basalt));
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	width: 100%;
+	min-height: 54px;
+	margin-bottom: 2rem;
+	padding: 0 14px 0 20px;
+	border: 1.5px solid var(--field-line);
+	border-radius: 999px;
+	background: var(--field-paper);
+	text-align: left;
+	color: var(--field-muted);
+	transition: border-color 120ms ease;
+}
+
+.search-field.MuiButtonBase-root:hover,
+.search-field.Mui-focusVisible {
+	border-color: var(--lava-crack);
+}
+
+.search-field.Mui-focusVisible {
+	outline: 3px solid var(--field-line);
+}
+
+.search-field__icon.MuiSvgIcon-root {
+	color: var(--lava-crack);
+}
+
+.search-field__placeholder.MuiTypography-root {
+	flex: 1;
+	min-width: 0;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.search-field__example {
+	color: var(--basalt);
+}
+
+/* caret after the typed example */
+.search-field__example::after {
+	content: '';
+	display: inline-block;
+	width: 2px;
+	height: 18px;
+	margin-left: 2px;
+	vertical-align: -3px;
+	background: var(--lava);
+	animation: search-field-caret 1s steps(1) infinite;
+}
+
+@keyframes search-field-caret {
+	50% {
+		opacity: 0;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.search-field__example::after {
+		animation: none;
+	}
+}
+
+.search-field__keys {
+	display: flex;
+	gap: 4px;
+}
+
+.search-field__keys kbd {
+	padding: 2px 7px;
+	border: 1px solid color-mix(in srgb, var(--lava-crack) 30%, var(--field-paper));
+	border-bottom-width: 2px;
+	border-radius: 6px;
+	background: var(--field-paper);
+	font-family: inherit;
+	color: var(--lava-crack);
+}
+
+/* no physical keyboard to press it with */
+@media (hover: none) {
+	.search-field__keys {
+		display: none;
+	}
+}
+
 .database-summary-container {
 	width: 85%;
 	max-width: 600px;
@@ -15,12 +106,6 @@
 	border-radius: 2.5rem;
 	margin-bottom: 2rem;
 	border: solid 3px rgb(93, 90, 107);
-}
-
-.card-image-avatar.MuiAvatar-root {
-	margin-right: 0.75rem;
-	width: 50px;
-	height: 50px;
 }
 
 .search-icon {
@@ -38,7 +123,6 @@
 .search-input-field {
 	color: black;
 	flex: 1;
-	font-size: 1.05rem;
 }
 .search-input-field fieldset {
 	border: none;
@@ -61,19 +145,6 @@
 
 .search-suggestions-parent.Mui-focused[aria-selected='true'] {
 	background: #d4d4d4;
-}
-
-.search-suggestions-info-parent {
-	padding: 0rem;
-	margin: 0rem;
-}
-
-.search-suggestion-substring-match {
-	color: rgba(255, 143, 68, 0.85);
-}
-
-.search-suggestion-subheader {
-	color: rgba(81, 99, 114, 0.8);
 }
 
 .search-suggestion-text {

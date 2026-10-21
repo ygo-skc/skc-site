@@ -9,7 +9,7 @@ const SelectedCardBrowseCriteria: FC<{ selectedCriteria: YGOData.CardBrowseValue
 		if (selectedCriteria === undefined) return
 
 		const criteriaChips = selectedCriteria.map((criteria: YGOData.CardBrowseValues) => {
-			return <Chip key={criteria.value} label={criteria.value} style={{ background: 'rgba(107, 52, 91, .8)' }} />
+			return <Chip key={criteria.value} label={criteria.value} />
 		})
 
 		setSelectedCriteriaChips(criteriaChips)
