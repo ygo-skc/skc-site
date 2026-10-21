@@ -23,6 +23,13 @@
 	--stone: #e9e3fa;
 	--stone-hover: #ddd3f7;
 	--stone-text: #3b2d7a;
+	/* ban list statuses - limited uses --ember / --lava-crack; -ink is the chip text */
+	--forbidden: #ff0000;
+	--forbidden-ink: #a3003b;
+	--semi-limited: #4caf50;
+	--semi-limited-ink: #246b28;
+	--limited-three: #00b5e2;
+	--limited-three-ink: #00607a;
 }
 
 html {

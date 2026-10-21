@@ -33,7 +33,7 @@ Yu-Gi-Oh! card database front end (thesupremekingscastle.com). React 19, react-r
 Theme: purple storm sky over an active volcano.
 
 - Flat fills only - no gradients, no blur/glassmorphism, no other "AI tells". Depth comes from layering shapes.
-- Colours come from the palette in `:root` in `src/index.css` (`--sky`, `--basalt`, `--lava`, `--lava-crack`, `--lava-crest`, `--ember`, `--stone`, `--stone-hover`, `--stone-text`, `--gate*`, `--bolt*`, `--on-dark-*`, ...). Use these variables rather than hex values; derive tints with `color-mix(in srgb, var(--x) N%, #fff | transparent)`.
+- Colours come from the palette in `:root` in `src/index.css` (`--sky`, `--basalt`, `--lava`, `--lava-crack`, `--lava-crest`, `--ember`, `--stone`, `--stone-hover`, `--stone-text`, `--gate*`, `--bolt*`, `--on-dark-*`, ban list statuses `--forbidden*` / `--semi-limited*` / `--limited-three*`, ...). Use these variables rather than hex values; derive tints with `color-mix(in srgb, var(--x) N%, #fff | transparent)`.
 - Solid text tints on dark backgrounds, not translucent white (translucent text dims over darker bands).
 - Watch contrast: lava text on white is only ~2.9:1, so it's for accents (e.g. the day number in the messages popup), not body text.
 - Fonts: Open Sans loaded at 400/600/800 only with `font-synthesis: none` - use only those weights. Root font size is ~12.3-13px by breakpoint, so prefer px in local component CSS.
@@ -73,5 +73,4 @@ The shared component library (Section, SKCTable, YGOCard*, YGOCardPreview, YGOCa
 - **Back navigation is broken because of how the site pushes links - revisit how links navigate.** Not diagnosed yet; places that touch history to start from: `LinkBehavior.tsx` (MUI `Link` → react-router `Link`), `navigate(..., { replace: true })` in `BanList.tsx`, `window.location.assign` error redirects in `FetchHandler.ts`, and `navigate` calls in the search popup and home tiles. Reproduce with real back/forward before changing anything.
 - skc-rcl 1.4.0 is published (`YGOCardPreview`, `YGOCardAttribute`, compact `SKCTable`, `SKCStatGrid`). Still to do here: bump `package.json` to 1.4.0 (the search popup needs it), switch product info and the Card Browse totals to `SKCStatGrid`, and set `--skc-table-*` / `--skc-stat-grid-*` to the palette.
 - The search API (`/api/v1/card/search`) doesn't return `monsterAssociation`, so the preview's level/rank/scale/link items never show from search results.
-- Forbidden / semi-limited / limited-three status colours aren't in the palette yet.
 - `MuiTheme.ts` and `NavScene.tsx` already fail prettier on `release`; leave unrelated lines alone.
