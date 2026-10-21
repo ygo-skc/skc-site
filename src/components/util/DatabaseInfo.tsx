@@ -1,6 +1,6 @@
 import '../../css/util/database-search-styles.css'
 
-import { FC, lazy, useCallback } from 'react'
+import { FC, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import Grid from '@mui/material/Grid'
@@ -9,8 +9,7 @@ import { Skeleton } from '@mui/material'
 import { Tile, Section } from 'skc-rcl'
 
 import AppRoutes from '../../helper/AppRoutes'
-
-const DatabaseSearch = lazy(() => import('./search/DBSearch'))
+import SearchField from './search/SearchField'
 
 const DatabaseInfo: FC<{ stats: SKC.DBStats & { isFetchingData: boolean } }> = ({ stats }) => {
 	const navigate = useNavigate()
@@ -23,7 +22,7 @@ const DatabaseInfo: FC<{ stats: SKC.DBStats & { isFetchingData: boolean } }> = (
 		<Section sectionName='Content'>
 			<div className='section-content'>
 				<div className='search-container'>
-					<DatabaseSearch />
+					<SearchField />
 				</div>
 
 				{stats.isFetchingData && <Skeleton variant='rectangular' height='170px' width='100%' className='rounded-skeleton' />}
