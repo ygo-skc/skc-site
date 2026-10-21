@@ -1,0 +1,334 @@
+/*
+ * Site wide search palette - a centred dialog with results beside a preview of the highlighted card.
+ * Below the md breakpoint the dialog is full screen and each card row gets an inline peek instead of the preview column
+ */
+.search-palette-root .MuiDialog-container {
+	align-items: flex-start;
+}
+
+.search-palette.MuiPaper-root {
+	/* ember colourway - warm paper with ember tints and lava-crack accents */
+	--palette-paper: color-mix(in srgb, var(--ember) 5%, #fff);
+	--palette-wash: color-mix(in srgb, var(--ember) 12%, var(--palette-paper));
+	--palette-tint: color-mix(in srgb, var(--ember) 24%, var(--palette-paper));
+	--palette-line: color-mix(in srgb, var(--ember) 30%, var(--palette-paper));
+	--palette-muted: color-mix(in srgb, var(--lava-crack) 55%, var(--basalt));
+	/* skc-rcl's card preview takes the site palette for its neutral text */
+	--ygo-card-preview-text: var(--basalt);
+	--ygo-card-preview-muted: var(--palette-muted);
+	display: flex;
+	flex-direction: column;
+	width: min(860px, calc(100vw - 32px));
+	max-height: min(640px, calc(100vh - 128px));
+	margin: 80px 16px 0;
+	border-radius: 16px;
+	overflow: hidden;
+	background-color: var(--palette-paper);
+	color: var(--basalt);
+}
+
+.search-palette.MuiDialog-paperFullScreen {
+	width: 100%;
+	max-height: none;
+	margin: 0;
+	border: 0;
+	border-radius: 0;
+}
+
+/* scrim is flat - no blur */
+.search-palette-root .MuiBackdrop-root {
+	background: color-mix(in srgb, var(--basalt) 62%, transparent);
+}
+
+.search-palette kbd {
+	padding: 2px 7px;
+	border: 1px solid color-mix(in srgb, var(--lava-crack) 30%, var(--palette-paper));
+	border-bottom-width: 2px;
+	border-radius: 6px;
+	background: var(--palette-paper);
+	font-family: inherit;
+	color: var(--lava-crack);
+}
+
+.search-palette__bar {
+	display: flex;
+	flex: none;
+	align-items: center;
+	gap: 12px;
+	min-height: 60px;
+	padding: 0 16px 0 20px;
+	border-bottom: 1px solid var(--palette-line);
+}
+
+.search-palette__icon.MuiSvgIcon-root {
+	color: var(--palette-muted);
+}
+
+.search-palette .search-palette__input {
+	flex: 1;
+	margin: 0;
+}
+
+.search-palette__close.MuiButton-root {
+	min-height: 44px;
+	color: var(--lava-crack);
+}
+
+.search-palette__body {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) 300px;
+	flex: 1;
+	min-height: 0;
+}
+
+.search-palette__list,
+.search-palette__group {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.search-palette__list {
+	padding: 4px 0 8px;
+	overflow-y: auto;
+	/* a short list shouldn't hand the drag on to the page behind */
+	overscroll-behavior: contain;
+}
+
+/* nothing to preview yet (jump to links only, or no matches) - the list takes the whole width */
+.search-palette__body:not(:has(.search-palette__preview)) {
+	grid-template-columns: minmax(0, 1fr);
+}
+
+.search-palette__label.MuiTypography-root {
+	margin: 0;
+	padding: 12px 20px 4px;
+	color: var(--palette-muted);
+}
+
+.search-palette__row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+.search-palette__option {
+	display: flex;
+	flex: 1;
+	align-items: center;
+	gap: 12px;
+	min-width: 0;
+	margin: 0 8px;
+	padding: 7px 12px;
+	border-radius: 10px;
+	cursor: pointer;
+}
+
+.search-palette__option[aria-selected='true'] {
+	background: var(--palette-tint);
+}
+
+.search-palette__thumb {
+	flex: none;
+	width: 36px;
+	height: 36px;
+	border-radius: 7px;
+	object-fit: cover;
+}
+
+.search-palette__thumb--page {
+	display: grid;
+	place-items: center;
+	background: var(--palette-tint);
+	color: var(--lava-crack);
+}
+
+.search-palette__thumb--page .MuiSvgIcon-root {
+	font-size: 18px;
+}
+
+.search-palette__text {
+	display: grid;
+	min-width: 0;
+}
+
+.search-palette__name.MuiTypography-root {
+	margin: 0;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.search-palette__name mark {
+	background: none;
+	color: inherit;
+	font-weight: 800;
+	text-decoration: underline 3px var(--lava);
+	text-underline-offset: 3px;
+}
+
+.search-palette__sub.MuiTypography-root {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	color: var(--palette-muted);
+}
+
+/* placeholder rows while cards load - same height as a result row so nothing below moves when they arrive */
+.search-palette__skeleton {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin: 0 8px;
+	padding: 7px 12px;
+}
+
+.search-palette__skeleton .search-palette__thumb,
+.search-palette__skeleton-lines span {
+	background: var(--palette-tint);
+	animation: search-palette-pulse 1.2s ease-in-out infinite;
+}
+
+.search-palette__skeleton-lines {
+	display: grid;
+	flex: 1;
+	gap: 7px;
+}
+
+.search-palette__skeleton-lines span {
+	height: 10px;
+	border-radius: 5px;
+}
+
+/* a staggered wave down the rows */
+.search-palette__skeleton:nth-child(3) * {
+	animation-delay: 0.15s;
+}
+
+.search-palette__skeleton:nth-child(4) * {
+	animation-delay: 0.3s;
+}
+
+.search-palette__skeleton:nth-child(5) * {
+	animation-delay: 0.45s;
+}
+
+.search-palette__skeleton:nth-child(6) * {
+	animation-delay: 0.6s;
+}
+
+@keyframes search-palette-pulse {
+	50% {
+		opacity: 0.45;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.search-palette__skeleton * {
+		animation: none;
+	}
+}
+
+.search-palette__empty.MuiTypography-root {
+	padding: 24px 20px;
+	color: var(--palette-muted);
+}
+
+.search-palette__preview {
+	padding: 18px;
+	border-left: 1px solid var(--palette-line);
+	background: var(--palette-wash);
+	overflow-y: auto;
+}
+
+.search-palette__foot.MuiTypography-root {
+	display: flex;
+	flex: none;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 16px;
+	padding: 10px 20px;
+	border-top: 1px solid var(--palette-line);
+	background: var(--palette-wash);
+	color: var(--palette-muted);
+}
+
+.search-palette__foot span {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+}
+
+.search-palette__foot-end {
+	margin-left: auto;
+}
+
+/* phones - list only, each card row can expand into its preview */
+.search-palette.MuiDialog-paperFullScreen .search-palette__body {
+	grid-template-columns: minmax(0, 1fr);
+}
+
+.search-palette.MuiDialog-paperFullScreen .search-palette__bar {
+	padding: 8px 8px 8px 16px;
+}
+
+.search-palette.MuiDialog-paperFullScreen .search-palette__row {
+	border-bottom: 1px solid var(--palette-line);
+}
+
+.search-palette.MuiDialog-paperFullScreen .search-palette__option {
+	margin: 0;
+	padding: 9px 0 9px 16px;
+	border-radius: 0;
+}
+
+.search-palette.MuiDialog-paperFullScreen .search-palette__option[aria-selected='true'] {
+	background: none;
+}
+
+.search-palette.MuiDialog-paperFullScreen .search-palette__skeleton {
+	margin: 0;
+	padding: 9px 16px;
+	border-bottom: 1px solid var(--palette-line);
+}
+
+.search-palette.MuiDialog-paperFullScreen .search-palette__thumb {
+	width: 44px;
+	height: 44px;
+	border-radius: 8px;
+}
+
+.search-palette .search-palette__peek.MuiIconButton-root {
+	width: 48px;
+	height: 48px;
+	margin-right: 6px;
+	border-radius: 12px;
+	background: transparent;
+	color: var(--lava-crack);
+}
+
+.search-palette .search-palette__peek[aria-expanded='true'] {
+	background: var(--lava-crack);
+	color: var(--on-dark-strong);
+}
+
+.search-palette__peek[aria-expanded='true'] .MuiSvgIcon-root {
+	transform: rotate(180deg);
+}
+
+.search-palette__row--peeked {
+	background: var(--palette-wash);
+}
+
+.search-palette__peek-detail {
+	flex-basis: 100%;
+	padding: 2px 16px 16px;
+}
+
+.search-palette .search-palette__open.MuiButton-root {
+	width: 100%;
+	min-height: 46px;
+	margin-top: 12px;
+	border-radius: 12px;
+	background: var(--lava-crack);
+}

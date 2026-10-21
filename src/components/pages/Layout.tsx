@@ -5,6 +5,7 @@ import { Outlet, ScrollRestoration } from 'react-router-dom'
 import { Skeleton } from '@mui/material'
 
 import SuspenseFallback from '../SuspenseFallback'
+import { SiteSearchProvider } from '../util/search/SiteSearch'
 
 const NavigationBar = lazy(() => import('../header-footer/NavigationBar'))
 const Footer = lazy(() => import('../header-footer/Footer'))
@@ -14,7 +15,7 @@ const Footer = lazy(() => import('../header-footer/Footer'))
  */
 export default function Layout() {
 	return (
-		<>
+		<SiteSearchProvider>
 			<ScrollRestoration />
 			<div className='content'>
 				<Suspense fallback={<Skeleton variant='rectangular' width='100%' height='108px' />}>
@@ -31,6 +32,6 @@ export default function Layout() {
 			<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='16.5rem' />}>
 				<Footer />
 			</Suspense>
-		</>
+		</SiteSearchProvider>
 	)
 }
