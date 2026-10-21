@@ -31,6 +31,9 @@
 	width: 100%;
 	max-height: none;
 	margin: 0;
+	/* follows the visible area down if the browser shifts it (set from visualViewport). the popup still runs behind the keyboard and
+	 * the toolbar above it, so its colour reaches the keyboard - the list's bottom padding keeps the last rows reachable */
+	transform: translateY(var(--search-palette-top, 0px));
 	border: 0;
 	border-radius: 0;
 }
@@ -266,6 +269,10 @@
 /* phones - list only, each card row can expand into its preview */
 .search-palette.MuiDialog-paperFullScreen .search-palette__body {
 	grid-template-columns: minmax(0, 1fr);
+}
+
+.search-palette.MuiDialog-paperFullScreen .search-palette__list {
+	padding-bottom: calc(8px + var(--search-palette-covered, 0px));
 }
 
 .search-palette.MuiDialog-paperFullScreen .search-palette__bar {

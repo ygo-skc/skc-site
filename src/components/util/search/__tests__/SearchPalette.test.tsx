@@ -247,3 +247,64 @@ test('verify an open peek closes when the window widens to the desktop layout', 
 	expect(screen.queryByText(/Gains 300 ATK/)).not.toBeInTheDocument()
 	expect(screen.getByRole('complementary', { name: 'Card preview' })).toBeInTheDocument()
 })
+
+test('verify the phone popup pads its list clear of the keyboard and toolbar', () => {
+	mockPhone(true)
+	jest.spyOn(document.documentElement, 'clientHeight', 'get').mockReturnValue(800)
+	const viewport = Object.assign(new EventTarget(), { height: 800, offsetTop: 0 })
+	Object.defineProperty(window, 'visualViewport', { value: viewport, configurable: true })
+	mockSearch()
+	renderPalette()
+
+	const popup = screen.getByRole('dialog', { name: 'Search' })
+	expect(popup.style.getPropertyValue('--search-palette-covered')).toBe('0px')
+
+	// keyboard and toolbar take the bottom 380px, and the browser nudges the visible area down
+	viewport.height = 360
+	viewport.offsetTop = 60
+	act(() => {
+		viewport.dispatchEvent(new Event('resize'))
+	})
+
+	expect(popup.style.getPropertyValue('--search-palette-covered')).toBe('380px')
+	expect(popup.style.getPropertyValue('--search-palette-top')).toBe('60px')
+
+	// desktop keeps its centred dialog
+	resizeTo(false)
+	expect(popup.style.getPropertyValue('--search-palette-covered')).toBe('')
+
+	Object.defineProperty(window, 'visualViewport', { value: undefined, configurable: true })
+})
+
+test('verify drags on the phone popup only go to the results list when it can scroll', () => {
+	mockPhone(true)
+	mockSearch()
+	const { input } = renderPalette()
+	const list = screen.getByRole('listbox', { name: 'Search results' })
+	const drag = (target: Element, fromY: number, toY: number) => {
+		fireEvent.touchStart(target, { touches: [{ clientY: fromY }] })
+		// fireEvent returns false when the drag was cancelled
+		return fireEvent.touchMove(target, { touches: [{ clientY: toY }] })
+	}
+
+	// the search bar and a list too short to scroll can't pan the page
+	expect(drag(input, 300, 200)).toBe(false)
+	expect(drag(list, 300, 200)).toBe(false)
+
+	// a list with more to show scrolls, until it reaches an end
+	Object.defineProperties(list, { scrollHeight: { value: 1000 }, clientHeight: { value: 300 }, scrollTop: { value: 100, writable: true } })
+	expect(drag(list, 300, 200)).toBe(true)
+	expect(drag(list, 200, 300)).toBe(true)
+	list.scrollTop = 0
+	expect(drag(list, 200, 300)).toBe(false)
+	list.scrollTop = 700
+	expect(drag(list, 300, 200)).toBe(false)
+})
+
+test('verify drags on the desktop popup are left alone', () => {
+	mockSearch()
+	const { input } = renderPalette()
+
+	fireEvent.touchStart(input, { touches: [{ clientY: 300 }] })
+	expect(fireEvent.touchMove(input, { touches: [{ clientY: 200 }] })).toBe(true)
+})

@@ -1,6 +1,6 @@
 import '../../../css/util/search-palette.css'
 
-import { Fragment, KeyboardEvent, ReactNode, useCallback, useEffect, useId, useMemo, useState } from 'react'
+import { CSSProperties, Fragment, KeyboardEvent, ReactNode, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
 import { generatePath, useNavigate } from 'react-router-dom'
 import { Button, Dialog, IconButton, InputBase, Typography, useMediaQuery, useTheme } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
@@ -12,6 +12,8 @@ import { YGOCardPreview } from 'skc-rcl'
 import FetchHandler from '../../../helper/FetchHandler'
 import DownstreamServices from '../../../helper/DownstreamServices'
 import AppRoutes from '../../../helper/AppRoutes'
+import useVisualViewport from './useVisualViewport'
+import usePreventPagePan from './usePreventPagePan'
 
 const DESTINATIONS = [
 	{ label: 'Home', to: AppRoutes.Home, hint: 'Trending cards and database stats' },
@@ -56,6 +58,10 @@ export default function SearchPalette({ open, onClose }: SearchPaletteProps) {
 	const navigate = useNavigate()
 	const isPhone = useMediaQuery(useTheme().breakpoints.down('md'), { noSsr: true })
 	const listboxId = useId()
+	// on phones the popup runs down behind the keyboard and toolbar, with the list padded so its last rows can scroll clear of them
+	const visibleArea = useVisualViewport(open && isPhone)
+	const listRef = useRef<HTMLUListElement>(null)
+	usePreventPagePan(open && isPhone, listRef)
 
 	const [query, setQuery] = useState('')
 	const [cards, setCards] = useState<YGOCard.Deets[]>([])
@@ -226,6 +232,7 @@ export default function SearchPalette({ open, onClose }: SearchPaletteProps) {
 				paper: {
 					className: 'search-palette',
 					'aria-label': 'Search',
+					style: visibleArea && ({ '--search-palette-top': `${visibleArea.top}px`, '--search-palette-covered': `${visibleArea.covered}px` } as CSSProperties),
 				},
 				transition: { onExited: handleExited },
 			}}
@@ -262,7 +269,7 @@ export default function SearchPalette({ open, onClose }: SearchPaletteProps) {
 			</div>
 
 			<div className='search-palette__body'>
-				<ul id={listboxId} role='listbox' aria-label='Search results' aria-busy={isLoading} className='search-palette__list'>
+				<ul ref={listRef} id={listboxId} role='listbox' aria-label='Search results' aria-busy={isLoading} className='search-palette__list'>
 					{isLoading && (
 						<li role='none' aria-hidden='true' className='search-palette__loading'>
 							<Typography variant='subtitle2' component='div' className='search-palette__label'>
