@@ -3,14 +3,15 @@ import Grid from '@mui/material/Grid'
 import AboutInfoCard from './AboutInfoCard'
 
 import Topic from './Topic'
+import WalletAddress from './WalletAddress'
 
 export default function Overview() {
 	return (
 		<div className='section-content'>
 			<Typography variant='h4'>SKC API, Donate, Contact Info, And More!</Typography>
 
-			<Grid container spacing={2}>
-				<Grid className='grid' size={{ xs: 12, sm: 12, md: 6, lg: 4, xl: 4 }}>
+			<Grid container className='info-cards'>
+				<Grid className='grid' size={{ xs: 12, md: 6 }}>
 					<AboutInfoCard
 						title='SKC API'
 						subtitle='The Backend'
@@ -47,7 +48,7 @@ export default function Overview() {
 					/>
 				</Grid>
 
-				<Grid className='grid' size={{ xs: 12, sm: 12, md: 6, lg: 4, xl: 4 }}>
+				<Grid className='grid' size={{ xs: 12, md: 6 }}>
 					<AboutInfoCard
 						title='Contributions'
 						subtitle='Donations To Website'
@@ -60,19 +61,10 @@ export default function Overview() {
 								</ol>
 
 								<Typography variant='body1'>To help maintain this web page, you can donate using one of the options below.</Typography>
-								<ul>
-									<li>
-										<strong>BTC (Bitcoin) Wallet:</strong> 3DbG1525F4HMf9Qttj5waDxJv747JrBh4g
-									</li>
-									<li>
-										<strong>ZEC (Zcash) Wallet:</strong> t1UdXZkAUUNY35Kh2FiRoRk29Xu8SEYsXxS
-									</li>
-									<li>
-										<Link className='link' color='secondary' href='https://www.paypal.com/donate?hosted_button_id=S3MFF6AVW662U'>
-											PayPal
-										</Link>
-									</li>
-								</ul>
+								<div className='wallets'>
+									<WalletAddress currency='BTC (Bitcoin)' address='3DbG1525F4HMf9Qttj5waDxJv747JrBh4g' />
+									<WalletAddress currency='ZEC (Zcash)' address='t1UdXZkAUUNY35Kh2FiRoRk29Xu8SEYsXxS' />
+								</div>
 
 								<div>
 									<form action='https://www.paypal.com/donate' method='post' target='_top'>
@@ -94,7 +86,7 @@ export default function Overview() {
 					/>
 				</Grid>
 
-				<Grid className='grid' size={{ xs: 12, sm: 12, md: 6, lg: 4, xl: 4 }}>
+				<Grid className='grid' size={{ xs: 12, md: 6 }}>
 					<AboutInfoCard
 						title='Other Information'
 						subtitle='Contact & Other Stuff'
@@ -133,7 +125,7 @@ export default function Overview() {
 					/>
 				</Grid>
 
-				<Grid className='grid' size={{ xs: 12, sm: 12, md: 6, lg: 4, xl: 4 }}>
+				<Grid className='grid' size={{ xs: 12, md: 6 }}>
 					<AboutInfoCard
 						title='Watch Yu-Gi-Oh! Related Content'
 						subtitle='Subscribe On YouTube'
