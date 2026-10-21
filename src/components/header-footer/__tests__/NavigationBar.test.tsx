@@ -1,10 +1,14 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { ThemeProvider } from '@mui/material/styles'
 import { MemoryRouter } from 'react-router-dom'
 
 import NavigationBar from '../NavigationBar'
 import MuiTheme from '../../MuiTheme'
 import AppRoutes from '../../../helper/AppRoutes'
+import { SiteSearchProvider } from '../../util/search/SiteSearch'
+
+// the search popup shows skc-rcl's card preview - skc-rcl pulls in esm only chart libraries jest can't load
+jest.mock('skc-rcl', () => ({ YGOCardPreview: () => null }))
 
 // Messages fetches from the heart api on mount - not what these tests are about
 jest.mock('../Messages', () => ({
@@ -16,7 +20,9 @@ function renderNavigationBar() {
 	return render(
 		<ThemeProvider theme={MuiTheme}>
 			<MemoryRouter initialEntries={[AppRoutes.BanList]}>
-				<NavigationBar />
+				<SiteSearchProvider>
+					<NavigationBar />
+				</SiteSearchProvider>
 			</MemoryRouter>
 		</ThemeProvider>
 	)
@@ -47,4 +53,22 @@ test('verify navigation bar is a labelled landmark with decorative scenery hidde
 
 	expect(screen.getByRole('navigation', { name: 'Main' })).toBeInTheDocument()
 	expect(container.querySelector('.site-nav__scene')).toHaveAttribute('aria-hidden', 'true')
+})
+
+test('verify the search button opens site search', async () => {
+	renderNavigationBar()
+
+	const button = screen.getByRole('button', { name: 'Search cards' })
+	expect(button).toHaveAttribute('aria-keyshortcuts', 'Meta+K Control+K /')
+	fireEvent.click(button)
+
+	expect(await screen.findByRole('combobox', { name: 'Search cards' })).toHaveFocus()
+})
+
+test('verify the keyboard shortcut opens site search from any page', async () => {
+	renderNavigationBar()
+
+	fireEvent.keyDown(document, { key: 'k', ctrlKey: true })
+
+	expect(await screen.findByRole('combobox', { name: 'Search cards' })).toBeInTheDocument()
 })

@@ -9,6 +9,7 @@ import YouTube from '@mui/icons-material/YouTube'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 
 import AppRoutes from '../../helper/AppRoutes'
+import SearchTrigger from '../util/search/SearchTrigger'
 
 import NavScene from './NavScene'
 import SubNav from './SubNav'
@@ -33,6 +34,8 @@ const NavigationBar = () => {
 				<SubNav />
 
 				<div className='site-nav__actions'>
+					<SearchTrigger />
+
 					{socialLinks.map(({ href, label, Icon }) => (
 						<a key={href} className='styled-icon-button' href={href} target='_blank' rel='noopener noreferrer' aria-label={label}>
 							<Icon />
