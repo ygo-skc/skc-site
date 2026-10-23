@@ -1,23 +1,33 @@
+/* a small count pill on the bell's corner, inside the nav capsule - px so it keeps its size whatever the root font size */
 .communication-message-badge span.MuiBadge-badge {
-	padding: 0.9rem;
-	padding-right: 0.9rem;
-	padding-bottom: 0.9rem;
-	padding-left: 0.9rem;
-	height: 0px;
-	width: 0px;
-	top: 3;
-	right: 3;
-	border-radius: 50rem;
+	min-width: 18px;
+	height: 18px;
+	margin: 0;
+	padding: 0 5px;
+	top: 7px;
+	right: 7px;
+	border-radius: 999px;
+	/* apple's increased-contrast red, so the white count holds 4.5:1 or better - the theme's error red manages ~3.6:1 */
+	background: var(--forbidden-ink);
 	color: white;
 }
 
 /*
- * Changelog popup - posts on a vertical rail with their dates in a gutter column. Unread posts get an ember node and a lava day.
+ * Changelog popup - an apple-style sheet in the nav capsule's neutrals. New posts are white cards in full, a "you're caught up"
+ * pill follows, then older posts fold into grouped rows under year headings. With nothing new, the latest post stays in full.
  */
 .messages.MuiPaper-root {
 	width: min(520px, calc(100vw - 24px));
 	max-height: min(640px, calc(100vh - 96px));
-	font-family: open sans, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif;
+	border-radius: 26px;
+	outline: 1px solid var(--capsule-edge);
+	outline-offset: -1px;
+	background: var(--capsule);
+	color: var(--capsule-muted);
+}
+
+.messages__panel {
+	padding-bottom: 14px;
 }
 
 .messages__header {
@@ -25,134 +35,219 @@
 	top: 0;
 	z-index: 2;
 	display: flex;
-	align-items: baseline;
+	align-items: center;
 	gap: 8px;
-	padding: 14px 18px;
-	border-bottom: 1px solid var(--stone);
-	background: #fff;
+	padding: 18px 20px 12px;
+	background: var(--capsule);
 }
 
 .messages .messages__heading {
 	margin: 0;
-	font-size: 16px;
-	font-weight: 600;
-	color: var(--basalt);
+	color: var(--capsule-text);
 }
 
 .messages__count {
 	margin-left: auto;
-	font-size: 12px;
-	color: var(--gate);
-}
-
-.messages__timeline {
-	margin: 0;
-	padding: 14px 18px 4px 10px;
-	list-style: none;
-}
-
-/* date gutter | node | post. the rail is drawn per post so it can stop at the last one */
-.messages__post {
-	position: relative;
-	display: grid;
-	grid-template-columns: 44px 12px minmax(0, 1fr);
-	column-gap: 10px;
-	padding-bottom: 18px;
-}
-
-.messages__post::before {
-	content: '';
-	position: absolute;
-	top: 14px;
-	bottom: 0;
-	left: 59px;
-	width: 2px;
-	background: var(--stone);
-}
-
-.messages__post:last-child::before {
-	display: none;
-}
-
-.messages__date {
-	display: flex;
-	flex-direction: column;
-	align-items: flex-end;
-	line-height: 1.15;
-}
-
-.messages__month {
-	font-size: 11px;
-	font-weight: 600;
-	letter-spacing: 0.06em;
-	text-transform: uppercase;
-	color: var(--gate);
-}
-
-.messages__day {
-	font-size: 20px;
-	font-weight: 800;
-	color: var(--lava);
-}
-
-.messages__year {
-	font-size: 10.5px;
-	color: var(--gate-light);
-}
-
-.messages__node {
-	position: relative;
-	z-index: 1;
-	box-sizing: border-box;
-	width: 12px;
-	height: 12px;
-	margin-top: 3px;
-	border: 2px solid var(--gate-light);
-	border-radius: 50%;
-	background: #fff;
-}
-
-.messages__post--new .messages__node {
-	border-color: var(--lava);
-	background: var(--lava);
+	padding: 5px 10px;
+	border-radius: 999px;
+	background: var(--capsule-track);
 }
 
 /* doubled class beats the theme's soft tag chip styles */
-.messages__new.MuiChip-root {
-	display: flex;
-	width: fit-content;
-	height: 20px;
-	margin: 0 0 4px;
-	border-radius: 5px;
-	background: color-mix(in srgb, var(--ember) 20%, #fff);
-	color: var(--lava-crack);
-	font-size: 11px;
-	font-weight: 600;
+.messages__count-new.MuiChip-root {
+	height: 24px;
+	margin: 0 0 0 auto;
+	border-radius: 999px;
+	background: color-mix(in srgb, var(--secondary) 14%, #fff);
+	color: var(--secondary-text);
 }
 
-.messages__new .MuiChip-label {
-	padding-inline: 7px;
+.messages__count-new .MuiChip-label {
+	padding-inline: 10px;
+}
+
+.messages__posts,
+.messages__rows {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.messages__posts {
+	display: grid;
+	gap: 10px;
+	padding-inline: 12px;
+}
+
+.messages__post {
+	padding: 14px 16px;
+	border-radius: 18px;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 0.5px var(--capsule-edge);
+}
+
+/* the date line above a full post - new posts lead it with "New" in the secondary orange, like the header's "N new" tag */
+.messages .messages__eyebrow {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	margin: 0 0 4px;
+}
+
+.messages__new {
+	color: var(--secondary-text);
+}
+
+/* the dot is only a separator - the empty alt text after the slash keeps screen readers from saying "dot" */
+.messages__new::after {
+	content: '·' / '';
+	margin-left: 6px;
+	color: var(--capsule-muted);
+}
+
+/* long posts stop after a few lines until read more is pressed */
+.messages__body--clipped {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 5;
+	overflow: hidden;
+}
+
+.messages .messages__more.MuiButton-root {
+	min-height: 0;
+	margin: 0 0 8px -6px;
+	padding: 2px 6px;
+	border-radius: 999px;
+	color: var(--accent-text);
+}
+
+.messages__more .MuiButton-endIcon {
+	margin-left: 2px;
+}
+
+.messages__more[aria-expanded='true'] .MuiButton-endIcon {
+	transform: rotate(180deg);
+}
+
+/* "you're caught up" - a grey pill between the full posts and the folded ones */
+.messages__caught-up {
+	display: flex;
+	justify-content: center;
+	padding: 14px 18px 4px;
+}
+
+/* at the top of the popup it's a status under the header */
+.messages__caught-up--top {
+	padding: 0 18px 12px;
+}
+
+.messages__caught-up .MuiChip-root.MuiChip-root {
+	margin: 0;
+	border-radius: 999px;
+	background: var(--capsule-track);
+	color: var(--capsule-muted);
+}
+
+.messages__caught-up .MuiChip-icon {
+	font-size: 15px;
+	color: var(--accent);
+}
+
+/* year headings read like ios section headers over a grouped list */
+.messages__year-header {
+	display: flex;
+	align-items: baseline;
+	gap: 8px;
+	padding: 16px 28px 6px;
+}
+
+.messages .messages__year-heading {
+	margin: 0;
+}
+
+.messages__year-count {
+	margin-left: auto;
+}
+
+.messages__rows {
+	margin-inline: 12px;
+	border-radius: 18px;
+	overflow: hidden;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 0.5px var(--capsule-edge);
+}
+
+/* hairlines between rows, inset past the date column like ios lists */
+.messages__row + .messages__row {
+	position: relative;
+}
+
+.messages__row + .messages__row::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 76px;
+	border-top: 0.5px solid var(--capsule-edge);
+}
+
+.messages .messages__row-heading {
+	margin: 0;
+}
+
+.messages__row-toggle.MuiButtonBase-root {
+	display: grid;
+	grid-template-columns: 48px minmax(0, 1fr) 20px;
+	align-items: center;
+	gap: 12px;
+	width: 100%;
+	padding: 11px 14px 11px 16px;
+	font: inherit;
+	text-align: left;
+	color: var(--capsule-text);
+}
+
+/* an open row stays white so its post reads like the full ones above - only the toggle tints, on hover or focus */
+.messages__row-toggle:hover,
+.messages__row-toggle.Mui-focusVisible {
+	background: var(--page);
+}
+
+.messages__row-title {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.messages__row--open .messages__row-title {
+	white-space: normal;
+}
+
+.messages__chevron.MuiSvgIcon-root {
+	font-size: 20px;
+	color: var(--capsule-muted);
+}
+
+.messages__row--open .messages__chevron {
+	transform: rotate(180deg);
+	color: var(--accent-text);
+}
+
+/* lines up with the title, past the date column */
+.messages__row-detail {
+	padding: 0 16px 14px 76px;
 }
 
 .messages .messages__title {
 	margin: 0 0 4px;
-	font-size: 14.5px;
-	font-weight: 600;
-	line-height: 1.35;
-	color: var(--basalt);
 }
 
 .messages__body {
-	font-size: 13.5px;
-	line-height: 1.55;
 	overflow-wrap: anywhere;
 }
 
 .messages__body :is(h1, h2, h3, h4, h5, h6) {
 	margin: 10px 0 4px;
-	font-size: 13.5px;
-	font-weight: 600;
-	color: var(--basalt);
 }
 
 .messages__body :is(p, ul, ol) {
@@ -164,9 +259,9 @@
 }
 
 .messages__body a {
-	color: var(--bolt-halo);
+	color: var(--accent-text);
 	text-decoration: underline;
-	text-decoration-color: var(--bolt);
+	text-decoration-color: var(--capsule-edge);
 	text-underline-offset: 2px;
 }
 
@@ -177,8 +272,7 @@
 .messages__body code {
 	padding: 1px 4px;
 	border-radius: 4px;
-	background: var(--stone);
-	font-size: 12px;
+	background: var(--capsule-track);
 }
 
 .messages__tags {
@@ -187,6 +281,9 @@
 	gap: 5px;
 }
 
-.messages__tags .MuiChip-root {
+.messages__tags .MuiChip-root.MuiChip-root {
 	margin: 0;
+	border-radius: 999px;
+	background: var(--capsule-track);
+	color: var(--capsule-muted);
 }
