@@ -12,11 +12,11 @@
 }
 
 /*
- * Open columns - the four sections sit in a grid split by stone hairlines instead of boxed cards. Each opens with a small icon
- * beside an eyebrow label and the title. Topics inside are marked with ember diamonds.
+ * Open columns - the four sections sit in a grid split by hairlines instead of boxed cards. Each opens with a small icon
+ * beside an eyebrow label and the title. Topics inside are marked with orange diamonds.
  */
 .info-cards .grid {
-	border-bottom: 1px solid var(--stone);
+	border-bottom: 1px solid var(--capsule-edge);
 }
 
 .info-cards .grid:last-child {
@@ -26,7 +26,7 @@
 /* two columns from MUI's md breakpoint - the left column carries the vertical rule, the bottom row drops its rule */
 @media (min-width: 900px) {
 	.info-cards .grid:nth-child(odd) {
-		border-right: 1px solid var(--stone);
+		border-right: 1px solid var(--capsule-edge);
 	}
 
 	.info-cards .grid:nth-last-child(-n + 2) {
@@ -35,13 +35,13 @@
 }
 
 .info-card {
-	--card-edge: color-mix(in srgb, var(--gate-light) 60%, #fff);
-	--badge-ring: var(--card-edge);
+	--card-edge: var(--capsule-edge);
+	--badge-ring: var(--accent);
 
 	box-sizing: border-box;
 	width: 100%;
 	padding: 28px 32px 24px;
-	color: var(--basalt);
+	color: var(--capsule-text);
 }
 
 .info-card__header {
@@ -71,38 +71,21 @@
 	box-shadow: 0 0 0 4px var(--badge-ring);
 }
 
-/* each section in the grid takes its own accent from the palette */
-.grid:nth-child(4n + 1) .info-card {
-	--badge-ring: var(--lava);
-}
-
-.grid:nth-child(4n + 2) .info-card {
-	--badge-ring: var(--ember);
-}
-
-.grid:nth-child(4n + 3) .info-card {
-	--badge-ring: var(--bolt-halo);
-}
-
-.grid:nth-child(4n + 4) .info-card {
-	--badge-ring: var(--sky);
-}
-
 .info-card__subtitle.MuiTypography-root {
 	margin: 0;
-	color: var(--lava-crack);
+	color: var(--accent-text);
 }
 
 .info-card__title.MuiTypography-root {
 	margin: 0;
-	color: var(--basalt);
+	color: var(--capsule-text);
 }
 
 .info-card .topic__header {
 	display: flex;
 	align-items: center;
 	gap: 8px;
-	color: var(--basalt);
+	color: var(--capsule-text);
 }
 
 .info-card .topic__header::before {
@@ -111,7 +94,7 @@
 	width: 7px;
 	height: 7px;
 	transform: rotate(45deg);
-	background: var(--ember);
+	background: var(--secondary);
 }
 
 /* lines details up with the header text, past the diamond */
@@ -143,12 +126,12 @@
 .wallet__currency.MuiTypography-root {
 	grid-area: currency;
 	margin: 0;
-	color: var(--stone-text);
+	color: var(--capsule-muted);
 }
 
 .wallet__status.MuiTypography-root {
 	grid-area: status;
-	color: var(--stone-text);
+	color: var(--capsule-muted);
 }
 
 .wallet__field {
@@ -159,7 +142,7 @@
 	padding: 4px 4px 4px 12px;
 	border: 1px solid var(--card-edge);
 	border-radius: 8px;
-	background: color-mix(in srgb, var(--stone) 45%, #fff);
+	background: var(--page);
 }
 
 .wallet__address {
@@ -171,11 +154,11 @@
 
 .wallet__copy.MuiIconButton-root {
 	flex: none;
-	color: var(--stone-text);
+	color: var(--capsule-muted);
 }
 
 .wallet__copy.MuiIconButton-root:hover {
-	background: var(--stone);
+	background: var(--capsule-hover);
 }
 
 @media (max-width: 600px) {

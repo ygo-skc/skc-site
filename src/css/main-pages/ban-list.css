@@ -1,16 +1,15 @@
-.tab-container {
-	background-color: rgba(255, 255, 255, 0.95) !important;
-	backdrop-filter: blur(60px);
+/* doubled class beats the AppBar's primary fill */
+.tab-container.MuiAppBar-root {
+	background-color: var(--capsule-lens);
 	box-shadow: none;
 }
 
-.tabs .MuiTab-textColorPrimary.Mui-selected {
-	font-weight: 800;
-	color: black;
+.tabs .MuiTab-root {
+	color: var(--capsule-muted);
 }
 
-.tab {
-	text-transform: none;
+.tabs .MuiTab-textColorPrimary.Mui-selected {
+	color: var(--capsule-text);
 }
 
 .ban-list-date-selector {
@@ -34,8 +33,8 @@
 
 .limited-breakdown-chip.MuiChip-root,
 .limited-one-breakdown-chip.MuiChip-root {
-	background-color: color-mix(in srgb, var(--ember) 20%, #fff);
-	color: var(--lava-crack);
+	background-color: color-mix(in srgb, var(--limited) 14%, #fff);
+	color: var(--limited-ink);
 }
 
 .semi-limited-breakdown-chip.MuiChip-root,
@@ -50,13 +49,13 @@
 }
 
 .removed-breakdown-chip.MuiChip-root {
-	background-color: var(--stone);
-	color: var(--stone-text);
+	background-color: var(--capsule-track);
+	color: var(--capsule-text);
 }
 
 .cards-with-different-status-parent {
 	margin-bottom: 2rem;
-	background: white;
+	background: var(--capsule-lens);
 	padding: 1.5rem;
 	border-radius: 1.5rem;
 }
@@ -77,22 +76,22 @@
 
 .forbidden-icon.MuiSvgIcon-root {
 	color: var(--forbidden);
-	font-size: 1.8rem;
+	font-size: 24px;
 }
 
 .limited-icon.MuiSvgIcon-root,
 .limited-one-icon.MuiSvgIcon-root {
-	color: #ff9100;
-	font-size: 1.8rem;
+	color: var(--limited);
+	font-size: 24px;
 }
 
 .semi-limited-icon.MuiSvgIcon-root,
 .limited-two-icon.MuiSvgIcon-root {
 	color: var(--semi-limited);
-	font-size: 1.8rem;
+	font-size: 24px;
 }
 
 .limited-three-icon.MuiSvgIcon-root {
 	color: var(--limited-three);
-	font-size: 1.8rem;
+	font-size: 24px;
 }

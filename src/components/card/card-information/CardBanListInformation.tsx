@@ -1,5 +1,5 @@
 import { useEffect, useState, FunctionComponent, startTransition, Fragment, useCallback, JSX } from 'react'
-import { Button, ButtonGroup, Typography } from '@mui/material'
+import { Button, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
 
 import { Dates } from '../../../helper/Dates'
 
@@ -8,12 +8,6 @@ import { DatedListItem, Hint } from 'skc-rcl'
 
 type CardBanListInformationProps = {
 	restrictedIn: YGOCard.Restrictions
-}
-
-type BanListFormatButtonProps = {
-	format: AcceptableBanListFormat
-	restrictedIn: YGOCard.Restrictions
-	setFormat: React.Dispatch<React.SetStateAction<AcceptableBanListFormat>>
 }
 
 function determineFormat(restrictedIn: YGOCard.Restrictions): AcceptableBanListFormat {
@@ -37,15 +31,7 @@ function transformFormat(format: AcceptableBanListFormat) {
 	}
 }
 
-const BanListFormatButton: FunctionComponent<BanListFormatButtonProps> = ({ format, restrictedIn, setFormat }) => {
-	const handleButtonClicked = useCallback(() => setFormat(format), [format, setFormat])
-
-	return (
-		<Button onClick={handleButtonClicked} disabled={restrictedIn[format].length === 0}>
-			{transformFormat(format)} — {restrictedIn[format].length}
-		</Button>
-	)
-}
+const FORMATS = [AcceptableBanListFormat.TCG, AcceptableBanListFormat.MD, AcceptableBanListFormat.DL]
 
 const CardBanListInformation: FunctionComponent<CardBanListInformationProps> = ({ restrictedIn }) => {
 	const initNumItems = 10
@@ -96,11 +82,22 @@ const CardBanListInformation: FunctionComponent<CardBanListInformationProps> = (
 
 			{restrictedIn[format].length !== 0 && (
 				<Fragment>
-					<ButtonGroup className='ban-list-format-container' fullWidth disableElevation variant='contained' aria-label='Disabled elevation buttons'>
-						<BanListFormatButton format={AcceptableBanListFormat.TCG} setFormat={setFormat} restrictedIn={restrictedIn} />
-						<BanListFormatButton format={AcceptableBanListFormat.MD} setFormat={setFormat} restrictedIn={restrictedIn} />
-						<BanListFormatButton format={AcceptableBanListFormat.DL} setFormat={setFormat} restrictedIn={restrictedIn} />
-					</ButtonGroup>
+					{/* segmented control - a white lens marks the selected format, a format with no ban lists can't be picked */}
+					<ToggleButtonGroup
+						className='ban-list-format-container'
+						fullWidth
+						exclusive
+						size='small'
+						aria-label='Ban list format'
+						value={format}
+						onChange={(_, value: AcceptableBanListFormat | null) => value && setFormat(value)}
+					>
+						{FORMATS.map((f) => (
+							<ToggleButton key={f} value={f} disabled={restrictedIn[f].length === 0}>
+								{transformFormat(f)} — {restrictedIn[f].length}
+							</ToggleButton>
+						))}
+					</ToggleButtonGroup>
 
 					<div>
 						<Typography variant='h5'>Selected Format — {transformFormat(format)}</Typography>

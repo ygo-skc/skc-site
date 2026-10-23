@@ -1,9 +1,31 @@
-.ban-list-format-container {
+/* segmented control: a grey track with a white lens under the selected format, like the nav and the trending toggle */
+.ban-list-format-container.MuiToggleButtonGroup-root {
 	margin-bottom: 1rem;
+	padding: 3px;
+	gap: 2px;
+	border-radius: 999px;
+	background: var(--capsule-track);
 }
 
-span.prominent {
-	color: #543fdad9;
+.ban-list-format-container .MuiToggleButton-root.MuiToggleButtonGroup-grouped {
+	margin: 0;
+	padding: 6px 12px;
+	border: 0;
+	border-radius: 999px;
+	color: var(--capsule-muted);
+}
+
+.ban-list-format-container .MuiToggleButton-root.Mui-selected,
+.ban-list-format-container .MuiToggleButton-root.Mui-selected:hover {
+	background: var(--capsule-lens);
+	color: var(--capsule-text);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+}
+
+/* a format with no ban lists - dimmer than the unselected ones, which can still be picked */
+.ban-list-format-container .MuiToggleButton-root.Mui-disabled {
+	border: 0;
+	color: color-mix(in srgb, var(--capsule-muted) 50%, var(--capsule-track));
 }
 
 .unique-rarities > *:not(:last-child) {
