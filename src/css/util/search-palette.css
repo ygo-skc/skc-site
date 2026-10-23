@@ -7,24 +7,26 @@
 }
 
 .search-palette.MuiPaper-root {
-	/* lavender sheet - a pale stone sheet; the input, highlighted row and preview are white pieces laid on it */
-	--palette-paper: color-mix(in srgb, var(--stone) 55%, #fff);
-	--palette-tint: var(--stone-hover);
-	--palette-line: var(--stone-hover);
-	--palette-muted: var(--gate-shade);
+	/* spotlight sheet - the nav capsule's neutrals, a borderless field on top and the highlighted row as a solid accent pill */
+	--palette-paper: var(--capsule);
+	--palette-tint: var(--capsule-track);
+	--palette-line: var(--capsule-edge);
+	--palette-muted: var(--capsule-muted);
 	/* skc-rcl's card preview takes the site palette for its neutral text */
-	--ygo-card-preview-text: var(--basalt);
+	--ygo-card-preview-text: var(--capsule-text);
 	--ygo-card-preview-muted: var(--palette-muted);
-	--ygo-card-preview-art-border: var(--stone);
+	--ygo-card-preview-art-border: var(--capsule-track);
 	display: flex;
 	flex-direction: column;
 	width: min(860px, calc(100vw - 32px));
 	max-height: min(640px, calc(100vh - 128px));
 	margin: 80px 16px 0;
-	border-radius: 18px;
+	border-radius: 26px;
+	outline: 1px solid var(--palette-line);
+	outline-offset: -1px;
 	overflow: hidden;
 	background-color: var(--palette-paper);
-	color: var(--basalt);
+	color: var(--capsule-text);
 }
 
 .search-palette.MuiDialog-paperFullScreen {
@@ -36,43 +38,40 @@
 	transform: translateY(var(--search-palette-top, 0px));
 	border: 0;
 	border-radius: 0;
+	outline: 0;
 }
 
 /* scrim is flat - no blur */
 .search-palette-root .MuiBackdrop-root {
-	background: color-mix(in srgb, var(--basalt) 62%, transparent);
+	background: color-mix(in srgb, var(--capsule-text) 40%, transparent);
 }
 
 .search-palette kbd {
 	padding: 2px 7px;
 	border-radius: 6px;
-	background: #fff;
-	/* the esc cap sits outside any Typography, so inheriting would fall back to the browser serif */
-	font-family: open sans, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif;
-	font-weight: 600;
-	color: var(--stone-text);
+	background: var(--palette-tint);
+	color: var(--palette-muted);
 }
 
-/* a white pill on the sheet */
+/* key caps inside Typography take its face instead of the browser's monospace - the esc cap is a Typography itself */
+.search-palette kbd:not(.MuiTypography-root) {
+	font-family: inherit;
+}
+
+/* spotlight's borderless field, ruled off from the results */
 .search-palette__bar {
 	display: flex;
 	flex: none;
 	align-items: center;
 	gap: 12px;
-	min-height: 48px;
-	margin: 14px 14px 4px;
-	padding: 0 8px 0 18px;
-	border: 1px solid var(--palette-line);
-	border-radius: 999px;
-	background: #fff;
-}
-
-.search-palette__bar kbd {
-	background: var(--stone);
+	min-height: 64px;
+	padding: 0 16px 0 22px;
+	border-bottom: 1px solid var(--palette-line);
 }
 
 .search-palette__icon.MuiSvgIcon-root {
-	color: var(--rock);
+	font-size: 26px;
+	color: var(--palette-muted);
 }
 
 .search-palette .search-palette__input {
@@ -83,7 +82,7 @@
 .search-palette__close.MuiButton-root {
 	min-height: 44px;
 	border-radius: 999px;
-	color: var(--sky);
+	color: var(--accent-text);
 }
 
 .search-palette__body {
@@ -115,7 +114,7 @@
 .search-palette__label.MuiTypography-root {
 	margin: 0;
 	padding: 12px 20px 4px;
-	color: var(--rock);
+	color: var(--palette-muted);
 }
 
 .search-palette__row {
@@ -137,13 +136,27 @@
 	cursor: pointer;
 }
 
-/* the highlighted row lifts off the sheet as a white card */
-.search-palette__option[aria-selected='true'] {
-	border-color: var(--palette-line);
-	background: #fff;
+/* the highlighted row is a solid accent pill, like spotlight's selection - in the darker accent, so its white text keeps 4.5:1.
+ * phones draw no highlight - their rows peek instead */
+.search-palette:not(.MuiDialog-paperFullScreen) .search-palette__option[aria-selected='true'] {
+	background: var(--accent-text);
+	color: var(--on-accent);
 }
 
-/* round, like the home page's trending strip */
+.search-palette:not(.MuiDialog-paperFullScreen) .search-palette__option[aria-selected='true'] :is(.search-palette__name, mark) {
+	color: inherit;
+}
+
+.search-palette:not(.MuiDialog-paperFullScreen) .search-palette__option[aria-selected='true'] .search-palette__sub {
+	color: var(--on-accent);
+}
+
+.search-palette:not(.MuiDialog-paperFullScreen) .search-palette__option[aria-selected='true'] .search-palette__thumb--page {
+	background: color-mix(in srgb, #fff 18%, var(--accent-text));
+	color: var(--on-accent);
+}
+
+/* round, like the home page's trending list */
 .search-palette__thumb {
 	flex: none;
 	width: 36px;
@@ -155,8 +168,8 @@
 .search-palette__thumb--page {
 	display: grid;
 	place-items: center;
-	background: var(--stone);
-	color: var(--rock);
+	background: var(--palette-tint);
+	color: var(--palette-muted);
 }
 
 .search-palette__thumb--page .MuiSvgIcon-root {
@@ -177,8 +190,7 @@
 
 .search-palette__name mark {
 	background: none;
-	color: var(--sky);
-	font-weight: 800;
+	color: var(--accent-text);
 }
 
 .search-palette__sub.MuiTypography-root {
@@ -251,8 +263,9 @@
 .search-palette__preview {
 	margin: 10px 14px 14px 0;
 	padding: 18px;
-	border-radius: 16px;
-	background: #fff;
+	border-radius: 18px;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 0.5px var(--palette-line);
 	overflow-y: auto;
 }
 
@@ -263,6 +276,7 @@
 	align-items: center;
 	gap: 16px;
 	padding: 10px 20px;
+	border-top: 1px solid var(--palette-line);
 	color: var(--palette-muted);
 }
 
@@ -301,9 +315,12 @@
 	content: '';
 	grid-area: 1 / 1 / 2 / 3;
 	align-self: stretch;
-	border: 1px solid var(--palette-line);
 	border-radius: 999px;
-	background: #fff;
+	background: var(--palette-tint);
+}
+
+.search-palette.MuiDialog-paperFullScreen .search-palette__icon {
+	font-size: 22px;
 }
 
 .search-palette.MuiDialog-paperFullScreen .search-palette__bar > * {
@@ -357,12 +374,12 @@
 	margin-right: 6px;
 	border-radius: 12px;
 	background: transparent;
-	color: var(--rock);
+	color: var(--palette-muted);
 }
 
 .search-palette .search-palette__peek[aria-expanded='true'] {
-	background: var(--sky);
-	color: var(--on-dark-strong);
+	background: var(--accent);
+	color: var(--on-accent);
 }
 
 .search-palette__peek[aria-expanded='true'] .MuiSvgIcon-root {
@@ -372,9 +389,9 @@
 /* the peeked card lifts off the sheet like the highlighted row on desktop */
 .search-palette.MuiDialog-paperFullScreen .search-palette__row--peeked {
 	margin: 6px 10px;
-	border: 1px solid var(--palette-line);
-	border-radius: 14px;
-	background: #fff;
+	border-radius: 18px;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 0.5px var(--palette-line);
 }
 
 .search-palette.MuiDialog-paperFullScreen .search-palette__row--peeked .search-palette__option {
@@ -390,6 +407,6 @@
 	width: 100%;
 	min-height: 46px;
 	margin-top: 12px;
-	border-radius: 12px;
-	background: var(--sky);
+	border-radius: 999px;
+	background: var(--accent-text);
 }

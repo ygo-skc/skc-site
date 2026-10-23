@@ -242,7 +242,7 @@ export default function SearchPalette({ open, onClose }: SearchPaletteProps) {
 				<InputBase
 					autoFocus
 					className='search-palette__input'
-					sx={{ typography: 'subtitle1' }}
+					sx={{ typography: isPhone ? 'subtitle1' : 'h5', color: 'var(--capsule-text)' }}
 					placeholder='Search cards by name or passcode'
 					value={query}
 					onChange={(event) => setQuery(event.target.value)}
@@ -264,7 +264,9 @@ export default function SearchPalette({ open, onClose }: SearchPaletteProps) {
 						Close
 					</Button>
 				) : (
-					<kbd className='search-palette__key'>esc</kbd>
+					<Typography variant='caption' component='kbd' className='search-palette__key'>
+						esc
+					</Typography>
 				)}
 			</div>
 

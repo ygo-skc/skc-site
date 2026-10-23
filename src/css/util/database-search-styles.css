@@ -4,12 +4,11 @@
 	max-width: 750px;
 }
 
-/* home page search - a button dressed as a field that opens the site search popup. wears the popup's ember colours */
+/* home page search - a button dressed as a field that opens the site search popup. an ios-style grey search pill, matching
+ * the popup's field on phones */
 .search-field.MuiButtonBase-root {
-	/* the search popup's lavender sheet, so the field previews the popup it opens */
-	--field-paper: color-mix(in srgb, var(--stone) 55%, #fff);
-	--field-line: var(--stone-hover);
-	--field-muted: var(--gate-shade);
+	--field-paper: var(--capsule-track);
+	--field-muted: var(--capsule-muted);
 	display: flex;
 	align-items: center;
 	gap: 12px;
@@ -17,25 +16,25 @@
 	min-height: 54px;
 	margin-bottom: 2rem;
 	padding: 0 14px 0 20px;
-	border: 1.5px solid var(--field-line);
 	border-radius: 999px;
 	background: var(--field-paper);
 	text-align: left;
 	color: var(--field-muted);
-	transition: border-color 120ms ease;
+	transition: background-color 120ms ease;
 }
 
 .search-field.MuiButtonBase-root:hover,
 .search-field.Mui-focusVisible {
-	border-color: var(--gate-light);
+	background: var(--capsule-hover);
 }
 
 .search-field.Mui-focusVisible {
-	outline: 3px solid var(--field-line);
+	outline: 2px solid var(--accent);
+	outline-offset: 2px;
 }
 
 .search-field__icon.MuiSvgIcon-root {
-	color: var(--rock);
+	color: var(--field-muted);
 }
 
 .search-field__placeholder.MuiTypography-root {
@@ -47,7 +46,7 @@
 }
 
 .search-field__example {
-	color: var(--basalt);
+	color: var(--capsule-text);
 }
 
 /* caret after the typed example */
@@ -58,7 +57,7 @@
 	height: 18px;
 	margin-left: 2px;
 	vertical-align: -3px;
-	background: var(--lava);
+	background: var(--accent);
 	animation: search-field-caret 1s steps(1) infinite;
 }
 
@@ -82,10 +81,11 @@
 .search-field__keys kbd {
 	padding: 2px 7px;
 	border-radius: 6px;
-	background: #fff;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 0.5px var(--capsule-edge);
+	/* takes the surrounding Typography's face instead of the browser's monospace */
 	font-family: inherit;
-	font-weight: 600;
-	color: var(--stone-text);
+	color: var(--field-muted);
 }
 
 /* no physical keyboard to press it with */
@@ -105,12 +105,22 @@
 	margin: 0 auto;
 	border-radius: 2.5rem;
 	margin-bottom: 2rem;
-	border: solid 3px rgb(93, 90, 107);
+	background: var(--capsule-track);
+	transition: background-color 120ms ease;
+}
+
+.search-bar:hover {
+	background: var(--capsule-hover);
+}
+
+.search-bar:focus-within {
+	outline: 2px solid var(--accent);
+	outline-offset: 2px;
 }
 
 .search-icon {
-	font-size: 1.85rem;
-	color: black;
+	font-size: 24px;
+	color: var(--capsule-muted);
 }
 
 .search-input-parent {
@@ -121,7 +131,7 @@
 }
 
 .search-input-field {
-	color: black;
+	color: var(--capsule-text);
 	flex: 1;
 }
 .search-input-field fieldset {
@@ -135,16 +145,17 @@
 }
 
 .search-suggestions-parent[aria-selected='true'] {
-	background: #afa;
+	background: color-mix(in srgb, var(--accent) 10%, #fff);
+	color: var(--accent-text);
 }
 
 .search-suggestions-parent.Mui-focused {
-	background: rgba(135, 120, 229, 0.08);
+	background: var(--page);
 	cursor: pointer;
 }
 
 .search-suggestions-parent.Mui-focused[aria-selected='true'] {
-	background: #d4d4d4;
+	background: color-mix(in srgb, var(--accent) 16%, #fff);
 }
 
 .search-suggestion-text {
@@ -155,5 +166,4 @@
 	overflow: hidden;
 	padding: 0rem;
 	margin: 0rem;
-	font-weight: 400;
 }
