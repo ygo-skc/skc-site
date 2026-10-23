@@ -15,13 +15,13 @@
 .suggestion-section-question-mark-button {
 	height: 18px;
 	width: 18px;
-	background: #4d4a59;
-	color: white;
+	background: var(--capsule-track);
+	color: var(--capsule-muted);
 	margin-left: 5px;
 }
 
 .suggestion-section-question-mark-button:hover {
-	background: #4d4a59;
+	background: var(--capsule-hover);
 }
 
 .suggestion-section-question-mark-icon.MuiSvgIcon-fontSizeMedium {

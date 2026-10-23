@@ -9,14 +9,25 @@
 }
 
 .yt-video-info-container {
-	background: linear-gradient(120deg, #ff4d4b, #dc4240);
+	background: var(--forbidden-ink); /* apple's darker system red, flat - keeps the white title at 4.5:1 or better */
 	border-radius: 0.85rem;
 	width: 26rem;
+	transition: transform 150ms ease;
 }
 
 .yt-video-info-container:hover {
 	cursor: pointer;
 	transform: scale(1.02);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.yt-video-info-container {
+		transition: none;
+	}
+
+	.yt-video-info-container:hover {
+		transform: none;
+	}
 }
 
 .yt-video-info-sub-container {
@@ -32,8 +43,6 @@
 	overflow: hidden;
 
 	color: rgb(255, 255, 255);
-	font-weight: 800;
-	line-height: 1.65rem;
 }
 
 .yt-video-image-container {

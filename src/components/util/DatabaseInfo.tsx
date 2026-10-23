@@ -30,15 +30,15 @@ const DatabaseInfo: FC<{ stats: SKC.DBStats & { isFetchingData: boolean } }> = (
 					<div className='database-summary-container'>
 						<Grid container spacing={3}>
 							<Grid size={{ xs: 6, sm: 6, md: 6, lg: 4, xl: 4 }}>
-								<Tile variant='full-width' total={stats.cardTotal} subject='Cards' color='rgb(144, 13, 218)' action={handleBrowseTileClicked} />
+								<Tile variant='full-width' total={stats.cardTotal} subject='Cards' color='var(--accent-text)' action={handleBrowseTileClicked} />
 							</Grid>
 
 							<Grid size={{ xs: 6, sm: 6, md: 6, lg: 4, xl: 4 }}>
-								<Tile variant='full-width' total={stats.banListTotal} subject='Ban Lists' color='#FE6D6B' action={handleBanListTileClicked} />
+								<Tile variant='full-width' total={stats.banListTotal} subject='Ban Lists' color='var(--accent-text)' action={handleBanListTileClicked} />
 							</Grid>
 
 							<Grid size={{ xs: 6, sm: 6, md: 6, lg: 4, xl: 4 }}>
-								<Tile variant='full-width' total={stats.productTotal} subject='Products' color='rgb(195, 47, 150)' action={handleProductsTileClicked} />
+								<Tile variant='full-width' total={stats.productTotal} subject='Products' color='var(--accent-text)' action={handleProductsTileClicked} />
 							</Grid>
 						</Grid>
 					</div>

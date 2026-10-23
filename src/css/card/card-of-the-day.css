@@ -4,7 +4,7 @@
 }
 
 .card-of-the-day-parent:hover {
-	background: #eee;
+	background: var(--page);
 	cursor: pointer;
 }
 
@@ -36,8 +36,7 @@
 }
 
 .card-of-the-day-name {
-	color: black;
-	font-weight: 600;
+	color: var(--capsule-text);
 }
 
 .card-of-the-day-type-wrapper {

@@ -40,15 +40,8 @@
 }
 
 .event-name {
-	color: black;
-	font-weight: 800;
+	color: var(--capsule-text);
 	flex-grow: 1;
-}
-
-.event-notes-header {
-	font-weight: 800;
-	color: #666;
-	text-transform: uppercase;
 }
 
 .event-notes {

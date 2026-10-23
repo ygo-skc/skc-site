@@ -1,28 +1,28 @@
 /*
- * skc-rcl's Section maps each header style to a hard-coded colour. These rules re-point them at the site palette in index.css.
+ * skc-rcl's Section maps each header style to a hard-coded colour band. Here the default / ban list / product headers become a
+ * near-black bar (apple.com's #1d1d1f) with light grey text, so the white card has a strong anchor, and the card's shadow becomes a hairline edge.
  * Doubled classes win over the package's own rules whichever stylesheet loads last. Card-coloured headers keep their card colours.
  */
-.section-header-container.default-section-header-container {
-	background: var(--sky);
+.section-parent.section-parent {
+	box-shadow: none;
+	outline: 1px solid var(--capsule-edge);
+	outline-offset: -1px;
 }
 
-.section-header-container.ban-list-section-header-container {
-	background: var(--lava-crack);
-}
-
-.section-header-container.product-section-header-container {
-	background: var(--rock);
-}
-
-.section-header-container .section-header-text {
-	color: var(--on-dark-strong);
+.section-header-container:is(.default-section-header-container, .ban-list-section-header-container, .product-section-header-container) {
+	/* rcl rounds the header at 1.5rem inside a 1.75rem card, which leaves light slivers at the corners of a dark bar */
+	border-top-left-radius: 1.75rem;
+	border-top-right-radius: 1.75rem;
+	background: var(--capsule-text);
+	box-shadow: none;
+	color: var(--page);
 }
 
 .section-parent.default-border {
-	border-color: color-mix(in srgb, var(--gate-light) 60%, #fff);
+	border-color: var(--capsule-edge);
 }
 
-/* every other block in a multi-part section gets a faint stone band instead of grey */
+/* every other block in a multi-part section gets the page grey instead of rcl's grey */
 .section-content .multi-section:nth-child(even) {
-	background: color-mix(in srgb, var(--stone) 40%, #fff);
+	background: var(--page);
 }
