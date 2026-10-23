@@ -100,10 +100,10 @@ export default function Home() {
 				<Breadcrumb crumbs={['Home']} />
 			</Suspense>
 
-			<Trends />
-
 			<div className='headline-v2'>
 				<DatabaseInfo stats={dbStats} />
+
+				<Trends />
 
 				<div className='group light-shadow'>
 					<Typography variant='h3' align='center'>

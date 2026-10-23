@@ -92,25 +92,34 @@
 
 @media (min-width: 700px) and (not (aspect-ratio: 3/4)) {
 	.headline-v2 {
-		grid-template-columns: 55% 45%;
+		grid-template-columns: minmax(0, 55fr) minmax(0, 45fr);
+		/* full width like the sections below it - the other headlines keep their max-width */
+		max-width: none;
+		/* Suggestions spans both rows, so the 1fr row takes its extra height and Content stays its own height */
+		grid-template-rows: auto 1fr;
+	}
+
+	.headline-v2 > .group {
+		grid-column: 2;
+		grid-row: 1 / span 2;
 	}
 }
 
 @media (min-width: 825px) and (not (aspect-ratio: 3/4)) {
 	.headline-v2 {
-		grid-template-columns: 55% 45%;
+		grid-template-columns: minmax(0, 55fr) minmax(0, 45fr);
 	}
 }
 
 @media (min-width: 950px) and (not (aspect-ratio: 3/4)) {
 	.headline-v2 {
-		grid-template-columns: 55% 45%;
+		grid-template-columns: minmax(0, 55fr) minmax(0, 45fr);
 	}
 }
 
 @media (min-width: 1050px) and (not (aspect-ratio: 3/4)) {
 	.headline-v2 {
-		grid-template-columns: 60% 425px;
+		grid-template-columns: minmax(0, 1fr) 425px;
 	}
 }
 
