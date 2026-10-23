@@ -18,7 +18,7 @@
 }
 
 .ban-list-date-selector-menu-item {
-	padding: 0.85rem;
+	padding: 11px;
 }
 
 /* soft tags tinted with each status colour - the tint carries the meaning, the dark text stays readable */
@@ -54,24 +54,24 @@
 }
 
 .cards-with-different-status-parent {
-	margin-bottom: 2rem;
+	margin-bottom: 26px;
 	background: var(--capsule-lens);
-	padding: 1.5rem;
-	border-radius: 1.5rem;
+	padding: 20px;
+	border-radius: 20px;
 }
 
 .cards-with-different-status-parent:last-child {
-	margin-bottom: 5rem;
+	margin-bottom: 65px;
 }
 
 .cards-with-diff-status-skeleton {
-	margin-bottom: 5rem;
+	margin-bottom: 65px;
 }
 
 .cards-with-different-status-content {
 	display: flex;
 	overflow-x: auto;
-	padding-bottom: 1rem;
+	padding-bottom: 13px;
 }
 
 .forbidden-icon.MuiSvgIcon-root {

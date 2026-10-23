@@ -100,6 +100,12 @@ test('verify component text is sized from the root rather than its parent', () =
 	overrideValues('fontSize').forEach((fontSize) => expect(String(fontSize)).toMatch(/rem$/))
 })
 
+test('verify component spacing is in px so it stays put when the reader enlarges text', () => {
+	;['margin', 'marginTop', 'marginRight', 'marginBottom', 'padding', 'paddingLeft', 'paddingRight', 'paddingBottom', 'borderRadius'].forEach((property) =>
+		overrideValues(property).forEach((value) => expect(String(value)).not.toMatch(/rem$/))
+	)
+})
+
 test('verify chip text is sized on the chip so local css on the chip can resize it', () => {
 	const chip = MuiTheme.components?.MuiChip?.styleOverrides as Record<string, Record<string, unknown>>
 	expect(chip.root.fontSize).toBe(MuiTheme.typography.body2.fontSize)

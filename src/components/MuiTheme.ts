@@ -16,20 +16,10 @@ const MuiTheme = createTheme({
 		},
 	},
 	components: {
+		// spacing below is in px (the sizes it was designed at) - only text is in rem, so it follows the reader's text-size setting
 		MuiLink: {
 			defaultProps: {
 				component: LinkBehavior,  // handles external links as usual but internal links will now route through React Router and not refresh page
-			},
-		},
-		MuiButtonGroup: {
-			styleOverrides: {
-				grouped: {
-					'&:not(:last-of-type)': {
-						borderRight: '3px solid rgba(255, 255, 255, .8)',
-						borderColor: 'white',
-					},
-					borderRadius: '5rem',
-				},
 			},
 		},
 		MuiIconButton: {
@@ -43,7 +33,7 @@ const MuiTheme = createTheme({
 		MuiDivider: {
 			styleOverrides: {
 				root: {
-					marginBottom: '.5rem',
+					marginBottom: '6px',
 				},
 			},
 		},
@@ -61,8 +51,8 @@ const MuiTheme = createTheme({
 			styleOverrides: {
 				// apple-style tags - grey capsules with near-black text, using the neutrals from index.css
 				root: {
-					marginRight: '.55rem',
-					marginTop: '.5rem',
+					marginRight: '7px',
+					marginTop: '6px',
 					borderRadius: '999px',
 					backgroundColor: 'var(--capsule-track)',
 					color: 'var(--capsule-text)',
@@ -85,11 +75,11 @@ const MuiTheme = createTheme({
 			styleOverrides: {
 				badge: {
 					fontSize: '0.75rem', // 12px
-					marginTop: '.4rem',
-					marginRight: '.5rem',
+					marginTop: '5px',
+					marginRight: '6px',
 				},
 				root: {
-					minHeight: '0rem',
+					minHeight: '0',
 				},
 			},
 		},
@@ -107,15 +97,15 @@ const MuiTheme = createTheme({
 		MuiAutocomplete: {
 			styleOverrides: {
 				paper: {
-					padding: '.5rem',
-					borderRadius: '1.5rem',
+					padding: '6px',
+					borderRadius: '20px',
 					border: '1px solid var(--capsule-edge)',
 					boxShadow: '0 8px 28px color-mix(in srgb, var(--capsule-text) 18%, transparent)', // same lift as the popovers
 				},
 				option: {
-					paddingLeft: '0rem',
-					paddingRight: '0rem',
-					paddingBottom: '.4rem',
+					paddingLeft: '0',
+					paddingRight: '0',
+					paddingBottom: '5px',
 				},
 				listbox: {
 					overflowX: 'hidden',
@@ -128,9 +118,9 @@ const MuiTheme = createTheme({
 					fontWeight: 400,
 					lineHeight: 1.45,
 					fontSize: '0.875rem', // 14px
-					padding: '.75rem',
+					padding: '10px',
 					backgroundColor: 'var(--capsule-text)',
-					borderRadius: '1rem',
+					borderRadius: '13px',
 				},
 				arrow: {
 					color: 'var(--capsule-text)',
@@ -152,8 +142,8 @@ const MuiTheme = createTheme({
 					fontSize: '0.9375rem', // 15px
 				},
 				root: {
-					padding: '.4rem',
-					borderBottom: '0rem',
+					padding: '5px',
+					borderBottom: '0',
 				},
 			},
 		},

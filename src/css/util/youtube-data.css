@@ -4,14 +4,14 @@
 	grid-template-rows: auto;
 	overflow-x: scroll;
 	max-width: 100%;
-	column-gap: 1.5rem;
-	padding: 0.2rem;
+	column-gap: 20px;
+	padding: 3px;
 }
 
 .yt-video-info-container {
 	background: var(--forbidden-ink); /* apple's darker system red, flat - keeps the white title at 4.5:1 or better */
-	border-radius: 0.85rem;
-	width: 26rem;
+	border-radius: 11px;
+	width: 338px;
 	transition: transform 150ms ease;
 }
 
@@ -32,7 +32,7 @@
 
 .yt-video-info-sub-container {
 	display: flex;
-	padding: 1rem;
+	padding: 13px;
 }
 
 .yt-video-title {
@@ -46,14 +46,14 @@
 }
 
 .yt-video-image-container {
-	border-radius: 0.8rem;
+	border-radius: 10px;
 	border-style: solid;
 	border-color: rgba(255, 255, 255, 0.5);
-	border-width: 0.6rem;
+	border-width: 8px;
 }
 
 .yt-video-image {
-	clip-path: inset(2.4rem 0rem 2.4rem 0rem round 0.2rem);
-	margin-top: -2.4rem;
-	margin-bottom: -2.7rem;
+	clip-path: inset(31px 0 31px 0 round 3px);
+	margin-top: -31px;
+	margin-bottom: -35px;
 }

@@ -1,11 +1,11 @@
 .suggestions-wrapper {
 	display: flex;
 	overflow-x: auto;
-	padding-bottom: 0.3rem;
+	padding-bottom: 4px;
 }
 
 .suggestion-section:not(:last-child) {
-	margin-bottom: 1.5rem;
+	margin-bottom: 20px;
 }
 
 .suggestion-section-title {
@@ -25,18 +25,18 @@
 }
 
 .suggestion-section-question-mark-icon.MuiSvgIcon-fontSizeMedium {
-	font-size: 1rem;
+	font-size: 13px;
 }
 
 .suggested-ygo-card-wrapper {
-	width: 16rem;
-	max-width: 16rem;
-	min-width: 16rem;
+	width: 208px;
+	max-width: 208px;
+	min-width: 208px;
 	cursor: pointer;
 	box-sizing: border-box;
-	padding-bottom: 0.75rem;
+	padding-bottom: 10px;
 }
 
 .suggested-ygo-card-wrapper:not(:last-child) {
-	margin-right: 1rem;
+	margin-right: 13px;
 }

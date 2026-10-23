@@ -1,6 +1,6 @@
 /* segmented control: a grey track with a white lens under the selected format, like the nav and the trending toggle */
 .ban-list-format-container.MuiToggleButtonGroup-root {
-	margin-bottom: 1rem;
+	margin-bottom: 13px;
 	padding: 3px;
 	gap: 2px;
 	border-radius: 999px;
@@ -29,11 +29,11 @@
 }
 
 .unique-rarities > *:not(:last-child) {
-	margin-bottom: 0.2rem;
+	margin-bottom: 3px;
 }
 
 .unique-rarities {
-	margin-top: 2rem;
+	margin-top: 26px;
 }
 
 .card-printing-info-container {
@@ -41,5 +41,5 @@
 }
 
 .card-printing-info-container > *:not(:last-child) {
-	margin-right: 1rem;
+	margin-right: 13px;
 }

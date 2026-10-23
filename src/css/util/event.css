@@ -7,26 +7,26 @@
 
 .event-header-container {
 	display: -webkit-flex;
-	margin-bottom: 0.75rem;
+	margin-bottom: 10px;
 }
 
 .event-header {
-	margin-right: 0.75rem;
-	margin-bottom: 0rem;
+	margin-right: 10px;
+	margin-bottom: 0;
 }
 
 .event-item {
-	padding: 1.5rem;
-	width: 24rem;
-	border-radius: 1.5rem;
+	padding: 20px;
+	width: 312px;
+	border-radius: 20px;
 	background: white;
-	margin-right: 1rem;
-	margin-bottom: 1rem;
+	margin-right: 13px;
+	margin-bottom: 13px;
 	display: flex;
 }
 
 .event-item > *:not(:last-child) {
-	margin-right: 2rem;
+	margin-right: 26px;
 }
 
 .dialog-event-item {
@@ -36,7 +36,7 @@
 }
 
 .dialog-event-item > *:not(:last-child) {
-	margin-right: 2rem;
+	margin-right: 26px;
 }
 
 .event-name {
@@ -45,7 +45,7 @@
 }
 
 .event-notes {
-	max-height: 5rem;
+	max-height: 65px;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	color: inherit;
@@ -65,13 +65,13 @@
 
 .markdown h3 {
 	margin-block-start: 0em;
-	margin-block-end: 0.5rem;
+	margin-block-end: 6px;
 }
 
 .event-icon-container {
-	margin-top: 1rem;
+	margin-top: 13px;
 }
 
 .event-icon-button.MuiButtonBase-root:not(:last-child) {
-	margin-right: 1rem;
+	margin-right: 13px;
 }

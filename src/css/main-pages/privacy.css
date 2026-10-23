@@ -1,14 +1,14 @@
 .policy {
-	padding-right: 3rem;
-	padding-left: 3rem;
+	padding-right: 39px;
+	padding-left: 39px;
 }
 
 .policy .MuiTypography-h4 {
-	margin-top: 3.25rem;
+	margin-top: 42px;
 }
 
 .policy .MuiTypography-h6 {
-	margin-top: 1.25rem;
+	margin-top: 16px;
 }
 
 strong {

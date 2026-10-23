@@ -1,6 +1,6 @@
 .card-of-the-day-parent {
-	padding: 1rem;
-	border-radius: 0.75rem;
+	padding: 13px;
+	border-radius: 10px;
 }
 
 .card-of-the-day-parent:hover {
@@ -24,7 +24,7 @@
 }
 
 .card-of-the-day-wrapper > *:not(:last-child) {
-	margin-right: 1rem !important;
+	margin-right: 13px !important;
 }
 
 .card-of-the-day-data {
@@ -32,7 +32,7 @@
 }
 
 .card-of-the-day-data > *:not(:last-child) {
-	margin-bottom: 0.5rem;
+	margin-bottom: 6px;
 }
 
 .card-of-the-day-name {
@@ -42,7 +42,7 @@
 .card-of-the-day-type-wrapper {
 	display: grid;
 	grid-template-columns: auto 1fr;
-	column-gap: 0.6rem;
+	column-gap: 8px;
 }
 
 .card-of-the-day-type {

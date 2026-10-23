@@ -5,7 +5,7 @@
 .site-footer {
 	container-type: inline-size;
 	width: min(1180px, calc(100% - 24px));
-	margin: 2rem auto 12px;
+	margin: 26px auto 12px;
 	border-radius: 26px;
 	outline: 1px solid var(--capsule-edge);
 	outline-offset: -1px;

@@ -67,8 +67,8 @@ li {
 }
 
 .routes-wrapper {
-	padding-left: 0.8rem;
-	padding-right: 0.8rem;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 .sticky {
@@ -80,7 +80,7 @@ li {
 
 /* doubled class beats MUI Link's own colour and underline */
 .link.MuiLink-root {
-	padding: 0.2rem;
+	padding: 3px;
 	color: var(--accent-text);
 	text-decoration: none;
 }
@@ -95,46 +95,46 @@ li {
 }
 
 .group {
-	padding: 1.25rem !important;
-	border-radius: 2rem;
+	padding: 16px !important;
+	border-radius: 26px;
 	background: var(--page);
 }
 
 .group:not(:last-child) {
-	margin-bottom: 1.5rem;
+	margin-bottom: 20px;
 }
 
 .group-dark {
-	padding: 1.25rem !important;
-	border-radius: 2rem;
+	padding: 16px !important;
+	border-radius: 26px;
 	background: rgba(0, 0, 0, 0.7);
-	margin-bottom: 1.5rem;
+	margin-bottom: 20px;
 }
 
 .group-dark > *:not(:last-child) {
-	margin-bottom: 1rem;
+	margin-bottom: 13px;
 }
 
 .rounded-skeleton {
-	border-radius: 1rem;
+	border-radius: 13px;
 }
 
 .rounded-skeleton-light {
-	border-radius: 1rem;
+	border-radius: 13px;
 	background-color: rgba(255, 255, 255, 0.3) !important;
 }
 .breadcrumb-skeleton {
-	border-radius: 2rem;
-	margin-top: 1rem;
-	margin-bottom: 2.25rem;
+	border-radius: 26px;
+	margin-top: 13px;
+	margin-bottom: 29px;
 }
 
 /* hairline rules in the edge grey, like the rest of the site's dividers */
 .spaced-divider.MuiDivider-root,
 .hairline-divider.MuiDivider-root {
 	margin: auto;
-	margin-top: 1.25rem;
-	margin-bottom: 1.5rem;
+	margin-top: 16px;
+	margin-bottom: 20px;
 	border-color: var(--capsule-edge);
 }
 
@@ -148,11 +148,11 @@ li {
 }
 
 .tag-chip span.MuiChip-label {
-	padding: 0.3rem 0.6rem 0.3rem 0.6rem;
+	padding: 4px 8px 4px 8px;
 }
 
 .tag-chip-condensed span.MuiChip-label {
-	padding: 0.2rem 0.4rem 0.2rem 0.4rem;
+	padding: 3px 5px 3px 5px;
 }
 
 .aggregate-anchor img {
