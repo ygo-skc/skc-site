@@ -15,8 +15,8 @@ function routeFor(crumb: string) {
 }
 
 /*
- * Trail of stepping stones from Home to the current page. Parent crumbs link to their page, the last crumb is the page itself.
- * An empty last crumb means the page is still loading its name. On narrow screens css collapses the trail to a back stone.
+ * Path bar from Home to the current page. Parent crumbs link to their page, the last crumb is the page itself.
+ * An empty last crumb means the page is still loading its name. On narrow screens css collapses the trail to a back button.
  */
 const Breadcrumb: FunctionComponent<BreadcrumbProps> = memo(
 	({ crumbs }) => {
@@ -28,8 +28,10 @@ const Breadcrumb: FunctionComponent<BreadcrumbProps> = memo(
 				<ol className='breadcrumb__trail'>
 					{parents.map((crumb) => (
 						<li key={crumb} className='breadcrumb__crumb'>
-							<Link className='breadcrumb__stone' to={routeFor(crumb)}>
-								{crumb}
+							<Link className='breadcrumb__item' to={routeFor(crumb)}>
+								<Typography variant='body2' component='span'>
+									{crumb}
+								</Typography>
 							</Link>
 						</li>
 					))}
@@ -37,7 +39,7 @@ const Breadcrumb: FunctionComponent<BreadcrumbProps> = memo(
 						{current === '' ? (
 							<Skeleton className='breadcrumb__loading' variant='rectangular' width={160} height={30} />
 						) : (
-							<Typography variant='inherit' className='breadcrumb__stone' aria-current='page'>
+							<Typography variant='body2' component='span' className='breadcrumb__item' aria-current='page'>
 								{current}
 							</Typography>
 						)}

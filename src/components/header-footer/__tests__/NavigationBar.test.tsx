@@ -48,11 +48,10 @@ test('verify social destinations are real links opening in a new tab', () => {
 	})
 })
 
-test('verify navigation bar is a labelled landmark with decorative scenery hidden', () => {
-	const { container } = renderNavigationBar()
+test('verify navigation bar is a labelled landmark', () => {
+	renderNavigationBar()
 
 	expect(screen.getByRole('navigation', { name: 'Main' })).toBeInTheDocument()
-	expect(container.querySelector('.site-nav__scene')).toHaveAttribute('aria-hidden', 'true')
 })
 
 test('verify the search button opens site search', async () => {

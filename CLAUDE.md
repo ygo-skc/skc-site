@@ -79,6 +79,7 @@ The shared component library (Section, SKCTable, YGOCard*, YGOCardPreview, YGOCa
 - **Back navigation is broken because of how the site pushes links - revisit how links navigate.** Not diagnosed yet; places that touch history to start from: `LinkBehavior.tsx` (MUI `Link` → react-router `Link`), `navigate(..., { replace: true })` in `BanList.tsx`, `window.location.assign` error redirects in `FetchHandler.ts`, and `navigate` calls in the search popup and home tiles. Reproduce with real back/forward before changing anything.
 - skc-rcl 1.4.0 is published (`YGOCardPreview`, `YGOCardAttribute`, compact `SKCTable`, `SKCStatGrid`). Still to do here: bump `package.json` to 1.4.0 (the search popup needs it), switch product info and the Card Browse totals to `SKCStatGrid`, and set `--skc-table-*` / `--skc-stat-grid-*` to the palette.
 - The search API (`/api/v1/card/search`) doesn't return `monsterAssociation`, so the preview's level/rank/scale/link items never show from search results.
+- Card pages' breadcrumbs read Home › Product Browse › <card> - should be Card Browse. The crumb is hard-coded in `src/reducers/CardInformationReducer.ts` (`pageBreadcrumbs: ['Home', 'Product Browse', ...]`).
 - `MuiTheme.ts`, `navigation-bar.css` and `navigation-icon.css` already fail prettier on `release`; leave unrelated lines alone.
 - **Backlog - skc-rcl pieces still in their own colours** (the rest of the site is on the apple palette):
   - `InlineDate` - the hot-pink month badge on Card of the Day (`CardOfTheDay.tsx`).

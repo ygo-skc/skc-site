@@ -1,59 +1,11 @@
 /*
- * Purple storm over a lava sea. Every color is a flat fill from the site palette in index.css - the scene's depth comes
- * from layering, not gradients or blur.
+ * An apple-style capsule floating at the top of the page - neutral flat fills from index.css, with a hairline edge instead of a shadow.
  */
 .site-nav {
-	position: relative;
-	isolation: isolate;
-	overflow: hidden;
-	padding-bottom: 48px;
-	background: var(--sky);
-	color: var(--on-dark-strong);
-	font-family: open sans, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif;
+	padding-bottom: 4px;
 }
 
-/* scene */
-
-.site-nav__scene {
-	position: absolute;
-	inset: 0;
-	z-index: -1;
-	pointer-events: none;
-}
-
-.site-nav__scene svg {
-	position: absolute;
-	display: block;
-}
-
-.site-nav__sky {
-	inset: 0;
-	width: 100%;
-	height: 100%;
-}
-
-.site-nav__bolt {
-	top: 0;
-	right: 9%;
-	width: 230px;
-	height: 70px;
-}
-
-.site-nav__spire {
-	right: 25%;
-	bottom: 8px;
-	width: 74px;
-	height: 100px;
-}
-
-.site-nav__lava {
-	left: 0;
-	bottom: 0;
-	width: 100%;
-	height: 22px;
-}
-
-/* content */
+/* the links sit in a track with a white lens under the current page */
 
 .site-nav__bar {
 	display: grid;
@@ -61,30 +13,37 @@
 	grid-template-areas: 'brand links actions';
 	align-items: center;
 	column-gap: 24px;
-	max-width: 1850px;
-	min-height: 60px;
-	margin-inline: auto;
-	padding-inline: 20px;
+	width: min(1180px, calc(100% - 24px));
+	min-height: 52px;
+	margin: 12px auto 0;
+	padding: 6px 6px 6px 14px;
+	border-radius: 999px;
+	background: var(--capsule);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+	color: var(--capsule-text);
 }
 
 .site-nav__brand {
 	grid-area: brand;
-	margin-left: -8px;
-	padding: 6px 8px;
-	border-radius: 6px;
-	font-size: 22px;
-	font-weight: 800;
-	letter-spacing: 0.02em;
+	padding: 6px 10px;
+	border-radius: 999px;
 	color: inherit;
 	text-decoration: none;
+	transition: background-color 120ms ease;
 }
 
 .site-nav__links {
 	grid-area: links;
+	justify-self: center;
+	position: relative;
 	/* grid items default to min-width: auto, which would let the links stretch the track instead of scrolling */
 	min-width: 0;
+	max-width: 100%;
 	display: flex;
 	gap: 2px;
+	padding: 3px;
+	border-radius: 999px;
+	background: var(--capsule-track);
 	overflow-x: auto;
 	scrollbar-width: none;
 }
@@ -93,33 +52,47 @@
 	display: none;
 }
 
-.site-nav__link {
-	position: relative;
-	padding: 8px 12px;
-	border-radius: 6px;
-	font-size: 14.5px;
-	font-weight: 400;
-	white-space: nowrap;
-	/* solid stone rather than translucent white - translucent text takes on each sky band behind it and dims over the darker ones */
-	color: var(--stone);
-	text-decoration: none;
-	transition:
-		color 120ms ease,
-		background-color 120ms ease;
-}
-
-.site-nav__link[aria-current='page'] {
-	color: var(--on-dark-strong);
-}
-
-.site-nav__link[aria-current='page']::after {
+/* the lens - SubNav sets --lens-x / --lens-w from the current link, and data-lens once there is one */
+.site-nav__links::before {
 	content: '';
 	position: absolute;
-	inset-inline: 12px;
-	bottom: 2px;
-	height: 2px;
-	border-radius: 2px;
-	background: var(--ember);
+	top: 3px;
+	bottom: 3px;
+	left: 0;
+	width: var(--lens-w, 0);
+	translate: var(--lens-x, 0) 0;
+	border-radius: 999px;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 0.5px var(--capsule-edge);
+	opacity: 0;
+	transition:
+		translate 450ms cubic-bezier(0.32, 1.28, 0.5, 1),
+		width 450ms cubic-bezier(0.32, 1.28, 0.5, 1),
+		opacity 150ms ease;
+}
+
+.site-nav__links[data-lens]::before {
+	opacity: 1;
+}
+
+.site-nav__link {
+	position: relative;
+	padding: 7px 14px;
+	border-radius: 999px;
+	white-space: nowrap;
+	color: var(--capsule-muted);
+	text-decoration: none;
+	transition: color 120ms ease;
+}
+
+/* the link owns the colour - its Typography would otherwise take its variant's colour from the theme */
+.site-nav :is(.site-nav__brand, .site-nav__link) .MuiTypography-root {
+	color: inherit;
+}
+
+.site-nav__link:hover,
+.site-nav__link[aria-current='page'] {
+	color: var(--capsule-text);
 }
 
 .site-nav__actions {
@@ -129,53 +102,45 @@
 	gap: 2px;
 }
 
-.site-nav__brand:hover,
-.site-nav__link:hover {
-	background: var(--on-dark-hover);
-	color: var(--on-dark-strong);
+.site-nav__brand:hover {
+	background: var(--capsule-hover);
 }
 
 .site-nav :focus-visible {
-	outline: 2px solid var(--lava-crest);
+	outline: 2px solid var(--accent);
 	outline-offset: 2px;
 }
 
-/* phones - links drop to their own scrolling row under the brand and actions */
+/* the links' track scrolls, which clips anything past its edge - keep their ring just inside the link */
+.site-nav__link:focus-visible {
+	outline-offset: -2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.site-nav__links::before {
+		transition: none;
+	}
+}
+
+/* phones - links drop to their own scrolling track under the brand and actions, and the capsule rounds into a card */
 
 @media (max-width: 720px) {
-	.site-nav {
-		padding-bottom: 16px;
-	}
-
 	.site-nav__bar {
 		grid-template-columns: 1fr auto;
 		grid-template-areas:
 			'brand actions'
 			'links links';
-		min-height: 52px;
-		padding: 8px 12px 0;
+		row-gap: 6px;
+		min-height: 0;
+		padding: 6px;
+		border-radius: 24px;
+	}
+
+	.site-nav__brand {
+		padding-left: 12px;
 	}
 
 	.site-nav__links {
-		margin-inline: -12px;
-		padding: 2px 4px 6px;
-	}
-
-	/* keeps the strike clear of the action icons that share its row */
-	.site-nav__bolt {
-		right: 136px;
-		width: 120px;
-		height: 44px;
-	}
-
-	.site-nav__spire {
-		right: 30%;
-		bottom: 6px;
-		width: 60px;
-		height: 84px;
-	}
-
-	.site-nav__lava {
-		height: 16px;
+		justify-self: stretch;
 	}
 }

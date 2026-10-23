@@ -1,78 +1,88 @@
 /*
- * Stepping stones - each crumb is a flat stone with a notched arrow edge. Parents are pale lavender, the current page is sky.
- * On narrow screens only the parent page is kept, as a back stone, since the page heading already names where you are.
+ * A path bar - parent crumbs are quiet links in a neutral track, separated by chevrons, and the current page sits on a white lens.
+ * On narrow screens only the parent page is kept, as a back button, since the page heading already names where you are.
  */
 .breadcrumb {
-	--stone-notch: 9px;
+	--crumb-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 5 7 7-7 7'/%3E%3C/svg%3E");
 
+	display: flex;
 	margin: 1rem 0 1.75rem;
-	font-family: open sans, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif;
-	font-size: 13px;
-	line-height: 18px;
 }
 
 .breadcrumb__trail {
 	display: flex;
 	align-items: center;
-	gap: 4px;
+	gap: 2px;
+	min-width: 0;
 	margin: 0;
-	padding: 0;
+	padding: 3px;
+	border-radius: 999px;
+	background: var(--capsule-track);
 	list-style: none;
 }
 
 .breadcrumb__crumb {
 	display: flex;
 	flex: none;
+	align-items: center;
+	gap: 2px;
 	white-space: nowrap;
 }
 
-/* only the current page gives up room, so parent stones stay whole and tappable */
+.breadcrumb__crumb + .breadcrumb__crumb::before {
+	content: '';
+	flex: none;
+	width: 12px;
+	height: 12px;
+	background: var(--capsule-muted);
+	mask: var(--crumb-chevron) center / contain no-repeat;
+}
+
+/* only the current page gives up room, so parent crumbs stay whole and tappable */
 .breadcrumb__crumb:last-child {
 	flex: 0 1 auto;
 	min-width: 0;
 }
 
-.breadcrumb__stone {
+.breadcrumb__item {
 	display: block;
-	padding: 6px 16px 6px 14px;
-	clip-path: polygon(0 0, calc(100% - var(--stone-notch)) 0, 100% 50%, calc(100% - var(--stone-notch)) 100%, 0 100%, var(--stone-notch) 50%);
+	padding: 6px 12px;
+	border-radius: 999px;
 }
 
-.breadcrumb__crumb:first-child .breadcrumb__stone {
-	padding-left: 12px;
-	border-radius: 4px 0 0 4px;
-	clip-path: polygon(0 0, calc(100% - var(--stone-notch)) 0, 100% 50%, calc(100% - var(--stone-notch)) 100%, 0 100%);
-}
-
-a.breadcrumb__stone {
-	background: var(--stone);
-	color: var(--stone-text);
-	font-weight: 400;
+a.breadcrumb__item {
+	color: var(--capsule-muted);
 	text-decoration: none;
-	transition: background-color 120ms ease;
+	transition:
+		color 120ms ease,
+		background-color 120ms ease;
 }
 
-a.breadcrumb__stone:hover {
-	background: var(--stone-hover);
+/* a parent crumb owns the colour - its Typography would otherwise take body2's colour from the theme */
+a.breadcrumb__item .MuiTypography-root {
+	color: inherit;
 }
 
-/* clip-path would cut an outline off, so focus is drawn inside the stone */
-a.breadcrumb__stone:focus-visible {
-	outline: none;
-	box-shadow: inset 0 0 0 2px var(--lava-crest);
+a.breadcrumb__item:hover {
+	background: var(--capsule-hover);
+	color: var(--capsule-text);
 }
 
-.breadcrumb__stone[aria-current='page'] {
+a.breadcrumb__item:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 1px;
+}
+
+.breadcrumb__item[aria-current='page'] {
 	overflow: hidden;
-	padding-right: 18px;
 	text-overflow: ellipsis;
-	background: var(--sky);
-	color: var(--on-dark-strong);
-	font-weight: 600;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 0.5px var(--capsule-edge);
+	color: var(--capsule-text);
 }
 
-.breadcrumb__loading {
-	clip-path: polygon(0 0, calc(100% - var(--stone-notch)) 0, 100% 50%, calc(100% - var(--stone-notch)) 100%, 0 100%, var(--stone-notch) 50%);
+.breadcrumb__loading.MuiSkeleton-root {
+	border-radius: 999px;
 }
 
 @media (max-width: 600px) {
@@ -80,19 +90,30 @@ a.breadcrumb__stone:focus-visible {
 		display: none;
 	}
 
-	/* the parent page becomes a back stone; a lone crumb (Home) still shows itself */
+	.breadcrumb__crumb::before {
+		display: none;
+	}
+
+	/* the parent page becomes a back button; a lone crumb (Home) still shows itself */
 	.breadcrumb__crumb:nth-last-child(2),
 	.breadcrumb__crumb:only-child {
 		display: flex;
 	}
 
-	.breadcrumb__crumb:nth-last-child(2) .breadcrumb__stone {
-		padding: 6px 12px;
-		border-radius: 4px;
-		clip-path: none;
+	.breadcrumb__crumb:nth-last-child(2) .breadcrumb__item {
+		display: flex;
+		align-items: center;
+		gap: 2px;
+		padding-left: 6px;
+		color: var(--capsule-text);
 	}
 
-	.breadcrumb__crumb:nth-last-child(2) .breadcrumb__stone::before {
-		content: '‹ ';
+	.breadcrumb__crumb:nth-last-child(2) .breadcrumb__item::before {
+		content: '';
+		width: 14px;
+		height: 14px;
+		background: currentColor;
+		mask: var(--crumb-chevron) center / contain no-repeat;
+		rotate: 180deg;
 	}
 }

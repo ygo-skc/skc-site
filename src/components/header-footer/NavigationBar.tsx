@@ -3,7 +3,7 @@ import '../../css/header-footer/navigation-icon.css'
 
 import { lazy, Suspense } from 'react'
 import { Link } from 'react-router-dom'
-import { IconButton } from '@mui/material'
+import { IconButton, Typography } from '@mui/material'
 import GitHubIcon from '@mui/icons-material/GitHub'
 import YouTube from '@mui/icons-material/YouTube'
 import NotificationsIcon from '@mui/icons-material/Notifications'
@@ -11,7 +11,6 @@ import NotificationsIcon from '@mui/icons-material/Notifications'
 import AppRoutes from '../../helper/AppRoutes'
 import SearchTrigger from '../util/search/SearchTrigger'
 
-import NavScene from './NavScene'
 import SubNav from './SubNav'
 
 const Messages = lazy(() => import('./Messages'))
@@ -24,11 +23,11 @@ const socialLinks = [
 const NavigationBar = () => {
 	return (
 		<header className='site-nav'>
-			<NavScene />
-
 			<div className='site-nav__bar'>
 				<Link className='site-nav__brand' to={AppRoutes.Home} aria-label='SKC home'>
-					SKC
+					<Typography variant='h6' component='span'>
+						SKC
+					</Typography>
 				</Link>
 
 				<SubNav />
