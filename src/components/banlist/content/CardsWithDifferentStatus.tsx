@@ -24,7 +24,7 @@ const CardsWithDifferentStatus: FC<CardsWithDifferentStatusProps> = ({ newStatus
 	}, [cards])
 
 	return numCards === 0 ? null : (
-		<div className='cards-with-different-status-parent very-light-shadow'>
+		<div className='cards-with-different-status-parent hairline-edge'>
 			<Typography variant='h4'>
 				Newly {newStatusName} ({numCards})
 			</Typography>

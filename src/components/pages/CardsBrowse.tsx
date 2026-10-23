@@ -112,7 +112,7 @@ export default function BrowseCards() {
 					</div>
 				</Section>
 
-				<div className='group light-shadow'>
+				<div className='group hairline-edge'>
 					<Typography variant='h3' align='center'>
 						Results
 					</Typography>

@@ -140,7 +140,7 @@ const CardInformation = () => {
 					</div>
 				</Section>
 
-				<div className='group light-shadow'>
+				<div className='group hairline-edge'>
 					<Typography variant='h3' align='center'>
 						Summary
 					</Typography>
@@ -150,7 +150,7 @@ const CardInformation = () => {
 						{state.isFetchingSuggestions && <Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='5rem' />}
 						{!state.isFetchingSuggestions &&
 							state.archetypes.size !== 0 &&
-							[...state.archetypes].map((archetype) => <Chip className='dark-chip' key={archetype} label={archetype} />)}
+							[...state.archetypes].map((archetype) => <Chip className='tag-chip' key={archetype} label={archetype} />)}
 						{!state.isFetchingSuggestions && state.archetypes.size === 0 && (
 							<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='3rem' />}>
 								<Hint variant='tight' fullWidth={false}>
@@ -183,7 +183,7 @@ const CardInformation = () => {
 							{state.uniqueRarities.length} unique {state.uniqueRarities.length == 1 ? 'rarity' : 'rarities'}
 						</Typography>
 						{state.uniqueRarities.map((uniqueRarity) => (
-							<Chip className='dark-chip' key={uniqueRarity} label={uniqueRarity} />
+							<Chip className='tag-chip' key={uniqueRarity} label={uniqueRarity} />
 						))}
 					</div>
 				</div>

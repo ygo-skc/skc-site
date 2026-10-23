@@ -6,3 +6,10 @@ import 'jest-location-mock'
 import { TextDecoder, TextEncoder } from 'node:util'
 
 Object.assign(globalThis, { TextEncoder, TextDecoder })
+
+// jsdom has no layout, so it ships no ResizeObserver either - a no-op stand-in lets components that measure themselves render
+globalThis.ResizeObserver ??= class {
+	observe() {}
+	unobserve() {}
+	disconnect() {}
+}

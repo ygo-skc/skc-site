@@ -36,7 +36,7 @@ const CardProductListItem: FC<CardProductListItemProps> = ({ cardID, productID, 
 			<div>
 				<Typography variant='body1'>Printed in the following rarities</Typography>
 				{productContent.rarities.map((uniqueRarity) => (
-					<Chip className='dark-chip-condensed' key={uniqueRarity} label={uniqueRarity} />
+					<Chip className='tag-chip-condensed' key={uniqueRarity} label={uniqueRarity} />
 				))}
 			</div>
 		</DatedListItem>

@@ -94,7 +94,7 @@ export default function ProductInformation() {
 			<div className='headline-v1'>
 				<ProductImage className='product-info-img' productID={state.productId} size='lg' loading='eager' />
 
-				<div className='group light-shadow'>
+				<div className='group hairline-edge'>
 					<Typography variant='h3' align='center'>
 						Summary
 					</Typography>
@@ -108,7 +108,7 @@ export default function ProductInformation() {
 						{state.productCardSuggestions.isFetchingData && <Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='5rem' />}
 						{!state.productCardSuggestions.isFetchingData &&
 							state.productCardSuggestions.associatedArchetypes.size !== 0 &&
-							[...state.productCardSuggestions.associatedArchetypes].map((archetype) => <Chip className='dark-chip' key={archetype} label={archetype} />)}
+							[...state.productCardSuggestions.associatedArchetypes].map((archetype) => <Chip className='tag-chip' key={archetype} label={archetype} />)}
 						{!state.productCardSuggestions.isFetchingData && state.productCardSuggestions.associatedArchetypes.size === 0 && (
 							<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='3rem' />}>
 								<Hint variant='tight' fullWidth={false}>

@@ -1,8 +1,9 @@
+import { getContrastRatio } from '@mui/material/styles'
 import MuiTheme from '../MuiTheme'
 
 // public/index.html only downloads these Open Sans weights, and font-synthesis is off, so any other weight renders as a neighbour
 const LOADED_WEIGHTS = [400, 600, 800]
-const TEXT_VARIANTS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'subtitle1', 'subtitle2', 'body1', 'body2', 'button'] as const
+const TEXT_VARIANTS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'subtitle1', 'subtitle2', 'body1', 'body2', 'caption', 'overline', 'button'] as const
 
 test('verify every text variant falls back past open sans', () => {
 	TEXT_VARIANTS.forEach((variant) => {
@@ -37,15 +38,26 @@ test('verify each heading level is larger than the one below it, down to body te
 	scale.slice(1).forEach((size, index) => expect(size).toBeLessThan(scale[index]))
 })
 
-test('verify body text renders at about 15px on desktop for comfortable reading', () => {
-	// the root font size is 13px on desktop (index.css)
-	expect(remOf(MuiTheme.typography.body1.fontSize) * 13).toBeGreaterThanOrEqual(14.9)
+// index.css leaves the root at the browser's 16px (100%) so text follows the reader's text-size setting
+const ROOT_PX = 16
+
+test("verify body text renders at apple's 17px for comfortable reading", () => {
+	expect(remOf(MuiTheme.typography.body1.fontSize) * ROOT_PX).toBe(17)
 })
 
 test('verify heading margins scale with the heading size', () => {
 	;(['h2', 'h3', 'h4', 'h5', 'h6', 'subtitle1', 'subtitle2'] as const).forEach((variant) => {
 		expect(String(MuiTheme.typography[variant].marginBottom)).toMatch(/em$/)
 		expect(String(MuiTheme.typography[variant].marginBottom)).not.toMatch(/rem$/)
+	})
+})
+
+test("verify small text stays at apple's 12px floor or more and below body text", () => {
+	const { body2, caption, overline } = MuiTheme.typography
+	;[caption, overline].forEach(({ fontSize }) => {
+		expect(String(fontSize)).toMatch(/rem$/)
+		expect(remOf(fontSize) * ROOT_PX).toBeGreaterThanOrEqual(12)
+		expect(remOf(fontSize)).toBeLessThan(remOf(body2.fontSize))
 	})
 })
 
@@ -114,6 +126,11 @@ test('verify table body text is regular weight so headers stand out', () => {
 test('verify autocomplete overrides only use real css properties', () => {
 	const autocomplete = MuiTheme.components?.MuiAutocomplete?.styleOverrides as Record<string, Record<string, unknown>>
 	expect(Object.keys(autocomplete.option)).not.toContain('paddingReft')
+})
+
+test('verify white text on primary fills (contained buttons, tabs) meets 4.5:1', () => {
+	expect(MuiTheme.palette.primary.contrastText).toBe('#fff')
+	expect(getContrastRatio(MuiTheme.palette.primary.main, '#fff')).toBeGreaterThanOrEqual(4.5)
 })
 
 test('verify popovers are solid so menu text stays readable over any page content', () => {

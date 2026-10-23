@@ -105,7 +105,7 @@ export default function Home() {
 
 				<Trends />
 
-				<div className='group light-shadow'>
+				<div className='group hairline-edge'>
 					<Typography variant='h3' align='center'>
 						Suggestions
 					</Typography>
@@ -114,7 +114,7 @@ export default function Home() {
 						<CardOfTheDay cardOfTheDayData={cotd} />
 					</div>
 
-					<Divider className='dark-translucent-divider-minimal' />
+					<Divider className='spaced-divider' />
 
 					<div className='headline-section'>
 						<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='33rem' />}>

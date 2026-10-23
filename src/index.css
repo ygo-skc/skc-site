@@ -1,35 +1,30 @@
 :root {
-	/* site palette - purple storm over a volcano. flat fills only; depth comes from layering shapes */
-	--sky: #2a1d62;
-	--sky-high: #33257a;
-	--sky-low: #231752;
-	--bolt: #e2c4ff;
-	--bolt-halo: #8a4dff;
-	--rock: #3f3d7a;
-	--rock-shade: #2c2a5c;
-	--rock-light: #56548f;
-	--gate: #6c6a9a;
-	--gate-light: #8987b5;
-	--gate-shade: #57557f;
-	--gate-door: #141033;
-	--basalt: #17113a;
-	--lava: #ff6a1a;
-	--lava-crest: #ffc84a;
-	--lava-crack: #b5300b;
-	--on-dark-text: rgba(241, 236, 255, 0.74);
-	--on-dark-strong: #fff;
-	--on-dark-hover: rgba(12, 6, 34, 0.35);
-	--ember: #ffb23e;
-	--stone: #e9e3fa;
-	--stone-hover: #ddd3f7;
-	--stone-text: #3b2d7a;
-	/* ban list statuses - limited uses --ember / --lava-crack; -ink is the chip text */
-	--forbidden: #ff0000;
-	--forbidden-ink: #a3003b;
-	--semi-limited: #4caf50;
-	--semi-limited-ink: #246b28;
-	--limited-three: #00b5e2;
-	--limited-three-ink: #00607a;
+	/* ban list statuses - apple's system red / orange / green / teal; -ink is a darker shade for text on a status tint (4.5:1 or better) */
+	--forbidden: #ff3b30;
+	--forbidden-ink: #d70015;
+	--limited: #ff9500;
+	--limited-ink: #c93400;
+	--semi-limited: #34c759;
+	--semi-limited-ink: #1e7a36;
+	--limited-three: #30b0c7;
+	--limited-three-ink: #007180;
+	/* apple-style neutrals - the page is apple.com's light grey, so the near-white capsules and panels stand off it */
+	--page: #f5f5f7;
+	--capsule: #fbfbfd;
+	--capsule-track: #ececf0;
+	--capsule-lens: #fff;
+	--capsule-edge: #d6d6dd;
+	--capsule-hover: #e3e3e8;
+	--capsule-text: #1d1d1f;
+	--capsule-muted: #636368;
+	/* apple's system purple - fills (dots, rings, carets, focus rings) use --accent; text, and fills that carry white text, use the
+	 * darker --accent-text, which keeps 4.5:1 on white, on accent tints and under white text (#af52de manages only ~4.1:1) */
+	--accent: #af52de;
+	--accent-text: #8944ab;
+	--on-accent: #fff;
+	/* apple's system orange as the secondary accent - the same orange as --limited, so --secondary-text matches --limited-ink */
+	--secondary: #ff9500;
+	--secondary-text: #c93400;
 }
 
 html {
@@ -40,35 +35,18 @@ html {
 	text-rendering: optimizeLegibility;
 
 	-webkit-text-size-adjust: 100%;
-}
-
-@media screen and (min-width: 0px) {
-	html {
-		font-size: 12.3px;
-	}
-}
-@media screen and (min-width: 601px) {
-	html {
-		font-size: 12.5px;
-	}
-}
-@media screen and (min-width: 1201px) {
-	html {
-		font-size: 13px;
-	}
+	/* the browser's root size (16px by default) at every width, so rem text follows the reader's text-size setting.
+	 * the theme's apple type scale is set in rem off it - only headings change size by breakpoint (MuiTheme.ts) */
+	font-size: 100%;
 }
 
 body {
 	margin: 0 auto;
-	background: #fbf7f4;
+	background: var(--page);
 }
 
 li {
 	font-family: open sans, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
-}
-
-.MuiExpansionPanel-root:before {
-	height: 0px !important;
 }
 
 .root {
@@ -100,24 +78,16 @@ li {
 	overflow: auto;
 }
 
-.link-container a,
-.link {
-	background: rgba(253, 237, 221, 0.6);
+/* doubled class beats MUI Link's own colour and underline */
+.link.MuiLink-root {
 	padding: 0.2rem;
-	color: #ff6600 !important;
-	text-decoration: none !important;
+	color: var(--accent-text);
+	text-decoration: none;
 }
 
-.heavy-shadow {
-	box-shadow: rgba(0, 0, 0, 0.3) 0.2rem 0.2rem 0.5rem;
-}
-
-.light-shadow {
-	box-shadow: rgba(0, 0, 0, 0.2) 0.1rem 0.1rem 0.5rem;
-}
-
-.very-light-shadow {
-	box-shadow: rgba(0, 0, 0, 0.1) 0.05rem 0.1rem 0.5rem;
+/* apple-style surfaces stand off the page with a hairline edge, not a drop shadow */
+.hairline-edge {
+	box-shadow: 0 0 0 1px var(--capsule-edge);
 }
 
 .search-icon-container {
@@ -127,7 +97,7 @@ li {
 .group {
 	padding: 1.25rem !important;
 	border-radius: 2rem;
-	background: #f5f5f5;
+	background: var(--page);
 }
 
 .group:not(:last-child) {
@@ -159,62 +129,30 @@ li {
 	margin-bottom: 2.25rem;
 }
 
-.light-translucent-divider {
+/* hairline rules in the edge grey, like the rest of the site's dividers */
+.spaced-divider.MuiDivider-root,
+.hairline-divider.MuiDivider-root {
 	margin: auto;
 	margin-top: 1.25rem;
 	margin-bottom: 1.5rem;
-	height: 3px;
-	border-radius: 1000rem;
+	border-color: var(--capsule-edge);
+}
+
+.hairline-divider.MuiDivider-root {
 	max-width: 97%;
-
-	background-color: rgba(255, 255, 255, 0.25);
 }
 
-.dark-translucent-divider-minimal.MuiDivider-root {
-	margin: auto;
-	margin-top: 1.25rem;
-	margin-bottom: 1.5rem;
-}
-
-.dark-translucent-divider.MuiDivider-root {
-	margin: auto;
-	margin-top: 1.25rem;
-	margin-bottom: 1.5rem;
-	height: 2px;
-	border-radius: 1000rem;
-	max-width: 97%;
-
-	background-color: rgba(0, 0, 0, 0.45);
-}
-
-.dark-translucent-divider-tight.MuiDivider-root {
-	margin: auto;
-	margin-top: 1rem;
-	height: 2px;
-	border-radius: 1000rem;
-	max-width: 97%;
-
-	background-color: rgba(0, 0, 0, 0.45);
-}
-
-.dark-chip.MuiChip-root,
-.dark-chip-condensed.MuiChip-root {
+.tag-chip.MuiChip-root,
+.tag-chip-condensed.MuiChip-root {
 	height: auto;
 }
 
-.dark-chip span.MuiChip-label,
-.dark-chip-condensed span.MuiChip-label {
-	font-weight: 600;
-}
-
-.dark-chip span.MuiChip-label {
+.tag-chip span.MuiChip-label {
 	padding: 0.3rem 0.6rem 0.3rem 0.6rem;
-	font-size: 0.98rem;
 }
 
-.dark-chip-condensed span.MuiChip-label {
+.tag-chip-condensed span.MuiChip-label {
 	padding: 0.2rem 0.4rem 0.2rem 0.4rem;
-	font-size: 0.9rem;
 }
 
 .aggregate-anchor img {

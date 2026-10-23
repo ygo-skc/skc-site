@@ -4,15 +4,15 @@ import LinkBehavior from './LinkBehavior'
 const MuiTheme = createTheme({
 	palette: {
 		primary: {
-			main: '#53539e',
+			main: '#8944ab', // apple's increased-contrast system purple (= --accent-text) - mui fills buttons with it under white text, which #af52de holds only ~4.1:1
 			// contrastDefaultColor: 'light',
 		},
 		secondary: {
-			main: '#ff8f44',
+			main: '#ff9500', // apple system orange, the same as --secondary in index.css
 			// contrastDefaultColor: 'light',
 		},
 		error: {
-			main: '#f50057',
+			main: '#ff3b30', // apple system red
 		},
 	},
 	components: {
@@ -35,8 +35,8 @@ const MuiTheme = createTheme({
 		MuiIconButton: {
 			styleOverrides: {
 				root: {
-					background: '#eee',
-					color: 'var(--basalt)',
+					background: 'var(--capsule-track)',
+					color: 'var(--capsule-text)',
 				},
 			},
 		},
@@ -52,30 +52,30 @@ const MuiTheme = createTheme({
 				root: {
 					fontWeight: 600,
 					lineHeight: 1.4,
-					color: 'var(--gate-shade)',
-					fontSize: '1.3rem',
+					color: 'var(--capsule-muted)',
+					fontSize: '1.0625rem', // 17px
 				},
 			},
 		},
 		MuiChip: {
 			styleOverrides: {
-				// soft tags - pale lavender with indigo text, using the site palette from index.css
+				// apple-style tags - grey capsules with near-black text, using the neutrals from index.css
 				root: {
 					marginRight: '.55rem',
 					marginTop: '.5rem',
-					borderRadius: '6px',
-					backgroundColor: 'var(--stone)',
-					color: 'var(--stone-text)',
-					fontSize: '1.05rem',
+					borderRadius: '999px',
+					backgroundColor: 'var(--capsule-track)',
+					color: 'var(--capsule-text)',
+					fontSize: '0.9375rem', // 15px, body2
 					fontWeight: 600,
 				},
 				clickable: {
 					'&:hover': {
-						backgroundColor: 'var(--stone-hover)',
+						backgroundColor: 'var(--capsule-hover)',
 					},
 					'&:focus-visible': {
-						backgroundColor: 'var(--stone-hover)',
-						outline: '2px solid var(--stone-text)',
+						backgroundColor: 'var(--capsule-hover)',
+						outline: '2px solid var(--accent)',
 						outlineOffset: '2px',
 					},
 				},
@@ -84,7 +84,7 @@ const MuiTheme = createTheme({
 		MuiBadge: {
 			styleOverrides: {
 				badge: {
-					fontSize: '1.0rem',
+					fontSize: '0.75rem', // 12px
 					marginTop: '.4rem',
 					marginRight: '.5rem',
 				},
@@ -97,10 +97,10 @@ const MuiTheme = createTheme({
 			styleOverrides: {
 				paper: {
 					backgroundColor: '#fff',
-					color: 'var(--basalt)',
+					color: 'var(--capsule-text)',
 					borderRadius: '12px',
-					border: '1px solid var(--stone)',
-					boxShadow: '0 8px 28px color-mix(in srgb, var(--basalt) 22%, transparent)',
+					border: '1px solid var(--capsule-edge)',
+					boxShadow: '0 8px 28px color-mix(in srgb, var(--capsule-text) 18%, transparent)',
 				},
 			},
 		},
@@ -109,9 +109,8 @@ const MuiTheme = createTheme({
 				paper: {
 					padding: '.5rem',
 					borderRadius: '1.5rem',
-					border: '3px rgba(135, 120, 229, .7)',
-					borderStyle: 'solid',
-					boxShadow: 'rgba(0,0,0,0.12) 0px 1px 6px',
+					border: '1px solid var(--capsule-edge)',
+					boxShadow: '0 8px 28px color-mix(in srgb, var(--capsule-text) 18%, transparent)', // same lift as the popovers
 				},
 				option: {
 					paddingLeft: '0rem',
@@ -128,13 +127,13 @@ const MuiTheme = createTheme({
 				tooltip: {
 					fontWeight: 400,
 					lineHeight: 1.45,
-					fontSize: '1.05rem',
+					fontSize: '0.875rem', // 14px
 					padding: '.75rem',
-					backgroundColor: 'var(--basalt)',
+					backgroundColor: 'var(--capsule-text)',
 					borderRadius: '1rem',
 				},
 				arrow: {
-					color: 'var(--basalt)',
+					color: 'var(--capsule-text)',
 				},
 			},
 		},
@@ -142,15 +141,15 @@ const MuiTheme = createTheme({
 			styleOverrides: {
 				stickyHeader: {
 					fontWeight: 800,
-					fontSize: '1.1rem',
+					fontSize: '0.9375rem', // 15px
 				},
 				head: {
 					fontWeight: 800,
-					fontSize: '1.1rem',
+					fontSize: '0.9375rem', // 15px
 				},
 				body: {
 					fontWeight: 400,
-					fontSize: '1.05rem',
+					fontSize: '0.9375rem', // 15px
 				},
 				root: {
 					padding: '.4rem',
@@ -161,8 +160,8 @@ const MuiTheme = createTheme({
 		MuiPaper: {
 			styleOverrides: {
 				elevation1: {
-					boxShadow: 'rgba(0,0,0,0.12) 0px 1px 6px',
-					border: '1px solid rgb(221, 221, 221)',
+					boxShadow: 'none',
+					border: '1px solid var(--capsule-edge)',
 				},
 			},
 		},
@@ -177,77 +176,108 @@ const MuiTheme = createTheme({
 		// line heights are unitless so they keep their ratio when css resizes the text - roomy for reading text, tighter as headings grow
 		button: {
 			lineHeight: 1.13,
-			fontSize: '1.15rem',
+			fontSize: '0.9375rem', // 15px
 			textTransform: 'none',
 		},
-		// sizes step up by roughly 1.15-1.2x per level from ~15px body text, so each heading level reads as distinct
+		// apple's web type scale, in rem off the browser's 16px root (index.css sets 100%, so text follows the reader's text-size setting):
+		// 17px body, 15px secondary text, 12px captions, headings stepping 19 -> 40px. like apple.com, only headings shrink on phones.
 		// margins are in em so the space under a heading grows with the heading
 		h1: {
 			fontWeight: 800,
-			color: 'var(--basalt)',
+			color: 'var(--capsule-text)',
 			lineHeight: 1.15,
-			fontSize: '2.8rem',
+			fontSize: '2.5rem', // 40px, 32px on phones
+			'@media (max-width: 599.95px)': {
+				fontSize: '2rem',
+			},
 		},
 		h2: {
 			fontWeight: 800,
-			color: 'var(--basalt)',
+			color: 'var(--capsule-text)',
 			lineHeight: 1.2,
 			marginBottom: '0.5em',
-			fontSize: '2.4rem',
+			fontSize: '2rem', // 32px, 28px on phones
+			'@media (max-width: 599.95px)': {
+				fontSize: '1.75rem',
+			},
 		},
 		h3: {
 			fontWeight: 800,
-			color: 'var(--basalt)',
+			color: 'var(--capsule-text)',
 			lineHeight: 1.25,
 			marginBottom: '0.55em',
-			fontSize: '2rem',
+			fontSize: '1.75rem', // 28px, 24px on phones
+			'@media (max-width: 599.95px)': {
+				fontSize: '1.5rem',
+			},
 		},
 		h4: {
 			fontWeight: 600,
-			color: 'var(--rock)',
+			color: 'var(--capsule-text)',
 			lineHeight: 1.3,
 			marginBottom: '0.5em',
-			fontSize: '1.75rem',
+			fontSize: '1.5rem', // 24px, 21px on phones
+			'@media (max-width: 599.95px)': {
+				fontSize: '1.3125rem',
+			},
 		},
 		h5: {
 			fontWeight: 600,
 			lineHeight: 1.3,
 			marginBottom: '0.5em',
-			color: 'var(--gate-shade)',
-			fontSize: '1.5rem',
+			color: 'var(--capsule-muted)',
+			fontSize: '1.3125rem', // 21px, 19px on phones
+			'@media (max-width: 599.95px)': {
+				fontSize: '1.1875rem',
+			},
 		},
 		h6: {
 			fontWeight: 600,
 			lineHeight: 1.35,
 			marginBottom: '0.5em',
-			color: 'var(--gate-shade)',
-			fontSize: '1.3rem',
+			color: 'var(--capsule-muted)',
+			fontSize: '1.1875rem', // 19px
 		},
 		subtitle1: {
 			fontWeight: 600,
 			lineHeight: 1.4,
 			marginBottom: '0.6em',
-			color: 'var(--basalt)',
-			fontSize: '1.25rem',
+			color: 'var(--capsule-text)',
+			fontSize: '1.0625rem', // 17px
 		},
 		subtitle2: {
 			fontWeight: 600,
 			lineHeight: 1.4,
 			marginBottom: '0.65em',
-			color: 'var(--basalt)',
-			fontSize: '1.1rem',
+			color: 'var(--capsule-text)',
+			fontSize: '0.9375rem', // 15px
 		},
 		body1: {
 			fontWeight: 400,
-			color: 'var(--basalt)',
+			color: 'var(--capsule-text)',
 			lineHeight: 1.55,
-			fontSize: '1.15rem',
+			fontSize: '1.0625rem', // 17px
 		},
 		body2: {
 			fontWeight: 400,
-			color: 'var(--basalt)',
+			color: 'var(--capsule-text)',
 			lineHeight: 1.5,
-			fontSize: '1.05rem',
+			fontSize: '0.9375rem', // 15px
+		},
+		// small labels, counts and dates - apple's 12px floor for text
+		caption: {
+			fontWeight: 400,
+			color: 'var(--capsule-muted)',
+			lineHeight: 1.4,
+			fontSize: '0.75rem', // 12px
+		},
+		overline: {
+			fontWeight: 600,
+			color: 'var(--capsule-muted)',
+			lineHeight: 1.4,
+			letterSpacing: '0.06em',
+			textTransform: 'uppercase',
+			fontSize: '0.75rem', // 12px
 		},
 	},
 })

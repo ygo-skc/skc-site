@@ -28,7 +28,7 @@ const EventItem: FC<_EventItem> = ({ event, showEventDialog, setEventDialogEvent
 		parentStyle = 'dialog-event-item'
 		notesStyle = 'markdown'
 	} else {
-		parentStyle = 'event-item very-light-shadow'
+		parentStyle = 'event-item hairline-edge'
 		notesStyle = 'event-notes markdown'
 	}
 

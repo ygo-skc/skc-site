@@ -29,8 +29,8 @@ const ProductGridItem: FC<ProductGridItemProps> = ({ id, name, type, subType, to
 					</Typography>
 					<Typography variant='h5'>{name}</Typography>
 					<div>
-						<Chip className='dark-chip-condensed' key={type} label={type} />
-						<Chip className='dark-chip-condensed' key={subType} label={subType} />
+						<Chip className='tag-chip-condensed' key={type} label={type} />
+						<Chip className='tag-chip-condensed' key={subType} label={subType} />
 					</div>
 				</div>
 			</Link>

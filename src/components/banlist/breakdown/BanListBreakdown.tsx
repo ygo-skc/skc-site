@@ -62,7 +62,7 @@ const BanListBreakdown: FC<BanListBreakdownProps> = memo(
 					/>
 				)}
 
-				<Divider className='dark-translucent-divider' />
+				<Divider className='hairline-divider' />
 
 				{isFetchingBanListNewContent || isFetchingBanListRemovedContent ? (
 					<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='80px' />
