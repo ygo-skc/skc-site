@@ -8,6 +8,7 @@ import * as environment from './.env-cmdrc.json'
 import * as packageInfo from './package.json'
 import webpack from 'webpack'
 import webpackDashboard from 'webpack-dashboard/plugin'
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 
 interface Configuration extends WebpackConfiguration {
 	devServer?: WebpackDevServerConfiguration
@@ -55,18 +56,6 @@ function config(env: any, argv: { mode?: string }) {
 					exclude: /node_modules/,
 				},
 				{
-					test: /\.tsx$/,
-					use: [
-						{
-							loader: 'ts-loader',
-							options: {
-								compilerOptions: { noEmit: false },
-							},
-						},
-					],
-					exclude: /node_modules/,
-				},
-				{
 					test: /\.css$/,
 					use: ['style-loader', 'css-loader'],
 				},
@@ -87,6 +76,8 @@ function config(env: any, argv: { mode?: string }) {
 				'process.env.REACT_APP_CLIENT_ID': JSON.stringify(environment[e].REACT_APP_CLIENT_ID),
 				'process.env.REACT_APP_VERSION': JSON.stringify(packageInfo.version),
 			}),
+			// babel only strips types, so type errors come from tsc in a separate process - they still fail a production build
+			new ForkTsCheckerWebpackPlugin(),
 			// only start:dashboard runs the dashboard that this plugin reports to
 			...(env?.dashboard ? [new webpackDashboard()] : []),
 		],
