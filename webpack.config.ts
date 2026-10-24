@@ -8,7 +8,6 @@ import * as environment from './.env-cmdrc.json'
 import * as packageInfo from './package.json'
 import webpack from 'webpack'
 import webpackDashboard from 'webpack-dashboard/plugin'
-import { CleanWebpackPlugin } from 'clean-webpack-plugin'
 
 interface Configuration extends WebpackConfiguration {
 	devServer?: WebpackDevServerConfiguration
@@ -36,6 +35,7 @@ function config(env: any) {
 			path: path.resolve(__dirname, 'build'),
 			filename: 'bundle.js',
 			publicPath: '/',
+			clean: true,
 		},
 		// webpack 5 comes with devServer which loads in development mode
 		devServer: {
@@ -72,7 +72,7 @@ function config(env: any) {
 			],
 		},
 		resolve: {
-			extensions: ['.tsx', '.ts', '.js', 'jsx'],
+			extensions: ['.tsx', '.ts', '.js', '.jsx'],
 		},
 		plugins: [
 			new HtmlWebpackPlugin({ template: './public/index.html', filename: 'index.html', inject: 'body' }),
@@ -86,11 +86,8 @@ function config(env: any) {
 				'process.env.REACT_APP_CLIENT_ID': JSON.stringify(environment[e].REACT_APP_CLIENT_ID),
 				'process.env.REACT_APP_VERSION': JSON.stringify(packageInfo.version),
 			}),
-			new webpackDashboard(),
-			new CleanWebpackPlugin({
-				cleanAfterEveryBuildPatterns: ['static*.*', '!static1.js'],
-				verbose: true,
-			}),
+			// only start:dashboard runs the dashboard that this plugin reports to
+			...(env?.dashboard ? [new webpackDashboard()] : []),
 		],
 	} as Configuration
 }
