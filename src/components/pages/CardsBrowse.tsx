@@ -2,19 +2,23 @@ import '../../css/util/database-search-styles.css'
 import '../../css/main-pages/card-browse.css'
 
 import { useState, useEffect, lazy, useReducer, startTransition, Suspense } from 'react'
-import { Skeleton, Typography } from '@mui/material'
+import axios from 'axios'
+import { Skeleton, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
+import ViewListRoundedIcon from '@mui/icons-material/ViewListRounded'
+import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded'
 
 import FetchHandler from '../../helper/FetchHandler'
 import * as DownstreamServices from '../../helper/DownstreamServices'
 
 import CardBrowse from '../util/search/CardBrowse'
-import { SKCTable, Section } from 'skc-rcl'
-import cardDisplayGridReducer, { CardDisplayGridStateReducerActionType } from '../../reducers/CardDisplayGridReducer'
+import { usePageView } from '../util/ResultsViewPreference'
+import CardBrowseResults, { CardBrowseView } from '../util/search/CardBrowseResults'
+import cardDisplayGridReducer, { CardDisplayGridState, CardDisplayGridStateReducerActionType } from '../../reducers/CardDisplayGridReducer'
 import cardBrowseReducer from '../../reducers/CardBrowseCriteriaReducer'
 
-import '../../css/util/headline.css'
+// with no criteria the answer is every card (~680KB gzipped), more than the default timeout allows on a slow phone connection
+const BROWSE_TIMEOUT = 10000
 
-const CardDisplayGrid = lazy(() => import('../util/grid/CardDisplayGrid'))
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 
 function generateBrowseQueryURL(selectedCriteria: YGOData.CardBrowseValues[]) {
@@ -54,6 +58,21 @@ function generateBrowseQueryURL(selectedCriteria: YGOData.CardBrowseValues[]) {
 		.join(',')}&ranks=${criteriaMap.get('ranks').join(',')}&linkRatings=${criteriaMap.get('linkRatings').join(',')}`
 }
 
+function browseStatus(hasCriteria: boolean, loadFailed: boolean, { isLoading, totalResults, totalDisplaying }: CardDisplayGridState) {
+	if (isLoading) return 'Finding cards…'
+	if (loadFailed) return 'Couldn’t load cards - check your connection and try again'
+	if (totalResults === 0) return hasCriteria ? 'No cards match these filters' : 'No cards to show'
+	return (
+		<>
+			{hasCriteria ? '' : 'All '}
+			{totalResults.toLocaleString()} {totalResults === 1 ? 'card' : 'cards'}
+			{/* dropped on phones so the count stays on one line, as "Finding cards…" does */}
+			<span className='card-browse__sort'> · sorted by name</span>
+			{totalDisplaying < totalResults && ` · showing ${totalDisplaying}`}
+		</>
+	)
+}
+
 export default function BrowseCards() {
 	const [{ selectedCriteria }, browseCriteriaDispatch] = useReducer(cardBrowseReducer, { selectedCriteria: [] })
 
@@ -66,10 +85,8 @@ export default function BrowseCards() {
 	})
 
 	const [skcCardBrowseCriteriaOutput, setSkcCardBrowseCriteriaOutput] = useState<YGOData.CardBrowseCriteria>({} as YGOData.CardBrowseCriteria)
-
-	const browseSummaryStats: string[][] = []
-	browseSummaryStats.push(['Total', cardGridState.totalResults.toString()])
-	browseSummaryStats.push(['Displaying', cardGridState.totalDisplaying.toString()])
+	const [loadFailed, setLoadFailed] = useState(false)
+	const [view, setView] = usePageView<CardBrowseView>({ list: 'list', grid: 'grid' })
 
 	useEffect(() => {
 		FetchHandler.handleFetch<YGOData.CardBrowseCriteria>(DownstreamServices.SKC_API_ENDPOINTS.browseCriteria, (json) => {
@@ -78,20 +95,39 @@ export default function BrowseCards() {
 	}, [])
 
 	useEffect(() => {
-		if (selectedCriteria === undefined || selectedCriteria.length === 0) {
-			cardDisplayGridDispatch({ type: CardDisplayGridStateReducerActionType.CLEAR_GRID })
-		} else {
-			cardDisplayGridDispatch({ type: CardDisplayGridStateReducerActionType.LOADING_GRID })
-			startTransition(() => {
-				FetchHandler.handleFetch<YGOData.CardBrowseResults>(generateBrowseQueryURL(selectedCriteria), (json) => {
+		// with no criteria the endpoint returns every card, so there's something to browse before any filter is picked
+		let isCurrent = true
+		// criteria that change mid-download cancel it, so a phone isn't still pulling the whole card list after a filter is picked
+		const request = axios.CancelToken.source()
+		setLoadFailed(false)
+		cardDisplayGridDispatch({ type: CardDisplayGridStateReducerActionType.LOADING_GRID })
+		startTransition(() => {
+			FetchHandler.handleFetch<YGOData.CardBrowseResults>(
+				generateBrowseQueryURL(selectedCriteria ?? []),
+				(json) => {
+					// a slower answer for criteria that have since changed (the unfiltered list is the big one) mustn't replace newer results
+					if (!isCurrent) return
 					cardDisplayGridDispatch({
 						type: CardDisplayGridStateReducerActionType.INIT_GRID,
 						results: json.results,
 						totalResults: json.numResults,
 						totalDisplaying: 50,
 					})
-				})
+				},
+				false,
+				request,
+				BROWSE_TIMEOUT
+			)?.catch((err) => {
+				// said in place rather than sending the reader to an error page, so the filters stay usable
+				if (!isCurrent || axios.isCancel(err)) return
+				setLoadFailed(true)
+				cardDisplayGridDispatch({ type: CardDisplayGridStateReducerActionType.CLEAR_GRID })
 			})
+		})
+
+		return () => {
+			isCurrent = false
+			request.cancel()
 		}
 	}, [selectedCriteria])
 
@@ -105,27 +141,30 @@ export default function BrowseCards() {
 				<Breadcrumb crumbs={['Home', 'Card Browse']} />
 			</Suspense>
 
-			<div className='headline-v1'>
-				<Section sectionHeaderBackground='product' sectionName='Current Criteria'>
-					<div className='section-content'>
-						<CardBrowse browseCriteriaDispatch={browseCriteriaDispatch} selectedCriteria={selectedCriteria} skcCardBrowseCriteriaOutput={skcCardBrowseCriteriaOutput} />
-					</div>
-				</Section>
+			<section className='card-browse-header'>
+				<Typography variant='subtitle2' component='p' className='card-browse-header__eyebrow'>
+					Card Browse
+				</Typography>
+				<Typography variant='h1'>Find cards by what they are</Typography>
+				<CardBrowse browseCriteriaDispatch={browseCriteriaDispatch} selectedCriteria={selectedCriteria} skcCardBrowseCriteriaOutput={skcCardBrowseCriteriaOutput} />
+			</section>
 
-				<div className='group hairline-edge'>
-					<Typography variant='h3' align='center'>
-						Results
-					</Typography>
-					{<SKCTable header={[]} rows={browseSummaryStats} />}
-				</div>
+			<div className='card-browse__toolbar'>
+				<Typography variant='body1' className='card-browse__count' aria-live='polite'>
+					{browseStatus(selectedCriteria.length > 0, loadFailed, cardGridState)}
+				</Typography>
+				<ToggleButtonGroup className='card-browse__view' exclusive aria-label='View' value={view} onChange={(_, value: CardBrowseView | null) => value && setView(value)}>
+					<ToggleButton value='list'>
+						<ViewListRoundedIcon />
+						List
+					</ToggleButton>
+					<ToggleButton value='grid'>
+						<GridViewRoundedIcon />
+						Grid
+					</ToggleButton>
+				</ToggleButtonGroup>
 			</div>
-
-			<Section sectionHeaderBackground='product' sectionName='Browse Results'>
-				<div className='section-content'>
-					<Typography variant='h5'>Results Are Sorted Alphabetically</Typography>
-					<CardDisplayGrid cardGridState={cardGridState} dispatch={cardDisplayGridDispatch} />
-				</div>
-			</Section>
+			<CardBrowseResults cardGridState={cardGridState} dispatch={cardDisplayGridDispatch} view={view} />
 		</div>
 	)
 }

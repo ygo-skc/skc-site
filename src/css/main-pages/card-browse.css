@@ -1,0 +1,583 @@
+/* page header: a white sheet - purple eyebrow, h1, and the criteria field as a grey pill holding the picked criteria as white tokens */
+.card-browse-header {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 6px;
+	margin-bottom: 40px;
+	padding: 36px 32px 32px;
+	border-radius: 28px;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+	text-align: center;
+}
+
+.card-browse-header .card-browse-header__eyebrow {
+	color: var(--accent-text);
+}
+
+.card-browse-header .search-bar {
+	width: 100%;
+	max-width: 760px;
+	margin: 14px 0 0;
+}
+
+.card-browse-header .search-input-field .MuiInputBase-root {
+	gap: 8px;
+	min-height: 56px;
+	padding: 8px 12px 8px 20px;
+}
+
+/* mui's placeholder is 42% of the text colour - only ~2.5:1 on the grey field */
+.card-browse-header .search-input-field input::placeholder {
+	color: var(--capsule-muted);
+	opacity: 1;
+}
+
+.search-input-field__icon.MuiSvgIcon-root {
+	font-size: 22px;
+	color: var(--capsule-muted);
+}
+
+/* white tokens on the grey field, so they read as picked rather than as more grey */
+.card-browse-token.MuiChip-root {
+	margin: 0;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+}
+
+.card-browse-token .MuiChip-deleteIcon {
+	color: var(--capsule-muted);
+}
+
+/* count on the left, list | grid segmented control on the right. both views span the page's width, like the header, so switching
+ * between them doesn't move anything */
+.card-browse__toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	margin: 0 0 16px;
+	padding: 0 4px;
+}
+
+.card-browse__count.MuiTypography-root {
+	margin: 0;
+	color: var(--capsule-muted);
+}
+
+/* segmented control: a grey track with a white lens under the current view, like the ban list's Table | Cards */
+.card-browse__view.MuiToggleButtonGroup-root {
+	gap: 2px;
+	padding: 3px;
+	border-radius: 999px;
+	background: var(--capsule-track);
+}
+
+.card-browse__view .MuiToggleButton-root.MuiToggleButtonGroup-grouped {
+	gap: 6px;
+	margin: 0;
+	padding: 6px 14px;
+	border: 0;
+	border-radius: 999px;
+	color: var(--capsule-muted);
+}
+
+.card-browse__view .MuiToggleButton-root.Mui-selected,
+.card-browse__view .MuiToggleButton-root.Mui-selected:hover {
+	background: var(--capsule-lens);
+	color: var(--capsule-text);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+}
+
+.card-browse__view .MuiSvgIcon-root {
+	font-size: 18px;
+}
+
+/* results: the list on a capsule sheet taking the width the preview's white card (a fixed column) leaves; below md the list is alone */
+.card-browse-results {
+	display: flex;
+	align-items: flex-start;
+	gap: 20px;
+	margin-bottom: 40px;
+	/* rcl's card preview takes the site palette for its neutral text */
+	--ygo-card-preview-text: var(--capsule-text);
+	--ygo-card-preview-muted: var(--capsule-muted);
+	--ygo-card-preview-art-border: var(--capsule-track);
+}
+
+.card-browse-results__list {
+	display: flex;
+	flex: 1 1 380px;
+	flex-direction: column;
+	gap: 8px;
+	min-width: 0;
+	padding: 10px;
+	border-radius: 24px;
+	background: var(--capsule);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+}
+
+.card-browse-results__list ul {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.card-browse-row {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 8px 12px 8px 8px;
+	border: 0;
+	border-radius: 14px;
+	background: none;
+	color: var(--capsule-text);
+	font: inherit;
+	text-align: left;
+	cursor: pointer;
+}
+
+.card-browse-row--loading {
+	pointer-events: none;
+}
+
+.card-browse-row:hover {
+	background: var(--capsule-hover);
+}
+
+.card-browse-row:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: -2px;
+}
+
+.card-browse-row[aria-pressed='true'] {
+	background: var(--accent-text);
+	color: var(--on-accent);
+}
+
+.card-browse-row[aria-pressed='true']:focus-visible {
+	outline-color: var(--on-accent);
+}
+
+/* round, like the search popup's and trending's thumbnails */
+.card-browse-row .card-browse-row__thumb {
+	flex: none;
+	width: 44px;
+	height: 44px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+.card-browse-row__text {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	min-width: 0;
+}
+
+.card-browse-row__text .MuiTypography-root {
+	margin: 0;
+}
+
+/* the name follows the row's colour, so it turns white on the picked row's purple */
+.card-browse-row .card-browse-row__name {
+	color: inherit;
+}
+
+.card-browse-row__name,
+.card-browse-row__sub {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.card-browse-row .card-browse-row__sub {
+	color: var(--capsule-muted);
+}
+
+.card-browse-row[aria-pressed='true'] .card-browse-row__sub {
+	color: var(--on-accent);
+}
+
+.card-browse-row .card-browse-row__frame-skeleton {
+	flex: none;
+	width: 10px;
+	height: 10px;
+}
+
+/* rcl's frame indicator (its colours, untouched) shrunk to a dot */
+.card-browse-row__frame {
+	display: inline-flex;
+}
+
+.card-browse-row__frame .indicator.small {
+	width: 10px;
+	height: 10px;
+	box-shadow: 0 0 0 1px color-mix(in srgb, var(--capsule-text) 15%, transparent);
+}
+
+.card-browse-results__more.MuiButton-root {
+	margin: 0 4px 4px;
+	padding: 9px 20px;
+	border-radius: 999px;
+	background: var(--capsule-track);
+	color: var(--capsule-text);
+}
+
+.card-browse-results__more.MuiButton-root:hover {
+	background: var(--capsule-hover);
+}
+
+.card-browse-preview {
+	position: sticky;
+	top: 16px;
+	display: flex;
+	flex: 0 1 560px;
+	flex-direction: column;
+	gap: 14px;
+	min-width: 0;
+	padding: 24px 28px 28px;
+	border-radius: 28px;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+}
+
+/* loading: the preview's own card with its pieces (count, art, name, attribute + type chip, effect, open pill) as grey shapes */
+/* rcl's preview spaces its pieces 10px apart */
+.card-browse-preview__card-skeleton {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.card-browse-preview .card-browse-preview__art-skeleton {
+	width: 100%;
+	height: auto;
+	aspect-ratio: 1.35 / 1;
+	border-radius: 12px;
+}
+
+.card-browse-preview__details-skeleton {
+	display: flex;
+	gap: 6px;
+}
+
+.card-browse-preview .card-browse-preview__chip-skeleton {
+	width: 56px;
+	height: 24px;
+	border-radius: 6px;
+}
+
+.card-browse-preview .card-browse-preview__open-skeleton {
+	width: 154px;
+	height: 37px;
+	border-radius: 999px;
+}
+
+.card-browse-preview .card-browse-preview__position {
+	margin: 0;
+	color: var(--capsule-muted);
+}
+
+.card-browse-results .card-browse-results__open.MuiButton-root {
+	align-self: flex-start;
+	padding: 10px 20px;
+	border-radius: 999px;
+	background: var(--accent-text);
+}
+
+/* grid view: rcl's cards, columns sized like the ban list's grid */
+.card-browse-results--grid {
+	flex-direction: column;
+	align-items: center;
+	gap: 16px;
+}
+
+.card-browse-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(240px, calc(50% - 9px)), 1fr));
+	gap: 18px;
+	width: 100%;
+	margin: 0 0 40px;
+	padding: 0;
+	list-style: none;
+}
+
+.card-browse-results--grid .card-browse-grid {
+	margin: 0;
+}
+
+/* loading tiles shaped like rcl's card: square art inset over its frame-coloured body */
+.card-browse-grid__skeleton {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 8px;
+}
+
+.card-browse-grid__skeleton .card-browse-grid__skeleton-art {
+	width: 96%;
+	height: auto;
+	aspect-ratio: 1;
+	border-radius: 20px;
+}
+
+.card-browse-grid__skeleton .card-browse-grid__skeleton-body {
+	width: 100%;
+	height: 169px;
+	border-radius: 20px;
+}
+
+.card-browse-results--grid .card-browse-results__more.MuiButton-root {
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+}
+
+/* phones: the tapped row opens its preview underneath, on a white card */
+.card-browse-results__item--peeked {
+	border-radius: 16px;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+}
+
+.card-browse-results__peek {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	padding: 4px 14px 14px;
+}
+
+.card-browse-results__peek .card-browse-results__open.MuiButton-root {
+	align-self: stretch;
+	min-height: 46px;
+}
+
+/* the field's suggestions: "Add all N filters" (purple when highlighted, a tint otherwise) over the single filters, each with its group */
+.criteria-suggestions.MuiPaper-root {
+	margin-top: 8px;
+	padding: 8px;
+}
+
+.criteria-suggestions .MuiAutocomplete-listbox {
+	padding: 0;
+}
+
+.criteria-suggestions .MuiAutocomplete-noOptions {
+	padding: 10px 12px;
+	color: var(--capsule-muted);
+}
+
+.criteria-suggestions__group ul {
+	margin: 0;
+	padding: 0;
+}
+
+.criteria-suggestions .criteria-suggestions__heading {
+	margin: 10px 12px 4px;
+	color: var(--capsule-muted);
+}
+
+.criteria-suggestions .criteria-suggestion.MuiAutocomplete-option {
+	gap: 12px;
+	min-height: 48px;
+	padding: 8px 12px;
+	border-radius: 14px;
+}
+
+.criteria-suggestions .criteria-suggestion.MuiAutocomplete-option.Mui-focused {
+	background: var(--capsule-track);
+}
+
+.criteria-suggestion .criteria-suggestion__group {
+	margin-left: auto;
+	color: var(--capsule-muted);
+}
+
+.criteria-suggestion__add {
+	display: grid;
+	flex: none;
+	place-items: center;
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	background: var(--capsule-track);
+	color: var(--capsule-muted);
+}
+
+.criteria-suggestion__add .MuiSvgIcon-root {
+	font-size: 18px;
+}
+
+.criteria-suggestions .criteria-suggestion--all.MuiAutocomplete-option {
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 10px;
+	margin-bottom: 4px;
+	padding: 14px 16px;
+	border-radius: 16px;
+	background: color-mix(in srgb, var(--accent) 10%, #fff);
+	color: var(--accent-text);
+}
+
+.criteria-suggestions .criteria-suggestion--all.MuiAutocomplete-option.Mui-focused {
+	background: var(--accent-text);
+	color: var(--on-accent);
+}
+
+/* the heading follows the row's colour - purple on the tint, white on the highlight */
+.criteria-suggestion--all > .MuiTypography-root {
+	color: inherit;
+}
+
+.criteria-suggestion__picks {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+}
+
+.criteria-suggestion__pick.MuiChip-root {
+	margin: 0;
+	background: var(--capsule-lens);
+	color: var(--capsule-text);
+}
+
+.criteria-suggestion__pick .criteria-suggestion__group {
+	margin: 0;
+}
+
+.criteria-suggestions .criteria-suggestion--unknown.MuiAutocomplete-option {
+	min-height: 0;
+	color: var(--capsule-muted);
+}
+
+.criteria-suggestions .criteria-suggestion--unknown.MuiAutocomplete-option[aria-disabled='true'] {
+	opacity: 1;
+}
+
+/* dropdown pills under the field - white with a hairline, near-black once they hold picks */
+.card-browse-filters {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 8px;
+	margin-top: 14px;
+}
+
+.card-browse-pill.MuiButton-root {
+	gap: 6px;
+	padding: 9px 12px 9px 16px;
+	border-radius: 999px;
+	background: var(--capsule-lens);
+	color: var(--capsule-text);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+}
+
+.card-browse-pill.MuiButton-root:hover {
+	background: var(--capsule-hover);
+}
+
+.card-browse-pill.MuiButton-root[aria-expanded='true'] {
+	box-shadow: 0 0 0 2px var(--accent);
+}
+
+.card-browse-pill .MuiButton-endIcon {
+	margin: 0;
+}
+
+.card-browse-pill .card-browse-pill__picks {
+	color: var(--capsule-muted);
+}
+
+.card-browse-pill--active.MuiButton-root,
+.card-browse-pill--active.MuiButton-root:hover {
+	background: var(--capsule-text);
+	color: var(--page);
+	box-shadow: none;
+}
+
+.card-browse-pill--active .card-browse-pill__picks {
+	color: color-mix(in srgb, var(--page) 80%, transparent);
+}
+
+.card-browse-filters__popover.MuiPaper-root {
+	box-sizing: border-box;
+	width: min(440px, calc(100vw - 32px));
+	margin-top: 8px;
+	padding: 12px;
+	border-radius: 20px;
+}
+
+.card-browse-filters__group + .card-browse-filters__group {
+	margin-top: 14px;
+}
+
+.card-browse-filters__group .card-browse-filters__heading {
+	display: block;
+	margin: 0 0 6px 4px;
+	color: var(--capsule-muted);
+}
+
+.card-browse-filters__options {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+}
+
+/* grey capsules like the ban list's status filters; a pick turns near-black */
+.card-browse-option.MuiChip-root {
+	margin: 0;
+}
+
+.card-browse-option.MuiChip-root[aria-pressed='true'] {
+	background-color: var(--capsule-text);
+	color: var(--page);
+}
+
+/* rcl's frame indicator (its colours, untouched) shrunk to a dot */
+.card-browse-option__frame {
+	display: inline-flex;
+	margin-left: 10px;
+}
+
+.card-browse-option__frame .indicator.small {
+	width: 10px;
+	height: 10px;
+	box-shadow: 0 0 0 1px color-mix(in srgb, var(--capsule-text) 15%, transparent);
+}
+
+.card-browse-filters__footer {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 12px;
+	padding-top: 10px;
+	border-top: 1px solid var(--capsule-edge);
+}
+
+.card-browse-filters__footer .MuiButton-root {
+	border-radius: 999px;
+	padding: 8px 18px;
+}
+
+@media (max-width: 599.95px) {
+	/* the count wraps once results load, so the view switch always sits on its own line rather than dropping down then */
+	.card-browse__toolbar {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.card-browse__sort {
+		display: none;
+	}
+
+	.card-browse-header {
+		padding: 28px 16px 20px;
+		border-radius: 24px;
+	}
+}
