@@ -686,6 +686,35 @@
 	margin: 0;
 }
 
+/* the link only fills the name cell (and not its height when "was X" makes the row taller) - stretch it over the whole row so a tap anywhere opens the card and highlights the row */
+.ban-list-cards__table .MuiTableBody-root .MuiTableRow-root {
+	position: relative;
+}
+
+.ban-list-cards__card::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+}
+
+/* the browser's tap highlight only paints the link's own boxes, not the overlay - press the row instead */
+.ban-list-cards__card {
+	-webkit-tap-highlight-color: transparent;
+}
+
+.ban-list-cards__table .MuiTableRow-root:has(.ban-list-cards__card:active) {
+	background: var(--capsule-hover);
+}
+
+.ban-list-cards__card:focus-visible {
+	outline: none;
+}
+
+.ban-list-cards__card:focus-visible::after {
+	outline: 2px solid var(--accent);
+	outline-offset: -2px;
+}
+
 .ban-list-cards__card .MuiTypography-root {
 	color: inherit;
 }
