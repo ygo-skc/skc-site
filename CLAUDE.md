@@ -6,7 +6,7 @@ Yu-Gi-Oh! card database front end (thesupremekingscastle.com). React 19, react-r
 
 - `yarn start` - dev server on http://localhost:3000
 - `npx jest <path>` - run tests once (`yarn test` runs in watch mode)
-- `npx tsc --noEmit -p .` - type check (lib is ES2021, so no `replaceAll`)
+- `npx tsc --noEmit -p .` - type check (target and lib are ES2021)
 - `yarn lint` - eslint
 
 ## Working preferences
