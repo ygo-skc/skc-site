@@ -1044,6 +1044,11 @@
 		padding: 8px 12px;
 	}
 
+	/* rows stack two lines on each side - the status chip starts level with the name, not centred against it */
+	.ban-list-cards__table .MuiTableBody-root .MuiTableCell-root {
+		vertical-align: top;
+	}
+
 	.ban-list-cards__table .MuiTableCell-root:first-child {
 		padding-left: 16px;
 	}
