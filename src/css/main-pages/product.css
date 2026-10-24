@@ -1,7 +1,3 @@
-.product-browse-section {
-	margin-bottom: 39px;
-}
-
 .product-info-img {
 	width: 70%;
 	margin-left: auto;
@@ -10,60 +6,521 @@
 	display: block;
 }
 
-.product-grid-item-parent {
+/* product browse: filter sidebar beside the results, stacking when there's no room for both */
+.product-browse {
 	display: flex;
-	flex-direction: row;
-	padding: 13px;
-	border-radius: 13px;
-	column-gap: 26px;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	gap: 24px;
+}
+
+.product-browse__results {
+	display: flex;
+	flex: 999 1 560px;
+	flex-direction: column;
+	gap: 28px;
+	min-width: 0;
+}
+
+.product-browse__tools {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px 16px;
+	/* the year headings' inset, so the title lines up with them */
+	padding: 0 16px;
+}
+
+.product-browse .product-browse__title {
+	margin: 0;
+}
+
+.product-browse .product-browse__count {
+	flex: 1;
+	color: var(--capsule-muted);
+}
+
+/* List | Cards - the segmented control the ban list uses */
+.product-browse__view.MuiToggleButtonGroup-root {
+	padding: 3px;
+	gap: 2px;
+	border-radius: 999px;
+	background: var(--capsule-track);
+}
+
+.product-browse__view .MuiToggleButton-root.MuiToggleButtonGroup-grouped {
+	gap: 6px;
+	margin: 0;
+	padding: 6px 14px;
+	border: 0;
+	border-radius: 999px;
+	color: var(--capsule-muted);
+}
+
+.product-browse__view .MuiToggleButton-root.Mui-selected,
+.product-browse__view .MuiToggleButton-root.Mui-selected:hover {
+	background: var(--capsule-lens);
+	color: var(--capsule-text);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+}
+
+.product-browse__view .MuiSvgIcon-root {
+	font-size: 18px;
+}
+
+.product-browse .product-browse__empty {
+	padding: 40px 4px;
+	color: var(--capsule-muted);
+}
+
+.product-browse__more.MuiButton-root {
+	align-self: center;
+	padding: 10px 22px;
+	border-radius: 999px;
+	background: var(--capsule-track);
+	color: var(--capsule-text);
+}
+
+.product-browse__more.MuiButton-root:hover {
+	background: var(--capsule-hover);
+}
+
+/* sidebar */
+.product-browse-filters {
+	display: flex;
+	flex: 1 1 260px;
+	flex-direction: column;
+	gap: 16px;
+	max-width: 300px;
+	/* the phone row of type pills scrolls inside the sidebar rather than widening it */
+	min-width: 0;
+	padding: 16px;
+	border-radius: 24px;
+	background: var(--capsule);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+}
+
+.product-browse-filters__search.MuiInputBase-root {
+	gap: 8px;
+	height: 40px;
+	padding: 0 14px;
+	border-radius: 999px;
+	background: var(--capsule-track);
+	color: var(--capsule-text);
+}
+
+.product-browse-filters__search .MuiSvgIcon-root {
+	font-size: 20px;
+	color: var(--capsule-muted);
+}
+
+/* MUI fades the placeholder to 42% near-black, ~2.6:1 on the grey field - the muted grey keeps 4.5:1 */
+.product-browse-filters__search .MuiInputBase-input::placeholder {
+	color: var(--capsule-muted);
+	opacity: 1;
+}
+
+.product-browse-filters__search.Mui-focused {
+	box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
+.product-browse-filters__group {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+}
+
+.product-browse-filters__group + .product-browse-filters__group {
+	padding-top: 16px;
+	border-top: 1px solid var(--capsule-edge);
+}
+
+.product-browse-filters .product-browse-filters__label {
+	margin: 0;
+	padding: 0 12px 6px;
+	color: var(--capsule-muted);
+}
+
+.product-browse-filters__types {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.product-browse-filters__type.MuiButtonBase-root {
+	justify-content: space-between;
+	width: 100%;
+	padding: 9px 12px;
+	border-radius: 12px;
+	color: var(--capsule-text);
+}
+
+.product-browse-filters__type .MuiTypography-root {
+	color: inherit;
 }
 
 @media (hover: hover) and (pointer: fine) {
-	.product-grid-item-parent:hover {
-		cursor: pointer;
+	.product-browse-filters__type.MuiButtonBase-root:hover {
+		background: var(--capsule-hover);
+	}
+}
+
+/* the picked type is a purple pill - --accent-text keeps 4.5:1 under white text */
+.product-browse-filters__type.MuiButtonBase-root[aria-pressed='true'] {
+	background: var(--accent-text);
+	color: var(--on-accent);
+}
+
+.product-browse-filters__type:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 2px;
+}
+
+.product-browse-filters .product-browse-filters__count {
+	color: var(--capsule-muted);
+}
+
+.product-browse-filters__type[aria-pressed='true'] .product-browse-filters__count {
+	color: inherit;
+}
+
+.product-browse-filters__type-skeleton.MuiSkeleton-root {
+	width: 100%;
+	height: 41px;
+}
+
+/* a checkbox row is 34px tall */
+.product-browse-filters__sub-type-skeleton.MuiSkeleton-root {
+	width: 100%;
+	height: 22px;
+	margin: 6px 0;
+}
+
+.product-browse-filters__more-skeleton.MuiSkeleton-root {
+	width: 120px;
+	height: 29px;
+	border-radius: 999px;
+}
+
+.product-browse-filters__sub-type.MuiFormControlLabel-root {
+	margin: 0;
+	padding-right: 12px;
+}
+
+.product-browse-filters__sub-type .MuiFormControlLabel-label {
+	display: flex;
+	align-items: center;
+	flex: 1;
+	justify-content: space-between;
+	gap: 8px;
+}
+
+.product-browse-filters__sub-type .MuiCheckbox-root {
+	padding: 7px 8px 7px 9px;
+}
+
+.product-browse-filters__more.MuiButton-root {
+	align-self: flex-start;
+	padding: 6px 12px;
+}
+
+/* one year: heading and count, then rows or tiles */
+.product-browse-section {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	/* the header's year graph scrolls here - leave room above the year heading */
+	scroll-margin-top: 24px;
+}
+
+.product-browse-section__head {
+	display: flex;
+	align-items: baseline;
+	gap: 10px;
+	padding: 0 16px;
+}
+
+.product-browse-section__head .MuiTypography-h4 {
+	margin: 0;
+}
+
+.product-browse-section__head .product-browse-section__count {
+	color: var(--capsule-muted);
+}
+
+/* List: a white grouped card with inset hairlines between rows */
+.product-list {
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	border-radius: 18px;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+}
+
+.product-list > li + li .product-list-row::before {
+	content: '' / '';
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 74px;
+	height: 1px;
+	background: var(--capsule-edge);
+}
+
+.product-list-row {
+	position: relative;
+	display: grid;
+	grid-template-columns: 44px minmax(0, 1fr) auto 20px;
+	align-items: center;
+	gap: 14px;
+	padding: 10px 16px;
+	color: var(--capsule-text);
+	text-decoration: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	a.product-list-row:hover {
 		background: var(--page);
 	}
 }
 
-.product-img {
-	min-width: 26%;
-	max-width: 26%;
-	height: auto;
+/* the list clips, so keep the focus ring inside it */
+.product-list-row:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: -2px;
 }
 
-.product-grid-item-text {
-	flex: 1;
-}
-
-.product-grid-item-text > *:not(:last-child) {
-	margin-bottom: 5px;
-}
-
-.product-grid-item-text .inline-date {
-	margin-bottom: 13px;
-}
-
-/* loading tiles: a cover in the product art's shape, pills where the date and chips go */
-.product-grid-skeleton__cover.MuiSkeleton-root {
-	height: auto;
+.product-list-row__thumb {
+	width: 44px;
 	aspect-ratio: 99 / 153;
 }
 
-.product-grid-skeleton__pill.MuiSkeleton-root {
-	border-radius: 999px;
+.product-list-row__thumb img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	border-radius: 6px;
+	object-fit: contain;
 }
 
-/* rcl's inline date keeps 13px under it */
-.product-grid-item-text .product-grid-skeleton__date {
-	margin-bottom: 13px;
+.product-list-row__thumb.MuiSkeleton-root {
+	height: auto;
 }
 
-.product-grid-skeleton__chips {
+.product-list-row__text {
 	display: flex;
-	gap: 4px;
+	flex-direction: column;
+	min-width: 0;
 }
 
-.product-grid-item-text .tag-chip.MuiChip-root,
-.tag-chip-condensed.MuiChip-root {
-	margin-top: 0;
+.product-list-row .product-list-row__name {
+	overflow: hidden;
+	margin: 0;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.product-list-row .product-list-row__muted {
+	overflow: hidden;
+	color: var(--capsule-muted);
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.product-list-row__end {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+}
+
+.product-list-row__chevron.MuiSvgIcon-root {
+	font-size: 20px;
+	color: var(--capsule-muted);
+}
+
+/* Cards: white tiles */
+.product-tiles {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+	gap: 12px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.product-tile {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	height: 100%;
+	box-sizing: border-box;
+	padding: 12px;
+	border-radius: 18px;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+	color: var(--capsule-text);
+	text-decoration: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.product-tile:hover {
+		box-shadow: 0 0 0 2px var(--accent);
+	}
+}
+
+.product-tile:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 2px;
+}
+
+.product-tile__cover {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	aspect-ratio: 99 / 153;
+	/* without it the box's automatic minimum grows to a taller cover's height, so tiles in a row start their text at different heights */
+	min-height: 0;
+	border-radius: 12px;
+	background: var(--page);
+}
+
+.product-tile__cover img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	border-radius: 12px;
+	object-fit: contain;
+}
+
+.product-tile__text {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.product-tile .product-tile__name {
+	margin: 0;
+}
+
+.product-tile .product-tile__muted {
+	color: var(--capsule-muted);
+}
+
+.product-tile__chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin-top: auto;
+}
+
+.product-tile__chips .MuiChip-root {
+	margin: 0;
+}
+
+/* stacked: the sidebar takes the full width */
+@media (max-width: 899.95px) {
+	.product-browse-filters {
+		max-width: none;
+	}
+}
+
+@media (max-width: 599.95px) {
+	/* the title takes its own line so the count and the toggle share the next, rather than the toggle wrapping alone */
+	.product-browse .product-browse__title {
+		flex-basis: 100%;
+	}
+
+	/* types become one swipeable row of pills */
+	.product-browse-filters__types {
+		flex-direction: row;
+		overflow-x: auto;
+		scrollbar-width: none;
+		mask-image: linear-gradient(90deg, #000 85%, transparent);
+	}
+
+	.product-browse-filters__types > li {
+		flex: none;
+	}
+
+	/* pills size to their label, so the skeletons need a width of their own */
+	.product-browse-filters__type-skeleton.MuiSkeleton-root {
+		width: 96px;
+		border-radius: 999px;
+	}
+
+	.product-browse-filters__type.MuiButtonBase-root {
+		gap: 8px;
+		border-radius: 999px;
+	}
+
+	.product-browse-filters__type:focus-visible {
+		outline-offset: -2px;
+	}
+
+	/* sub-types as a swipeable row of grey chips, like the ban list's status filters - near-black when picked */
+	.product-browse-filters__sub-types {
+		display: flex;
+		gap: 6px;
+		margin: 0;
+		padding: 0;
+		overflow-x: auto;
+		list-style: none;
+		scrollbar-width: none;
+		mask-image: linear-gradient(90deg, #000 85%, transparent);
+	}
+
+	.product-browse-filters__sub-types > li {
+		flex: none;
+	}
+
+	.product-browse-filters__sub-type-chip.MuiChip-root {
+		margin: 0;
+	}
+
+	.product-browse-filters__sub-type-chip.MuiChip-root:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: -2px;
+	}
+
+	.product-browse-filters__sub-type-chip.MuiChip-root[aria-pressed='true'] {
+		background-color: var(--capsule-text);
+		color: var(--page);
+	}
+
+	.product-browse-filters__sub-type-chip[aria-pressed='true'] .product-browse-filters__count {
+		color: color-mix(in srgb, var(--page) 80%, transparent);
+	}
+
+	.product-browse-filters__sub-type-chip-skeleton.MuiSkeleton-root {
+		width: 96px;
+		height: 32px;
+		border-radius: 999px;
+	}
+
+	.product-list-row {
+		grid-template-columns: 40px minmax(0, 1fr) auto;
+		gap: 12px;
+		padding: 10px 12px;
+	}
+
+	.product-list > li + li .product-list-row::before {
+		left: 64px;
+	}
+
+	.product-list-row__thumb {
+		width: 40px;
+	}
+
+	.product-list-row__chevron.MuiSvgIcon-root {
+		display: none;
+	}
+
+	.product-tiles {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
 }

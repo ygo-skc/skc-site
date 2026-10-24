@@ -1,0 +1,86 @@
+/* white card like the header above it: the cover beside the name, meta, type chips and a purple pill */
+.product-latest-release {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 28px 40px;
+	margin-bottom: 40px;
+	padding: 36px 40px;
+	border-radius: 28px;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+}
+
+.product-latest-release__cover {
+	flex: 0 0 200px;
+}
+
+.product-latest-release__cover img {
+	display: block;
+	width: 100%;
+	height: auto;
+	border-radius: 12px;
+}
+
+.product-latest-release__cover.MuiSkeleton-root {
+	height: auto;
+	aspect-ratio: 99 / 153;
+}
+
+.product-latest-release__text {
+	display: flex;
+	flex: 1 1 300px;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 12px;
+}
+
+.product-latest-release .product-latest-release__eyebrow {
+	margin: 0;
+	color: var(--accent-text);
+}
+
+.product-latest-release .MuiTypography-h2 {
+	margin: 0;
+}
+
+.product-latest-release .product-latest-release__meta {
+	color: var(--capsule-muted);
+}
+
+.product-latest-release__chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+}
+
+.product-latest-release__chips .MuiChip-root {
+	margin: 0;
+}
+
+.product-latest-release__pill-skeleton.MuiSkeleton-root {
+	border-radius: 999px;
+}
+
+.product-latest-release__open-skeleton.MuiSkeleton-root {
+	margin-top: 8px;
+}
+
+.product-latest-release__open.MuiButton-root {
+	margin-top: 8px;
+	padding: 10px 22px;
+	border-radius: 999px;
+}
+
+@media (max-width: 599.95px) {
+	.product-latest-release {
+		gap: 20px;
+		margin-bottom: 32px;
+		padding: 24px 20px;
+		border-radius: 24px;
+	}
+
+	.product-latest-release__cover {
+		flex-basis: 132px;
+	}
+}

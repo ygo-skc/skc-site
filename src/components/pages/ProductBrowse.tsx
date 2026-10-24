@@ -1,68 +1,73 @@
 import '../../css/main-pages/product.css'
 
-import { useState, useEffect, lazy, FunctionComponent, Suspense, useCallback, startTransition, JSX } from 'react'
+import { useState, useEffect, FunctionComponent, useCallback, useMemo, startTransition } from 'react'
 
 import FetchHandler from '../../helper/FetchHandler'
 import * as DownstreamServices from '../../helper/DownstreamServices'
 
 import * as Dates from '../../helper/Dates'
-import { Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Skeleton, Typography } from '@mui/material'
-import Grid from '@mui/material/Grid'
+import { Button, Skeleton, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
+import TableRowsRoundedIcon from '@mui/icons-material/TableRowsRounded'
+import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded'
+import ProductBrowseHeader from '../product/ProductBrowseHeader'
+import ProductLatestRelease from '../product/ProductLatestRelease'
+import ProductBrowseFilters from '../product/ProductBrowseFilters'
+import ProductGrid, { ProductView } from '../product/ProductGrid'
+import { productTypeLabel, releaseYear } from '../product/productUtil'
+import { usePageView } from '../util/ResultsViewPreference'
+import Breadcrumb from '../header-footer/Breadcrumb'
 
-const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
-const ProductGrid = lazy(() => import('../product/ProductGrid'))
-const Section = lazy(() =>
-	import('skc-rcl').then((module) => {
-		return { default: module.Section }
-	})
-)
-
-// a year heading and a few product tiles shaped like ProductGridItem (cover, release date, id and total, name, type chips)
+// a year heading and a white list of rows shaped like ProductListRow (thumb, name over meta, card count over date)
 const ProductSectionSkeleton: FunctionComponent = () => (
 	<div className='product-browse-section' aria-hidden='true' data-testid='product-browse-skeleton'>
-		<Typography variant='h2'>
-			<Skeleton width='10rem' />
-		</Typography>
-		<Grid container spacing={1}>
+		<div className='product-browse-section__head'>
+			<Typography variant='h4' component='span'>
+				<Skeleton width='4ch' />
+			</Typography>
+		</div>
+		<ul className='product-list'>
 			{Array.from({ length: 6 }, (_, i) => (
-				<Grid key={i} size={{ xs: 12, sm: 6, md: 4, lg: 4, xl: 3 }}>
-					<div className='product-grid-item-parent'>
-						<div className='product-img'>
-							<Skeleton className='product-grid-skeleton__cover' variant='rounded' />
-						</div>
-						<div className='product-grid-item-text'>
-							<Skeleton className='product-grid-skeleton__pill product-grid-skeleton__date' variant='rounded' width={145} height={32} />
-							<Typography variant='body1'>
+				<li key={i}>
+					<span className='product-list-row'>
+						<Skeleton className='product-list-row__thumb' variant='rounded' />
+						<span className='product-list-row__text'>
+							<Typography variant='subtitle1' component='span' className='product-list-row__name'>
 								<Skeleton width='60%' />
 							</Typography>
-							<Typography variant='h5'>
-								<Skeleton width='85%' />
+							<Typography variant='body2' component='span'>
+								<Skeleton width='40%' />
 							</Typography>
-							<div className='product-grid-skeleton__chips'>
-								<Skeleton className='product-grid-skeleton__pill' variant='rounded' width={33} height={29} />
-								<Skeleton className='product-grid-skeleton__pill' variant='rounded' width={75} height={29} />
-							</div>
-						</div>
-					</div>
-				</Grid>
+						</span>
+						<span className='product-list-row__end'>
+							<Typography variant='body2' component='span'>
+								<Skeleton width='4.5em' />
+							</Typography>
+							<Typography variant='body2' component='span'>
+								<Skeleton width='2.5em' />
+							</Typography>
+						</span>
+					</span>
+				</li>
 			))}
-		</Grid>
+		</ul>
 	</div>
 )
 
+// filters matching fewer products than this show every year instead of the last few
+const showAllUnder = 100
+
 const ProductBrowse: FunctionComponent = () => {
 	const [products, setProducts] = useState<YGOProduct.Info[]>([])
-	const [productGridItems, setProductGridItems] = useState<JSX.Element[]>([])
-
-	const [isDataLoaded, setIsDataLoaded] = useState(false)
 	const [isFetchingProducts, setIsFetchingProducts] = useState(true)
 	const [loadAll, setLoadAll] = useState(false)
 
-	const [productTypes, setProductTypes] = useState<JSX.Element[]>([])
+	const [query, setQuery] = useState('')
 	const [productTypeFilter, setProductTypeFilter] = useState('All')
+	const [productSubTypesFilter, setProductSubTypesFilter] = useState<ReadonlySet<string>>(new Set())
+	const [view, setView] = usePageView<ProductView>({ list: 'list', grid: 'cards' })
 
-	const [productSubTypes, setProductSubTypes] = useState<JSX.Element[]>([])
-	const [productSubTypesFilter, setProductSubTypesFilter] = useState('All')
+	// a year picked on the header's graph, scrolled to once its section renders
+	const [pickedYear, setPickedYear] = useState<number>()
 
 	useEffect(() => {
 		startTransition(() => {
@@ -73,66 +78,70 @@ const ProductBrowse: FunctionComponent = () => {
 		})
 	}, [])
 
-	useEffect(() => {
-		const pt = Array.from(new Set(products.map((product: YGOProduct.Info) => product.productType))).map((productType: string) => (
-			<FormControlLabel key={productType} value={productType} control={<Radio />} label={productType} />
-		))
+	const matchingProducts = useMemo(() => {
+		const search = query.trim().toLowerCase()
+		return products
+			.filter((product) => productTypeFilter === 'All' || product.productType === productTypeFilter)
+			.filter((product) => productSubTypesFilter.size === 0 || productSubTypesFilter.has(product.productSubType))
+			.filter((product) => search === '' || product.productName.toLowerCase().includes(search) || product.productId.toLowerCase().includes(search))
+			.sort((a, b) => b.productReleaseDate.localeCompare(a.productReleaseDate))
+	}, [products, query, productTypeFilter, productSubTypesFilter])
 
-		setProductTypes([<FormControlLabel key='All' value='All' control={<Radio />} label='All' />, ...pt])
-	}, [products])
+	// only the last few years show until everything is loaded - unless the filters leave few enough to show at once (e.g. "Other"),
+	// or it's a search, which looks through every year
+	const showsEveryYear = loadAll || query.trim() !== '' || matchingProducts.length < showAllUnder
+	const oldestRecentYear = +Dates.getYear(new Date()) - 2
+	const oldestShownYear = showsEveryYear ? -Infinity : oldestRecentYear
+	const shownProducts = useMemo(() => matchingProducts.filter((product) => releaseYear(product) >= oldestShownYear), [matchingProducts, oldestShownYear])
+	const hiddenCount = matchingProducts.length - shownProducts.length
 
-	useEffect(() => {
-		startTransition(() => {
-			const pst = Array.from(
-				new Set(
-					products
-						.filter((product: YGOProduct.Info) => productTypeFilter === 'All' || product.productType === productTypeFilter)
-						.map((product: YGOProduct.Info) => product.productSubType)
-				)
-			).map((productSubType: string) => <FormControlLabel key={productSubType} value={productSubType} control={<Radio />} label={productSubType} />)
-
-			const filteredProducts = products
-				.filter((product: YGOProduct.Info) => loadAll || +Dates.getYear(Dates.fromYYYYMMDDToDate(product.productReleaseDate)) > +Dates.getYear(new Date()) - 3)
-				.filter((product: YGOProduct.Info) => productTypeFilter === 'All' || product.productType === productTypeFilter)
-				.filter((product: YGOProduct.Info) => productSubTypesFilter === 'All' || product.productSubType === productSubTypesFilter)
-				.reduce((map: Map<number, YGOProduct.Info[]>, product: YGOProduct.Info) => {
-					const productReleaseDate = Dates.fromYYYYMMDDToDate(product.productReleaseDate)
-					const year = +Dates.getYear(productReleaseDate)
-
-					map.set(year, map.get(year) ?? [])
-					map.get(year)!.push(product)
-					return map
-				}, new Map<number, YGOProduct.Info[]>())
-
-			setProductSubTypes([<FormControlLabel key='All' value='All' control={<Radio />} label='All' />, ...pst])
-			setProductGridItems(Array.from(filteredProducts.keys()).map((year: number) => <ProductGrid key={year} section={String(year)} products={filteredProducts.get(year)!} />))
-		})
-	}, [products, loadAll, productTypeFilter, productSubTypesFilter])
-
-	useEffect(() => {
-		startTransition(() => {
-			setIsDataLoaded(true)
-		})
-	}, [productGridItems])
-
-	const loadAllCB = useCallback(() => {
-		setLoadAll(true)
-	}, [setLoadAll])
-
-	const handleProductTypeFilterChangedCB = useCallback(
-		(_: React.ChangeEvent<HTMLInputElement>, value: string) => {
-			setProductTypeFilter(value)
-			setProductSubTypesFilter('All')
-		},
-		[setProductTypeFilter]
+	const productsByYear = useMemo(
+		() =>
+			Array.from(
+				shownProducts.reduce((map, product) => map.set(releaseYear(product), [...(map.get(releaseYear(product)) ?? []), product]), new Map<number, YGOProduct.Info[]>()).entries()
+			),
+		[shownProducts]
 	)
 
-	const handleProductSubTypeFilterChangedCB = useCallback(
-		(_: React.ChangeEvent<HTMLInputElement>, value: string) => {
-			setProductSubTypesFilter(value)
+	useEffect(() => {
+		if (pickedYear === undefined) return
+		// an older year's section only exists once everything has loaded, so keep the pick until it renders
+		const section = document.getElementById(`products-${pickedYear}`)
+		if (!section) return
+		// jump rather than smooth scroll - lazy covers loading on the way would push the year further down
+		section.scrollIntoView({ block: 'start' })
+		setPickedYear(undefined)
+	}, [pickedYear, productsByYear])
+
+	const handlePickYearCB = useCallback(
+		(year: number) => {
+			// the graph counts every product - a year the filters leave empty clears them, so the tap still lands on its releases
+			// (otherwise the pick would wait, and jump the page whenever the filters next let that year show)
+			if (!matchingProducts.some((product) => releaseYear(product) === year)) {
+				setQuery('')
+				setProductTypeFilter('All')
+				setProductSubTypesFilter(new Set())
+			}
+			// with the filters cleared only the recent years may show, so an older pick loads the rest
+			if (year < oldestRecentYear) setLoadAll(true)
+			setPickedYear(year)
 		},
-		[setProductSubTypesFilter]
+		[matchingProducts, oldestRecentYear]
 	)
+
+	const handleProductTypeFilterChangedCB = useCallback((type: string) => {
+		setProductTypeFilter(type)
+		// sub-types belong to a type, so start them over
+		setProductSubTypesFilter(new Set())
+	}, [])
+
+	const toggleSubTypeCB = useCallback((subType: string) => {
+		setProductSubTypesFilter((subTypes) => {
+			const next = new Set(subTypes)
+			if (!next.delete(subType)) next.add(subType)
+			return next
+		})
+	}, [])
 
 	return (
 		<div className='generic-container'>
@@ -140,45 +149,61 @@ const ProductBrowse: FunctionComponent = () => {
 			<meta name='description' content={`Browse all products in database to check the progression of YuGiOh.`} />
 			<meta name='keywords' content={`YuGiOh, product browse, The Supreme Kings Castle`} />
 
-			<Suspense fallback={<Skeleton className='breadcrumb breadcrumb__loading' variant='rectangular' width={260} height={30} />}>
-				<Breadcrumb crumbs={['Home', 'Product Browse']} />
-			</Suspense>
+			<Breadcrumb crumbs={['Home', 'Product Browse']} />
 
-			<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='40rem' />}>
-				<Section sectionHeaderBackground='product' sectionName='Products In Database'>
-					{isDataLoaded ? (
-						<div className='section-content'>
-							<Typography variant='h2'>Filters</Typography>
-							<div className='group'>
-								<FormControl>
-									<FormLabel id='product-type-label'>Product Type</FormLabel>
-									<RadioGroup value={productTypeFilter} onChange={handleProductTypeFilterChangedCB} row aria-labelledby='product-type-label' name='product-type-radio-group'>
-										{productTypes}
-									</RadioGroup>
-								</FormControl>
-							</div>
+			<ProductBrowseHeader products={products} isLoading={isFetchingProducts} onPickYear={handlePickYearCB} />
 
-							<div className='group'>
-								<FormControl>
-									<FormLabel id='product-sub-type-label'>Product Sub-type</FormLabel>
-									<RadioGroup
-										value={productSubTypesFilter}
-										onChange={handleProductSubTypeFilterChangedCB}
-										row
-										aria-labelledby='product-sub-type-label'
-										name='product-sub-type-radio-group'
-									>
-										{productSubTypes}
-									</RadioGroup>
-								</FormControl>
-							</div>
+			<ProductLatestRelease products={products} isLoading={isFetchingProducts} />
 
-							{isFetchingProducts ? <ProductSectionSkeleton /> : productGridItems}
-							{loadAll ? undefined : <Button onClick={loadAllCB}>Load All</Button>}
-						</div>
-					) : undefined}
-				</Section>
-			</Suspense>
+			<div className='product-browse'>
+				<ProductBrowseFilters
+					products={products}
+					isLoading={isFetchingProducts}
+					query={query}
+					setQuery={setQuery}
+					type={productTypeFilter}
+					setType={handleProductTypeFilterChangedCB}
+					subTypes={productSubTypesFilter}
+					toggleSubType={toggleSubTypeCB}
+				/>
+
+				<div className='product-browse__results'>
+					<div className='product-browse__tools'>
+						<Typography variant='h3' component='h2' className='product-browse__title'>
+							{productTypeFilter === 'All' ? 'All products' : productTypeLabel(productTypeFilter)}
+						</Typography>
+						<Typography variant='body2' className='product-browse__count'>
+							{isFetchingProducts ? <Skeleton width='9em' /> : `${matchingProducts.length} · newest first`}
+						</Typography>
+						<ToggleButtonGroup className='product-browse__view' exclusive aria-label='View' value={view} onChange={(_, value: ProductView | null) => value && setView(value)}>
+							<ToggleButton value='list'>
+								<TableRowsRoundedIcon />
+								List
+							</ToggleButton>
+							<ToggleButton value='cards'>
+								<GridViewRoundedIcon />
+								Cards
+							</ToggleButton>
+						</ToggleButtonGroup>
+					</div>
+
+					{isFetchingProducts ? (
+						<ProductSectionSkeleton />
+					) : matchingProducts.length === 0 ? (
+						<Typography variant='body1' className='product-browse__empty'>
+							No products match these filters.
+						</Typography>
+					) : (
+						productsByYear.map(([year, yearProducts]) => <ProductGrid key={year} section={String(year)} products={yearProducts} view={view} />)
+					)}
+
+					{hiddenCount > 0 && (
+						<Button className='product-browse__more' onClick={() => setLoadAll(true)}>
+							Show {hiddenCount} earlier
+						</Button>
+					)}
+				</div>
+			</div>
 		</div>
 	)
 }

@@ -1,0 +1,192 @@
+/* white card like the ban list header: count + type totals on top, the releases-per-year bars under them */
+.product-browse-header {
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
+	margin-bottom: 40px;
+	padding: 40px;
+	border-radius: 28px;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+}
+
+.product-browse-header__top {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 24px 32px;
+}
+
+/* never wider than the card - the loading heading is a fixed 20ch */
+.product-browse-header__title {
+	max-width: 100%;
+}
+
+.product-browse-header .product-browse-header__eyebrow {
+	margin: 0 0 4px;
+	color: var(--accent-text);
+}
+
+.product-browse-header .MuiTypography-h1 {
+	margin: 0;
+}
+
+.product-browse-header__since {
+	color: var(--capsule-muted);
+}
+
+/* totals: big counts split by hairlines */
+.product-browse-header__totals {
+	display: flex;
+	flex-wrap: wrap;
+	row-gap: 16px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.product-browse-header__totals > li {
+	display: flex;
+	flex-direction: column;
+	padding: 0 24px;
+}
+
+.product-browse-header__totals > li:first-child {
+	padding-left: 0;
+}
+
+.product-browse-header__totals > li + li {
+	box-shadow: -1px 0 0 var(--capsule-edge);
+}
+
+.product-browse-header .product-browse-header__total-count {
+	margin: 0;
+	color: var(--capsule-text);
+}
+
+.product-browse-header .product-browse-header__total-label {
+	color: var(--capsule-muted);
+}
+
+/* bars: near-black, the latest year in the accent - scrolls sideways on phones */
+.product-browse-header__graph {
+	overflow-x: auto;
+	scrollbar-width: none;
+}
+
+.product-browse-header__bars {
+	display: flex;
+	align-items: flex-end;
+	gap: 6px;
+	/* room for a 15px label under each bar */
+	min-width: 760px;
+	height: 190px;
+}
+
+.product-browse-header__bar {
+	display: flex;
+	flex: 1 1 0;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 6px;
+	height: 100%;
+	padding: 0;
+	border: 0;
+	border-radius: 8px;
+	background: none;
+	font: inherit;
+	cursor: pointer;
+}
+
+.product-browse-header__bar:disabled {
+	cursor: default;
+}
+
+/* the graph scrolls, so keep the focus ring inside it */
+.product-browse-header__bar:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: -2px;
+}
+
+.product-browse-header__bar-fill {
+	width: 100%;
+	height: calc(var(--share) * 130px);
+	border-radius: 8px 8px 4px 4px;
+	background: var(--capsule-text);
+}
+
+.product-browse-header__bar[aria-current] .product-browse-header__bar-fill {
+	background: var(--accent);
+}
+
+.product-browse-header__bar .MuiTypography-root {
+	color: var(--capsule-muted);
+}
+
+.product-browse-header__bar[aria-current] .MuiTypography-root {
+	color: var(--accent-text);
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.product-browse-header__bar:not(:disabled):hover .product-browse-header__bar-fill {
+		background: var(--accent-text);
+	}
+}
+
+.product-browse-header__h1-skeleton.MuiSkeleton-root {
+	max-width: 100%;
+}
+
+.product-browse-header__phone-line.MuiSkeleton-root {
+	display: none;
+}
+
+/* a count over its label */
+.product-browse-header__total-skeleton.MuiSkeleton-root {
+	width: 40px;
+	height: 54px;
+}
+
+.product-browse-header__graph-skeleton.MuiSkeleton-root {
+	width: 100%;
+	height: 190px;
+}
+
+@media (max-width: 599.95px) {
+	.product-browse-header {
+		gap: 24px;
+		margin-bottom: 32px;
+		padding: 24px 20px;
+		border-radius: 24px;
+	}
+
+	/* one swipeable row, like the ban list totals, so a wrapped total doesn't start with a hairline */
+	.product-browse-header__totals {
+		flex-wrap: nowrap;
+		overflow-x: auto;
+		scrollbar-width: none;
+		mask-image: linear-gradient(90deg, #000 85%, transparent);
+		/* end padding as wide as the fade, so the last total scrolls clear of it */
+		padding-inline-end: 15%;
+	}
+
+	.product-browse-header__phone-line.MuiSkeleton-root {
+		display: block;
+	}
+
+	/* the h4 counts step down on phones */
+	.product-browse-header__total-skeleton.MuiSkeleton-root {
+		height: 50px;
+	}
+
+	.product-browse-header__totals > li {
+		flex: none;
+		padding: 0 16px;
+	}
+
+	.product-browse-header__graph {
+		mask-image: linear-gradient(90deg, transparent, #000 15%);
+	}
+}
