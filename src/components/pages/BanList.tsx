@@ -207,7 +207,7 @@ export default function BanList() {
 	return (
 		<div className='generic-container'>
 			<title>{`SKC - Ban List: ${selectedBanList}`}</title>
-			<meta name={`SKC - Ban List: ${selectedBanList}`} content={`Ban list content/info for list effective ${selectedBanList}`} />
+			<meta name='description' content={`Ban list content/info for list effective ${selectedBanList}`} />
 			<meta name='keywords' content={`YuGiOh, ban list, The Supreme Kings Castle, ${selectedBanList}`} />
 
 			<Suspense fallback={<Skeleton className='breadcrumb breadcrumb__loading' variant='rectangular' width={260} height={30} />}>

@@ -100,7 +100,7 @@ const CardInformation = () => {
 		<div className='generic-container'>
 			<title>SKC - Card: {state.card.cardID}</title>
 			<meta
-				name={`SKC - Card: ${state.card.cardID}`}
+				name='description'
 				content={`Information for YuGiOh card ${state.card.cardName} such as ban lists it was in, products it can be found in, effect/stats, etc.`}
 			/>
 			<meta name='keywords' content={`YuGiOh, The Supreme Kings Castle, card, ${state.card.cardName}, ${state.card.cardID}, ${state.card.cardColor}`} />

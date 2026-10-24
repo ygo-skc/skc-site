@@ -137,7 +137,7 @@ const ProductBrowse: FunctionComponent = () => {
 	return (
 		<div className='generic-container'>
 			<title>{`SKC - Product Browser`}</title>
-			<meta name={`SKC - Product Browser`} content={`Browse all products in database to check the progression of YuGiOh.`} />
+			<meta name='description' content={`Browse all products in database to check the progression of YuGiOh.`} />
 			<meta name='keywords' content={`YuGiOh, product browse, The Supreme Kings Castle`} />
 
 			<Suspense fallback={<Skeleton className='breadcrumb breadcrumb__loading' variant='rectangular' width={260} height={30} />}>

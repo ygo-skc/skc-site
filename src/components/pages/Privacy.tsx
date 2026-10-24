@@ -10,7 +10,7 @@ const Privacy: FunctionComponent = () => {
 	return (
 		<div className='generic-container'>
 			<title>{`SKC - Privacy Policy`}</title>
-			<meta name={`SKC - Privacy`} content={`Privacy policy for site and mobile app`} />
+			<meta name='description' content={`Privacy policy for site and mobile app`} />
 			<meta name='keywords' content={`YuGiOh, YGO-API, support, The Supreme Kings Castle`} />
 
 			<Suspense fallback={<Skeleton className='breadcrumb breadcrumb__loading' variant='rectangular' width={260} height={30} />}>

@@ -98,7 +98,7 @@ export default function BrowseCards() {
 	return (
 		<div className='generic-container'>
 			<title>{`SKC - Card Browser`}</title>
-			<meta name={`SKC - Card Browser`} content={`Browse all cards in database to find the right card you want.`} />
+			<meta name='description' content={`Browse all cards in database to find the right card you want.`} />
 			<meta name='keywords' content={`YuGiOh, card browse, The Supreme Kings Castle`} />
 
 			<Suspense fallback={<Skeleton className='breadcrumb breadcrumb__loading' variant='rectangular' width={260} height={30} />}>
