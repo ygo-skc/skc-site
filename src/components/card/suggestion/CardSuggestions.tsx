@@ -2,7 +2,7 @@ import '../../../css/card/ygo-card-suggestion.css'
 import { FC, Fragment, lazy, Suspense, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import { decodeHTML } from 'entities'
-import { Skeleton } from '@mui/material'
+import { Skeleton, Typography } from '@mui/material'
 
 import SuggestionSection from './SuggestionSection'
 
@@ -18,6 +18,29 @@ const GenericNonBreakingErr = lazy(() =>
 	import('skc-rcl').then((module) => {
 		return { default: module.GenericNonBreakingErr }
 	})
+)
+
+// two rows shaped like SuggestionSection's - a heading over a strip of card tiles (art, then the card) - since popular cards usually fill two
+const SuggestionsSkeleton: FC = () => (
+	<div className='suggestions-skeleton' aria-hidden='true' data-testid='card-suggestions-skeleton'>
+		{['14ch', '17ch'].map((titleWidth) => (
+			<div key={titleWidth} className='suggestion-section'>
+				<div className='suggestion-section-title'>
+					<Typography variant='h4'>
+						<Skeleton width={titleWidth} />
+					</Typography>
+				</div>
+				<div className='suggestions-wrapper'>
+					{[0, 1, 2, 3, 4, 5].map((tile) => (
+						<div key={tile} className='suggested-ygo-card-wrapper'>
+							<Skeleton className='suggestions-skeleton__art' variant='rounded' />
+							<Skeleton className='suggestions-skeleton__card' variant='rounded' />
+						</div>
+					))}
+				</div>
+			</div>
+		))}
+	</div>
 )
 
 type CardSuggestionProps = Omit<YGOCard.Suggestion, 'card' | 'materialArchetypes' | 'referencedArchetypes' | 'hasSelfReference'> &
@@ -82,7 +105,7 @@ const CardSuggestions: FC<CardSuggestionProps> = ({
 			: []
 	}, [])
 
-	const LoadingUI = <Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='50rem' />
+	const LoadingUI = <SuggestionsSkeleton />
 
 	return (
 		<Section sectionHeaderBackground={cardColor !== undefined ? (cardColor?.replace(/Pendulum-/gi, '') as YGOCard.Color) : ''} sectionName='Suggestions'>

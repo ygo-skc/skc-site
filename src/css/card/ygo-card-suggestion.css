@@ -40,3 +40,22 @@
 .suggested-ygo-card-wrapper:not(:last-child) {
 	margin-right: 13px;
 }
+
+/* loading rows - the tiles fade off the right edge instead of scrolling */
+.suggestions-skeleton .suggestions-wrapper {
+	overflow: hidden;
+	mask-image: linear-gradient(to right, #000 calc(100% - 64px), transparent);
+}
+
+/* rcl's tile: 200px art, then the card 8px under it */
+.suggestions-skeleton__art.MuiSkeleton-root {
+	width: 200px;
+	height: 200px;
+	border-radius: 20px;
+}
+
+.suggestions-skeleton__card.MuiSkeleton-root {
+	height: 169px;
+	margin-top: 8px;
+	border-radius: 20px;
+}
