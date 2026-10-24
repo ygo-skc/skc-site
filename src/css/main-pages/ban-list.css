@@ -728,10 +728,6 @@
 	color: var(--capsule-muted);
 }
 
-.ban-list-cards .ban-list-cards__was {
-	color: var(--accent-text);
-}
-
 .ban-list-cards__previous {
 	display: inline-flex;
 	align-items: center;

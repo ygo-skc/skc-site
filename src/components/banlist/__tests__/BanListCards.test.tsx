@@ -50,7 +50,8 @@ test('lists every card, strongest status first, with its type, status and previo
 	expect(within(card).getByRole('link')).toHaveAttribute('href', '/card/2')
 	// phones hide the type and previous columns, so both are repeated under the name and the status chip
 	expect(within(card).getByText('Spellcaster/Effect')).toHaveClass('ban-list-cards__phone-only')
-	expect(within(status).getByText('was Limited')).toHaveClass('ban-list-cards__phone-only')
+	const phoneWas = within(status).getByText('was').closest('.ban-list-cards__phone-only') as HTMLElement
+	expect(within(phoneWas).getByText('Limited').closest('.MuiChip-root')).toHaveClass('ban-status--limited')
 
 	const potOfGreed = within(screen.getAllByRole('row')[2]).getAllByRole('cell')
 	// no change is a quiet dash, read out as "No change"

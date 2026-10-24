@@ -102,7 +102,7 @@ const PreviousStatus: FC<{ previous?: string }> = ({ previous }) => {
 	const status = toBanStatus(previous)
 	return (
 		<span className='ban-list-cards__previous'>
-			<Typography variant='caption' component='span' className='ban-list-cards__muted'>
+			<Typography variant='body2' component='span' className='ban-list-cards__muted'>
 				was
 			</Typography>
 			<Chip size='small' className={`ban-status-chip ${status ? banStatusClass(status) : ''}`} label={status ?? previous} />
@@ -272,9 +272,9 @@ const BanListCards: FC<BanListCardsProps> = ({ isLoading, lists, previousStatus 
 												<Chip size='small' className={`ban-status-chip ${banStatusClass(status)}`} label={status} />
 												{/* and the previous status sits under the chip */}
 												{previous && (
-													<Typography variant='body2' component='span' className='ban-list-cards__was ban-list-cards__phone-only'>
-														was {previous}
-													</Typography>
+													<span className='ban-list-cards__phone-only'>
+														<PreviousStatus previous={previous} />
+													</span>
 												)}
 											</span>
 										</TableCell>
