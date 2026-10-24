@@ -92,7 +92,7 @@ const MessageItemComponent = memo(({ message, isNew }: MessageItemComponentArgs)
 				<ReactMarkdown components={postMarkdown}>{message.content}</ReactMarkdown>
 			</Typography>
 			{(isLong || isExpanded) && (
-				<Button className='messages__more' size='small' aria-expanded={isExpanded} aria-controls={bodyId} endIcon={<ExpandMoreIcon />} onClick={() => setIsExpanded(!isExpanded)}>
+				<Button className='messages__more' aria-expanded={isExpanded} aria-controls={bodyId} endIcon={<ExpandMoreIcon />} onClick={() => setIsExpanded(!isExpanded)}>
 					{isExpanded ? 'Show less' : 'Read more'}
 				</Button>
 			)}
