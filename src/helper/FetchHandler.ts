@@ -3,20 +3,21 @@ import AppRoutes from './AppRoutes'
 
 class FetchHandler {
 	static readonly CLIENT_ID = process.env.REACT_APP_CLIENT_ID as string
-	static readonly DEFAULT_TIMEOUT = 3000
+	static readonly DEFAULT_TIMEOUT = 6000
 
 	static readonly handleFetch = <T>(
 		endPoint: string,
 		onJsonReceived: (res: T) => void,
 		useDefaultErrorHandler = true,
-		fetchToken: CancelTokenSource | undefined = undefined
+		fetchToken: CancelTokenSource | undefined = undefined,
+		timeout = FetchHandler.DEFAULT_TIMEOUT
 	): Promise<void> | void => {
 		const request = axios
 			.get(endPoint, {
 				headers: {
 					CLIENT_ID: FetchHandler.CLIENT_ID,
 				},
-				timeout: FetchHandler.DEFAULT_TIMEOUT,
+				timeout,
 				cancelToken: fetchToken?.token,
 			})
 			.then((res: AxiosResponse) => {

@@ -63,3 +63,15 @@ test('verify user is redirected to GenericServerPage when server returns with no
 
 	expect(window.location.assign).toHaveBeenCalledWith(AppRoutes.GenericServerError)
 })
+
+test('requests time out after 6 seconds unless a call asks for longer', () => {
+	const get = jest.spyOn(axios, 'get').mockResolvedValue({ data: {} })
+
+	FetchHandler.handleFetch('/default', () => {})
+	expect(get).toHaveBeenLastCalledWith('/default', expect.objectContaining({ timeout: 6000 }))
+
+	FetchHandler.handleFetch('/slow', () => {}, false, undefined, 10000)
+	expect(get).toHaveBeenLastCalledWith('/slow', expect.objectContaining({ timeout: 10000 }))
+
+	get.mockRestore()
+})
