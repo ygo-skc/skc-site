@@ -1,8 +1,8 @@
 import { ReactNode, useEffect, useReducer, useState } from 'react'
 import { Link } from 'react-router-dom'
 import FetchHandler from '../../helper/FetchHandler'
-import DownstreamServices from '../../helper/DownstreamServices'
-import { Dates } from '../../helper/Dates'
+import * as DownstreamServices from '../../helper/DownstreamServices'
+import * as Dates from '../../helper/Dates'
 import { TrendActionType, trendsReducer } from '../../reducers/TrendingReducer'
 
 import { Chip, Divider, Skeleton, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'

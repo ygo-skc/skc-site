@@ -5,7 +5,7 @@ import { useState, useEffect, lazy, useReducer, startTransition, Suspense } from
 import { Skeleton, Typography } from '@mui/material'
 
 import FetchHandler from '../../helper/FetchHandler'
-import DownstreamServices from '../../helper/DownstreamServices'
+import * as DownstreamServices from '../../helper/DownstreamServices'
 
 import CardBrowse from '../util/search/CardBrowse'
 import { SKCTable, Section } from 'skc-rcl'
@@ -47,7 +47,7 @@ function generateBrowseQueryURL(selectedCriteria: YGOData.CardBrowseValues[]) {
 		}
 	})
 
-	return `${DownstreamServices.NAME_maps_ENDPOINT.browse}?cardColors=${criteriaMap.get('cardColors').join(',')}&attributes=${criteriaMap
+	return `${DownstreamServices.SKC_API_ENDPOINTS.browse}?cardColors=${criteriaMap.get('cardColors').join(',')}&attributes=${criteriaMap
 		.get('attributes')
 		.join(',')}&monsterTypes=${criteriaMap.get('monsterTypes').join(',')}&monsterSubTypes=${criteriaMap.get('monsterSubTypes').join(',')}&levels=${criteriaMap
 		.get('levels')
@@ -72,7 +72,7 @@ export default function BrowseCards() {
 	browseSummaryStats.push(['Displaying', cardGridState.totalDisplaying.toString()])
 
 	useEffect(() => {
-		FetchHandler.handleFetch<YGOData.CardBrowseCriteria>(DownstreamServices.NAME_maps_ENDPOINT.browseCriteria, (json) => {
+		FetchHandler.handleFetch<YGOData.CardBrowseCriteria>(DownstreamServices.SKC_API_ENDPOINTS.browseCriteria, (json) => {
 			setSkcCardBrowseCriteriaOutput(json)
 		})
 	}, [])

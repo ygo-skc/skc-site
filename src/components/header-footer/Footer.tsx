@@ -4,7 +4,7 @@ import { FunctionComponent, startTransition, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Typography } from '@mui/material'
 import FetchHandler from '../../helper/FetchHandler'
-import DownstreamServices from '../../helper/DownstreamServices'
+import * as DownstreamServices from '../../helper/DownstreamServices'
 import AppRoutes from '../../helper/AppRoutes'
 import { IOS_APP_STORE_URL } from '../../helper/IOSApp'
 
@@ -26,7 +26,7 @@ const Footer: FunctionComponent = () => {
 	const [skcSuggestionEngineVersion, setSkcSuggestionEngineVersion] = useState('---')
 
 	useEffect(() => {
-		FetchHandler.handleFetch<HealthCheckOutput>(DownstreamServices.NAME_maps_ENDPOINT.status, (json) => startTransition(() => setSkcAPIVersion(json?.version)), false)?.catch(
+		FetchHandler.handleFetch<HealthCheckOutput>(DownstreamServices.SKC_API_ENDPOINTS.status, (json) => startTransition(() => setSkcAPIVersion(json?.version)), false)?.catch(
 			() => {}
 		)
 

@@ -6,7 +6,7 @@ import { Suspense, lazy, useEffect, useReducer } from 'react'
 import { Skeleton } from '@mui/material'
 import Trends from '../util/Trending'
 import FetchHandler from '../../helper/FetchHandler'
-import DownstreamServices from '../../helper/DownstreamServices'
+import * as DownstreamServices from '../../helper/DownstreamServices'
 import { HomePageActionType, homePageReducer } from '../../reducers/HomePageReducer'
 import DiscordPresence from '../util/social/DiscordPresence'
 import YouTubeData, { channelIDs, YouTubeChannelID } from '../home/YouTubeData'
@@ -52,7 +52,7 @@ export default function Home() {
 
 	useEffect(() => {
 		// fetch DB Stats
-		FetchHandler.handleFetch<SKC.DBStats>(DownstreamServices.NAME_maps_ENDPOINT.databaseStats, (json: SKC.DBStats) => {
+		FetchHandler.handleFetch<SKC.DBStats>(DownstreamServices.SKC_API_ENDPOINTS.databaseStats, (json: SKC.DBStats) => {
 			dispatch({ type: HomePageActionType.UPDATE_DB_STATS, dbStats: json })
 		})
 

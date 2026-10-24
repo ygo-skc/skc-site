@@ -2,7 +2,7 @@ import { memo, useId, useState } from 'react'
 import { ButtonBase, Typography } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 
-import { Dates } from '../../helper/Dates'
+import * as Dates from '../../helper/Dates'
 import { MessageDetails } from './MessageItemComponent'
 
 /*

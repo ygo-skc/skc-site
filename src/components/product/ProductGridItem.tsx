@@ -2,7 +2,7 @@ import { Chip, Typography } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import { FC } from 'react'
 import { Link } from 'react-router-dom'
-import { Dates } from '../../helper/Dates'
+import * as Dates from '../../helper/Dates'
 import { InlineDate, ProductImage } from 'skc-rcl'
 
 type ProductGridItemProps = {

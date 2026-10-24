@@ -2,7 +2,7 @@ import { lazy, useState, useEffect, Suspense, useReducer, useCallback, useMemo }
 
 import { Skeleton } from '@mui/material'
 import FetchHandler from '../../helper/FetchHandler'
-import DownstreamServices from '../../helper/DownstreamServices'
+import * as DownstreamServices from '../../helper/DownstreamServices'
 
 import '../../css/main-pages/ban-list.css'
 import dateReducer, { BanListDateReducerActionType } from '../../reducers/BanListDateReducer'
@@ -10,7 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { AcceptableBanListFormat, determineListSize, getValidFormat } from '../../helper/BanListUtil'
 import AppRoutes from '../../helper/AppRoutes'
 import { BanListReducerType, currentBanListReducer } from '../../reducers/CurrentBanListReducer'
-import { Dates } from '../../helper/Dates'
+import * as Dates from '../../helper/Dates'
 import { toBanStatus } from '../../helper/BanStatus'
 
 const BreadCrumb = lazy(() => import('../header-footer/Breadcrumb'))
@@ -90,7 +90,7 @@ export default function BanList() {
 
 		setSelectedBanList('')
 
-		FetchHandler.handleFetch<YGOBanList.Dates>(`${DownstreamServices.NAME_maps_ENDPOINT.banListsUrl}?format=${format}`, (json) => {
+		FetchHandler.handleFetch<YGOBanList.Dates>(`${DownstreamServices.SKC_API_ENDPOINTS.banListsUrl}?format=${format}`, (json) => {
 			dateDispatch({
 				type: BanListDateReducerActionType.DATES_RECEIVED,
 				payload: {
@@ -110,7 +110,7 @@ export default function BanList() {
 				type: BanListReducerType.FETCHING_INFO,
 			})
 
-			FetchHandler.handleFetch<YGOBanList.NormalFormatNewlyAdded>(`${DownstreamServices.NAME_maps_ENDPOINT.banListUrl}/${selectedBanList}/new?format=${format}`, (json) => {
+			FetchHandler.handleFetch<YGOBanList.NormalFormatNewlyAdded>(`${DownstreamServices.SKC_API_ENDPOINTS.banListUrl}/${selectedBanList}/new?format=${format}`, (json) => {
 				currentBanListDispatch({
 					type: BanListReducerType.UPDATE_NEW_CONTENT,
 					newForbidden: json.newForbidden,
@@ -122,7 +122,7 @@ export default function BanList() {
 				})
 			})
 
-			FetchHandler.handleFetch<YGOBanList.NormalFormatRemovedCards>(`${DownstreamServices.NAME_maps_ENDPOINT.banListUrl}/${selectedBanList}/removed?format=${format}`, (json) => {
+			FetchHandler.handleFetch<YGOBanList.NormalFormatRemovedCards>(`${DownstreamServices.SKC_API_ENDPOINTS.banListUrl}/${selectedBanList}/removed?format=${format}`, (json) => {
 				currentBanListDispatch({
 					type: BanListReducerType.UPDATE_REMOVED_CONTENT,
 					removedCards: json.removedCards,
@@ -130,7 +130,7 @@ export default function BanList() {
 				})
 			})
 
-			FetchHandler.handleFetch<YGOBanList.NormalFormatContent>(`${DownstreamServices.NAME_maps_ENDPOINT.banListUrl}/${selectedBanList}/cards?format=${format}`, (json) => {
+			FetchHandler.handleFetch<YGOBanList.NormalFormatContent>(`${DownstreamServices.SKC_API_ENDPOINTS.banListUrl}/${selectedBanList}/cards?format=${format}`, (json) => {
 				currentBanListDispatch({
 					type: BanListReducerType.UPDATE_LIST_CONTENT,
 					forbidden: json.forbidden,

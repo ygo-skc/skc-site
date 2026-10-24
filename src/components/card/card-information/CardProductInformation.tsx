@@ -1,7 +1,7 @@
 import { useEffect, useState, FC, useCallback, JSX } from 'react'
 import { Typography, Button } from '@mui/material'
 
-import { Dates } from '../../../helper/Dates'
+import * as Dates from '../../../helper/Dates'
 import { Hint } from 'skc-rcl'
 import CardProductListItem from '../../product/CardProductListItem'
 

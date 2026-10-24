@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { Chip, Skeleton, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { DateBadge } from 'skc-rcl'
-import { Dates } from '../../helper/Dates'
+import * as Dates from '../../helper/Dates'
 import { AcceptableBanListFormat } from '../../helper/BanListUtil'
 import { BanStatus, banStatusClass } from '../../helper/BanStatus'
 import BanListFormat from './BanListFormat'

@@ -1,6 +1,6 @@
 import { FC, Fragment, JSX, memo, useCallback, useEffect, useState } from 'react'
 import { ListSubheader, MenuItem, Select, SelectChangeEvent, Skeleton, Typography } from '@mui/material'
-import { Dates } from '../../helper/Dates'
+import * as Dates from '../../helper/Dates'
 import { scrollToTop } from '../../helper/Etc'
 
 // "Oct 19" - the year comes from the menu's year heading

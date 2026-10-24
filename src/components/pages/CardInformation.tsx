@@ -6,11 +6,11 @@ import { useParams } from 'react-router-dom'
 import { Chip, Skeleton, Typography } from '@mui/material'
 
 import FetchHandler from '../../helper/FetchHandler'
-import DownstreamServices from '../../helper/DownstreamServices'
+import * as DownstreamServices from '../../helper/DownstreamServices'
 import { CardImageRounded, Section } from 'skc-rcl'
 import { decodeHTML } from 'entities'
 import { cardInformationReducer, CardInformationType } from '../../reducers/CardInformationReducer'
-import { Dates } from '../../helper/Dates'
+import * as Dates from '../../helper/Dates'
 
 import CalendarMonthTwoToneIcon from '@mui/icons-material/CalendarMonthTwoTone'
 
@@ -57,7 +57,7 @@ const CardInformation = () => {
 	})
 
 	useEffect(() => {
-		FetchHandler.handleFetch(`${DownstreamServices.NAME_maps_ENDPOINT.cardInstanceUrl}/${state.card.cardID}?allInfo=true`, (cardInfo: YGOCard.Info) => {
+		FetchHandler.handleFetch(`${DownstreamServices.SKC_API_ENDPOINTS.cardInstanceUrl}/${state.card.cardID}?allInfo=true`, (cardInfo: YGOCard.Info) => {
 			cardInformationDispatch({
 				type: CardInformationType.UPDATE_CARD,
 				cardInfo: cardInfo,

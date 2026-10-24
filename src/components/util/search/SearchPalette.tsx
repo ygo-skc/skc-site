@@ -10,7 +10,7 @@ import axios from 'axios'
 import { YGOCardPreview } from 'skc-rcl'
 
 import FetchHandler from '../../../helper/FetchHandler'
-import DownstreamServices from '../../../helper/DownstreamServices'
+import * as DownstreamServices from '../../../helper/DownstreamServices'
 import AppRoutes from '../../../helper/AppRoutes'
 import useVisualViewport from './useVisualViewport'
 import usePreventPagePan from './usePreventPagePan'
@@ -84,7 +84,7 @@ export default function SearchPalette({ open, onClose }: SearchPaletteProps) {
 
 		const timer = setTimeout(() => {
 			FetchHandler.handleFetch<YGOCard.Deets[]>(
-				`${DownstreamServices.NAME_maps_ENDPOINT.search}?limit=10&${searchQuery}`,
+				`${DownstreamServices.SKC_API_ENDPOINTS.search}?limit=10&${searchQuery}`,
 				(json) => {
 					setCards(json)
 					setResultsTerm(term)

@@ -1,4 +1,4 @@
-import { Dates } from '../helper/Dates'
+import * as Dates from '../helper/Dates'
 
 type ProductInformationState = {
 	pageBreadcrumbs: string[]

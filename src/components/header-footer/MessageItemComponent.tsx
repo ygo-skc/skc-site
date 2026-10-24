@@ -3,7 +3,7 @@ import { Button, Typography, Chip } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ReactMarkdown, { Components } from 'react-markdown'
 
-import { Dates } from '../../helper/Dates'
+import * as Dates from '../../helper/Dates'
 
 // headings inside a post are sub-headings of the post title, so every markdown level renders one level below the title
 // (h3 for a full post, h4 for an opened row) in the theme's subtitle2 - screen readers navigate by heading level, so none are skipped

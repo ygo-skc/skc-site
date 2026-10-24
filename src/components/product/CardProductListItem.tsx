@@ -1,6 +1,6 @@
 import { Chip, Typography } from '@mui/material'
 import { FC } from 'react'
-import { Dates } from '../../helper/Dates'
+import * as Dates from '../../helper/Dates'
 import { DatedListItem, ProductImage } from 'skc-rcl'
 
 type CardProductListItemProps = {

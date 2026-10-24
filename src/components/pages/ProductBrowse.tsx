@@ -3,9 +3,9 @@ import '../../css/main-pages/product.css'
 import { useState, useEffect, lazy, FunctionComponent, Suspense, useCallback, startTransition, JSX } from 'react'
 
 import FetchHandler from '../../helper/FetchHandler'
-import DownstreamServices from '../../helper/DownstreamServices'
+import * as DownstreamServices from '../../helper/DownstreamServices'
 
-import { Dates } from '../../helper/Dates'
+import * as Dates from '../../helper/Dates'
 import { Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Skeleton, Typography } from '@mui/material'
 import Grid from '@mui/material/Grid'
 
@@ -66,7 +66,7 @@ const ProductBrowse: FunctionComponent = () => {
 
 	useEffect(() => {
 		startTransition(() => {
-			FetchHandler.handleFetch<YGOData.ProductBrowseResult>(DownstreamServices.NAME_maps_ENDPOINT.productBrowse, (json: YGOData.ProductBrowseResult) => {
+			FetchHandler.handleFetch<YGOData.ProductBrowseResult>(DownstreamServices.SKC_API_ENDPOINTS.productBrowse, (json: YGOData.ProductBrowseResult) => {
 				setProducts(json.products)
 				setIsFetchingProducts(false)
 			})

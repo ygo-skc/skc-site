@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { GenericNonBreakingErr, YGOCardPreview } from 'skc-rcl'
 import { Skeleton, Typography } from '@mui/material'
 import '../../css/card/card-of-the-day.css'
-import { Dates } from '../../helper/Dates'
+import * as Dates from '../../helper/Dates'
 
 // the same glanceable preview as the search popup - art, attribute, type chip in its frame colour, atk/def and the full effect
 const CardOfTheDay: FC<{ cardOfTheDayData: APIRequest<SKC.CardOfTheDay> }> = ({ cardOfTheDayData }) => {

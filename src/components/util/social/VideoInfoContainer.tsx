@@ -2,7 +2,7 @@ import { Typography } from '@mui/material'
 import { FC } from 'react'
 import { decodeHTML } from 'entities'
 
-import { Dates } from '../../../helper/Dates'
+import * as Dates from '../../../helper/Dates'
 
 // one upload in the channel's row - the thumbnail is decorative since the title names the link
 const VideoInfoContainer: FC<HeartAPI.YouTubeUploads & { publishedAt: Date }> = ({ thumbnailImg, title, url, publishedAt }) => {

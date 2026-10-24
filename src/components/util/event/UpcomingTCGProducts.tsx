@@ -6,7 +6,7 @@ import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import Markdown from 'react-markdown'
-import { Dates } from '../../../helper/Dates'
+import * as Dates from '../../../helper/Dates'
 
 const GenericNonBreakingErr = lazy(() =>
 	import('skc-rcl').then((module) => {

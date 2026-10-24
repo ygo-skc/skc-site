@@ -5,7 +5,7 @@ import { useEffect, lazy, useReducer, Suspense, startTransition } from 'react'
 import { useParams } from 'react-router-dom'
 
 import FetchHandler from '../../helper/FetchHandler'
-import DownstreamServices from '../../helper/DownstreamServices'
+import * as DownstreamServices from '../../helper/DownstreamServices'
 
 import { Chip, Skeleton, Typography } from '@mui/material'
 import ProductStats from '../product/ProductStats'
@@ -48,7 +48,7 @@ export default function ProductInformation() {
 	})
 
 	useEffect(() => {
-		FetchHandler.handleFetch<YGOProduct.Info>(`${DownstreamServices.NAME_maps_ENDPOINT.productDetails}/${state.productId}/en`, (productInfo: YGOProduct.Info) => {
+		FetchHandler.handleFetch<YGOProduct.Info>(`${DownstreamServices.SKC_API_ENDPOINTS.productDetails}/${state.productId}/en`, (productInfo: YGOProduct.Info) => {
 			productInformationDispatch({
 				type: ProductInformationActionType.UPDATE_PRODUCT,
 				productInformation: productInfo,

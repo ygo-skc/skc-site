@@ -1,7 +1,7 @@
 import { useEffect, useState, FunctionComponent, startTransition, Fragment, useCallback, JSX } from 'react'
 import { Button, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
 
-import { Dates } from '../../../helper/Dates'
+import * as Dates from '../../../helper/Dates'
 
 import { AcceptableBanListFormat } from '../../../helper/BanListUtil'
 import { DatedListItem, Hint } from 'skc-rcl'

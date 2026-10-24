@@ -1,4 +1,4 @@
-import { Dates } from '../Dates'
+import * as Dates from '../Dates'
 
 const myBday = new Date(new Date(746322027000).toLocaleString('en-US', { timeZone: 'America/Chicago' }))
 const becksBday = new Date(new Date(680664480000).toLocaleString('en-US', { timeZone: 'America/Chicago' }))
