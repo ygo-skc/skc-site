@@ -1,0 +1,71 @@
+/* settings popup - a capsule sheet like the messages popup, its preferences as rows in a white grouped card */
+.site-settings.MuiPaper-root {
+	box-sizing: border-box;
+	width: min(400px, calc(100vw - 24px));
+	padding: 18px 12px 12px;
+	border-radius: 26px;
+	outline: 1px solid var(--capsule-edge);
+	outline-offset: -1px;
+	background: var(--capsule);
+	color: var(--capsule-muted);
+}
+
+.site-settings .site-settings__heading {
+	margin: 0 8px 12px;
+	color: var(--capsule-text);
+}
+
+.site-settings__group {
+	border-radius: 18px;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 0.5px var(--capsule-edge);
+}
+
+.site-settings__row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 14px 16px;
+}
+
+.site-settings__text {
+	flex: 1 1 100%;
+}
+
+.site-settings .site-settings__label {
+	color: var(--capsule-text);
+}
+
+.site-settings .site-settings__hint {
+	color: var(--capsule-muted);
+}
+
+/* segmented control: a grey track with a white lens under the saved view, like the pages' own List | Grid */
+.site-settings__view.MuiToggleButtonGroup-root {
+	gap: 2px;
+	padding: 3px;
+	border-radius: 999px;
+	background: var(--capsule-track);
+}
+
+.site-settings__view .MuiToggleButton-root.MuiToggleButtonGroup-grouped {
+	gap: 6px;
+	margin: 0;
+	padding: 6px 14px;
+	border: 0;
+	border-radius: 999px;
+	color: var(--capsule-muted);
+}
+
+.site-settings__view .MuiToggleButton-root.Mui-selected,
+.site-settings__view .MuiToggleButton-root.Mui-selected:hover {
+	background: var(--capsule-lens);
+	color: var(--capsule-text);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+}
+
+.site-settings__view .MuiSvgIcon-root {
+	font-size: 18px;
+}

@@ -13,6 +13,7 @@ import SearchTrigger from '../util/search/SearchTrigger'
 
 import SubNav from './SubNav'
 import AppBanner from './AppBanner'
+import SiteSettings from './SiteSettings'
 
 const Messages = lazy(() => import('./Messages'))
 
@@ -51,6 +52,8 @@ const NavigationBar = () => {
 					>
 						<Messages />
 					</Suspense>
+
+					<SiteSettings />
 				</div>
 			</div>
 

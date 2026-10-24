@@ -6,6 +6,7 @@ import { Skeleton } from '@mui/material'
 
 import SuspenseFallback from '../SuspenseFallback'
 import { SiteSearchProvider } from '../util/search/SiteSearch'
+import { ResultsViewProvider } from '../util/ResultsViewPreference'
 
 const NavigationBar = lazy(() => import('../header-footer/NavigationBar'))
 const Footer = lazy(() => import('../header-footer/Footer'))
@@ -15,23 +16,25 @@ const Footer = lazy(() => import('../header-footer/Footer'))
  */
 export default function Layout() {
 	return (
-		<SiteSearchProvider>
-			<ScrollRestoration />
-			<div className='content'>
-				<Suspense fallback={<Skeleton variant='rectangular' width='100%' height='108px' />}>
-					<NavigationBar />
-				</Suspense>
-				<div className='routes'>
-					<div className='routes-wrapper'>
-						<Suspense fallback={<SuspenseFallback />}>
-							<Outlet />
-						</Suspense>
+		<ResultsViewProvider>
+			<SiteSearchProvider>
+				<ScrollRestoration />
+				<div className='content'>
+					<Suspense fallback={<Skeleton variant='rectangular' width='100%' height='108px' />}>
+						<NavigationBar />
+					</Suspense>
+					<div className='routes'>
+						<div className='routes-wrapper'>
+							<Suspense fallback={<SuspenseFallback />}>
+								<Outlet />
+							</Suspense>
+						</div>
 					</div>
 				</div>
-			</div>
-			<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='16.5rem' />}>
-				<Footer />
-			</Suspense>
-		</SiteSearchProvider>
+				<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='16.5rem' />}>
+					<Footer />
+				</Suspense>
+			</SiteSearchProvider>
+		</ResultsViewProvider>
 	)
 }
