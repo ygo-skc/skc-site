@@ -1,7 +1,6 @@
 import DatabaseInfo from '../util/DatabaseInfo'
 import UpcomingTCGProducts from '../util/event/UpcomingTCGProducts'
 import Welcome from '../home/Welcome'
-import { Section } from 'skc-rcl'
 import CardOfTheDay from '../card/CardOfTheDay'
 import { Suspense, lazy, useEffect, useReducer } from 'react'
 import { Skeleton } from '@mui/material'
@@ -13,6 +12,7 @@ import DiscordPresence from '../util/social/DiscordPresence'
 import YouTubeData, { channelIDs, YouTubeChannelID } from '../home/YouTubeData'
 
 import '../../css/util/headline.css'
+import '../../css/util/welcome.css'
 
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 
@@ -113,16 +113,14 @@ export default function Home() {
 
 			<UpcomingTCGProducts upcomingTCGProducts={upcomingTCGProducts} />
 
-			<Section sectionName='Welcome'>
-				<div className='section-content'>
-					<div className='multi-section'>
-						<Welcome />
-					</div>
-					<div className='multi-section'>
+			<section className='welcome' aria-labelledby='welcome__title'>
+				<div className='welcome__sheet'>
+					<Welcome />
+					<div className='welcome__channel'>
 						<YouTubeData channel={YouTubeChannelID.SKC} uploadsData={skcYTUploads} />
 					</div>
 				</div>
-			</Section>
+			</section>
 		</div>
 	)
 }

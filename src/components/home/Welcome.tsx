@@ -1,30 +1,38 @@
-import { Link, Typography } from '@mui/material'
-import { Fragment } from 'react'
+import { Button, Chip, Typography } from '@mui/material'
+import ChevronRightIcon from '@mui/icons-material/ChevronRight'
+import { Link } from 'react-router-dom'
 
 import AppRoutes from '../../helper/AppRoutes'
 
+const PROMISES = ['No ads', 'No trackers', 'Updated every ban list']
+
+// the pitch in home's welcome sheet - what the site is, what it promises, and the about page
 export default function Welcome() {
 	return (
-		<Fragment>
-			<Typography variant='h5'>The BEST Yu-Gi-Oh! Site?</Typography>
-
-			<Typography variant='h6'>Maybe one day!</Typography>
-
-			<Typography variant='body1'>
-				This is a site dedicated to Yu-Gi-Oh! content. The main differences between this site and others is that this site is incredibly fast and intuitive and has no Ads or
-				trackers.
+		<div className='welcome__pitch'>
+			<Typography variant='overline' component='p' className='welcome__eyebrow'>
+				Welcome
 			</Typography>
 
-			<br />
-
-			<Typography variant='body1'>
-				Yugioh is ever expanding and evolving. New products are continuously released and new ban lists established. As such this website will also be continuously updated to
-				accommodate. Want to learn more? Check out the{' '}
-				<Link className='link' color='secondary' href={AppRoutes.About}>
-					About
-				</Link>{' '}
-				section
+			<Typography id='welcome__title' variant='h3' component='h2'>
+				A Yu-Gi-Oh! database that stays out of your way.
 			</Typography>
-		</Fragment>
+
+			<Typography variant='body1' className='welcome__summary'>
+				Card info, ban lists and products, loaded fast. New sets and ban lists land here as they&apos;re announced.
+			</Typography>
+
+			<ul className='welcome__promises'>
+				{PROMISES.map((promise) => (
+					<li key={promise}>
+						<Chip className='welcome__promise' icon={<span className='welcome__dot' aria-hidden='true' />} label={promise} />
+					</li>
+				))}
+			</ul>
+
+			<Button className='welcome__about' component={Link} to={AppRoutes.About} endIcon={<ChevronRightIcon />}>
+				About the site
+			</Button>
+		</div>
 	)
 }

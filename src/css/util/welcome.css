@@ -1,0 +1,91 @@
+/* home's welcome - one white sheet like Trending's: the pitch, then the channel behind a hairline */
+.welcome {
+	margin-bottom: 56px;
+	container-type: inline-size;
+}
+
+.welcome__sheet {
+	display: grid;
+	grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+	gap: 36px;
+	padding: 24px 28px;
+	border-radius: 28px;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+}
+
+.welcome .MuiTypography-root {
+	margin: 0;
+}
+
+.welcome__pitch {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 14px;
+}
+
+.welcome .welcome__eyebrow {
+	color: var(--accent-text);
+}
+
+.welcome__pitch .MuiTypography-h3 {
+	text-wrap: balance;
+}
+
+.welcome .welcome__summary {
+	color: var(--capsule-muted);
+}
+
+.welcome__promises {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.welcome__promise .welcome__dot.MuiChip-icon {
+	width: 7px;
+	height: 7px;
+	margin: 0 -2px 0 12px;
+	border-radius: 50%;
+	background: var(--accent);
+}
+
+.welcome__about.MuiButton-root {
+	padding-inline: 16px 12px;
+	border-radius: 999px;
+	background: var(--capsule-track);
+	color: var(--capsule-text);
+}
+
+.welcome__about.MuiButton-root:hover {
+	background: var(--capsule-hover);
+}
+
+.welcome__about .MuiButton-endIcon {
+	margin-left: 2px;
+}
+
+.welcome__channel {
+	min-width: 0;
+	padding-left: 36px;
+	box-shadow: -1px 0 0 var(--capsule-edge);
+}
+
+@container (max-width: 700px) {
+	.welcome__sheet {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 24px;
+		padding: 22px;
+		border-radius: 24px;
+	}
+
+	.welcome__channel {
+		padding-top: 24px;
+		padding-left: 0;
+		box-shadow: 0 -1px 0 var(--capsule-edge);
+	}
+}

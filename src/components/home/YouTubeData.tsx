@@ -27,24 +27,27 @@ const channelNames = new Map<YouTubeChannelID, string>([
 ])
 
 const channelDescription = new Map<YouTubeChannelID, string>([
-	[YouTubeChannelID.SKC, 'Yu-Gi-Oh! product unboxing, market watch and other commentary. Generally, we just have fun in this channel. This is my main YouTube channel.'],
+	[YouTubeChannelID.SKC, 'Yu-Gi-Oh! product unboxing, market watch and other commentary.'],
 	[YouTubeChannelID.BTSC, 'This is my secondary channel. Really, I only upload here if I see an interesting Pokemon TCG product I want to open.'],
 ])
+// served from public/Img - the About page shows the same file
+const channelAvatars = new Map<YouTubeChannelID, string>([[YouTubeChannelID.SKC, '/assets/yt_channel_icon.jpeg']])
+
 const YouTubeData: FC<{ channel: YouTubeChannelID; uploadsData: APIRequest<HeartAPI.YouTubeUploadsResponse> }> = ({ channel, uploadsData }) => {
 	const channelId = channelIDs.get(channel)
 
 	return (
 		<Suspense fallback={<Skeleton variant='rectangular' height='375px' width='100%' className='rounded-skeleton' />}>
-			{!uploadsData.isFetchingData && (
-				<YouTubeUploads
-					youtubeData={uploadsData.videos}
-					channelName={channelNames.get(channel)!}
-					channelId={channelId!.toString()}
-					channelDescription={channelDescription.get(channel)!}
-				/>
-			)}
+			{/* the channel's name and description don't need the api, so only the videos wait */}
+			<YouTubeUploads
+				youtubeData={uploadsData.videos}
+				isLoading={uploadsData.isFetchingData}
+				channelName={channelNames.get(channel)!}
+				channelId={channelId!.toString()}
+				channelDescription={channelDescription.get(channel)!}
+				channelAvatar={channelAvatars.get(channel)}
+			/>
 			{!uploadsData.isFetchingData && uploadsData.requestHasError && <GenericNonBreakingErr errExplanation='Come back at a different time to see recent YouTube uploads 🎥!' />}
-			{uploadsData.isFetchingData && <Skeleton variant='rectangular' height='375' width='100%' className='rounded-skeleton' />}
 		</Suspense>
 	)
 }
