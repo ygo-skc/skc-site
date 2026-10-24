@@ -1,5 +1,6 @@
 import { lazy, useState, useEffect, Suspense, useReducer, useCallback, useMemo } from 'react'
 
+import axios from 'axios'
 import { Skeleton } from '@mui/material'
 import FetchHandler from '../../helper/FetchHandler'
 import * as DownstreamServices from '../../helper/DownstreamServices'
@@ -89,14 +90,29 @@ export default function BanList() {
 
 		setSelectedBanList('')
 
-		FetchHandler.handleFetch<YGOBanList.Dates>(`${DownstreamServices.SKC_API_ENDPOINTS.banListsUrl}?format=${format}`, (json) => {
-			dateDispatch({
-				type: BanListDateReducerActionType.DATES_RECEIVED,
-				payload: {
-					banListStartDates: json.banListDates.map((item: YGOBanList.Date) => item.effectiveDate),
-				},
-			})
-		})
+		// switching format cancels the old format's dates, and an answer already on its way is ignored, so it can't replace the new format's
+		let isCurrent = true
+		const request = axios.CancelToken.source()
+
+		FetchHandler.handleFetch<YGOBanList.Dates>(
+			`${DownstreamServices.SKC_API_ENDPOINTS.banListsUrl}?format=${format}`,
+			(json) => {
+				if (!isCurrent) return
+				dateDispatch({
+					type: BanListDateReducerActionType.DATES_RECEIVED,
+					payload: {
+						banListStartDates: json.banListDates.map((item: YGOBanList.Date) => item.effectiveDate),
+					},
+				})
+			},
+			true,
+			request
+		)
+
+		return () => {
+			isCurrent = false
+			request.cancel()
+		}
 	}, [format, navigate])
 
 	useEffect(() => {
@@ -105,41 +121,68 @@ export default function BanList() {
 
 	useEffect(() => {
 		if (selectedBanList && selectedBanList.length !== 0) {
+			// picking another list (or format) cancels this one's requests, and ignores any answer already on its way
+			let isCurrent = true
+			const request = axios.CancelToken.source()
+
 			currentBanListDispatch({
 				type: BanListReducerType.FETCHING_INFO,
 			})
 
-			FetchHandler.handleFetch<YGOBanList.NormalFormatNewlyAdded>(`${DownstreamServices.SKC_API_ENDPOINTS.banListUrl}/${selectedBanList}/new?format=${format}`, (json) => {
-				currentBanListDispatch({
-					type: BanListReducerType.UPDATE_NEW_CONTENT,
-					newForbidden: json.newForbidden,
-					newLimited: json.newLimited,
-					newSemiLimited: json.newSemiLimited,
-					numNewForbidden: json.numNewForbidden,
-					numNewLimited: json.numNewLimited,
-					numNewSemiLimited: json.numNewSemiLimited,
-				})
-			})
+			FetchHandler.handleFetch<YGOBanList.NormalFormatNewlyAdded>(
+				`${DownstreamServices.SKC_API_ENDPOINTS.banListUrl}/${selectedBanList}/new?format=${format}`,
+				(json) => {
+					if (!isCurrent) return
+					currentBanListDispatch({
+						type: BanListReducerType.UPDATE_NEW_CONTENT,
+						newForbidden: json.newForbidden,
+						newLimited: json.newLimited,
+						newSemiLimited: json.newSemiLimited,
+						numNewForbidden: json.numNewForbidden,
+						numNewLimited: json.numNewLimited,
+						numNewSemiLimited: json.numNewSemiLimited,
+					})
+				},
+				true,
+				request
+			)
 
-			FetchHandler.handleFetch<YGOBanList.NormalFormatRemovedCards>(`${DownstreamServices.SKC_API_ENDPOINTS.banListUrl}/${selectedBanList}/removed?format=${format}`, (json) => {
-				currentBanListDispatch({
-					type: BanListReducerType.UPDATE_REMOVED_CONTENT,
-					removedCards: json.removedCards,
-					numRemoved: determineListSize(json.numRemoved),
-				})
-			})
+			FetchHandler.handleFetch<YGOBanList.NormalFormatRemovedCards>(
+				`${DownstreamServices.SKC_API_ENDPOINTS.banListUrl}/${selectedBanList}/removed?format=${format}`,
+				(json) => {
+					if (!isCurrent) return
+					currentBanListDispatch({
+						type: BanListReducerType.UPDATE_REMOVED_CONTENT,
+						removedCards: json.removedCards,
+						numRemoved: determineListSize(json.numRemoved),
+					})
+				},
+				true,
+				request
+			)
 
-			FetchHandler.handleFetch<YGOBanList.NormalFormatContent>(`${DownstreamServices.SKC_API_ENDPOINTS.banListUrl}/${selectedBanList}/cards?format=${format}`, (json) => {
-				currentBanListDispatch({
-					type: BanListReducerType.UPDATE_LIST_CONTENT,
-					forbidden: json.forbidden,
-					limited: json.limited,
-					semiLimited: json.semiLimited,
-					numForbidden: determineListSize(json.numForbidden),
-					numLimited: determineListSize(json.numLimited),
-					numSemiLimited: determineListSize(json.numSemiLimited),
-				})
-			})
+			FetchHandler.handleFetch<YGOBanList.NormalFormatContent>(
+				`${DownstreamServices.SKC_API_ENDPOINTS.banListUrl}/${selectedBanList}/cards?format=${format}`,
+				(json) => {
+					if (!isCurrent) return
+					currentBanListDispatch({
+						type: BanListReducerType.UPDATE_LIST_CONTENT,
+						forbidden: json.forbidden,
+						limited: json.limited,
+						semiLimited: json.semiLimited,
+						numForbidden: determineListSize(json.numForbidden),
+						numLimited: determineListSize(json.numLimited),
+						numSemiLimited: determineListSize(json.numSemiLimited),
+					})
+				},
+				true,
+				request
+			)
+
+			return () => {
+				isCurrent = false
+				request.cancel()
+			}
 		}
 	}, [selectedBanList])
 
