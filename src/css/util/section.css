@@ -18,6 +18,14 @@
 	color: var(--page);
 }
 
+/* while a card loads its colour isn't known yet, so rcl gets no header style and paints white text on nothing - a grey bar holds the place */
+.section-header-container:not([class*='-section-header-container'], [class*='-ygo-card-style']) {
+	border-top-left-radius: 1.75rem;
+	border-top-right-radius: 1.75rem;
+	background: var(--capsule-track);
+	color: var(--capsule-muted);
+}
+
 .section-parent.default-border {
 	border-color: var(--capsule-edge);
 }

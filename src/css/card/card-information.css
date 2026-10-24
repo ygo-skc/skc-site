@@ -43,3 +43,7 @@
 .card-printing-info-container > *:not(:last-child) {
 	margin-right: 13px;
 }
+
+.card-releases__chip-skeleton.MuiSkeleton-root {
+	border-radius: 999px;
+}

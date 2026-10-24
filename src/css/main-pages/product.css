@@ -43,6 +43,26 @@
 	margin-bottom: 13px;
 }
 
+/* loading tiles: a cover in the product art's shape, pills where the date and chips go */
+.product-grid-skeleton__cover.MuiSkeleton-root {
+	height: auto;
+	aspect-ratio: 99 / 153;
+}
+
+.product-grid-skeleton__pill.MuiSkeleton-root {
+	border-radius: 999px;
+}
+
+/* rcl's inline date keeps 13px under it */
+.product-grid-item-text .product-grid-skeleton__date {
+	margin-bottom: 13px;
+}
+
+.product-grid-skeleton__chips {
+	display: flex;
+	gap: 4px;
+}
+
 .product-grid-item-text .tag-chip.MuiChip-root,
 .tag-chip-condensed.MuiChip-root {
 	margin-top: 0;

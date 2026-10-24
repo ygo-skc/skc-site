@@ -7,6 +7,7 @@ import DownstreamServices from '../../helper/DownstreamServices'
 
 import { Dates } from '../../helper/Dates'
 import { Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Skeleton, Typography } from '@mui/material'
+import Grid from '@mui/material/Grid'
 
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 const ProductGrid = lazy(() => import('../product/ProductGrid'))
@@ -16,11 +17,45 @@ const Section = lazy(() =>
 	})
 )
 
+// a year heading and a few product tiles shaped like ProductGridItem (cover, release date, id and total, name, type chips)
+const ProductSectionSkeleton: FunctionComponent = () => (
+	<div className='product-browse-section' aria-hidden='true' data-testid='product-browse-skeleton'>
+		<Typography variant='h2'>
+			<Skeleton width='10rem' />
+		</Typography>
+		<Grid container spacing={1}>
+			{Array.from({ length: 6 }, (_, i) => (
+				<Grid key={i} size={{ xs: 12, sm: 6, md: 4, lg: 4, xl: 3 }}>
+					<div className='product-grid-item-parent'>
+						<div className='product-img'>
+							<Skeleton className='product-grid-skeleton__cover' variant='rounded' />
+						</div>
+						<div className='product-grid-item-text'>
+							<Skeleton className='product-grid-skeleton__pill product-grid-skeleton__date' variant='rounded' width={145} height={32} />
+							<Typography variant='body1'>
+								<Skeleton width='60%' />
+							</Typography>
+							<Typography variant='h5'>
+								<Skeleton width='85%' />
+							</Typography>
+							<div className='product-grid-skeleton__chips'>
+								<Skeleton className='product-grid-skeleton__pill' variant='rounded' width={33} height={29} />
+								<Skeleton className='product-grid-skeleton__pill' variant='rounded' width={75} height={29} />
+							</div>
+						</div>
+					</div>
+				</Grid>
+			))}
+		</Grid>
+	</div>
+)
+
 const ProductBrowse: FunctionComponent = () => {
 	const [products, setProducts] = useState<YGOProduct.Info[]>([])
 	const [productGridItems, setProductGridItems] = useState<JSX.Element[]>([])
 
 	const [isDataLoaded, setIsDataLoaded] = useState(false)
+	const [isFetchingProducts, setIsFetchingProducts] = useState(true)
 	const [loadAll, setLoadAll] = useState(false)
 
 	const [productTypes, setProductTypes] = useState<JSX.Element[]>([])
@@ -33,6 +68,7 @@ const ProductBrowse: FunctionComponent = () => {
 		startTransition(() => {
 			FetchHandler.handleFetch<YGOData.ProductBrowseResult>(DownstreamServices.NAME_maps_ENDPOINT.productBrowse, (json: YGOData.ProductBrowseResult) => {
 				setProducts(json.products)
+				setIsFetchingProducts(false)
 			})
 		})
 	}, [])
@@ -137,7 +173,7 @@ const ProductBrowse: FunctionComponent = () => {
 								</FormControl>
 							</div>
 
-							{productGridItems}
+							{isFetchingProducts ? <ProductSectionSkeleton /> : productGridItems}
 							{loadAll ? undefined : <Button onClick={loadAllCB}>Load All</Button>}
 						</div>
 					) : undefined}

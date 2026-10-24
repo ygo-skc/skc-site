@@ -120,7 +120,7 @@ const CardInformation = () => {
 						<CardImageRounded size='md' cardID={state.card.cardID} loading='eager' />
 						<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='10rem' />}>
 							{state.isFetchingCardData ? (
-								<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='10rem' />
+								<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='12rem' />
 							) : (
 								<YGOCard
 									cardName={state.card.cardName}
@@ -147,7 +147,7 @@ const CardInformation = () => {
 
 					<div className='headline-section'>
 						<Typography variant='h5'>Archetypes (BETA)</Typography>
-						{state.isFetchingSuggestions && <Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='5rem' />}
+						{state.isFetchingSuggestions && <Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='3.5rem' />}
 						{!state.isFetchingSuggestions &&
 							state.archetypes.size !== 0 &&
 							[...state.archetypes].map((archetype) => <Chip className='tag-chip' key={archetype} label={archetype} />)}
@@ -162,7 +162,27 @@ const CardInformation = () => {
 
 					<div className='headline-section'>
 						<Typography variant='h5'>Releases</Typography>
-						{state.productInfo.length !== 0 && (
+						{/* the printing dates, rarity count and rarity chips, held while the card's products load */}
+						{state.isFetchingCardData && (
+							<div aria-hidden='true' data-testid='card-releases-skeleton'>
+								<div className='card-printing-info-container'>
+									<Skeleton variant='circular' width={24} height={24} />
+									<div>
+										<Typography variant='subtitle2'>
+											<Skeleton width='16rem' />
+										</Typography>
+										<Typography variant='subtitle2'>
+											<Skeleton width='14rem' />
+										</Typography>
+									</div>
+								</div>
+								<Typography variant='subtitle2'>
+									<Skeleton width='7rem' />
+								</Typography>
+								<Skeleton className='card-releases__chip-skeleton' variant='rounded' width='6rem' height={32} />
+							</div>
+						)}
+						{!state.isFetchingCardData && state.productInfo.length !== 0 && (
 							<div className='card-printing-info-container'>
 								<CalendarMonthTwoToneIcon />
 								<div>
@@ -179,12 +199,16 @@ const CardInformation = () => {
 							</div>
 						)}
 
-						<Typography variant='subtitle2'>
-							{state.uniqueRarities.length} unique {state.uniqueRarities.length == 1 ? 'rarity' : 'rarities'}
-						</Typography>
-						{state.uniqueRarities.map((uniqueRarity) => (
-							<Chip className='tag-chip' key={uniqueRarity} label={uniqueRarity} />
-						))}
+						{!state.isFetchingCardData && (
+							<>
+								<Typography variant='subtitle2'>
+									{state.uniqueRarities.length} unique {state.uniqueRarities.length == 1 ? 'rarity' : 'rarities'}
+								</Typography>
+								{state.uniqueRarities.map((uniqueRarity) => (
+									<Chip className='tag-chip' key={uniqueRarity} label={uniqueRarity} />
+								))}
+							</>
+						)}
 					</div>
 				</div>
 			</div>
@@ -205,7 +229,7 @@ const CardInformation = () => {
 			</Suspense>
 			<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='40rem' />}>
 				{state.isFetchingCardData ? (
-					<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='20rem' />
+					<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='40rem' />
 				) : (
 					<CardInformationRelatedContent
 						cardColor={state.card.cardColor?.replace(/Pendulum-/gi, '') as YGOCard.Color}
