@@ -102,8 +102,11 @@
 	gap: 2px;
 }
 
-.site-nav__brand:hover {
-	background: var(--capsule-hover);
+/* touch screens keep :hover on the last tapped element, so the brand would stay grey after the page changes */
+@media (hover: hover) and (pointer: fine) {
+	.site-nav__brand:hover {
+		background: var(--capsule-hover);
+	}
 }
 
 .site-nav :focus-visible {
