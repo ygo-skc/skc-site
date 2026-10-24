@@ -1,5 +1,6 @@
 import { Button, Chip, Typography } from '@mui/material'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
+import CheckRoundedIcon from '@mui/icons-material/CheckRounded'
 import { Link } from 'react-router-dom'
 
 import AppRoutes from '../../helper/AppRoutes'
@@ -25,7 +26,7 @@ export default function Welcome() {
 			<ul className='welcome__promises'>
 				{PROMISES.map((promise) => (
 					<li key={promise}>
-						<Chip className='welcome__promise' icon={<span className='welcome__dot' aria-hidden='true' />} label={promise} />
+						<Chip className='welcome__promise' icon={<CheckRoundedIcon />} label={promise} />
 					</li>
 				))}
 			</ul>

@@ -46,12 +46,11 @@
 	list-style: none;
 }
 
-.welcome__promise .welcome__dot.MuiChip-icon {
-	width: 7px;
-	height: 7px;
-	margin: 0 -2px 0 12px;
-	border-radius: 50%;
-	background: var(--accent);
+/* a quiet check marks the promises as what you get, so they don't read as buttons beside the About pill */
+.welcome__promise .MuiChip-icon.MuiSvgIcon-root {
+	margin: 0 -4px 0 10px;
+	font-size: 18px;
+	color: var(--capsule-muted);
 }
 
 .welcome__about.MuiButton-root {
