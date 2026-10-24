@@ -1,5 +1,5 @@
 import { FC, memo, useCallback } from 'react'
-import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material'
+import { ToggleButton, ToggleButtonGroup } from '@mui/material'
 import { AcceptableBanListFormat } from '../../helper/BanListUtil'
 import { scrollToTop } from '../../helper/Etc'
 
@@ -11,23 +11,20 @@ type BanListFormatProps = {
 const BanListFormat: FC<BanListFormatProps> = memo(
 	({ format, setFormat }) => {
 		const handleFormatChanged = useCallback(
-			(_: React.ChangeEvent<HTMLInputElement>, value: string) => {
-				setFormat(value as AcceptableBanListFormat)
+			(_: React.MouseEvent<HTMLElement>, value: AcceptableBanListFormat | null) => {
+				// clicking the selected format again gives null - keep the current one
+				if (value === null) return
+				setFormat(value)
 				scrollToTop()
 			},
 			[setFormat]
 		)
 
 		return (
-			<div className='group'>
-				<FormControl>
-					<FormLabel id='ban-list-format-label'>Format</FormLabel>
-					<RadioGroup value={format} onChange={handleFormatChanged} row aria-labelledby='ban-list-format-label' name='ban-list-format-buttons-group'>
-						<FormControlLabel value='TCG' control={<Radio />} label='TCG' />
-						<FormControlLabel value='MD' control={<Radio />} label='Master Duel' />
-					</RadioGroup>
-				</FormControl>
-			</div>
+			<ToggleButtonGroup className='ban-list-format' exclusive aria-label='Ban list format' value={format} onChange={handleFormatChanged}>
+				<ToggleButton value={AcceptableBanListFormat.TCG}>TCG</ToggleButton>
+				<ToggleButton value={AcceptableBanListFormat.MD}>Master Duel</ToggleButton>
+			</ToggleButtonGroup>
 		)
 	},
 	(prevProps, nextProps) => {

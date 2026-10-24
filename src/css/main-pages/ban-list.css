@@ -1,97 +1,901 @@
-/* doubled class beats the AppBar's primary fill */
-.tab-container.MuiAppBar-root {
-	background-color: var(--capsule-lens);
-	box-shadow: none;
+/* page header: a white card - date badge, eyebrow, effective date and list count on the left, format + date controls on the right
+(wrapping under on narrow widths), and the status totals as pills in a strip along the bottom */
+.ban-list-header {
+	overflow: hidden;
+	margin-bottom: 40px;
+	border-radius: 28px;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
 }
 
-.tabs .MuiTab-root {
+.ban-list-header__top {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 20px 32px;
+	padding: 28px 32px 24px;
+}
+
+.ban-list-header__who {
+	display: flex;
+	align-items: center;
+	gap: 24px;
+	min-width: 0;
+}
+
+/* rcl's DateBadge keeps its own colours - only stop it shrinking beside a long title */
+.ban-list-header__badge {
+	display: flex;
+	flex: none;
+}
+
+/* the size of rcl's normal DateBadge (condensed on phones, below) - in rem like rcl's own badge, so it grows with it */
+.ban-list-header__badge-skeleton.MuiSkeleton-root {
+	flex: none;
+	width: 7rem;
+	height: 5.25rem;
+	border-radius: 1rem;
+}
+
+.ban-list-header__totals {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin: 0;
+	padding: 16px 32px;
+	list-style: none;
+	border-top: 1px solid var(--capsule-edge);
+	background: var(--capsule);
+}
+
+.ban-list-header__total.MuiChip-root {
+	margin: 0;
+	background-color: var(--capsule-lens);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
 	color: var(--capsule-muted);
 }
 
-.tabs .MuiTab-textColorPrimary.Mui-selected {
+.ban-list-header__total.MuiChip-root::before {
+	content: '';
+	width: 8px;
+	height: 8px;
+	margin-left: 14px;
+	border-radius: 50%;
+	background: var(--status, var(--accent));
+}
+
+.ban-list-header__total .MuiChip-label {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.ban-list-header__total .ban-list-header__count {
 	color: var(--capsule-text);
 }
 
-.ban-list-date-selector {
-	width: 100%;
-	margin: auto;
+.ban-list-header__total-skeleton.MuiSkeleton-root {
+	height: 32px;
+	border-radius: 999px;
+}
+
+.ban-list-header__title {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	min-width: 0;
+}
+
+.ban-list-header .ban-list-header__eyebrow {
+	color: var(--accent-text);
+}
+
+.ban-list-header__meta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px 12px;
+}
+
+.ban-list-header .ban-list-header__lead {
+	color: var(--capsule-muted);
+}
+
+.ban-list-header__upcoming.MuiChip-root {
+	margin: 0;
+	background-color: color-mix(in srgb, var(--accent) 12%, #fff);
+	color: var(--accent-text);
+}
+
+.ban-list-header__controls {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 10px;
+}
+
+/* skeleton lines for text that only wraps on phones */
+.ban-list-phone-line.MuiSkeleton-root {
+	display: none;
+}
+
+/* read by screen readers, not shown */
+.ban-list-header__sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+
+/* segmented control: a grey track with a white lens under the selected format, like the nav and the trending toggle */
+.ban-list-format.MuiToggleButtonGroup-root {
+	padding: 3px;
+	gap: 2px;
+	border-radius: 999px;
+	background: var(--capsule-track);
+}
+
+.ban-list-format .MuiToggleButton-root.MuiToggleButtonGroup-grouped {
+	margin: 0;
+	padding: 6px 16px;
+	border: 0;
+	border-radius: 999px;
+	color: var(--capsule-muted);
+}
+
+.ban-list-format .MuiToggleButton-root.Mui-selected,
+.ban-list-format .MuiToggleButton-root.Mui-selected:hover {
+	background: var(--capsule-lens);
+	color: var(--capsule-text);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+}
+
+/* date picker as a grey pill (it sits on the white header card) with a purple caret */
+.ban-list-date-selector.MuiInputBase-root {
+	border-radius: 999px;
+	background: var(--capsule-track);
+}
+
+.ban-list-date-selector .MuiSelect-select.MuiSelect-select {
+	padding: 10px 40px 10px 16px;
+}
+
+.ban-list-date-selector .MuiOutlinedInput-notchedOutline {
+	border: 0;
+}
+
+.ban-list-date-selector .MuiSelect-icon {
+	color: var(--accent);
+}
+
+.ban-list-date-selector.Mui-focused {
+	box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
+.ban-list-date-selector__skeleton.MuiSkeleton-root {
+	border-radius: 999px;
+}
+
+/* touch screens get apple's 44px minimum target */
+@media (pointer: coarse) {
+	.ban-list-format .MuiToggleButton-root.MuiToggleButtonGroup-grouped,
+	.ban-list-date-selector.MuiInputBase-root {
+		min-height: 44px;
+	}
 }
 
 .ban-list-date-selector-menu-item {
 	padding: 11px;
 }
 
-/* soft tags tinted with each status colour - the tint carries the meaning, the dark text stays readable */
-.breakdown-chip.MuiChip-root {
-	border-color: transparent;
+/* each ban status sets its colour (dots), ink (text) and tint (fills) - the tint carries the meaning, the ink stays readable on it */
+.ban-status--forbidden {
+	--status: var(--forbidden);
+	--status-ink: var(--forbidden-ink);
+	--status-tint: color-mix(in srgb, var(--forbidden) 12%, #fff);
 }
 
-.forbidden-breakdown-chip.MuiChip-root {
-	background-color: color-mix(in srgb, var(--forbidden) 12%, #fff);
-	color: var(--forbidden-ink);
+.ban-status--limited {
+	--status: var(--limited);
+	--status-ink: var(--limited-ink);
+	--status-tint: color-mix(in srgb, var(--limited) 14%, #fff);
 }
 
-.limited-breakdown-chip.MuiChip-root,
-.limited-one-breakdown-chip.MuiChip-root {
-	background-color: color-mix(in srgb, var(--limited) 14%, #fff);
-	color: var(--limited-ink);
+.ban-status--semi-limited {
+	--status: var(--semi-limited);
+	--status-ink: var(--semi-limited-ink);
+	--status-tint: color-mix(in srgb, var(--semi-limited) 12%, #fff);
 }
 
-.semi-limited-breakdown-chip.MuiChip-root,
-.limited-two-breakdown-chip.MuiChip-root {
-	background-color: color-mix(in srgb, var(--semi-limited) 12%, #fff);
-	color: var(--semi-limited-ink);
+.ban-status--unlimited {
+	--status: var(--capsule-muted);
+	--status-ink: var(--capsule-text);
+	--status-tint: var(--capsule-track);
 }
 
-.limited-three-breakdown-chip.MuiChip-root {
-	background-color: color-mix(in srgb, var(--limited-three) 12%, #fff);
-	color: var(--limited-three-ink);
+.ban-status-chip.MuiChip-root {
+	margin: 0;
+	background-color: var(--status-tint, var(--capsule-track));
+	color: var(--status-ink, var(--capsule-text));
 }
 
-.removed-breakdown-chip.MuiChip-root {
-	background-color: var(--capsule-track);
+/* "What changed" and "Full list" blocks */
+.ban-list-block {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	margin-bottom: 40px;
+}
+
+.ban-list-block__head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 8px;
+}
+
+.ban-list-block .ban-list-block__hint {
+	color: var(--capsule-muted);
+}
+
+/* "What changed" sits in a white sheet like the header, its title inside */
+.ban-list-block--sheet {
+	padding: 24px;
+	border-radius: 28px;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+}
+
+.ban-list-block--sheet .ban-list-block__head {
+	padding-inline: 4px;
+}
+
+/* one group per new status in its status tint, stretched to the same height - a status dot, title and count, then the rows in a white inset list */
+.ban-list-changes {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+	gap: 14px;
+	align-items: stretch;
+}
+
+.ban-list-changes__column {
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	border-radius: 20px;
+	background: var(--status-tint, var(--page));
+}
+
+.ban-list-changes__head {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	padding: 16px 16px 10px;
+	color: var(--status-ink, var(--capsule-text));
+}
+
+.ban-list-changes__head .MuiTypography-root {
+	color: inherit;
+}
+
+.ban-list-changes__head > .MuiTypography-body2 {
+	margin: 0;
+	padding-left: 18px;
+}
+
+.ban-list-changes__title {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.ban-list-changes__title::before {
+	content: '' / '';
+	flex: none;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background: var(--status);
+}
+
+/* the title takes the slack so the count (and the popup's close button) sit at the end */
+.ban-list-changes__title > :first-child {
+	flex: 1;
+}
+
+.ban-list-changes__rows {
+	margin: 0;
+	padding: 6px 0;
+	list-style: none;
+}
+
+.ban-list-changes__column .ban-list-changes__rows {
+	overflow: hidden;
+	margin: 0 8px 8px;
+	border-radius: 14px;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+}
+
+.ban-list-changes__rows li {
+	position: relative;
+}
+
+.ban-list-changes__rows li + li::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 64px;
+	height: 1px;
+	background: var(--capsule-edge);
+}
+
+.ban-list-changes__row {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	min-height: 44px;
+	padding: 8px 18px;
+	color: var(--capsule-text);
+	text-decoration: none;
+}
+
+.ban-list-changes__row:hover {
+	background: var(--capsule);
+}
+
+.ban-list-changes__name {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	min-width: 0;
+}
+
+.ban-list-changes__name .MuiTypography-root {
+	margin: 0;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 	color: var(--capsule-text);
 }
 
-.cards-with-different-status-parent {
-	margin-bottom: 26px;
-	background: var(--capsule-lens);
-	padding: 20px;
-	border-radius: 20px;
+.ban-list-changes__name .MuiTypography-body2,
+.ban-list-changes__was .MuiTypography-root {
+	color: var(--capsule-muted);
 }
 
-.cards-with-different-status-parent:last-child {
-	margin-bottom: 65px;
-}
-
-.cards-with-diff-status-skeleton {
-	margin-bottom: 65px;
-}
-
-.cards-with-different-status-content {
+.ban-list-changes__was {
 	display: flex;
-	overflow-x: auto;
-	padding-bottom: 13px;
+	flex: none;
+	flex-direction: column;
+	align-items: flex-end;
+	gap: 2px;
 }
 
-.forbidden-icon.MuiSvgIcon-root {
-	color: var(--forbidden);
-	font-size: 24px;
+.ban-list-changes__more-skeleton {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 44px;
+	margin-top: auto;
 }
 
-.limited-icon.MuiSvgIcon-root,
-.limited-one-icon.MuiSvgIcon-root {
-	color: var(--limited);
-	font-size: 24px;
+.ban-list-changes__more.MuiButton-root {
+	min-height: 44px;
+	margin-top: auto;
+	border-radius: 0;
+	color: var(--accent-text);
 }
 
-.semi-limited-icon.MuiSvgIcon-root,
-.limited-two-icon.MuiSvgIcon-root {
-	color: var(--semi-limited);
-	font-size: 24px;
+/* "Show all" popup: the column as a solid sheet - tinted head pinned, rows scroll under it */
+.ban-list-changes-dialog.MuiPaper-root {
+	width: min(512px, calc(100vw - 24px));
+	max-height: min(720px, calc(100vh - 96px));
+	margin: 12px;
+	border-radius: 26px;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
 }
 
-.limited-three-icon.MuiSvgIcon-root {
-	color: var(--limited-three);
-	font-size: 24px;
+.ban-list-changes-dialog.MuiDialog-paperFullScreen {
+	width: 100%;
+	max-height: none;
+	margin: 0;
+	border-radius: 0;
+}
+
+.ban-list-changes-dialog .ban-list-changes__head {
+	background: var(--status-tint);
+}
+
+.ban-list-changes-dialog__body {
+	overflow-y: auto;
+}
+
+.ban-list-changes__close.MuiIconButton-root {
+	margin: -8px -8px -8px 0;
+	color: inherit;
+}
+
+.ban-list-changes__head--skeleton .ban-list-changes__title::before {
+	display: none;
+}
+
+.ban-list-changes__chip-skeleton.MuiSkeleton-root {
+	border-radius: 999px;
+}
+
+/* full list: a white sheet with the toolbar on top */
+.ban-list-cards {
+	overflow: hidden;
+	border-radius: 28px;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+}
+
+.ban-list-cards__tools {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 10px;
+	padding: 16px 18px;
+	border-bottom: 1px solid var(--capsule-edge);
+}
+
+.ban-list-cards .ban-list-cards__title {
+	margin-right: 8px;
+	padding-left: 4px;
+}
+
+.ban-list-cards__search.MuiInputBase-root {
+	flex: 1 1 220px;
+	max-width: 300px;
+	gap: 8px;
+	padding: 0 16px;
+	border-radius: 999px;
+	background: var(--capsule-track);
+	color: var(--capsule-text);
+}
+
+.ban-list-cards__search .MuiSvgIcon-root {
+	font-size: 20px;
+	color: var(--capsule-muted);
+}
+
+.ban-list-cards__search.Mui-focused {
+	box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
+.ban-list-cards__filters {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+}
+
+/* grey capsules with the status colour as a dot; the picked one turns near-black */
+.ban-list-cards__filter.MuiChip-root {
+	margin: 0;
+}
+
+.ban-list-cards__filter.MuiChip-root[class*='ban-status--']::before {
+	content: '';
+	width: 8px;
+	height: 8px;
+	margin-left: 12px;
+	border-radius: 50%;
+	background: var(--status);
+}
+
+.ban-list-cards__filter .MuiChip-label {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.ban-list-cards__filter .ban-list-cards__filter-count {
+	color: var(--capsule-muted);
+}
+
+.ban-list-cards__filter.MuiChip-root[aria-pressed='true'] {
+	background-color: var(--capsule-text);
+	color: var(--page);
+}
+
+.ban-list-cards__filter.MuiChip-root[aria-pressed='true'] .ban-list-cards__filter-count {
+	color: color-mix(in srgb, var(--page) 80%, transparent);
+}
+
+.ban-list-cards__tools-end {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin-left: auto;
+}
+
+.ban-list-cards__kind.MuiInputBase-root {
+	border-radius: 999px;
+	background: var(--capsule-track);
+}
+
+.ban-list-cards__kind .MuiSelect-select.MuiSelect-select {
+	padding: 8px 40px 8px 16px;
+}
+
+.ban-list-cards__kind .MuiOutlinedInput-notchedOutline {
+	border: 0;
+}
+
+.ban-list-cards__kind .MuiSelect-icon {
+	color: var(--accent);
+}
+
+.ban-list-cards__kind.Mui-focused {
+	box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
+/* table / cards switch - same segmented control as the format, segments equal width */
+.ban-list-cards__view.MuiToggleButtonGroup-root {
+	padding: 3px;
+	gap: 2px;
+	border-radius: 999px;
+	background: var(--capsule-track);
+}
+
+.ban-list-cards__view .MuiToggleButton-root.MuiToggleButtonGroup-grouped {
+	flex: 1;
+	gap: 6px;
+	margin: 0;
+	padding: 6px 14px;
+	border: 0;
+	border-radius: 999px;
+	color: var(--capsule-muted);
+}
+
+.ban-list-cards__view .MuiToggleButton-root.Mui-selected,
+.ban-list-cards__view .MuiToggleButton-root.Mui-selected:hover {
+	background: var(--capsule-lens);
+	color: var(--capsule-text);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+}
+
+.ban-list-cards__view .MuiSvgIcon-root {
+	font-size: 18px;
+}
+
+.ban-list-cards__table .MuiTableCell-root {
+	padding: 8px 18px;
+	border-bottom-color: var(--capsule-edge);
+}
+
+.ban-list-cards__table .MuiTableCell-head {
+	height: 44px;
+	background: var(--capsule);
+	color: var(--capsule-muted);
+}
+
+.ban-list-cards__table .MuiTableSortLabel-root.Mui-active {
+	color: var(--capsule-text);
+}
+
+.ban-list-cards__table .MuiTableSortLabel-root.Mui-active .MuiTableSortLabel-icon {
+	color: var(--accent);
+}
+
+.ban-list-cards__table .MuiTableRow-hover:hover {
+	background: var(--capsule);
+}
+
+.ban-list-cards__table .MuiTableRow-root:last-child .MuiTableCell-body {
+	border-bottom: 0;
+}
+
+.ban-list-cards__card {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	color: var(--capsule-text);
+	text-decoration: none;
+}
+
+/* rcl wraps card art in a padded square with its own margin - size it as a round thumbnail (doubled classes beat rcl's injected css) */
+.ban-list-thumb {
+	flex: none;
+	width: 36px;
+}
+
+.ban-list-thumb .rounded-img-outer-container.rounded-img-outer-container {
+	width: 36px;
+	margin: 0;
+}
+
+.ban-list-cards__card .MuiTypography-root {
+	color: inherit;
+}
+
+.ban-list-cards__card:hover {
+	color: var(--accent-text);
+}
+
+.ban-list-cards .ban-list-cards__muted,
+.ban-list-cards .ban-list-cards__empty {
+	color: var(--capsule-muted);
+}
+
+.ban-list-cards .ban-list-cards__was {
+	color: var(--accent-text);
+}
+
+.ban-list-cards__previous {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.ban-list-cards__empty {
+	padding: 32px 18px;
+	text-align: center;
+}
+
+/* wide tracks so each card reads at a decent size - 4 a row on desktop, 2 on phones (the min() keeps two columns when 240px won't fit twice) */
+.ban-list-cards__grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(240px, calc(50% - 9px)), 1fr));
+	gap: 18px;
+	margin: 0;
+	padding: 20px 18px;
+	list-style: none;
+}
+
+.ban-list-cards__grid-meta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 6px 8px;
+	margin-top: 8px;
+}
+
+.ban-list-cards__foot {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 8px;
+	padding: 14px 18px 18px;
+	border-top: 1px solid var(--capsule-edge);
+}
+
+.ban-list-cards__more.MuiButton-root {
+	min-height: 44px;
+	padding: 0 22px;
+	border-radius: 999px;
+	background: var(--capsule-track);
+	color: var(--accent-text);
+}
+
+.ban-list-cards__more.MuiButton-root:hover {
+	background: var(--capsule-hover);
+}
+
+/* about the shape of rcl's card (art over its frame) in the 4-a-row grid */
+.ban-list-cards__card-skeleton.MuiSkeleton-root {
+	width: 100%;
+	height: auto;
+	aspect-ratio: 3 / 5;
+	border-radius: 18px;
+}
+
+/* touch screens get apple's 44px minimum target */
+@media (pointer: coarse) {
+	.ban-list-cards__search.MuiInputBase-root,
+	.ban-list-cards__filter.MuiChip-root,
+	.ban-list-cards__kind.MuiInputBase-root,
+	.ban-list-cards__view .MuiToggleButton-root.MuiToggleButtonGroup-grouped {
+		min-height: 44px;
+	}
+}
+
+/* date menu: lists grouped under ios-style year headings that stay pinned while scrolling */
+.ban-list-date-menu.MuiPaper-root {
+	max-height: min(448px, 70vh);
+	border-radius: 18px;
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+}
+
+.ban-list-date-menu .ban-list-date-menu__year {
+	padding: 12px 16px 4px;
+	background: var(--capsule-lens);
+	color: var(--capsule-muted);
+	/* flex drops the 48px line box MUI gives subheaders, so the overline sets its own height */
+	display: flex;
+}
+
+.ban-list-date-menu .ban-list-date-menu__year .MuiTypography-root {
+	color: inherit;
+}
+
+/* only shown on phones (below), where the table drops its secondary columns */
+.ban-list-cards__phone-only {
+	display: none;
+}
+
+.ban-list-cards__card-text,
+.ban-list-cards__status {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 2px;
+	min-width: 0;
+}
+
+/* the gap spaces the lines, not subtitle2's bottom margin */
+.ban-list-cards__card-text .MuiTypography-root {
+	margin: 0;
+}
+
+/* phones (below MUI's sm) */
+@media (max-width: 599.95px) {
+	/* header: tighter card, condensed badge, controls full width and stacked, totals in one swipeable row */
+	.ban-list-header {
+		margin-bottom: 32px;
+		border-radius: 24px;
+	}
+
+	.ban-list-header__top {
+		gap: 20px;
+		padding: 20px 20px 16px;
+	}
+
+	.ban-list-header__who {
+		gap: 16px;
+	}
+
+	.ban-list-header__badge-skeleton.MuiSkeleton-root {
+		width: 5.5rem;
+		height: 4.625rem;
+	}
+
+	.ban-list-header__controls {
+		width: 100%;
+	}
+
+	.ban-list-header__controls > *,
+	.ban-list-format .MuiToggleButton-root.MuiToggleButtonGroup-grouped {
+		flex: 1;
+	}
+
+	.ban-list-phone-line.MuiSkeleton-root {
+		display: block;
+	}
+
+	/* the date menu is too wide to share a row with the formats, so its skeleton takes its own row too */
+	.ban-list-header__controls > .ban-list-date-selector__skeleton {
+		flex-basis: 100%;
+	}
+
+	.ban-list-header__totals {
+		flex-wrap: nowrap;
+		overflow-x: auto;
+		padding: 14px 20px;
+		scrollbar-width: none;
+		mask-image: linear-gradient(90deg, #000 85%, transparent);
+	}
+
+	.ban-list-header__totals > li {
+		flex: none;
+	}
+
+	.ban-list-block--sheet {
+		padding: 16px;
+		border-radius: 24px;
+	}
+
+	/* what changed: the columns become a sideways swipe, the next one peeking in, instead of three tall stacks */
+	.ban-list-changes {
+		grid-template-columns: none;
+		grid-auto-flow: column;
+		grid-auto-columns: 86%;
+		overflow-x: auto;
+		scroll-snap-type: x mandatory;
+		scrollbar-width: none;
+		/* room for the columns' hairline edges, which the scroll box would otherwise clip */
+		padding: 1px;
+	}
+
+	.ban-list-changes__column {
+		scroll-snap-align: start;
+	}
+
+	/* rows: "was <chip>" drops under the type so the name and type get the row's width */
+	.ban-list-changes__row {
+		display: grid;
+		grid-template-columns: auto minmax(0, 1fr);
+		column-gap: 12px;
+		row-gap: 4px;
+	}
+
+	.ban-list-changes__row > .ban-list-thumb {
+		grid-row: span 2;
+		align-self: start;
+	}
+
+	.ban-list-changes__was {
+		flex-direction: row;
+		align-items: center;
+		gap: 6px;
+	}
+
+	/* full list: search full width, status filters in one swipeable row, type + view sharing the last row */
+	.ban-list-cards {
+		border-radius: 24px;
+	}
+
+	.ban-list-cards__tools {
+		padding: 14px 16px;
+	}
+
+	.ban-list-cards__search.MuiInputBase-root {
+		flex-basis: 100%;
+		max-width: none;
+	}
+
+	.ban-list-cards__filters {
+		flex-wrap: nowrap;
+		overflow-x: auto;
+		width: calc(100% + 32px);
+		margin-inline: -16px;
+		padding-inline: 16px;
+		scrollbar-width: none;
+		mask-image: linear-gradient(90deg, transparent, #000 16px, #000 85%, transparent);
+	}
+
+	.ban-list-cards__filter.MuiChip-root {
+		flex: none;
+	}
+
+	.ban-list-cards__tools-end {
+		width: 100%;
+		margin-left: 0;
+		flex-wrap: nowrap;
+	}
+
+	.ban-list-cards__kind.MuiInputBase-root,
+	.ban-list-cards__view.MuiToggleButtonGroup-root {
+		flex: 1;
+	}
+
+	/* table: type and previous status move under the name and the status chip */
+	.ban-list-cards__table .ban-list-cards__secondary {
+		display: none;
+	}
+
+	.ban-list-cards__table .ban-list-cards__phone-only {
+		display: block;
+	}
+
+	.ban-list-cards__table .MuiTableCell-root {
+		padding: 8px 12px;
+	}
+
+	.ban-list-cards__table .MuiTableCell-root:first-child {
+		padding-left: 16px;
+	}
+
+	/* the status cell is the last one showing */
+	.ban-list-cards__table .MuiTableCell-root:nth-child(3) {
+		padding-right: 16px;
+	}
+
+	.ban-list-cards__grid {
+		gap: 14px;
+		padding: 16px;
+	}
+
+	/* the narrow cards wrap their text, so they run taller */
+	.ban-list-cards__card-skeleton.MuiSkeleton-root {
+		aspect-ratio: 3 / 7;
+	}
 }

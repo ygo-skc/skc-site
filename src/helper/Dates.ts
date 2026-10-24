@@ -36,7 +36,7 @@ class Dates {
 		})
 
 		if (banListPos === 0) {
-			return Dates.fromYYYYMMDDToDateStr(selectedBanList) + ' - ⁇'
+			return Dates.fromYYYYMMDDToDateStr(selectedBanList) + ' - Present'
 		} else {
 			return Dates.fromYYYYMMDDToDateStr(selectedBanList) + ' - ' + Dates.fromYYYYMMDDToDateStr(banListStartDates[banListPos - 1])
 		}

@@ -1,8 +1,10 @@
 import { FC, Fragment, JSX, memo, useCallback, useEffect, useState } from 'react'
-import { MenuItem, Select, SelectChangeEvent, Skeleton, Typography } from '@mui/material'
+import { ListSubheader, MenuItem, Select, SelectChangeEvent, Skeleton, Typography } from '@mui/material'
 import { Dates } from '../../helper/Dates'
 import { scrollToTop } from '../../helper/Etc'
-import { Hint } from 'skc-rcl'
+
+// "Oct 19" - the year comes from the menu's year heading
+const shortDate = (date: Date) => date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
 
 type BanListDatesProps = {
 	isFetchingBanListDates: boolean
@@ -12,15 +14,32 @@ type BanListDatesProps = {
 }
 
 const BanListDates: FC<BanListDatesProps> = memo(
-	({ isFetchingBanListDates, banListStartDates, selectedBanList, setSelectedBanList }) => {
+	({ isFetchingBanListDates, banListStartDates, setSelectedBanList }) => {
 		const [selectorItems, setSelectorItems] = useState<JSX.Element[]>()
 		const [selectedBanListInd, setSelectedBanListInd] = useState<number>(0)
 
 		useEffect(() => {
-			const selectorItems: JSX.Element[] = banListStartDates.map((_: string, ind: number) => {
-				return (
-					<MenuItem key={banListStartDates[ind]} className='ban-list-date-selector-menu-item' value={ind}>
-						{Dates.getCurrentBanListDate(banListStartDates[ind], banListStartDates)}
+			// newest first, under a heading per year; each list reads "Oct 19 – Present" since the heading has the year.
+			// Select gives every child role=option, so the headings are hidden from screen readers and each option is labelled with its full dates
+			const selectorItems: JSX.Element[] = []
+			banListStartDates.forEach((startDate, ind) => {
+				const start = Dates.fromYYYYMMDDToDate(startDate)
+				const year = Dates.getYear(start)
+
+				if (ind === 0 || Dates.getYear(Dates.fromYYYYMMDDToDate(banListStartDates[ind - 1])) !== year) {
+					selectorItems.push(
+						<ListSubheader key={year} className='ban-list-date-menu__year' aria-hidden='true'>
+							<Typography variant='overline' component='span'>
+								{year}
+							</Typography>
+						</ListSubheader>
+					)
+				}
+
+				const end = ind === 0 ? 'Present' : shortDate(Dates.fromYYYYMMDDToDate(banListStartDates[ind - 1]))
+				selectorItems.push(
+					<MenuItem key={startDate} className='ban-list-date-selector-menu-item' value={ind} aria-label={Dates.getCurrentBanListDate(startDate, banListStartDates)}>
+						{shortDate(start)} – {end}
 					</MenuItem>
 				)
 			})
@@ -38,27 +57,24 @@ const BanListDates: FC<BanListDatesProps> = memo(
 			[setSelectedBanList]
 		)
 
-		return (
-			<div className='group'>
-				<Typography variant='h5'>Date Range</Typography>
-
-				{isFetchingBanListDates ? (
-					<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='80px' />
-				) : (
-					<Fragment>
-						<Typography variant='subtitle1'>There are {banListStartDates.length} ban lists for selected format currently in the database</Typography>
-
-						<Select className='ban-list-date-selector' value={selectedBanListInd.toString()} onChange={handleBanListChanged}>
-							{selectorItems}
-						</Select>
-						{!isFetchingBanListDates && Dates.isFutureDate(Dates.fromYYYYMMDDToDate(selectedBanList)) && (
-							<Hint backgroundColor='rgba(0, 0, 0, 0.7)' textColor='white' variant='tight'>
-								Current List Will Be Effective In {Dates.daysBetweenTwoDates(new Date(), Dates.fromYYYYMMDDToDate(selectedBanList))} Day(s)
-							</Hint>
-						)}
-					</Fragment>
-				)}
-			</div>
+		return isFetchingBanListDates ? (
+			<Skeleton className='ban-list-date-selector__skeleton' variant='rectangular' width='15rem' height='2.75rem' />
+		) : (
+			<Fragment>
+				<Typography component='label' variant='body2' id='ban-list-date-label' className='ban-list-header__sr-only'>
+					Ban list date
+				</Typography>
+				<Select
+					className='ban-list-date-selector'
+					labelId='ban-list-date-label'
+					value={selectedBanListInd.toString()}
+					onChange={handleBanListChanged}
+					renderValue={(value) => Dates.getCurrentBanListDate(banListStartDates[+value], banListStartDates)}
+					MenuProps={{ slotProps: { paper: { className: 'ban-list-date-menu' } } }}
+				>
+					{selectorItems}
+				</Select>
+			</Fragment>
 		)
 	},
 	(prevProps, nextProps) => {
