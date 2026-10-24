@@ -25,7 +25,18 @@ const DatabaseInfo: FC<{ stats: SKC.DBStats & { isFetchingData: boolean } }> = (
 					<SearchField />
 				</div>
 
-				{stats.isFetchingData && <Skeleton variant='rectangular' height='170px' width='100%' className='rounded-skeleton' />}
+				{stats.isFetchingData && (
+					// a tile-shaped skeleton in each tile's place
+					<div className='database-summary-container' aria-hidden='true' data-testid='database-summary-skeleton'>
+						<Grid container spacing={3}>
+							{[0, 1, 2].map((i) => (
+								<Grid key={i} size={{ xs: 6, sm: 6, md: 6, lg: 4, xl: 4 }}>
+									<Skeleton className='database-summary__tile-skeleton' variant='rounded' />
+								</Grid>
+							))}
+						</Grid>
+					</div>
+				)}
 				{!stats.isFetchingData && (
 					<div className='database-summary-container'>
 						<Grid container spacing={3}>

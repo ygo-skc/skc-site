@@ -55,7 +55,7 @@ const TrendMeta = ({ item, showHits = true }: { item: TrendItem; showHits?: bool
 	if (!text) return null
 
 	return (
-		<Typography variant='caption' className='trending__meta'>
+		<Typography variant='body2' className='trending__meta'>
 			{item.color && <YGOCardColorIndicator cardColor={item.color} variant='small' />}
 			{text}
 		</Typography>
@@ -133,14 +133,7 @@ const Trends = () => {
 			<div className='trending__sheet'>
 				<div className='trending__header'>
 					<Typography variant='h4'>Trending</Typography>
-					<ToggleButtonGroup
-						className='trending__tabs'
-						exclusive
-						size='small'
-						aria-label='Trending type'
-						value={kind}
-						onChange={(_, value: TrendKind | null) => value && setKind(value)}
-					>
+					<ToggleButtonGroup className='trending__tabs' exclusive aria-label='Trending type' value={kind} onChange={(_, value: TrendKind | null) => value && setKind(value)}>
 						<ToggleButton value='CARD'>Cards</ToggleButton>
 						<ToggleButton value='PRODUCT'>Products</ToggleButton>
 					</ToggleButtonGroup>
@@ -204,7 +197,7 @@ const Trends = () => {
 										</Typography>
 										<div className='trending__thumb'>{item.image(false)}</div>
 										<div className='trending__row-text'>
-											<Typography variant='body2' component='span' className='trending__name'>
+											<Typography variant='subtitle2' component='span' className='trending__name'>
 												{item.name}
 											</Typography>
 											<TrendMeta item={item} />
