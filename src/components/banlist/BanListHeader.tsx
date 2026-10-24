@@ -6,6 +6,7 @@ import { AcceptableBanListFormat } from '../../helper/BanListUtil'
 import { BanStatus, banStatusClass } from '../../helper/BanStatus'
 import BanListFormat from './BanListFormat'
 import BanListDates from './BanListDates'
+import BanListDonut from './BanListDonut'
 
 export type BanListTotal = {
 	status: BanStatus
@@ -25,7 +26,7 @@ type BanListHeaderProps = {
 	previousDate?: string
 }
 
-const totalSkeletonWidths = ['9.5rem', '7.75rem', '9.75rem', '16.5rem']
+const totalSkeletonKeys = ['forbidden', 'limited', 'semi-limited', 'changed']
 
 const formatName: Record<AcceptableBanListFormat, string> = {
 	[AcceptableBanListFormat.TCG]: 'TCG',
@@ -33,7 +34,7 @@ const formatName: Record<AcceptableBanListFormat, string> = {
 	[AcceptableBanListFormat.DL]: 'Duel Links',
 }
 
-// white card: date badge, title and list count beside the format + date controls, with the status totals as pills underneath
+// white card: date badge, title and list count beside the format + date controls, with a donut of the status totals beside them as tiles underneath
 const BanListHeader: FC<BanListHeaderProps> = ({
 	format,
 	setFormat,
@@ -52,6 +53,7 @@ const BanListHeader: FC<BanListHeaderProps> = ({
 	const isCurrent = banListStartDates[0] === selectedBanList && daysUntilEffective === 0
 	// the normal badge leaves too little room for the title beside it on phones
 	const isPhone = useMediaQuery(useTheme().breakpoints.down('sm'))
+	const totalCount = totals.reduce((sum, { count }) => sum + count, 0)
 
 	return (
 		<header className='ban-list-header'>
@@ -102,49 +104,52 @@ const BanListHeader: FC<BanListHeaderProps> = ({
 				</div>
 			</div>
 
-			<ul className='ban-list-header__totals' aria-label='Totals'>
+			<div className='ban-list-header__stats'>
 				{isFetchingTotals ? (
-					// one pill per total, about as wide as the loaded ones
-					totalSkeletonWidths.map((width) => (
-						<li key={width}>
-							<Skeleton className='ban-list-header__total-skeleton' variant='rounded' width={width} />
-						</li>
-					))
+					<Skeleton className='ban-list-header__summary-skeleton' variant='rounded' />
 				) : (
-					<>
-						{totals.map(({ status, count }) => (
-							<li key={status}>
-								<Chip
-									className={`ban-list-header__total ${banStatusClass(status)}`}
-									label={
-										<>
-											<Typography variant='inherit' component='span' className='ban-list-header__count'>
-												{count}
-											</Typography>{' '}
-											{status}
-										</>
-									}
-								/>
-							</li>
-						))}
-						{previousDate && (
-							<li>
-								<Chip
-									className='ban-list-header__total ban-list-header__total--changed'
-									label={
-										<>
-											<Typography variant='inherit' component='span' className='ban-list-header__count'>
-												{numChanged}
-											</Typography>{' '}
-											changed since {previousDate}
-										</>
-									}
-								/>
-							</li>
-						)}
-					</>
+					<div className='ban-list-header__summary'>
+						<BanListDonut totals={totals} />
+						<Typography variant='body2' component='p' className='ban-list-header__summary-text'>
+							<span className='visually-hidden'>{totalCount} </span>cards restricted on this list
+						</Typography>
+					</div>
 				)}
-			</ul>
+
+				<ul className='ban-list-header__totals' aria-label='Totals'>
+					{isFetchingTotals ? (
+						// one tile per total
+						totalSkeletonKeys.map((key) => (
+							<li key={key}>
+								<Skeleton className='ban-list-header__total-skeleton' variant='rounded' />
+							</li>
+						))
+					) : (
+						<>
+							{totals.map(({ status, count }) => (
+								<li key={status} className={`ban-list-header__total ${banStatusClass(status)}`}>
+									<Typography variant='h6' component='span' className='ban-list-header__count'>
+										{count}
+									</Typography>{' '}
+									<Typography variant='body2' component='span' className='ban-list-header__label'>
+										{status}
+									</Typography>
+								</li>
+							))}
+							{previousDate && (
+								<li className='ban-list-header__total ban-list-header__total--changed'>
+									<Typography variant='h6' component='span' className='ban-list-header__count'>
+										{numChanged}
+									</Typography>{' '}
+									<Typography variant='body2' component='span' className='ban-list-header__label'>
+										changed<span className='ban-list-header__since'> since {previousDate}</span>
+									</Typography>
+								</li>
+							)}
+						</>
+					)}
+				</ul>
+			</div>
 		</header>
 	)
 }

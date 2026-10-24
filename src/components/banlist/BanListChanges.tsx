@@ -146,10 +146,17 @@ const BanListChanges: FC<BanListChangesProps> = ({ isLoading, columns, previousD
 				<Typography variant='h2' id='ban-list-changes-heading'>
 					What changed
 				</Typography>
-				{!isLoading && previousDate && (
-					<Typography variant='body2' className='ban-list-block__hint'>
-						{numChanged} {numChanged === 1 ? 'card' : 'cards'} · compared to {previousDate}
+				{/* the count's line is held while loading - phones wrap it under the heading, so it would push the columns down on arrival */}
+				{isLoading ? (
+					<Typography variant='body2' className='ban-list-block__hint' data-testid='ban-list-changes-hint-skeleton'>
+						<Skeleton width='16em' />
 					</Typography>
+				) : (
+					previousDate && (
+						<Typography variant='body2' className='ban-list-block__hint'>
+							{numChanged} {numChanged === 1 ? 'card' : 'cards'} · compared to {previousDate}
+						</Typography>
+					)
 				)}
 			</div>
 

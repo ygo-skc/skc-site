@@ -110,7 +110,9 @@ test('switches to card images, keeping the filters', () => {
 
 	expect(screen.queryByRole('table')).not.toBeInTheDocument()
 	expect(screen.getAllByTestId('card-image').map((image) => image.textContent)).toEqual(['Elfnote Tinia', 'Pot of Greed'])
-	expect(screen.getByText('was Limited')).toBeInTheDocument()
+	// the status chip and the old status share one badge laid over the card's art
+	const badge = screen.getByText('was Limited').closest('.ban-list-cards__grid-badge') as HTMLElement
+	expect(within(badge).getByText('Forbidden').closest('.MuiChip-root')).toHaveClass('ban-status--forbidden')
 })
 
 test('shows 30 cards at a time with a Show more button', () => {

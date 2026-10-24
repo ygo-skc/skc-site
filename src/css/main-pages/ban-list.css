@@ -1,5 +1,5 @@
 /* page header: a white card - date badge, eyebrow, effective date and list count on the left, format + date controls on the right
-(wrapping under on narrow widths), and the status totals as pills in a strip along the bottom */
+(wrapping under on narrow widths), and the status totals as a donut tile beside grey tiles along the bottom */
 .ban-list-header {
 	overflow: hidden;
 	margin-bottom: 40px;
@@ -38,46 +38,119 @@
 	border-radius: 1rem;
 }
 
-.ban-list-header__totals {
-	display: flex;
-	flex-wrap: wrap;
+/* the totals: a grey tile with a donut of the statuses beside a 2x2 of tiles in each status's tint (the changed count in a purple tint) */
+.ban-list-header__stats {
+	display: grid;
+	grid-template-columns: 280px minmax(0, 1fr);
 	gap: 8px;
-	margin: 0;
-	padding: 16px 32px;
-	list-style: none;
-	border-top: 1px solid var(--capsule-edge);
-	background: var(--capsule);
+	padding: 0 20px 20px;
 }
 
-.ban-list-header__total.MuiChip-root {
+.ban-list-header__summary {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	padding: 16px;
+	border-radius: 18px;
+	background: var(--page);
+}
+
+.ban-list-header .ban-list-header__summary-text {
 	margin: 0;
-	background-color: var(--capsule-lens);
-	box-shadow: 0 0 0 1px var(--capsule-edge);
 	color: var(--capsule-muted);
 }
 
-.ban-list-header__total.MuiChip-root::before {
-	content: '';
-	width: 8px;
-	height: 8px;
-	margin-left: 14px;
-	border-radius: 50%;
-	background: var(--status, var(--accent));
+.ban-list-header__summary-skeleton.MuiSkeleton-root {
+	height: 128px;
+	border-radius: 18px;
 }
 
-.ban-list-header__total .MuiChip-label {
-	display: inline-flex;
-	align-items: center;
-	gap: 6px;
+.ban-list-donut {
+	position: relative;
+	display: grid;
+	flex: none;
+	place-items: center;
+	width: 96px;
+	height: 96px;
 }
 
-.ban-list-header__total .ban-list-header__count {
+.ban-list-donut__ring {
+	position: absolute;
+	inset: 0;
+	transform: rotate(-90deg);
+}
+
+.ban-list-donut__ring circle {
+	fill: none;
+	stroke-width: 8;
+}
+
+.ban-list-donut__track {
+	stroke: var(--capsule-track);
+}
+
+.ban-list-donut__segment {
+	stroke: var(--status);
+}
+
+.ban-list-header .ban-list-donut__total {
 	color: var(--capsule-text);
 }
 
+.ban-list-header__totals {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 8px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.ban-list-header__total {
+	display: flex;
+	flex-wrap: wrap;
+	align-content: center;
+	align-items: baseline;
+	gap: 4px 10px;
+	padding: 12px 16px;
+	border-radius: 16px;
+	background: var(--page);
+}
+
+.ban-list-header__total::before {
+	content: '';
+	flex: none;
+	align-self: center;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background: var(--status);
+}
+
+/* status tiles take What changed's palette - the status tint with its ink for the text */
+.ban-list-header__total[class*='ban-status--'] {
+	background: var(--status-tint);
+}
+
+.ban-list-header .ban-list-header__total :is(.ban-list-header__count, .ban-list-header__label) {
+	color: var(--status-ink);
+}
+
+.ban-list-header__total--changed {
+	background: color-mix(in srgb, var(--accent) 12%, #fff);
+}
+
+.ban-list-header__total--changed::before {
+	display: none;
+}
+
+.ban-list-header .ban-list-header__total--changed :is(.ban-list-header__count, .ban-list-header__label) {
+	color: var(--accent-text);
+}
+
 .ban-list-header__total-skeleton.MuiSkeleton-root {
-	height: 32px;
-	border-radius: 999px;
+	height: 60px;
+	border-radius: 16px;
 }
 
 .ban-list-header__title {
@@ -651,12 +724,44 @@
 	list-style: none;
 }
 
-.ban-list-cards__grid-meta {
+/* the status sits on the art's bottom-left corner - rcl's art is a square 96% of the card's width, centred, so cqi places the badge on it */
+.ban-list-cards__grid-item {
+	position: relative;
+	container-type: inline-size;
+}
+
+.ban-list-cards__grid-badge {
+	position: absolute;
+	top: calc(96cqi - 10px);
+	left: calc(2cqi + 10px);
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
-	gap: 6px 8px;
-	margin-top: 8px;
+	max-width: calc(96cqi - 20px);
+	padding: 3px;
+	border-radius: 19px;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+	transform: translateY(-100%);
+	pointer-events: none;
+}
+
+.ban-list-cards__grid-badge .ban-list-cards__grid-was {
+	padding: 0 10px 0 8px;
+	color: var(--capsule-muted);
+}
+
+/* phone columns can't fit the chip and "was X" on one line, so the old status drops under the chip */
+@container (max-width: 220px) {
+	.ban-list-cards__grid-badge {
+		flex-direction: column;
+		align-items: flex-start;
+		border-radius: 16px;
+	}
+
+	.ban-list-cards__grid-badge .ban-list-cards__grid-was {
+		padding: 2px 8px 3px;
+	}
 }
 
 .ban-list-cards__foot {
@@ -738,7 +843,7 @@
 
 /* phones (below MUI's sm) */
 @media (max-width: 599.95px) {
-	/* header: tighter card, condensed badge, controls full width and stacked, totals in one swipeable row */
+	/* header: tighter card, condensed badge, controls full width and stacked, totals stacked */
 	.ban-list-header {
 		margin-bottom: 32px;
 		border-radius: 24px;
@@ -776,16 +881,37 @@
 		flex-basis: 100%;
 	}
 
-	.ban-list-header__totals {
-		flex-wrap: nowrap;
-		overflow-x: auto;
-		padding: 14px 20px;
-		scrollbar-width: none;
-		mask-image: linear-gradient(90deg, #000 85%, transparent);
+	/* the donut tile on top, the tiles in a 2x2 under it */
+	.ban-list-header__stats {
+		grid-template-columns: minmax(0, 1fr);
+		padding: 0 16px 16px;
 	}
 
-	.ban-list-header__totals > li {
-		flex: none;
+	.ban-list-header__summary {
+		padding: 12px;
+	}
+
+	.ban-list-donut {
+		width: 72px;
+		height: 72px;
+	}
+
+	.ban-list-header__summary-skeleton.MuiSkeleton-root {
+		height: 96px;
+	}
+
+	/* every tile is dot + count over its label, so they share one shape and the skeleton's height whatever the label's length */
+	.ban-list-header__total .ban-list-header__label {
+		flex-basis: 100%;
+	}
+
+	/* "since <date>" would wrap the changed tile to two lines and grow its row past the skeleton - What changed names the date right below */
+	.ban-list-header__since {
+		display: none;
+	}
+
+	.ban-list-header__total-skeleton.MuiSkeleton-root {
+		height: 86px;
 	}
 
 	.ban-list-block--sheet {

@@ -23,6 +23,7 @@ import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded'
 import { Link } from 'react-router-dom'
 import { decodeHTML } from 'entities'
 import { CardImageRounded, YGOCardWithImage } from 'skc-rcl'
+import { usePageView } from '../util/ResultsViewPreference'
 import { BanStatus, banStatusClass, banStatuses, cardKind, CardKind, cardTypeLabel, toBanStatus } from '../../helper/BanStatus'
 
 export type BanListStatusCards = {
@@ -114,7 +115,7 @@ const BanListCards: FC<BanListCardsProps> = ({ isLoading, lists, previousStatus 
 	const [statusFilter, setStatusFilter] = useState<BanStatus | 'All'>('All')
 	const [kindFilter, setKindFilter] = useState<CardKind | 'All'>('All')
 	const [sort, setSort] = useState<{ key: SortKey; direction: 'asc' | 'desc' }>({ key: 'status', direction: 'asc' })
-	const [view, setView] = useState<View>('table')
+	const [view, setView] = usePageView<View>({ list: 'table', grid: 'cards' })
 	const [numShown, setNumShown] = useState(PAGE_SIZE)
 
 	// another list starts from the first page again, keeping the search, filters and view
@@ -291,9 +292,6 @@ const BanListCards: FC<BanListCardsProps> = ({ isLoading, lists, previousStatus 
 							Array.from({ length: 8 }, (_, i) => (
 								<li key={i} className='ban-list-cards__grid-item' data-testid='ban-list-card-skeleton'>
 									<Skeleton className='ban-list-cards__card-skeleton' variant='rounded' />
-									<div className='ban-list-cards__grid-meta'>
-										<Skeleton variant='rounded' width='5.5rem' height='1.5rem' className='ban-list-changes__chip-skeleton' />
-									</div>
 								</li>
 							))}
 						{shown.map(({ card, status, previous }) => (
@@ -301,10 +299,10 @@ const BanListCards: FC<BanListCardsProps> = ({ isLoading, lists, previousStatus 
 								<Link to={`/card/${card.cardID}`} className='aggregate-anchor'>
 									<YGOCardWithImage card={{ ...card, cardEffect: decodeHTML(card.cardEffect) }} imgLoadingType='lazy' />
 								</Link>
-								<div className='ban-list-cards__grid-meta'>
+								<div className='ban-list-cards__grid-badge'>
 									<Chip size='small' className={`ban-status-chip ${banStatusClass(status)}`} label={status} />
 									{previous && (
-										<Typography variant='body2' className='ban-list-cards__was'>
+										<Typography variant='body2' component='span' className='ban-list-cards__grid-was'>
 											was {previous}
 										</Typography>
 									)}

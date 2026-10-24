@@ -135,14 +135,29 @@ test('shows the effective date on a date badge', () => {
 	expect(screen.getByTestId('date-badge').parentElement).toHaveAttribute('aria-hidden', 'true')
 })
 
-test('lists the status totals and how many cards changed as pills', () => {
+test('lists the status totals and how many cards changed as tiles', () => {
 	renderHeader()
 	const totals = within(screen.getByRole('list', { name: 'Totals' }))
 
 	expect(totals.getAllByRole('listitem').map((item) => item.textContent)).toEqual(['156 Forbidden', '93 Limited', '7 Semi-Limited', '43 changed since Jan 15, 2026'])
 })
 
-test('leaves out the changed pill when there is no earlier list', () => {
+test('sums the totals beside a donut of each status', () => {
+	renderHeader()
+
+	expect(screen.getByText('cards restricted on this list')).toHaveTextContent('256 cards restricted on this list')
+	// the ring is decorative - one segment per status, sized by its share
+	const segments = document.querySelectorAll('.ban-list-donut__segment')
+	expect(Array.from(segments).map((segment) => segment.getAttribute('class'))).toEqual([
+		'ban-list-donut__segment ban-status--forbidden',
+		'ban-list-donut__segment ban-status--limited',
+		'ban-list-donut__segment ban-status--semi-limited',
+	])
+	expect(segments[1]).toHaveAttribute('stroke-dashoffset', `${-(156 / 256) * 100}`)
+	expect(document.querySelector('.ban-list-donut')).toHaveAttribute('aria-hidden', 'true')
+})
+
+test('leaves out the changed tile when there is no earlier list', () => {
 	renderHeader({ previousDate: undefined })
 
 	expect(screen.queryByText(/changed since/)).not.toBeInTheDocument()
@@ -152,6 +167,6 @@ test('holds the totals with a skeleton while the list loads', () => {
 	renderHeader({ isFetchingTotals: true })
 
 	expect(screen.queryByText('Forbidden')).not.toBeInTheDocument()
-	// one placeholder pill per total
+	// one placeholder tile per total
 	expect(within(screen.getByRole('list', { name: 'Totals' })).getAllByRole('listitem')).toHaveLength(4)
 })

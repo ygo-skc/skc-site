@@ -79,6 +79,8 @@ test('holds the columns with a skeleton while loading', () => {
 	expect(skeleton.querySelectorAll('.ban-list-changes__rows')[0].children).toHaveLength(8)
 	expect(screen.queryByRole('link')).not.toBeInTheDocument()
 	expect(screen.queryByText(/compared to/)).not.toBeInTheDocument()
+	// the count's line is held too
+	expect(screen.getByTestId('ban-list-changes-hint-skeleton')).toBeInTheDocument()
 })
 
 test('shows 8 rows per column and the rest in a popup', async () => {
