@@ -54,8 +54,8 @@
 		"lint": "eslint src --ext .tsx,.ts",
 		"mutation": "stryker run config/stryker.conf.json",
 		"aws:check-skc-cloudfront": "aws cloudfront list-distributions | jq '.DistributionList.Items[] | select(.Aliases.Items | contains([\"thesupremekingscastle.com\"])) |  {id: .Id, aliases: .Aliases}'",
-		"deploy:prod": "yarn run build:production; aws s3 rm s3://yugiohsite/ --recursive; aws s3 sync build s3://yugiohsite/ --cache-control max-age=3600; aws cloudfront create-invalidation --distribution-id ${YGO_CLOUDFRONT_PROD} --paths '/*'",
-		"deploy:dev": "yarn run build:development_remote; aws s3 rm s3://yugiohsitedev/ --recursive; aws s3 sync build s3://yugiohsitedev/ --cache-control max-age=3600; aws cloudfront create-invalidation --distribution-id ${YGO_CLOUDFRONT_DEV} --paths '/*'",
+		"deploy:prod": "yarn run build:production && bash deploy-s3.sh yugiohsite ${YGO_CLOUDFRONT_PROD}",
+		"deploy:dev": "yarn run build:development_remote && bash deploy-s3.sh yugiohsitedev ${YGO_CLOUDFRONT_DEV}",
 		"deploy:ec2-dev": "yarn run build:development_remote; bash deploy.sh ${SKC_SERVER}"
 	},
 	"browserslist": [

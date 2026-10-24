@@ -15,7 +15,7 @@ interface Configuration extends WebpackConfiguration {
 
 type environment = 'dev' | 'remote-dev' | 'prod'
 
-function config(env: any) {
+function config(env: any, argv: { mode?: string }) {
 	let e: environment
 
 	if (env && env.prod) {
@@ -33,7 +33,8 @@ function config(env: any) {
 		// Where files should be sent once they are bundled
 		output: {
 			path: path.resolve(__dirname, 'build'),
-			filename: 'bundle.js',
+			// production names carry a hash of their content, so browsers can keep them for a year and a deploy only changes the files that changed
+			filename: argv.mode === 'production' ? '[name].[contenthash:8].js' : 'bundle.js',
 			publicPath: '/',
 			clean: true,
 		},
