@@ -1,0 +1,6 @@
+/* doubled class to beat skc-rcl's runtime injected card styles */
+.http-err__card.http-err__card {
+	width: 400px;
+	max-width: 85%;
+	margin: auto;
+}

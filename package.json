@@ -10,7 +10,6 @@
 		"@emotion/styled": "11.14.1",
 		"@mui/icons-material": "9.5.0",
 		"@mui/material": "9.5.0",
-		"@mui/styled-engine-sc": "9.5.0",
 		"@nivo/pie": "0.99.0",
 		"axios": "1.20.0",
 		"entities": "8.1.0",
@@ -19,8 +18,7 @@
 		"react-dom": "19.3.1",
 		"react-markdown": "10.1.0",
 		"react-router-dom": "7.18.4",
-		"skc-rcl": "2.0.1",
-		"styled-components": "5.3.11"
+		"skc-rcl": "2.0.1"
 	},
 	"resolutions": {
 		"d3-color": "3.1.0",
@@ -83,8 +81,6 @@
 		"@types/lodash.startcase": "4.4.9",
 		"@types/react": "19.3.0",
 		"@types/react-dom": "19.3.0",
-		"@types/react-router-dom": "5.3.3",
-		"@types/styled-components": "5.1.36",
 		"@typescript-eslint/eslint-plugin": "8.72.0",
 		"@typescript-eslint/parser": "8.72.0",
 		"babel-loader": "10.1.1",
@@ -102,7 +98,6 @@
 		"postcss-normalize": "13.0.1",
 		"react-test-renderer": "19.3.1",
 		"style-loader": "4.0.0",
-		"ts-jest": "29.4.15",
 		"ts-loader": "9.6.2",
 		"ts-node": "10.9.2",
 		"typescript": "6.0.3",

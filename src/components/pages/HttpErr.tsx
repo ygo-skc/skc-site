@@ -1,5 +1,6 @@
+import '../../css/main-pages/http-err.css'
+
 import { FC } from 'react'
-import Styled from 'styled-components'
 
 import Breadcrumbs from '../header-footer/Breadcrumb'
 import { YGOCard } from 'skc-rcl'
@@ -37,19 +38,12 @@ class HttpErrMaps {
 	}
 }
 
-const ErrCard = Styled(YGOCard)`
-	&& {
-		width: 400px;
-		max-width: 85%;
-		margin: auto;
-	}
-`
-
 const HttpErr: FC<{ httpErr: string }> = ({ httpErr }) => {
 	return (
 		<div className='generic-container'>
 			<Breadcrumbs crumbs={['Home', httpErr]} />
-			<ErrCard
+			<YGOCard
+				className='http-err__card'
 				cardColor='err'
 				cardName={HttpErrMaps.HTTP_ERR_maps_ERR_NAME[httpErr]}
 				monsterType={HttpErrMaps.HTTP_ERR_maps_ERR_TYPE[httpErr]}
