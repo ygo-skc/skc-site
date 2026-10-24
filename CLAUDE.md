@@ -89,6 +89,10 @@ The shared component library (Section, SKCTable, YGOCard*, YGOCardPreview, YGOCa
 - The search API (`/api/v1/card/search`) doesn't return `monsterAssociation`, so the preview's level/rank/scale/link items never show from search results.
 - Card pages' breadcrumbs read Home › Product Browse › <card> - should be Card Browse. The crumb is hard-coded in `src/reducers/CardInformationReducer.ts` (`pageBreadcrumbs: ['Home', 'Product Browse', ...]`).
 - `MuiTheme.ts`, `navigation-bar.css` and `navigation-icon.css` already fail prettier on `release`; leave unrelated lines alone.
+- Visually hidden text: `.ban-list-header__sr-only` (ban list header, cards and date / type labels) and `.trending__sr-only` duplicate the shared `.visually-hidden` in `index.css` - swap them over and delete the local rules.
+- `BanListDates.tsx`'s custom `memo` comparator compares each date with characters of the `selectedBanList` string, so it almost never skips a render - drop the comparator.
+- `YouTubeUploads.tsx` preloads every thumbnail with `new Image()`, which defeats the `<img loading='lazy'>` in `VideoInfoContainer`, and keys videos by title - render the URL directly and key by video id.
+- The upcoming products copy-link Snackbar (`UpcomingTCGProducts.tsx`) still reads "Share that shit!" - reword it.
 - **Backlog - skc-rcl pieces still in their own colours** (the rest of the site is on the apple palette):
   - `InlineDate` - the hot-pink month badge on Card of the Day (`CardOfTheDay.tsx`).
   - `Hint` - the lavender box behind "No Content To Show" (`CardDisplayGrid.tsx`) and "Not tied to any archetype" (`CardInformation.tsx`, `ProductInformation.tsx`).
