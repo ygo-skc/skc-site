@@ -4,17 +4,17 @@ import Welcome from '../home/Welcome'
 import { Section } from 'skc-rcl'
 import CardOfTheDay from '../card/CardOfTheDay'
 import { Suspense, lazy, useEffect, useReducer } from 'react'
-import { Divider, Skeleton, Typography } from '@mui/material'
+import { Skeleton } from '@mui/material'
 import Trends from '../util/Trending'
 import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 import { HomePageActionType, homePageReducer } from '../../reducers/HomePageReducer'
+import DiscordPresence from '../util/social/DiscordPresence'
 import YouTubeData, { channelIDs, YouTubeChannelID } from '../home/YouTubeData'
 
 import '../../css/util/headline.css'
 
 const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
-const SocialMedia = lazy(() => import('../util/social/SocialMedia'))
 
 export default function Home() {
 	const [{ dbStats, cotd, upcomingTCGProducts, skcYTUploads }, dispatch] = useReducer(homePageReducer, {
@@ -105,23 +105,10 @@ export default function Home() {
 
 				<Trends />
 
-				<div className='group hairline-edge'>
-					<Typography variant='h3' align='center'>
-						Suggestions
-					</Typography>
-
-					<div className='headline-section'>
-						<CardOfTheDay cardOfTheDayData={cotd} />
-					</div>
-
-					<Divider className='spaced-divider' />
-
-					<div className='headline-section'>
-						<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='33rem' />}>
-							<SocialMedia />
-						</Suspense>
-					</div>
-				</div>
+				<section className='suggestions' aria-label='Suggestions'>
+					<CardOfTheDay cardOfTheDayData={cotd} />
+					<DiscordPresence />
+				</section>
 			</div>
 
 			<UpcomingTCGProducts upcomingTCGProducts={upcomingTCGProducts} />

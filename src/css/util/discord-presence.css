@@ -1,0 +1,139 @@
+/* "Join the Discord" - a hairline-topped section: heading, online count and channels, a grey Join pill, then the members online in a grey group */
+.discord-presence {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	padding-top: 20px;
+	border-top: 1px solid var(--capsule-edge);
+}
+
+.discord-presence .MuiTypography-root {
+	margin: 0;
+}
+
+.discord-presence__header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.discord-presence__header > div {
+	min-width: 0;
+}
+
+/* the theme mutes h6 - the section heading reads near-black like card of the day's */
+.discord-presence .MuiTypography-h6 {
+	color: var(--capsule-text);
+}
+
+.discord-presence .discord-presence__summary {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	color: var(--capsule-muted);
+}
+
+.discord-presence__dot {
+	flex: none;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+}
+
+.discord-presence__dot--online {
+	background: var(--semi-limited);
+}
+
+.discord-presence .discord-presence__join.MuiButton-root {
+	flex: none;
+	min-width: 0;
+	padding: 6px 18px;
+	border-radius: 999px;
+	background: var(--capsule-track);
+	color: var(--capsule-text);
+}
+
+.discord-presence__join-skeleton.MuiSkeleton-root {
+	flex: none;
+	border-radius: 999px;
+}
+
+.discord-presence .discord-presence__join.MuiButton-root:hover {
+	background: var(--capsule-hover);
+}
+
+.discord-presence__members {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	border-radius: 16px;
+	background: var(--page);
+	overflow: hidden;
+}
+
+/* inset hairlines start at the name, like the messages popup */
+.discord-presence__member {
+	position: relative;
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr) auto;
+	align-items: center;
+	gap: 12px;
+	padding: 8px 14px;
+}
+
+.discord-presence__member + .discord-presence__member::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 56px;
+	height: 1px;
+	background: var(--capsule-edge);
+}
+
+.discord-presence__member .MuiAvatar-root {
+	width: 30px;
+	height: 30px;
+	background: var(--capsule-track);
+	color: var(--capsule-muted);
+}
+
+/* status dot on the avatar - the theme's badge margins are for count badges, so they're reset here */
+.discord-presence__status .MuiBadge-dot.MuiBadge-badge {
+	width: 10px;
+	min-width: 10px;
+	height: 10px;
+	margin: 0;
+	border-radius: 50%;
+	box-shadow: 0 0 0 2px var(--page);
+}
+
+.discord-presence__status--online .MuiBadge-badge.MuiBadge-dot {
+	background: var(--semi-limited);
+}
+
+.discord-presence__status--idle .MuiBadge-badge.MuiBadge-dot {
+	background: var(--limited);
+}
+
+.discord-presence__status--dnd .MuiBadge-badge.MuiBadge-dot {
+	background: var(--forbidden);
+}
+
+.discord-presence .discord-presence__name {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	color: var(--capsule-text);
+}
+
+.discord-presence .discord-presence__game {
+	color: var(--capsule-muted);
+}
+
+.discord-presence .discord-presence__more {
+	margin: -6px 0 0;
+	padding-left: 14px;
+	color: var(--capsule-muted);
+}

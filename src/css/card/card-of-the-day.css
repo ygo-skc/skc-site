@@ -1,54 +1,79 @@
-.card-of-the-day-parent {
-	padding: 13px;
-	border-radius: 10px;
-}
-
-.card-of-the-day-parent:hover {
-	background: var(--page);
-	cursor: pointer;
-}
-
-.card-of-the-day-wrapper {
+.card-of-the-day {
 	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	/* rcl's card preview takes the site palette for its neutral text */
+	--ygo-card-preview-text: var(--capsule-text);
+	--ygo-card-preview-muted: var(--capsule-muted);
+	--ygo-card-preview-art-border: var(--capsule-track);
 }
 
-.card-of-the-day-wrapper .rounded-img-outer-container {
-	flex: 4;
-	margin: auto; /* override parent default */
+.card-of-the-day__header {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 12px;
 }
 
-.card-of-the-day-wrapper .MuiSkeleton-root {
-	flex: 4;
-	padding-top: 20%;
-	margin: auto; /* override parent default */
+.card-of-the-day__header .MuiTypography-root {
+	margin: 0;
 }
 
-.card-of-the-day-wrapper > *:not(:last-child) {
-	margin-right: 13px !important;
+.card-of-the-day__date.MuiTypography-root {
+	color: var(--capsule-muted);
 }
 
-.card-of-the-day-data {
-	flex: 11;
+.card-of-the-day__loading {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
 }
 
-.card-of-the-day-data > *:not(:last-child) {
-	margin-bottom: 6px;
+.card-of-the-day__loading .MuiTypography-root {
+	margin: 0;
 }
 
-.card-of-the-day-name {
-	color: var(--capsule-text);
+/* rcl's preview art keeps this ratio at every width */
+.card-of-the-day__art-skeleton.MuiSkeleton-root {
+	height: auto;
+	aspect-ratio: 369 / 273;
+	border-radius: 12px;
 }
 
-.card-of-the-day-type-wrapper {
-	display: grid;
-	grid-template-columns: auto 1fr;
-	column-gap: 8px;
+.card-of-the-day__pill-skeleton.MuiSkeleton-root {
+	border-radius: 999px;
 }
 
-.card-of-the-day-type {
-	overflow: hidden;
-	white-space: normal;
-	word-break: break-word;
-	word-wrap: break-word;
-	hyphens: none;
+.card-of-the-day__effect-skeleton.MuiSkeleton-root {
+	border-radius: 14px;
+}
+
+/* the whole preview is the link - a grey wash on hover, the focus ring kept inside the sheet */
+.card-of-the-day__link {
+	display: block;
+	margin: -10px;
+	padding: 10px;
+	border-radius: 20px;
+	color: inherit;
+	text-decoration: none;
+}
+
+.card-of-the-day__link:hover {
+	background: var(--page);
+}
+
+.card-of-the-day__link:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: -2px;
+}
+
+/* the effect sits in a grey well under the facts */
+.card-of-the-day .ygo-card-preview__effect.MuiTypography-root {
+	padding: 12px 14px;
+	border-radius: 14px;
+	background: var(--page);
+}
+
+.card-of-the-day__link:hover .ygo-card-preview__effect.MuiTypography-root {
+	background: var(--capsule-lens);
 }

@@ -1,46 +1,52 @@
-import { FC, Fragment } from 'react'
+import { FC } from 'react'
 import { Link } from 'react-router-dom'
-import { CardImageRounded, GenericNonBreakingErr, InlineDate, YGOCardColorIndicator } from 'skc-rcl'
+import { GenericNonBreakingErr, YGOCardPreview } from 'skc-rcl'
 import { Skeleton, Typography } from '@mui/material'
 import '../../css/card/card-of-the-day.css'
 import { Dates } from '../../helper/Dates'
 
+// the same glanceable preview as the search popup - art, attribute, type chip in its frame colour, atk/def and the full effect
 const CardOfTheDay: FC<{ cardOfTheDayData: APIRequest<SKC.CardOfTheDay> }> = ({ cardOfTheDayData }) => {
-	const date = Dates.fromYYYYMMDDToDate(cardOfTheDayData.date)
+	const { card, date, isFetchingData, requestHasError } = cardOfTheDayData
 
 	return (
-		<Fragment>
-			<Typography variant='h5'>Card of The Day</Typography>
-			<Link to={`/card/${cardOfTheDayData.card?.cardID}`} className='aggregate-anchor'>
-				<div className={`${cardOfTheDayData.requestHasError ? '' : 'card-of-the-day-parent'}`} id='card-of-the-day'>
-					{cardOfTheDayData.requestHasError && <GenericNonBreakingErr errExplanation='Come back at a different time to see todays card of the day!' />}
-					{!cardOfTheDayData.requestHasError && (
-						<div className='card-of-the-day-wrapper'>
-							{(!cardOfTheDayData.isFetchingData && <CardImageRounded size='tn' variant='circle' cardID={cardOfTheDayData.card!.cardID} loading='eager' />) || (
-								<Skeleton className='rounded-skeleton' variant='circular' />
-							)}
+		<div className='card-of-the-day'>
+			<div className='card-of-the-day__header'>
+				<Typography variant='h4' component='h2'>
+					Card of the day
+				</Typography>
+				{date ? (
+					<Typography variant='caption' component='time' dateTime={date} className='card-of-the-day__date'>
+						{Dates.getMonth(Dates.fromYYYYMMDDToDate(date))} {Dates.getDay(Dates.fromYYYYMMDDToDate(date))}
+					</Typography>
+				) : (
+					isFetchingData && (
+						<Typography variant='caption' aria-hidden='true'>
+							<Skeleton width='3rem' />
+						</Typography>
+					)
+				)}
+			</div>
 
-							<div className='card-of-the-day-data'>
-								{(!cardOfTheDayData.isFetchingData && (
-									<Fragment>
-										<InlineDate month={Dates.getMonth(date)} day={+Dates.getDay(date)} year={+Dates.getYear(date)} />
-										<Typography variant='h6' className='card-of-the-day-name'>
-											{cardOfTheDayData.card?.cardName}
-										</Typography>
-										<div className='card-of-the-day-type-wrapper'>
-											<YGOCardColorIndicator cardColor={cardOfTheDayData.card?.cardColor} variant={'small'} />
-											<Typography variant='subtitle1' className='card-of-the-day-type'>
-												{cardOfTheDayData.card?.monsterType === undefined ? cardOfTheDayData.card?.cardColor : cardOfTheDayData.card.monsterType.replace(/\//g, '/\u200B')}
-											</Typography>
-										</div>
-									</Fragment>
-								)) || <Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='3rem' />}
-							</div>
-						</div>
-					)}
+			{requestHasError && <GenericNonBreakingErr errExplanation='Come back at a different time to see todays card of the day!' />}
+			{!requestHasError && isFetchingData && (
+				// the preview's pieces - art, name, type chip, atk/def and the effect well - so nothing moves when the card arrives
+				<div className='card-of-the-day__loading' aria-hidden='true' data-testid='card-of-the-day-skeleton'>
+					<Skeleton className='card-of-the-day__art-skeleton' variant='rounded' />
+					<Typography variant='h6'>
+						<Skeleton width='60%' />
+					</Typography>
+					<Skeleton className='card-of-the-day__pill-skeleton' variant='rounded' width='7rem' height={24} />
+					<Skeleton variant='rounded' width='9rem' height={24} />
+					<Skeleton className='card-of-the-day__effect-skeleton' variant='rounded' height={180} />
 				</div>
-			</Link>
-		</Fragment>
+			)}
+			{!requestHasError && !isFetchingData && card && (
+				<Link to={`/card/${card.cardID}`} className='card-of-the-day__link'>
+					<YGOCardPreview card={card} />
+				</Link>
+			)}
+		</div>
 	)
 }
 
