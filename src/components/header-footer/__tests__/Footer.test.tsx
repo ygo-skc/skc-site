@@ -6,6 +6,7 @@ import Footer from '../Footer'
 import MuiTheme from '../../MuiTheme'
 import AppRoutes from '../../../helper/AppRoutes'
 import FetchHandler from '../../../helper/FetchHandler'
+import { IOS_APP_STORE_URL } from '../../../helper/IOSApp'
 
 afterEach(() => {
 	jest.restoreAllMocks()
@@ -36,6 +37,15 @@ test('verify footer links to every explore destination', () => {
 	expect(within(explore).getByRole('link', { name: 'Card Browse' })).toHaveAttribute('href', AppRoutes.CardBrowse)
 	expect(within(explore).getByRole('link', { name: 'Product Browse' })).toHaveAttribute('href', AppRoutes.ProductBrowse)
 	expect(within(explore).getByRole('link', { name: 'Privacy Policy' })).toHaveAttribute('href', AppRoutes.Privacy)
+})
+
+test('verify footer links to the iOS app with the App Store badge', () => {
+	jest.spyOn(FetchHandler, 'handleFetch').mockImplementation(() => new Promise<void>(() => {}))
+	renderFooter()
+
+	const app = screen.getByRole('region', { name: 'Get the App' })
+	expect(within(app).getByRole('link', { name: 'Download on the App Store' })).toHaveAttribute('href', IOS_APP_STORE_URL)
+	expect(within(app).getByRole('link', { name: 'Download on the App Store' })).not.toHaveAttribute('target')
 })
 
 test('verify footer shows a placeholder version until each service responds', () => {

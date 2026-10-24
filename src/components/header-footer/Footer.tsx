@@ -6,6 +6,7 @@ import { Typography } from '@mui/material'
 import FetchHandler from '../../helper/FetchHandler'
 import DownstreamServices from '../../helper/DownstreamServices'
 import AppRoutes from '../../helper/AppRoutes'
+import { IOS_APP_STORE_URL } from '../../helper/IOSApp'
 
 type HealthCheckOutput = {
 	version: string
@@ -92,6 +93,26 @@ const Footer: FunctionComponent = () => {
 						))}
 					</ul>
 				</nav>
+
+				<section aria-labelledby='site-footer-app' className='site-footer__app'>
+					<Typography variant='subtitle2' component='h2' id='site-footer-app' className='site-footer__heading'>
+						Get the App
+					</Typography>
+					<div className='site-footer__app-row'>
+						<img src='/assets/skc_ios_app.png' alt='' />
+						<div>
+							<Typography variant='body2' component='p' className='site-footer__app-name'>
+								SKC: Yugioh Database
+							</Typography>
+							<Typography variant='caption' component='p'>
+								iPhone and iPad
+							</Typography>
+						</div>
+					</div>
+					<a className='site-footer__badge' href={IOS_APP_STORE_URL}>
+						<img src='/assets/app_store_badge.svg' alt='Download on the App Store' />
+					</a>
+				</section>
 			</div>
 		</footer>
 	)

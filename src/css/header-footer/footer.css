@@ -15,7 +15,7 @@
 
 .site-footer__content {
 	display: grid;
-	grid-template-columns: 1.6fr 1fr 1fr;
+	grid-template-columns: 1.4fr 1fr 1fr 1fr;
 	gap: 40px;
 	padding: 32px 36px;
 }
@@ -87,12 +87,63 @@
 	text-decoration: underline;
 }
 
+/* the iOS app - a white row like the versions list, then apple's badge (official artwork, unaltered) */
+.site-footer__app-row {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 10px;
+	border-radius: 14px;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 0.5px var(--capsule-edge);
+}
+
+.site-footer__app-row img {
+	flex: none;
+	width: 40px;
+	height: 40px;
+	border-radius: 9px;
+	box-shadow: 0 0 0 0.5px var(--capsule-edge);
+}
+
+.site-footer__app-row .MuiTypography-root {
+	margin: 0;
+}
+
+.site-footer .site-footer__app-name {
+	color: var(--capsule-text);
+}
+
+.site-footer__badge {
+	display: inline-block;
+	margin-top: 12px;
+	border-radius: 7px;
+}
+
+.site-footer__badge img {
+	display: block;
+	height: 40px;
+}
+
 .site-footer a:focus-visible {
 	outline: 2px solid var(--accent);
 	outline-offset: 2px;
 }
 
-/* narrow - copyright spans the top, system info and explore share the row beneath with roomier tap targets */
+/* medium - copyright spans the top, the other three columns share the row beneath */
+
+@container (max-width: 900px) {
+	.site-footer__content {
+		grid-template-columns: repeat(3, 1fr);
+		gap: 28px 32px;
+	}
+
+	.site-footer__about {
+		grid-column: 1 / -1;
+	}
+}
+
+/* narrow - copyright and the app span the width, system info and explore share a row with roomier tap targets */
 
 @container (max-width: 560px) {
 	.site-footer__content {
@@ -101,7 +152,8 @@
 		padding: 26px 20px;
 	}
 
-	.site-footer__about {
+	.site-footer__about,
+	.site-footer__app {
 		grid-column: 1 / -1;
 	}
 

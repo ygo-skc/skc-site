@@ -1,0 +1,59 @@
+/* a white capsule under the nav for iOS browsers that don't show Safari's Smart App Banner - icon, name, purple Get pill, close */
+.app-banner {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	width: min(1180px, calc(100% - 24px));
+	margin: 8px auto 0;
+	padding: 6px;
+	border-radius: 999px;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+	color: var(--capsule-text);
+}
+
+.app-banner__icon {
+	flex: none;
+	width: 38px;
+	height: 38px;
+	border-radius: 9px;
+	box-shadow: 0 0 0 0.5px var(--capsule-edge);
+}
+
+.app-banner__text {
+	flex: 1;
+	min-width: 0;
+}
+
+.app-banner__text .MuiTypography-root {
+	margin: 0;
+}
+
+.app-banner .MuiTypography-caption {
+	color: var(--capsule-muted);
+}
+
+.app-banner .app-banner__get.MuiButton-root {
+	flex: none;
+	min-width: 0;
+	padding: 5px 18px;
+	border-radius: 999px;
+}
+
+.app-banner .app-banner__close.MuiIconButton-root {
+	flex: none;
+	width: 32px;
+	height: 32px;
+	color: var(--capsule-muted);
+}
+
+.app-banner__close::after {
+	/* a 44px touch target around the 32px button */
+	content: '';
+	position: absolute;
+	inset: -6px;
+}
+
+.app-banner__close .MuiSvgIcon-root {
+	font-size: 18px;
+}

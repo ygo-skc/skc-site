@@ -12,6 +12,7 @@ import AppRoutes from '../../helper/AppRoutes'
 import SearchTrigger from '../util/search/SearchTrigger'
 
 import SubNav from './SubNav'
+import AppBanner from './AppBanner'
 
 const Messages = lazy(() => import('./Messages'))
 
@@ -52,6 +53,8 @@ const NavigationBar = () => {
 					</Suspense>
 				</div>
 			</div>
+
+			<AppBanner />
 		</header>
 	)
 }
