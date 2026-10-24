@@ -1,54 +1,278 @@
-.event-container {
-	display: grid;
-	grid-auto-flow: column;
-	grid-template-rows: auto;
-	overflow-x: auto;
+/* home's upcoming products - a white sheet like Trending's: a to-scale rail from today to the last release, then the selected release */
+.upcoming {
+	margin-bottom: 56px;
 }
 
-.event-header-container {
-	display: -webkit-flex;
-	margin-bottom: 10px;
-}
-
-.event-header {
-	margin-right: 10px;
-	margin-bottom: 0;
-}
-
-.event-item {
-	padding: 20px;
-	width: 312px;
-	border-radius: 20px;
-	background: white;
-	margin-right: 13px;
-	margin-bottom: 13px;
+.upcoming__sheet {
 	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	padding: 24px 28px;
+	border-radius: 28px;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+	container-type: inline-size;
 }
 
-.event-item > *:not(:last-child) {
-	margin-right: 26px;
-}
-
-.dialog-event-item {
-	max-width: 100%;
-	background: white;
+.upcoming__header {
 	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
 }
 
-.dialog-event-item > *:not(:last-child) {
-	margin-right: 26px;
+.upcoming .MuiTypography-root {
+	margin: 0;
 }
 
-.event-name {
+.upcoming__body .MuiTypography-h6 {
 	color: var(--capsule-text);
-	flex-grow: 1;
 }
 
-.event-notes {
-	max-height: 65px;
-	text-overflow: ellipsis;
-	overflow: hidden;
-	color: inherit;
+.upcoming__summary.MuiTypography-root,
+.upcoming__empty.MuiTypography-root {
+	color: var(--capsule-muted);
+}
+
+.upcoming__copy.MuiIconButton-root {
+	background: var(--capsule-track);
+	color: var(--capsule-text);
+}
+
+.upcoming__copy.MuiIconButton-root:hover {
+	background: var(--capsule-hover);
+}
+
+/* --line is the rail's centre; date labels sit in two rows above it (alternating, so close dates don't collide), months below */
+.upcoming__rail {
+	--line: 52px;
+	position: relative;
+	height: calc(var(--line) + 32px);
+	margin-inline: 18px;
+}
+
+.upcoming__line,
+.upcoming__today {
+	position: absolute;
+	top: calc(var(--line) - 2px);
+	height: 4px;
+	border-radius: 2px;
+}
+
+.upcoming__line {
+	inset-inline: 0;
+	background: var(--capsule-track);
+}
+
+.upcoming__today {
+	top: calc(var(--line) - 8px);
+	left: -2px;
+	width: 4px;
+	height: 16px;
+	background: var(--capsule-text);
+}
+
+.upcoming__month.MuiTypography-root,
+.upcoming__label.MuiTypography-root {
+	position: absolute;
+	left: var(--at);
+	transform: translateX(-50%);
+	white-space: nowrap;
+	color: var(--capsule-muted);
+}
+
+.upcoming__month.MuiTypography-root {
+	top: calc(var(--line) + 14px);
+}
+
+.upcoming__label.MuiTypography-root {
+	top: 0;
+}
+
+.upcoming__label--low.MuiTypography-root {
+	top: 18px;
+}
+
+/* a 32px target around the 24px dot */
+.upcoming__dot.MuiButtonBase-root {
+	position: absolute;
+	top: calc(var(--line) - 16px);
+	left: var(--at);
+	transform: translateX(-50%);
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+}
+
+/* a white ring with a 10px centre */
+.upcoming__dot::before,
+.upcoming__dot::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	margin: auto;
+	border-radius: 50%;
+}
+
+.upcoming__dot::before {
+	width: 24px;
+	height: 24px;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 2px var(--capsule-edge);
+}
+
+.upcoming__dot::after {
+	width: 10px;
+	height: 10px;
+	background: var(--capsule-muted);
+}
+
+.upcoming__dot[aria-pressed='true']::before {
+	box-shadow: 0 0 0 2px var(--accent);
+}
+
+.upcoming__dot[aria-pressed='true']::after {
+	background: var(--accent);
+}
+
+.upcoming__dot.Mui-focusVisible {
+	outline: 2px solid var(--accent);
+}
+
+.upcoming__detail {
+	display: flex;
+	gap: 20px;
+	padding: 20px;
+	border-radius: 20px;
+	background: var(--capsule);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+}
+
+/* rcl's badge is a fixed 7rem - without this the notes squeeze it to its text and stretch it to their height, so it changes size with each date */
+.upcoming__badge {
+	flex: none;
+	align-self: flex-start;
+}
+
+.upcoming__body {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 10px;
+	min-width: 0;
+}
+
+.upcoming__top {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	align-self: stretch;
+}
+
+/* a grey capsule like the segmented controls: ‹ 2 of 5 › */
+.upcoming__stepper {
+	display: flex;
+	align-items: center;
+	gap: 2px;
+	padding: 2px;
+	border-radius: 999px;
+	background: var(--capsule-track);
+}
+
+.upcoming__stepper .MuiIconButton-root {
+	color: var(--capsule-text);
+}
+
+.upcoming__stepper .MuiIconButton-root:hover {
+	background: var(--capsule-lens);
+}
+
+.upcoming__stepper .MuiIconButton-root.Mui-disabled {
+	color: color-mix(in srgb, var(--capsule-muted) 45%, transparent);
+}
+
+.upcoming__position.MuiTypography-root {
+	min-width: 3.5em;
+	text-align: center;
+	color: var(--capsule-muted);
+}
+
+.upcoming__countdown.MuiChip-root {
+	margin: 0;
+	background-color: color-mix(in srgb, var(--accent) 12%, #fff);
+	color: var(--accent-text);
+}
+
+.upcoming__link.MuiButton-root {
+	padding-inline: 14px;
+	border-radius: 999px;
+	background: var(--capsule-track);
+	color: var(--capsule-text);
+}
+
+.upcoming__link.MuiButton-root:hover {
+	background: var(--capsule-hover);
+}
+
+/* loading: the badge and pills at their loaded sizes, and three lines of notes (more on phones, below) */
+.upcoming__badge-skeleton.MuiSkeleton-root {
+	flex: none;
+	height: 83px;
+	border-radius: 16px;
+}
+
+.upcoming__pill-skeleton.MuiSkeleton-root {
+	border-radius: 999px;
+}
+
+.upcoming__notes-skeleton {
+	align-self: stretch;
+}
+
+.upcoming__notes-skeleton > :nth-child(n + 4) {
+	display: none;
+}
+
+@media (max-width: 600px) {
+	.upcoming__sheet {
+		padding: 20px;
+	}
+}
+
+/* phones: the date labels can't fit, so the rail keeps only the months and the panel names the date - smaller dots keep releases a week apart from touching */
+@container (max-width: 520px) {
+	.upcoming__rail {
+		--line: 16px;
+		margin-inline: 10px;
+	}
+
+	.upcoming__dot::before {
+		width: 16px;
+		height: 16px;
+	}
+
+	.upcoming__dot::after {
+		width: 6px;
+		height: 6px;
+	}
+
+	.upcoming__label.MuiTypography-root {
+		display: none;
+	}
+
+	.upcoming__detail {
+		flex-direction: column;
+		padding: 16px;
+	}
+
+	.upcoming__badge-skeleton.MuiSkeleton-root {
+		height: 79px;
+	}
+
+	.upcoming__notes-skeleton > :nth-child(n + 4) {
+		display: block;
+	}
 }
 
 /* below styles are for react markdown */
@@ -66,12 +290,4 @@
 .markdown h3 {
 	margin-block-start: 0em;
 	margin-block-end: 6px;
-}
-
-.event-icon-container {
-	margin-top: 13px;
-}
-
-.event-icon-button.MuiButtonBase-root:not(:last-child) {
-	margin-right: 13px;
 }
