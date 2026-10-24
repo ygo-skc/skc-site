@@ -166,3 +166,64 @@
 		padding-inline: 4px;
 	}
 }
+
+/* why I started - the title beside a segmented control that shows one topic at a time */
+.about-skc__header {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px 24px;
+	margin-bottom: 24px;
+}
+
+.about-skc__title.MuiTypography-root {
+	margin: 0;
+}
+
+/* segmented control: a grey track with a white lens under the picked topic, like Settings' List | Grid */
+.about-skc__topics.MuiToggleButtonGroup-root {
+	gap: 2px;
+	padding: 3px;
+	border-radius: 999px;
+	background: var(--capsule-track);
+}
+
+.about-skc__topics .MuiToggleButton-root.MuiToggleButtonGroup-grouped {
+	margin: 0;
+	padding: 8px 16px;
+	border: 0;
+	border-radius: 999px;
+	color: var(--capsule-muted);
+}
+
+.about-skc__topics .MuiToggleButton-root.Mui-selected,
+.about-skc__topics .MuiToggleButton-root.Mui-selected:hover {
+	background: var(--capsule-lens);
+	color: var(--capsule-text);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+}
+
+/* labels take the button's muted / picked colour rather than body2's own */
+.about-skc__topics .about-skc__topic-label.MuiTypography-root {
+	color: inherit;
+}
+
+/* the picked label names the topic, so its heading is only there for screen readers */
+.about-skc__text.MuiTypography-root {
+	margin-bottom: 13px;
+}
+
+/* phones - the track spans the card and the labels share it, wrapping onto two lines if they must */
+@media (max-width: 600px) {
+	.about-skc__topics.MuiToggleButtonGroup-root {
+		width: 100%;
+		border-radius: 22px;
+	}
+
+	.about-skc__topics .MuiToggleButton-root.MuiToggleButtonGroup-grouped {
+		flex: 1;
+		padding-inline: 8px;
+		border-radius: 19px;
+	}
+}
