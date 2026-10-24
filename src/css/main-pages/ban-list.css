@@ -870,6 +870,19 @@
 	margin: 0;
 }
 
+/* names stay on one line - the name column takes the spare width (max-width: 0 lets it shrink below the name) and the rest fit their content */
+.ban-list-cards__table .MuiTableCell-root:first-child {
+	width: 100%;
+	max-width: 0;
+}
+
+.ban-list-cards__table .ban-list-cards__name {
+	max-width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
 /* phones (below MUI's sm) */
 @media (max-width: 599.95px) {
 	/* header: tighter card, condensed badge, controls full width and stacked, totals stacked */
