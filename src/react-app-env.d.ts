@@ -205,35 +205,6 @@ declare namespace YGOBanList {
 
 	type NormalFormatDiff = YGOBanList.NormalFormatRemovedCards & YGOBanList.NormalFormatNewlyAdded
 
-	type DLFormatContent = {
-		forbidden: YGOCard.Deets[]
-		limitedOne: YGOCard.Deets[]
-		limitedTwo: YGOCard.Deets[]
-		limitedThree: YGOCard.Deets[]
-		numForbidden: number
-		numLimitedOne: number
-		numLimitedTwo: number
-		numLimitedThree: number
-	}
-
-	type DLFormatRemovedCards = {
-		removedCards: YGOBanList.PreviousBanListStatus[]
-		numRemoved: number
-	}
-
-	type DLFormatNewlyAdded = {
-		newForbidden: YGOBanList.PreviousBanListStatus[]
-		newLimitedOne: YGOBanList.PreviousBanListStatus[]
-		newLimitedTwo: YGOBanList.PreviousBanListStatus[]
-		newLimitedThree: YGOBanList.PreviousBanListStatus[]
-		numNewForbidden: number
-		numNewLimitedOne: number
-		numNewLimitedTwo: number
-		numNewLimitedThree: number
-	}
-
-	type DLFormatDiff = DLFormatRemovedCards & DLFormatNewlyAdded
-
 	declare type PreviousBanListStatus = {
 		card: Deets
 		previousBanStatus: string
