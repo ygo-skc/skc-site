@@ -1,9 +1,9 @@
 import '../../css/util/database-search-styles.css'
 import '../../css/main-pages/card-browse.css'
 
-import { useState, useEffect, lazy, useReducer, startTransition, Suspense } from 'react'
+import { useState, useEffect, useReducer, startTransition } from 'react'
 import axios from 'axios'
-import { Skeleton, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
+import { ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
 import ViewListRoundedIcon from '@mui/icons-material/ViewListRounded'
 import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded'
 
@@ -15,11 +15,10 @@ import { usePageView } from '../util/ResultsViewPreference'
 import CardBrowseResults, { CardBrowseView } from '../util/search/CardBrowseResults'
 import cardDisplayGridReducer, { CardDisplayGridState, CardDisplayGridStateReducerActionType } from '../../reducers/CardDisplayGridReducer'
 import cardBrowseReducer from '../../reducers/CardBrowseCriteriaReducer'
+import Breadcrumb from '../header-footer/Breadcrumb'
 
 // with no criteria the answer is every card (~680KB gzipped), more than the default timeout allows on a slow phone connection
 const BROWSE_TIMEOUT = 10000
-
-const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 
 function generateBrowseQueryURL(selectedCriteria: YGOData.CardBrowseValues[]) {
 	const criteriaMap = new Map()
@@ -137,9 +136,7 @@ export default function BrowseCards() {
 			<meta name='description' content={`Browse all cards in database to find the right card you want.`} />
 			<meta name='keywords' content={`YuGiOh, card browse, The Supreme Kings Castle`} />
 
-			<Suspense fallback={<Skeleton className='breadcrumb breadcrumb__loading' variant='rectangular' width={260} height={30} />}>
-				<Breadcrumb crumbs={['Home', 'Card Browse']} />
-			</Suspense>
+			<Breadcrumb crumbs={['Home', 'Card Browse']} />
 
 			<section className='card-browse-header'>
 				<Typography variant='subtitle2' component='p' className='card-browse-header__eyebrow'>

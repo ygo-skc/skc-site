@@ -12,8 +12,7 @@ import AppRoutes from '../../helper/AppRoutes'
 import { BanListReducerType, currentBanListReducer } from '../../reducers/CurrentBanListReducer'
 import * as Dates from '../../helper/Dates'
 import { toBanStatus } from '../../helper/BanStatus'
-
-const BreadCrumb = lazy(() => import('../header-footer/Breadcrumb'))
+import BreadCrumb from '../header-footer/Breadcrumb'
 
 const BanListHeader = lazy(() => import('../banlist/BanListHeader'))
 const BanListChanges = lazy(() => import('../banlist/BanListChanges'))
@@ -198,9 +197,7 @@ export default function BanList() {
 			<meta name='description' content={`Ban list content/info for list effective ${selectedBanList}`} />
 			<meta name='keywords' content={`YuGiOh, ban list, The Supreme Kings Castle, ${selectedBanList}`} />
 
-			<Suspense fallback={<Skeleton className='breadcrumb breadcrumb__loading' variant='rectangular' width={260} height={30} />}>
-				<BreadCrumb crumbs={['Home', 'Ban List']} />
-			</Suspense>
+			<BreadCrumb crumbs={['Home', 'Ban List']} />
 
 			<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='13.625rem' />}>
 				<BanListHeader

@@ -12,8 +12,8 @@ import ProductStats from '../product/ProductStats'
 import { ProductImage, Section, SKCTable } from 'skc-rcl'
 import cardDisplayGridReducer, { CardDisplayGridStateReducerActionType } from '../../reducers/CardDisplayGridReducer'
 import { productInformationReducer, ProductInformationActionType } from '../../reducers/ProductInformationReducer'
+import Breadcrumb from '../header-footer/Breadcrumb'
 
-const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 const CardDisplayGrid = lazy(() => import('../util/grid/CardDisplayGrid'))
 const CardSuggestions = lazy(() => import('../card/suggestion/CardSuggestions'))
 
@@ -87,9 +87,7 @@ export default function ProductInformation() {
 			<meta name='description' content={`Contents, info, dates, etc for ${state.productName}`} />
 			<meta name='keywords' content={`YuGiOh, product browse, The Supreme Kings Castle`} />
 
-			<Suspense fallback={<Skeleton className='breadcrumb breadcrumb__loading' variant='rectangular' width={260} height={30} />}>
-				<Breadcrumb crumbs={state.pageBreadcrumbs} />
-			</Suspense>
+			<Breadcrumb crumbs={state.pageBreadcrumbs} />
 
 			<div className='headline-v1'>
 				<ProductImage className='product-info-img' productID={state.productId} size='lg' loading='eager' />

@@ -1,15 +1,13 @@
 import '../../css/util/grids-and-containers.css'
 
-import { Suspense, lazy } from 'react'
+import { Suspense } from 'react'
 import { Outlet, ScrollRestoration } from 'react-router-dom'
-import { Skeleton } from '@mui/material'
 
 import SuspenseFallback from '../SuspenseFallback'
+import NavigationBar from '../header-footer/NavigationBar'
+import Footer from '../header-footer/Footer'
 import { SiteSearchProvider } from '../util/search/SiteSearch'
 import { ResultsViewProvider } from '../util/ResultsViewPreference'
-
-const NavigationBar = lazy(() => import('../header-footer/NavigationBar'))
-const Footer = lazy(() => import('../header-footer/Footer'))
 
 /*
  * Contains the base layout of the whole application that will be used as the base element in the React Router
@@ -20,9 +18,7 @@ export default function Layout() {
 			<SiteSearchProvider>
 				<ScrollRestoration />
 				<div className='content'>
-					<Suspense fallback={<Skeleton variant='rectangular' width='100%' height='108px' />}>
-						<NavigationBar />
-					</Suspense>
+					<NavigationBar />
 					<div className='routes'>
 						<div className='routes-wrapper'>
 							<Suspense fallback={<SuspenseFallback />}>
@@ -31,9 +27,7 @@ export default function Layout() {
 						</div>
 					</div>
 				</div>
-				<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='16.5rem' />}>
-					<Footer />
-				</Suspense>
+				<Footer />
 			</SiteSearchProvider>
 		</ResultsViewProvider>
 	)

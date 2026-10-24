@@ -7,28 +7,16 @@ import { Chip, Skeleton, Typography } from '@mui/material'
 
 import FetchHandler from '../../helper/FetchHandler'
 import * as DownstreamServices from '../../helper/DownstreamServices'
-import { CardImageRounded, Section } from 'skc-rcl'
+import { CardImageRounded, Hint, Section, YGOCard } from 'skc-rcl'
 import { decodeHTML } from 'entities'
 import { cardInformationReducer, CardInformationType } from '../../reducers/CardInformationReducer'
 import * as Dates from '../../helper/Dates'
 
 import CalendarMonthTwoToneIcon from '@mui/icons-material/CalendarMonthTwoTone'
+import Breadcrumb from '../header-footer/Breadcrumb'
 
-const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
 const CardSuggestions = lazy(() => import('../card/suggestion/CardSuggestions'))
 const CardInformationRelatedContent = lazy(() => import('../card/card-information/CardInformationRelatedContent'))
-
-const YGOCard = lazy(() =>
-	import('skc-rcl').then((module) => {
-		return { default: module.YGOCard }
-	})
-)
-
-const Hint = lazy(() =>
-	import('skc-rcl').then((module) => {
-		return { default: module.Hint }
-	})
-)
 
 const CardInformation = () => {
 	const [state, cardInformationDispatch] = useReducer(cardInformationReducer, {
@@ -99,10 +87,7 @@ const CardInformation = () => {
 	return (
 		<div className='generic-container'>
 			<title>SKC - Card: {state.card.cardID}</title>
-			<meta
-				name='description'
-				content={`Information for YuGiOh card ${state.card.cardName} such as ban lists it was in, products it can be found in, effect/stats, etc.`}
-			/>
+			<meta name='description' content={`Information for YuGiOh card ${state.card.cardName} such as ban lists it was in, products it can be found in, effect/stats, etc.`} />
 			<meta name='keywords' content={`YuGiOh, The Supreme Kings Castle, card, ${state.card.cardName}, ${state.card.cardID}, ${state.card.cardColor}`} />
 
 			<meta property='og:title' content={`${state.card.cardName} - ${state.card.cardID}`} />
@@ -110,33 +95,29 @@ const CardInformation = () => {
 			<meta property='og:type' content='website' />
 			<meta property='og:description' content={`Details For Yugioh Card - ${state.card.cardName}`} />
 
-			<Suspense fallback={<Skeleton className='breadcrumb breadcrumb__loading' variant='rectangular' width={260} height={30} />}>
-				<Breadcrumb crumbs={state.pageBreadcrumbs} />
-			</Suspense>
+			<Breadcrumb crumbs={state.pageBreadcrumbs} />
 
 			<div className='headline-v1'>
 				<Section sectionHeaderBackground={state.card.cardColor !== undefined ? (state.card.cardColor?.replace(/Pendulum-/gi, '') as YGOCard.Color) : ''} sectionName='Card Stats'>
 					<div className='section-content'>
 						<CardImageRounded size='md' cardID={state.card.cardID} loading='eager' />
-						<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='10rem' />}>
-							{state.isFetchingCardData ? (
-								<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='12rem' />
-							) : (
-								<YGOCard
-									cardName={state.card.cardName}
-									cardColor={state.card.cardColor}
-									cardEffect={decodeHTML(state.card.cardEffect)}
-									cardAttribute={state.card.cardAttribute}
-									monsterType={state.card.monsterType}
-									monsterAttack={state.card.monsterAttack}
-									monsterDefense={state.card.monsterDefense}
-									monsterAssociation={state.card.monsterAssociation}
-									cardID={state.card.cardID}
-									fullDetails={true}
-									isLoading={false}
-								/>
-							)}
-						</Suspense>
+						{state.isFetchingCardData ? (
+							<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='12rem' />
+						) : (
+							<YGOCard
+								cardName={state.card.cardName}
+								cardColor={state.card.cardColor}
+								cardEffect={decodeHTML(state.card.cardEffect)}
+								cardAttribute={state.card.cardAttribute}
+								monsterType={state.card.monsterType}
+								monsterAttack={state.card.monsterAttack}
+								monsterDefense={state.card.monsterDefense}
+								monsterAssociation={state.card.monsterAssociation}
+								cardID={state.card.cardID}
+								fullDetails={true}
+								isLoading={false}
+							/>
+						)}
 					</div>
 				</Section>
 
@@ -152,11 +133,9 @@ const CardInformation = () => {
 							state.archetypes.size !== 0 &&
 							[...state.archetypes].map((archetype) => <Chip className='tag-chip' key={archetype} label={archetype} />)}
 						{!state.isFetchingSuggestions && state.archetypes.size === 0 && (
-							<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='3rem' />}>
-								<Hint variant='tight' fullWidth={false}>
-									Not tied to any archetype
-								</Hint>
-							</Suspense>
+							<Hint variant='tight' fullWidth={false}>
+								Not tied to any archetype
+							</Hint>
 						)}
 					</div>
 

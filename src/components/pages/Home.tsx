@@ -2,8 +2,7 @@ import DatabaseInfo from '../util/DatabaseInfo'
 import UpcomingTCGProducts from '../util/event/UpcomingTCGProducts'
 import Welcome from '../home/Welcome'
 import CardOfTheDay from '../card/CardOfTheDay'
-import { Suspense, lazy, useEffect, useReducer } from 'react'
-import { Skeleton } from '@mui/material'
+import { useEffect, useReducer } from 'react'
 import Trends from '../util/Trending'
 import FetchHandler from '../../helper/FetchHandler'
 import * as DownstreamServices from '../../helper/DownstreamServices'
@@ -13,8 +12,7 @@ import YouTubeData, { channelIDs, YouTubeChannelID } from '../home/YouTubeData'
 
 import '../../css/util/headline.css'
 import '../../css/util/welcome.css'
-
-const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
+import Breadcrumb from '../header-footer/Breadcrumb'
 
 export default function Home() {
 	const [{ dbStats, cotd, upcomingTCGProducts, skcYTUploads }, dispatch] = useReducer(homePageReducer, {
@@ -96,9 +94,7 @@ export default function Home() {
 			<meta name='description' content={`YuGiOh Site for checking; card information, current and past ban lists, search cards, and browse cards.`} />
 			<meta name='keywords' content={`YuGiOh, ban list, card info, The Supreme Kings Castle`} />
 
-			<Suspense fallback={<Skeleton className='breadcrumb breadcrumb__loading' variant='rectangular' width={260} height={30} />}>
-				<Breadcrumb crumbs={['Home']} />
-			</Suspense>
+			<Breadcrumb crumbs={['Home']} />
 
 			<div className='headline-v2'>
 				<DatabaseInfo stats={dbStats} />

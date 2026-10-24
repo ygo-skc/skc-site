@@ -1,10 +1,10 @@
-import { FunctionComponent, Suspense, lazy } from 'react'
+import { FunctionComponent } from 'react'
 
-import { Link, Skeleton, Typography } from '@mui/material'
+import { Link, Typography } from '@mui/material'
 import { Section } from 'skc-rcl'
 
 import '../../css/main-pages/privacy.css'
-const Breadcrumb = lazy(() => import('../header-footer/Breadcrumb'))
+import Breadcrumb from '../header-footer/Breadcrumb'
 
 const Privacy: FunctionComponent = () => {
 	return (
@@ -13,9 +13,7 @@ const Privacy: FunctionComponent = () => {
 			<meta name='description' content={`Privacy policy for site and mobile app`} />
 			<meta name='keywords' content={`YuGiOh, YGO-API, support, The Supreme Kings Castle`} />
 
-			<Suspense fallback={<Skeleton className='breadcrumb breadcrumb__loading' variant='rectangular' width={260} height={30} />}>
-				<Breadcrumb crumbs={['Home', 'Privacy']} />
-			</Suspense>
+			<Breadcrumb crumbs={['Home', 'Privacy']} />
 
 			<Section sectionName='Privacy Policy - Updated November 1, 2024'>
 				<div className='section-content policy'>
