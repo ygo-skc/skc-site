@@ -1,7 +1,8 @@
+import { Crumbs } from '../components/header-footer/Breadcrumb'
 import * as Dates from '../helper/Dates'
 
 type ProductInformationState = {
-	pageBreadcrumbs: string[]
+	pageBreadcrumbs: Crumbs
 	productId: string
 	productName: string
 	productSummary: string[][]

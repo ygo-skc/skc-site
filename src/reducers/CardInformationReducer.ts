@@ -1,7 +1,9 @@
+import { Crumbs } from '../components/header-footer/Breadcrumb'
+
 type CardSuggestions = Omit<YGOCard.Suggestion, 'card' | 'materialArchetypes' | 'referencedArchetypes'> & Omit<YGOCard.Support, 'card'>
 
 type CardInformationState = {
-	pageBreadcrumbs: string[]
+	pageBreadcrumbs: Crumbs
 	card: YGOCard.Deets
 	productInfo: YGOProduct.Info[]
 	restrictionInfo: YGOCard.Restrictions

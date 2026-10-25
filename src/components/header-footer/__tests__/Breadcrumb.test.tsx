@@ -3,7 +3,7 @@ import { ThemeProvider } from '@mui/material/styles'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { ReactNode } from 'react'
 
-import Breadcrumb from '../Breadcrumb'
+import Breadcrumb, { Crumbs } from '../Breadcrumb'
 import MuiTheme from '../../MuiTheme'
 import AppRoutes from '../../../helper/AppRoutes'
 
@@ -80,4 +80,24 @@ test('verify breadcrumb keeps parent crumbs while the current page name is loadi
 
 	expect(await screen.findByRole('link', { name: 'Card Browse' })).toBeInTheDocument()
 	expect(document.querySelector('[aria-current="page"]')).toBeNull()
+})
+
+test('verify breadcrumb re-renders when only a parent crumb changes', async () => {
+	const withCrumbs = (crumbs: Crumbs) => (
+		<ThemeProvider theme={MuiTheme}>
+			<MemoryRouter>
+				<Breadcrumb crumbs={crumbs} />
+			</MemoryRouter>
+		</ThemeProvider>
+	)
+	const { rerender } = render(withCrumbs(['Home', 'Card Browse', 'LOB']))
+	rerender(withCrumbs(['Home', 'Product Browse', 'LOB']))
+
+	expect(await screen.findByRole('link', { name: 'Product Browse' })).toHaveAttribute('href', AppRoutes.ProductBrowse)
+})
+
+test('verify breadcrumb only takes parent crumbs that have a page', () => {
+	// @ts-expect-error - 'Card Browser' isn't a page, so it can't be a parent crumb
+	const crumbs: Crumbs = ['Home', 'Card Browser', 'Blue-Eyes White Dragon']
+	expect(crumbs).toHaveLength(3)
 })
