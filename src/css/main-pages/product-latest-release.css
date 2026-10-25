@@ -54,8 +54,10 @@
 	gap: 6px;
 }
 
+/* the chips only label the product - stop iOS Safari flashing its tap highlight on them, which reads as a press */
 .product-latest-release__chips .MuiChip-root {
 	margin: 0;
+	-webkit-tap-highlight-color: transparent;
 }
 
 .product-latest-release__pill-skeleton.MuiSkeleton-root {
