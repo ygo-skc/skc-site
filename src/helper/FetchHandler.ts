@@ -31,19 +31,21 @@ class FetchHandler {
 		}
 	}
 
+	// replace, not assign: the error page takes the failing page's place in history. Pushed on top of it,
+	// going back reloads the failing page, which fails and pushes the error page again - back never gets past it
 	static readonly handleError = (err: AxiosError) => {
 		if (err.name === 'TypeError' || err.message === 'Network Error') {
-			window.location.assign(AppRoutes.ServiceUnavailable)
+			window.location.replace(AppRoutes.ServiceUnavailable)
 		} else if (err.code === 'ECONNABORTED') {
 			// request timeout
-			window.location.assign(AppRoutes.RequestTimeout)
+			window.location.replace(AppRoutes.RequestTimeout)
 		} else if (err.response) {
 			if (err.response.status === 404) {
-				window.location.assign(AppRoutes.Server404Error)
+				window.location.replace(AppRoutes.Server404Error)
 			} else if (err.response.status === 400) {
-				window.location.assign(AppRoutes.BadRequest)
+				window.location.replace(AppRoutes.BadRequest)
 			} else {
-				window.location.assign(AppRoutes.GenericServerError)
+				window.location.replace(AppRoutes.GenericServerError)
 			}
 		} else if (axios.isCancel(err)) {
 			console.log('Request cancelled')
