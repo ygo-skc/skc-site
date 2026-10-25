@@ -152,6 +152,11 @@ li {
 	max-width: 97%;
 }
 
+/* chips that only label something - stop iOS Safari flashing its tap highlight on them, which reads as a press */
+.MuiChip-root:not(.MuiChip-clickable, .MuiChip-deletable) {
+	-webkit-tap-highlight-color: transparent;
+}
+
 .tag-chip.MuiChip-root,
 .tag-chip-condensed.MuiChip-root {
 	height: auto;
