@@ -76,11 +76,6 @@ const BanListDates: FC<BanListDatesProps> = memo(
 				</Select>
 			</Fragment>
 		)
-	},
-	(prevProps, nextProps) => {
-		return (
-			prevProps.selectedBanList === nextProps.selectedBanList && prevProps.banListStartDates.every((blDate: string, index: number) => blDate === nextProps.selectedBanList[index])
-		)
 	}
 )
 
