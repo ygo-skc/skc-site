@@ -36,7 +36,7 @@ test('holds the releases with a skeleton instead of a zero count while the card 
 test('remembers the card as recently viewed once it loads', () => {
 	localStorage.clear()
 	jest.mocked(FetchHandler.handleFetch).mockImplementationOnce((_url, onSuccess) => {
-		onSuccess({ cardID: '83461421', cardName: 'Mist Valley Falcon', cardColor: 'effect', cardEffect: '', foundIn: [], restrictedIn: { TCG: [], MD: [], DL: [] } })
+		onSuccess({ cardID: '83461421', cardName: 'Pendulum Storm', cardColor: 'spell', cardEffect: '', foundIn: [], restrictedIn: { TCG: [], MD: [], DL: [] } })
 		return new Promise(() => {})
 	})
 
@@ -50,5 +50,5 @@ test('remembers the card as recently viewed once it loads', () => {
 		</ThemeProvider>
 	)
 
-	expect(readRecentlyViewed()).toEqual([expect.objectContaining({ kind: 'card', id: '83461421', name: 'Mist Valley Falcon', cardColor: 'effect' })])
+	expect(readRecentlyViewed()).toEqual([expect.objectContaining({ kind: 'card', id: '83461421', name: 'Pendulum Storm' })])
 })
