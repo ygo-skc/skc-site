@@ -93,7 +93,6 @@ The shared component library (Section, SKCTable, YGOCard*, YGOCardPreview, YGOCa
 
 - skc-rcl 1.4.0 is published (`YGOCardPreview`, `YGOCardAttribute`, compact `SKCTable`, `SKCStatGrid`). Still to do here: bump `package.json` to 1.4.0 (the search popup needs it), switch product info and the Card Browse totals to `SKCStatGrid`, and set `--skc-table-*` / `--skc-stat-grid-*` to the palette.
 - The search API (`/api/v1/card/search`) doesn't return `monsterAssociation`, so the preview's level/rank/scale/link items never show from search results.
-- Card pages' breadcrumbs read Home › Product Browse › <card> - should be Card Browse. The crumb is hard-coded in `src/reducers/CardInformationReducer.ts` (`pageBreadcrumbs: ['Home', 'Product Browse', ...]`).
 - `MuiTheme.ts`, `navigation-bar.css` and `navigation-icon.css` already fail prettier on `release`; leave unrelated lines alone.
 - Visually hidden text: `.ban-list-header__sr-only` (ban list header, cards and date / type labels) and `.trending__sr-only` duplicate the shared `.visually-hidden` in `index.css` - swap them over and delete the local rules.
 - `BanListDates.tsx`'s custom `memo` comparator compares each date with characters of the `selectedBanList` string, so it almost never skips a render - drop the comparator.
