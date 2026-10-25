@@ -2,25 +2,27 @@ import '../../../css/util/search-palette.css'
 
 import { CSSProperties, Fragment, KeyboardEvent, ReactNode, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
 import { generatePath, useNavigate } from 'react-router-dom'
-import { Button, Dialog, IconButton, InputBase, Typography, useMediaQuery, useTheme } from '@mui/material'
+import { Button, Chip, Dialog, IconButton, InputBase, Typography, useMediaQuery, useTheme } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import HistoryIcon from '@mui/icons-material/History'
 import axios from 'axios'
-import { YGOCardPreview } from 'skc-rcl'
+import { decodeHTML } from 'entities'
+import { ProductImage, YGOCardPreview } from 'skc-rcl'
 
 import FetchHandler from '../../../helper/FetchHandler'
 import * as DownstreamServices from '../../../helper/DownstreamServices'
 import AppRoutes from '../../../helper/AppRoutes'
+import { clearRecentlyViewed, groupRecentlyViewed, readRecentlyViewed, RecentlyViewedItem, RecentProduct } from '../../../helper/RecentlyViewed'
 import useVisualViewport from './useVisualViewport'
 import usePreventPagePan from './usePreventPagePan'
 
 const DESTINATIONS = [
-	{ label: 'Home', to: AppRoutes.Home, hint: 'Trending cards and database stats' },
-	{ label: 'Ban List', to: AppRoutes.BanList, hint: 'Current and past forbidden & limited lists' },
-	{ label: 'Card Browse', to: AppRoutes.CardBrowse, hint: 'Filter cards by attribute, type and level' },
-	{ label: 'Product Browse', to: AppRoutes.ProductBrowse, hint: 'Every set, deck and pack by release' },
-	{ label: 'About', to: AppRoutes.About, hint: 'The project, its API and how to contribute' },
+	{ label: 'Home', to: AppRoutes.Home },
+	{ label: 'Ban List', to: AppRoutes.BanList },
+	{ label: 'Card Browse', to: AppRoutes.CardBrowse },
+	{ label: 'Product Browse', to: AppRoutes.ProductBrowse },
+	{ label: 'About', to: AppRoutes.About },
 ]
 
 // gives the api a moment between keystrokes rather than firing a request per letter
@@ -29,7 +31,15 @@ const SEARCH_DELAY_MS = 150
 // widths of the placeholder name lines, so the skeleton doesn't look like a ruled block
 const SKELETON_WIDTHS = [62, 48, 70, 55, 40]
 
-type Option = { id: string; card: YGOCard.Deets; destination?: never } | { id: string; destination: (typeof DESTINATIONS)[number]; card?: never }
+// a card from the search or the history, a product from the history, or a page shortcut - time is when a recent one was viewed
+type Option = { id: string; time?: string } & (
+	| { card: YGOCard.Deets; product?: never; destination?: never }
+	| { product: RecentProduct; card?: never; destination?: never }
+	| { destination: (typeof DESTINATIONS)[number]; card?: never; product?: never }
+)
+
+// the api sends effects with html entities (bullets, quotes) - the preview renders text as is
+const previewCard = (card: YGOCard.Deets): YGOCard.Deets => ({ ...card, cardEffect: decodeHTML(card.cardEffect) })
 
 const isMac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.userAgent)
 
@@ -51,16 +61,19 @@ type SearchPaletteProps = {
 }
 
 /*
- * Site wide search - cards by name or passcode, plus shortcuts to the main pages.
- * Desktop previews the highlighted card beside the list; phones go full screen with an inline peek per card instead
+ * Site wide search - cards by name or passcode. Before anything is typed it shows shortcuts to the main pages and the cards and
+ * products viewed lately, under day headings. Desktop previews the highlighted card beside the list; phones go full screen with an
+ * inline peek per card instead
  */
 export default function SearchPalette({ open, onClose }: SearchPaletteProps) {
 	const navigate = useNavigate()
 	const isPhone = useMediaQuery(useTheme().breakpoints.down('md'), { noSsr: true })
 	const listboxId = useId()
+	const jumpToId = `${listboxId}-jump`
 	// on phones the popup runs down behind the keyboard and toolbar, with the list padded so its last rows can scroll clear of them
 	const visibleArea = useVisualViewport(open && isPhone)
 	const listRef = useRef<HTMLUListElement>(null)
+	const inputRef = useRef<HTMLInputElement>(null)
 	usePreventPagePan(open && isPhone, listRef)
 
 	const [query, setQuery] = useState('')
@@ -69,6 +82,14 @@ export default function SearchPalette({ open, onClose }: SearchPaletteProps) {
 	const [resultsTerm, setResultsTerm] = useState('')
 	const [activeIndex, setActiveIndex] = useState(0)
 	const [peekedId, setPeekedId] = useState<string>()
+	const [recents, setRecents] = useState<RecentlyViewedItem[]>([])
+
+	// the history is read each time search opens, during render so the first frame already has it
+	const [wasOpen, setWasOpen] = useState(false)
+	if (open !== wasOpen) {
+		setWasOpen(open)
+		if (open) setRecents(readRecentlyViewed())
+	}
 
 	useEffect(() => {
 		const term = query.trim()
@@ -105,22 +126,41 @@ export default function SearchPalette({ open, onClose }: SearchPaletteProps) {
 		}
 	}, [query])
 
-	// page shortcuts are for an empty search - once typing starts the list is all cards, so nothing shifts or steals enter while they load
-	const destinations = useMemo(() => (query.trim() === '' ? DESTINATIONS : []), [query])
-
+	// page shortcuts and the history are for an empty search - once typing starts the list is all cards
+	const isEmpty = query.trim() === ''
 	const isLoading = query.trim() !== resultsTerm
 
 	// stale cards aren't offered while the next ones load - the skeleton holds their place
-	const options: Option[] = useMemo(
-		() => [
-			...(isLoading ? [] : cards).map((card) => ({ id: `${listboxId}-card-${card.cardID}`, card })),
-			...destinations.map((destination) => ({ id: `${listboxId}-page-${destination.to}`, destination })),
-		],
-		[isLoading, cards, destinations, listboxId]
+	const groups: { name: string; key: string; options: Option[] }[] = useMemo(() => {
+		if (isEmpty) {
+			return groupRecentlyViewed(recents).map((day, index) => ({
+				name: day.label,
+				key: `recent-${index}`,
+				options: day.items.map(
+					({ item, time }): Option =>
+						item.kind === 'card' ? { id: `${listboxId}-recent-card-${item.id}`, card: item.card, time } : { id: `${listboxId}-recent-product-${item.id}`, product: item, time }
+				),
+			}))
+		}
+
+		return isLoading || cards.length === 0 ? [] : [{ name: 'Cards', key: 'cards', options: cards.map((card) => ({ id: `${listboxId}-card-${card.cardID}`, card })) }]
+	}, [isEmpty, recents, isLoading, cards, listboxId])
+
+	// the page shortcuts come first, in their own row above the list
+	const jumpCount = isEmpty ? DESTINATIONS.length : 0
+	const options = useMemo(
+		() => [...DESTINATIONS.slice(0, jumpCount).map((destination): Option => ({ id: `${jumpToId}-${destination.to}`, destination })), ...groups.flatMap((group) => group.options)],
+		[jumpCount, groups, jumpToId]
 	)
 
+	// a new list starts on its first card or product - the page shortcuts only when there's nothing else
 	useEffect(() => {
-		setActiveIndex(0)
+		setActiveIndex(
+			Math.max(
+				0,
+				options.findIndex((option) => !option.destination)
+			)
+		)
 		setPeekedId(undefined)
 	}, [options])
 
@@ -133,7 +173,13 @@ export default function SearchPalette({ open, onClose }: SearchPaletteProps) {
 
 	const choose = useCallback(
 		(option: Option) => {
-			navigate(option.card ? generatePath(AppRoutes.Card, { cardId: option.card.cardID }) : option.destination.to)
+			navigate(
+				option.card
+					? generatePath(AppRoutes.Card, { cardId: option.card.cardID })
+					: option.product
+					? generatePath(AppRoutes.ProductInformation, { productId: option.product.id })
+					: option.destination.to
+			)
 			onClose()
 		},
 		[navigate, onClose]
@@ -143,27 +189,49 @@ export default function SearchPalette({ open, onClose }: SearchPaletteProps) {
 		(event: KeyboardEvent<HTMLInputElement>) => {
 			if (options.length === 0) return
 
+			const onShortcut = activeIndex < jumpCount
+			const hasRows = options.length > jumpCount
+			const wrap = (index: number) => (index + options.length) % options.length
+
 			if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
 				event.preventDefault()
-				const step = event.key === 'ArrowDown' ? 1 : -1
-				setActiveIndex((index) => (index + step + options.length) % options.length)
+				if (event.key === 'ArrowDown') {
+					// down from the shortcut row drops into the list
+					setActiveIndex(onShortcut && hasRows ? jumpCount : wrap(activeIndex + 1))
+				} else {
+					// up from the top of the list goes to the first shortcut, up from the shortcuts wraps to the bottom of the list
+					setActiveIndex(activeIndex === jumpCount && jumpCount !== 0 ? 0 : onShortcut && hasRows ? options.length - 1 : wrap(activeIndex - 1))
+				}
+			} else if (onShortcut && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')) {
+				// the input is empty while the shortcuts show, so the caret has nowhere to go
+				event.preventDefault()
+				setActiveIndex((activeIndex + (event.key === 'ArrowRight' ? 1 : -1) + jumpCount) % jumpCount)
 			} else if (event.key === 'Enter' && activeOption !== undefined) {
 				event.preventDefault()
 				choose(activeOption)
 			}
 		},
-		[options.length, activeOption, choose]
+		[options.length, activeIndex, jumpCount, activeOption, choose]
 	)
 
 	const handleExited = useCallback(() => setQuery(''), [])
+
+	const clearHistory = useCallback(() => {
+		clearRecentlyViewed()
+		setRecents([])
+		// the button goes with the history, so focus returns to the field rather than dropping to the page
+		inputRef.current?.focus()
+	}, [])
 
 	const renderOption = (option: Option, index: number) => {
 		const isActive = index === activeIndex
 		// the peek is the phone layout's preview - desktop has the preview column instead
 		const isPeeked = isPhone && option.card !== undefined && option.card.cardID === peekedId
-		const name = option.card ? option.card.cardName : option.destination.label
+		const name = option.card ? option.card.cardName : option.product?.name ?? ''
 		// monster type already says normal/effect/etc, so spells and traps fall back to their colour
-		const sub = option.card ? [...new Set([option.card.monsterType ?? option.card.cardColor, option.card.cardAttribute].filter(Boolean))].join(' · ') : option.destination.hint
+		const sub = option.card
+			? [...new Set([option.card.monsterType ?? option.card.cardColor, option.card.cardAttribute].filter(Boolean))].join(' · ')
+			: [option.product?.productType, option.product?.productSubType].filter(Boolean).join(' · ')
 
 		return (
 			<li key={option.id} className={`search-palette__row${isPeeked ? ' search-palette__row--peeked' : ''}`} role='none'>
@@ -173,7 +241,7 @@ export default function SearchPalette({ open, onClose }: SearchPaletteProps) {
 					aria-selected={isActive}
 					// the highlighted name is split into marks, so the option is named from plain text
 					aria-label={name}
-					aria-describedby={`${option.id}-sub`}
+					aria-describedby={option.time ? `${option.id}-sub ${option.id}-time` : `${option.id}-sub`}
 					className='search-palette__option'
 					onMouseMove={() => !isActive && setActiveIndex(index)}
 					onClick={() => choose(option)}
@@ -181,9 +249,8 @@ export default function SearchPalette({ open, onClose }: SearchPaletteProps) {
 					{option.card ? (
 						<img className='search-palette__thumb' src={`https://images.thesupremekingscastle.com/cards/tn/${option.card.cardID}.jpg`} alt='' />
 					) : (
-						<span className='search-palette__thumb search-palette__thumb--page'>
-							<ArrowForwardIcon />
-						</span>
+						// rcl's image falls back to a stock cover when a product has none
+						<ProductImage className='search-palette__thumb search-palette__thumb--product' productID={option.product?.id ?? ''} size='tn' />
 					)}
 					<span className='search-palette__text'>
 						<Typography variant='subtitle2' component='span' className='search-palette__name'>
@@ -193,6 +260,11 @@ export default function SearchPalette({ open, onClose }: SearchPaletteProps) {
 							{sub}
 						</Typography>
 					</span>
+					{option.time && (
+						<Typography id={`${option.id}-time`} variant='body2' component='span' className='search-palette__time'>
+							{option.time}
+						</Typography>
+					)}
 				</div>
 				{isPhone && option.card && (
 					<IconButton
@@ -206,7 +278,7 @@ export default function SearchPalette({ open, onClose }: SearchPaletteProps) {
 				)}
 				{isPeeked && option.card && (
 					<div className='search-palette__peek-detail'>
-						<YGOCardPreview card={option.card} />
+						<YGOCardPreview card={previewCard(option.card)} />
 						<Button className='search-palette__open' variant='contained' disableElevation onClick={() => choose(option)}>
 							Open card
 						</Button>
@@ -215,11 +287,6 @@ export default function SearchPalette({ open, onClose }: SearchPaletteProps) {
 			</li>
 		)
 	}
-
-	const groups = [
-		{ name: 'Cards', key: 'cards', options: options.filter((option) => option.card) },
-		{ name: 'Jump to', key: 'pages', options: options.filter((option) => option.destination) },
-	].filter((group) => group.options.length > 0)
 
 	return (
 		<Dialog
@@ -241,6 +308,7 @@ export default function SearchPalette({ open, onClose }: SearchPaletteProps) {
 				<SearchIcon className='search-palette__icon' />
 				<InputBase
 					autoFocus
+					inputRef={inputRef}
 					className='search-palette__input'
 					sx={{ typography: isPhone ? 'subtitle1' : 'h5', color: 'var(--capsule-text)' }}
 					placeholder='Search cards by name or passcode'
@@ -252,7 +320,7 @@ export default function SearchPalette({ open, onClose }: SearchPaletteProps) {
 							role: 'combobox',
 							'aria-label': 'Search cards',
 							'aria-expanded': true,
-							'aria-controls': listboxId,
+							'aria-controls': isEmpty ? `${jumpToId} ${listboxId}` : listboxId,
 							'aria-autocomplete': 'list',
 							'aria-activedescendant': activeOption?.id,
 							enterKeyHint: 'go',
@@ -270,7 +338,37 @@ export default function SearchPalette({ open, onClose }: SearchPaletteProps) {
 				)}
 			</div>
 
-			<div className='search-palette__body'>
+			{isEmpty && (
+				<div className='search-palette__jump'>
+					<Typography id={`${jumpToId}-label`} variant='subtitle2' component='span' className='search-palette__jump-label'>
+						Jump to
+					</Typography>
+					{/* a second listbox for the combobox, so the arrow keys reach the shortcuts too */}
+					<div id={jumpToId} role='listbox' aria-labelledby={`${jumpToId}-label`} aria-orientation='horizontal' className='search-palette__jump-list'>
+						{options.slice(0, jumpCount).map((option, index) => (
+							<Chip
+								key={option.id}
+								id={option.id}
+								role='option'
+								aria-selected={index === activeIndex}
+								tabIndex={-1}
+								className='search-palette__jump-link'
+								label={option.destination?.label}
+								onMouseMove={() => index !== activeIndex && setActiveIndex(index)}
+								onClick={() => choose(option)}
+							/>
+						))}
+					</div>
+					{recents.length !== 0 && (
+						<Button className='search-palette__clear' onClick={clearHistory}>
+							Clear history
+						</Button>
+					)}
+				</div>
+			)}
+
+			{/* the preview column stays while a page shortcut is highlighted (they have no preview), so the list keeps its width */}
+			<div className={`search-palette__body${options.some((option) => !option.destination) ? '' : ' search-palette__body--list-only'}`}>
 				<ul ref={listRef} id={listboxId} role='listbox' aria-label='Search results' aria-busy={isLoading} className='search-palette__list'>
 					{isLoading && (
 						<li role='none' aria-hidden='true' className='search-palette__loading'>
@@ -288,17 +386,36 @@ export default function SearchPalette({ open, onClose }: SearchPaletteProps) {
 							))}
 						</li>
 					)}
+					{isEmpty && recents.length === 0 && (
+						<li role='presentation' className='search-palette__first-visit'>
+							<span className='search-palette__first-visit-icon' aria-hidden='true'>
+								<HistoryIcon />
+							</span>
+							<Typography variant='h6' component='p' className='search-palette__first-visit-title'>
+								Nothing here yet
+							</Typography>
+							<Typography variant='body2' component='p' className='search-palette__first-visit-text'>
+								Cards and products you open will show up here, so you can get back to them.
+							</Typography>
+						</li>
+					)}
 					{groups.map((group) => (
 						<li key={group.name} role='none'>
 							<ul role='group' aria-labelledby={`${listboxId}-${group.key}`} className='search-palette__group'>
-								<Typography id={`${listboxId}-${group.key}`} variant='subtitle2' component='li' role='presentation' className='search-palette__label'>
+								<Typography
+									id={`${listboxId}-${group.key}`}
+									variant={isEmpty ? 'subtitle1' : 'subtitle2'}
+									component='li'
+									role='presentation'
+									className={`search-palette__label${isEmpty ? ' search-palette__label--day' : ''}`}
+								>
 									{group.name}
 								</Typography>
 								{group.options.map((option) => renderOption(option, options.indexOf(option)))}
 							</ul>
 						</li>
 					))}
-					{groups.length === 0 && !isLoading && (
+					{groups.length === 0 && !isLoading && !isEmpty && (
 						<Typography variant='body2' component='li' role='presentation' className='search-palette__empty'>
 							No cards match “{query.trim()}”
 						</Typography>
@@ -307,7 +424,19 @@ export default function SearchPalette({ open, onClose }: SearchPaletteProps) {
 
 				{!isPhone && activeOption?.card && (
 					<aside className='search-palette__preview' aria-label='Card preview'>
-						<YGOCardPreview key={activeOption.card.cardID} card={activeOption.card} />
+						<YGOCardPreview key={activeOption.card.cardID} card={previewCard(activeOption.card)} />
+					</aside>
+				)}
+				{/* holds the preview column while a recent product is highlighted, so the list doesn't change width between rows */}
+				{!isPhone && activeOption?.product && (
+					<aside className='search-palette__preview search-palette__preview--plain' aria-label='Product preview'>
+						<ProductImage key={activeOption.product.id} className='search-palette__cover' productID={activeOption.product.id} size='md' />
+						<Typography variant='h6' component='p' className='search-palette__plain-name'>
+							{activeOption.product.name}
+						</Typography>
+						<Typography variant='body2' component='p' className='search-palette__sub'>
+							{[activeOption.product.productType, activeOption.product.productSubType].filter(Boolean).join(' · ')}
+						</Typography>
 					</aside>
 				)}
 			</div>

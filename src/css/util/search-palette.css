@@ -106,8 +106,8 @@
 	overscroll-behavior: contain;
 }
 
-/* nothing to preview yet (jump to links only, or no matches) - the list takes the whole width */
-.search-palette__body:not(:has(.search-palette__preview)) {
+/* nothing in the list to preview (page shortcuts only, or no matches) - the list takes the whole width */
+.search-palette__body--list-only {
 	grid-template-columns: minmax(0, 1fr);
 }
 
@@ -115,6 +115,53 @@
 	margin: 0;
 	padding: 12px 20px 4px;
 	color: var(--palette-muted);
+}
+
+/* the history's day headings, like the messages popup's years */
+.search-palette .search-palette__label--day.MuiTypography-root {
+	padding-top: 14px;
+	color: var(--capsule-text);
+}
+
+/* page shortcuts as grey pills under the field - they wrap rather than scroll, since phones cancel drags outside the list */
+.search-palette__jump {
+	display: flex;
+	flex: none;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+	padding: 10px 16px 10px 20px;
+	border-bottom: 1px solid var(--palette-line);
+}
+
+.search-palette__jump-label.MuiTypography-root {
+	margin: 0 4px 0 0;
+	color: var(--palette-muted);
+}
+
+.search-palette__jump-list {
+	display: flex;
+	flex: 1;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.search-palette__jump .search-palette__jump-link.MuiChip-root {
+	margin: 0;
+	cursor: pointer;
+}
+
+/* the highlighted shortcut is the same solid accent pill as a highlighted row */
+.search-palette:not(.MuiDialog-paperFullScreen) .search-palette__jump-link[aria-selected='true'].MuiChip-root {
+	background: var(--accent-text);
+	color: var(--on-accent);
+}
+
+.search-palette__jump .search-palette__clear.MuiButton-root {
+	min-height: 32px;
+	margin-left: auto;
+	border-radius: 999px;
+	color: var(--accent-text);
 }
 
 .search-palette__row {
@@ -147,12 +194,7 @@
 	color: inherit;
 }
 
-.search-palette:not(.MuiDialog-paperFullScreen) .search-palette__option[aria-selected='true'] .search-palette__sub {
-	color: var(--on-accent);
-}
-
-.search-palette:not(.MuiDialog-paperFullScreen) .search-palette__option[aria-selected='true'] .search-palette__thumb--page {
-	background: color-mix(in srgb, #fff 18%, var(--accent-text));
+.search-palette:not(.MuiDialog-paperFullScreen) .search-palette__option[aria-selected='true'] :is(.search-palette__sub, .search-palette__time) {
 	color: var(--on-accent);
 }
 
@@ -165,19 +207,22 @@
 	object-fit: cover;
 }
 
-.search-palette__thumb--page {
-	display: grid;
-	place-items: center;
-	background: var(--palette-tint);
-	color: var(--palette-muted);
+/* product covers are tall - shown whole rather than cropped to a circle */
+.search-palette__thumb--product {
+	border-radius: 0;
+	object-fit: contain;
 }
 
-.search-palette__thumb--page .MuiSvgIcon-root {
-	font-size: 18px;
+/* when a recent card or product was viewed */
+.search-palette__time.MuiTypography-root {
+	flex: none;
+	color: var(--palette-muted);
+	font-variant-numeric: tabular-nums;
 }
 
 .search-palette__text {
 	display: grid;
+	flex: 1;
 	min-width: 0;
 }
 
@@ -260,6 +305,44 @@
 	color: var(--palette-muted);
 }
 
+/* no history yet - a centred note in the list's place */
+.search-palette__first-visit {
+	display: grid;
+	justify-items: center;
+	gap: 6px;
+	padding: 56px 24px;
+	text-align: center;
+}
+
+.search-palette__first-visit-icon {
+	display: grid;
+	place-items: center;
+	width: 56px;
+	height: 56px;
+	margin-bottom: 8px;
+	border-radius: 50%;
+	background: var(--palette-tint);
+	color: var(--palette-muted);
+}
+
+.search-palette__first-visit-icon .MuiSvgIcon-root {
+	font-size: 28px;
+}
+
+.search-palette__first-visit .MuiTypography-root {
+	margin: 0;
+}
+
+/* near-black - the theme's h6 is muted */
+.search-palette__first-visit .search-palette__first-visit-title.MuiTypography-root {
+	color: var(--capsule-text);
+}
+
+.search-palette__first-visit .search-palette__first-visit-text.MuiTypography-root {
+	max-width: 320px;
+	color: var(--palette-muted);
+}
+
 .search-palette__preview {
 	margin: 10px 14px 14px 0;
 	padding: 18px;
@@ -267,6 +350,27 @@
 	background: var(--capsule-lens);
 	box-shadow: 0 0 0 0.5px var(--palette-line);
 	overflow-y: auto;
+}
+
+.search-palette__preview--plain {
+	display: grid;
+	align-content: start;
+	justify-items: start;
+	gap: 6px;
+}
+
+.search-palette__preview--plain .MuiTypography-root {
+	margin: 0;
+}
+
+/* a product - near-black like the card preview's name, since the theme's h6 is muted */
+.search-palette__preview--plain .search-palette__plain-name.MuiTypography-root {
+	color: var(--capsule-text);
+}
+
+.search-palette__cover {
+	width: 120px;
+	margin-bottom: 8px;
 }
 
 .search-palette__foot.MuiTypography-root {
@@ -342,6 +446,22 @@
 	margin-left: 4px;
 }
 
+.search-palette.MuiDialog-paperFullScreen .search-palette__jump {
+	padding: 6px 12px 10px 16px;
+}
+
+/* a full size tap target, like close */
+.search-palette.MuiDialog-paperFullScreen .search-palette__jump .search-palette__clear.MuiButton-root {
+	min-height: 44px;
+}
+
+/* phones put the label over the pills, so a second line of pills doesn't leave it floating in a column of its own -
+ * clear history joins the label's line rather than taking one of its own */
+.search-palette.MuiDialog-paperFullScreen .search-palette__jump-list {
+	flex-basis: 100%;
+	order: 1;
+}
+
 .search-palette.MuiDialog-paperFullScreen .search-palette__row {
 	border-bottom: 1px solid var(--palette-line);
 }
@@ -351,6 +471,11 @@
 	padding: 9px 0 9px 16px;
 	border: 0;
 	border-radius: 0;
+}
+
+/* products have no peek button, so their time keeps off the edge */
+.search-palette.MuiDialog-paperFullScreen .search-palette__row:not(:has(.search-palette__peek)) .search-palette__option {
+	padding-right: 16px;
 }
 
 .search-palette.MuiDialog-paperFullScreen .search-palette__option[aria-selected='true'] {
@@ -371,6 +496,8 @@
 .search-palette .search-palette__peek.MuiIconButton-root {
 	width: 48px;
 	height: 48px;
+	/* clear of a recent card's time */
+	margin-left: 4px;
 	margin-right: 6px;
 	border-radius: 12px;
 	background: transparent;
