@@ -8,11 +8,14 @@ import NavigationBar from '../header-footer/NavigationBar'
 import Footer from '../header-footer/Footer'
 import { SiteSearchProvider } from '../util/search/SiteSearch'
 import { ResultsViewProvider } from '../util/ResultsViewPreference'
+import useGoToShortcuts from '../util/useGoToShortcuts'
 
 /*
  * Contains the base layout of the whole application that will be used as the base element in the React Router
  */
 export default function Layout() {
+	useGoToShortcuts()
+
 	return (
 		<ResultsViewProvider>
 			<SiteSearchProvider>

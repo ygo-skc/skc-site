@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-const isTyping = (target: EventTarget | null) => target instanceof HTMLElement && (target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName))
+import { isTyping } from '../../../helper/Keyboard'
 
 /*
  * Opens search from anywhere on the site - cmd/ctrl + k (the common palette shortcut) or / (as on GitHub and YouTube).
