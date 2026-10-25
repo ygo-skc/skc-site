@@ -13,6 +13,7 @@ import { ProductImage, Section, SKCTable } from 'skc-rcl'
 import cardDisplayGridReducer, { CardDisplayGridStateReducerActionType } from '../../reducers/CardDisplayGridReducer'
 import { productInformationReducer, ProductInformationActionType } from '../../reducers/ProductInformationReducer'
 import Breadcrumb from '../header-footer/Breadcrumb'
+import { recordRecentlyViewed } from '../../helper/RecentlyViewed'
 
 const CardDisplayGrid = lazy(() => import('../util/grid/CardDisplayGrid'))
 const CardSuggestions = lazy(() => import('../card/suggestion/CardSuggestions'))
@@ -53,6 +54,8 @@ export default function ProductInformation() {
 				type: ProductInformationActionType.UPDATE_PRODUCT,
 				productInformation: productInfo,
 			})
+			// only once the product loads, so a bad id never lands in the history
+			recordRecentlyViewed({ kind: 'product', id: productInfo.productId, name: productInfo.productName, productType: productInfo.productType })
 
 			const cards = productInfo.productContent.map((item: YGOProduct.Content) => item.card)
 			cardDisplayGridDispatch({

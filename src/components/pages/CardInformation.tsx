@@ -11,6 +11,7 @@ import { CardImageRounded, Hint, Section, YGOCard } from 'skc-rcl'
 import { decodeHTML } from 'entities'
 import { cardInformationReducer, CardInformationType } from '../../reducers/CardInformationReducer'
 import * as Dates from '../../helper/Dates'
+import { recordRecentlyViewed } from '../../helper/RecentlyViewed'
 
 import CalendarMonthTwoToneIcon from '@mui/icons-material/CalendarMonthTwoTone'
 import Breadcrumb from '../header-footer/Breadcrumb'
@@ -50,6 +51,8 @@ const CardInformation = () => {
 				type: CardInformationType.UPDATE_CARD,
 				cardInfo: cardInfo,
 			})
+			// only once the card loads, so a bad id never lands in the history
+			recordRecentlyViewed({ kind: 'card', id: cardInfo.cardID, name: cardInfo.cardName, cardColor: cardInfo.cardColor })
 		})
 
 		// fetch suggestions
