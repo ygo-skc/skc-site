@@ -23,7 +23,7 @@
 		"d3-color": "3.1.0",
 		"async": "3.2.6",
 		"glob-parent": "6.0.2",
-		"node-forge": "1.4.1",
+		"node-forge": "1.4.2",
 		"nth-check": "3.0.1",
 		"socket.io-parser": "4.2.7",
 		"@babel/traverse": "7.29.10",
