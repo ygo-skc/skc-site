@@ -1,12 +1,16 @@
 import { FC, useCallback, useState } from 'react'
-import { Button, Chip, Popover, Typography } from '@mui/material'
+import { Button, Chip, InputBase, Popover, Typography } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import SearchIcon from '@mui/icons-material/Search'
 import { YGOCardColorIndicator } from 'skc-rcl'
 
-type FilterPill = { label: string; groups: { name: string; heading: string }[] }
+export type FilterPill = { label: string; groups: { name: string; heading: string }[] }
+
+// popovers with more options than this get a field to find one
+const FIND_THRESHOLD = 12
 
 // each pill edits one or more criteria groups from the browse criteria endpoint
-const pills: FilterPill[] = [
+export const browsePills: FilterPill[] = [
 	{ label: 'Card type', groups: [{ name: 'cardColors', heading: 'Card type' }] },
 	{ label: 'Attribute', groups: [{ name: 'attributes', heading: 'Attribute' }] },
 	{ label: 'Monster type', groups: [{ name: 'monsterTypes', heading: 'Monster type' }] },
@@ -34,8 +38,15 @@ const CardBrowseFilters: FC<{
 	options: YGOData.CardBrowseValues[]
 	selectedCriteria: YGOData.CardBrowseValues[]
 	onChange: (selectedCriteria: YGOData.CardBrowseValues[]) => void
-}> = ({ options, selectedCriteria, onChange }) => {
+	pills?: FilterPill[]
+}> = ({ options, selectedCriteria, onChange, pills = browsePills }) => {
 	const [open, setOpen] = useState<{ pill: FilterPill; anchor: HTMLElement }>()
+	const [find, setFind] = useState('')
+
+	const pillOptions = (pill: FilterPill) => options.filter((option) => pill.groups.some((group) => group.name === option.name))
+	const needle = find.trim().toLowerCase()
+	// a pill with nothing to pick (e.g. no monsters) is left out - but only once options have loaded, so the row keeps its height meanwhile
+	const shownPills = options.length === 0 ? pills : pills.filter((pill) => pillOptions(pill).length > 0)
 
 	const toggle = useCallback(
 		(option: YGOData.CardBrowseValues) =>
@@ -50,7 +61,7 @@ const CardBrowseFilters: FC<{
 
 	return (
 		<div className='card-browse-filters' role='group' aria-label='Filters'>
-			{pills.map((pill) => {
+			{shownPills.map((pill) => {
 				const picks = selectedCriteria.filter((picked) => pill.groups.some((group) => group.name === picked.name))
 				const isOpen = open?.pill === pill
 
@@ -61,7 +72,10 @@ const CardBrowseFilters: FC<{
 						aria-haspopup='dialog'
 						aria-expanded={isOpen}
 						endIcon={<ExpandMoreIcon />}
-						onClick={(event) => setOpen({ pill, anchor: event.currentTarget })}
+						onClick={(event) => {
+							setFind('')
+							setOpen({ pill, anchor: event.currentTarget })
+						}}
 					>
 						{pill.label}
 						{picks.length > 0 && ' '}
@@ -83,8 +97,20 @@ const CardBrowseFilters: FC<{
 				transformOrigin={{ vertical: 'top', horizontal: 'center' }}
 				slotProps={{ paper: { className: 'card-browse-filters__popover', role: 'dialog', 'aria-label': open?.pill.label } }}
 			>
+				{open && pillOptions(open.pill).length > FIND_THRESHOLD && (
+					<InputBase
+						className='card-browse-filters__find'
+						placeholder={`Find a ${open.pill.label.toLowerCase()}`}
+						type='search'
+						autoFocus
+						value={find}
+						onChange={(event) => setFind(event.target.value)}
+						startAdornment={<SearchIcon />}
+						inputProps={{ 'aria-label': `Find a ${open.pill.label.toLowerCase()}` }}
+					/>
+				)}
 				{open?.pill.groups.map((group) => {
-					const groupOptions = options.filter((option) => option.name === group.name)
+					const groupOptions = options.filter((option) => option.name === group.name && option.value.toLowerCase().includes(needle))
 					if (groupOptions.length === 0) return null
 
 					return (
@@ -116,6 +142,11 @@ const CardBrowseFilters: FC<{
 						</section>
 					)
 				})}
+				{open && needle !== '' && pillOptions(open.pill).every((option) => !option.value.toLowerCase().includes(needle)) && (
+					<Typography variant='body2' className='card-browse-filters__none'>
+						No {open.pill.label.toLowerCase()} matches &ldquo;{find.trim()}&rdquo;
+					</Typography>
+				)}
 				{open && (
 					<div className='card-browse-filters__footer'>
 						<Button className='card-browse-filters__clear' onClick={() => clear(open.pill)}>

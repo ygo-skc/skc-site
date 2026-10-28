@@ -1,54 +1,45 @@
-import '../../css/main-pages/product.css'
-import '../../css/util/headline.css'
+import '../../css/main-pages/card-browse.css'
+import '../../css/main-pages/product-information.css'
 
-import { useEffect, lazy, useReducer, Suspense, startTransition } from 'react'
+import { useEffect, startTransition } from 'react'
 import { useParams } from 'react-router-dom'
 
 import FetchHandler from '../../helper/FetchHandler'
 import * as DownstreamServices from '../../helper/DownstreamServices'
 
-import { Chip, Skeleton, Typography } from '@mui/material'
-import ProductStats from '../product/ProductStats'
-import { ProductImage, Section, SKCTable } from 'skc-rcl'
-import cardDisplayGridReducer, { CardDisplayGridStateReducerActionType } from '../../reducers/CardDisplayGridReducer'
 import { productInformationReducer, ProductInformationActionType } from '../../reducers/ProductInformationReducer'
 import Breadcrumb from '../header-footer/Breadcrumb'
+import ProductInformationHeader from '../product/ProductInformationHeader'
+import ProductContents from '../product/ProductContents'
+import ProductSuggestions from '../product/ProductSuggestions'
 import { recordProductView } from '../../helper/RecentlyViewed'
+import { useHistoryEntryReducer } from '../util/useHistoryEntry'
 
-const CardDisplayGrid = lazy(() => import('../util/grid/CardDisplayGrid'))
-const CardSuggestions = lazy(() => import('../card/suggestion/CardSuggestions'))
-
-const Hint = lazy(() =>
-	import('skc-rcl').then((module) => {
-		return { default: module.Hint }
-	})
-)
+// the product and its suggestions have answered (or failed), so coming back to it can show it without fetching again
+const isProductSettled = (state: ReturnType<typeof productInformationReducer>) => state.productName !== '' && !state.productCardSuggestions.isFetchingData
 
 export default function ProductInformation() {
-	const [state, productInformationDispatch] = useReducer(productInformationReducer, {
-		pageBreadcrumbs: ['Home', 'Product Browse', ''],
-		productId: useParams<{ productId: string }>().productId ?? '',
-		productName: '',
-		productRarityStats: {},
-		productSummary: [],
-		productCardSuggestions: {
-			suggestions: { namedMaterials: [], namedReferences: [], materialArchetypes: [], referencedArchetypes: [] },
-			support: { referencedBy: [], materialFor: [] },
-			associatedArchetypes: new Set<string>(),
-			isFetchingData: true,
-			requestHasError: false,
+	const [state, productInformationDispatch, isProductRestored] = useHistoryEntryReducer(
+		'product-information',
+		productInformationReducer,
+		{
+			pageBreadcrumbs: ['Home', 'Product Browse', ''],
+			productId: useParams<{ productId: string }>().productId ?? '',
+			productName: '',
+			productCardSuggestions: {
+				suggestions: { namedMaterials: [], namedReferences: [], materialArchetypes: [], referencedArchetypes: [] },
+				support: { referencedBy: [], materialFor: [] },
+				associatedArchetypes: new Set<string>(),
+				isFetchingData: true,
+				requestHasError: false,
+			},
 		},
-	})
-
-	const [gridState, cardDisplayGridDispatch] = useReducer(cardDisplayGridReducer, {
-		results: [],
-		totalResults: 0,
-		totalDisplaying: 0,
-		numItemsToLoadWhenNeeded: 0,
-		isLoading: true,
-	})
+		isProductSettled
+	)
 
 	useEffect(() => {
+		if (isProductRestored) return
+
 		FetchHandler.handleFetch<YGOProduct.Info>(`${DownstreamServices.SKC_API_ENDPOINTS.productDetails}/${state.productId}/en`, (productInfo: YGOProduct.Info) => {
 			productInformationDispatch({
 				type: ProductInformationActionType.UPDATE_PRODUCT,
@@ -56,14 +47,6 @@ export default function ProductInformation() {
 			})
 			// only once the product loads, so a bad id never lands in the history
 			recordProductView(productInfo)
-
-			const cards = productInfo.productContent.map((item: YGOProduct.Content) => item.card)
-			cardDisplayGridDispatch({
-				type: CardDisplayGridStateReducerActionType.INIT_GRID,
-				results: cards,
-				totalResults: cards.length,
-				totalDisplaying: cards.length,
-			})
 		})
 
 		FetchHandler.handleFetch(
@@ -82,7 +65,7 @@ export default function ProductInformation() {
 				type: ProductInformationActionType.FETCH_PRODUCT_CARD_SUGGESTIONS_ERROR,
 			})
 		})
-	}, [])
+	}, [isProductRestored])
 
 	return (
 		<div className='generic-container'>
@@ -92,58 +75,20 @@ export default function ProductInformation() {
 
 			<Breadcrumb crumbs={state.pageBreadcrumbs} />
 
-			<div className='headline-v1'>
-				<ProductImage className='product-info-img' productID={state.productId} size='lg' loading='eager' />
+			<ProductInformationHeader
+				product={state.product}
+				archetypes={[...state.productCardSuggestions.associatedArchetypes].sort()}
+				isFetchingArchetypes={state.productCardSuggestions.isFetchingData}
+			/>
 
-				<div className='group hairline-edge'>
-					<Typography variant='h3' align='center'>
-						Summary
-					</Typography>
-					<div className='headline-section'>
-						<Typography variant='h5'>Information</Typography>
-						{!gridState.isLoading ? <SKCTable header={[]} rows={state.productSummary} /> : <Skeleton variant='rectangular' height='170px' />}
-					</div>
+			<ProductContents product={state.product} />
 
-					<div className='headline-section'>
-						<Typography variant='h5'>Archetypes (BETA)</Typography>
-						{state.productCardSuggestions.isFetchingData && <Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='5rem' />}
-						{!state.productCardSuggestions.isFetchingData &&
-							state.productCardSuggestions.associatedArchetypes.size !== 0 &&
-							[...state.productCardSuggestions.associatedArchetypes].map((archetype) => <Chip className='tag-chip' key={archetype} label={archetype} />)}
-						{!state.productCardSuggestions.isFetchingData && state.productCardSuggestions.associatedArchetypes.size === 0 && (
-							<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='3rem' />}>
-								<Hint variant='tight' fullWidth={false}>
-									Not tied to any archetype
-								</Hint>
-							</Suspense>
-						)}
-					</div>
-				</div>
-			</div>
-
-			<ProductStats isDataLoaded={!gridState.isLoading} cards={gridState.results} productRarityStats={state.productRarityStats} />
-
-			<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='22rem' />}>
-				<CardSuggestions
-					namedMaterials={state.productCardSuggestions.suggestions.namedMaterials}
-					namedReferences={state.productCardSuggestions.suggestions.namedReferences}
-					materialFor={state.productCardSuggestions.support.materialFor}
-					referencedBy={state.productCardSuggestions.support.referencedBy}
-					isFetchingSuggestions={state.productCardSuggestions.isFetchingData}
-					isFetchingSupport={state.productCardSuggestions.isFetchingData}
-					suggestionRequestHasError={state.productCardSuggestions.requestHasError}
-					supportRequestHasError={state.productCardSuggestions.requestHasError}
-					cardColor={'xyz'}
-					cardName={state.productName}
-				/>
-			</Suspense>
-
-			<Section sectionName='Product Content'>
-				<div className='section-content'>
-					<Typography variant='h5'>Sorted By Pack Order</Typography>
-					<CardDisplayGrid cardGridState={gridState} dispatch={cardDisplayGridDispatch} />
-				</div>
-			</Section>
+			<ProductSuggestions
+				suggestions={state.productCardSuggestions.suggestions}
+				support={state.productCardSuggestions.support}
+				isLoading={state.productCardSuggestions.isFetchingData}
+				hasError={state.productCardSuggestions.requestHasError}
+			/>
 		</div>
 	)
 }

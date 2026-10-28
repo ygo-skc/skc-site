@@ -15,7 +15,7 @@ const PLACEHOLDER_EFFECT = ['100%', '100%', '100%', '100%', '100%', '60%']
 export type CardBrowseView = 'list' | 'grid'
 
 // monster type already says normal/effect/etc, so spells and traps fall back to their colour
-const cardSummary = (card: YGOCard.Deets) => {
+export const cardSummary = (card: YGOCard.Deets) => {
 	const association = card.monsterAssociation
 	const tier = association?.level
 		? `Level ${association.level}`
@@ -31,13 +31,16 @@ const cardSummary = (card: YGOCard.Deets) => {
  * browse results as a list of rows with a preview beside it - the picked row is a purple pill and the preview (rcl's YGOCardPreview)
  * sticks beside the list. below md the preview opens inline under the tapped row instead, like the search popup's peek.
  * browse results cut the effect short and carry no ATK / DEF, so the previewed card's full details are fetched (and kept) on demand.
- * the grid view is rcl's card (YGOCardWithImage, as on the ban list), each linking straight to its card page
+ * the grid view is rcl's card (YGOCardWithImage, as on the ban list), each linking straight to its card page.
+ * a page whose cards are already complete (a product's) passes fetchDetails={false}, and rowDetail for its own second line
  */
 const CardBrowseResults: FC<{
 	cardGridState: CardDisplayGridState
 	dispatch: React.Dispatch<CardDisplayGridStateReducerAction>
 	view: CardBrowseView
-}> = ({ cardGridState, dispatch, view }) => {
+	rowDetail?: (card: YGOCard.Deets) => string
+	fetchDetails?: boolean
+}> = ({ cardGridState, dispatch, view, rowDetail = cardSummary, fetchDetails = true }) => {
 	const isPhone = useMediaQuery(useTheme().breakpoints.down('md'), { noSsr: true })
 	const { results, totalResults, totalDisplaying, isLoading } = cardGridState
 	const shown = results.slice(0, totalDisplaying)
@@ -57,7 +60,7 @@ const CardBrowseResults: FC<{
 
 	const previewedId = view === 'grid' ? undefined : isPhone ? peekedId : selectedId
 	useEffect(() => {
-		if (previewedId === undefined || details[previewedId] !== undefined) return
+		if (!fetchDetails || previewedId === undefined || details[previewedId] !== undefined) return
 
 		// a short wait so arrowing down the list doesn't fetch every card passed on the way
 		const timer = setTimeout(() => {
@@ -70,7 +73,7 @@ const CardBrowseResults: FC<{
 			})
 		}, 150)
 		return () => clearTimeout(timer)
-	}, [previewedId, details])
+	}, [fetchDetails, previewedId, details])
 
 	// closing a peek above the tapped row would pull the row up by the peek's height (off screen on a phone) - scroll it back
 	useLayoutEffect(() => {
@@ -216,7 +219,7 @@ const CardBrowseResults: FC<{
 											{card.cardName}
 										</Typography>
 										<Typography variant='body2' component='span' className='card-browse-row__sub'>
-											{cardSummary(card)}
+											{rowDetail(card)}
 										</Typography>
 									</span>
 									<span className='card-browse-row__frame' aria-hidden='true'>
