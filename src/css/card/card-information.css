@@ -47,3 +47,11 @@
 .card-releases__chip-skeleton.MuiSkeleton-root {
 	border-radius: 999px;
 }
+
+/* a product's cover in the card's product list holds a booster pack's shape while it loads, so going back to the card lands where it was left */
+.card-product-list-item__cover {
+	display: block;
+	width: 100%;
+	height: auto;
+	aspect-ratio: auto 270 / 490;
+}

@@ -1,9 +1,10 @@
-import { useEffect, useState, FC, useCallback, JSX } from 'react'
+import { FC, useCallback, useMemo } from 'react'
 import { Typography, Button } from '@mui/material'
 
 import * as Dates from '../../../helper/Dates'
 import { Hint } from 'skc-rcl'
 import CardProductListItem from '../../product/CardProductListItem'
+import { useHistoryEntryState } from '../../util/useHistoryEntry'
 
 type CardProductInformationProps = {
 	cardID: string
@@ -12,22 +13,16 @@ type CardProductInformationProps = {
 
 const CardProductInformation: FC<CardProductInformationProps> = ({ productInfo, cardID }) => {
 	const initNumItems = 5
-	const [productContents, setProductContents] = useState<JSX.Element[]>([])
-	const [uniqueProductsFeaturedIn, setUniqueProductsFeaturedIn] = useState(0)
-	const [loadAll, setLoadAll] = useState(false)
+	// kept for coming back from a product page, and built during render rather than in an effect, so the list is there on the first paint
+	const [loadedAll, setLoadAll] = useHistoryEntryState('card-products-load-all', false)
+	const loadAll = loadedAll || productInfo.length <= initNumItems
 
 	const loadAllCB = useCallback(() => {
 		setLoadAll(true)
-	}, [])
+	}, [setLoadAll])
 
-	useEffect(() => {
-		setLoadAll(productInfo.length <= initNumItems)
-	}, [productInfo])
-
-	const alphaSort = (a: string, b: string) => a.localeCompare(b)
-
-	useEffect(() => {
-		if (productInfo === null || productInfo === undefined || productInfo.length === 0) return
+	const { productContents, uniqueProductsFeaturedIn } = useMemo(() => {
+		const alphaSort = (a: string, b: string) => a.localeCompare(b)
 
 		const contents: React.JSX.Element[] = []
 		const uniqueProductsFeaturedIn = new Set<string>()
@@ -41,23 +36,22 @@ const CardProductInformation: FC<CardProductInformationProps> = ({ productInfo, 
 				uniqueRarityPrintings = new Set([...uniqueRarityPrintings, ...productContent.rarities])
 
 				if (loadAll || index < initNumItems) {
-					productContent.rarities.sort(alphaSort)
-
 					contents.push(
 						<CardProductListItem
+							key={`${product.productId}-${productContent.productPosition}`}
 							cardID={cardID}
 							productID={product.productId}
 							productName={product.productName}
 							productReleaseDate={productReleaseDate}
-							productContent={productContent}
+							// sorted on a copy, so the remembered product info isn't changed during render
+							productContent={{ ...productContent, rarities: [...productContent.rarities].sort(alphaSort) }}
 						/>
 					)
 				}
 			})
 		})
 
-		setProductContents(contents)
-		setUniqueProductsFeaturedIn(uniqueProductsFeaturedIn.size)
+		return { productContents: contents, uniqueProductsFeaturedIn: uniqueProductsFeaturedIn.size }
 	}, [productInfo, cardID, loadAll])
 
 	return (
