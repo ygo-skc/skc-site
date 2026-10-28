@@ -19,6 +19,8 @@
 	display: block;
 	width: 100%;
 	height: auto;
+	/* holds the cover's place while it loads, so the card doesn't grow under the reader */
+	aspect-ratio: auto 99 / 153;
 	border-radius: 12px;
 }
 

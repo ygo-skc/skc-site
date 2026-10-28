@@ -16,6 +16,7 @@ import ProductGrid, { ProductView } from '../product/ProductGrid'
 import { productTypeLabel, releaseYear } from '../product/productUtil'
 import { usePageView } from '../util/ResultsViewPreference'
 import Breadcrumb from '../header-footer/Breadcrumb'
+import useHistoryEntry, { useHistoryEntryState } from '../util/useHistoryEntry'
 
 // a year heading and a white list of rows shaped like ProductListRow (thumb, name over meta, card count over date)
 const ProductSectionSkeleton: FunctionComponent = () => (
@@ -53,30 +54,39 @@ const ProductSectionSkeleton: FunctionComponent = () => (
 	</div>
 )
 
+// the products are only kept once they've loaded, since a restored page doesn't fetch them again
+const hasProducts = (products: YGOProduct.Info[]) => products.length > 0
+
 // filters matching fewer products than this show every year instead of the last few
 const showAllUnder = 100
 
 const ProductBrowse: FunctionComponent = () => {
-	const [products, setProducts] = useState<YGOProduct.Info[]>([])
-	const [isFetchingProducts, setIsFetchingProducts] = useState(true)
-	const [loadAll, setLoadAll] = useState(false)
+	// kept for coming back from a product page: the products, the filters and how many years show, so the page has its full height
+	const [products, setProducts, isRestored] = useHistoryEntryState<YGOProduct.Info[]>('product-browse', [], hasProducts)
+	const [isFetchingProducts, setIsFetchingProducts] = useState(!isRestored)
+	const [loadAll, setLoadAll] = useHistoryEntryState('product-browse-load-all', false)
 
-	const [query, setQuery] = useState('')
-	const [productTypeFilter, setProductTypeFilter] = useState('All')
-	const [productSubTypesFilter, setProductSubTypesFilter] = useState<ReadonlySet<string>>(new Set())
-	const [view, setView] = usePageView<ProductView>({ list: 'list', grid: 'cards' })
+	const [query, setQuery] = useHistoryEntryState('product-browse-query', '')
+	const [productTypeFilter, setProductTypeFilter] = useHistoryEntryState('product-browse-type', 'All')
+	const [productSubTypesFilter, setProductSubTypesFilter] = useHistoryEntryState<ReadonlySet<string>>('product-browse-sub-types', new Set())
+	const [savedView, rememberView] = useHistoryEntry<ProductView>('product-browse-view')
+	const [view, setView] = usePageView<ProductView>({ list: 'list', grid: 'cards' }, savedView)
+	useEffect(() => {
+		rememberView(view)
+	}, [view, rememberView])
 
 	// a year picked on the header's graph, scrolled to once its section renders
 	const [pickedYear, setPickedYear] = useState<number>()
 
 	useEffect(() => {
+		if (isRestored) return
 		startTransition(() => {
 			FetchHandler.handleFetch<YGOData.ProductBrowseResult>(DownstreamServices.SKC_API_ENDPOINTS.productBrowse, (json: YGOData.ProductBrowseResult) => {
 				setProducts(json.products)
 				setIsFetchingProducts(false)
 			})
 		})
-	}, [])
+	}, [isRestored, setProducts])
 
 	const matchingProducts = useMemo(() => {
 		const search = query.trim().toLowerCase()

@@ -1,7 +1,8 @@
-import { FC, useMemo, useState } from 'react'
+import { FC, useMemo } from 'react'
 import { Button, ButtonBase, Checkbox, Chip, FormControlLabel, InputBase, Skeleton, Typography, useMediaQuery, useTheme } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import { productTypeLabel } from './productUtil'
+import { useHistoryEntryState } from '../util/useHistoryEntry'
 
 type ProductBrowseFiltersProps = {
 	products: YGOProduct.Info[]
@@ -22,7 +23,8 @@ const countBy = (products: YGOProduct.Info[], key: (product: YGOProduct.Info) =>
 
 // sidebar: name / set code search, the product type as one choice, sub-types as checkboxes - counts beside each
 const ProductBrowseFilters: FC<ProductBrowseFiltersProps> = ({ products, isLoading, query, setQuery, type, setType, subTypes, toggleSubType }) => {
-	const [showAllSubTypes, setShowAllSubTypes] = useState(false)
+	// kept for coming back from a product page, since the longer list moves the results down
+	const [showAllSubTypes, setShowAllSubTypes] = useHistoryEntryState('product-browse-all-sub-types', false)
 	// phones get sub-types as one swipeable row of chips, so they don't push the results a screen down
 	const isPhone = useMediaQuery(useTheme().breakpoints.down('sm'), { noSsr: true })
 

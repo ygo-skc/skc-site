@@ -130,6 +130,34 @@ test('switches between the list and cards views', () => {
 	expect(document.querySelectorAll('.product-tile')).toHaveLength(5)
 })
 
+test('coming back to the page keeps the products, filters, earlier years and view without fetching again', () => {
+	// enough sub-types that some sit behind Show more
+	const olderPacks = Array.from({ length: 100 }, (_, i) => product(`OLD${i}`, 'Pack', `Booster ${i % 10}`, '2010-01-01'))
+	const handleFetch = answerWith([...products, ...olderPacks])
+	const first = renderPage()
+
+	fireEvent.click(screen.getByRole('button', { name: 'Packs 103' }))
+	fireEvent.click(screen.getByRole('button', { name: 'Show 101 earlier' }))
+	fireEvent.click(screen.getByRole('button', { name: 'Show 5 more' }))
+	fireEvent.click(screen.getByRole('button', { name: 'Cards' }))
+	first.unmount()
+
+	// same history entry, so everything is as it was left
+	const second = renderPage()
+	expect(screen.getByRole('heading', { level: 2, name: 'Packs' })).toBeInTheDocument()
+	expect(yearHeadings()).toEqual(['2026', '2010', '2002'])
+	expect(screen.getByRole('button', { name: 'Show fewer' })).toBeInTheDocument()
+	expect(screen.getByRole('button', { name: 'Cards' })).toHaveAttribute('aria-pressed', 'true')
+
+	fireEvent.change(screen.getByRole('searchbox', { name: 'Search products' }), { target: { value: 'lob' } })
+	second.unmount()
+
+	renderPage()
+	expect(screen.getByRole('searchbox', { name: 'Search products' })).toHaveValue('lob')
+	expect(productLinks()).toEqual(['/product/LOB'])
+	expect(handleFetch).toHaveBeenCalledTimes(1)
+})
+
 test('list rows use the small tn covers, tiles the md ones', () => {
 	answerWith(products)
 	renderPage()
