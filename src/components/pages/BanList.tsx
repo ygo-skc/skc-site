@@ -1,4 +1,4 @@
-import { lazy, useState, useEffect, Suspense, useReducer, useCallback, useMemo } from 'react'
+import { lazy, useState, useEffect, Suspense, useReducer, useCallback, useMemo, useRef } from 'react'
 
 import axios from 'axios'
 import { Skeleton } from '@mui/material'
@@ -7,13 +7,14 @@ import * as DownstreamServices from '../../helper/DownstreamServices'
 
 import '../../css/main-pages/ban-list.css'
 import dateReducer, { BanListDateReducerActionType } from '../../reducers/BanListDateReducer'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { AcceptableBanListFormat, determineListSize, getValidFormat } from '../../helper/BanListUtil'
 import AppRoutes from '../../helper/AppRoutes'
 import { BanListReducerType, currentBanListReducer } from '../../reducers/CurrentBanListReducer'
 import * as Dates from '../../helper/Dates'
 import { toBanStatus } from '../../helper/BanStatus'
 import BreadCrumb from '../header-footer/Breadcrumb'
+import useHistoryEntry from '../util/useHistoryEntry'
 
 const BanListHeader = lazy(() => import('../banlist/BanListHeader'))
 const BanListChanges = lazy(() => import('../banlist/BanListChanges'))
@@ -25,60 +26,85 @@ function supportedFormat(specifiedFormat: string | undefined): AcceptableBanList
 	return format === AcceptableBanListFormat.DL ? AcceptableBanListFormat.TCG : format
 }
 
+// the loaded page, left in its history entry so coming back from a card shows it as it was
+type BanListSnapshot = {
+	format: AcceptableBanListFormat
+	selectedBanList: string
+	dates: ReturnType<typeof dateReducer>
+	content: ReturnType<typeof currentBanListReducer>
+}
+
 export default function BanList() {
 	const navigate = useNavigate()
-
-	const [selectedBanList, setSelectedBanList] = useState<string>('')
+	const { pathname } = useLocation()
 
 	const { specifiedFormat } = useParams<'specifiedFormat'>()
 	const [format, setFormat] = useState<AcceptableBanListFormat>(supportedFormat(specifiedFormat))
 
-	const [{ banListStartDates, isFetchingBanListDates }, dateDispatch] = useReducer(dateReducer, {
-		banListStartDates: [],
-		isFetchingBanListDates: true,
-	})
+	const [snapshot, rememberSnapshot] = useHistoryEntry<BanListSnapshot>('ban-list')
+	const saved = snapshot?.format === format ? snapshot : undefined
+	// a restored page skips the mount's fetches - it already has everything they would load
+	const isRestored = useRef(saved !== undefined)
 
-	const [
-		{
-			forbidden,
-			limited,
-			semiLimited,
-			numForbidden,
-			numLimited,
-			numSemiLimited,
-			removedCards,
-			newForbidden,
-			newLimited,
-			newSemiLimited,
-			isFetchingBanListNewContent,
-			isFetchingBanListContent,
-			isFetchingBanListRemovedContent,
-		},
-		currentBanListDispatch,
-	] = useReducer(currentBanListReducer, {
-		forbidden: [],
-		limited: [],
-		semiLimited: [],
-		numForbidden: 0,
-		numLimited: 0,
-		numSemiLimited: 0,
-		removedCards: [],
-		numRemoved: 0,
-		newForbidden: [],
-		newLimited: [],
-		newSemiLimited: [],
-		numNewForbidden: 0,
-		numNewLimited: 0,
-		numNewSemiLimited: 0,
-		isFetchingBanListNewContent: true,
-		isFetchingBanListContent: true,
-		isFetchingBanListRemovedContent: true,
-	})
+	const [selectedBanList, setSelectedBanList] = useState<string>(saved?.selectedBanList ?? '')
+
+	const [dates, dateDispatch] = useReducer(
+		dateReducer,
+		saved?.dates ?? {
+			banListStartDates: [],
+			isFetchingBanListDates: true,
+		}
+	)
+	const { banListStartDates, isFetchingBanListDates } = dates
+
+	const [content, currentBanListDispatch] = useReducer(
+		currentBanListReducer,
+		saved?.content ?? {
+			forbidden: [],
+			limited: [],
+			semiLimited: [],
+			numForbidden: 0,
+			numLimited: 0,
+			numSemiLimited: 0,
+			removedCards: [],
+			numRemoved: 0,
+			newForbidden: [],
+			newLimited: [],
+			newSemiLimited: [],
+			numNewForbidden: 0,
+			numNewLimited: 0,
+			numNewSemiLimited: 0,
+			isFetchingBanListNewContent: true,
+			isFetchingBanListContent: true,
+			isFetchingBanListRemovedContent: true,
+		}
+	)
+	const {
+		forbidden,
+		limited,
+		semiLimited,
+		numForbidden,
+		numLimited,
+		numSemiLimited,
+		removedCards,
+		newForbidden,
+		newLimited,
+		newSemiLimited,
+		isFetchingBanListNewContent,
+		isFetchingBanListContent,
+		isFetchingBanListRemovedContent,
+	} = content
 
 	useEffect(() => {
 		// keep the URL in sync with the chosen format via the router, so router state
-		// and the address bar cannot drift apart the way history.replaceState allowed
-		navigate(`${AppRoutes.BanList}/${format}`, { replace: true })
+		// and the address bar cannot drift apart the way history.replaceState allowed.
+		// Only when it differs - a replace gives the entry a new key, and ScrollRestoration loses its saved position with the old one
+		const path = `${AppRoutes.BanList}/${format}`
+		if (pathname !== path) navigate(path, { replace: true })
+	}, [format, pathname, navigate])
+
+	useEffect(() => {
+		if (isRestored.current) return
 
 		dateDispatch({
 			type: BanListDateReducerActionType.FETCHING_DATES,
@@ -113,14 +139,14 @@ export default function BanList() {
 			isCurrent = false
 			request.cancel()
 		}
-	}, [format, navigate])
+	}, [format])
 
 	useEffect(() => {
-		if (banListStartDates.length !== 0) setSelectedBanList(banListStartDates[0])
+		if (!isRestored.current && banListStartDates.length !== 0) setSelectedBanList(banListStartDates[0])
 	}, [banListStartDates])
 
 	useEffect(() => {
-		if (selectedBanList && selectedBanList.length !== 0) {
+		if (!isRestored.current && selectedBanList && selectedBanList.length !== 0) {
 			// picking another list (or format) cancels this one's requests, and ignores any answer already on its way
 			let isCurrent = true
 			const request = axios.CancelToken.source()
@@ -185,6 +211,17 @@ export default function BanList() {
 			}
 		}
 	}, [selectedBanList])
+
+	// after the effects above, so only the mount's run is skipped
+	useEffect(() => {
+		isRestored.current = false
+	}, [])
+
+	// only a fully loaded page is left behind - a half loaded one would come back with skeletons and nothing fetching
+	const isLoaded = !isFetchingBanListDates && !isFetchingBanListContent && !isFetchingBanListNewContent && !isFetchingBanListRemovedContent
+	useEffect(() => {
+		if (isLoaded) rememberSnapshot({ format, selectedBanList, dates, content })
+	}, [isLoaded, format, selectedBanList, dates, content, rememberSnapshot])
 
 	const handleBanListChosen = useCallback((ind: number) => setSelectedBanList(banListStartDates[ind]), [banListStartDates])
 

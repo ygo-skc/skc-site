@@ -1,12 +1,11 @@
 import { Crumbs } from '../components/header-footer/Breadcrumb'
-import * as Dates from '../helper/Dates'
 
 type ProductInformationState = {
 	pageBreadcrumbs: Crumbs
 	productId: string
 	productName: string
-	productSummary: string[][]
-	productRarityStats: { [key: string]: number }
+	// the whole answer, once it loads
+	product?: YGOProduct.Info
 	productCardSuggestions: {
 		suggestions: Omit<YGOCard.Suggestion, 'hasSelfReference'>
 		support: Omit<YGOCard.Support, 'card'>
@@ -42,14 +41,7 @@ export function productInformationReducer(state: ProductInformationState, action
 				...state,
 				pageBreadcrumbs: ['Home', 'Product Browse', `${action.productInformation.productId}`],
 				productName: action.productInformation.productName,
-				productRarityStats: action.productInformation.productRarityStats,
-				productSummary: [
-					['Product ID', action.productInformation.productId],
-					['Product Type', action.productInformation.productType],
-					['Product Sub-Type', action.productInformation.productSubType],
-					['American Release', Dates.fromYYYYMMDDToDateStr(action.productInformation.productReleaseDate)],
-					['Total Unique Cards', action.productInformation.productTotal.toString()],
-				],
+				product: action.productInformation,
 			}
 		case ProductInformationActionType.UPDATE_PRODUCT_CARD_SUGGESTIONS:
 			return {

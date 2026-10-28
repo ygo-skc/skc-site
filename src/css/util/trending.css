@@ -64,7 +64,7 @@
 
 /* about the height of the loaded banner + rows, so the page doesn't jump when they arrive */
 .trending__skeleton.MuiSkeleton-root {
-	height: 520px;
+	height: 620px;
 	border-radius: 18px;
 }
 
@@ -167,13 +167,6 @@
 	white-space: nowrap;
 }
 
-/* rcl's indicator is 1.5rem - shrink it to a dot beside the type. its colour stays rcl's */
-.trending .indicator.small {
-	flex-shrink: 0;
-	width: 8px;
-	height: 8px;
-}
-
 .trending__stats {
 	display: flex;
 	align-items: stretch;
@@ -250,12 +243,12 @@
 }
 
 .trending__thumb {
-	width: 44px;
+	width: var(--card-thumb);
 	flex-shrink: 0;
 }
 
 .trending__thumb .rounded-img-outer-container.rounded-img-outer-container {
-	width: 44px;
+	width: var(--card-thumb);
 	margin: 0;
 }
 
@@ -328,7 +321,7 @@
 
 	/* the banner's text runs longer and the rows stack */
 	.trending__skeleton.MuiSkeleton-root {
-		height: 820px;
+		height: 985px;
 	}
 }
 
@@ -352,6 +345,6 @@
 	}
 
 	.trending__skeleton.MuiSkeleton-root {
-		height: 650px;
+		height: 825px;
 	}
 }

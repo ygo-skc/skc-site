@@ -1,7 +1,7 @@
 import '../../css/util/database-search-styles.css'
 import '../../css/main-pages/card-browse.css'
 
-import { useState, useEffect, useReducer, startTransition } from 'react'
+import { useState, useEffect, useReducer, useRef, startTransition } from 'react'
 import axios from 'axios'
 import { ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
 import ViewListRoundedIcon from '@mui/icons-material/ViewListRounded'
@@ -16,6 +16,7 @@ import CardBrowseResults, { CardBrowseView } from '../util/search/CardBrowseResu
 import cardDisplayGridReducer, { CardDisplayGridState, CardDisplayGridStateReducerActionType } from '../../reducers/CardDisplayGridReducer'
 import cardBrowseReducer from '../../reducers/CardBrowseCriteriaReducer'
 import Breadcrumb from '../header-footer/Breadcrumb'
+import useHistoryEntry from '../util/useHistoryEntry'
 
 // with no criteria the answer is every card (~680KB gzipped), more than the default timeout allows on a slow phone connection
 const BROWSE_TIMEOUT = 10000
@@ -72,28 +73,47 @@ function browseStatus(hasCriteria: boolean, loadFailed: boolean, { isLoading, to
 	)
 }
 
+// the loaded page, left in its history entry so coming back from a card shows the same criteria, results and view
+type CardBrowseSnapshot = {
+	selectedCriteria: YGOData.CardBrowseValues[]
+	cardGridState: CardDisplayGridState
+	skcCardBrowseCriteriaOutput: YGOData.CardBrowseCriteria
+	view: CardBrowseView
+}
+
 export default function BrowseCards() {
-	const [{ selectedCriteria }, browseCriteriaDispatch] = useReducer(cardBrowseReducer, { selectedCriteria: [] })
+	const [saved, rememberSnapshot] = useHistoryEntry<CardBrowseSnapshot>('card-browse')
+	// a restored page skips the mount's fetches - it already has everything they would load
+	const isRestored = useRef(saved !== undefined)
 
-	const [cardGridState, cardDisplayGridDispatch] = useReducer(cardDisplayGridReducer, {
-		results: [],
-		totalResults: 0,
-		totalDisplaying: 0,
-		numItemsToLoadWhenNeeded: 50,
-		isLoading: false,
-	})
+	const [{ selectedCriteria }, browseCriteriaDispatch] = useReducer(cardBrowseReducer, { selectedCriteria: saved?.selectedCriteria ?? [] })
 
-	const [skcCardBrowseCriteriaOutput, setSkcCardBrowseCriteriaOutput] = useState<YGOData.CardBrowseCriteria>({} as YGOData.CardBrowseCriteria)
+	const [cardGridState, cardDisplayGridDispatch] = useReducer(
+		cardDisplayGridReducer,
+		saved?.cardGridState ?? {
+			results: [],
+			totalResults: 0,
+			totalDisplaying: 0,
+			numItemsToLoadWhenNeeded: 50,
+			isLoading: false,
+		}
+	)
+
+	const [skcCardBrowseCriteriaOutput, setSkcCardBrowseCriteriaOutput] = useState<YGOData.CardBrowseCriteria>(
+		saved?.skcCardBrowseCriteriaOutput ?? ({} as YGOData.CardBrowseCriteria)
+	)
 	const [loadFailed, setLoadFailed] = useState(false)
-	const [view, setView] = usePageView<CardBrowseView>({ list: 'list', grid: 'grid' })
+	const [view, setView] = usePageView<CardBrowseView>({ list: 'list', grid: 'grid' }, saved?.view)
 
 	useEffect(() => {
+		if (isRestored.current) return
 		FetchHandler.handleFetch<YGOData.CardBrowseCriteria>(DownstreamServices.SKC_API_ENDPOINTS.browseCriteria, (json) => {
 			setSkcCardBrowseCriteriaOutput(json)
 		})
 	}, [])
 
 	useEffect(() => {
+		if (isRestored.current) return
 		// with no criteria the endpoint returns every card, so there's something to browse before any filter is picked
 		let isCurrent = true
 		// criteria that change mid-download cancel it, so a phone isn't still pulling the whole card list after a filter is picked
@@ -129,6 +149,17 @@ export default function BrowseCards() {
 			request.cancel()
 		}
 	}, [selectedCriteria])
+
+	// after the effects above, so only the mount's run is skipped
+	useEffect(() => {
+		isRestored.current = false
+	}, [])
+
+	// only a fully loaded page is left behind - a half loaded one would come back with skeletons and nothing fetching
+	const isLoaded = !cardGridState.isLoading && !loadFailed && skcCardBrowseCriteriaOutput.cardColors !== undefined
+	useEffect(() => {
+		if (isLoaded) rememberSnapshot({ selectedCriteria, cardGridState, skcCardBrowseCriteriaOutput, view })
+	}, [isLoaded, selectedCriteria, cardGridState, skcCardBrowseCriteriaOutput, view, rememberSnapshot])
 
 	return (
 		<div className='generic-container'>

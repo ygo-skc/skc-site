@@ -1,4 +1,4 @@
-import { FC, Fragment, JSX, memo, useCallback, useEffect, useState } from 'react'
+import { FC, Fragment, JSX, memo, useCallback, useMemo } from 'react'
 import { ListSubheader, MenuItem, Select, SelectChangeEvent, Skeleton, Typography } from '@mui/material'
 import * as Dates from '../../helper/Dates'
 import { scrollToTop } from '../../helper/Etc'
@@ -14,11 +14,12 @@ type BanListDatesProps = {
 }
 
 const BanListDates: FC<BanListDatesProps> = memo(
-	({ isFetchingBanListDates, banListStartDates, setSelectedBanList }) => {
-		const [selectorItems, setSelectorItems] = useState<JSX.Element[]>()
-		const [selectedBanListInd, setSelectedBanListInd] = useState<number>(0)
+	({ isFetchingBanListDates, banListStartDates, selectedBanList, setSelectedBanList }) => {
+		// from the page, so a list restored on going back shows as picked
+		const selectedBanListInd = Math.max(banListStartDates.indexOf(selectedBanList), 0)
 
-		useEffect(() => {
+		// built during render, so the menu has its options on the first paint (a restored page mounts with its dates)
+		const selectorItems = useMemo(() => {
 			// newest first, under a heading per year; each list reads "Oct 19 – Present" since the heading has the year.
 			// Select gives every child role=option, so the headings are hidden from screen readers and each option is labelled with its full dates
 			const selectorItems: JSX.Element[] = []
@@ -44,13 +45,11 @@ const BanListDates: FC<BanListDatesProps> = memo(
 				)
 			})
 
-			setSelectorItems(selectorItems)
-			setSelectedBanListInd(0)
+			return selectorItems
 		}, [banListStartDates])
 
 		const handleBanListChanged = useCallback(
 			(event: SelectChangeEvent) => {
-				setSelectedBanListInd(+event.target.value)
 				setSelectedBanList(+event.target.value)
 				scrollToTop()
 			},

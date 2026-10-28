@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from 'react'
+import { FC, useEffect, useMemo, useState } from 'react'
 import {
 	Button,
 	Chip,
@@ -20,10 +20,14 @@ import {
 import SearchIcon from '@mui/icons-material/Search'
 import TableRowsRoundedIcon from '@mui/icons-material/TableRowsRounded'
 import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded'
+import PaletteRoundedIcon from '@mui/icons-material/PaletteRounded'
+import SortByAlphaRoundedIcon from '@mui/icons-material/SortByAlphaRounded'
 import { Link } from 'react-router-dom'
 import { decodeHTML } from 'entities'
 import { CardImageRounded, YGOCardWithImage } from 'skc-rcl'
 import { usePageView } from '../util/ResultsViewPreference'
+import CardFrameRing from '../util/CardFrameRing'
+import useHistoryEntry from '../util/useHistoryEntry'
 import { BanStatus, banStatusClass, banStatuses, cardKind, CardKind, cardTypeLabel, toBanStatus } from '../../helper/BanStatus'
 
 export type BanListStatusCards = {
@@ -38,18 +42,31 @@ type BanListCardsProps = {
 	previousStatus: Map<string, string>
 }
 
-type Row = { card: YGOCard.Deets; status: BanStatus; previous?: string }
-type SortKey = 'name' | 'type' | 'status'
+// order is the card's place in the API's answer - status, then card color, then name
+type Row = { card: YGOCard.Deets; status: BanStatus; previous?: string; order: number }
+// color is the API's order - the default, and the segmented control's pick beside A–Z
+type SortKey = 'name' | 'type' | 'color'
 type View = 'table' | 'cards'
+type Sort = { key: SortKey; direction: 'asc' | 'desc' }
+
+// how the reader left the list, so coming back from a card shows the same rows at the same height
+type ListSnapshot = { query: string; statusFilter?: BanStatus; kindFilter: CardKind | 'All'; sort: Sort; view: View; numShown: number }
 
 const PAGE_SIZE = 30
 
-function compareRows(a: Row, b: Row, key: SortKey): number {
+// the direction flips only the column's own order - ties keep theirs
+function compareRows(a: Row, b: Row, { key, direction }: Sort): number {
+	const flip = direction === 'asc' ? 1 : -1
 	const byName = a.card.cardName.localeCompare(b.card.cardName)
-	if (key === 'type') return cardTypeLabel(a.card).localeCompare(cardTypeLabel(b.card)) || byName
-	if (key === 'status') return banStatuses.indexOf(a.status) - banStatuses.indexOf(b.status) || byName
-	return byName
+	if (key === 'type') return flip * cardTypeLabel(a.card).localeCompare(cardTypeLabel(b.card)) || byName
+	if (key === 'color') return a.order - b.order
+	return flip * byName
 }
+
+const DEFAULT_SORT: Sort = { key: 'color', direction: 'asc' }
+
+// the segmented control's pick - none while a table column sort other than these two is on
+const sortOrder = ({ key, direction }: Sort): 'color' | 'name' | null => (direction !== 'asc' ? null : key === 'color' ? 'color' : key === 'name' ? 'name' : null)
 
 // rows shaped like the loaded ones (thumbnail + name, type, status chip, previous) while the list loads
 const TableSkeletonRows: FC = () => (
@@ -58,7 +75,8 @@ const TableSkeletonRows: FC = () => (
 			<TableRow key={i} data-testid='ban-list-row-skeleton'>
 				<TableCell>
 					<span className='ban-list-cards__card'>
-						<Skeleton className='ban-list-thumb' variant='circular' width={36} height={36} />
+						{/* the thumb in its frame ring */}
+						<Skeleton className='ban-list-thumb' variant='circular' width='calc(var(--card-thumb) + 10px)' height='calc(var(--card-thumb) + 10px)' />
 						<span className='ban-list-cards__card-text'>
 							<Typography variant='subtitle2' component='span'>
 								<Skeleton width='12ch' />
@@ -111,12 +129,17 @@ const PreviousStatus: FC<{ previous?: string }> = ({ previous }) => {
 }
 
 const BanListCards: FC<BanListCardsProps> = ({ isLoading, lists, previousStatus }) => {
-	const [query, setQuery] = useState('')
-	const [statusFilter, setStatusFilter] = useState<BanStatus | 'All'>('All')
-	const [kindFilter, setKindFilter] = useState<CardKind | 'All'>('All')
-	const [sort, setSort] = useState<{ key: SortKey; direction: 'asc' | 'desc' }>({ key: 'status', direction: 'asc' })
-	const [view, setView] = usePageView<View>({ list: 'table', grid: 'cards' })
-	const [numShown, setNumShown] = useState(PAGE_SIZE)
+	const [saved, remember] = useHistoryEntry<ListSnapshot>('ban-list-cards')
+	const [query, setQuery] = useState(saved?.query ?? '')
+	const [statusFilter, setStatusFilter] = useState<BanStatus | undefined>(saved?.statusFilter)
+	const [kindFilter, setKindFilter] = useState<CardKind | 'All'>(saved?.kindFilter ?? 'All')
+	const [sort, setSort] = useState<Sort>(saved?.sort ?? DEFAULT_SORT)
+	const [view, setView] = usePageView<View>({ list: 'table', grid: 'cards' }, saved?.view)
+	const [numShown, setNumShown] = useState(saved?.numShown ?? PAGE_SIZE)
+
+	useEffect(() => {
+		remember({ query, statusFilter, kindFilter, sort, view, numShown })
+	}, [query, statusFilter, kindFilter, sort, view, numShown, remember])
 
 	// another list starts from the first page again, keeping the search, filters and view
 	const [pagedLists, setPagedLists] = useState(lists)
@@ -126,21 +149,20 @@ const BanListCards: FC<BanListCardsProps> = ({ isLoading, lists, previousStatus 
 	}
 
 	const allRows = useMemo<Row[]>(
-		() => lists.flatMap(({ status, cards }) => cards.map((card) => ({ card, status, previous: previousStatus.get(card.cardID) }))),
+		() => lists.flatMap(({ status, cards }) => cards.map((card) => ({ card, status, previous: previousStatus.get(card.cardID) }))).map((row, order) => ({ ...row, order })),
 		[lists, previousStatus]
 	)
+
+	// one status at a time - until one is picked, the strongest status the list has
+	const status = statusFilter ?? lists.find((list) => list.cards.length > 0)?.status ?? 'Forbidden'
 
 	const rows = useMemo(() => {
 		const needle = query.trim().toLowerCase()
 		const filtered = allRows.filter(
-			(row) =>
-				(statusFilter === 'All' || row.status === statusFilter) &&
-				(kindFilter === 'All' || cardKind(row.card) === kindFilter) &&
-				(needle === '' || row.card.cardName.toLowerCase().includes(needle))
+			(row) => row.status === status && (kindFilter === 'All' || cardKind(row.card) === kindFilter) && (needle === '' || row.card.cardName.toLowerCase().includes(needle))
 		)
-		const direction = sort.direction === 'asc' ? 1 : -1
-		return filtered.sort((a, b) => direction * compareRows(a, b, sort.key))
-	}, [allRows, query, statusFilter, kindFilter, sort])
+		return filtered.sort((a, b) => compareRows(a, b, sort))
+	}, [allRows, query, status, kindFilter, sort])
 
 	// a new filter starts from the first page again
 	const filterBy =
@@ -173,25 +195,27 @@ const BanListCards: FC<BanListCardsProps> = ({ isLoading, lists, previousStatus 
 					/>
 
 					<div className='ban-list-cards__filters' role='group' aria-label='Status'>
-						{(['All', ...banStatuses.filter((status) => status !== 'Unlimited')] as const).map((status) => (
-							<Chip
-								key={status}
-								className={`ban-list-cards__filter ${status === 'All' ? '' : banStatusClass(status)}`}
-								aria-pressed={statusFilter === status}
-								onClick={() => filterBy(setStatusFilter)(status)}
-								label={
-									<>
-										{status}
-										{!isLoading && ' '}
-										{!isLoading && (
-											<Typography variant='caption' component='span' className='ban-list-cards__filter-count'>
-												{status === 'All' ? allRows.length : lists.find((list) => list.status === status)?.cards.length ?? 0}
-											</Typography>
-										)}
-									</>
-								}
-							/>
-						))}
+						{banStatuses
+							.filter((option) => option !== 'Unlimited')
+							.map((option) => (
+								<Chip
+									key={option}
+									className={`ban-list-cards__filter ${banStatusClass(option)}`}
+									aria-pressed={status === option}
+									onClick={() => filterBy(setStatusFilter)(option)}
+									label={
+										<>
+											{option}
+											{!isLoading && ' '}
+											{!isLoading && (
+												<Typography variant='caption' component='span' className='ban-list-cards__filter-count'>
+													{lists.find((list) => list.status === option)?.cards.length ?? 0}
+												</Typography>
+											)}
+										</>
+									}
+								/>
+							))}
 					</div>
 
 					<div className='ban-list-cards__tools-end'>
@@ -209,6 +233,23 @@ const BanListCards: FC<BanListCardsProps> = ({ isLoading, lists, previousStatus 
 							<MenuItem value='Spell'>Spells</MenuItem>
 							<MenuItem value='Trap'>Traps</MenuItem>
 						</Select>
+
+						<ToggleButtonGroup
+							className='ban-list-cards__view'
+							exclusive
+							aria-label='Sort'
+							value={sortOrder(sort)}
+							onChange={(_, value: 'color' | 'name' | null) => value && setSort(value === 'color' ? DEFAULT_SORT : { key: 'name', direction: 'asc' })}
+						>
+							<ToggleButton value='color'>
+								<PaletteRoundedIcon />
+								Color
+							</ToggleButton>
+							<ToggleButton value='name'>
+								<SortByAlphaRoundedIcon />
+								A–Z
+							</ToggleButton>
+						</ToggleButtonGroup>
 
 						<ToggleButtonGroup className='ban-list-cards__view' exclusive aria-label='View' value={view} onChange={(_, value: View | null) => value && setView(value)}>
 							<ToggleButton value='table'>
@@ -232,13 +273,15 @@ const BanListCards: FC<BanListCardsProps> = ({ isLoading, lists, previousStatus 
 						<Table stickyHeader>
 							<TableHead>
 								<TableRow>
-									{(['name', 'type', 'status'] as const).map((key) => (
+									{(['name', 'type'] as const).map((key) => (
 										<TableCell key={key} className={key === 'type' ? 'ban-list-cards__secondary' : undefined} sortDirection={sort.key === key ? sort.direction : false}>
 											<TableSortLabel active={sort.key === key} direction={sort.key === key ? sort.direction : 'asc'} onClick={() => sortBy(key)}>
-												{key === 'name' ? 'Card' : key === 'type' ? 'Type' : 'Status'}
+												{key === 'name' ? 'Card' : 'Type'}
 											</TableSortLabel>
 										</TableCell>
 									))}
+									{/* one status shows at a time, so there's nothing to sort it by */}
+									<TableCell>Status</TableCell>
 									<TableCell className='ban-list-cards__secondary'>Previous</TableCell>
 								</TableRow>
 							</TableHead>
@@ -248,9 +291,11 @@ const BanListCards: FC<BanListCardsProps> = ({ isLoading, lists, previousStatus 
 									<TableRow key={card.cardID} hover>
 										<TableCell>
 											<Link to={`/card/${card.cardID}`} className='ban-list-cards__card'>
-												<span className='ban-list-thumb'>
-													<CardImageRounded cardID={card.cardID} size='tn' variant='circle' loading='lazy' />
-												</span>
+												<CardFrameRing cardColor={card.cardColor}>
+													<span className='ban-list-thumb'>
+														<CardImageRounded cardID={card.cardID} size='tn' variant='circle' loading='lazy' />
+													</span>
+												</CardFrameRing>
 												<span className='ban-list-cards__card-text'>
 													<Typography variant='subtitle2' component='span' className='ban-list-cards__name'>
 														{card.cardName}

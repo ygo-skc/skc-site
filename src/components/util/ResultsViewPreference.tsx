@@ -45,9 +45,9 @@ export const useResultsViewPreference = () => useContext(ResultsViewContext)
  * A page's view, starting from the saved preference (mapped to the page's own names, e.g. ban list's 'table' | 'cards').
  * Changing the preference switches the open page to it right away
  */
-export function usePageView<V extends string>(names: Record<ResultsView, V>) {
+export function usePageView<V extends string>(names: Record<ResultsView, V>, initial?: V) {
 	const { resultsView } = useResultsViewPreference()
-	const [view, setView] = useState<V>(names[resultsView])
+	const [view, setView] = useState<V>(initial ?? names[resultsView])
 
 	// adjusted during render rather than in an effect, so the page never paints the old view first
 	const [appliedPreference, setAppliedPreference] = useState(resultsView)

@@ -6,6 +6,7 @@ import BanListCards, { BanListStatusCards } from '../BanListCards'
 import MuiTheme from '../../MuiTheme'
 
 jest.mock('skc-rcl', () => ({
+	YGOCardColorIndicator: () => null,
 	CardImageRounded: () => null,
 	YGOCardWithImage: ({ card }: { card: YGOCard.Deets }) => <span data-testid='card-image'>{card.cardName}</span>,
 }))
@@ -13,8 +14,8 @@ jest.mock('skc-rcl', () => ({
 const card = (cardID: string, cardName: string, cardColor: YGOCard.Color, monsterType?: string): YGOCard.Deets => ({ cardID, cardName, cardColor, monsterType, cardEffect: '' })
 
 const lists: BanListStatusCards[] = [
-	{ status: 'Forbidden', cards: [card('1', 'Pot of Greed', 'spell'), card('2', 'Elfnote Tinia', 'effect', 'Spellcaster/Effect')] },
-	{ status: 'Limited', cards: [card('3', 'Mirror Force', 'trap'), card('4', 'Ash Blossom', 'effect', 'Zombie/Tuner/Effect')] },
+	{ status: 'Forbidden', cards: [card('2', 'Elfnote Tinia', 'effect', 'Spellcaster/Effect'), card('1', 'Pot of Greed', 'spell')] },
+	{ status: 'Limited', cards: [card('4', 'Ash Blossom', 'effect', 'Zombie/Tuner/Effect'), card('3', 'Mirror Force', 'trap')] },
 	{ status: 'Semi-Limited', cards: [card('5', 'Called by the Grave', 'spell')] },
 ]
 
@@ -36,10 +37,10 @@ const cardNames = () =>
 		.slice(1)
 		.map((row) => row.querySelector('.ban-list-cards__name')?.textContent)
 
-test('lists every card, strongest status first, with its type, status and previous status', () => {
+test('lists the strongest status first, with each card type, status and previous status', () => {
 	renderCards()
 
-	expect(cardNames()).toEqual(['Elfnote Tinia', 'Pot of Greed', 'Ash Blossom', 'Mirror Force', 'Called by the Grave'])
+	expect(cardNames()).toEqual(['Elfnote Tinia', 'Pot of Greed'])
 
 	const [card, type, status, previous] = within(screen.getAllByRole('row')[1]).getAllByRole('cell')
 	expect(within(type).getByText('Spellcaster/Effect')).toBeInTheDocument()
@@ -58,19 +59,28 @@ test('lists every card, strongest status first, with its type, status and previo
 	expect(within(potOfGreed[3]).getByText('—')).toHaveAttribute('aria-hidden', 'true')
 	expect(within(potOfGreed[3]).getByText('No change')).toBeInTheDocument()
 	expect(within(potOfGreed[2]).queryByText(/was/)).not.toBeInTheDocument()
-	expect(screen.getByText('5 of 5 cards')).toBeInTheDocument()
+	expect(screen.getByText('2 of 2 cards')).toBeInTheDocument()
 })
 
-test('filters by status and shows how many cards each status has', () => {
+test('shows one status at a time and how many cards each status has', () => {
 	renderCards()
 	const filters = within(screen.getByRole('group', { name: 'Status' }))
 
-	expect(filters.getByRole('button', { name: /^All/ })).toHaveAttribute('aria-pressed', 'true')
+	expect(filters.queryByRole('button', { name: /^All/ })).not.toBeInTheDocument()
+	expect(filters.getByRole('button', { name: /^Forbidden/ })).toHaveAttribute('aria-pressed', 'true')
 	expect(filters.getByRole('button', { name: /^Limited/ })).toHaveTextContent('Limited 2')
 
 	fireEvent.click(filters.getByRole('button', { name: /^Limited/ }))
 
 	expect(filters.getByRole('button', { name: /^Limited/ })).toHaveAttribute('aria-pressed', 'true')
+	expect(cardNames()).toEqual(['Ash Blossom', 'Mirror Force'])
+	expect(filters.getByRole('button', { name: /^Forbidden/ })).toHaveAttribute('aria-pressed', 'false')
+})
+
+test('opens on the strongest status the list has', () => {
+	renderCards({ lists: lists.slice(1) })
+
+	expect(within(screen.getByRole('group', { name: 'Status' })).getByRole('button', { name: /^Limited/ })).toHaveAttribute('aria-pressed', 'true')
 	expect(cardNames()).toEqual(['Ash Blossom', 'Mirror Force'])
 })
 
@@ -88,19 +98,49 @@ test('filters by card type', () => {
 	fireEvent.mouseDown(screen.getByRole('combobox', { name: 'Card type' }))
 	fireEvent.click(screen.getByRole('option', { name: 'Spells' }))
 
-	expect(cardNames()).toEqual(['Pot of Greed', 'Called by the Grave'])
+	expect(cardNames()).toEqual(['Pot of Greed'])
 })
 
 test('sorts by a column and flips direction on a second click', () => {
 	renderCards()
 
 	fireEvent.click(screen.getByRole('button', { name: 'Card' }))
-	expect(cardNames()).toEqual(['Ash Blossom', 'Called by the Grave', 'Elfnote Tinia', 'Mirror Force', 'Pot of Greed'])
+	expect(cardNames()).toEqual(['Elfnote Tinia', 'Pot of Greed'])
 	expect(screen.getByRole('columnheader', { name: /Card/ })).toHaveAttribute('aria-sort', 'ascending')
 
 	fireEvent.click(screen.getByRole('button', { name: 'Card' }))
 	expect(cardNames()[0]).toBe('Pot of Greed')
 	expect(screen.getByRole('columnheader', { name: /Card/ })).toHaveAttribute('aria-sort', 'descending')
+})
+
+test('keeps the API order (card color, then name) by default, and switches to A–Z and back', () => {
+	renderCards({
+		lists: [
+			{
+				status: 'Forbidden',
+				cards: [card('6', 'Zoodiac Ratpier', 'effect'), card('1', 'Pot of Greed', 'spell'), card('7', 'Super Polymerization', 'spell'), card('3', 'Mirror Force', 'trap')],
+			},
+		],
+	})
+	const sort = within(screen.getByRole('group', { name: 'Sort' }))
+
+	expect(sort.getByRole('button', { name: 'Color' })).toHaveAttribute('aria-pressed', 'true')
+	expect(cardNames()).toEqual(['Zoodiac Ratpier', 'Pot of Greed', 'Super Polymerization', 'Mirror Force'])
+
+	fireEvent.click(sort.getByRole('button', { name: 'A–Z' }))
+	expect(cardNames()).toEqual(['Mirror Force', 'Pot of Greed', 'Super Polymerization', 'Zoodiac Ratpier'])
+	expect(screen.getByRole('columnheader', { name: /Card/ })).toHaveAttribute('aria-sort', 'ascending')
+
+	// a column sort the control doesn't name leaves neither picked
+	fireEvent.click(screen.getByRole('button', { name: 'Card' }))
+	expect(sort.getByRole('button', { name: 'A–Z' })).toHaveAttribute('aria-pressed', 'false')
+
+	fireEvent.click(sort.getByRole('button', { name: 'Color' }))
+	expect(cardNames()).toEqual(['Zoodiac Ratpier', 'Pot of Greed', 'Super Polymerization', 'Mirror Force'])
+
+	// one status shows at a time, so its column has no sort
+	expect(screen.getByRole('columnheader', { name: 'Status' })).not.toHaveAttribute('aria-sort')
+	expect(within(screen.getByRole('columnheader', { name: 'Status' })).queryByRole('button')).not.toBeInTheDocument()
 })
 
 test('switches to card images, keeping the filters', () => {
@@ -167,4 +207,22 @@ test('holds the card grid with card-shaped placeholders while loading', () => {
 	fireEvent.click(screen.getByRole('button', { name: 'Cards' }))
 
 	expect(screen.getAllByTestId('ban-list-card-skeleton')).toHaveLength(8)
+})
+
+test('comes back from a card on the same rows, search and view', () => {
+	const { unmount } = render(
+		<ThemeProvider theme={MuiTheme}>
+			<MemoryRouter>
+				<BanListCards isLoading={false} lists={lists} previousStatus={new Map()} />
+			</MemoryRouter>
+		</ThemeProvider>
+	)
+	fireEvent.change(screen.getByRole('searchbox', { name: 'Search this list' }), { target: { value: 'pot' } })
+	fireEvent.click(screen.getByRole('button', { name: 'Cards' }))
+	// leaving for a card page unmounts the list; going back mounts it on the same history entry
+	unmount()
+
+	renderCards()
+	expect(screen.getByRole('searchbox', { name: 'Search this list' })).toHaveValue('pot')
+	expect(screen.getAllByTestId('card-image').map((image) => image.textContent)).toEqual(['Pot of Greed'])
 })

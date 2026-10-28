@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { ThemeProvider } from '@mui/material/styles'
+import { MemoryRouter } from 'react-router-dom'
 
 import UpcomingTCGProducts, { countdown } from '../UpcomingTCGProducts'
 import MuiTheme from '../../../MuiTheme'
@@ -30,7 +31,9 @@ const event = (name: string, eventDate: string): HeartAPI.EventItem => ({
 const renderUpcoming = (events: HeartAPI.EventItem[], requestHasError = false) =>
 	render(
 		<ThemeProvider theme={MuiTheme}>
-			<UpcomingTCGProducts upcomingTCGProducts={{ service: 'skc', events, isFetchingData: false, requestHasError }} />
+			<MemoryRouter>
+				<UpcomingTCGProducts upcomingTCGProducts={{ service: 'skc', events, isFetchingData: false, requestHasError }} />
+			</MemoryRouter>
 		</ThemeProvider>
 	)
 
@@ -47,7 +50,9 @@ describe('UpcomingTCGProducts', () => {
 	it('holds the rail and a release panel with a skeleton while releases load', () => {
 		render(
 			<ThemeProvider theme={MuiTheme}>
-				<UpcomingTCGProducts upcomingTCGProducts={{ service: 'skc', events: [], isFetchingData: true, requestHasError: false }} />
+				<MemoryRouter>
+					<UpcomingTCGProducts upcomingTCGProducts={{ service: 'skc', events: [], isFetchingData: true, requestHasError: false }} />
+				</MemoryRouter>
 			</ThemeProvider>
 		)
 
@@ -80,6 +85,20 @@ describe('UpcomingTCGProducts', () => {
 		expect(screen.getByText('Glorious Victors notes')).toBeInTheDocument()
 		expect(screen.getByRole('button', { name: 'Glorious Victors, Dec 4' })).toHaveAttribute('aria-pressed', 'true')
 		expect(screen.getByRole('button', { name: 'Ultimate Tournament Pack 2, Nov 4' })).toHaveAttribute('aria-pressed', 'false')
+	})
+
+	it('keeps the picked release when the reader comes back to the page', async () => {
+		const events = [event('Ultimate Tournament Pack 2', '2026-11-04T12:00:00Z'), event('Glorious Victors', '2026-12-04T12:00:00Z')]
+		const { unmount } = renderUpcoming(events)
+
+		await screen.findByText('badge Nov 4')
+		fireEvent.click(screen.getByRole('button', { name: 'Glorious Victors, Dec 4' }))
+		unmount()
+
+		// same history entry, so the pick is still there
+		renderUpcoming(events)
+		expect(screen.getByRole('heading', { level: 3, name: 'Glorious Victors' })).toBeInTheDocument()
+		expect(screen.getByRole('button', { name: 'Glorious Victors, Dec 4' })).toHaveAttribute('aria-pressed', 'true')
 	})
 
 	it('steps through releases with the previous and next buttons', async () => {

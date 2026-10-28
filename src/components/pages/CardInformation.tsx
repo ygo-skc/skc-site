@@ -1,7 +1,7 @@
 import '../../css/card/card-information.css'
 import '../../css/util/headline.css'
 
-import { useEffect, lazy, Suspense, useReducer } from 'react'
+import { useEffect, lazy, Suspense } from 'react'
 import { useParams } from 'react-router-dom'
 import { Chip, Skeleton, Typography } from '@mui/material'
 
@@ -15,37 +15,53 @@ import { recordCardView } from '../../helper/RecentlyViewed'
 
 import CalendarMonthTwoToneIcon from '@mui/icons-material/CalendarMonthTwoTone'
 import Breadcrumb from '../header-footer/Breadcrumb'
+import { useHistoryEntryReducer } from '../util/useHistoryEntry'
 
 const CardSuggestions = lazy(() => import('../card/suggestion/CardSuggestions'))
 const CardInformationRelatedContent = lazy(() => import('../card/card-information/CardInformationRelatedContent'))
 
+// the card, its suggestions and support have all answered (or failed), so coming back to it can show it without fetching again
+const isSettled = ({ isFetchingCardData, isFetchingSuggestions, isFetchingSupport }: ReturnType<typeof cardInformationReducer>) =>
+	!isFetchingCardData && !isFetchingSuggestions && !isFetchingSupport
+
 const CardInformation = () => {
-	const [state, cardInformationDispatch] = useReducer(cardInformationReducer, {
-		pageBreadcrumbs: ['Home', 'Card Browse', ''],
-		card: {
-			cardID: useParams<{ cardId: string }>().cardId ?? '',
-			cardName: '',
-			cardColor: undefined,
-			cardEffect: '',
-			cardAttribute: '',
-			monsterType: '',
-			monsterAttack: '',
-			monsterDefense: '',
-			monsterAssociation: undefined,
+	const [state, cardInformationDispatch, isRestored] = useHistoryEntryReducer(
+		'card-information',
+		cardInformationReducer,
+		{
+			pageBreadcrumbs: ['Home', 'Card Browse', ''],
+			card: {
+				cardID: useParams<{ cardId: string }>().cardId ?? '',
+				cardName: '',
+				cardColor: undefined,
+				cardEffect: '',
+				cardAttribute: '',
+				monsterType: '',
+				monsterAttack: '',
+				monsterDefense: '',
+				monsterAssociation: undefined,
+			},
+			productInfo: [],
+			restrictionInfo: { TCG: [], MD: [], DL: [] },
+			isFetchingCardData: true,
+			uniqueRarities: [],
+			suggestions: { namedMaterials: [], namedReferences: [], referencedBy: [], materialFor: [], hasSelfReference: false },
+			archetypes: new Set<string>(),
+			isFetchingSuggestions: true,
+			isFetchingSupport: true,
+			suggestionRequestHasError: false,
+			supportRequestHasError: false,
 		},
-		productInfo: [],
-		restrictionInfo: { TCG: [], MD: [], DL: [] },
-		isFetchingCardData: true,
-		uniqueRarities: [],
-		suggestions: { namedMaterials: [], namedReferences: [], referencedBy: [], materialFor: [], hasSelfReference: false },
-		archetypes: new Set<string>(),
-		isFetchingSuggestions: true,
-		isFetchingSupport: true,
-		suggestionRequestHasError: false,
-		supportRequestHasError: false,
-	})
+		isSettled
+	)
 
 	useEffect(() => {
+		// coming back to the card is viewing it again, so it still goes to the top of the recents
+		if (isRestored) {
+			recordCardView(state.card)
+			return
+		}
+
 		FetchHandler.handleFetch(`${DownstreamServices.SKC_API_ENDPOINTS.cardInstanceUrl}/${state.card.cardID}?allInfo=true`, (cardInfo: YGOCard.Info) => {
 			cardInformationDispatch({
 				type: CardInformationType.UPDATE_CARD,
@@ -85,7 +101,7 @@ const CardInformation = () => {
 				type: CardInformationType.FETCH_SUPPORT_ERROR,
 			})
 		})
-	}, [])
+	}, [isRestored])
 
 	return (
 		<div className='generic-container'>

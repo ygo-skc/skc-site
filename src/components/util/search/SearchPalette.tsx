@@ -16,6 +16,7 @@ import AppRoutes from '../../../helper/AppRoutes'
 import { clearRecentlyViewed, groupRecentlyViewed, readRecentlyViewed, RecentlyViewedItem, RecentProduct } from '../../../helper/RecentlyViewed'
 import useVisualViewport from './useVisualViewport'
 import usePreventPagePan from './usePreventPagePan'
+import CardFrameRing from '../CardFrameRing'
 
 const DESTINATIONS = [
 	{ label: 'Home', to: AppRoutes.Home },
@@ -171,6 +172,25 @@ export default function SearchPalette({ open, onClose }: SearchPaletteProps) {
 
 	const activeOption = options[activeIndex] as Option | undefined
 
+	// set by the arrow keys, so a row picked by the mouse doesn't scroll the list under the pointer
+	const scrollToActive = useRef(false)
+	useEffect(() => {
+		if (!scrollToActive.current) return
+		scrollToActive.current = false
+
+		const list = listRef.current
+		const row = activeOption && !activeOption.destination ? document.getElementById(activeOption.id) : null
+		if (!list || !row) return
+
+		// the first row of a day brings its heading with it. scrolls only the list, so the page itself doesn't jump the way scrollIntoView can
+		const group = row.closest('.search-palette__group')
+		const top = (group?.querySelector('[role=option]') === row ? group : row).getBoundingClientRect().top
+		const { bottom } = row.getBoundingClientRect()
+		const view = list.getBoundingClientRect()
+		if (top < view.top) list.scrollTop -= view.top - top
+		else if (bottom > view.bottom) list.scrollTop += bottom - view.bottom
+	}, [activeOption])
+
 	const choose = useCallback(
 		(option: Option) => {
 			navigate(
@@ -195,6 +215,7 @@ export default function SearchPalette({ open, onClose }: SearchPaletteProps) {
 
 			if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
 				event.preventDefault()
+				scrollToActive.current = true
 				if (event.key === 'ArrowDown') {
 					// down from the shortcut row drops into the list
 					setActiveIndex(onShortcut && hasRows ? jumpCount : wrap(activeIndex + 1))
@@ -247,7 +268,9 @@ export default function SearchPalette({ open, onClose }: SearchPaletteProps) {
 					onClick={() => choose(option)}
 				>
 					{option.card ? (
-						<img className='search-palette__thumb' src={`https://images.thesupremekingscastle.com/cards/tn/${option.card.cardID}.jpg`} alt='' />
+						<CardFrameRing cardColor={option.card.cardColor}>
+							<img className='search-palette__thumb' src={`https://images.thesupremekingscastle.com/cards/tn/${option.card.cardID}.jpg`} alt='' />
+						</CardFrameRing>
 					) : (
 						// rcl's image falls back to a stock cover when a product has none
 						<ProductImage className='search-palette__thumb search-palette__thumb--product' productID={option.product?.id ?? ''} size='tn' />

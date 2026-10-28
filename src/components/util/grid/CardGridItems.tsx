@@ -1,19 +1,17 @@
 import Grid from '@mui/material/Grid'
-import { FC, Fragment, JSX, useEffect, useState } from 'react'
+import { FC, Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import { decodeHTML } from 'entities'
 import { YGOCardWithImage } from 'skc-rcl'
 
-const CardGridItems: FC<{ cards: YGOCard.Deets[] }> = ({ cards }) => {
-	const [cardGridItems, setCardGridItems] = useState<JSX.Element[]>([])
-
-	useEffect(() => {
-		const cardGridItems = cards.map((card) => <CardGridItem key={card.cardID} card={card} />)
-		setCardGridItems(cardGridItems)
-	}, [cards])
-
-	return <Fragment>{cardGridItems}</Fragment>
-}
+// rendered straight from the cards (not built in an effect), so the grid has its full height on the first paint - going back to a page lands where it was left
+const CardGridItems: FC<{ cards: YGOCard.Deets[] }> = ({ cards }) => (
+	<Fragment>
+		{cards.map((card) => (
+			<CardGridItem key={card.cardID} card={card} />
+		))}
+	</Fragment>
+)
 
 const CardGridItem: FC<{ card: YGOCard.Deets }> = ({ card }) => {
 	card.cardEffect = decodeHTML(card.cardEffect)

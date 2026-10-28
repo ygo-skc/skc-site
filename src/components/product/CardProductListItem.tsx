@@ -23,7 +23,7 @@ const CardProductListItem: FC<CardProductListItemProps> = ({ cardID, productID, 
 		>
 			<div style={{ display: 'flex', marginBottom: '1rem' }}>
 				<div style={{ width: '5rem', marginRight: '1rem' }}>
-					<ProductImage size='tn' productID={productID} loading='lazy' />
+					<ProductImage className='card-product-list-item__cover' size='tn' productID={productID} loading='lazy' />
 				</div>
 				<div style={{ flex: '1' }}>
 					<Typography variant='body1'>

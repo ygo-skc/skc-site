@@ -1,0 +1,514 @@
+/* header: a white card like product browse's - the cover beside the title, then one grey tile with the counts and the two spreads */
+.product-info-header {
+	display: flex;
+	flex-direction: column;
+	gap: 28px;
+	margin-bottom: 32px;
+	padding: 32px;
+	border-radius: 28px;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+}
+
+.product-info-header__top {
+	display: flex;
+	flex-wrap: wrap;
+	/* top-aligned so the cover stays put when the archetypes unfold */
+	align-items: flex-start;
+	gap: 24px 36px;
+}
+
+.product-info-header .product-info-header__cover {
+	display: block;
+	flex: 0 0 150px;
+	width: 150px;
+	height: auto;
+	/* holds the cover's place while it loads (a booster pack's shape, the most common), so the page below doesn't move */
+	aspect-ratio: auto 270 / 490;
+	border-radius: 12px;
+}
+
+.product-info-header__cover--skeleton.MuiSkeleton-root {
+	height: auto;
+	aspect-ratio: 270 / 490;
+}
+
+.product-info-header__text {
+	display: flex;
+	flex: 1 1 360px;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 14px;
+	min-width: 0;
+}
+
+.product-info-header__eyebrow-row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+	align-self: stretch;
+}
+
+.product-info-header .product-info-header__eyebrow {
+	margin: 0 auto 0 0;
+	color: var(--accent-text);
+}
+
+.product-info-header__neighbours {
+	display: flex;
+	gap: 6px;
+}
+
+.product-info-header__neighbour.MuiButton-root {
+	padding: 6px 14px;
+	border-radius: 999px;
+	background: var(--capsule-track);
+	color: var(--capsule-text);
+}
+
+.product-info-header__neighbour.MuiButton-root:hover {
+	background: var(--capsule-hover);
+}
+
+.product-info-header__neighbour .MuiButton-startIcon {
+	margin-right: 2px;
+	margin-left: -6px;
+}
+
+.product-info-header__neighbour .MuiButton-endIcon {
+	margin-right: -6px;
+	margin-left: 2px;
+}
+
+.product-info-header .product-info-header__name {
+	margin: 0;
+	overflow-wrap: anywhere;
+}
+
+.product-info-header__chips,
+.product-info-header__archetypes,
+.product-info-header__archetype-list {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 6px;
+}
+
+.product-info-header__chips .MuiChip-root,
+.product-info-header__archetype-list .MuiChip-root {
+	margin: 0;
+}
+
+.product-info-header .product-info-header__chip-label,
+.product-info-header .product-info-header__archetypes-label {
+	color: var(--capsule-muted);
+}
+
+.product-info-header__archetypes {
+	gap: 8px;
+	align-self: stretch;
+	padding-top: 14px;
+	border-top: 1px solid var(--capsule-edge);
+}
+
+.product-info-header .product-info-header__archetypes-label {
+	margin: 0 4px 0 0;
+}
+
+.product-info-header__archetype-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+/* the fold toggle reads as a control - white on the grey chips around it */
+.product-info-header__more.MuiChip-root {
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+}
+
+/* sized by the hidden chip or button inside it */
+.product-info-header__pill-skeleton.MuiSkeleton-root {
+	border-radius: 999px;
+}
+
+/* the grey tile: counts split by hairlines like product browse's totals, then the spreads */
+.product-info-header__stats {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	padding: 22px 24px;
+	border-radius: 20px;
+	background: var(--capsule-track);
+}
+
+.product-info-header__bar--skeleton.MuiSkeleton-root {
+	height: 14px;
+	border-radius: 999px;
+}
+
+.product-info-header__totals {
+	display: flex;
+	flex-wrap: wrap;
+	row-gap: 12px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.product-info-header__totals > li {
+	display: flex;
+	flex-direction: column;
+	padding: 0 22px;
+}
+
+.product-info-header__totals > li:first-child {
+	padding-left: 0;
+}
+
+.product-info-header__totals > li + li {
+	box-shadow: -1px 0 0 var(--capsule-edge);
+}
+
+.product-info-header .product-info-header__total-count {
+	margin: 0;
+}
+
+.product-info-header .product-info-header__total-label,
+.product-info-header .product-info-header__legend-count {
+	color: var(--capsule-muted);
+}
+
+.product-info-header__spreads {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: 24px 32px;
+}
+
+.product-info-header .product-info-header__spread-heading {
+	margin: 0 0 10px;
+}
+
+.product-info-header__bar {
+	display: flex;
+	gap: 2px;
+	height: 14px;
+	overflow: hidden;
+	border-radius: 999px;
+}
+
+/* rcl's frame classes bring padding and radii of their own on some cards - a segment is only its colour */
+.product-info-header__bar .product-info-header__segment {
+	flex-basis: 0;
+	min-width: 4px;
+	padding: 0;
+	border-radius: 0;
+}
+
+.product-info-header__legend {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px 16px;
+	margin: 12px 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.product-info-header__legend > li {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.product-info-header__dot {
+	flex: none;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+}
+
+/* rcl's frame indicator (its colours, untouched) shrunk to a dot */
+.product-info-header__frame {
+	display: inline-flex;
+}
+
+.product-info-header__frame .indicator.small {
+	width: 10px;
+	height: 10px;
+	box-shadow: 0 0 0 1px color-mix(in srgb, var(--capsule-text) 15%, transparent);
+}
+
+/* rarities rarest first: an orange ramp off the secondary - its deep text shade for the chase rarity, down to white for the most common */
+.product-rarity--tier-0 {
+	background: var(--secondary-text);
+}
+
+.product-rarity--tier-1 {
+	background: var(--secondary);
+}
+
+.product-rarity--tier-2 {
+	background: color-mix(in srgb, var(--secondary) 65%, #fff);
+}
+
+.product-rarity--tier-3 {
+	background: color-mix(in srgb, var(--secondary) 40%, #fff);
+}
+
+.product-rarity--tier-4 {
+	background: color-mix(in srgb, var(--secondary) 20%, #fff);
+	box-shadow: inset 0 0 0 1px var(--capsule-edge);
+}
+
+.product-rarity--tier-5 {
+	background: var(--capsule-lens);
+	box-shadow: inset 0 0 0 1px var(--capsule-edge);
+}
+
+/* "In this set" and suggestions: white sheets like the ban list's full list, a toolbar over a hairline */
+.product-contents,
+.product-suggestions {
+	margin-bottom: 32px;
+	border-radius: 28px;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+}
+
+.product-contents__tools,
+.product-suggestions__tools {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	padding: 16px 18px;
+	border-bottom: 1px solid var(--capsule-edge);
+}
+
+.product-contents__tools-row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 10px;
+}
+
+.product-contents .product-contents__title,
+.product-suggestions .product-suggestions__title {
+	margin: 0 8px 0 0;
+	padding-left: 4px;
+}
+
+.product-contents__search.MuiInputBase-root {
+	flex: 1 1 260px;
+	max-width: 440px;
+	gap: 8px;
+	padding: 2px 16px;
+	border-radius: 999px;
+	background: var(--capsule-track);
+	color: var(--capsule-text);
+}
+
+.product-contents__search .MuiSvgIcon-root {
+	font-size: 20px;
+	color: var(--capsule-muted);
+}
+
+.product-contents__search.Mui-focused {
+	box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
+/* mui's placeholder is 42% of the text colour - only ~2.5:1 on the grey field */
+.product-contents__search input::placeholder {
+	color: var(--capsule-muted);
+	opacity: 1;
+}
+
+.product-contents__tools-end {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 10px 14px;
+	margin-left: auto;
+}
+
+/* card browse centres its pills under its field - here they start the row, with the count at its end */
+.product-contents .card-browse-filters {
+	justify-content: flex-start;
+	margin: 0;
+}
+
+.product-contents__pill-skeleton.MuiSkeleton-root {
+	border-radius: 999px;
+}
+
+.product-contents__summary {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 4px 12px;
+}
+
+.product-contents .product-contents__count {
+	margin: 0;
+	color: var(--capsule-muted);
+}
+
+.product-contents__clear.MuiButton-root {
+	padding: 6px 12px;
+	border-radius: 999px;
+	color: var(--accent-text);
+}
+
+.product-contents__body,
+.product-suggestions__body {
+	padding: 14px 18px 18px;
+}
+
+.product-contents .product-contents__empty,
+.product-suggestions .product-suggestions__empty {
+	margin: 12px 4px;
+	color: var(--capsule-muted);
+}
+
+/* card browse's results inside the sheet: the list straight on the white, the preview a near-white panel beside it */
+.product-contents .card-browse-results {
+	margin-bottom: 0;
+}
+
+.product-contents .card-browse-results__list {
+	padding: 0;
+	background: none;
+	box-shadow: none;
+}
+
+.product-contents .card-browse-preview {
+	top: 16px;
+	background: var(--capsule);
+}
+
+.product-contents .card-browse-results__peek {
+	background: var(--capsule);
+}
+
+.product-suggestions__tools {
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 4px 12px;
+}
+
+.product-suggestions .product-suggestions__intro {
+	margin: 0;
+	color: var(--capsule-muted);
+}
+
+.product-suggestions__thumb-skeleton.MuiSkeleton-root {
+	flex: none;
+}
+
+/* What changed's columns (ban-list.css) in a purple tint rather than a status's - its ink and the popup's head follow */
+.product-suggestions__column {
+	--status-ink: var(--accent-text);
+	--status-tint: color-mix(in srgb, var(--accent) 10%, #fff);
+}
+
+/* the columns share their rows (head, list, Show all) through a subgrid, so a rule that wraps doesn't push one list below the others */
+.product-suggestions .ban-list-changes {
+	align-items: stretch;
+}
+
+.product-suggestions .product-suggestions__column {
+	display: grid;
+	grid-row: span 3;
+	grid-template-rows: subgrid;
+	row-gap: 0;
+}
+
+.product-suggestions__column .ban-list-changes__rows {
+	align-self: start;
+}
+
+.product-suggestions__column .ban-list-changes__more.MuiButton-root {
+	align-self: end;
+}
+
+@media (max-width: 599.95px) {
+	.product-info-header {
+		gap: 20px;
+		padding: 20px;
+		border-radius: 24px;
+	}
+
+	.product-info-header .product-info-header__cover {
+		flex-basis: 110px;
+		width: 110px;
+	}
+
+	.product-info-header__stats {
+		padding: 18px;
+	}
+
+	/* a wrapped total would start its row with a hairline - phones lay the counts out in even columns instead */
+	.product-info-header__totals {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 12px;
+	}
+
+	.product-info-header__totals > li {
+		padding: 0;
+	}
+
+	.product-info-header__totals > li + li {
+		box-shadow: none;
+	}
+
+	.product-info-header__spreads {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.product-contents,
+	.product-suggestions {
+		border-radius: 24px;
+	}
+
+	.product-contents__search.MuiInputBase-root {
+		max-width: none;
+	}
+
+	.product-contents__order {
+		display: none;
+	}
+
+	.product-contents__tools-end {
+		justify-content: space-between;
+		width: 100%;
+		margin-left: 0;
+	}
+
+	.product-contents__body,
+	.product-suggestions__body {
+		padding: 12px;
+	}
+
+	/* What changed's phone rows drop the "was" chip under the type; a suggestion's "N links" is short, so the row stays one line
+	   (by the column class, since the "Show all" popup is portaled outside .product-suggestions) */
+	.product-suggestions__column .ban-list-changes__row {
+		display: flex;
+	}
+
+	/* phones swipe one column at a time, so each sizes to its own rows rather than the longest column's */
+	.product-suggestions .ban-list-changes {
+		align-items: start;
+	}
+
+	.product-suggestions .product-suggestions__column {
+		display: flex;
+		grid-row: auto;
+	}
+
+	/* the subgrid's start / end alignments would shrink these sideways in the flex column */
+	.product-suggestions__column .ban-list-changes__rows,
+	.product-suggestions__column .ban-list-changes__more.MuiButton-root {
+		align-self: stretch;
+	}
+}

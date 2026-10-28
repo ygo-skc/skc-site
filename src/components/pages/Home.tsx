@@ -2,7 +2,7 @@ import DatabaseInfo from '../util/DatabaseInfo'
 import UpcomingTCGProducts from '../util/event/UpcomingTCGProducts'
 import Welcome from '../home/Welcome'
 import CardOfTheDay from '../card/CardOfTheDay'
-import { useEffect, useReducer } from 'react'
+import { useEffect } from 'react'
 import Trends from '../util/Trending'
 import FetchHandler from '../../helper/FetchHandler'
 import * as DownstreamServices from '../../helper/DownstreamServices'
@@ -13,42 +13,54 @@ import YouTubeData, { channelIDs, YouTubeChannelID } from '../home/YouTubeData'
 import '../../css/util/headline.css'
 import '../../css/util/welcome.css'
 import Breadcrumb from '../header-footer/Breadcrumb'
+import { useHistoryEntryReducer } from '../util/useHistoryEntry'
+
+// every section has answered (or failed), so coming back to Home can show it without fetching again
+const isSettled = ({ dbStats, cotd, upcomingTCGProducts, skcYTUploads }: ReturnType<typeof homePageReducer>) =>
+	[dbStats, cotd, upcomingTCGProducts, skcYTUploads].every((section) => !section.isFetchingData)
 
 export default function Home() {
-	const [{ dbStats, cotd, upcomingTCGProducts, skcYTUploads }, dispatch] = useReducer(homePageReducer, {
-		dbStats: { cardTotal: 0, productTotal: 0, banListTotal: 0, isFetchingData: true, requestHasError: false },
-		cotd: {
-			date: '',
-			version: 0,
-			card: {
-				cardID: '',
-				cardName: '',
-				cardColor: undefined,
-				cardEffect: '',
-				cardAttribute: '',
-				monsterType: '',
-				monsterAttack: '',
-				monsterDefense: '',
-				monsterAssociation: undefined,
+	const [{ dbStats, cotd, upcomingTCGProducts, skcYTUploads }, dispatch, isRestored] = useHistoryEntryReducer(
+		'home',
+		homePageReducer,
+		{
+			dbStats: { cardTotal: 0, productTotal: 0, banListTotal: 0, isFetchingData: true, requestHasError: false },
+			cotd: {
+				date: '',
+				version: 0,
+				card: {
+					cardID: '',
+					cardName: '',
+					cardColor: undefined,
+					cardEffect: '',
+					cardAttribute: '',
+					monsterType: '',
+					monsterAttack: '',
+					monsterDefense: '',
+					monsterAssociation: undefined,
+				},
+				isFetchingData: true,
+				requestHasError: false,
 			},
-			isFetchingData: true,
-			requestHasError: false,
+			upcomingTCGProducts: {
+				service: '',
+				events: [],
+				isFetchingData: true,
+				requestHasError: false,
+			},
+			skcYTUploads: {
+				videos: [],
+				total: 0,
+				isFetchingData: true,
+				requestHasError: false,
+			},
 		},
-		upcomingTCGProducts: {
-			service: '',
-			events: [],
-			isFetchingData: true,
-			requestHasError: false,
-		},
-		skcYTUploads: {
-			videos: [],
-			total: 0,
-			isFetchingData: true,
-			requestHasError: false,
-		},
-	})
+		isSettled
+	)
 
 	useEffect(() => {
+		if (isRestored) return
+
 		// fetch DB Stats
 		FetchHandler.handleFetch<SKC.DBStats>(DownstreamServices.SKC_API_ENDPOINTS.databaseStats, (json: SKC.DBStats) => {
 			dispatch({ type: HomePageActionType.UPDATE_DB_STATS, dbStats: json })
@@ -86,7 +98,7 @@ export default function Home() {
 		)?.catch(() => {
 			dispatch({ type: HomePageActionType.FETCH_SKC_YOUTUBE_UPLOADS_ERROR })
 		})
-	}, [])
+	}, [isRestored])
 
 	return (
 		<div className='generic-container'>

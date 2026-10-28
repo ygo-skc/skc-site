@@ -1,10 +1,11 @@
-import { useEffect, useState, FunctionComponent, startTransition, Fragment, useCallback, JSX } from 'react'
+import { FunctionComponent, Fragment, useCallback, useMemo } from 'react'
 import { Button, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
 
 import * as Dates from '../../../helper/Dates'
 
 import { AcceptableBanListFormat } from '../../../helper/BanListUtil'
 import { DatedListItem, Hint } from 'skc-rcl'
+import { useHistoryEntryState } from '../../util/useHistoryEntry'
 
 type CardBanListInformationProps = {
 	restrictedIn: YGOCard.Restrictions
@@ -35,25 +36,19 @@ const FORMATS = [AcceptableBanListFormat.TCG, AcceptableBanListFormat.MD, Accept
 
 const CardBanListInformation: FunctionComponent<CardBanListInformationProps> = ({ restrictedIn }) => {
 	const initNumItems = 10
-	const [banListContent, setBanListContent] = useState<JSX.Element[]>([])
-	const [format, setFormat] = useState<AcceptableBanListFormat>(AcceptableBanListFormat.TCG)
-	const [loadAll, setLoadAll] = useState(false)
+	// kept for coming back from another page, and built during render rather than in an effect, so the list is there on the first paint
+	const [pickedFormat, setFormat] = useHistoryEntryState<AcceptableBanListFormat | undefined>('card-ban-list-format', undefined)
+	const [loadedAll, setLoadAll] = useHistoryEntryState('card-ban-list-load-all', false)
+	const format = pickedFormat ?? determineFormat(restrictedIn)
+	const loadAll = loadedAll || restrictedIn[format].length <= initNumItems
 
 	const loadAllCB = useCallback(() => {
 		setLoadAll(true)
-	}, [])
+	}, [setLoadAll])
 
-	useEffect(() => {
-		setFormat(determineFormat(restrictedIn))
-	}, [restrictedIn])
-
-	useEffect(() => {
-		setLoadAll(restrictedIn[format].length <= initNumItems)
-	}, [format])
-
-	useEffect(() => {
-		startTransition(() => {
-			const content: JSX.Element[] = restrictedIn[format].slice(0, loadAll ? restrictedIn[format].length : initNumItems).map((banList: YGOCard.RestrictionStatus) => {
+	const banListContent = useMemo(
+		() =>
+			restrictedIn[format].slice(0, loadAll ? restrictedIn[format].length : initNumItems).map((banList: YGOCard.RestrictionStatus) => {
 				const banListEffectiveDate = Dates.fromYYYYMMDDToDate(banList.banListDate)
 				return (
 					<DatedListItem
@@ -70,11 +65,9 @@ const CardBanListInformation: FunctionComponent<CardBanListInformationProps> = (
 						</div>
 					</DatedListItem>
 				)
-			})
-
-			setBanListContent(content)
-		})
-	}, [format, restrictedIn, loadAll])
+			}),
+		[format, restrictedIn, loadAll]
+	)
 
 	return (
 		<div className='group'>
@@ -90,7 +83,12 @@ const CardBanListInformation: FunctionComponent<CardBanListInformationProps> = (
 						size='small'
 						aria-label='Ban list format'
 						value={format}
-						onChange={(_, value: AcceptableBanListFormat | null) => value && setFormat(value)}
+						onChange={(_, value: AcceptableBanListFormat | null) => {
+							if (!value) return
+							setFormat(value)
+							// another format starts from its first few lists again
+							setLoadAll(false)
+						}}
 					>
 						{FORMATS.map((f) => (
 							<ToggleButton key={f} value={f} disabled={restrictedIn[f].length === 0}>

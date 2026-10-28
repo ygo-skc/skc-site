@@ -1,4 +1,7 @@
 :root {
+	/* round card art in every list row (and its skeleton) - a touch over the 44px the biggest rows had */
+	--card-thumb: 50px;
+
 	/* ban list statuses - apple's system red / orange / green / teal; -ink is a darker shade for text on a status tint (4.5:1 or better) */
 	--forbidden: #ff3b30;
 	--forbidden-ink: #d70015;
@@ -98,6 +101,21 @@ li {
 	overflow: hidden;
 	clip-path: inset(50%);
 	white-space: nowrap;
+}
+
+/* CardFrameRing: a 3px frame-colour ring with a white gap around a card row's round art - doubled class so rcl's frame classes only bring their colour */
+.card-frame-ring.card-frame-ring {
+	display: inline-flex;
+	flex: none;
+	padding: 3px;
+	border-radius: 50%;
+}
+
+.card-frame-ring > * {
+	box-sizing: content-box;
+	padding: 2px;
+	border-radius: 50%;
+	background: var(--capsule-lens);
 }
 
 .search-icon-container {

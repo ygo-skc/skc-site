@@ -1,10 +1,12 @@
-import { FC, KeyboardEvent, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { FC, KeyboardEvent, useCallback, useEffect, useLayoutEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { Button, Skeleton, Typography, useMediaQuery, useTheme } from '@mui/material'
-import { YGOCardColorIndicator, YGOCardPreview, YGOCardWithImage } from 'skc-rcl'
+import { YGOCardPreview, YGOCardWithImage } from 'skc-rcl'
 import { decodeHTML } from 'entities'
 
 import FetchHandler from '../../../helper/FetchHandler'
+import { useHistoryEntryState } from '../useHistoryEntry'
+import CardFrameRing from '../CardFrameRing'
 import * as DownstreamServices from '../../../helper/DownstreamServices'
 import { CardDisplayGridState, CardDisplayGridStateReducerAction, CardDisplayGridStateReducerActionType } from '../../../reducers/CardDisplayGridReducer'
 
@@ -15,7 +17,7 @@ const PLACEHOLDER_EFFECT = ['100%', '100%', '100%', '100%', '100%', '60%']
 export type CardBrowseView = 'list' | 'grid'
 
 // monster type already says normal/effect/etc, so spells and traps fall back to their colour
-const cardSummary = (card: YGOCard.Deets) => {
+export const cardSummary = (card: YGOCard.Deets) => {
 	const association = card.monsterAssociation
 	const tier = association?.level
 		? `Level ${association.level}`
@@ -31,33 +33,43 @@ const cardSummary = (card: YGOCard.Deets) => {
  * browse results as a list of rows with a preview beside it - the picked row is a purple pill and the preview (rcl's YGOCardPreview)
  * sticks beside the list. below md the preview opens inline under the tapped row instead, like the search popup's peek.
  * browse results cut the effect short and carry no ATK / DEF, so the previewed card's full details are fetched (and kept) on demand.
- * the grid view is rcl's card (YGOCardWithImage, as on the ban list), each linking straight to its card page
+ * the grid view is rcl's card (YGOCardWithImage, as on the ban list), each linking straight to its card page.
+ * a page whose cards are already complete (a product's) passes fetchDetails={false}, and rowDetail for its own second line
  */
 const CardBrowseResults: FC<{
 	cardGridState: CardDisplayGridState
 	dispatch: React.Dispatch<CardDisplayGridStateReducerAction>
 	view: CardBrowseView
-}> = ({ cardGridState, dispatch, view }) => {
+	rowDetail?: (card: YGOCard.Deets) => string
+	fetchDetails?: boolean
+}> = ({ cardGridState, dispatch, view, rowDetail = cardSummary, fetchDetails = true }) => {
 	const isPhone = useMediaQuery(useTheme().breakpoints.down('md'), { noSsr: true })
 	const { results, totalResults, totalDisplaying, isLoading } = cardGridState
 	const shown = results.slice(0, totalDisplaying)
 
-	const [selectedId, setSelectedId] = useState<string>()
-	const [peekedId, setPeekedId] = useState<string>()
-	const [details, setDetails] = useState<Record<string, YGOCard.Deets>>({})
+	// kept for coming back from a card page: the picked row, an open peek (it adds height on phones) and the fetched details
+	const [selectedId, setSelectedId, isRestored] = useHistoryEntryState<string | undefined>('card-browse-selected', undefined)
+	const [peekedId, setPeekedId] = useHistoryEntryState<string | undefined>('card-browse-peeked', undefined)
+	const [details, setDetails] = useHistoryEntryState<Record<string, YGOCard.Deets>>('card-browse-details', {})
+	const keepRestoredPicks = useRef(isRestored)
 	const listRef = useRef<HTMLUListElement>(null)
 	// where the tapped row sat on screen, so it can be kept there when a peek above it closes
 	const tappedRow = useRef<{ id: string; top: number }>(undefined)
 
 	// a new set of results previews its first card (desktop) and closes any peek (phones)
+	// - apart from the results a restored page mounts with, whose picks are the ones it left with
 	useEffect(() => {
+		if (keepRestoredPicks.current) {
+			keepRestoredPicks.current = false
+			return
+		}
 		setSelectedId(results[0]?.cardID)
 		setPeekedId(undefined)
-	}, [results])
+	}, [results, setSelectedId, setPeekedId])
 
 	const previewedId = view === 'grid' ? undefined : isPhone ? peekedId : selectedId
 	useEffect(() => {
-		if (previewedId === undefined || details[previewedId] !== undefined) return
+		if (!fetchDetails || previewedId === undefined || details[previewedId] !== undefined) return
 
 		// a short wait so arrowing down the list doesn't fetch every card passed on the way
 		const timer = setTimeout(() => {
@@ -70,7 +82,7 @@ const CardBrowseResults: FC<{
 			})
 		}, 150)
 		return () => clearTimeout(timer)
-	}, [previewedId, details])
+	}, [fetchDetails, previewedId, details, setDetails])
 
 	// closing a peek above the tapped row would pull the row up by the peek's height (off screen on a phone) - scroll it back
 	useLayoutEffect(() => {
@@ -130,7 +142,7 @@ const CardBrowseResults: FC<{
 					<ul>
 						{Array.from({ length: PLACEHOLDER_ROWS }, (_, index) => (
 							<li key={index} className='card-browse-row card-browse-row--loading'>
-								<Skeleton variant='circular' className='card-browse-row__thumb' />
+								<Skeleton variant='circular' className='card-browse-row__thumb card-browse-row__thumb--skeleton' />
 								<span className='card-browse-row__text'>
 									<Typography variant='subtitle2' component='span'>
 										<Skeleton width='70%' />
@@ -139,7 +151,6 @@ const CardBrowseResults: FC<{
 										<Skeleton width='45%' />
 									</Typography>
 								</span>
-								<Skeleton variant='circular' className='card-browse-row__frame-skeleton' />
 							</li>
 						))}
 					</ul>
@@ -210,17 +221,16 @@ const CardBrowseResults: FC<{
 									{...(isPhone ? { 'aria-expanded': isPeeked } : { 'aria-pressed': isSelected, tabIndex: isSelected ? 0 : -1 })}
 									onClick={(event) => (isPhone ? handlePeek(event, card.cardID) : setSelectedId(card.cardID))}
 								>
-									<img className='card-browse-row__thumb' src={`https://images.thesupremekingscastle.com/cards/tn/${card.cardID}.jpg`} alt='' loading='lazy' />
+									<CardFrameRing cardColor={card.cardColor}>
+										<img className='card-browse-row__thumb' src={`https://images.thesupremekingscastle.com/cards/tn/${card.cardID}.jpg`} alt='' loading='lazy' />
+									</CardFrameRing>
 									<span className='card-browse-row__text'>
 										<Typography variant='subtitle2' component='span' className='card-browse-row__name'>
 											{card.cardName}
 										</Typography>
 										<Typography variant='body2' component='span' className='card-browse-row__sub'>
-											{cardSummary(card)}
+											{rowDetail(card)}
 										</Typography>
-									</span>
-									<span className='card-browse-row__frame' aria-hidden='true'>
-										<YGOCardColorIndicator cardColor={card.cardColor} />
 									</span>
 								</button>
 								{isPeeked && (

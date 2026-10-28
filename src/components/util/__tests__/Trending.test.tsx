@@ -9,7 +9,6 @@ import FetchHandler from '../../../helper/FetchHandler'
 jest.mock('skc-rcl', () => ({
 	CardImageRounded: () => null,
 	ProductImage: () => null,
-	YGOCardColorIndicator: ({ cardColor }: { cardColor: string }) => <span data-testid={`indicator-${cardColor}`} />,
 }))
 
 afterEach(() => {
@@ -18,7 +17,7 @@ afterEach(() => {
 
 const cardTrends = {
 	metrics: [
-		{ resource: { cardID: '14558127', cardName: 'Ash Blossom & Joyous Spring', cardEffect: 'Negate the effect.' }, change: 4, occurrences: 2418 },
+		{ resource: { cardID: '14558127', cardName: 'Ash Blossom & Joyous Spring', cardColor: 'Effect', cardEffect: 'Negate the effect.' }, change: 4, occurrences: 2418 },
 		{ resource: { cardID: '23434538', cardName: 'Maxx "C"', cardColor: 'Pendulum-Effect' }, change: -1, occurrences: 1973 },
 		{ resource: { cardID: '27204311', cardName: 'Nibiru, the Primal Being' }, change: 0, occurrences: 1288 },
 	],
@@ -56,7 +55,20 @@ test('verify the top card is spotlighted and also listed as rank 1 for narrow la
 	expect(rows[0]).toHaveClass('trending__row--first')
 	expect(within(rows[0]).getByRole('link')).toHaveAttribute('href', '/card/14558127')
 	expect(within(rows[1]).getByText('Pendulum Effect · 1973 hits')).toBeInTheDocument()
-	expect(within(rows[1]).getByTestId('indicator-Pendulum-Effect')).toBeInTheDocument()
+	// the rows ring their art in the card's frame colour
+	expect(rows[1].querySelector('.card-frame-ring')).toHaveClass('pendulum-effect-ygo-card-style')
+})
+
+test('verify coming back to the page shows the trends and the picked tab without fetching them again', async () => {
+	const { unmount } = renderTrends()
+	fireEvent.click(await screen.findByRole('button', { name: 'Products' }))
+	unmount()
+
+	// same history entry, so both lists and the tab are still there
+	renderTrends()
+	expect(screen.getByRole('button', { name: 'Products' })).toHaveAttribute('aria-pressed', 'true')
+	expect(screen.getByText('Rage of the Abyss', { selector: '.trending__name' })).toBeInTheDocument()
+	expect(FetchHandler.handleFetch).toHaveBeenCalledTimes(2)
 })
 
 test('verify all 10 trends are listed', async () => {

@@ -13,3 +13,10 @@ globalThis.ResizeObserver ??= class {
 	unobserve() {}
 	disconnect() {}
 }
+
+// every test's router starts on the same 'default' history entry, so clear what an earlier test left there
+beforeEach(() => {
+	// required here rather than imported - imports run first, and react-router needs the TextEncoder set above
+	// eslint-disable-next-line @typescript-eslint/no-require-imports
+	require('./components/util/useHistoryEntry').forgetHistoryEntries()
+})

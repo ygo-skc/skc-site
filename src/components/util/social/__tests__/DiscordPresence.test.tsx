@@ -1,5 +1,6 @@
 import { render, screen, waitFor, within } from '@testing-library/react'
 import { ThemeProvider } from '@mui/material/styles'
+import { MemoryRouter } from 'react-router-dom'
 
 import DiscordPresence, { DISCORD_WIDGET, MAX_MEMBERS } from '../DiscordPresence'
 import MuiTheme from '../../../MuiTheme'
@@ -25,7 +26,9 @@ const respondWith = (response: Partial<Response>) => {
 const renderPresence = () =>
 	render(
 		<ThemeProvider theme={MuiTheme}>
-			<DiscordPresence />
+			<MemoryRouter>
+				<DiscordPresence />
+			</MemoryRouter>
 		</ThemeProvider>
 	)
 
@@ -51,6 +54,18 @@ test('each member online with their status in words and what they are playing', 
 	expect(members[0]).toHaveTextContent('GLIZZY PETE, idle RuneLite')
 	expect(members[2]).toHaveTextContent('Tersecrown, online WARDOGS')
 	expect(screen.queryByText(/more online/)).not.toBeInTheDocument()
+})
+
+test('coming back to the page shows the widget without fetching it again', async () => {
+	respondWith({ json: () => Promise.resolve(widget) })
+	const { unmount } = renderPresence()
+	await screen.findByRole('heading', { name: 'Join the Discord' })
+	unmount()
+
+	// same history entry, so the widget is still there on the first render
+	renderPresence()
+	expect(screen.getByRole('heading', { name: 'Join the Discord' })).toBeInTheDocument()
+	expect(global.fetch).toHaveBeenCalledTimes(1)
 })
 
 test('shows a few members and counts the rest', async () => {

@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { ThemeProvider } from '@mui/material/styles'
+import { MemoryRouter } from 'react-router-dom'
 import { ReactNode } from 'react'
 
 import CardBanListInformation from '../CardBanListInformation'
@@ -20,7 +21,9 @@ const restrictedIn = {
 function renderBanLists() {
 	return render(
 		<ThemeProvider theme={MuiTheme}>
-			<CardBanListInformation restrictedIn={restrictedIn} />
+			<MemoryRouter>
+				<CardBanListInformation restrictedIn={restrictedIn} />
+			</MemoryRouter>
 		</ThemeProvider>
 	)
 }
@@ -50,4 +53,36 @@ test('verify a format with no ban lists cannot be picked', () => {
 	renderBanLists()
 
 	expect(screen.getByRole('button', { name: 'Duel Links — 0' })).toBeDisabled()
+})
+
+test('verify coming back keeps the picked format and loaded lists, and another format folds back to its first few', () => {
+	const many = {
+		TCG: Array.from({ length: 12 }, (_, i) => ({ banListDate: `2025-${String(i + 1).padStart(2, '0')}-01`, banStatus: 'Limited' })),
+		MD: Array.from({ length: 12 }, (_, i) => ({ banListDate: `2024-${String(i + 1).padStart(2, '0')}-01`, banStatus: 'Semi-Limited' })),
+		DL: [],
+	} as unknown as YGOCard.Restrictions
+	const renderMany = () =>
+		render(
+			<ThemeProvider theme={MuiTheme}>
+				<MemoryRouter>
+					<CardBanListInformation restrictedIn={many} />
+				</MemoryRouter>
+			</ThemeProvider>
+		)
+
+	const { unmount } = renderMany()
+	fireEvent.click(screen.getByRole('button', { name: 'Master Duel — 12' }))
+	fireEvent.click(screen.getByRole('button', { name: 'Load All' }))
+	expect(screen.getAllByText('Semi-Limited')).toHaveLength(12)
+	unmount()
+
+	// same history entry, so the format and the loaded lists are still there
+	renderMany()
+	expect(screen.getByRole('button', { name: 'Master Duel — 12' })).toHaveAttribute('aria-pressed', 'true')
+	expect(screen.getAllByText('Semi-Limited')).toHaveLength(12)
+	expect(screen.queryByRole('button', { name: 'Load All' })).not.toBeInTheDocument()
+
+	fireEvent.click(screen.getByRole('button', { name: 'TCG — 12' }))
+	expect(screen.getAllByText('Limited')).toHaveLength(10)
+	expect(screen.getByRole('button', { name: 'Load All' })).toBeInTheDocument()
 })
