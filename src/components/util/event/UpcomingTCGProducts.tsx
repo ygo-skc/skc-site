@@ -7,6 +7,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import Markdown from 'react-markdown'
 import * as Dates from '../../../helper/Dates'
+import { useHistoryEntryState } from '../useHistoryEntry'
 
 const GenericNonBreakingErr = lazy(() =>
 	import('skc-rcl').then((module) => {
@@ -72,7 +73,8 @@ const UpcomingSkeleton: FC = () => (
 
 const UpcomingTCGProducts: FC<{ upcomingTCGProducts: APIRequest<HeartAPI.Event> }> = ({ upcomingTCGProducts }) => {
 	const [isSnackbarOpen, setIsSnackbarOpen] = useState<boolean>(false)
-	const [selected, setSelected] = useState(0)
+	// the picked release stays picked when the reader comes back from its product page
+	const [selected, setSelected] = useHistoryEntryState('upcoming-release', 0)
 
 	const releases: Release[] = useMemo(() => {
 		const now = new Date()

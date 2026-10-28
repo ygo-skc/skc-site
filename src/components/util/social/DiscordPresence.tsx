@@ -1,6 +1,7 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect } from 'react'
 import { Avatar, Badge, Button, Skeleton, Typography } from '@mui/material'
 import '../../../css/util/discord-presence.css'
+import { useHistoryEntryState } from '../useHistoryEntry'
 
 // discord's public widget - who's online, and an invite. Read with a plain fetch: FetchHandler adds a CLIENT_ID header discord's CORS doesn't allow
 export const DISCORD_WIDGET = 'https://discord.com/api/guilds/659477868799197185/widget.json'
@@ -47,12 +48,16 @@ const PresenceSkeleton: FC = () => (
 	</div>
 )
 
+const isWidgetSettled = (widget: DiscordWidget | null | undefined) => widget !== undefined
+
 // "Join the Discord" under card of the day - who's on, the public channels and the members online. Hidden if the widget can't be read
 const DiscordPresence: FC = () => {
 	// undefined while loading, null when the widget can't be read
-	const [widget, setWidget] = useState<DiscordWidget | null>()
+	const [widget, setWidget, isRestored] = useHistoryEntryState<DiscordWidget | null | undefined>('discord-widget', undefined, isWidgetSettled)
 
 	useEffect(() => {
+		if (isRestored) return
+
 		const controller = new AbortController()
 
 		fetch(DISCORD_WIDGET, { signal: controller.signal })
@@ -64,7 +69,7 @@ const DiscordPresence: FC = () => {
 			})
 
 		return () => controller.abort()
-	}, [])
+	}, [isRestored, setWidget])
 
 	if (widget === undefined) return <PresenceSkeleton />
 	if (!widget?.instant_invite) return null
