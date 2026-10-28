@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useReducer, useState } from 'react'
+import { ReactNode, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import FetchHandler from '../../helper/FetchHandler'
 import * as DownstreamServices from '../../helper/DownstreamServices'
@@ -6,9 +6,11 @@ import * as Dates from '../../helper/Dates'
 import { TrendActionType, trendsReducer } from '../../reducers/TrendingReducer'
 
 import { Chip, Divider, Skeleton, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
-import { CardImageRounded, ProductImage, YGOCardColorIndicator } from 'skc-rcl'
+import { CardImageRounded, ProductImage } from 'skc-rcl'
 
 import '../../css/util/trending.css'
+import { useHistoryEntryReducer, useHistoryEntryState } from './useHistoryEntry'
+import CardFrameRing from './CardFrameRing'
 
 type TrendKind = 'CARD' | 'PRODUCT'
 
@@ -49,35 +51,44 @@ const TrendChange = ({ change }: { change: number }) => (
 	<Chip size='small' className={`trending__change trending__change--${describeChange(change).direction}`} label={<ChangeText change={change} spaced />} />
 )
 
-// card frame colour dot + type, and the hit count for cards. Products will just get hit count
+// type and hit count for cards. Products will just get hit count
 const TrendMeta = ({ item, showHits = true }: { item: TrendItem; showHits?: boolean }) => {
 	const text = [item.typeLabel, showHits && `${item.occurrences} hits`].filter(Boolean).join(' · ')
 	if (!text) return null
 
 	return (
 		<Typography variant='body2' className='trending__meta'>
-			{item.color && <YGOCardColorIndicator cardColor={item.color} variant='small' />}
 			{text}
 		</Typography>
 	)
 }
 
+// both lists have answered (or failed), so coming back to Home can show them without fetching again
+const isSettled = ({ cardTrendData, productTrendData }: ReturnType<typeof trendsReducer>) => !cardTrendData.isFetchingData && !productTrendData.isFetchingData
+
 const Trends = () => {
-	const [kind, setKind] = useState<TrendKind>('CARD')
-	const [{ cardTrendData, productTrendData }, dispatch] = useReducer(trendsReducer, {
-		cardTrendData: {
-			metrics: [],
-			isFetchingData: true,
-			requestHasError: false,
+	const [kind, setKind] = useHistoryEntryState<TrendKind>('trending-kind', 'CARD')
+	const [{ cardTrendData, productTrendData }, dispatch, isRestored] = useHistoryEntryReducer(
+		'trending',
+		trendsReducer,
+		{
+			cardTrendData: {
+				metrics: [],
+				isFetchingData: true,
+				requestHasError: false,
+			},
+			productTrendData: {
+				metrics: [],
+				isFetchingData: true,
+				requestHasError: false,
+			},
 		},
-		productTrendData: {
-			metrics: [],
-			isFetchingData: true,
-			requestHasError: false,
-		},
-	})
+		isSettled
+	)
 
 	useEffect(() => {
+		if (isRestored) return
+
 		FetchHandler.handleFetch<YGOCard.CardTrendData>(
 			`${DownstreamServices.SKC_SUGGESTION_ENDPOINTS.trending}/CARD`,
 			(trendingData: YGOCard.CardTrendData) => {
@@ -97,7 +108,7 @@ const Trends = () => {
 		)?.catch(() => {
 			dispatch({ type: TrendActionType.FETCH_PRODUCT_TRENDS_ERROR })
 		})
-	}, [])
+	}, [isRestored])
 
 	const isFetchingData = kind === 'CARD' ? cardTrendData.isFetchingData : productTrendData.isFetchingData
 	const items: TrendItem[] =
@@ -195,7 +206,9 @@ const Trends = () => {
 										<Typography variant='subtitle2' component='span' className='trending__rank'>
 											{index + 1}
 										</Typography>
-										<div className='trending__thumb'>{item.image(false)}</div>
+										<CardFrameRing cardColor={item.color}>
+											<div className='trending__thumb'>{item.image(false)}</div>
+										</CardFrameRing>
 										<div className='trending__row-text'>
 											<Typography variant='subtitle2' component='span' className='trending__name'>
 												{item.name}
