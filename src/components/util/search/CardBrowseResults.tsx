@@ -1,10 +1,12 @@
-import { FC, KeyboardEvent, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { FC, KeyboardEvent, useCallback, useEffect, useLayoutEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { Button, Skeleton, Typography, useMediaQuery, useTheme } from '@mui/material'
-import { YGOCardColorIndicator, YGOCardPreview, YGOCardWithImage } from 'skc-rcl'
+import { YGOCardPreview, YGOCardWithImage } from 'skc-rcl'
 import { decodeHTML } from 'entities'
 
 import FetchHandler from '../../../helper/FetchHandler'
+import { useHistoryEntryState } from '../useHistoryEntry'
+import CardFrameRing from '../CardFrameRing'
 import * as DownstreamServices from '../../../helper/DownstreamServices'
 import { CardDisplayGridState, CardDisplayGridStateReducerAction, CardDisplayGridStateReducerActionType } from '../../../reducers/CardDisplayGridReducer'
 
@@ -45,18 +47,25 @@ const CardBrowseResults: FC<{
 	const { results, totalResults, totalDisplaying, isLoading } = cardGridState
 	const shown = results.slice(0, totalDisplaying)
 
-	const [selectedId, setSelectedId] = useState<string>()
-	const [peekedId, setPeekedId] = useState<string>()
-	const [details, setDetails] = useState<Record<string, YGOCard.Deets>>({})
+	// kept for coming back from a card page: the picked row, an open peek (it adds height on phones) and the fetched details
+	const [selectedId, setSelectedId, isRestored] = useHistoryEntryState<string | undefined>('card-browse-selected', undefined)
+	const [peekedId, setPeekedId] = useHistoryEntryState<string | undefined>('card-browse-peeked', undefined)
+	const [details, setDetails] = useHistoryEntryState<Record<string, YGOCard.Deets>>('card-browse-details', {})
+	const keepRestoredPicks = useRef(isRestored)
 	const listRef = useRef<HTMLUListElement>(null)
 	// where the tapped row sat on screen, so it can be kept there when a peek above it closes
 	const tappedRow = useRef<{ id: string; top: number }>(undefined)
 
 	// a new set of results previews its first card (desktop) and closes any peek (phones)
+	// - apart from the results a restored page mounts with, whose picks are the ones it left with
 	useEffect(() => {
+		if (keepRestoredPicks.current) {
+			keepRestoredPicks.current = false
+			return
+		}
 		setSelectedId(results[0]?.cardID)
 		setPeekedId(undefined)
-	}, [results])
+	}, [results, setSelectedId, setPeekedId])
 
 	const previewedId = view === 'grid' ? undefined : isPhone ? peekedId : selectedId
 	useEffect(() => {
@@ -73,7 +82,7 @@ const CardBrowseResults: FC<{
 			})
 		}, 150)
 		return () => clearTimeout(timer)
-	}, [fetchDetails, previewedId, details])
+	}, [fetchDetails, previewedId, details, setDetails])
 
 	// closing a peek above the tapped row would pull the row up by the peek's height (off screen on a phone) - scroll it back
 	useLayoutEffect(() => {
@@ -133,7 +142,7 @@ const CardBrowseResults: FC<{
 					<ul>
 						{Array.from({ length: PLACEHOLDER_ROWS }, (_, index) => (
 							<li key={index} className='card-browse-row card-browse-row--loading'>
-								<Skeleton variant='circular' className='card-browse-row__thumb' />
+								<Skeleton variant='circular' className='card-browse-row__thumb card-browse-row__thumb--skeleton' />
 								<span className='card-browse-row__text'>
 									<Typography variant='subtitle2' component='span'>
 										<Skeleton width='70%' />
@@ -142,7 +151,6 @@ const CardBrowseResults: FC<{
 										<Skeleton width='45%' />
 									</Typography>
 								</span>
-								<Skeleton variant='circular' className='card-browse-row__frame-skeleton' />
 							</li>
 						))}
 					</ul>
@@ -213,7 +221,9 @@ const CardBrowseResults: FC<{
 									{...(isPhone ? { 'aria-expanded': isPeeked } : { 'aria-pressed': isSelected, tabIndex: isSelected ? 0 : -1 })}
 									onClick={(event) => (isPhone ? handlePeek(event, card.cardID) : setSelectedId(card.cardID))}
 								>
-									<img className='card-browse-row__thumb' src={`https://images.thesupremekingscastle.com/cards/tn/${card.cardID}.jpg`} alt='' loading='lazy' />
+									<CardFrameRing cardColor={card.cardColor}>
+										<img className='card-browse-row__thumb' src={`https://images.thesupremekingscastle.com/cards/tn/${card.cardID}.jpg`} alt='' loading='lazy' />
+									</CardFrameRing>
 									<span className='card-browse-row__text'>
 										<Typography variant='subtitle2' component='span' className='card-browse-row__name'>
 											{card.cardName}
@@ -221,9 +231,6 @@ const CardBrowseResults: FC<{
 										<Typography variant='body2' component='span' className='card-browse-row__sub'>
 											{rowDetail(card)}
 										</Typography>
-									</span>
-									<span className='card-browse-row__frame' aria-hidden='true'>
-										<YGOCardColorIndicator cardColor={card.cardColor} />
 									</span>
 								</button>
 								{isPeeked && (

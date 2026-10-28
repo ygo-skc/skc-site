@@ -1,7 +1,7 @@
 import { CancelTokenSource } from 'axios'
-import { act, fireEvent, render, screen, within } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import { ThemeProvider } from '@mui/material/styles'
-import { MemoryRouter } from 'react-router-dom'
+import { MemoryRouter, RouterProvider, createMemoryRouter } from 'react-router-dom'
 
 import CardsBrowse from '../CardsBrowse'
 import MuiTheme from '../../MuiTheme'
@@ -241,6 +241,47 @@ test('switches the results to a grid of rcl cards linking to each card page', as
 	// rcl's grid card, as on the ban list
 	expect(within(list).getAllByTestId('grid-card')).toHaveLength(2)
 	expect(screen.queryByRole('complementary', { name: 'Preview' })).not.toBeInTheDocument()
+})
+
+test('going back from a card shows the page as it was left, without fetching again', async () => {
+	const router = createMemoryRouter(
+		[
+			{ path: '/browse/card', element: <CardsBrowse /> },
+			{ path: '/card/:cardId', element: <p>Card</p> },
+		],
+		{ initialEntries: ['/browse/card'] }
+	)
+	render(
+		<ThemeProvider theme={MuiTheme}>
+			<RouterProvider router={router} />
+		</ThemeProvider>
+	)
+	await screen.findByRole('heading', { level: 1 })
+
+	fireEvent.click(screen.getByRole('button', { name: 'Attribute' }))
+	fireEvent.click(within(screen.getByRole('dialog')).getByRole('button', { name: 'Dark' }))
+	fireEvent.click(within(screen.getByRole('dialog')).getByRole('button', { name: 'Done' }))
+	fireEvent.click(within(screen.getByRole('list', { name: 'Cards' })).getByRole('button', { name: /Dark End Dragon/ }))
+	// the picked card's full details, fetched after a short wait
+	await waitFor(() => expect(screen.getByTestId('preview')).toHaveTextContent('Dark End Dragon: full effect'))
+
+	const goToCardAndBack = async () => {
+		await act(() => router.navigate('/card/88643579'))
+		const fetches = handleFetch.mock.calls.length
+		await act(() => router.navigate(-1))
+		expect(handleFetch).toHaveBeenCalledTimes(fetches)
+	}
+
+	await goToCardAndBack()
+	expect(within(document.querySelector('.card-browse-header') as HTMLElement).getByRole('button', { name: 'Dark' })).toBeInTheDocument()
+	expectCount('2 cards · sorted by name')
+	expect(within(screen.getByRole('list', { name: 'Cards' })).getByRole('button', { name: /Dark End Dragon/ })).toHaveAttribute('aria-pressed', 'true')
+	expect(screen.getByTestId('preview')).toHaveTextContent('Dark End Dragon: full effect')
+
+	fireEvent.click(screen.getByRole('button', { name: 'Grid' }))
+	await goToCardAndBack()
+	expect(screen.getByRole('button', { name: 'Grid' })).toHaveAttribute('aria-pressed', 'true')
+	expect(within(screen.getByRole('list', { name: 'Cards' })).getAllByTestId('grid-card')).toHaveLength(2)
 })
 
 test('shows every card before any filter is picked', async () => {
