@@ -201,8 +201,8 @@
 /* round, like the home page's trending list */
 .search-palette__thumb {
 	flex: none;
-	width: 36px;
-	height: 36px;
+	width: var(--card-thumb);
+	height: var(--card-thumb);
 	border-radius: 50%;
 	object-fit: cover;
 }
@@ -252,6 +252,12 @@
 	gap: 12px;
 	margin: 0 8px;
 	padding: 8px 13px;
+}
+
+/* the size of a card's art in its frame ring (3px ring + 2px gap), so the rows match the results */
+.search-palette__skeleton .search-palette__thumb {
+	width: calc(var(--card-thumb) + 10px);
+	height: calc(var(--card-thumb) + 10px);
 }
 
 .search-palette__skeleton .search-palette__thumb,
@@ -486,11 +492,6 @@
 	margin: 0;
 	padding: 9px 16px;
 	border-bottom: 1px solid var(--palette-line);
-}
-
-.search-palette.MuiDialog-paperFullScreen .search-palette__thumb {
-	width: 44px;
-	height: 44px;
 }
 
 .search-palette .search-palette__peek.MuiIconButton-root {

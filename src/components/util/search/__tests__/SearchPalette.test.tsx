@@ -296,6 +296,34 @@ test('verify the highlighted card is previewed', async () => {
 	expect(input).toHaveAttribute('aria-activedescendant', screen.getByRole('option', { name: 'Dark Magician Girl' }).id)
 })
 
+test('verify the arrow keys scroll the highlighted row into view, bringing its heading at the top of a group', async () => {
+	mockSearch()
+	const { input } = renderPalette()
+	fireEvent.change(input, { target: { value: 'dark magi' } })
+	await screen.findByRole('group', { name: 'Cards' })
+
+	// jsdom has no layout - the list shows 100px, the heading sits above the first row and each row is 60px tall
+	const list = screen.getByRole('listbox', { name: 'Search results' })
+	const group = screen.getByRole('group', { name: 'Cards' })
+	const rows = screen.getAllByRole('option')
+	jest.spyOn(Element.prototype, 'getBoundingClientRect').mockImplementation(function (this: Element) {
+		const index = rows.indexOf(this as HTMLElement)
+		const top = this === list ? 0 : this === group ? 30 - list.scrollTop : index >= 0 ? 60 + index * 60 - list.scrollTop : 0
+		return { top, bottom: this === list ? 100 : top + 60 } as DOMRect
+	})
+
+	fireEvent.keyDown(input, { key: 'ArrowDown' })
+	expect(list.scrollTop).toBe(80)
+
+	// a row picked with the mouse is already under the pointer
+	fireEvent.mouseMove(rows[0])
+	expect(list.scrollTop).toBe(80)
+
+	fireEvent.keyDown(input, { key: 'ArrowDown' })
+	fireEvent.keyDown(input, { key: 'ArrowUp' })
+	expect(list.scrollTop).toBe(30)
+})
+
 test('verify a spell result does not repeat spell as its attribute', async () => {
 	mockSearch([
 		{ cardID: '83764718', cardName: 'Monster Reborn', cardColor: 'Spell', cardAttribute: 'Spell', cardEffect: 'Target 1 monster in either GY; Special Summon it.' },
