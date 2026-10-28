@@ -117,16 +117,6 @@
 	background: var(--page);
 }
 
-.ban-list-header__total::before {
-	content: '';
-	flex: none;
-	align-self: center;
-	width: 10px;
-	height: 10px;
-	border-radius: 50%;
-	background: var(--status);
-}
-
 /* status tiles take What changed's palette - the status tint with its ink for the text */
 .ban-list-header__total[class*='ban-status--'] {
 	background: var(--status-tint);
@@ -138,10 +128,6 @@
 
 .ban-list-header__total--changed {
 	background: color-mix(in srgb, var(--accent) 12%, #fff);
-}
-
-.ban-list-header__total--changed::before {
-	display: none;
 }
 
 .ban-list-header .ban-list-header__total--changed :is(.ban-list-header__count, .ban-list-header__label) {
@@ -327,7 +313,7 @@
 	padding-inline: 4px;
 }
 
-/* one group per new status in its status tint, stretched to the same height - a status dot, title and count, then the rows in a white inset list */
+/* one group per new status in its status tint, stretched to the same height - title and count, then the rows in a white inset list */
 .ban-list-changes {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -357,22 +343,12 @@
 
 .ban-list-changes__head > .MuiTypography-body2 {
 	margin: 0;
-	padding-left: 18px;
 }
 
 .ban-list-changes__title {
 	display: flex;
 	align-items: center;
 	gap: 8px;
-}
-
-.ban-list-changes__title::before {
-	content: '' / '';
-	flex: none;
-	width: 10px;
-	height: 10px;
-	border-radius: 50%;
-	background: var(--status);
 }
 
 /* the title takes the slack so the count (and the popup's close button) sit at the end */
@@ -495,10 +471,6 @@
 	color: inherit;
 }
 
-.ban-list-changes__head--skeleton .ban-list-changes__title::before {
-	display: none;
-}
-
 .ban-list-changes__chip-skeleton.MuiSkeleton-root {
 	border-radius: 999px;
 }
@@ -521,7 +493,7 @@
 }
 
 .ban-list-cards .ban-list-cards__title {
-	margin-right: 8px;
+	margin: 0 8px 0 0;
 	padding-left: 4px;
 }
 
@@ -678,11 +650,11 @@
 /* rcl wraps card art in a padded square with its own margin - size it as a round thumbnail (doubled classes beat rcl's injected css) */
 .ban-list-thumb {
 	flex: none;
-	width: 36px;
+	width: var(--card-thumb);
 }
 
 .ban-list-thumb .rounded-img-outer-container.rounded-img-outer-container {
-	width: 36px;
+	width: var(--card-thumb);
 	margin: 0;
 }
 
@@ -872,7 +844,8 @@
 	max-width: 0;
 }
 
-.ban-list-cards__table .ban-list-cards__name {
+.ban-list-cards__table .ban-list-cards__name,
+.ban-list-cards__table .ban-list-cards__card-text .ban-list-cards__phone-only {
 	max-width: 100%;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -981,7 +954,7 @@
 		row-gap: 4px;
 	}
 
-	.ban-list-changes__row > .ban-list-thumb {
+	.ban-list-changes__row > :is(.ban-list-thumb, .card-frame-ring) {
 		grid-row: span 2;
 		align-self: start;
 	}
@@ -1020,15 +993,15 @@
 		flex: none;
 	}
 
+	/* type, sort and view share the width, wrapping onto a second line when all three don't fit */
 	.ban-list-cards__tools-end {
 		width: 100%;
 		margin-left: 0;
-		flex-wrap: nowrap;
 	}
 
 	.ban-list-cards__kind.MuiInputBase-root,
 	.ban-list-cards__view.MuiToggleButtonGroup-root {
-		flex: 1;
+		flex: 1 1 auto;
 	}
 
 	/* table: type and previous status move under the name and the status chip */

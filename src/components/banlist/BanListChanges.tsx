@@ -3,6 +3,7 @@ import { Button, Chip, Dialog, IconButton, Skeleton, Typography, useMediaQuery, 
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
 import { Link } from 'react-router-dom'
 import { CardImageRounded } from 'skc-rcl'
+import CardFrameRing from '../util/CardFrameRing'
 import { BanStatus, banStatusClass, banStatusRule, cardTypeLabel, toBanStatus } from '../../helper/BanStatus'
 
 export type BanListChangeColumn = {
@@ -54,9 +55,11 @@ const ChangeRows: FC<{ cards: YGOBanList.PreviousBanListStatus[] }> = ({ cards }
 			return (
 				<li key={card.cardID}>
 					<Link to={`/card/${card.cardID}`} className='ban-list-changes__row'>
-						<span className='ban-list-thumb'>
-							<CardImageRounded cardID={card.cardID} size='tn' variant='circle' loading='lazy' />
-						</span>
+						<CardFrameRing cardColor={card.cardColor}>
+							<span className='ban-list-thumb'>
+								<CardImageRounded cardID={card.cardID} size='tn' variant='circle' loading='lazy' />
+							</span>
+						</CardFrameRing>
 						<span className='ban-list-changes__name'>
 							<Typography variant='subtitle2' component='span'>
 								{card.cardName}
@@ -102,7 +105,8 @@ const ChangesSkeleton: FC = () => (
 					{Array.from({ length: NUM_ROWS_COLLAPSED }, (_, row) => (
 						<li key={row}>
 							<div className='ban-list-changes__row'>
-								<Skeleton className='ban-list-thumb' variant='circular' width={36} height={36} />
+								{/* the thumb in its frame ring */}
+								<Skeleton className='ban-list-thumb' variant='circular' width='calc(var(--card-thumb) + 10px)' height='calc(var(--card-thumb) + 10px)' />
 								<span className='ban-list-changes__name'>
 									<Typography variant='subtitle2' component='span'>
 										<Skeleton width='60%' />

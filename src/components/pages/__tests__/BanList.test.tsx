@@ -9,6 +9,7 @@ import FetchHandler from '../../../helper/FetchHandler'
 
 // skc-rcl pulls in esm only chart libraries
 jest.mock('skc-rcl', () => ({
+	YGOCardColorIndicator: () => null,
 	CardImageRounded: () => null,
 	DateBadge: () => null,
 	YGOCardWithImage: () => null,
@@ -80,4 +81,48 @@ test('ignores a list the reader has already moved on from', async () => {
 		})
 	)
 	expect(screen.queryByText('Pot of Greed')).not.toBeInTheDocument()
+})
+
+test('going back from a card shows the list as it was left, without loading it again', async () => {
+	const router = createMemoryRouter(
+		[
+			{ path: '/ban_list/:specifiedFormat', element: <BanList /> },
+			{ path: '/card/:cardId', element: <p>Card page</p> },
+		],
+		{ initialEntries: ['/ban_list/TCG'] }
+	)
+	render(
+		<ThemeProvider theme={MuiTheme}>
+			<RouterProvider router={router} />
+		</ThemeProvider>
+	)
+
+	answerDates('TCG', ['2026-10-19', '2026-09-21'])
+	// the reader picks the older list
+	fireEvent.mouseDown(await screen.findByRole('combobox', { name: 'Ban list date' }))
+	fireEvent.click(screen.getByRole('option', { name: /Sep 21, 2026/ }))
+
+	const answer = (path: string, json: unknown) =>
+		act(() => (requests.find(({ url }) => url.includes(`2026-09-21/${path}`)) as Request).onJsonReceived(json))
+	answer('new', { newForbidden: [], newLimited: [], newSemiLimited: [], numNewForbidden: 0, numNewLimited: 0, numNewSemiLimited: 0 })
+	answer('removed', { removedCards: [], numRemoved: 0 })
+	answer('cards', {
+		forbidden: [{ cardID: '1', cardName: 'Pot of Greed', cardColor: 'Spell', cardEffect: '' }],
+		limited: [],
+		semiLimited: [],
+		numForbidden: 1,
+		numLimited: 0,
+		numSemiLimited: 0,
+	})
+	expect(await screen.findByText('Pot of Greed')).toBeInTheDocument()
+
+	await act(() => router.navigate('/card/1'))
+	const numRequests = requests.length
+	await act(() => router.navigate(-1))
+
+	// back on the same history entry, so ScrollRestoration can find its position
+	expect(router.state.location.key).toBe('default')
+	expect(screen.getByText('Pot of Greed')).toBeInTheDocument()
+	expect(screen.getByRole('combobox', { name: 'Ban list date' })).toHaveTextContent('Sep 21, 2026')
+	expect(requests).toHaveLength(numRequests)
 })
