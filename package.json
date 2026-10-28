@@ -26,9 +26,7 @@
 		"node-forge": "1.4.2",
 		"nth-check": "3.0.1",
 		"socket.io-parser": "4.2.7",
-		"@babel/traverse": "7.29.10",
 		"postcss": "8.5.32",
-		"@babel/core": "7.29.7",
 		"browserslist": "4.29.5",
 		"react-is": "19.3.1",
 		"ws": "8.22.0",
@@ -65,9 +63,10 @@
 		"not op_mini all"
 	],
 	"devDependencies": {
-		"@babel/preset-env": "7.29.7",
-		"@babel/preset-react": "7.29.7",
-		"@babel/preset-typescript": "7.29.7",
+		"@babel/core": "8.0.9",
+		"@babel/preset-env": "8.0.7",
+		"@babel/preset-react": "8.0.1",
+		"@babel/preset-typescript": "8.0.7",
 		"@eslint/eslintrc": "3.3.7",
 		"@eslint/js": "10.0.1",
 		"@stryker-mutator/core": "10.1.1",
@@ -81,6 +80,7 @@
 		"@types/react-dom": "19.3.0",
 		"@typescript-eslint/eslint-plugin": "8.72.1",
 		"@typescript-eslint/parser": "8.72.1",
+		"babel-jest": "30.5.2",
 		"babel-loader": "10.1.1",
 		"copy-webpack-plugin": "14.0.0",
 		"css-loader": "7.1.5",
@@ -105,6 +105,9 @@
 	},
 	"jest": {
 		"testEnvironment": "<rootDir>/config/jest/jsdomWithFetchEnvironment.js",
+		"transform": {
+			"\\.[jt]sx?$": "babel-jest"
+		},
 		"setupFilesAfterEnv": [
 			"<rootDir>/src/setupTests.ts"
 		],
