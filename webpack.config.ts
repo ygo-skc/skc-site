@@ -52,7 +52,7 @@ function config(env: any, argv: { mode?: string }) {
 			rules: [
 				{
 					test: /\.(js|jsx|ts|tsx)$/,
-					use: 'babel-loader',
+					use: { loader: 'babel-loader', options: { envName: argv.mode } },
 					exclude: /node_modules/,
 				},
 				{
