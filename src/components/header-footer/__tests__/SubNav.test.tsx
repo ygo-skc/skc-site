@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, screen } from '@testing-library/react'
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { ThemeProvider } from '@mui/material/styles'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { ReactNode } from 'react'
@@ -30,6 +30,7 @@ function renderWithProviders(ui: ReactNode, initialPath = '/') {
 					<Route path={AppRoutes.CardBrowse} element={<div data-testid='route-probe'>{AppRoutes.CardBrowse}</div>} />
 					<Route path={AppRoutes.ProductBrowse} element={<div data-testid='route-probe'>{AppRoutes.ProductBrowse}</div>} />
 					<Route path={AppRoutes.About} element={<div data-testid='route-probe'>{AppRoutes.About}</div>} />
+					<Route path={AppRoutes.TierList} element={<div data-testid='route-probe'>{AppRoutes.TierList}</div>} />
 				</Routes>
 			</MemoryRouter>
 		</ThemeProvider>
@@ -120,4 +121,52 @@ test('verify sub nav scrolls an out of view current link to the middle of its tr
 	expect(scrollTo).not.toHaveBeenCalled()
 
 	jest.restoreAllMocks()
+})
+
+test('verify sub nav lists Utilities between Product Browse and About', () => {
+	renderWithProviders(<SubNav />)
+	const items = screen.getByRole('navigation', { name: 'Main' }).querySelectorAll('a, button')
+
+	expect(Array.from(items, (item) => item.textContent)).toEqual(['Home', 'Ban List', 'Card Browse', 'Product Browse', 'Utilities', 'About'])
+})
+
+test('verify Utilities opens a menu with Tier List', async () => {
+	renderWithProviders(<SubNav />)
+	const utilities = screen.getByRole('button', { name: 'Utilities' })
+	expect(utilities).toHaveAttribute('aria-haspopup', 'menu')
+
+	fireEvent.click(utilities)
+	const tierList = await screen.findByRole('menuitem', { name: 'Tier List' })
+	expect(tierList).toHaveAttribute('href', AppRoutes.TierList)
+
+	fireEvent.click(tierList)
+	expect(screen.getByTestId('route-probe').textContent).toBe(AppRoutes.TierList)
+	await waitFor(() => expect(screen.queryByRole('menu')).not.toBeInTheDocument())
+})
+
+test('verify Utilities menu lists Pull Cost', async () => {
+	renderWithProviders(<SubNav />)
+	fireEvent.click(screen.getByRole('button', { name: 'Utilities' }))
+
+	expect(await screen.findByRole('menuitem', { name: 'Pull Cost' })).toHaveAttribute('href', AppRoutes.PullCost)
+})
+
+test('verify Utilities menu marks the current page', async () => {
+	renderWithProviders(<SubNav />, AppRoutes.PullCost)
+	fireEvent.click(screen.getByRole('button', { name: 'Utilities' }))
+
+	expect(await screen.findByRole('menuitem', { name: 'Pull Cost' })).toHaveAttribute('aria-current', 'page')
+	expect(screen.getByRole('menuitem', { name: 'Tier List' })).not.toHaveAttribute('aria-current')
+})
+
+test('verify Utilities is current on a utility page', () => {
+	renderWithProviders(<SubNav />, AppRoutes.TierList)
+
+	expect(screen.getByRole('button', { name: 'Utilities' })).toHaveAttribute('aria-current', 'page')
+	expect(screen.getAllByRole('link').filter((link) => link.hasAttribute('aria-current'))).toHaveLength(0)
+	expect(screen.getByRole('navigation', { name: 'Main' })).toHaveAttribute('data-lens')
+	cleanup()
+
+	renderWithProviders(<SubNav />, AppRoutes.About)
+	expect(screen.getByRole('button', { name: 'Utilities' })).not.toHaveAttribute('aria-current')
 })

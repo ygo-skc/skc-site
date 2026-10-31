@@ -13,6 +13,8 @@ jest.mock('../ProductInformation', () => ({ __esModule: true, default: () => <di
 jest.mock('../CardsBrowse', () => ({ __esModule: true, default: () => <div>cards browse screen</div> }))
 jest.mock('../CardInformation', () => ({ __esModule: true, default: () => <div>card information screen</div> }))
 jest.mock('../About', () => ({ __esModule: true, default: () => <div>about screen</div> }))
+jest.mock('../TierList', () => ({ __esModule: true, default: () => <div>tier list screen</div> }))
+jest.mock('../PullCost', () => ({ __esModule: true, default: () => <div>pull cost screen</div> }))
 jest.mock('../Privacy', () => ({ __esModule: true, default: () => <div>privacy screen</div> }))
 jest.mock('../HttpErr', () => ({ __esModule: true, default: () => <div>http err screen</div> }))
 
@@ -51,6 +53,8 @@ test('verify each app path resolves to its screen', async () => {
 	await expectScreenAt('/product/LOB', 'product information screen')
 	await expectScreenAt(AppRoutes.About, 'about screen')
 	await expectScreenAt(AppRoutes.Privacy, 'privacy screen')
+	await expectScreenAt(AppRoutes.TierList, 'tier list screen')
+	await expectScreenAt(AppRoutes.PullCost, 'pull cost screen')
 })
 
 test('verify err paths and unknown paths resolve to the err screen', async () => {

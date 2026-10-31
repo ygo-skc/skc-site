@@ -7,6 +7,8 @@ enum AppRoutes {
 	CardBrowse = '/browse/card',
 	ProductBrowse = '/browse/product',
 	ProductInformation = '/product/:productId',
+	TierList = '/tools/tier-list',
+	PullCost = '/tools/pull-cost',
 
 	BadRequest = '/bad-request', // 400
 	RequestTimeout = '/request-timeout', // 408

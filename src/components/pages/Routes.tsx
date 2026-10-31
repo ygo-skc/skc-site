@@ -15,6 +15,9 @@ const ProductInformation = lazy(() => import('./ProductInformation'))
 const Browse = lazy(() => import('./CardsBrowse'))
 const CardInformation = lazy(() => import('./CardInformation'))
 
+const TierList = lazy(() => import('./TierList'))
+const PullCost = lazy(() => import('./PullCost'))
+
 const About = lazy(() => import('./About'))
 const Privacy = lazy(() => import('./Privacy'))
 const HttpErr = lazy(() => import('./HttpErr'))
@@ -58,6 +61,9 @@ const routes: RouteObject[] = [
 			},
 
 			{ path: AppRoutes.ProductInformation, element: <KeyedProductInformation /> },
+
+			{ path: AppRoutes.TierList, element: <TierList /> },
+			{ path: AppRoutes.PullCost, element: <PullCost /> },
 
 			{ path: AppRoutes.About, element: <About /> },
 			{ path: AppRoutes.Privacy, element: <Privacy /> },
