@@ -11,6 +11,9 @@
 	--semi-limited-ink: #1e7a36;
 	--limited-three: #30b0c7;
 	--limited-three-ink: #007180;
+	/* the rest of apple's system colours the tier list's rainbow needs (red, orange and green are the statuses above, purple is --accent) */
+	--system-yellow: #ffcc00;
+	--system-blue: #007aff;
 	/* apple-style neutrals - the page is apple.com's light grey, so the near-white capsules and panels stand off it */
 	--page: #f5f5f7;
 	--capsule: #fbfbfd;

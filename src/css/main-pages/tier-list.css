@@ -1,0 +1,881 @@
+/* tier list - the search column (a capsule sheet) beside the board (a white sheet of tier rows) */
+.tier-list {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	gap: 20px;
+	margin-bottom: 40px;
+}
+
+.tier-list__side {
+	position: sticky;
+	top: 16px;
+	/* a set width - long names cut off with an ellipsis instead of widening the column */
+	flex: 0 0 340px;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	padding: 20px;
+	border-radius: 24px;
+	background: var(--capsule);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+}
+
+/* the name field, with Start over beside it */
+.tier-list__heading {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.tier-list__heading .tier-list__name-field {
+	flex: 1;
+	min-width: 0;
+}
+
+.tier-list__heading .tier-list__start-over.MuiButton-root {
+	flex: none;
+	align-self: center;
+	gap: 0;
+	padding: 6px 14px 6px 12px;
+	border-radius: 999px;
+	/* a destructive action - red text and icon on a light red tint, like apple's bordered destructive buttons */
+	background: color-mix(in srgb, var(--forbidden) 8%, #fff);
+	color: var(--forbidden-ink);
+	transition: none;
+}
+
+.tier-list__heading .tier-list__start-over.MuiButton-root:hover {
+	/* no darker - the red text needs 4.5:1 on it */
+	background: color-mix(in srgb, var(--forbidden) 12%, #fff);
+}
+
+.tier-list__heading .tier-list__start-over .MuiButton-startIcon {
+	margin: 0 4px 0 0;
+}
+
+.tier-list__heading .tier-list__start-over .MuiSvgIcon-root {
+	font-size: 18px;
+}
+
+/* the side column is too narrow to share a row with the name - Start over goes right under it, above the search */
+.tier-list__side .tier-list__heading {
+	flex-wrap: wrap;
+}
+
+.tier-list__side .tier-list__heading .tier-list__name-field {
+	flex-basis: 100%;
+}
+
+/* the name - a white field with a muted label over the value and a pencil at the end; the hairline turns into a purple ring while typing */
+.tier-list__name-field {
+	display: flex;
+	flex-direction: column;
+	padding: 8px 14px 6px;
+	border-radius: 14px;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+	cursor: text;
+}
+
+.tier-list__name-field:hover {
+	box-shadow: 0 0 0 1px var(--capsule-muted);
+}
+
+.tier-list__name-field:focus-within {
+	box-shadow: 0 0 0 2px var(--accent);
+}
+
+.tier-list .tier-list__name-label {
+	color: var(--capsule-muted);
+	cursor: text;
+}
+
+.tier-list__name-row {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.tier-list .tier-list__name-text {
+	flex: 1;
+	min-width: 0;
+	margin: 0;
+}
+
+/* the Typography around it sets its variant */
+.tier-list__name.MuiInputBase-root {
+	font: inherit;
+	color: var(--capsule-text);
+}
+
+.tier-list__name .MuiInputBase-input {
+	padding: 0;
+	text-overflow: ellipsis;
+}
+
+.tier-list__name .MuiInputBase-input::placeholder {
+	color: var(--capsule-muted);
+	opacity: 1;
+}
+
+/* the pencil is only a hint - clicks go through to the field */
+.tier-list__name-row .tier-list__name-icon {
+	flex: none;
+	font-size: 20px;
+	color: var(--capsule-muted);
+	pointer-events: none;
+}
+
+.tier-list__name-field:focus-within .tier-list__name-icon {
+	color: var(--accent-text);
+}
+
+.tier-list-tray .tier-list-tray__hint {
+	color: var(--capsule-muted);
+}
+
+.start-over-dialog .start-over-dialog__cancel {
+	align-self: flex-start;
+	padding: 8px 18px;
+	border-radius: 999px;
+	background: var(--capsule-track);
+	color: var(--capsule-text);
+}
+
+.start-over-dialog .start-over-dialog__cancel:hover {
+	background: var(--capsule-hover);
+}
+
+/* h5 is muted in the theme - the question is the dialog's main line */
+.start-over-dialog .MuiDialogTitle-root {
+	color: var(--capsule-text);
+}
+
+/* red like the Start over pill and the picker's Remove - the ink shade, since white on --forbidden falls short of 4.5:1 */
+.start-over-dialog .start-over-dialog__confirm {
+	border-radius: 999px;
+	padding: 8px 18px;
+	background: var(--forbidden-ink);
+	color: var(--on-accent);
+	box-shadow: none;
+}
+
+.start-over-dialog .start-over-dialog__confirm:hover {
+	background: color-mix(in srgb, var(--forbidden-ink) 85%, #000);
+	box-shadow: none;
+}
+
+.start-over-dialog .MuiPaper-root {
+	border-radius: 24px;
+}
+
+/* search - a grey pill over a white grouped list of results; the highlighted one is a solid purple pill */
+.tier-list-search {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.tier-list-search__field {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 6px 14px 6px 12px;
+	border-radius: 999px;
+	background: var(--capsule-track);
+}
+
+.tier-list-search__field:focus-within {
+	outline: 2px solid var(--accent);
+}
+
+.tier-list-search__field .MuiSvgIcon-root {
+	font-size: 20px;
+	color: var(--capsule-muted);
+}
+
+/* the clear button - a small round hit area that tucks into the field's padding, so the field keeps its height */
+.tier-list-search__field .tier-list-search__clear.MuiIconButton-root {
+	margin: -4px -8px -4px 0;
+	padding: 4px;
+	color: var(--capsule-muted);
+	transition: none;
+}
+
+.tier-list-search__field .tier-list-search__clear:hover {
+	background: var(--capsule-hover);
+}
+
+.tier-list-search__input {
+	flex: 1;
+	min-width: 0;
+}
+
+.tier-list-search__field .MuiInputBase-root {
+	font: inherit;
+	color: var(--capsule-text);
+}
+
+/* mui's placeholder is 42% of the text colour - only ~2.5:1 on the grey field */
+.tier-list-search__field input::placeholder {
+	color: var(--capsule-muted);
+	opacity: 1;
+}
+
+/* the results' popup - a white sheet with one soft lift, like the site's other floating menus; long lists scroll inside it */
+.tier-list-search__popup {
+	z-index: 1300;
+	max-height: min(420px, 60vh);
+	overflow-y: auto;
+	border-radius: 16px;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 1px var(--capsule-edge), 0 12px 32px rgb(0 0 0 / 12%);
+}
+
+.tier-list-search .tier-list-search__note {
+	padding: 12px 16px;
+	color: var(--capsule-muted);
+}
+
+.tier-list-search__results {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	margin: 0;
+	padding: 6px;
+	list-style: none;
+}
+
+.tier-list-search__results[hidden] {
+	display: none;
+}
+
+.tier-list-search__option {
+	display: flex;
+	align-items: flex-start;
+	gap: 12px;
+	padding: 8px 10px;
+	border-radius: 12px;
+	color: var(--capsule-text);
+	cursor: pointer;
+}
+
+.tier-list-search__option[aria-disabled='true'] {
+	cursor: default;
+}
+
+.tier-list-search__option[aria-selected='true'] {
+	background: var(--accent-text);
+	color: var(--on-accent);
+}
+
+.tier-list-search__thumb,
+.tier-list-tray__thumb {
+	display: block;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	object-fit: cover;
+	background: var(--capsule-track);
+}
+
+.tier-list-search__text {
+	flex: 1;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+}
+
+.tier-list-search__option .MuiTypography-root {
+	color: inherit;
+}
+
+.tier-list-search .tier-list-search__add .MuiTypography-root {
+	/* the theme's em margin under subtitle2 would sit inside the pill */
+	margin: 0;
+	color: inherit;
+}
+
+.tier-list-search__name mark {
+	background: none;
+	color: var(--accent-text);
+}
+
+/* the card's place - a flat grey tag with a tick, no fill change on hover, so it never reads as the purple Add */
+.tier-list-search .tier-list-search__status.MuiChip-root {
+	align-self: flex-start;
+	margin-top: 6px;
+	height: auto;
+	padding: 1px 0;
+	background: transparent;
+	box-shadow: inset 0 0 0 1px var(--capsule-edge);
+	color: var(--capsule-muted);
+	cursor: default;
+	transition: none;
+}
+
+.tier-list-search .tier-list-search__status .MuiChip-icon {
+	font-size: 16px;
+	color: inherit;
+}
+
+.tier-list-search__option[aria-selected='true'] .tier-list-search__status.MuiChip-root {
+	box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--on-accent) 60%, transparent);
+	color: var(--on-accent);
+}
+
+/* one line of name, then Add as a small purple pill */
+.tier-list-search__name.MuiTypography-root {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.tier-list-search .tier-list-search__add {
+	align-self: flex-start;
+	margin-top: 6px;
+	min-width: 0;
+	min-height: 0;
+	padding: 1px 12px;
+	border-radius: 999px;
+	background: var(--accent-text);
+	color: var(--on-accent);
+	/* mui eases its colours over 250ms - the pill flips with its row's highlight, which is instant */
+	transition: none;
+}
+
+.tier-list-search .tier-list-search__add:hover {
+	background: color-mix(in srgb, var(--accent-text) 85%, #000);
+}
+
+.tier-list-search__option[aria-selected='true'] .tier-list-search__add.MuiButton-root {
+	background: var(--on-accent);
+	color: var(--accent-text);
+}
+
+.tier-list-search__option[aria-selected='true'] mark {
+	color: var(--on-accent);
+}
+
+/* tray - white rows under a heading with the unranked count */
+.tier-list-tray {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	padding-top: 14px;
+	border-top: 1px solid var(--capsule-edge);
+}
+
+/* All / Monster / Spell / Trap - a segmented control like the tier picker's */
+.tier-list-tray__filter.MuiToggleButtonGroup-root {
+	gap: 2px;
+	padding: 3px;
+	border-radius: 999px;
+	background: var(--capsule-track);
+}
+
+.tier-list-tray__filter .tier-list-tray__filter-option.MuiToggleButton-root {
+	min-height: 32px;
+	padding: 0 8px;
+	border: 0;
+	border-radius: 999px;
+	color: var(--capsule-text);
+	transition: none;
+}
+
+.tier-list-tray__filter .tier-list-tray__filter-option.Mui-selected,
+.tier-list-tray__filter .tier-list-tray__filter-option.Mui-selected:hover {
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+	color: var(--capsule-text);
+}
+
+.tier-list-tray__head {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+}
+
+.tier-list .tier-list-tray__count,
+.tier-list .tier-list-tray__empty {
+	color: var(--capsule-muted);
+}
+
+/* a filter with nothing to show - a white tile the shape of a tray row, with a way back to every card */
+.tier-list-tray__none {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 4px;
+	padding: 20px 16px;
+	border-radius: 14px;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+	text-align: center;
+}
+
+.tier-list-tray__none .tier-list-tray__none-title {
+	margin: 0;
+	color: var(--capsule-text);
+}
+
+.tier-list-tray__none .tier-list-tray__none-text {
+	margin: 0;
+	color: var(--capsule-muted);
+}
+
+.tier-list-tray__none .tier-list-tray__show-all {
+	margin-top: 10px;
+	padding: 6px 14px;
+	border-radius: 999px;
+	background: var(--capsule-track);
+	color: var(--capsule-text);
+}
+
+.tier-list-tray__none .tier-list-tray__show-all:hover {
+	background: var(--capsule-hover);
+}
+
+.tier-list-tray__cards {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.tier-list-tray__card {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	padding: 6px 6px 6px 4px;
+	border-radius: 14px;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+}
+
+.tier-list-tray__handle.MuiSvgIcon-root {
+	font-size: 18px;
+	color: var(--capsule-muted);
+}
+
+.tier-list-tray__pick.MuiButtonBase-root {
+	flex: 1;
+	min-width: 0;
+	justify-content: flex-start;
+	gap: 12px;
+	padding: 4px 6px;
+	border-radius: 10px;
+	text-align: start;
+	color: var(--capsule-text);
+}
+
+.tier-list-tray__pick[aria-pressed='true'] {
+	box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.tier-list-tray__name.MuiTypography-root {
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+/* picker - the card's name, then S to F as a segmented control, then grey pills */
+.tier-picker {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	padding: 14px;
+	border-radius: 18px;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+}
+
+.tier-picker .tier-picker__label {
+	color: var(--capsule-muted);
+}
+
+.tier-picker .tier-picker__name {
+	color: var(--capsule-text);
+}
+
+.tier-picker__tiers.MuiToggleButtonGroup-root {
+	gap: 2px;
+	padding: 3px;
+	border-radius: 999px;
+	background: var(--capsule-track);
+}
+
+/* small pills - the pressed tier takes its row's tint, hovering one shows a faint wash of it */
+.tier-picker__tiers .tier-picker__tier.MuiToggleButton-root {
+	min-height: 32px;
+	padding: 0;
+	border: 0;
+	border-radius: 999px;
+	color: var(--capsule-text);
+	transition: none;
+}
+
+.tier-picker__tiers .tier-picker__tier.MuiToggleButton-root:hover {
+	background: color-mix(in srgb, var(--tier) 45%, transparent);
+}
+
+.tier-picker__tiers .tier-picker__tier.Mui-selected,
+.tier-picker__tiers .tier-picker__tier.Mui-selected:hover {
+	background: var(--tier);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+	color: var(--capsule-text);
+}
+
+.tier-picker .tier-picker__letter {
+	margin: 0;
+	color: inherit;
+}
+
+.tier-picker__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.tier-picker .tier-picker__action.tier-picker__action--remove {
+	color: var(--forbidden-ink);
+}
+
+.tier-picker .tier-picker__action {
+	min-height: 0;
+	padding: 4px 12px;
+	border-radius: 999px;
+	background: var(--capsule-track);
+	color: var(--capsule-text);
+}
+
+/* the picker as a tooltip over the picked card, one soft lift like the site's other floating menus, with an arrow pointing at the card */
+.tier-picker-tooltip {
+	z-index: 1300;
+	width: 280px;
+}
+
+.tier-picker-tooltip .tier-picker {
+	/* over the arrow, which tucks under the sheet's edge so only its point shows */
+	position: relative;
+	gap: 8px;
+	padding: 12px;
+	box-shadow: 0 0 0 1px var(--capsule-edge), 0 8px 24px rgb(0 0 0 / 0.14);
+}
+
+.tier-picker-tooltip__arrow {
+	position: absolute;
+	width: 16px;
+	height: 16px;
+}
+
+.tier-picker-tooltip[data-popper-placement^='top'] .tier-picker-tooltip__arrow {
+	bottom: -7px;
+}
+
+.tier-picker-tooltip[data-popper-placement^='bottom'] .tier-picker-tooltip__arrow {
+	top: -7px;
+}
+
+.tier-picker-tooltip__arrow::before {
+	content: '';
+	display: block;
+	width: 100%;
+	height: 100%;
+	transform: rotate(45deg);
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+}
+
+/* board - a white sheet of tier rows split by hairlines, each with its letter block in a light tint of an apple system colour, red (S) round to purple (F), near-black letters */
+.tier-list__board {
+	position: relative;
+	flex: 999 1 560px;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+}
+
+/* expand / collapse - a white round button in the board's top right corner; the first row's cards keep clear of it */
+.tier-list__board .tier-list__expand.MuiIconButton-root {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	width: 40px;
+	height: 40px;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+	color: var(--capsule-text);
+	transition: none;
+}
+
+.tier-list__board .tier-list__expand.MuiIconButton-root:hover {
+	background: var(--capsule-hover);
+}
+
+.tier-list__board .tier-list__expand .MuiSvgIcon-root {
+	font-size: 20px;
+}
+
+.tier-list__board .tier-row:first-child .tier-row__cards,
+.tier-list__board .tier-row:first-child .tier-row__empty {
+	padding-right: 64px;
+}
+
+/* phones - a smaller button, so the first row still fits three tiles */
+.tier-list--phone .tier-list__board .tier-list__expand.MuiIconButton-root {
+	top: 10px;
+	right: 10px;
+	width: 36px;
+	height: 36px;
+}
+
+.tier-list--phone .tier-list__board .tier-row:first-child .tier-row__cards,
+.tier-list--phone .tier-list__board .tier-row:first-child .tier-row__empty {
+	padding-right: 52px;
+}
+
+.tier-board {
+	flex: 1;
+	min-width: 0;
+	overflow: hidden;
+	border-radius: 24px;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+}
+
+.tier-row--S,
+.tier-picker__tier--S {
+	--tier: color-mix(in srgb, var(--forbidden) 55%, #fff);
+}
+.tier-row--A,
+.tier-picker__tier--A {
+	--tier: color-mix(in srgb, var(--limited) 50%, #fff);
+}
+.tier-row--B,
+.tier-picker__tier--B {
+	--tier: color-mix(in srgb, var(--system-yellow) 50%, #fff);
+}
+.tier-row--C,
+.tier-picker__tier--C {
+	--tier: color-mix(in srgb, var(--semi-limited) 50%, #fff);
+}
+.tier-row--D,
+.tier-picker__tier--D {
+	--tier: color-mix(in srgb, var(--system-blue) 45%, #fff);
+}
+.tier-row--F,
+.tier-picker__tier--F {
+	--tier: color-mix(in srgb, var(--accent) 50%, #fff);
+}
+
+.tier-row {
+	display: flex;
+	min-height: 140px;
+}
+
+.tier-row + .tier-row {
+	border-top: 1px solid var(--capsule-edge);
+}
+
+.tier-row .tier-row__letter {
+	flex: 0 0 96px;
+	/* the theme gives headings em margins - the block fills its row */
+	margin: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: var(--tier);
+	color: var(--capsule-text);
+}
+
+.tier-board .tier-row__empty {
+	align-self: center;
+	padding: 0 20px;
+	color: var(--capsule-muted);
+}
+
+.tier-row__cards {
+	flex: 1;
+	min-width: 0;
+	display: grid;
+	/* square art tiles - a tier holds six or so a row on desktop */
+	grid-template-columns: repeat(auto-fill, var(--tier-tile, 112px));
+	gap: 12px;
+	margin: 0;
+	padding: 18px;
+	list-style: none;
+}
+
+.tier-row__card {
+	display: flex;
+	flex-direction: column;
+}
+
+.tier-row__pick.MuiButtonBase-root {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	text-align: start;
+	/* rcl's art corners */
+	border-radius: 1.25rem;
+	font: inherit;
+}
+
+.tier-row__pick[aria-pressed='true'] {
+	outline: 3px solid var(--accent);
+	outline-offset: 2px;
+}
+
+.tier-row__pick:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 2px;
+}
+
+/* dragging - the card stays behind faded while a lifted copy follows the pointer, and the place under it gets a purple ring */
+.tier-row__card--dragging,
+.tier-list-tray__card--dragging {
+	opacity: 0.4;
+}
+
+.tier-row__card,
+.tier-list-tray__card {
+	touch-action: manipulation;
+}
+
+.tier-list__dragged {
+	border-radius: 1.25rem;
+	box-shadow: 0 14px 30px rgb(0 0 0 / 18%);
+	cursor: grabbing;
+}
+
+.tier-row.tier-row--over {
+	background: color-mix(in srgb, var(--accent) 6%, #fff);
+	box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.tier-list-tray--over .tier-list-tray__cards,
+.tier-list-tray--over .tier-list-tray__none,
+.tier-list-tray--over .tier-list-tray__empty {
+	border-radius: 14px;
+	box-shadow: 0 0 0 2px var(--accent);
+}
+
+/* phones - the name and Start over, the tiers with smaller art tiles, then a capsule sheet held at the bottom with the search and tray */
+.tier-list--phone {
+	flex-direction: column;
+	flex-wrap: nowrap;
+	align-items: stretch;
+	gap: 14px;
+}
+
+.tier-list__phone-head {
+	display: flex;
+	align-items: flex-end;
+	gap: 12px;
+}
+
+.tier-list__phone-head .tier-list__heading {
+	flex: 1;
+	min-width: 0;
+}
+
+.tier-list--phone .tier-board {
+	flex: none;
+	border-radius: 20px;
+}
+
+/* the same art tiles as desktop, smaller */
+.tier-row--compact {
+	--tier-tile: 72px;
+	min-height: 96px;
+}
+
+.tier-row--compact .tier-row__letter {
+	flex-basis: 56px;
+}
+
+/* the picked tray card gets a purple ring outside its frame ring */
+.tier-list-tray--compact .tier-list-tray__pick[aria-pressed='true'] .card-frame-ring {
+	box-shadow: 0 0 0 3px var(--accent);
+}
+
+.tier-list__sheet {
+	position: sticky;
+	bottom: 0;
+	z-index: 2;
+	max-height: 60vh;
+	overflow-y: auto;
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	padding: 18px 16px 24px;
+	border-radius: 24px 24px 0 0;
+	background: var(--capsule);
+	box-shadow: 0 0 0 1px var(--capsule-edge), 0 -8px 24px rgb(0 0 0 / 8%);
+}
+
+.tier-list-tray--compact .tier-list-tray__cards {
+	flex-direction: row;
+	gap: 14px;
+	overflow-x: auto;
+	scrollbar-width: none;
+	padding: 6px 4px;
+}
+
+.tier-list-tray--compact .tier-list-tray__card {
+	flex: 0 0 104px;
+	/* flex items won't shrink below their content - without this a long one-line name widens its tile */
+	min-width: 0;
+	/* tops line up, whether a name takes one line or two */
+	align-items: flex-start;
+	padding: 0;
+	background: none;
+	box-shadow: none;
+}
+
+.tier-list-tray--compact .tier-list-tray__pick.MuiButtonBase-root {
+	flex-direction: column;
+	gap: 6px;
+	padding: 4px;
+	border-radius: 12px;
+	text-align: center;
+}
+
+.tier-list-tray--compact .tier-list-tray__pick:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: -2px;
+}
+
+.tier-list-tray--compact .tier-list-tray__pick[aria-pressed='true'] {
+	box-shadow: none;
+}
+
+.tier-list-tray--compact .tier-list-tray__thumb {
+	width: 52px;
+	height: 52px;
+}
+
+.tier-list-tray--compact .tier-list-tray__name.MuiTypography-root {
+	/* up to two lines, then an ellipsis */
+	width: 100%;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	line-clamp: 2;
+	white-space: normal;
+	overflow-wrap: anywhere;
+}
+
+/* rcl's art sits 96% wide over a 0.5rem gap, meant for its card - here the art is the whole tile. rcl's css loads at runtime, so a doubled class wins */
+.tier-row__card .rounded-img-outer-container.rounded-img-outer-container,
+.tier-list__dragged .rounded-img-outer-container.rounded-img-outer-container {
+	width: 100%;
+	margin: 0;
+}

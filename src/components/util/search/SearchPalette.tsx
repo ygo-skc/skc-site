@@ -1,6 +1,6 @@
 import '../../../css/util/search-palette.css'
 
-import { CSSProperties, Fragment, KeyboardEvent, ReactNode, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
+import { CSSProperties, KeyboardEvent, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
 import { generatePath, useNavigate } from 'react-router-dom'
 import { Button, Chip, Dialog, IconButton, InputBase, Typography, useMediaQuery, useTheme } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
@@ -17,6 +17,7 @@ import { clearRecentlyViewed, groupRecentlyViewed, readRecentlyViewed, RecentlyV
 import useVisualViewport from './useVisualViewport'
 import usePreventPagePan from './usePreventPagePan'
 import CardFrameRing from '../CardFrameRing'
+import highlight from './highlight'
 
 const DESTINATIONS = [
 	{ label: 'Home', to: AppRoutes.Home },
@@ -43,18 +44,6 @@ type Option = { id: string; time?: string } & (
 const previewCard = (card: YGOCard.Deets): YGOCard.Deets => ({ ...card, cardEffect: decodeHTML(card.cardEffect) })
 
 const isMac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.userAgent)
-
-function highlight(text: string, query: string): ReactNode {
-	const terms = query
-		.trim()
-		.split(/\s+/)
-		.filter(Boolean)
-		.map((term) => term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
-
-	if (terms.length === 0) return text
-
-	return text.split(new RegExp(`(${terms.join('|')})`, 'gi')).map((part, index) => (index % 2 === 1 ? <mark key={index}>{part}</mark> : <Fragment key={index}>{part}</Fragment>))
-}
 
 type SearchPaletteProps = {
 	open: boolean
