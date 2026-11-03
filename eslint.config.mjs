@@ -1,37 +1,24 @@
 import { defineConfig } from 'eslint/config'
-import react from 'eslint-plugin-react'
-import typescriptEslint from '@typescript-eslint/eslint-plugin'
-import globals from 'globals'
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
 import js from '@eslint/js'
-import { FlatCompat } from '@eslint/eslintrc'
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-const compat = new FlatCompat({
-	baseDirectory: __dirname,
-	recommendedConfig: js.configs.recommended,
-	allConfig: js.configs.all,
-})
+import tseslint from 'typescript-eslint'
+import react from 'eslint-plugin-react'
+import globals from 'globals'
 
 export default defineConfig([
 	{
-		extends: compat.extends('eslint:recommended', 'plugin:react/recommended', 'plugin:@typescript-eslint/recommended'),
-
-		plugins: {
-			react,
-			'@typescript-eslint': typescriptEslint,
-		},
+		// the plugins' own flat configs - FlatCompat's @eslint/eslintrc needs minimatch's default export, which the minimatch 11 override (a security fix) removed.
+		// jsx-runtime is for React 17+'s JSX transform, which doesn't need React in scope
+		extends: [js.configs.recommended, react.configs.flat.recommended, react.configs.flat['jsx-runtime'], tseslint.configs.recommended],
 
 		languageOptions: {
 			globals: {
 				...globals.browser,
 				...globals.jest,
 			},
+		},
 
-			ecmaVersion: 'latest',
-			sourceType: 'module',
+		linterOptions: {
+			reportUnusedDisableDirectives: 'error',
 		},
 
 		settings: {
@@ -41,9 +28,7 @@ export default defineConfig([
 		},
 
 		rules: {
-			'react/react-in-jsx-scope': 'off',
 			'react/prop-types': 'off',
-			'no-mixed-spaces-and-tabs': 'off',
 		},
 	},
 ])
