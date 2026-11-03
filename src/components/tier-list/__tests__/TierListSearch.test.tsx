@@ -182,6 +182,45 @@ test('the failure note hides like results do', async () => {
 	expect(screen.getByText("Couldn't search cards")).toBeVisible()
 })
 
+describe('while a search loads', () => {
+	const skeletonRows = () => document.querySelectorAll('.tier-list-search__skeleton')
+
+	test('placeholder rows hold the results open until the answer, hidden from screen readers', async () => {
+		renderSearch()
+		type('ash')
+
+		expect(skeletonRows()).toHaveLength(5)
+		expect(skeletonRows()[0]).toBeVisible()
+		expect(document.querySelector('.tier-list-search__loading')).toHaveAttribute('aria-hidden', 'true')
+		expect(screen.getByRole('listbox', { hidden: true })).toHaveAttribute('aria-busy', 'true')
+
+		await act(async () => calls[0].respond([ash]))
+		expect(skeletonRows()).toHaveLength(0)
+		expect(screen.getByRole('option', { name: /^Ash Blossom/ })).toBeInTheDocument()
+	})
+
+	test('refining swaps the results for placeholders, and a retry after a failure shows them instead of the failure', async () => {
+		renderSearch()
+		type('ash')
+		await act(async () => calls[0].respond([ash]))
+		type('ash blossom')
+		expect(skeletonRows()).toHaveLength(5)
+		expect(screen.queryByRole('option')).not.toBeInTheDocument()
+
+		await act(async () => calls[1].reject(new Error('Network Error')))
+		type('ash blossom &')
+		expect(skeletonRows()).toHaveLength(5)
+		expect(screen.queryByText("Couldn't search cards")).not.toBeInTheDocument()
+	})
+
+	test('typing before the search waits shows them too, so the field never looks unanswered', () => {
+		renderSearch()
+		fireEvent.change(screen.getByRole('combobox'), { target: { value: 'a' } })
+		expect(calls).toHaveLength(0)
+		expect(skeletonRows()).toHaveLength(5)
+	})
+})
+
 test('Enter while the next answer loads adds nothing', async () => {
 	const dispatch = renderSearch()
 	type('dark')

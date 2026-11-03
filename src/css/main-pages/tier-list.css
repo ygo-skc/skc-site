@@ -239,6 +239,82 @@
 	color: var(--capsule-muted);
 }
 
+/* while a search loads - grey rows the size of the results (ringed art, a name, the Add pill), pulsing like the search popup's */
+.tier-list-search__loading {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	padding: 6px;
+}
+
+.tier-list-search__skeleton {
+	display: flex;
+	align-items: flex-start;
+	gap: 12px;
+	padding: 8px 10px;
+}
+
+.tier-list-search__skeleton-thumb {
+	flex: none;
+	/* the art in its frame ring (40px + 3px ring + 2px gap a side) */
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+}
+
+.tier-list-search__skeleton-lines {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 13px;
+	padding-top: 6px;
+}
+
+.tier-list-search__skeleton-lines span {
+	height: 10px;
+	border-radius: 5px;
+}
+
+.tier-list-search__skeleton-lines .tier-list-search__skeleton-pill {
+	width: 53px;
+	height: 23px;
+	border-radius: 999px;
+}
+
+.tier-list-search__skeleton-thumb,
+.tier-list-search__skeleton-lines span {
+	background: var(--capsule-track);
+	animation: tier-list-search-pulse 1.2s ease-in-out infinite;
+}
+
+.tier-list-search__skeleton:nth-child(2) * {
+	animation-delay: 0.15s;
+}
+
+.tier-list-search__skeleton:nth-child(3) * {
+	animation-delay: 0.3s;
+}
+
+.tier-list-search__skeleton:nth-child(4) * {
+	animation-delay: 0.45s;
+}
+
+.tier-list-search__skeleton:nth-child(5) * {
+	animation-delay: 0.6s;
+}
+
+@keyframes tier-list-search-pulse {
+	50% {
+		opacity: 0.45;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.tier-list-search__skeleton * {
+		animation: none;
+	}
+}
+
 .tier-list-search__results {
 	display: flex;
 	flex-direction: column;
@@ -725,6 +801,8 @@
 	text-align: start;
 	/* rcl's art corners */
 	border-radius: 1.25rem;
+	/* a grey tile until the art paints over it, so a ranked card shows before its image loads */
+	background: var(--capsule-track);
 	font: inherit;
 }
 

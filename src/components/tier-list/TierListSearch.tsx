@@ -12,6 +12,9 @@ import { useHistoryEntryState } from '../util/useHistoryEntry'
 
 type PopperInstance = NonNullable<PopperProps['popperRef']> extends Ref<infer Instance> ? Instance : never
 
+// name widths for the rows that hold the results' place while they load, like the search popup's
+const SKELETON_WIDTHS = [72, 54, 64, 46, 60]
+
 /*
  * Search for cards to add to the tray. Each result says whether it's on the page already - only new cards can be added,
  * by clicking the row or Enter on the highlighted one (up / down move the highlight). Esc or a click outside hides the results (focusing the field brings them back),
@@ -87,7 +90,7 @@ const TierListSearch: FC<{ list: TierListState; dispatch: Dispatch<TierListActio
 	// the popup is placed before the answer fills it - place it again once it has its height, so it can open upward when there's no room below
 	useEffect(() => {
 		popper.current?.update()
-	}, [cards, showResults, failed])
+	}, [cards, showResults, failed, isLoading])
 
 	const optionId = (index: number) => `${listboxId}-option-${index}`
 
@@ -129,7 +132,7 @@ const TierListSearch: FC<{ list: TierListState; dispatch: Dispatch<TierListActio
 				{/* the results float over the page under the field, as wide as it - fixed, so the phone sheet's scrolling doesn't clip them, and kept
 				    in the DOM (inside the search, for its styles, the click-away check and tab order) so the combobox always has its listbox */}
 				<Popper
-					open={isOpen && query.trim() !== '' && !isLoading}
+					open={isOpen && query.trim() !== ''}
 					anchorEl={field}
 					popperRef={popper}
 					keepMounted
@@ -153,7 +156,21 @@ const TierListSearch: FC<{ list: TierListState; dispatch: Dispatch<TierListActio
 						},
 					]}
 				>
-					{failed && (
+					{/* the rows the answer will fill - a first search, or the next one while the last results are swapped out */}
+					{isLoading && (
+						<div className='tier-list-search__loading' aria-hidden='true'>
+							{SKELETON_WIDTHS.map((width) => (
+								<div key={width} className='tier-list-search__skeleton'>
+									<span className='tier-list-search__skeleton-thumb' />
+									<span className='tier-list-search__skeleton-lines'>
+										<span style={{ width: `${width}%` }} />
+										<span className='tier-list-search__skeleton-pill' />
+									</span>
+								</div>
+							))}
+						</div>
+					)}
+					{failed && !isLoading && (
 						<Typography variant='body2' className='tier-list-search__note' role='status'>
 							Couldn&apos;t search cards
 						</Typography>
