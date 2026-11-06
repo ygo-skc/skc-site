@@ -330,9 +330,8 @@
 	margin-left: auto;
 }
 
-/* card browse centres its pills under its field - here they start the row, with the count at its end */
+/* the pills share the row with the count at its end */
 .product-contents .card-browse-filters {
-	justify-content: flex-start;
 	margin: 0;
 }
 
@@ -367,26 +366,6 @@
 .product-suggestions .product-suggestions__empty {
 	margin: 12px 4px;
 	color: var(--capsule-muted);
-}
-
-/* card browse's results inside the sheet: the list straight on the white, the preview a near-white panel beside it */
-.product-contents .card-browse-results {
-	margin-bottom: 0;
-}
-
-.product-contents .card-browse-results__list {
-	padding: 0;
-	background: none;
-	box-shadow: none;
-}
-
-.product-contents .card-browse-preview {
-	top: 16px;
-	background: var(--capsule);
-}
-
-.product-contents .card-browse-results__peek {
-	background: var(--capsule);
 }
 
 .product-suggestions__tools {

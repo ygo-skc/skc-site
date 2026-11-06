@@ -55,7 +55,7 @@ test('shows picked criteria as tokens inside the field and removes them', async 
 	renderPage()
 
 	// the results grid is lazy loaded, so the page suspends until it arrives
-	expect(await screen.findByRole('heading', { level: 1, name: 'Find cards by what they are' })).toBeInTheDocument()
+	expect(await screen.findByRole('heading', { level: 1, name: 'Find cards using card features' })).toBeInTheDocument()
 	expectCount('All 2 cards · sorted by name')
 
 	const field = screen.getByRole('combobox', { name: 'Filter cards' })
@@ -101,6 +101,19 @@ test('adds every filter a typed phrase names at once', async () => {
 		expect.anything(),
 		10000
 	)
+})
+
+test('fills the field with an example search and offers its filters', async () => {
+	renderPage()
+	await screen.findByRole('heading', { level: 1 })
+
+	const examples = screen.getByRole('group', { name: 'Example searches' })
+	fireEvent.click(within(examples).getByRole('button', { name: 'light dragon lv 4' }))
+
+	const field = screen.getByRole('combobox', { name: 'Filter cards' })
+	expect(field).toHaveValue('light dragon lv 4')
+	expect(field).toHaveFocus()
+	expect(screen.getByRole('option', { name: /Add all 2 filters/ })).toHaveTextContent('Light AttributeDragon Monster type')
 })
 
 test('edits the same criteria from the dropdown pills', async () => {
@@ -169,9 +182,9 @@ test('opens the preview inline under the tapped row on phones', async () => {
 	}))
 	renderPage()
 	await screen.findByRole('heading', { level: 1 })
-	// a shorter hint, so the example isn't cut off
+	// a shorter hint, so it isn't cut off
 	const field = screen.getByRole('combobox', { name: 'Filter cards' })
-	expect(field).toHaveAttribute('placeholder', 'Try “light dragon lv 4”')
+	expect(field).toHaveAttribute('placeholder', 'Add filters in words')
 
 	fireEvent.click(screen.getByRole('button', { name: 'Attribute' }))
 	fireEvent.click(within(screen.getByRole('dialog')).getByRole('button', { name: 'Dark' }))

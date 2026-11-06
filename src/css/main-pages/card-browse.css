@@ -2,14 +2,13 @@
 .card-browse-header {
 	display: flex;
 	flex-direction: column;
-	align-items: center;
+	align-items: flex-start;
 	gap: 6px;
 	margin-bottom: 40px;
 	padding: 36px 32px 32px;
 	border-radius: 28px;
 	background: var(--capsule-lens);
 	box-shadow: 0 0 0 1px var(--capsule-edge);
-	text-align: center;
 }
 
 .card-browse-header .card-browse-header__eyebrow {
@@ -18,7 +17,6 @@
 
 .card-browse-header .search-bar {
 	width: 100%;
-	max-width: 760px;
 	margin: 14px 0 0;
 }
 
@@ -50,6 +48,18 @@
 	color: var(--capsule-muted);
 }
 
+/* results: one white sheet like the product page's "In this set" - the toolbar over a hairline, then the list */
+.card-browse-sheet {
+	margin-bottom: 40px;
+	border-radius: 28px;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+}
+
+.card-browse-sheet__body {
+	padding: 14px 18px 18px;
+}
+
 /* count on the left, list | grid segmented control on the right. both views span the page's width, like the header, so switching
  * between them doesn't move anything */
 .card-browse__toolbar {
@@ -58,8 +68,8 @@
 	align-items: center;
 	justify-content: space-between;
 	gap: 12px;
-	margin: 0 0 16px;
-	padding: 0 4px;
+	padding: 12px 18px 12px 22px;
+	border-bottom: 1px solid var(--capsule-edge);
 }
 
 .card-browse__count.MuiTypography-root {
@@ -95,12 +105,12 @@
 	font-size: 18px;
 }
 
-/* results: the list on a capsule sheet taking the width the preview's white card (a fixed column) leaves; below md the list is alone */
+/* results inside a white sheet (here and the product page): the list straight on the white, taking the width the preview's near-white
+ * panel (a fixed column) leaves; below md the list is alone */
 .card-browse-results {
 	display: flex;
 	align-items: flex-start;
 	gap: 20px;
-	margin-bottom: 40px;
 	/* rcl's card preview takes the site palette for its neutral text */
 	--ygo-card-preview-text: var(--capsule-text);
 	--ygo-card-preview-muted: var(--capsule-muted);
@@ -113,13 +123,10 @@
 	flex-direction: column;
 	gap: 8px;
 	min-width: 0;
-	padding: 10px;
-	border-radius: 24px;
-	background: var(--capsule);
-	box-shadow: 0 0 0 1px var(--capsule-edge);
 }
 
-.card-browse-results__list ul {
+/* only the results list - a descendant selector also stacks the peek's rcl detail list */
+.card-browse-results__list > ul {
 	display: flex;
 	flex-direction: column;
 	gap: 2px;
@@ -234,7 +241,7 @@
 	min-width: 0;
 	padding: 24px 28px 28px;
 	border-radius: 28px;
-	background: var(--capsule-lens);
+	background: var(--capsule);
 	box-shadow: 0 0 0 1px var(--capsule-edge);
 }
 
@@ -325,12 +332,7 @@
 	border-radius: 20px;
 }
 
-.card-browse-results--grid .card-browse-results__more.MuiButton-root {
-	background: var(--capsule-lens);
-	box-shadow: 0 0 0 1px var(--capsule-edge);
-}
-
-/* phones: the tapped row opens its preview underneath, on a white card */
+/* phones: the tapped row opens its preview underneath, in a near-white panel */
 .card-browse-results__item--peeked {
 	border-radius: 16px;
 	background: var(--capsule-lens);
@@ -342,6 +344,8 @@
 	flex-direction: column;
 	gap: 12px;
 	padding: 4px 14px 14px;
+	border-radius: 0 0 16px 16px;
+	background: var(--capsule);
 }
 
 .card-browse-results__peek .card-browse-results__open.MuiButton-root {
@@ -451,11 +455,24 @@
 	opacity: 1;
 }
 
+/* example phrases under the pills - a muted "Try" and grey chips that fill the field */
+.card-browse-examples {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 8px;
+	margin-top: 10px;
+}
+
+.card-browse-examples .card-browse-examples__label {
+	margin-right: 2px;
+	color: var(--capsule-muted);
+}
+
 /* dropdown pills under the field - white with a hairline, near-black once they hold picks */
 .card-browse-filters {
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: center;
 	gap: 8px;
 	margin-top: 14px;
 }
@@ -595,5 +612,13 @@
 	.card-browse-header {
 		padding: 28px 16px 20px;
 		border-radius: 24px;
+	}
+
+	.card-browse-sheet {
+		border-radius: 24px;
+	}
+
+	.card-browse-sheet__body {
+		padding: 12px;
 	}
 }

@@ -173,26 +173,30 @@ export default function BrowseCards() {
 				<Typography variant='subtitle2' component='p' className='card-browse-header__eyebrow'>
 					Card Browse
 				</Typography>
-				<Typography variant='h1'>Find cards by what they are</Typography>
+				<Typography variant='h1'>Find cards using card features</Typography>
 				<CardBrowse browseCriteriaDispatch={browseCriteriaDispatch} selectedCriteria={selectedCriteria} skcCardBrowseCriteriaOutput={skcCardBrowseCriteriaOutput} />
 			</section>
 
-			<div className='card-browse__toolbar'>
-				<Typography variant='body1' className='card-browse__count' aria-live='polite'>
-					{browseStatus(selectedCriteria.length > 0, loadFailed, cardGridState)}
-				</Typography>
-				<ToggleButtonGroup className='card-browse__view' exclusive aria-label='View' value={view} onChange={(_, value: CardBrowseView | null) => value && setView(value)}>
-					<ToggleButton value='list'>
-						<ViewListRoundedIcon />
-						List
-					</ToggleButton>
-					<ToggleButton value='grid'>
-						<GridViewRoundedIcon />
-						Grid
-					</ToggleButton>
-				</ToggleButtonGroup>
+			<div className='card-browse-sheet'>
+				<div className='card-browse__toolbar'>
+					<Typography variant='body1' className='card-browse__count' aria-live='polite'>
+						{browseStatus(selectedCriteria.length > 0, loadFailed, cardGridState)}
+					</Typography>
+					<ToggleButtonGroup className='card-browse__view' exclusive aria-label='View' value={view} onChange={(_, value: CardBrowseView | null) => value && setView(value)}>
+						<ToggleButton value='list'>
+							<ViewListRoundedIcon />
+							List
+						</ToggleButton>
+						<ToggleButton value='grid'>
+							<GridViewRoundedIcon />
+							Grid
+						</ToggleButton>
+					</ToggleButtonGroup>
+				</div>
+				<div className='card-browse-sheet__body'>
+					<CardBrowseResults cardGridState={cardGridState} dispatch={cardDisplayGridDispatch} view={view} />
+				</div>
 			</div>
-			<CardBrowseResults cardGridState={cardGridState} dispatch={cardDisplayGridDispatch} view={view} />
 		</div>
 	)
 }

@@ -8,7 +8,7 @@ import Chip from '@mui/material/Chip'
 import { useMediaQuery, useTheme } from '@mui/material'
 import AddRoundedIcon from '@mui/icons-material/AddRounded'
 
-import { FC, Fragment, useCallback, useEffect, useMemo, useReducer } from 'react'
+import { FC, Fragment, useCallback, useEffect, useMemo, useReducer, useRef } from 'react'
 import SearchInput from './SearchInput'
 import CardBrowseFilters from './CardBrowseFilters'
 import parseCriteriaQuery, { criteriaGroupLabel, CriteriaSuggestion } from './parseCriteriaQuery'
@@ -24,6 +24,8 @@ const groupLabel = (criteria: YGOData.CardBrowseValues) => {
 	const label = criteriaGroupLabel[criteria.name]
 	return criteria.value.toLowerCase().startsWith(label.toLowerCase()) ? undefined : label
 }
+// phrases the field reads as several filters at once, offered under the pills to show what typing can do
+const EXAMPLE_QUERIES = ['light dragon lv 4', 'xyz rank 4', 'link 2 cyberse', 'water tuner']
 const suggestionLabel = (suggestion: CriteriaSuggestion) =>
 	suggestion.kind === 'all' ? suggestion.criteria.map((criteria) => criteria.value).join(', ') : suggestion.kind === 'one' ? suggestion.criteria.value : suggestion.words.join(' ')
 
@@ -33,6 +35,7 @@ const CardBrowse: FC<{
 	browseCriteriaDispatch: React.Dispatch<CardBrowseReducerAction>
 }> = ({ skcCardBrowseCriteriaOutput, selectedCriteria, browseCriteriaDispatch }) => {
 	const [{ browseInput, browseCriteria }, browseCriteriaSearchDispatch] = useReducer(cardBrowseCriteriaSearchReducer, { browseInput: '', browseCriteria: [] })
+	const fieldRef = useRef<HTMLDivElement>(null)
 
 	useEffect(() => {
 		const criteria: YGOData.CardBrowseValues[] = []
@@ -105,9 +108,15 @@ const CardBrowse: FC<{
 		),
 		[]
 	)
-	// phones cut the long hint off before its example, and after the tokens there's room for less still
+	// an example goes into the field and focuses it, so its "Add all N filters" suggestion opens highlighted
+	const tryExample = useCallback((query: string) => {
+		browseCriteriaSearchDispatch({ type: CardBrowseCriteriaSearchReducerActionType.UPDATE_INPUT, browseInput: query })
+		fieldRef.current?.querySelector('input')?.focus()
+	}, [])
+
+	// the examples sit under the pills, so the hint just says what to type. phones cut a long one off, and after the tokens there's room for less still
 	const isPhone = useMediaQuery(useTheme().breakpoints.down('sm'), { noSsr: true })
-	const placeholder = !isPhone ? 'Add filters in words, like “light dragon lv 4”' : selectedCriteria.length > 0 ? 'Add more' : 'Try “light dragon lv 4”'
+	const placeholder = !isPhone ? 'Add filters in words - a type, attribute or level' : selectedCriteria.length > 0 ? 'Add more' : 'Add filters in words'
 	const handleRenderInput = useCallback(
 		(params: AutocompleteRenderInputParams) => <SearchInput setInput={browseCriteriaSearchDispatch} searchParams={params} placeholder={placeholder} />,
 		[placeholder]
@@ -172,6 +181,7 @@ const CardBrowse: FC<{
 	return (
 		<Fragment>
 			<Autocomplete
+				ref={fieldRef}
 				className='search-bar'
 				multiple
 				forcePopupIcon={false}
@@ -197,6 +207,14 @@ const CardBrowse: FC<{
 				slotProps={{ paper: { className: 'criteria-suggestions' } }}
 			/>
 			<CardBrowseFilters options={browseCriteria} selectedCriteria={selectedCriteria} onChange={updateSelectedCriteria} />
+			<div className='card-browse-examples' role='group' aria-label='Example searches'>
+				<Typography variant='body2' component='span' className='card-browse-examples__label'>
+					Try
+				</Typography>
+				{EXAMPLE_QUERIES.map((query) => (
+					<Chip key={query} className='card-browse-examples__chip' label={query} onClick={() => tryExample(query)} />
+				))}
+			</div>
 		</Fragment>
 	)
 }
