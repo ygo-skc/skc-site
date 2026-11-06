@@ -227,7 +227,7 @@ const UpcomingTCGProducts: FC<{ upcomingTCGProducts: APIRequest<HeartAPI.Event> 
 
 			<Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} open={isSnackbarOpen} autoHideDuration={3000} onClose={handleSnackbarIsClosed}>
 				<Alert onClose={handleSnackbarIsClosed} severity='success'>
-					Link copied to clipboard. Share that shit!
+					Link to upcoming releases copied
 				</Alert>
 			</Snackbar>
 		</section>

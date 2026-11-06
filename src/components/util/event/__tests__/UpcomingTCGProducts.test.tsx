@@ -132,6 +132,7 @@ describe('UpcomingTCGProducts', () => {
 		fireEvent.click(screen.getByRole('button', { name: 'Copy link to this section' }))
 
 		expect(writeText).toHaveBeenCalledWith('http://localhost/#upcoming-tcg-products')
+		expect(screen.getByRole('alert')).toHaveTextContent('Link to upcoming releases copied')
 	})
 
 	it('says so when nothing is coming up', () => {
