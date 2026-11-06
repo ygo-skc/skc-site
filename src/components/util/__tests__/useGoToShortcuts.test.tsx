@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import { MemoryRouter, useLocation } from 'react-router-dom'
 
 import useGoToShortcuts, { GO_TO_WINDOW_MS } from '../useGoToShortcuts'
+import { ShortcutsProvider } from '../ShortcutsPreference'
 
 function Harness() {
 	useGoToShortcuts()
@@ -33,7 +34,10 @@ function renderAt(path = '/about') {
 
 const press = (key: string, target: Element = document.body, init = {}) => fireEvent.keyDown(target, { key, ...init })
 
-afterEach(() => jest.useRealTimers())
+afterEach(() => {
+	jest.useRealTimers()
+	localStorage.clear()
+})
 
 test('verify g then a letter opens each page', () => {
 	const path = renderAt()
@@ -93,4 +97,20 @@ test('verify the shortcuts stand aside while typing, in a popup or menu, or with
 	press('b')
 
 	expect(path).toHaveTextContent('/about')
+})
+
+test('verify the shortcuts do nothing once Settings turns them off', () => {
+	localStorage.setItem('singleKeyShortcuts', 'off')
+	render(
+		<MemoryRouter initialEntries={['/about']}>
+			<ShortcutsProvider>
+				<Harness />
+			</ShortcutsProvider>
+		</MemoryRouter>
+	)
+
+	press('g')
+	press('b')
+
+	expect(screen.getByTestId('path')).toHaveTextContent('/about')
 })

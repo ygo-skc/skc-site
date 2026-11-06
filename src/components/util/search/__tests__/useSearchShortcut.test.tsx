@@ -1,6 +1,7 @@
 import { fireEvent, render } from '@testing-library/react'
 
 import useSearchShortcut from '../useSearchShortcut'
+import { ShortcutsProvider } from '../../ShortcutsPreference'
 
 function Harness({ onOpen }: { onOpen: () => void }) {
 	useSearchShortcut(onOpen)
@@ -59,4 +60,21 @@ test('verify plain k does not open search', () => {
 	fireEvent.keyDown(document.body, { key: 'k' })
 
 	expect(onOpen).not.toHaveBeenCalled()
+})
+
+test('verify slash does nothing once Settings turns single key shortcuts off, but cmd + k still opens search', () => {
+	localStorage.setItem('singleKeyShortcuts', 'off')
+	const onOpen = jest.fn()
+	render(
+		<ShortcutsProvider>
+			<Harness onOpen={onOpen} />
+		</ShortcutsProvider>
+	)
+
+	fireEvent.keyDown(document.body, { key: '/' })
+	expect(onOpen).not.toHaveBeenCalled()
+
+	fireEvent.keyDown(document, { key: 'k', metaKey: true })
+	expect(onOpen).toHaveBeenCalledTimes(1)
+	localStorage.clear()
 })

@@ -1,16 +1,19 @@
 import { useEffect } from 'react'
 
 import { isTyping } from '../../../helper/Keyboard'
+import { useShortcutsPreference } from '../ShortcutsPreference'
 
 /*
  * Opens search from anywhere on the site - cmd/ctrl + k (the common palette shortcut) or / (as on GitHub and YouTube).
- * Slash is a single key, so it only fires when the user isn't typing in a field
+ * Slash is a single key, so it only fires when the user isn't typing in a field, and Settings can turn it off (the chord stays)
  */
 export default function useSearchShortcut(onOpen: () => void) {
+	const { singleKeyShortcuts } = useShortcutsPreference()
+
 	useEffect(() => {
 		const handleKeyDown = (event: KeyboardEvent) => {
 			const isPaletteChord = (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k'
-			const isSlash = event.key === '/' && !event.metaKey && !event.ctrlKey && !event.altKey && !isTyping(event.target)
+			const isSlash = singleKeyShortcuts && event.key === '/' && !event.metaKey && !event.ctrlKey && !event.altKey && !isTyping(event.target)
 
 			if (isPaletteChord || isSlash) {
 				event.preventDefault()
@@ -20,5 +23,5 @@ export default function useSearchShortcut(onOpen: () => void) {
 
 		document.addEventListener('keydown', handleKeyDown)
 		return () => document.removeEventListener('keydown', handleKeyDown)
-	}, [onOpen])
+	}, [onOpen, singleKeyShortcuts])
 }

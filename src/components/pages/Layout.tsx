@@ -8,30 +8,38 @@ import NavigationBar from '../header-footer/NavigationBar'
 import Footer from '../header-footer/Footer'
 import { SiteSearchProvider } from '../util/search/SiteSearch'
 import { ResultsViewProvider } from '../util/ResultsViewPreference'
+import { ShortcutsProvider } from '../util/ShortcutsPreference'
 import useGoToShortcuts from '../util/useGoToShortcuts'
+
+// rendered inside ShortcutsProvider, so Settings can turn the shortcuts off
+function GoToShortcuts() {
+	useGoToShortcuts()
+	return null
+}
 
 /*
  * Contains the base layout of the whole application that will be used as the base element in the React Router
  */
 export default function Layout() {
-	useGoToShortcuts()
-
 	return (
-		<ResultsViewProvider>
-			<SiteSearchProvider>
-				<ScrollRestoration />
-				<div className='content'>
-					<NavigationBar />
-					<div className='routes'>
-						<div className='routes-wrapper'>
-							<Suspense fallback={<SuspenseFallback />}>
-								<Outlet />
-							</Suspense>
+		<ShortcutsProvider>
+			<ResultsViewProvider>
+				<SiteSearchProvider>
+					<GoToShortcuts />
+					<ScrollRestoration />
+					<div className='content'>
+						<NavigationBar />
+						<div className='routes'>
+							<div className='routes-wrapper'>
+								<Suspense fallback={<SuspenseFallback />}>
+									<Outlet />
+								</Suspense>
+							</div>
 						</div>
 					</div>
-				</div>
-				<Footer />
-			</SiteSearchProvider>
-		</ResultsViewProvider>
+					<Footer />
+				</SiteSearchProvider>
+			</ResultsViewProvider>
+		</ShortcutsProvider>
 	)
 }

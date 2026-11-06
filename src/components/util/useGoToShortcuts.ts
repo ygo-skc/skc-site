@@ -3,14 +3,15 @@ import { useNavigate } from 'react-router-dom'
 
 import AppRoutes from '../../helper/AppRoutes'
 import { isTyping } from '../../helper/Keyboard'
+import { useShortcutsPreference } from './ShortcutsPreference'
 
-// g, then one of these - the same pages as search's "Jump to" pills
-const GO_TO_SHORTCUTS: Record<string, AppRoutes> = {
-	h: AppRoutes.Home,
-	b: AppRoutes.BanList,
-	c: AppRoutes.CardBrowse,
-	p: AppRoutes.ProductBrowse,
-	a: AppRoutes.About,
+// g, then one of these - the same pages as search's "Jump to" pills. Settings lists them too
+export const GO_TO_SHORTCUTS: Record<string, { to: AppRoutes; page: string }> = {
+	h: { to: AppRoutes.Home, page: 'Home' },
+	b: { to: AppRoutes.BanList, page: 'Ban List' },
+	c: { to: AppRoutes.CardBrowse, page: 'Card Browse' },
+	p: { to: AppRoutes.ProductBrowse, page: 'Product Browse' },
+	a: { to: AppRoutes.About, page: 'About' },
 }
 
 // how long after g the second key still counts
@@ -18,12 +19,15 @@ export const GO_TO_WINDOW_MS = 1000
 
 /*
  * GitHub style page shortcuts - press g, let go, then a letter (g b opens the ban list).
- * Both are single keys, so they're ignored while the user types in a field, has a popup open or is in a menu (which types ahead)
+ * Both are single keys, so they're ignored while the user types in a field, has a popup open or is in a menu (which types ahead), and Settings can turn them off
  */
 export default function useGoToShortcuts() {
 	const navigate = useNavigate()
+	const { singleKeyShortcuts } = useShortcutsPreference()
 
 	useEffect(() => {
+		if (!singleKeyShortcuts) return
+
 		let pressedGAt = 0
 
 		const handleKeyDown = (event: KeyboardEvent) => {
@@ -32,7 +36,7 @@ export default function useGoToShortcuts() {
 			if (target instanceof Element && target.closest('[role="dialog"], [role="listbox"], [role="menu"]')) return
 
 			const key = event.key.toLowerCase()
-			const to = GO_TO_SHORTCUTS[key]
+			const to = GO_TO_SHORTCUTS[key]?.to
 
 			if (to !== undefined && Date.now() - pressedGAt <= GO_TO_WINDOW_MS) {
 				event.preventDefault()
@@ -46,5 +50,5 @@ export default function useGoToShortcuts() {
 
 		document.addEventListener('keydown', handleKeyDown)
 		return () => document.removeEventListener('keydown', handleKeyDown)
-	}, [navigate])
+	}, [navigate, singleKeyShortcuts])
 }
