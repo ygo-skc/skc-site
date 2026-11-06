@@ -19,12 +19,14 @@ import { useHistoryEntryReducer } from '../util/useHistoryEntry'
 const isProductSettled = (state: ReturnType<typeof productInformationReducer>) => state.productName !== '' && !state.productCardSuggestions.isFetchingData
 
 export default function ProductInformation() {
+	// each product gets its own mount (see Routes), so the id from the URL doesn't change while the page is up
+	const { productId = '' } = useParams<{ productId: string }>()
 	const [state, productInformationDispatch, isProductRestored] = useHistoryEntryReducer(
 		'product-information',
 		productInformationReducer,
 		{
 			pageBreadcrumbs: ['Home', 'Product Browse', ''],
-			productId: useParams<{ productId: string }>().productId ?? '',
+			productId,
 			productName: '',
 			productCardSuggestions: {
 				suggestions: { namedMaterials: [], namedReferences: [], materialArchetypes: [], referencedArchetypes: [] },
@@ -40,7 +42,7 @@ export default function ProductInformation() {
 	useEffect(() => {
 		if (isProductRestored) return
 
-		FetchHandler.handleFetch<YGOProduct.Info>(`${DownstreamServices.SKC_API_ENDPOINTS.productDetails}/${state.productId}/en`, (productInfo: YGOProduct.Info) => {
+		FetchHandler.handleFetch<YGOProduct.Info>(`${DownstreamServices.SKC_API_ENDPOINTS.productDetails}/${productId}/en`, (productInfo: YGOProduct.Info) => {
 			productInformationDispatch({
 				type: ProductInformationActionType.UPDATE_PRODUCT,
 				productInformation: productInfo,
@@ -50,7 +52,7 @@ export default function ProductInformation() {
 		})
 
 		FetchHandler.handleFetch(
-			`${DownstreamServices.SKC_SUGGESTION_ENDPOINTS.productCardSuggestions}/${state.productId}`,
+			`${DownstreamServices.SKC_SUGGESTION_ENDPOINTS.productCardSuggestions}/${productId}`,
 			(productCardSuggestions: YGOProduct.SuggestionData) => {
 				startTransition(() => {
 					productInformationDispatch({
@@ -65,7 +67,7 @@ export default function ProductInformation() {
 				type: ProductInformationActionType.FETCH_PRODUCT_CARD_SUGGESTIONS_ERROR,
 			})
 		})
-	}, [isProductRestored])
+	}, [isProductRestored, productId, productInformationDispatch])
 
 	return (
 		<div className='generic-container'>

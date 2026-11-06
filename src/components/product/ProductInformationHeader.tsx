@@ -20,23 +20,25 @@ type Neighbours = { previous?: YGOProduct.Deets; next?: YGOProduct.Deets }
 // kept for going back, so the pills are there on the first frame instead of growing the header after a refetch
 const useNeighbours = (product?: YGOProduct.Deets): Neighbours => {
 	const [neighbours, setNeighbours, isRestored] = useHistoryEntryState<Neighbours>('product-neighbours', {})
+	// the fields the search needs, so the neighbours aren't fetched again when the same product comes back as a new object
+	const { productId, productType, productSubType } = product ?? {}
 
 	useEffect(() => {
-		if (!product || isRestored) return
+		if (productId === undefined || isRestored) return
 		FetchHandler.handleFetch<YGOData.ProductBrowseResult>(
 			DownstreamServices.SKC_API_ENDPOINTS.productBrowse,
 			({ products }) => {
 				const siblings = products
-					.filter((other) => other.productType === product.productType && other.productSubType === product.productSubType)
+					.filter((other) => other.productType === productType && other.productSubType === productSubType)
 					.sort((a, b) => a.productReleaseDate.localeCompare(b.productReleaseDate) || a.productId.localeCompare(b.productId))
-				const index = siblings.findIndex((other) => other.productId === product.productId)
+				const index = siblings.findIndex((other) => other.productId === productId)
 				if (index !== -1) setNeighbours({ previous: siblings[index - 1], next: siblings[index + 1] })
 			},
 			false
 		)?.catch(() => {
 			// no neighbours to step to - the pills stay hidden
 		})
-	}, [product?.productId, isRestored])
+	}, [productId, productType, productSubType, isRestored, setNeighbours])
 
 	return neighbours
 }
