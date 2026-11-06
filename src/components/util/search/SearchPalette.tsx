@@ -1,6 +1,6 @@
 import '../../../css/util/search-palette.css'
 
-import { CSSProperties, KeyboardEvent, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
+import { CSSProperties, KeyboardEvent, MouseEvent, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
 import { generatePath, useNavigate } from 'react-router-dom'
 import { Button, Chip, Dialog, IconButton, InputBase, Typography, useMediaQuery, useTheme } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
@@ -182,6 +182,15 @@ export default function SearchPalette({ open, onClose }: SearchPaletteProps) {
 		else if (bottom > view.bottom) list.scrollTop += bottom - view.bottom
 	}, [activeOption])
 
+	// browsers send a mousemove when the list scrolls a row under a still pointer, so only a pointer that moved picks a row -
+	// otherwise arrowing past the fold hands the highlight to whatever row lands under the mouse
+	const pointer = useRef<{ x: number; y: number }>(undefined)
+	const hover = (event: MouseEvent, index: number) => {
+		const moved = pointer.current?.x !== event.clientX || pointer.current?.y !== event.clientY
+		pointer.current = { x: event.clientX, y: event.clientY }
+		if (moved && index !== activeIndex) setActiveIndex(index)
+	}
+
 	const choose = useCallback(
 		(option: Option) => {
 			navigate(
@@ -255,7 +264,7 @@ export default function SearchPalette({ open, onClose }: SearchPaletteProps) {
 					aria-label={name}
 					aria-describedby={option.time ? `${option.id}-sub ${option.id}-time` : `${option.id}-sub`}
 					className='search-palette__option'
-					onMouseMove={() => !isActive && setActiveIndex(index)}
+					onMouseMove={(event) => hover(event, index)}
 					onClick={() => choose(option)}
 				>
 					{option.card ? (
@@ -368,7 +377,7 @@ export default function SearchPalette({ open, onClose }: SearchPaletteProps) {
 								tabIndex={-1}
 								className='search-palette__jump-link'
 								label={option.destination?.label}
-								onMouseMove={() => index !== activeIndex && setActiveIndex(index)}
+								onMouseMove={(event) => hover(event, index)}
 								onClick={() => choose(option)}
 							/>
 						))}

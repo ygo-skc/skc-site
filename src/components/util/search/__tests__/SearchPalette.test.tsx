@@ -324,6 +324,25 @@ test('verify the arrow keys scroll the highlighted row into view, bringing its h
 	expect(list.scrollTop).toBe(30)
 })
 
+test('verify a row scrolled under a still pointer does not take the highlight from the arrow keys', async () => {
+	mockSearch()
+	const { input } = renderPalette()
+	fireEvent.change(input, { target: { value: 'dark magi' } })
+	await screen.findByRole('group', { name: 'Cards' })
+	const [first, second] = screen.getAllByRole('option')
+
+	fireEvent.mouseMove(first, { clientX: 40, clientY: 100 })
+	fireEvent.keyDown(input, { key: 'ArrowDown' })
+	expect(input).toHaveAttribute('aria-activedescendant', second.id)
+
+	// browsers send a mousemove when the list scrolls a row under the pointer, though the pointer hasn't moved
+	fireEvent.mouseMove(first, { clientX: 40, clientY: 100 })
+	expect(input).toHaveAttribute('aria-activedescendant', second.id)
+
+	fireEvent.mouseMove(first, { clientX: 40, clientY: 104 })
+	expect(input).toHaveAttribute('aria-activedescendant', first.id)
+})
+
 test('verify a spell result does not repeat spell as its attribute', async () => {
 	mockSearch([
 		{ cardID: '83764718', cardName: 'Monster Reborn', cardColor: 'Spell', cardAttribute: 'Spell', cardEffect: 'Target 1 monster in either GY; Special Summon it.' },
