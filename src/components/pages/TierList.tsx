@@ -100,6 +100,19 @@ const TierList: FunctionComponent = () => {
 		setPickedID(undefined)
 	}
 
+	// a removed card takes focus with it, so focus moves to the card after it in its place, as shown (the tray's order and filter are only in the DOM), else the one before.
+	// With neither, the search - or the expand button when that's out of sight, or on phones, where focusing the search would bring up the keyboard
+	const removeCard = ({ cardID, cardName }: YGOCard.Deets) => {
+		const cards = Array.from(document.querySelector(`[data-card-id="${cardID}"]`)?.closest('ul')?.querySelectorAll<HTMLElement>('[data-card-id]') ?? [])
+		const index = cards.findIndex((card) => card.dataset.cardId === cardID)
+		const search = isDraggable ? document.querySelector<HTMLElement>('.tier-list-search input') : null
+		;(cards[index + 1] ?? cards[index - 1] ?? search ?? document.querySelector<HTMLElement>('.tier-list__expand'))?.focus()
+
+		dispatch({ type: 'remove', cardID })
+		setAnnouncement(`${cardName} removed`)
+		setPickedID(undefined)
+	}
+
 	// keyed by card, so picking another card moves focus to the picker again
 	const picker = picked && pickedPlace && (
 		<TierPicker
@@ -115,19 +128,6 @@ const TierList: FunctionComponent = () => {
 			onClose={() => putDown(picked.cardID)}
 		/>
 	)
-
-	// a removed card takes focus with it, so focus moves to the card after it in its place, as shown (the tray's order and filter are only in the DOM), else the one before.
-	// With neither, the search - or the expand button when that's out of sight, or on phones, where focusing the search would bring up the keyboard
-	const removeCard = ({ cardID, cardName }: YGOCard.Deets) => {
-		const cards = Array.from(document.querySelector(`[data-card-id="${cardID}"]`)?.closest('ul')?.querySelectorAll<HTMLElement>('[data-card-id]') ?? [])
-		const index = cards.findIndex((card) => card.dataset.cardId === cardID)
-		const search = isDraggable ? document.querySelector<HTMLElement>('.tier-list-search input') : null
-		;(cards[index + 1] ?? cards[index - 1] ?? search ?? document.querySelector<HTMLElement>('.tier-list__expand'))?.focus()
-
-		dispatch({ type: 'remove', cardID })
-		setAnnouncement(`${cardName} removed`)
-		setPickedID(undefined)
-	}
 
 	// the picker as a tooltip pointing at the picked card. A click elsewhere puts the card down; a click on another card picks that one instead
 	const pickerTooltip = picked && (
