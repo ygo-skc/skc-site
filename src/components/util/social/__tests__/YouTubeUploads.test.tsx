@@ -71,3 +71,29 @@ test('the channel icon replaces the initials when there is one', () => {
 	)
 	expect(container.querySelector('.yt-channel__avatar img')).toHaveAttribute('src', '/assets/icon.jpeg')
 })
+
+test('thumbnails load lazily from their url rather than all being fetched up front', () => {
+	const preload = jest.spyOn(window, 'Image')
+	renderUploads({
+		isLoading: false,
+		youtubeData: [{ id: '1', title: 'Pack opening', description: '', publishedAt: new Date(), thumbnailUrl: 'https://img/1.jpg', url: 'https://youtu.be/1' }],
+	})
+
+	const thumb = screen.getByRole('link', { name: /Pack opening/ }).querySelector('img')
+	expect(thumb).toHaveAttribute('src', 'https://img/1.jpg')
+	expect(thumb).toHaveAttribute('loading', 'lazy')
+	expect(preload).not.toHaveBeenCalled()
+	preload.mockRestore()
+})
+
+test('uploads with the same title both show', () => {
+	renderUploads({
+		isLoading: false,
+		youtubeData: [
+			{ id: '1', title: 'Pack opening', description: '', publishedAt: new Date(), thumbnailUrl: 'https://img/1.jpg', url: 'https://youtu.be/1' },
+			{ id: '2', title: 'Pack opening', description: '', publishedAt: new Date(), thumbnailUrl: 'https://img/2.jpg', url: 'https://youtu.be/2' },
+		],
+	})
+
+	expect(screen.getAllByRole('link', { name: /Pack opening/ }).map((video) => video.getAttribute('href'))).toEqual(['https://youtu.be/1', 'https://youtu.be/2'])
+})

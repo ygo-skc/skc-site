@@ -226,12 +226,6 @@ declare namespace HeartAPI {
 		total: number
 	}
 
-	type YouTubeUploads = {
-		thumbnailImg: HTMLImageElement
-		title: string
-		url: string
-	}
-
 	type Event = {
 		service: string
 		events: HeartAPI.EventItem[]

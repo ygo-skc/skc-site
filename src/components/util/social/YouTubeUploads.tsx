@@ -1,4 +1,4 @@
-import { FC, JSX, useEffect, useState } from 'react'
+import { FC } from 'react'
 import { Avatar, Button, Skeleton, Typography } from '@mui/material'
 
 import VideoInfoContainer from './VideoInfoContainer'
@@ -12,20 +12,6 @@ const YouTubeUploads: FC<{
 	channelDescription: string
 	channelAvatar?: string
 }> = ({ youtubeData, isLoading, channelName, channelId, channelDescription, channelAvatar }) => {
-	const [videos, setVideos] = useState<JSX.Element[]>([])
-
-	useEffect(() => {
-		if (youtubeData !== undefined) {
-			setVideos(
-				youtubeData.map((item: HeartAPI.YouTubeUpload) => {
-					const img = new Image()
-					img.src = item.thumbnailUrl
-					return <VideoInfoContainer key={item.title} thumbnailImg={img} title={item.title} url={item.url} publishedAt={item.publishedAt} />
-				})
-			)
-		}
-	}, [youtubeData])
-
 	const initials = channelName
 		.split(' ')
 		.slice(0, 2)
@@ -70,7 +56,12 @@ const YouTubeUploads: FC<{
 					))}
 				</div>
 			) : (
-				<div className='yt-uploads-grid'>{videos}</div>
+				// built during render, and each thumbnail loads lazily as the row scrolls to it
+				<div className='yt-uploads-grid'>
+					{youtubeData?.map((item) => (
+						<VideoInfoContainer key={item.id} thumbnailUrl={item.thumbnailUrl} title={item.title} url={item.url} publishedAt={item.publishedAt} />
+					))}
+				</div>
 			)}
 		</div>
 	)
