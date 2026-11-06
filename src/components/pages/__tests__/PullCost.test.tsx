@@ -228,7 +228,7 @@ test('verify the headline is announced once it settles, not on every change', ()
 	jest.useRealTimers()
 })
 
-test('verify phones show the answer before the inputs, under the title', () => {
+const asPhone = () => {
 	const matchMedia = window.matchMedia
 	window.matchMedia = jest.fn().mockImplementation((query: string) => ({
 		matches: query.includes('max-width'),
@@ -238,15 +238,32 @@ test('verify phones show the answer before the inputs, under the title', () => {
 		addListener: () => {},
 		removeListener: () => {},
 	}))
+	return () => (window.matchMedia = matchMedia)
+}
+
+test('verify phones fold the inputs into a summary between the title and the answer', () => {
+	const restore = asPhone()
 	renderPage()
 
 	const title = screen.getByRole('heading', { level: 1, name: 'Pull cost calculator' })
+	const edit = screen.getByRole('button', { name: 'Edit numbers' })
 	const answer = screen.getByRole('heading', { level: 2, name: /chance of/ })
-	const inputs = screen.getByRole('complementary', { name: 'Your numbers' })
-	expect(title.compareDocumentPosition(answer) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
-	expect(answer.compareDocumentPosition(inputs) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
-	expect(within(inputs).queryByRole('heading', { level: 1 })).not.toBeInTheDocument()
-	window.matchMedia = matchMedia
+	expect(title.compareDocumentPosition(edit) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+	expect(edit.compareDocumentPosition(answer) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+	expect(screen.getByText('$334 a box · 4 boxes a case · 40 cases on average · 18 cards')).toBeInTheDocument()
+	expect(edit).toHaveAttribute('aria-expanded', 'false')
+	expect(screen.queryByLabelText('Cost of a sealed box')).not.toBeInTheDocument()
+
+	fireEvent.click(edit)
+	const inputs = screen.getByRole('group', { name: 'Your numbers' })
+	expect(within(inputs).getByLabelText('Cost of a sealed box')).toBeInTheDocument()
+	expect(inputs.compareDocumentPosition(answer) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+	type('Cost of a sealed box', '33.99')
+
+	fireEvent.click(screen.getByRole('button', { name: 'Done' }))
+	expect(screen.getByRole('button', { name: 'Edit numbers' })).toHaveAttribute('aria-expanded', 'false')
+	expect(screen.getByText(/^\$33\.99 a box/)).toBeInTheDocument()
+	restore()
 })
 
 test('verify desktop keeps the inputs first, with the title in their column', () => {

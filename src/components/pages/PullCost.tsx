@@ -1,7 +1,9 @@
 import { FunctionComponent, ReactNode, useEffect, useId, useState } from 'react'
-import { ButtonBase, IconButton, InputBase, ToggleButton, ToggleButtonGroup, Typography, useMediaQuery, useTheme } from '@mui/material'
+import { Button, ButtonBase, IconButton, InputBase, ToggleButton, ToggleButtonGroup, Typography, useMediaQuery, useTheme } from '@mui/material'
 import AddRoundedIcon from '@mui/icons-material/AddRounded'
 import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded'
+import EditRoundedIcon from '@mui/icons-material/EditRounded'
+import CheckRoundedIcon from '@mui/icons-material/CheckRounded'
 
 import '../../css/main-pages/pull-cost.css'
 import Breadcrumb from '../header-footer/Breadcrumb'
@@ -81,6 +83,12 @@ const Field: FunctionComponent<FieldProps> = ({ label, value, onChange, isMoney,
 	)
 }
 
+// a typed price as it reads - cents only when there are some ($334, $33.99)
+const formatPrice = (value: string) => {
+	const price = parseFloat(value)
+	return `$${price.toLocaleString('en-US', { minimumFractionDigits: price % 1 ? 2 : 0, maximumFractionDigits: 2 })}`
+}
+
 // "an" before a vowel sound. Rarities in capitals are read letter by letter (an SR, a UR, a GMR), so it's the letter's name that counts; words go by their first letter (an Ultimate Rare)
 const article = (word: string) => ((/^[A-Z]{2,}\b/.test(word) ? /^[AEFHILMNORSX]/ : /^[aeiou]/i).test(word) ? 'an' : 'a')
 
@@ -97,6 +105,9 @@ const PullCost: FunctionComponent = () => {
 	const target = rarity.trim() === '' ? 'the card' : `${article(rarity.trim())} ${rarity.trim()}`
 	// phones put the answer before the inputs, under the page's title
 	const isPhone = useMediaQuery(useTheme().breakpoints.down('md'), { noSsr: true })
+	// phones fold the inputs into a summary under the title, opened in place by its Edit pill
+	const [isEditing, setIsEditing] = useHistoryEntryState('pullCostEditing', false)
+	const fieldsId = useId()
 	let headlineText = ''
 
 	let results: ReactNode = (
@@ -210,10 +221,8 @@ const PullCost: FunctionComponent = () => {
 		</div>
 	)
 
-	const inputColumn = (
-		<aside className='pull-cost__side' aria-label='Your numbers'>
-			{!isPhone && title}
-
+	const fields = (
+		<>
 			<Field label='Product' value={product} onChange={(value) => change({ product: value })} />
 			<Field label='Chase rarity' value={rarity} onChange={(value) => change({ rarity: value })} />
 			<Field label='Cost of a sealed box' value={boxCost} onChange={(value) => change({ boxCost: value })} isMoney isNumber isCents />
@@ -246,8 +255,17 @@ const PullCost: FunctionComponent = () => {
 				<Field label='Lowest single' value={lowestSingle} onChange={(value) => change({ lowestSingle: value })} isMoney isNumber isCents />
 				<Field label='Highest single' value={highestSingle} onChange={(value) => change({ highestSingle: value })} isMoney isNumber isCents />
 			</div>
-		</aside>
+		</>
 	)
+
+	const summary = [
+		boxCost !== '' && `${formatPrice(boxCost)} a box`,
+		`${boxesPerCase} boxes a case`,
+		avgCases !== '' && `${formatCount(parseFloat(avgCases))} cases on average`,
+		uniqueCards !== '' && `${uniqueCards} ${parseInt(uniqueCards, 10) === 1 ? 'card' : 'cards'}`,
+	]
+		.filter(Boolean)
+		.join(' · ')
 
 	const answer = <div className='pull-cost__results'>{results}</div>
 
@@ -263,13 +281,37 @@ const PullCost: FunctionComponent = () => {
 
 			{isPhone ? (
 				<div className='pull-cost'>
-					<div className='pull-cost__side'>{title}</div>
+					<div className='pull-cost__side'>
+						{title}
+						<div className='pull-cost__summary'>
+							{!isEditing && (
+								// product and rarity stay off it - the answer's eyebrow, just below, already names them
+								<Typography variant='body2' className='pull-cost__summary-text pull-cost__muted'>
+									{summary}
+								</Typography>
+							)}
+							<Button
+								className='pull-cost__edit'
+								aria-expanded={isEditing}
+								aria-controls={fieldsId}
+								startIcon={isEditing ? <CheckRoundedIcon /> : <EditRoundedIcon />}
+								onClick={() => setIsEditing(!isEditing)}
+							>
+								{isEditing ? 'Done' : 'Edit numbers'}
+							</Button>
+						</div>
+						<div id={fieldsId} role='group' aria-label='Your numbers' className='pull-cost__fields' hidden={!isEditing}>
+							{isEditing && fields}
+						</div>
+					</div>
 					{answer}
-					{inputColumn}
 				</div>
 			) : (
 				<div className='pull-cost'>
-					{inputColumn}
+					<aside className='pull-cost__side' aria-label='Your numbers'>
+						{title}
+						{fields}
+					</aside>
 					{answer}
 				</div>
 			)}

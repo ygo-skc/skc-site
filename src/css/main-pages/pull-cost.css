@@ -52,6 +52,45 @@
 	color: var(--accent-text);
 }
 
+/* phones: the inputs folded into a summary under the title, with a grey pill that opens them in place */
+.pull-cost__summary {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding-top: 16px;
+	border-top: 1px solid var(--capsule-edge);
+}
+
+.pull-cost__summary-text.MuiTypography-root {
+	flex: 1 1 180px;
+	min-width: 0;
+	margin: 0;
+}
+
+.pull-cost__edit.MuiButton-root {
+	margin-left: auto;
+	padding-inline: 12px 16px;
+	border-radius: 999px;
+	background: var(--capsule-track);
+	color: var(--capsule-text);
+}
+
+.pull-cost__edit.MuiButton-root:hover {
+	background: var(--capsule-hover);
+}
+
+.pull-cost__fields {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.pull-cost__fields[hidden] {
+	display: none;
+}
+
 /* a field - a label over a white pill, with a purple ring while typing */
 .pull-cost-field {
 	display: flex;
