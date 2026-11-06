@@ -103,7 +103,7 @@ function Messages() {
 							(numNewMessages > 0 ? (
 								<Chip size='small' label={`${numNewMessages} new`} className='messages__count-new' />
 							) : (
-								<Typography variant='caption' className='messages__count'>
+								<Typography variant='body2' className='messages__count'>
 									{messages.length} updates
 								</Typography>
 							))}
@@ -125,10 +125,10 @@ function Messages() {
 								{earlierByYear.map(([year, yearMessages]) => (
 									<section key={year} className='messages__year' aria-labelledby={`messages-year-${year}`}>
 										<header className='messages__year-header'>
-											<Typography id={`messages-year-${year}`} variant='overline' component='h3' className='messages__year-heading'>
+											<Typography id={`messages-year-${year}`} variant='subtitle2' component='h3' className='messages__year-heading'>
 												{year}
 											</Typography>
-											<Typography variant='caption' className='messages__year-count'>
+											<Typography variant='body2' className='messages__year-count'>
 												{yearMessages.length} {yearMessages.length === 1 ? 'update' : 'updates'}
 											</Typography>
 										</header>

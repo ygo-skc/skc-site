@@ -29,7 +29,7 @@
 	margin: 0;
 }
 
-.app-banner .MuiTypography-caption {
+.app-banner .app-banner__tagline {
 	color: var(--capsule-muted);
 }
 

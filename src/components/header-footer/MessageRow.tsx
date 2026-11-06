@@ -17,7 +17,7 @@ const MessageRow = memo(({ message }: { message: HeartAPI.MessageInstance }) => 
 		<li className={isOpen ? 'messages__row messages__row--open' : 'messages__row'}>
 			<Typography variant='body1' component='h4' className='messages__row-heading'>
 				<ButtonBase className='messages__row-toggle' aria-expanded={isOpen} aria-controls={detailId} onClick={() => setIsOpen(!isOpen)}>
-					<Typography variant='caption' component='time' className='messages__row-date' dateTime={message.createdAt} title={Dates.getDateString(creationDate)}>
+					<Typography variant='body2' component='time' className='messages__row-date' dateTime={message.createdAt} title={Dates.getDateString(creationDate)}>
 						{Dates.getMonth(creationDate)} {Dates.getDay(creationDate)}
 					</Typography>
 					<Typography variant='inherit' component='span' className='messages__row-title'>

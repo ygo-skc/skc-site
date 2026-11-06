@@ -74,7 +74,7 @@ const MessageItemComponent = memo(({ message, isNew }: MessageItemComponentArgs)
 
 	return (
 		<li className='messages__post'>
-			<Typography variant='overline' component='p' className='messages__eyebrow'>
+			<Typography variant='subtitle2' component='p' className='messages__eyebrow'>
 				{isNew && (
 					<Typography variant='inherit' component='span' className='messages__new'>
 						New

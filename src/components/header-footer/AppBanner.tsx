@@ -38,7 +38,7 @@ const AppBanner = () => {
 				<Typography variant='subtitle2' component='p'>
 					SKC on iPhone
 				</Typography>
-				<Typography variant='caption' component='p'>
+				<Typography variant='body2' component='p' className='app-banner__tagline'>
 					Card search, ban lists and more
 				</Typography>
 			</div>

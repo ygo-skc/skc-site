@@ -46,8 +46,9 @@
 	color: var(--capsule-text);
 }
 
-.messages__count {
+.messages .messages__count {
 	margin-left: auto;
+	color: var(--capsule-muted);
 	padding: 5px 10px;
 	border-radius: 999px;
 	background: var(--capsule-track);
@@ -89,6 +90,7 @@
 /* the date line above a full post - new posts lead it with "New" in the secondary orange, like the header's "N new" tag */
 .messages .messages__eyebrow {
 	display: flex;
+	color: var(--capsule-muted);
 	align-items: center;
 	gap: 6px;
 	margin: 0 0 4px;
@@ -163,10 +165,12 @@
 
 .messages .messages__year-heading {
 	margin: 0;
+	color: var(--capsule-muted);
 }
 
-.messages__year-count {
+.messages .messages__year-count {
 	margin-left: auto;
+	color: var(--capsule-muted);
 }
 
 .messages__rows {
@@ -208,6 +212,10 @@
 }
 
 /* an open row stays white so its post reads like the full ones above - only the toggle tints, on hover or focus */
+.messages .messages__row-date {
+	color: var(--capsule-muted);
+}
+
 .messages__row-toggle:hover,
 .messages__row-toggle.Mui-focusVisible {
 	background: var(--page);

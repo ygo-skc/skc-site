@@ -55,10 +55,10 @@ const Footer: FunctionComponent = () => {
 					<Typography variant='h6' component='p' className='site-footer__brand'>
 						SKC
 					</Typography>
-					<Typography variant='caption' component='p'>
+					<Typography variant='body2' component='p'>
 						© 2026. Konami owns all rights to Yu-Gi-Oh! and all card images used on this site.
 					</Typography>
-					<Typography variant='caption' component='p'>
+					<Typography variant='body2' component='p'>
 						Not affiliated with Konami; assets used under Fair Use.
 					</Typography>
 				</section>
@@ -70,10 +70,10 @@ const Footer: FunctionComponent = () => {
 					<dl className='site-footer__versions'>
 						{systemInfo.map(({ name, version }) => (
 							<div key={name} className='site-footer__version'>
-								<Typography variant='caption' component='dt'>
+								<Typography variant='body2' component='dt'>
 									{name}
 								</Typography>
-								<Typography variant='caption' component='dd'>
+								<Typography variant='body2' component='dd'>
 									v{version}
 								</Typography>
 							</div>
@@ -104,7 +104,7 @@ const Footer: FunctionComponent = () => {
 							<Typography variant='body2' component='p' className='site-footer__app-name'>
 								SKC: Yugioh Database
 							</Typography>
-							<Typography variant='caption' component='p'>
+							<Typography variant='body2' component='p'>
 								iPhone and iPad
 							</Typography>
 						</div>
