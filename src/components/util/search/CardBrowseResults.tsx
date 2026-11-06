@@ -113,7 +113,7 @@ const CardBrowseResults: FC<{
 			setSelectedId(next.cardID)
 			listRef.current?.querySelector<HTMLButtonElement>(`[data-card-id='${next.cardID}']`)?.focus()
 		},
-		[shown, selectedId]
+		[shown, selectedId, setSelectedId]
 	)
 
 	const showMore = totalDisplaying < totalResults && (

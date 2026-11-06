@@ -17,7 +17,7 @@ const CardDisplayGrid: FC<CardDisplayGridProps> = memo(
 	({ cardGridState, dispatch }) => {
 		const loadMoreCB = useCallback(() => {
 			dispatch({ type: CardDisplayGridStateReducerActionType.LOAD_MORE })
-		}, [])
+		}, [dispatch])
 
 		return (
 			<div>
