@@ -38,7 +38,7 @@ All from the SKC API (`SKC_API_ENDPOINTS` in [`DownstreamServices.ts`](../../src
    - `banListUrl/<date>/new?format=` - cards that moved to a new status, each with its previous status.
    - `banListUrl/<date>/removed?format=` - cards that went back to Unlimited.
 
-Switching format or date cancels the requests in flight (axios `CancelToken`), and an `isCurrent` flag drops any answer already on its way, so a slow answer for the old pick can't replace the new one.
+Switching format or date cancels the requests in flight (axios `CancelToken`), and an `isCurrent` flag drops any answer already on its way, so a slow answer for the old pick can't replace the new one. Switching format also clears the selected date in the same render (`handleFormatChosen`), so the list's fetch never asks for the old format's date in the new format.
 
 The API leaves out empty lists, so each is defaulted to `[]`. The list before the selected one (next in the newest-first dates) is what "changed since" compares to; the first list in the database has none.
 

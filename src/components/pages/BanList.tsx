@@ -210,7 +210,7 @@ export default function BanList() {
 				request.cancel()
 			}
 		}
-	}, [selectedBanList])
+	}, [selectedBanList, format])
 
 	// after the effects above, so only the mount's run is skipped
 	useEffect(() => {
@@ -224,6 +224,12 @@ export default function BanList() {
 	}, [isLoaded, format, selectedBanList, dates, content, rememberSnapshot])
 
 	const handleBanListChosen = useCallback((ind: number) => setSelectedBanList(banListStartDates[ind]), [banListStartDates])
+
+	// the old format's list is let go in the same render, so the list's fetch never pairs the new format with the old format's date
+	const handleFormatChosen = useCallback((chosen: AcceptableBanListFormat) => {
+		setFormat(chosen)
+		setSelectedBanList('')
+	}, [])
 
 	// the list after the selected one in the (newest first) dates is the one it replaced
 	const previousBanList = banListStartDates[banListStartDates.indexOf(selectedBanList) + 1]
@@ -282,7 +288,7 @@ export default function BanList() {
 			<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='13.625rem' />}>
 				<BanListHeader
 					format={format}
-					setFormat={setFormat}
+					setFormat={handleFormatChosen}
 					isFetchingBanListDates={isFetchingBanListDates}
 					banListStartDates={banListStartDates}
 					selectedBanList={selectedBanList}

@@ -5,7 +5,7 @@ import { scrollToTop } from '../../helper/Etc'
 
 type BanListFormatProps = {
 	format: AcceptableBanListFormat
-	setFormat: React.Dispatch<React.SetStateAction<AcceptableBanListFormat>>
+	setFormat: (format: AcceptableBanListFormat) => void
 }
 
 const BanListFormat: FC<BanListFormatProps> = memo(

@@ -15,7 +15,7 @@ export type BanListTotal = {
 
 type BanListHeaderProps = {
 	format: AcceptableBanListFormat
-	setFormat: React.Dispatch<React.SetStateAction<AcceptableBanListFormat>>
+	setFormat: (format: AcceptableBanListFormat) => void
 	isFetchingBanListDates: boolean
 	banListStartDates: string[]
 	selectedBanList: string

@@ -83,6 +83,18 @@ test('ignores a list the reader has already moved on from', async () => {
 	expect(screen.queryByText('Pot of Greed')).not.toBeInTheDocument()
 })
 
+test("switching format never asks for the old format's list in the new format", async () => {
+	renderBanList()
+
+	answerDates('TCG', ['2026-10-19'])
+	fireEvent.click(await screen.findByRole('button', { name: 'Master Duel' }))
+	answerDates('MD', ['2026-09-01'])
+
+	const listRequests = requests.filter(({ url }) => !url.includes('/dates')).map(({ url }) => url.replace(/^.*\/ban_list\//, ''))
+	expect(listRequests).not.toContainEqual(expect.stringMatching(/^2026-10-19\/.*format=MD$/))
+	expect(listRequests.slice(-3)).toEqual(['2026-09-01/new?format=MD', '2026-09-01/removed?format=MD', '2026-09-01/cards?format=MD'])
+})
+
 test('going back from a card shows the list as it was left, without loading it again', async () => {
 	const router = createMemoryRouter(
 		[
