@@ -42,7 +42,7 @@ const ChangeText = ({ change, spaced }: { change: number; spaced?: boolean }) =>
 	return (
 		<>
 			<span aria-hidden='true'>{amount === undefined ? arrow : `${arrow}${spaced ? ' ' : ''}${amount}`}</span>
-			<span className='trending__sr-only'>{words}</span>
+			<span className='visually-hidden'>{words}</span>
 		</>
 	)
 }

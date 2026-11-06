@@ -112,7 +112,7 @@ const PreviousStatus: FC<{ previous?: string }> = ({ previous }) => {
 		return (
 			<Typography variant='body2' className='ban-list-cards__muted'>
 				<span aria-hidden='true'>—</span>
-				<span className='ban-list-header__sr-only'>No change</span>
+				<span className='visually-hidden'>No change</span>
 			</Typography>
 		)
 	}
@@ -219,7 +219,7 @@ const BanListCards: FC<BanListCardsProps> = ({ isLoading, lists, previousStatus 
 					</div>
 
 					<div className='ban-list-cards__tools-end'>
-						<Typography component='label' variant='body2' id='ban-list-kind-label' className='ban-list-header__sr-only'>
+						<Typography component='label' variant='body2' id='ban-list-kind-label' className='visually-hidden'>
 							Card type
 						</Typography>
 						<Select

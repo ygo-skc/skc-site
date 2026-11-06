@@ -60,7 +60,7 @@ const BanListDates: FC<BanListDatesProps> = memo(
 			<Skeleton className='ban-list-date-selector__skeleton' variant='rectangular' width='15rem' height='2.75rem' />
 		) : (
 			<Fragment>
-				<Typography component='label' variant='body2' id='ban-list-date-label' className='ban-list-header__sr-only'>
+				<Typography component='label' variant='body2' id='ban-list-date-label' className='visually-hidden'>
 					Ban list date
 				</Typography>
 				<Select

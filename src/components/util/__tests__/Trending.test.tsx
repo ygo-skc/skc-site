@@ -95,7 +95,7 @@ test('verify each trend reads its movement out', async () => {
 
 	// the spotlight and its row both read "Up 4"
 	expect(await screen.findAllByText('Up 4')).toHaveLength(2)
-	expect(screen.getByText('Down 1')).toHaveClass('trending__sr-only')
+	expect(screen.getByText('Down 1')).toHaveClass('visually-hidden')
 	expect(screen.getByText('No change')).toBeInTheDocument()
 	// the arrows are hidden from screen readers so the movement isn't read twice
 	expect(screen.getByText('▼ 1')).toHaveAttribute('aria-hidden', 'true')

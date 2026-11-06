@@ -86,7 +86,6 @@ The page test checks that stale answers are ignored and that going back restores
 
 ## Known issues
 
-- `.ban-list-header__sr-only` duplicates the shared `.visually-hidden` in `index.css` - swap it over and delete the local rule.
 - Still on 12px text (the 15px floor): the year headings in the date menu (`overline`), "was" in What changed, the status chip counts, the skeleton's Previous column and the "N of M cards" foot (`caption`).
 - rcl's `YGOCardWithImage` (the Cards grid) puts its text on frame colours below 4.5:1 contrast - rcl has to pick text colours per frame.
 - `DateBadge`'s headings are hidden as a stopgap; the fix belongs in rcl (plain text or a `component` prop).

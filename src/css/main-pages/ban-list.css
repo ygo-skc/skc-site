@@ -179,16 +179,6 @@
 	display: none;
 }
 
-/* read by screen readers, not shown */
-.ban-list-header__sr-only {
-	position: absolute;
-	width: 1px;
-	height: 1px;
-	overflow: hidden;
-	clip-path: inset(50%);
-	white-space: nowrap;
-}
-
 /* segmented control: a grey track with a white lens under the selected format, like the nav and the trending toggle */
 .ban-list-format.MuiToggleButtonGroup-root {
 	padding: 3px;
