@@ -388,6 +388,23 @@ test('verify a skeleton holds the cards place while results load', async () => {
 	expect(within(screen.getByRole('group', { name: 'Cards' })).getAllByRole('option')).toHaveLength(2)
 })
 
+test('verify clearing a search goes straight back to the history, with no skeleton', async () => {
+	recordHistory()
+	mockSearch()
+	const { input } = renderPalette()
+	const listbox = screen.getByRole('listbox', { name: 'Search results' })
+
+	fireEvent.change(input, { target: { value: 'dark magi' } })
+	await screen.findByRole('group', { name: 'Cards' })
+	fireEvent.change(input, { target: { value: '' } })
+
+	expect(listbox).toHaveAttribute('aria-busy', 'false')
+	expect(listbox.querySelector('.search-palette__skeleton')).toBeNull()
+	expect(screen.getByRole('group', { name: 'Today' })).toBeInTheDocument()
+	// the first recent is highlighted again, as when search opens
+	expect(input).toHaveAttribute('aria-activedescendant', expect.stringContaining('recent-card'))
+})
+
 test('verify phones get the list only, with an inline peek instead of the preview column', async () => {
 	mockPhone(true)
 	mockSearch()

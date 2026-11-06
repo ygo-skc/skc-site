@@ -12,10 +12,7 @@ export default function useVisualViewport(enabled: boolean): VisibleArea | undef
 
 	useEffect(() => {
 		const viewport = window.visualViewport
-		if (!enabled || !viewport) {
-			setArea(undefined)
-			return
-		}
+		if (!enabled || !viewport) return
 
 		const update = () =>
 			setArea({
@@ -26,9 +23,11 @@ export default function useVisualViewport(enabled: boolean): VisibleArea | undef
 		viewport.addEventListener('resize', update)
 		viewport.addEventListener('scroll', update)
 
+		// cleared when turned off, so turning it on again doesn't start from the last area
 		return () => {
 			viewport.removeEventListener('resize', update)
 			viewport.removeEventListener('scroll', update)
+			setArea(undefined)
 		}
 	}, [enabled])
 

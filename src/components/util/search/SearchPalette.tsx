@@ -82,12 +82,9 @@ export default function SearchPalette({ open, onClose }: SearchPaletteProps) {
 	}
 
 	useEffect(() => {
+		// an empty search shows the history instead, so the last cards can stay - they're only shown again for their own term
 		const term = query.trim()
-		if (term === '') {
-			setCards([])
-			setResultsTerm('')
-			return
-		}
+		if (term === '') return
 
 		// passcodes are all digits, so those also search by id
 		const searchQuery = /^\d+$/.test(term) ? `cName=${term}&cId=${term}` : `cName=${encodeURIComponent(term)}`
@@ -118,7 +115,7 @@ export default function SearchPalette({ open, onClose }: SearchPaletteProps) {
 
 	// page shortcuts and the history are for an empty search - once typing starts the list is all cards
 	const isEmpty = query.trim() === ''
-	const isLoading = query.trim() !== resultsTerm
+	const isLoading = !isEmpty && query.trim() !== resultsTerm
 
 	// stale cards aren't offered while the next ones load - the skeleton holds their place
 	const groups: { name: string; key: string; options: Option[] }[] = useMemo(() => {
@@ -143,8 +140,11 @@ export default function SearchPalette({ open, onClose }: SearchPaletteProps) {
 		[jumpCount, groups, jumpToId]
 	)
 
-	// a new list starts on its first card or product - the page shortcuts only when there's nothing else
-	useEffect(() => {
+	// a new list starts on its first card or product - the page shortcuts only when there's nothing else.
+	// Adjusted during render, so the old row is never highlighted in the new list
+	const [listedOptions, setListedOptions] = useState<Option[]>()
+	if (listedOptions !== options) {
+		setListedOptions(options)
 		setActiveIndex(
 			Math.max(
 				0,
@@ -152,12 +152,14 @@ export default function SearchPalette({ open, onClose }: SearchPaletteProps) {
 			)
 		)
 		setPeekedId(undefined)
-	}, [options])
+	}
 
 	// a peek left open while the window was narrow shouldn't reappear if it narrows again later
-	useEffect(() => {
+	const [wasPhone, setWasPhone] = useState(isPhone)
+	if (wasPhone !== isPhone) {
+		setWasPhone(isPhone)
 		if (!isPhone) setPeekedId(undefined)
-	}, [isPhone])
+	}
 
 	const activeOption = options[activeIndex] as Option | undefined
 

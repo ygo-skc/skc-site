@@ -22,8 +22,14 @@ function useTypedExample(examples: string[]) {
 	const reduceMotion = useMediaQuery('(prefers-reduced-motion: reduce)', { noSsr: true })
 	const [text, setText] = useState(examples[0])
 
-	useEffect(() => {
+	// new examples, or reduced motion switching, start again from the first example - adjusted during render, so a half typed one never paints
+	const [startedFor, setStartedFor] = useState({ examples, reduceMotion })
+	if (startedFor.examples !== examples || startedFor.reduceMotion !== reduceMotion) {
+		setStartedFor({ examples, reduceMotion })
 		setText(examples[0])
+	}
+
+	useEffect(() => {
 		if (reduceMotion) return
 
 		let index = 0
