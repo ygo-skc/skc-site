@@ -2,25 +2,44 @@
 
 [![Build & Code Quality](https://github.com/ygo-skc/skc-site/actions/workflows/build-and-code-quality.yaml/badge.svg)](https://github.com/ygo-skc/skc-site/actions/workflows/build-and-code-quality.yaml)
 
-## Purpose
-This repo serves up content to the web from SKC API and SKC Suggestion Engine.
+The front end of [thesupremekingscastle.com](https://thesupremekingscastle.com), a Yu-Gi-Oh! card database. It shows content from three services:
 
-## Testing
+- **SKC API** - cards, products, ban lists, search and database stats.
+- **SKC Suggestion Engine** - card of the day, trending, and the cards and products a card links to.
+- **Heart API** - YouTube uploads, upcoming events and site messages.
 
-The following scripts (found in package.json) are used for testing
+Built with React 19, react-router 7, MUI 9 and TypeScript, bundled with webpack and tested with Jest + Testing Library. Card UI (previews, card images, frame colours) comes from the shared component library [skc-rcl](https://github.com/ygo-skc/skc-rcl).
 
-| Script Name			| Purpose					|
-| ------------------ | --------------------- |
-| test					| Uses react-scripts to execute tests. This uses the Jest framework. This script is ideal for devs as watch mode is enabled by default.	|
-| ui:test				| Same as test, however this script will not use Jests watch mode and will also print out the coverage of code touched by the tests. This script is ideal for automated tasks. |
-| mutation				| Uses stryker.js to execute Jest test cases and also check the mutation's killed by the tests. `ts-jest` and `jest` are needed, else a TypeError will occur. |
+## Scripts
 
-More info on the testing frameworks used for testing can be found below.
+| Script                                 | Purpose                                                                   |
+| -------------------------------------- | ------------------------------------------------------------------------- |
+| `yarn start`                           | Dev server on port 3000, against the local API                            |
+| `yarn build`                           | Production bundle in `build/`, against the local API                      |
+| `yarn build:development_remote`        | Production bundle against the remote dev API                              |
+| `yarn build:production`                | Production bundle against the production API                              |
+| `yarn test`                            | Jest in watch mode, with coverage                                         |
+| `yarn ci:test`                         | Jest once, with coverage - what CI runs                                   |
+| `yarn lint`                            | eslint over `src`                                                         |
+| `yarn mutation`                        | Stryker mutation testing (see below)                                      |
+| `yarn deploy:prod` / `yarn deploy:dev` | Build and upload to S3 behind CloudFront ([`deploy-s3.sh`](deploy-s3.sh)) |
 
-### Mutation
-We are using Stryker to verify test cases kill mutants in an attempt to verify tests written are actually doing their job.
+Type check with `npx tsc --noEmit -p .` and run a single test file with `npx jest <path>`.
 
-To get Stryker working on a react application:
+## Documentation
 
-1. ensure you have a stryker.conf.json file that configures stryker.js. This project has it under `config/` folder.
-2. Ensure you have the following dependencies in your devDependencies: `@stryker-mutator/core`, `@stryker-mutator/jest-runner` (since we are using Jest), `@stryker-mutator/typescript-checker` (since we are using TS), `@jest-environment-jsdom` (solves weird issue with react/stryker.js/whatever).
+How the site is put together and how each page works lives in [`docs/`](docs/README.md):
+
+- [Architecture](docs/architecture.md) - routing, layout, going back, fetching, styling and testing.
+- [Pages](docs/README.md#pages) - one document per page.
+- [Shared pieces](docs/README.md#shared-pieces) - the nav, search popup, messages, settings and shortcuts.
+
+The site's UI rules and visual direction are in [`CLAUDE.md`](CLAUDE.md).
+
+## Working on skc-rcl alongside the site
+
+To try unpublished skc-rcl changes, run `yarn build` in `../skc-rcl`, copy `../skc-rcl/dist/*` into `node_modules/skc-rcl/dist/`, then restart `yarn start` (webpack caches `node_modules`). `yarn install` puts the published version back.
+
+## Mutation testing
+
+[Stryker](https://stryker-mutator.io) changes the code in small ways and checks that a test fails for each change, to show the tests actually check behaviour. It's configured in [`config/stryker.conf.json`](config/stryker.conf.json) and needs `@stryker-mutator/core`, `@stryker-mutator/jest-runner`, `@stryker-mutator/typescript-checker` and `jest-environment-jsdom` in `devDependencies`.
