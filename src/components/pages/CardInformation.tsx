@@ -1,7 +1,7 @@
 import '../../css/card/card-information.css'
 import '../../css/util/headline.css'
 
-import { useEffect, lazy, Suspense } from 'react'
+import { useEffect, useEffectEvent, lazy, Suspense } from 'react'
 import { useParams } from 'react-router-dom'
 import { Chip, Skeleton, Typography } from '@mui/material'
 
@@ -25,13 +25,15 @@ const isSettled = ({ isFetchingCardData, isFetchingSuggestions, isFetchingSuppor
 	!isFetchingCardData && !isFetchingSuggestions && !isFetchingSupport
 
 const CardInformation = () => {
+	// each card gets its own mount (see Routes), so the id from the URL doesn't change while the page is up
+	const { cardId = '' } = useParams<{ cardId: string }>()
 	const [state, cardInformationDispatch, isRestored] = useHistoryEntryReducer(
 		'card-information',
 		cardInformationReducer,
 		{
 			pageBreadcrumbs: ['Home', 'Card Browse', ''],
 			card: {
-				cardID: useParams<{ cardId: string }>().cardId ?? '',
+				cardID: cardId,
 				cardName: '',
 				cardColor: undefined,
 				cardEffect: '',
@@ -55,14 +57,16 @@ const CardInformation = () => {
 		isSettled
 	)
 
+	// coming back to the card is viewing it again, so it still goes to the top of the recents - with the card as it was restored
+	const recordRestoredView = useEffectEvent(() => recordCardView(state.card))
+
 	useEffect(() => {
-		// coming back to the card is viewing it again, so it still goes to the top of the recents
 		if (isRestored) {
-			recordCardView(state.card)
+			recordRestoredView()
 			return
 		}
 
-		FetchHandler.handleFetch(`${DownstreamServices.SKC_API_ENDPOINTS.cardInstanceUrl}/${state.card.cardID}?allInfo=true`, (cardInfo: YGOCard.Info) => {
+		FetchHandler.handleFetch(`${DownstreamServices.SKC_API_ENDPOINTS.cardInstanceUrl}/${cardId}?allInfo=true`, (cardInfo: YGOCard.Info) => {
 			cardInformationDispatch({
 				type: CardInformationType.UPDATE_CARD,
 				cardInfo: cardInfo,
@@ -73,7 +77,7 @@ const CardInformation = () => {
 
 		// fetch suggestions
 		FetchHandler.handleFetch(
-			`${DownstreamServices.SKC_SUGGESTION_ENDPOINTS.cardSuggestions}/${state.card.cardID}`,
+			`${DownstreamServices.SKC_SUGGESTION_ENDPOINTS.cardSuggestions}/${cardId}`,
 			(cardSuggestionOutput: YGOCard.Suggestion) => {
 				cardInformationDispatch({
 					type: CardInformationType.UPDATE_SUGGESTIONS,
@@ -88,7 +92,7 @@ const CardInformation = () => {
 		})
 
 		FetchHandler.handleFetch(
-			`${DownstreamServices.SKC_SUGGESTION_ENDPOINTS.cardSupport}/${state.card.cardID}`,
+			`${DownstreamServices.SKC_SUGGESTION_ENDPOINTS.cardSupport}/${cardId}`,
 			(cardSupportOutput: YGOCard.Support) => {
 				cardInformationDispatch({
 					type: CardInformationType.UPDATE_SUPPORT,
@@ -101,7 +105,7 @@ const CardInformation = () => {
 				type: CardInformationType.FETCH_SUPPORT_ERROR,
 			})
 		})
-	}, [isRestored])
+	}, [isRestored, cardId, cardInformationDispatch])
 
 	return (
 		<div className='generic-container'>
