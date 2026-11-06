@@ -98,7 +98,7 @@ export default function Home() {
 		)?.catch(() => {
 			dispatch({ type: HomePageActionType.FETCH_SKC_YOUTUBE_UPLOADS_ERROR })
 		})
-	}, [isRestored])
+	}, [isRestored, dispatch])
 
 	return (
 		<div className='generic-container'>

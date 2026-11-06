@@ -108,7 +108,7 @@ const Trends = () => {
 		)?.catch(() => {
 			dispatch({ type: TrendActionType.FETCH_PRODUCT_TRENDS_ERROR })
 		})
-	}, [isRestored])
+	}, [isRestored, dispatch])
 
 	const isFetchingData = kind === 'CARD' ? cardTrendData.isFetchingData : productTrendData.isFetchingData
 	const items: TrendItem[] =
