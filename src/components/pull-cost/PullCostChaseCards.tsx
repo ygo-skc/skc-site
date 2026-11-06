@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react'
 import { Typography } from '@mui/material'
 
-import { casesToCollectAll, chanceWithin, formatChance, formatCount, formatMoney, oddsOfOneCard, PullOdds } from './pullCostStats'
+import { article, casesToCollectAll, chanceWithin, formatChance, formatCount, formatMoney, oddsOfOneCard, PullOdds } from './pullCostStats'
 
 type PullCostChaseCardsProps = {
 	odds: PullOdds
@@ -40,8 +40,8 @@ const PullCostChaseCards: FunctionComponent<PullCostChaseCardsProps> = ({ odds, 
 			</Typography>
 			{isSeveral && (
 				<Typography variant='body2' className='pull-cost__muted'>
-					Your {formatCount(odds.avgCases)} case average is for pulling any one of the {formatCount(uniqueCards)} {name}s, not a particular one. These figures assume each is
-					equally likely.
+					Your {formatCount(odds.avgCases)} case average is for pulling any one of the {formatCount(uniqueCards)} {name}s. Wanting one particular {name} is much harder, since only
+					1 in {formatCount(uniqueCards)} of the {name}s you pull is that one. These figures assume every {name} is equally likely to turn up.
 				</Typography>
 			)}
 
@@ -56,7 +56,8 @@ const PullCostChaseCards: FunctionComponent<PullCostChaseCardsProps> = ({ odds, 
 								{formatMoney(oneCard.avgCost)}
 							</Typography>
 							<Typography variant='body2' component='dd' className='pull-cost__muted'>
-								{formatCount(oneCard.avgCases)} cases on average to hit the exact one you want. Your budget has a {formatChance(chanceWithin(oneCard, cases))} chance of it.
+								{formatCount(oneCard.avgCases)} cases on average, {formatCount(uniqueCards)} times as many, to hit the exact one you want. Your budget has a{' '}
+								{formatChance(chanceWithin(oneCard, cases))} chance of it.
 							</Typography>
 						</div>
 						<div className='pull-cost__tile'>
@@ -67,7 +68,7 @@ const PullCostChaseCards: FunctionComponent<PullCostChaseCardsProps> = ({ odds, 
 								{formatMoney(collectCases * odds.caseCost)}
 							</Typography>
 							<Typography variant='body2' component='dd' className='pull-cost__muted'>
-								{formatCount(collectCases)} cases on average. The last few take longest, since most pulls are duplicates by then.
+								{formatCount(collectCases)} cases on average. The first few come quickly, but the last ones take longest: by then most {name}s you pull are copies you already have.
 							</Typography>
 						</div>
 					</>
@@ -84,9 +85,9 @@ const PullCostChaseCards: FunctionComponent<PullCostChaseCardsProps> = ({ odds, 
 								{formatMoney(price)}
 							</Typography>
 							<Typography variant='body2' component='dd' className='pull-cost__muted'>
-								What buying it outright costs, and {formatChance(price / odds.avgCost)} of the average cost to pull one. The same money on boxes gives a{' '}
-								{formatChance(chanceWithin(odds, casesAtPrice))} chance of any {name}
-								{isSeveral && ` and a ${formatChance(chanceWithin(oneCard, casesAtPrice))} chance of this exact card`}.
+								Buying this card on its own costs {formatChance(price / odds.avgCost)} of what pulling {article(name)} {name} costs on average. Spend the same {formatMoney(price)}{' '}
+								on boxes instead and you&apos;d have a {formatChance(chanceWithin(odds, casesAtPrice))} chance of any {name}
+								{isSeveral && `, and only a ${formatChance(chanceWithin(oneCard, casesAtPrice))} chance of this exact card`}.
 							</Typography>
 						</div>
 					)
@@ -101,8 +102,9 @@ const PullCostChaseCards: FunctionComponent<PullCostChaseCardsProps> = ({ odds, 
 							{worth}
 						</Typography>
 						<Typography variant='body2' component='dd' className='pull-cost__muted'>
-							Spending {formatMoney(spend)} gets about {expected.toFixed(2)} {name}s on average, so this is what they&apos;d sell for, depending on which you pull. The other cards
-							are extra.
+							If 100 people each spent {formatMoney(spend)}, together they&apos;d pull about {formatCount(expected * 100)} {name}s - some none, a few two or more. Shared out,
+							that&apos;s {expected.toFixed(2)} each, worth this much at the {prices.length > 1 ? 'lowest and highest prices' : 'price you entered'}. The other cards you open are
+							extra.
 						</Typography>
 					</div>
 				)}

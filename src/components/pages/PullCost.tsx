@@ -11,7 +11,7 @@ import { useHistoryEntryState } from '../util/useHistoryEntry'
 import PullCostChart from '../pull-cost/PullCostChart'
 import PullCostBreakdown from '../pull-cost/PullCostBreakdown'
 import PullCostChaseCards from '../pull-cost/PullCostChaseCards'
-import { boxesForBudget, casesForChance, chanceWithin, formatChance, formatCount, formatMoney, formatPeople, outcomesWithin, readOdds } from '../pull-cost/pullCostStats'
+import { boxesForBudget, casesForChance, chanceWithin, formatChance, formatCount, formatMoney, formatPeople, outcomesWithin, readOdds, article } from '../pull-cost/pullCostStats'
 
 const BOXES_PER_CASE = [4, 6, 12, 24]
 
@@ -89,9 +89,6 @@ const formatPrice = (value: string) => {
 	return `$${price.toLocaleString('en-US', { minimumFractionDigits: price % 1 ? 2 : 0, maximumFractionDigits: 2 })}`
 }
 
-// "an" before a vowel sound. Rarities in capitals are read letter by letter (an SR, a UR, a GMR), so it's the letter's name that counts; words go by their first letter (an Ultimate Rare)
-const article = (word: string) => ((/^[A-Z]{2,}\b/.test(word) ? /^[AEFHILMNORSX]/ : /^[aeiou]/i).test(word) ? 'an' : 'a')
-
 /*
  * How much a chase card costs to pull, and how sure that spend makes you. The reader's numbers go in the side column; the rest of
  * the page is worked out from them during render, so going back lands at the same height with the same picks
@@ -116,7 +113,7 @@ const PullCost: FunctionComponent = () => {
 				Your odds show up here
 			</Typography>
 			<Typography variant='body1' className='pull-cost__muted'>
-				Enter the cost of a box and the average cases it takes to pull one (at least 1).
+				Enter what a sealed box costs and how many cases it takes, on average, to pull one (1 or more).
 			</Typography>
 		</section>
 	)
@@ -149,7 +146,7 @@ const PullCost: FunctionComponent = () => {
 						</Typography>
 						<Typography variant='body1' className='pull-cost__muted'>
 							{formatMoney(boxes * odds.boxCost)} buys {formatCount(boxes)} boxes ({formatCount(cases)} cases). If 100 people each spent this, {formatPeople(chance)} would pull{' '}
-							{target} and {formatPeople(outcomesWithin(odds, boxes).none)} would pull nothing.
+							{target} and {formatPeople(outcomesWithin(odds, boxes).none)} would come away without one.
 						</Typography>
 					</div>
 
@@ -158,7 +155,8 @@ const PullCost: FunctionComponent = () => {
 					<PullCostChart odds={odds} cases={cases} maxCases={maxCases} onCasesChange={spendOnCases} sliderLabel='Cases you can afford' />
 
 					<Typography variant='body2' className='pull-cost__muted'>
-						Further right is more money spent, higher is a better chance. The line flattens because each extra case only helps if you haven&apos;t pulled one yet.
+						Left to right is how much you spend, bottom to top is your chance of pulling at least one. The line climbs fast, then slows: every case has the same small chance, so
+						spending twice as much never doubles your chance, and no amount of money reaches 100%.
 					</Typography>
 
 					<div className='pull-cost__scenarios'>
@@ -175,7 +173,7 @@ const PullCost: FunctionComponent = () => {
 										{formatMoney(scenarioBoxes * odds.boxCost)}
 									</Typography>
 									<Typography variant='body2' component='span'>
-										{formatCount(scenarioCases)} cases. {formatChance(chanceWithin(odds, scenarioCases))} chance of a pull by here.
+										{formatCount(scenarioCases)} cases. {formatChance(chanceWithin(odds, scenarioCases))} of buyers have one by this point.
 									</Typography>
 								</ButtonBase>
 							)

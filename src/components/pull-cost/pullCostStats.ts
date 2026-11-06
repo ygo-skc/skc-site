@@ -104,3 +104,6 @@ export function formatPeople(chance: number) {
 
 // the odds as the spreadsheet shows them - 0.625%
 export const formatOdds = (odds: number) => `${parseFloat((odds * 100).toFixed(3))}%`
+
+// "an" before a vowel sound. Rarities in capitals are read letter by letter (an SR, a UR, a GMR), so it's the letter's name that counts; words go by their first letter (an Ultimate Rare)
+export const article = (word: string) => ((/^[A-Z]{2,}\b/.test(word) ? /^[AEFHILMNORSX]/ : /^[aeiou]/i).test(word) ? 'an' : 'a')

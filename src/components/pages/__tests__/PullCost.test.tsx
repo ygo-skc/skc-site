@@ -28,11 +28,11 @@ test('verify the budget starts at the average cost', () => {
 test('verify the chance also reads as people out of 100', () => {
 	renderPage()
 
-	expect(screen.getByText(/If 100 people each spent this, about 64 would pull a GMR and about 36 would pull nothing/)).toBeInTheDocument()
-	expect(screen.getByText(/about 36 would pull nothing, about 37 would pull exactly one and about 27 would pull two or more/)).toBeInTheDocument()
+	expect(screen.getByText(/If 100 people each spent this, about 64 would pull a GMR and about 36 would come away without one/)).toBeInTheDocument()
+	expect(screen.getByText(/about 36 would pull none, about 37 would pull exactly one and about 27 would pull two or more/)).toBeInTheDocument()
 
 	type('Your budget', '0')
-	expect(screen.getByText(/If 100 people each spent this, none would pull a GMR and all would pull nothing/)).toBeInTheDocument()
+	expect(screen.getByText(/If 100 people each spent this, none would pull a GMR and all would come away without one/)).toBeInTheDocument()
 })
 
 test('verify the spreadsheet outcomes show and set the budget', () => {
@@ -55,7 +55,7 @@ test('verify an odd average sets the budget a scenario shows', () => {
 	const lucky = screen.getByRole('button', { name: /Lucky, half the average cost/ })
 
 	expect(within(lucky).getByText('$4,676')).toBeInTheDocument()
-	expect(within(lucky).getByText(/3.5 cases. 42% chance/)).toBeInTheDocument()
+	expect(within(lucky).getByText(/3.5 cases. 42% of buyers have one by this point/)).toBeInTheDocument()
 
 	fireEvent.click(lucky)
 	expect(headline()).toBe('42% chance of a GMR')
@@ -103,7 +103,7 @@ test('verify several cards at the rarity show the odds of one and of all', () =>
 
 	expect(screen.getByText('One specific GMR')).toBeInTheDocument()
 	expect(screen.getByText('$961,920')).toBeInTheDocument()
-	expect(screen.getByText(/720 cases on average to hit the exact one you want. Your budget has a 5% chance of it/)).toBeInTheDocument()
+	expect(screen.getByText(/720 cases on average, 18 times as many, to hit the exact one you want. Your budget has a 5% chance of it/)).toBeInTheDocument()
 	expect(screen.getByText('All 18 GMRs')).toBeInTheDocument()
 	expect(screen.getByText(/Add the lowest and highest single prices/)).toBeInTheDocument()
 })
@@ -124,10 +124,16 @@ test('verify lowest and highest prices give their metrics and the value of the b
 	type('Lowest single', '500')
 	type('Highest single', '13360')
 
-	expect(screen.getByText(/25% of the average cost to pull one. The same money on boxes gives a 22% chance of any GMR and a 1% chance of this exact card/)).toBeInTheDocument()
-	expect(screen.getByText(/0.9% of the average cost to pull one. The same money on boxes gives a 0.9% chance of any GMR/)).toBeInTheDocument()
+	expect(
+		screen.getByText(
+			/costs 25% of what pulling a GMR costs on average. Spend the same \$13,360 on boxes instead and you'd have a 22% chance of any GMR, and only a 1% chance of this exact card/
+		)
+	).toBeInTheDocument()
+	expect(screen.getByText(/costs 0.9% of what pulling a GMR costs on average. Spend the same \$500 on boxes instead and you'd have a 0.9% chance of any GMR/)).toBeInTheDocument()
 	expect(screen.getByText('$500 – $13,360')).toBeInTheDocument()
-	expect(screen.getByText(/Spending \$53,440 gets about 1.00 GMRs on average/)).toBeInTheDocument()
+	expect(
+		screen.getByText(/If 100 people each spent \$53,440, together they'd pull about 100 GMRs - some none, a few two or more. Shared out, that's 1.00 each/)
+	).toBeInTheDocument()
 	expect(screen.queryByText(/Add the lowest and highest/)).not.toBeInTheDocument()
 })
 
@@ -281,5 +287,5 @@ test('verify a mouse press on the chart starts no text selection', () => {
 	// fireEvent returns false once a handler has prevented the default - the press that would start a selection
 	expect(fireEvent.mouseDown(slider)).toBe(false)
 	expect(fireEvent.mouseDown(screen.getByRole('img', { name: /Chance of a pull rises with spend/ }))).toBe(false)
-	expect(fireEvent.mouseDown(screen.getByText(/Further right is more money spent/))).toBe(true)
+	expect(fireEvent.mouseDown(screen.getByText(/Left to right is how much you spend/))).toBe(true)
 })
