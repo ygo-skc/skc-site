@@ -1,6 +1,6 @@
 import '../../css/main-pages/product.css'
 
-import { useState, useEffect, FunctionComponent, useCallback, useMemo, startTransition } from 'react'
+import { useState, useEffect, FunctionComponent, useCallback, useMemo, useRef, startTransition } from 'react'
 
 import FetchHandler from '../../helper/FetchHandler'
 import * as DownstreamServices from '../../helper/DownstreamServices'
@@ -60,6 +60,13 @@ const hasProducts = (products: YGOProduct.Info[]) => products.length > 0
 // filters matching fewer products than this show every year instead of the last few
 const showAllUnder = 100
 
+// jumps rather than smooth scrolls - lazy covers loading on the way would push the year further down. False if the year's section isn't there
+function scrollToYear(year: number) {
+	const section = document.getElementById(`products-${year}`)
+	section?.scrollIntoView({ block: 'start' })
+	return section !== null
+}
+
 const ProductBrowse: FunctionComponent = () => {
 	// kept for coming back from a product page: the products, the filters and how many years show, so the page has its full height
 	const [products, setProducts, isRestored] = useHistoryEntryState<YGOProduct.Info[]>('product-browse', [], hasProducts)
@@ -75,8 +82,8 @@ const ProductBrowse: FunctionComponent = () => {
 		rememberView(view)
 	}, [view, rememberView])
 
-	// a year picked on the header's graph, scrolled to once its section renders
-	const [pickedYear, setPickedYear] = useState<number>()
+	// a year picked on the header's graph whose section hasn't rendered yet - scrolled to once it does
+	const pendingYear = useRef<number>(undefined)
 
 	useEffect(() => {
 		if (isRestored) return
@@ -113,15 +120,10 @@ const ProductBrowse: FunctionComponent = () => {
 		[shownProducts]
 	)
 
+	// an older year's section only exists once everything has loaded, so the pick waits until it renders
 	useEffect(() => {
-		if (pickedYear === undefined) return
-		// an older year's section only exists once everything has loaded, so keep the pick until it renders
-		const section = document.getElementById(`products-${pickedYear}`)
-		if (!section) return
-		// jump rather than smooth scroll - lazy covers loading on the way would push the year further down
-		section.scrollIntoView({ block: 'start' })
-		setPickedYear(undefined)
-	}, [pickedYear, productsByYear])
+		if (pendingYear.current !== undefined && scrollToYear(pendingYear.current)) pendingYear.current = undefined
+	}, [productsByYear])
 
 	const handlePickYearCB = useCallback(
 		(year: number) => {
@@ -134,24 +136,30 @@ const ProductBrowse: FunctionComponent = () => {
 			}
 			// with the filters cleared only the recent years may show, so an older pick loads the rest
 			if (year < oldestRecentYear) setLoadAll(true)
-			setPickedYear(year)
+			if (!scrollToYear(year)) pendingYear.current = year
 		},
-		[matchingProducts, oldestRecentYear]
+		[matchingProducts, oldestRecentYear, setQuery, setProductTypeFilter, setProductSubTypesFilter, setLoadAll]
 	)
 
-	const handleProductTypeFilterChangedCB = useCallback((type: string) => {
-		setProductTypeFilter(type)
-		// sub-types belong to a type, so start them over
-		setProductSubTypesFilter(new Set())
-	}, [])
+	const handleProductTypeFilterChangedCB = useCallback(
+		(type: string) => {
+			setProductTypeFilter(type)
+			// sub-types belong to a type, so start them over
+			setProductSubTypesFilter(new Set())
+		},
+		[setProductTypeFilter, setProductSubTypesFilter]
+	)
 
-	const toggleSubTypeCB = useCallback((subType: string) => {
-		setProductSubTypesFilter((subTypes) => {
-			const next = new Set(subTypes)
-			if (!next.delete(subType)) next.add(subType)
-			return next
-		})
-	}, [])
+	const toggleSubTypeCB = useCallback(
+		(subType: string) => {
+			setProductSubTypesFilter((subTypes) => {
+				const next = new Set(subTypes)
+				if (!next.delete(subType)) next.add(subType)
+				return next
+			})
+		},
+		[setProductSubTypesFilter]
+	)
 
 	return (
 		<div className='generic-container'>

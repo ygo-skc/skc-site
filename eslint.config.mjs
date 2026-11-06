@@ -31,7 +31,6 @@ export default defineConfig([
 		rules: {
 			'react/prop-types': 'off',
 			// warnings until each page's findings are fixed (one page per commit), then back to the plugin's errors
-			'react-hooks/set-state-in-effect': 'warn',
 			'react-hooks/globals': 'warn',
 		},
 	},

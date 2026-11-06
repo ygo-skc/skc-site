@@ -186,6 +186,19 @@ test('a year picked on the graph that the filters leave empty clears them and ju
 	delete (Element.prototype as Partial<Element>).scrollIntoView
 })
 
+test('a year picked on the graph that already shows is jumped to straight away', () => {
+	const scrollIntoView = jest.fn()
+	Element.prototype.scrollIntoView = scrollIntoView
+	answerWith([...products, ...manyOlderPacks])
+	renderPage()
+
+	fireEvent.click(screen.getByRole('button', { name: '2026, 3 releases' }))
+
+	expect(scrollIntoView).toHaveBeenCalledTimes(1)
+	expect(scrollIntoView.mock.contexts[0]).toBe(screen.getByRole('region', { name: '2026' }))
+	delete (Element.prototype as Partial<Element>).scrollIntoView
+})
+
 test('lists sub-types as toggle chips on phones', () => {
 	const matchMedia = window.matchMedia
 	window.matchMedia = jest.fn().mockImplementation((query: string) => ({
