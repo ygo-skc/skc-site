@@ -45,7 +45,7 @@ test('verify the spreadsheet outcomes show and set the budget', () => {
 
 	fireEvent.click(unlucky)
 	expect(headline()).toBe('87% chance of a GMR')
-	expect(screen.getByLabelText('Your budget')).toHaveValue(106880)
+	expect(screen.getByLabelText('Your budget')).toHaveDisplayValue('106,880.00')
 	expect(unlucky).toHaveAttribute('aria-pressed', 'true')
 })
 
@@ -59,7 +59,7 @@ test('verify an odd average sets the budget a scenario shows', () => {
 
 	fireEvent.click(lucky)
 	expect(headline()).toBe('42% chance of a GMR')
-	expect(screen.getByLabelText('Your budget')).toHaveValue(4676)
+	expect(screen.getByLabelText('Your budget')).toHaveDisplayValue('4,676.00')
 	expect(lucky).toHaveAttribute('aria-pressed', 'true')
 })
 
@@ -84,7 +84,7 @@ test('verify picking a confidence level uses it as the budget', () => {
 	renderPage()
 	fireEvent.click(screen.getByRole('button', { name: /90% chance/ }))
 
-	expect(screen.getByLabelText('Your budget')).toHaveValue(121576)
+	expect(screen.getByLabelText('Your budget')).toHaveDisplayValue('121,576.00')
 	expect(headline()).toBe('90% chance of a GMR')
 })
 
@@ -156,13 +156,29 @@ test('verify missing numbers ask for them instead of showing odds', () => {
 test('verify the box cost keeps to dollars and cents', () => {
 	renderPage()
 	const boxCost = screen.getByLabelText('Cost of a sealed box')
-	expect(boxCost).toHaveValue(334)
+	expect(boxCost).toHaveDisplayValue('334.00')
 
 	type('Cost of a sealed box', '299.999')
-	expect(boxCost).toHaveValue(334)
+	expect(boxCost).toHaveDisplayValue('334.00')
 	type('Cost of a sealed box', '299.9')
 	fireEvent.blur(boxCost)
 	expect(boxCost).toHaveDisplayValue('299.90')
+})
+
+test('verify money reads with commas and keeps the plain amount', () => {
+	renderPage()
+	const budget = screen.getByLabelText('Your budget')
+	expect(budget).toHaveAttribute('placeholder', '53,440')
+
+	type('Your budget', '1234567.5')
+	expect(budget).toHaveDisplayValue('1,234,567.5')
+	fireEvent.blur(budget)
+	expect(budget).toHaveDisplayValue('1,234,567.50')
+
+	// a pasted amount with its own commas reads the same
+	type('Highest single', '13,360')
+	expect(screen.getByLabelText('Highest single')).toHaveDisplayValue('13,360')
+	expect(screen.getByText('$13,360')).toBeInTheDocument()
 })
 
 test('verify the single prices keep to dollars and cents like the box cost', () => {

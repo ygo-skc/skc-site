@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactNode, useEffect, useId, useState } from 'react'
+import { FunctionComponent, ReactNode, useEffect, useId, useLayoutEffect, useRef, useState } from 'react'
 import { Button, ButtonBase, IconButton, InputBase, ToggleButton, ToggleButtonGroup, Typography, useMediaQuery, useTheme } from '@mui/material'
 import AddRoundedIcon from '@mui/icons-material/AddRounded'
 import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded'
@@ -32,10 +32,9 @@ type FieldProps = {
 	label: string
 	value: string
 	onChange: (value: string) => void
+	// dollars and cents, shown with commas - two decimals at most while typing, filled out to two on leaving the field
 	isMoney?: boolean
 	isNumber?: boolean
-	// dollars and cents - two decimals at most while typing, filled out to two on leaving the field
-	isCents?: boolean
 	// whole numbers from 1, with - and + buttons beside them
 	isStepper?: boolean
 	placeholder?: string
@@ -46,10 +45,29 @@ const WHOLE = /^\d*$/
 // keys a number field takes that a whole number can't use - a number input lets them through and reads the half-typed value as empty
 const NOT_WHOLE = new Set(['.', ',', 'e', 'E', '+', '-'])
 
-const Field: FunctionComponent<FieldProps> = ({ label, value, onChange, isMoney, isNumber, isCents, isStepper, placeholder }) => {
+// commas between thousands of a typed amount, keeping a half-typed decimal (1,234. or 1,234.5) as it is
+const withCommas = (value: string) => {
+	const [whole, cents] = value.split('.')
+	return whole.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (cents === undefined ? '' : `.${cents}`)
+}
+
+const Field: FunctionComponent<FieldProps> = ({ label, value, onChange, isMoney, isNumber, isStepper, placeholder }) => {
 	const id = useId()
 	const count = Math.max(parseInt(value, 10) || 1, 1)
-	const pattern = isCents ? CENTS : isStepper ? WHOLE : undefined
+	const pattern = isMoney ? CENTS : isStepper ? WHOLE : undefined
+	// money is a text field, since a number field can't show commas. The commas come and go as the amount grows, so the caret is put
+	// back after the same number of characters it followed while typing
+	const shown = isMoney ? withCommas(value) : value
+	const inputRef = useRef<HTMLInputElement>(null)
+	const caret = useRef<number>(undefined)
+	useLayoutEffect(() => {
+		const input = inputRef.current
+		if (caret.current === undefined || !input || document.activeElement !== input) return
+		let at = 0
+		for (let kept = 0; at < shown.length && kept < caret.current; at++) if (shown[at] !== ',') kept++
+		input.setSelectionRange(at, at)
+		caret.current = undefined
+	}, [shown])
 	return (
 		<div className='pull-cost-field'>
 			<Typography variant='subtitle2' component='label' htmlFor={id} className='pull-cost__muted'>
@@ -60,13 +78,20 @@ const Field: FunctionComponent<FieldProps> = ({ label, value, onChange, isMoney,
 				<InputBase
 					fullWidth
 					id={id}
-					type={isNumber ? 'number' : 'text'}
-					value={value}
+					inputRef={inputRef}
+					type={isNumber && !isMoney ? 'number' : 'text'}
+					value={shown}
 					placeholder={placeholder}
-					onChange={(event) => (!pattern || pattern.test(event.target.value)) && onChange(event.target.value)}
+					onChange={(event) => {
+						const { value: typed, selectionStart } = event.target
+						const raw = isMoney ? typed.replace(/,/g, '') : typed
+						if (pattern && !pattern.test(raw)) return
+						if (isMoney) caret.current = typed.slice(0, selectionStart ?? typed.length).replace(/,/g, '').length
+						onChange(raw)
+					}}
 					onKeyDown={(event) => isStepper && NOT_WHOLE.has(event.key) && event.preventDefault()}
-					onBlur={() => isCents && value !== '' && onChange(parseFloat(value).toFixed(2))}
-					inputProps={isNumber ? { min: isStepper ? 1 : 0, step: isCents ? 0.01 : 1, inputMode: isCents ? 'decimal' : 'numeric' } : { maxLength: 80 }}
+					onBlur={() => isMoney && value !== '' && onChange(parseFloat(value).toFixed(2))}
+					inputProps={isMoney ? { inputMode: 'decimal', maxLength: 16 } : isNumber ? { min: isStepper ? 1 : 0, step: 1, inputMode: 'numeric' } : { maxLength: 80 }}
 				/>
 				{isStepper && (
 					<span className='pull-cost-field__stepper'>
@@ -125,7 +150,7 @@ const PullCost: FunctionComponent = () => {
 		const chance = chanceWithin(odds, cases)
 		// wide enough to reach 95% sure, and further if the budget goes past it
 		const maxCases = Math.max(casesForChance(odds, 0.95), Math.ceil(cases), 1)
-		const spendOnCases = (picked: number) => change({ budget: String(Math.round(picked * odds.caseCost * 100) / 100) })
+		const spendOnCases = (picked: number) => change({ budget: (Math.round(picked * odds.caseCost * 100) / 100).toFixed(2) })
 		headlineText = `${formatChance(chance)} chance of ${target}`
 
 		const scenarios = [
@@ -150,7 +175,7 @@ const PullCost: FunctionComponent = () => {
 						</Typography>
 					</div>
 
-					<Field label='Your budget' value={budget} onChange={(value) => change({ budget: value })} isMoney isNumber placeholder={String(Math.round(odds.avgCost))} />
+					<Field label='Your budget' value={budget} onChange={(value) => change({ budget: value })} isMoney placeholder={withCommas(String(Math.round(odds.avgCost)))} />
 
 					<PullCostChart odds={odds} cases={cases} maxCases={maxCases} onCasesChange={spendOnCases} sliderLabel='Cases you can afford' />
 
@@ -223,7 +248,7 @@ const PullCost: FunctionComponent = () => {
 		<>
 			<Field label='Product' value={product} onChange={(value) => change({ product: value })} />
 			<Field label='Chase rarity' value={rarity} onChange={(value) => change({ rarity: value })} />
-			<Field label='Cost of a sealed box' value={boxCost} onChange={(value) => change({ boxCost: value })} isMoney isNumber isCents />
+			<Field label='Cost of a sealed box' value={boxCost} onChange={(value) => change({ boxCost: value })} isMoney />
 
 			<div className='pull-cost-field'>
 				<Typography variant='subtitle2' component='span' className='pull-cost__muted' id='pull-cost-per-case'>
@@ -250,8 +275,8 @@ const PullCost: FunctionComponent = () => {
 			<Field label='Average cases to pull one' value={avgCases} onChange={(value) => change({ avgCases: value })} isNumber />
 			<Field label='Unique cards at this rarity' value={uniqueCards} onChange={(value) => change({ uniqueCards: value })} isNumber isStepper />
 			<div className='pull-cost__price-pair'>
-				<Field label='Lowest single' value={lowestSingle} onChange={(value) => change({ lowestSingle: value })} isMoney isNumber isCents />
-				<Field label='Highest single' value={highestSingle} onChange={(value) => change({ highestSingle: value })} isMoney isNumber isCents />
+				<Field label='Lowest single' value={lowestSingle} onChange={(value) => change({ lowestSingle: value })} isMoney />
+				<Field label='Highest single' value={highestSingle} onChange={(value) => change({ highestSingle: value })} isMoney />
 			</div>
 		</>
 	)

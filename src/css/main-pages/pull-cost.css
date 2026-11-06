@@ -340,11 +340,21 @@
 }
 
 .pull-cost__sure {
+	display: grid;
+	/* the rows share these columns (subgrid), so the cases line up even though each row's price is a different width */
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+	column-gap: 12px;
 	margin: 0;
 	padding: 0;
 	list-style: none;
 	border-radius: 16px;
 	background: var(--capsule-track);
+}
+
+.pull-cost__sure li {
+	display: grid;
+	grid-column: 1 / -1;
+	grid-template-columns: subgrid;
 }
 
 .pull-cost__sure li + li {
@@ -353,8 +363,8 @@
 
 .pull-cost__sure-row.MuiButtonBase-root {
 	display: grid;
-	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
-	gap: 12px;
+	grid-column: 1 / -1;
+	grid-template-columns: subgrid;
 	align-items: baseline;
 	width: 100%;
 	min-height: 48px;
@@ -436,6 +446,11 @@
 
 	.pull-cost__scenarios {
 		grid-template-columns: minmax(0, 1fr);
+	}
+
+	/* the chance takes the width of its words so "50% chance" stays on one line */
+	.pull-cost__sure {
+		grid-template-columns: max-content minmax(0, 1fr) max-content;
 	}
 
 	.pull-cost-chart__tip {
