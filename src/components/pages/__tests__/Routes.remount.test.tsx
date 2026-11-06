@@ -12,9 +12,10 @@ import { RouterProvider, createMemoryRouter } from 'react-router-dom'
 jest.mock('../../header-footer/NavigationBar', () => ({ __esModule: true, default: () => <div>nav</div> }))
 jest.mock('../../header-footer/Footer', () => ({ __esModule: true, default: () => <div>footer</div> }))
 
+// named, so the hooks lint rule sees a component
 jest.mock('../CardInformation', () => ({
 	__esModule: true,
-	default: () => {
+	default: function CardScreen() {
 		const { useParams, Link } = jest.requireActual<typeof import('react-router-dom')>('react-router-dom')
 		const { useState } = jest.requireActual<typeof import('react')>('react')
 		const [idAtMount] = useState(useParams().cardId)
@@ -30,7 +31,7 @@ jest.mock('../CardInformation', () => ({
 
 jest.mock('../ProductInformation', () => ({
 	__esModule: true,
-	default: () => {
+	default: function ProductScreen() {
 		const { useParams, Link } = jest.requireActual<typeof import('react-router-dom')>('react-router-dom')
 		const { useState } = jest.requireActual<typeof import('react')>('react')
 		const [idAtMount] = useState(useParams().productId)
