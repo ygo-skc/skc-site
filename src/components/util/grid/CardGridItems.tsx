@@ -13,13 +13,12 @@ const CardGridItems: FC<{ cards: YGOCard.Deets[] }> = ({ cards }) => (
 	</Fragment>
 )
 
+// decodes a copy - the cards are the page's saved state, and decoding them in place would decode the text again on every render
 const CardGridItem: FC<{ card: YGOCard.Deets }> = ({ card }) => {
-	card.cardEffect = decodeHTML(card.cardEffect)
-
 	return (
 		<Grid className='ygo-card-grid-item' id={card.cardID} key={card.cardID} size={{ xs: 6, sm: 4, md: 3, lg: 2, xl: 1.5 }}>
 			<Link to={`/card/${card.cardID}`} className='aggregate-anchor'>
-				<YGOCardWithImage card={card} imgLoadingType='lazy' />
+				<YGOCardWithImage card={{ ...card, cardEffect: decodeHTML(card.cardEffect) }} imgLoadingType='lazy' />
 			</Link>
 		</Grid>
 	)

@@ -6,8 +6,16 @@ import { ReactNode } from 'react'
 // skc-rcl pulls in the ESM-only nivo chart stack, which jest cannot load, and the card visuals
 // are not what these tests are about
 jest.mock('skc-rcl', () => ({
-	YGOCardWithImage: ({ card }: { card: { cardName: string } }) => <div>{card.cardName}</div>,
+	YGOCardWithImage: ({ card }: { card: { cardName: string; cardEffect: string } }) => (
+		<div>
+			{card.cardName}
+			<p data-testid='effect'>{card.cardEffect}</p>
+		</div>
+	),
 }))
+
+// jest maps entities to a pass-through mock - this decodes one level, so decoding twice would show
+jest.mock('entities', () => ({ decodeHTML: (text: string) => text.replace(/&(amp|lt|gt);/g, (_, name: 'amp' | 'lt' | 'gt') => ({ amp: '&', lt: '<', gt: '>' }[name])) }))
 
 import CardGridItems from '../CardGridItems'
 import MuiTheme from '../../../MuiTheme'
@@ -54,4 +62,20 @@ test('verify card grid item navigates to card without reloading page', async () 
 
 	expect(screen.getByTestId('route-probe').textContent).toBe('card')
 	expect(window.location.assign).not.toHaveBeenCalled()
+})
+
+test('verify the effect is decoded once, without changing the cards it was given', () => {
+	// the api double encodes text the effect means literally
+	const card = { ...stratos, cardEffect: 'Tribute 1 &amp;lt;Fiend&amp;gt; monster' }
+	const { rerender } = renderWithProviders(<CardGridItems cards={[card]} />)
+	rerender(
+		<ThemeProvider theme={MuiTheme}>
+			<MemoryRouter initialEntries={['/']}>
+				<CardGridItems cards={[card]} />
+			</MemoryRouter>
+		</ThemeProvider>
+	)
+
+	expect(screen.getByTestId('effect')).toHaveTextContent('Tribute 1 &lt;Fiend&gt; monster')
+	expect(card.cardEffect).toBe('Tribute 1 &amp;lt;Fiend&amp;gt; monster')
 })
