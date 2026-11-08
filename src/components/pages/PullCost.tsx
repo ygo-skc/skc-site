@@ -19,7 +19,7 @@ const BOXES_PER_CASE = [4, 6, 12, 24]
 const initialInputs = {
 	product: 'Magnificent Monsters',
 	rarity: 'GMR',
-	boxCost: '334.00',
+	boxCost: '350.00',
 	boxesPerCase: 4,
 	avgCases: '40',
 	budget: '',

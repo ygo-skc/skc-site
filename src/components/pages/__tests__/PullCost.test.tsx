@@ -21,7 +21,7 @@ test('verify the budget starts at the average cost', () => {
 	renderPage()
 
 	expect(headline()).toBe('64% chance of a GMR')
-	expect(screen.getByText(/\$53,440 buys 160 boxes \(40 cases\)/)).toBeInTheDocument()
+	expect(screen.getByText(/\$56,000 buys 160 boxes \(40 cases\)/)).toBeInTheDocument()
 	expect(screen.getByRole('button', { name: /^Average cost/ })).toHaveAttribute('aria-pressed', 'true')
 })
 
@@ -40,12 +40,12 @@ test('verify the spreadsheet outcomes show and set the budget', () => {
 	const lucky = screen.getByRole('button', { name: /Lucky, half the average cost/ })
 	const unlucky = screen.getByRole('button', { name: /Unlucky, double the average cost/ })
 
-	expect(within(lucky).getByText('$26,720')).toBeInTheDocument()
-	expect(within(unlucky).getByText('$106,880')).toBeInTheDocument()
+	expect(within(lucky).getByText('$28,000')).toBeInTheDocument()
+	expect(within(unlucky).getByText('$112,000')).toBeInTheDocument()
 
 	fireEvent.click(unlucky)
 	expect(headline()).toBe('87% chance of a GMR')
-	expect(screen.getByLabelText('Your budget')).toHaveDisplayValue('106,880.00')
+	expect(screen.getByLabelText('Your budget')).toHaveDisplayValue('112,000.00')
 	expect(unlucky).toHaveAttribute('aria-pressed', 'true')
 })
 
@@ -54,12 +54,12 @@ test('verify an odd average sets the budget a scenario shows', () => {
 	type('Average cases to pull one', '7')
 	const lucky = screen.getByRole('button', { name: /Lucky, half the average cost/ })
 
-	expect(within(lucky).getByText('$4,676')).toBeInTheDocument()
+	expect(within(lucky).getByText('$4,900')).toBeInTheDocument()
 	expect(within(lucky).getByText(/3.5 cases. 42% of buyers have one by this point/)).toBeInTheDocument()
 
 	fireEvent.click(lucky)
 	expect(headline()).toBe('42% chance of a GMR')
-	expect(screen.getByLabelText('Your budget')).toHaveDisplayValue('4,676.00')
+	expect(screen.getByLabelText('Your budget')).toHaveDisplayValue('4,900.00')
 	expect(lucky).toHaveAttribute('aria-pressed', 'true')
 })
 
@@ -67,7 +67,7 @@ test('verify a budget under a case still buys boxes', () => {
 	renderPage()
 	type('Your budget', '1000')
 
-	expect(screen.getByText(/\$668 buys 2 boxes \(0.5 cases\)/)).toBeInTheDocument()
+	expect(screen.getByText(/\$700 buys 2 boxes \(0.5 cases\)/)).toBeInTheDocument()
 	expect(headline()).toBe('1% chance of a GMR')
 })
 
@@ -76,7 +76,7 @@ test('verify boxes per case and the rarity change the answer', () => {
 	fireEvent.click(screen.getByRole('button', { name: '12' }))
 	type('Chase rarity', 'Ultimate Rare')
 
-	expect(screen.getByText(/\$160,320 buys 480 boxes \(40 cases\)/)).toBeInTheDocument()
+	expect(screen.getByText(/\$168,000 buys 480 boxes \(40 cases\)/)).toBeInTheDocument()
 	expect(headline()).toBe('64% chance of an Ultimate Rare')
 })
 
@@ -84,7 +84,7 @@ test('verify picking a confidence level uses it as the budget', () => {
 	renderPage()
 	fireEvent.click(screen.getByRole('button', { name: /90% chance/ }))
 
-	expect(screen.getByLabelText('Your budget')).toHaveDisplayValue('121,576.00')
+	expect(screen.getByLabelText('Your budget')).toHaveDisplayValue('127,400.00')
 	expect(headline()).toBe('90% chance of a GMR')
 })
 
@@ -95,14 +95,14 @@ test('verify every confidence level reads the chance it sets', () => {
 		fireEvent.click(screen.getByRole('button', { name: new RegExp(`^${level} chance`) }))
 		expect(headline()).toBe(`${level} chance of a GMR`)
 	}
-	expect(screen.getByRole('button', { name: /^50% chance/ })).toHaveTextContent('27.5 cases$36,740')
+	expect(screen.getByRole('button', { name: /^50% chance/ })).toHaveTextContent('27.5 cases$38,500')
 })
 
 test('verify several cards at the rarity show the odds of one and of all', () => {
 	renderPage()
 
 	expect(screen.getByText('One specific GMR')).toBeInTheDocument()
-	expect(screen.getByText('$961,920')).toBeInTheDocument()
+	expect(screen.getByText('$1,008,000')).toBeInTheDocument()
 	expect(screen.getByText(/720 cases on average, 18 times as many, to hit the exact one you want. Your budget has a 5% chance of it/)).toBeInTheDocument()
 	expect(screen.getByText('All 18 GMRs')).toBeInTheDocument()
 	expect(screen.getByText(/Add the lowest and highest single prices/)).toBeInTheDocument()
@@ -122,17 +122,17 @@ test('verify one card at the rarity hides the section until a price is entered',
 test('verify lowest and highest prices give their metrics and the value of the budget', () => {
 	renderPage()
 	type('Lowest single', '500')
-	type('Highest single', '13360')
+	type('Highest single', '14000')
 
 	expect(
 		screen.getByText(
-			/costs 25% of what pulling a GMR costs on average. Spend the same \$13,360 on boxes instead and you'd have a 22% chance of any GMR, and only a 1% chance of this exact card/
+			/costs 25% of what pulling a GMR costs on average. Spend the same \$14,000 on boxes instead and you'd have a 22% chance of any GMR, and only a 1% chance of this exact card/
 		)
 	).toBeInTheDocument()
 	expect(screen.getByText(/costs 0.9% of what pulling a GMR costs on average. Spend the same \$500 on boxes instead and you'd have a 0.9% chance of any GMR/)).toBeInTheDocument()
-	expect(screen.getByText('$500 – $13,360')).toBeInTheDocument()
+	expect(screen.getByText('$500 – $14,000')).toBeInTheDocument()
 	expect(
-		screen.getByText(/If 100 people each spent \$53,440, together they'd pull about 100 GMRs - some none, a few two or more. Shared out, that's 1.00 each/)
+		screen.getByText(/If 100 people each spent \$56,000, together they'd pull about 100 GMRs - some none, a few two or more. Shared out, that's 1.00 each/)
 	).toBeInTheDocument()
 	expect(screen.queryByText(/Add the lowest and highest/)).not.toBeInTheDocument()
 })
@@ -156,10 +156,10 @@ test('verify missing numbers ask for them instead of showing odds', () => {
 test('verify the box cost keeps to dollars and cents', () => {
 	renderPage()
 	const boxCost = screen.getByLabelText('Cost of a sealed box')
-	expect(boxCost).toHaveDisplayValue('334.00')
+	expect(boxCost).toHaveDisplayValue('350.00')
 
 	type('Cost of a sealed box', '299.999')
-	expect(boxCost).toHaveDisplayValue('334.00')
+	expect(boxCost).toHaveDisplayValue('350.00')
 	type('Cost of a sealed box', '299.9')
 	fireEvent.blur(boxCost)
 	expect(boxCost).toHaveDisplayValue('299.90')
@@ -168,7 +168,7 @@ test('verify the box cost keeps to dollars and cents', () => {
 test('verify money reads with commas and keeps the plain amount', () => {
 	renderPage()
 	const budget = screen.getByLabelText('Your budget')
-	expect(budget).toHaveAttribute('placeholder', '53,440')
+	expect(budget).toHaveAttribute('placeholder', '56,000')
 
 	type('Your budget', '1234567.5')
 	expect(budget).toHaveDisplayValue('1,234,567.5')
@@ -242,7 +242,7 @@ test('verify the headline is announced once it settles, not on every change', ()
 	expect(screen.getByRole('heading', { level: 2, name: /chance of/ })).not.toHaveAttribute('aria-live')
 
 	type('Your budget', '1000')
-	type('Your budget', '106880')
+	type('Your budget', '112000')
 	act(() => jest.advanceTimersByTime(500))
 	expect(status).toHaveTextContent('64% chance of a GMR')
 	act(() => jest.advanceTimersByTime(500))
@@ -272,7 +272,7 @@ test('verify phones fold the inputs into a summary between the title and the ans
 	const answer = screen.getByRole('heading', { level: 2, name: /chance of/ })
 	expect(title.compareDocumentPosition(edit) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
 	expect(edit.compareDocumentPosition(answer) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
-	expect(screen.getByText('$334 a box · 4 boxes a case · 40 cases on average · 18 cards')).toBeInTheDocument()
+	expect(screen.getByText('$350 a box · 4 boxes a case · 40 cases on average · 18 cards')).toBeInTheDocument()
 	expect(edit).toHaveAttribute('aria-expanded', 'false')
 	expect(screen.queryByLabelText('Cost of a sealed box')).not.toBeInTheDocument()
 
