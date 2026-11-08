@@ -340,10 +340,6 @@
 }
 
 .pull-cost__sure {
-	display: grid;
-	/* the rows share these columns (subgrid), so the cases line up even though each row's price is a different width */
-	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
-	column-gap: 12px;
 	margin: 0;
 	padding: 0;
 	list-style: none;
@@ -351,20 +347,15 @@
 	background: var(--capsule-track);
 }
 
-.pull-cost__sure li {
-	display: grid;
-	grid-column: 1 / -1;
-	grid-template-columns: subgrid;
-}
-
 .pull-cost__sure li + li {
 	box-shadow: 0 -1px 0 var(--capsule-edge);
 }
 
+/* equal columns line the cases up without the rows sharing tracks - Safari 27 left nested subgrid rows squeezed until hovered */
 .pull-cost__sure-row.MuiButtonBase-root {
 	display: grid;
-	grid-column: 1 / -1;
-	grid-template-columns: subgrid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	column-gap: 12px;
 	align-items: baseline;
 	width: 100%;
 	min-height: 48px;
@@ -377,6 +368,10 @@
 
 .pull-cost__sure-row.MuiButtonBase-root:hover {
 	background: var(--capsule-hover);
+}
+
+.pull-cost__sure-price {
+	justify-self: end;
 }
 
 .pull-cost__outcomes {
@@ -449,7 +444,7 @@
 	}
 
 	/* the chance takes the width of its words so "50% chance" stays on one line */
-	.pull-cost__sure {
+	.pull-cost__sure-row.MuiButtonBase-root {
 		grid-template-columns: max-content minmax(0, 1fr) max-content;
 	}
 

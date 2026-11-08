@@ -108,7 +108,7 @@ const PullCostBreakdown: FunctionComponent<PullCostBreakdownProps> = ({ odds, bo
 									<Typography variant='body2' component='span' className='pull-cost__muted'>
 										{formatCount(cases)} cases
 									</Typography>
-									<Typography variant='subtitle1' component='span'>
+									<Typography variant='subtitle1' component='span' className='pull-cost__sure-price'>
 										{formatMoney(cases * odds.caseCost)}
 									</Typography>
 								</ButtonBase>
