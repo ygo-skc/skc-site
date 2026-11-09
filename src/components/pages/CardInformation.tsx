@@ -1,21 +1,17 @@
 import '../../css/card/card-information.css'
-import '../../css/util/headline.css'
 
 import { useEffect, useEffectEvent, lazy, Suspense } from 'react'
 import { useParams } from 'react-router-dom'
-import { Chip, Skeleton, Typography } from '@mui/material'
+import { Skeleton } from '@mui/material'
 
 import FetchHandler from '../../helper/FetchHandler'
 import * as DownstreamServices from '../../helper/DownstreamServices'
-import { CardImageRounded, Hint, Section, YGOCard } from 'skc-rcl'
-import { decodeHTML } from 'entities'
 import { cardInformationReducer, CardInformationType } from '../../reducers/CardInformationReducer'
-import * as Dates from '../../helper/Dates'
 import { recordCardView } from '../../helper/RecentlyViewed'
 
-import CalendarMonthTwoToneIcon from '@mui/icons-material/CalendarMonthTwoTone'
 import Breadcrumb from '../header-footer/Breadcrumb'
 import { useHistoryEntryReducer } from '../util/useHistoryEntry'
+import CardInformationHeader from '../card/card-information/CardInformationHeader'
 
 const CardSuggestions = lazy(() => import('../card/suggestion/CardSuggestions'))
 const CardInformationRelatedContent = lazy(() => import('../card/card-information/CardInformationRelatedContent'))
@@ -46,7 +42,6 @@ const CardInformation = () => {
 			productInfo: [],
 			restrictionInfo: { TCG: [], MD: [], DL: [] },
 			isFetchingCardData: true,
-			uniqueRarities: [],
 			suggestions: { namedMaterials: [], namedReferences: [], referencedBy: [], materialFor: [], hasSelfReference: false },
 			archetypes: new Set<string>(),
 			isFetchingSuggestions: true,
@@ -120,100 +115,14 @@ const CardInformation = () => {
 
 			<Breadcrumb crumbs={state.pageBreadcrumbs} />
 
-			<div className='headline-v1'>
-				<Section sectionHeaderBackground={state.card.cardColor !== undefined ? (state.card.cardColor?.replace(/Pendulum-/gi, '') as YGOCard.Color) : ''} sectionName='Card Stats'>
-					<div className='section-content'>
-						<CardImageRounded size='md' cardID={state.card.cardID} loading='eager' />
-						{state.isFetchingCardData ? (
-							<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='12rem' />
-						) : (
-							<YGOCard
-								cardName={state.card.cardName}
-								cardColor={state.card.cardColor}
-								cardEffect={decodeHTML(state.card.cardEffect)}
-								cardAttribute={state.card.cardAttribute}
-								monsterType={state.card.monsterType}
-								monsterAttack={state.card.monsterAttack}
-								monsterDefense={state.card.monsterDefense}
-								monsterAssociation={state.card.monsterAssociation}
-								cardID={state.card.cardID}
-								fullDetails={true}
-								isLoading={false}
-							/>
-						)}
-					</div>
-				</Section>
-
-				<div className='group hairline-edge'>
-					<Typography variant='h3' align='center'>
-						Summary
-					</Typography>
-
-					<div className='headline-section'>
-						<Typography variant='h5'>Archetypes (BETA)</Typography>
-						{state.isFetchingSuggestions && <Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='3.5rem' />}
-						{!state.isFetchingSuggestions &&
-							state.archetypes.size !== 0 &&
-							[...state.archetypes].map((archetype) => <Chip className='tag-chip' key={archetype} label={archetype} />)}
-						{!state.isFetchingSuggestions && state.archetypes.size === 0 && (
-							<Hint variant='tight' fullWidth={false}>
-								Not tied to any archetype
-							</Hint>
-						)}
-					</div>
-
-					<div className='headline-section'>
-						<Typography variant='h5'>Releases</Typography>
-						{/* the printing dates, rarity count and rarity chips, held while the card's products load */}
-						{state.isFetchingCardData && (
-							<div aria-hidden='true' data-testid='card-releases-skeleton'>
-								<div className='card-printing-info-container'>
-									<Skeleton variant='circular' width={24} height={24} />
-									<div>
-										<Typography variant='subtitle2'>
-											<Skeleton width='16rem' />
-										</Typography>
-										<Typography variant='subtitle2'>
-											<Skeleton width='14rem' />
-										</Typography>
-									</div>
-								</div>
-								<Typography variant='subtitle2'>
-									<Skeleton width='7rem' />
-								</Typography>
-								<Skeleton className='card-releases__chip-skeleton' variant='rounded' width='6rem' height={32} />
-							</div>
-						)}
-						{!state.isFetchingCardData && state.productInfo.length !== 0 && (
-							<div className='card-printing-info-container'>
-								<CalendarMonthTwoToneIcon />
-								<div>
-									<Typography variant='subtitle2'>
-										{Dates.daysBetweenTwoDates(Dates.fromYYYYMMDDToDate(state.productInfo[0].productReleaseDate)).toLocaleString()} day(s) since last printing
-									</Typography>
-									{state.productInfo.length >= 2 && (
-										<Typography variant='subtitle2'>
-											{Dates.daysBetweenTwoDates(Dates.fromYYYYMMDDToDate(state.productInfo[state.productInfo.length - 1].productReleaseDate)).toLocaleString()} days since initial
-											release
-										</Typography>
-									)}
-								</div>
-							</div>
-						)}
-
-						{!state.isFetchingCardData && (
-							<>
-								<Typography variant='subtitle2'>
-									{state.uniqueRarities.length} unique {state.uniqueRarities.length == 1 ? 'rarity' : 'rarities'}
-								</Typography>
-								{state.uniqueRarities.map((uniqueRarity) => (
-									<Chip className='tag-chip' key={uniqueRarity} label={uniqueRarity} />
-								))}
-							</>
-						)}
-					</div>
-				</div>
-			</div>
+			<CardInformationHeader
+				card={state.card}
+				isFetchingCardData={state.isFetchingCardData}
+				productInfo={state.productInfo}
+				restrictionInfo={state.restrictionInfo}
+				archetypes={state.archetypes}
+				isFetchingArchetypes={state.isFetchingSuggestions}
+			/>
 
 			<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='22rem' />}>
 				<CardSuggestions

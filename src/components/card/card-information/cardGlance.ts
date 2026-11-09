@@ -1,0 +1,80 @@
+import { byRarity, setNumber } from '../../product/productFilters'
+
+export type Printing = { date: string; productName: string }
+
+// one set number the card was printed under in a rarity, e.g. MZMU-EN000 in Maze of Muertos
+export type RarityPrinting = { productId: string; productName: string; date: string; setNumber: string }
+
+export type RarityPrintings = { rarity: string; printings: RarityPrinting[] }
+
+export type FormatHistory = { format: 'TCG' | 'MD'; lists: number; latest?: YGOCard.RestrictionStatus }
+
+export type CardGlance = {
+	printings: number
+	products: number
+	first?: Printing
+	last?: Printing
+	rarities: RarityPrintings[]
+	banLists: FormatHistory[]
+}
+
+// "Effect Monster · Fire · Level 10", "Pendulum Effect Monster · Dark · Level 4", "Spell Card"
+export const cardEyebrow = ({ cardColor, cardAttribute, monsterAssociation }: YGOCard.Deets): string => {
+	const color = (cardColor as string | undefined) ?? ''
+	if (/^(spell|trap)$/i.test(color)) return `${color} Card`
+	if (/^token$/i.test(color)) return 'Token'
+
+	const tier =
+		monsterAssociation?.level !== undefined
+			? `Level ${monsterAssociation.level}`
+			: monsterAssociation?.rank !== undefined
+			? `Rank ${monsterAssociation.rank}`
+			: monsterAssociation?.linkRating !== undefined
+			? `Link ${monsterAssociation.linkRating}`
+			: undefined
+
+	return [`${color.replace(/-/g, ' ')} Monster`, cardAttribute, tier].filter(Boolean).join(' · ')
+}
+
+const DAY_MS = 24 * 60 * 60 * 1000
+
+// whole days between a YYYY-MM-DD date and today, both at local midnight - "today", "262 days ago", "in 30 days" for an upcoming printing
+export const relativeDays = (date: string, today: Date = new Date()): string => {
+	const [year, month, day] = date.split('-').map(Number)
+	const days = Math.round((new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime() - new Date(year, month - 1, day).getTime()) / DAY_MS)
+	if (days === 0) return 'today'
+	const count = `${Math.abs(days).toLocaleString()} ${Math.abs(days) === 1 ? 'day' : 'days'}`
+	return days > 0 ? `${count} ago` : `in ${count}`
+}
+
+// a product can list the card more than once (MZMU-EN000 and MZMU-EN074), so printings count each set number and products count each product once
+export const cardGlance = (productInfo: YGOProduct.Info[], restrictedIn: YGOCard.Restrictions): CardGlance => {
+	const byDate = [...productInfo].sort((a, b) => a.productReleaseDate.localeCompare(b.productReleaseDate))
+	const printing = (product?: YGOProduct.Info): Printing | undefined => product && { date: product.productReleaseDate, productName: product.productName }
+
+	// each rarity with the printings in it, newest first - a printing in two rarities (Ultra and Ultimate) shows under both
+	const byRarityName = new Map<string, RarityPrinting[]>()
+	for (const product of [...byDate].reverse()) {
+		for (const content of product.productContent) {
+			for (const rarity of content.rarities) {
+				const entry = { productId: product.productId, productName: product.productName, date: product.productReleaseDate, setNumber: setNumber(product, content) }
+				byRarityName.set(rarity, [...(byRarityName.get(rarity) ?? []), entry])
+			}
+		}
+	}
+
+	return {
+		printings: productInfo.reduce((total, product) => total + product.productContent.length, 0),
+		products: new Set(productInfo.map((product) => product.productId)).size,
+		first: printing(byDate[0]),
+		last: printing(byDate[byDate.length - 1]),
+		rarities: Array.from(byRarityName.keys())
+			.sort(byRarity)
+			.map((rarity) => ({ rarity, printings: byRarityName.get(rarity) ?? [] })),
+		banLists: (['TCG', 'MD'] as const).map((format) => ({
+			format,
+			lists: restrictedIn[format].length,
+			latest: [...restrictedIn[format]].sort((a, b) => b.banListDate.localeCompare(a.banListDate))[0],
+		})),
+	}
+}

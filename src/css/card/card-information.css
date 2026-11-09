@@ -28,26 +28,6 @@
 	color: color-mix(in srgb, var(--capsule-muted) 50%, var(--capsule-track));
 }
 
-.unique-rarities > *:not(:last-child) {
-	margin-bottom: 3px;
-}
-
-.unique-rarities {
-	margin-top: 26px;
-}
-
-.card-printing-info-container {
-	display: flex;
-}
-
-.card-printing-info-container > *:not(:last-child) {
-	margin-right: 13px;
-}
-
-.card-releases__chip-skeleton.MuiSkeleton-root {
-	border-radius: 999px;
-}
-
 /* a product's cover in the card's product list holds a booster pack's shape while it loads, so going back to the card lands where it was left */
 .card-product-list-item__cover {
 	display: block;

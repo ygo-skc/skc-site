@@ -8,7 +8,6 @@ type CardInformationState = {
 	productInfo: YGOProduct.Info[]
 	restrictionInfo: YGOCard.Restrictions
 	isFetchingCardData: boolean
-	uniqueRarities: string[]
 	// card suggestion state
 	suggestions: CardSuggestions
 	archetypes: Set<string>
@@ -56,9 +55,6 @@ export function cardInformationReducer(state: CardInformationState, action: Card
 				productInfo: action.cardInfo.foundIn ?? [],
 				restrictionInfo: action.cardInfo.restrictedIn ?? { TCG: [], MD: [], DL: [] },
 				isFetchingCardData: false,
-				uniqueRarities: Array.from(
-					new Set(action.cardInfo.foundIn.flatMap((product: YGOProduct.Info) => product.productContent.flatMap((productContent: YGOProduct.Content) => productContent.rarities)))
-				).sort((a, b) => a.localeCompare(b)),
 			}
 		case CardInformationType.UPDATE_SUGGESTIONS:
 			return {

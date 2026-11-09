@@ -9,10 +9,8 @@ import { readRecentlyViewed, recordCardView } from '../../../helper/RecentlyView
 
 // skc-rcl pulls in esm only chart libraries
 jest.mock('skc-rcl', () => ({
-	Section: ({ sectionName, children }: { sectionName: string; children: React.ReactNode }) => <section aria-label={sectionName}>{children}</section>,
 	CardImageRounded: () => null,
 	YGOCard: () => null,
-	Hint: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
 }))
 
 // the page's lazy sections aren't what these tests are about
@@ -22,7 +20,7 @@ jest.mock('../../card/card-information/CardInformationRelatedContent', () => ({ 
 // the page's requests never answer, so it stays in its loading state
 jest.spyOn(FetchHandler, 'handleFetch').mockImplementation(() => new Promise(() => {}))
 
-test('holds the releases with a skeleton instead of a zero count while the card loads', () => {
+test('holds the at a glance rows with a skeleton instead of a zero count while the card loads', () => {
 	render(
 		<ThemeProvider theme={MuiTheme}>
 			<MemoryRouter initialEntries={['/card/83461421']}>
@@ -33,9 +31,9 @@ test('holds the releases with a skeleton instead of a zero count while the card 
 		</ThemeProvider>
 	)
 
-	expect(screen.getByText('Releases')).toBeInTheDocument()
-	expect(screen.getByTestId('card-releases-skeleton')).toHaveAttribute('aria-hidden', 'true')
-	expect(screen.queryByText(/unique rarit/)).not.toBeInTheDocument()
+	expect(screen.getByText('At a glance')).toBeInTheDocument()
+	expect(screen.getByTestId('card-glance-skeleton')).toHaveAttribute('aria-hidden', 'true')
+	expect(screen.queryByText('Not printed yet')).not.toBeInTheDocument()
 })
 
 test('remembers the card as recently viewed once it loads', () => {
@@ -83,7 +81,7 @@ test('coming back to the card shows it without fetching again, and moves it back
 		)
 
 	const { unmount } = renderCard()
-	await waitFor(() => expect(screen.queryByTestId('card-releases-skeleton')).not.toBeInTheDocument())
+	await waitFor(() => expect(screen.queryByTestId('card-glance-skeleton')).not.toBeInTheDocument())
 	expect(handleFetch).toHaveBeenCalledTimes(3)
 	await screen.findByText('Not tied to any archetype')
 	unmount()
@@ -92,7 +90,7 @@ test('coming back to the card shows it without fetching again, and moves it back
 	recordCardView({ ...card, cardID: '89631139', cardName: 'Blue-Eyes White Dragon' } as YGOCard.Deets)
 	renderCard()
 
-	expect(screen.queryByTestId('card-releases-skeleton')).not.toBeInTheDocument()
+	expect(screen.queryByTestId('card-glance-skeleton')).not.toBeInTheDocument()
 	expect(handleFetch).toHaveBeenCalledTimes(3)
 	expect(readRecentlyViewed()[0]).toEqual(expect.objectContaining({ id: '83461421' }))
 })
