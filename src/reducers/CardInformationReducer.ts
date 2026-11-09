@@ -15,6 +15,9 @@ type CardInformationState = {
 	isFetchingSupport: boolean
 	suggestionRequestHasError: boolean
 	supportRequestHasError: boolean
+	// every TCG / Master Duel list's date, newest first - the reach of the card's ban history, and whether it's on the current list.
+	// undefined while loading, empty if the request failed
+	banListDates: { TCG?: string[]; MD?: string[] }
 }
 
 export enum CardInformationType {
@@ -23,6 +26,7 @@ export enum CardInformationType {
 	UPDATE_SUPPORT,
 	FETCH_SUGGESTIONS_ERROR,
 	FETCH_SUPPORT_ERROR,
+	UPDATE_BAN_LIST_DATES,
 }
 
 type CardInformationAction =
@@ -43,6 +47,11 @@ type CardInformationAction =
 	  }
 	| {
 			type: CardInformationType.FETCH_SUPPORT_ERROR
+	  }
+	| {
+			type: CardInformationType.UPDATE_BAN_LIST_DATES
+			format: 'TCG' | 'MD'
+			dates: string[]
 	  }
 
 export function cardInformationReducer(state: CardInformationState, action: CardInformationAction): CardInformationState {
@@ -82,6 +91,11 @@ export function cardInformationReducer(state: CardInformationState, action: Card
 				...state,
 				supportRequestHasError: true,
 				isFetchingSupport: false,
+			}
+		case CardInformationType.UPDATE_BAN_LIST_DATES:
+			return {
+				...state,
+				banListDates: { ...state.banListDates, [action.format]: [...action.dates].sort((a, b) => b.localeCompare(a)) },
 			}
 	}
 }

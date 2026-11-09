@@ -1,88 +1,83 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 import { ThemeProvider } from '@mui/material/styles'
 import { MemoryRouter } from 'react-router-dom'
-import { ReactNode } from 'react'
 
 import CardBanListInformation from '../CardBanListInformation'
 import MuiTheme from '../../../MuiTheme'
 
-// skc-rcl pulls in esm-only charting code jest can't load - the list items just need to show their content
-jest.mock('skc-rcl', () => ({
-	DatedListItem: ({ children }: { children: ReactNode }) => <div>{children}</div>,
-	Hint: ({ children }: { children: ReactNode }) => <div>{children}</div>,
-}))
+// skc-rcl pulls in esm only chart libraries (the shared column head's module uses its card art)
+jest.mock('skc-rcl', () => ({ CardImageRounded: () => null }))
 
 const restrictedIn = {
-	TCG: [{ banListDate: '2026-10-19', banStatus: 'Forbidden' }],
+	TCG: [
+		{ banListDate: '2015-11-09', banStatus: 'Forbidden' },
+		{ banListDate: '2016-08-29', banStatus: 'Semi Limited' },
+	],
 	MD: [{ banListDate: '2026-09-01', banStatus: 'Limited' }],
-	DL: [],
+	DL: [{ banListDate: '2026-01-01', banStatus: 'Forbidden' }],
 } as unknown as YGOCard.Restrictions
 
-function renderBanLists() {
+function renderBanLists(lists: YGOCard.Restrictions = restrictedIn, banListDates: { TCG?: string[]; MD?: string[] } = {}) {
 	return render(
 		<ThemeProvider theme={MuiTheme}>
 			<MemoryRouter>
-				<CardBanListInformation restrictedIn={restrictedIn} />
+				<CardBanListInformation restrictedIn={lists} banListDates={banListDates} cardName='Sangan' />
 			</MemoryRouter>
 		</ThemeProvider>
 	)
 }
 
-test('verify the format control marks the selected format and switches lists', () => {
+const rows = (column: HTMLElement) =>
+	within(column)
+		.getAllByRole('listitem')
+		.map((row) => row.textContent)
+
+test('a column per format with lists, each newest first with its status in its tint - no Duel Links', () => {
 	renderBanLists()
 
-	const tcg = screen.getByRole('button', { name: 'TCG — 1' })
-	const md = screen.getByRole('button', { name: 'Master Duel — 1' })
-	expect(tcg).toHaveAttribute('aria-pressed', 'true')
-	expect(md).toHaveAttribute('aria-pressed', 'false')
-	expect(screen.getByText('Forbidden')).toBeInTheDocument()
-
-	fireEvent.click(md)
-
-	expect(md).toHaveAttribute('aria-pressed', 'true')
-	expect(tcg).toHaveAttribute('aria-pressed', 'false')
-	expect(screen.getByText('Selected Format — Master Duel')).toBeInTheDocument()
-	expect(screen.getByText('Limited')).toBeInTheDocument()
-
-	// pressing the selected format again keeps it selected rather than clearing the choice
-	fireEvent.click(md)
-	expect(md).toHaveAttribute('aria-pressed', 'true')
+	const tcg = screen.getByRole('region', { name: 'TCG' })
+	expect(within(tcg).getByText('Lists Sangan was on, newest first')).toBeInTheDocument()
+	expect(rows(tcg)).toEqual(['Aug 29, 2016Semi-Limited', 'Nov 9, 2015Forbidden'])
+	expect(within(tcg).getByText('Forbidden').closest('.ban-status-chip')).toHaveClass('ban-status--forbidden')
+	expect(rows(screen.getByRole('region', { name: 'Master Duel' }))).toEqual(['Sep 1, 2026Limited'])
+	expect(screen.queryByRole('region', { name: 'Duel Links' })).not.toBeInTheDocument()
 })
 
-test('verify a format with no ban lists cannot be picked', () => {
-	renderBanLists()
+test('a format with no lists keeps its column, with an unlimited row', () => {
+	renderBanLists({ TCG: [], MD: restrictedIn.MD, DL: [] })
 
-	expect(screen.getByRole('button', { name: 'Duel Links — 0' })).toBeDisabled()
+	const tcg = screen.getByRole('region', { name: 'TCG' })
+	expect(within(tcg).getByText('Up to 3 copies a deck')).toBeInTheDocument()
+	expect(rows(tcg)).toEqual(['Not on a listUnlimited'])
+	expect(within(tcg).getByText('Unlimited').closest('.ban-status-chip')).toHaveClass('ban-status--unlimited')
+	expect(rows(screen.getByRole('region', { name: 'Master Duel' }))).toEqual(['Sep 1, 2026Limited'])
 })
 
-test('verify coming back keeps the picked format and loaded lists, and another format folds back to its first few', () => {
+test('a card never listed keeps both columns, saying how far back the lists reach when their dates are in', () => {
+	renderBanLists({ TCG: [], MD: [], DL: [] }, { TCG: ['2026-10-19', '2015-11-09'], MD: ['2026-10-01', '2022-01-19'] })
+
+	expect(screen.getByText('Not on a TCG or Master Duel list')).toBeInTheDocument()
+	expect(rows(screen.getByRole('region', { name: 'TCG' }))).toEqual(['Not on a list since Nov 2015Unlimited'])
+	expect(rows(screen.getByRole('region', { name: 'Master Duel' }))).toEqual(['Not on a list since Jan 2022Unlimited'])
+})
+
+test('a card off the newest list starts its column with where it stands now', () => {
+	renderBanLists(restrictedIn, { TCG: ['2026-10-19', '2016-11-14', '2016-08-29', '2016-04-11', '2015-11-09'], MD: ['2026-09-01'] })
+
+	// unlimited since the TCG list after its last one; still on Master Duel's newest list, so no row before its lists
+	expect(rows(screen.getByRole('region', { name: 'TCG' }))).toEqual(['Since Nov 14, 2016Unlimited', 'Aug 29, 2016Semi-Limited', 'Nov 9, 2015Forbidden'])
+	expect(rows(screen.getByRole('region', { name: 'Master Duel' }))).toEqual(['Sep 1, 2026Limited'])
+})
+
+test('past eight lists the rest open in a popup', () => {
 	const many = {
 		TCG: Array.from({ length: 12 }, (_, i) => ({ banListDate: `2025-${String(i + 1).padStart(2, '0')}-01`, banStatus: 'Limited' })),
-		MD: Array.from({ length: 12 }, (_, i) => ({ banListDate: `2024-${String(i + 1).padStart(2, '0')}-01`, banStatus: 'Semi-Limited' })),
+		MD: [],
 		DL: [],
 	} as unknown as YGOCard.Restrictions
-	const renderMany = () =>
-		render(
-			<ThemeProvider theme={MuiTheme}>
-				<MemoryRouter>
-					<CardBanListInformation restrictedIn={many} />
-				</MemoryRouter>
-			</ThemeProvider>
-		)
+	renderBanLists(many)
 
-	const { unmount } = renderMany()
-	fireEvent.click(screen.getByRole('button', { name: 'Master Duel — 12' }))
-	fireEvent.click(screen.getByRole('button', { name: 'Load All' }))
-	expect(screen.getAllByText('Semi-Limited')).toHaveLength(12)
-	unmount()
-
-	// same history entry, so the format and the loaded lists are still there
-	renderMany()
-	expect(screen.getByRole('button', { name: 'Master Duel — 12' })).toHaveAttribute('aria-pressed', 'true')
-	expect(screen.getAllByText('Semi-Limited')).toHaveLength(12)
-	expect(screen.queryByRole('button', { name: 'Load All' })).not.toBeInTheDocument()
-
-	fireEvent.click(screen.getByRole('button', { name: 'TCG — 12' }))
-	expect(screen.getAllByText('Limited')).toHaveLength(10)
-	expect(screen.getByRole('button', { name: 'Load All' })).toBeInTheDocument()
+	expect(rows(screen.getByRole('region', { name: 'TCG' }))).toHaveLength(8)
+	fireEvent.click(screen.getByRole('button', { name: 'Show all 12' }))
+	expect(within(screen.getByRole('dialog', { name: 'TCG' })).getAllByRole('listitem')).toHaveLength(12)
 })

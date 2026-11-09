@@ -14,9 +14,9 @@ jest.mock('skc-rcl', () => ({
 	ProductImage: () => null,
 }))
 
-// the page's lazy sections aren't what these tests are about
+// the page's lower sections aren't what these tests are about
 jest.mock('../../card/suggestion/CardSuggestions', () => ({ __esModule: true, default: () => null }))
-jest.mock('../../card/card-information/CardInformationRelatedContent', () => ({ __esModule: true, default: () => null }))
+jest.mock('../../card/card-information/CardBanListInformation', () => ({ __esModule: true, default: () => null }))
 
 // the page's requests never answer, so it stays in its loading state
 jest.spyOn(FetchHandler, 'handleFetch').mockImplementation(() => new Promise(() => {}))
@@ -62,7 +62,7 @@ test('coming back to the card shows it without fetching again, and moves it back
 	const card = { cardID: '83461421', cardName: 'Pendulum Storm', cardColor: 'spell', cardEffect: '', foundIn: [], restrictedIn: { TCG: [], MD: [], DL: [] } }
 	const handleFetch = jest.mocked(FetchHandler.handleFetch)
 	handleFetch.mockClear()
-	// the card answers, suggestions and support fail - every section has settled
+	// the card answers, everything else fails - every section has settled
 	handleFetch.mockImplementation((url, onSuccess) => {
 		if (url.includes('83461421?allInfo')) {
 			onSuccess(card)
@@ -83,7 +83,8 @@ test('coming back to the card shows it without fetching again, and moves it back
 
 	const { unmount } = renderCard()
 	await waitFor(() => expect(screen.queryByTestId('card-glance-skeleton')).not.toBeInTheDocument())
-	expect(handleFetch).toHaveBeenCalledTimes(3)
+	// the card, its suggestions and support, and both formats' list dates
+	expect(handleFetch).toHaveBeenCalledTimes(5)
 	await screen.findByText('Not tied to any archetype')
 	unmount()
 
@@ -92,6 +93,6 @@ test('coming back to the card shows it without fetching again, and moves it back
 	renderCard()
 
 	expect(screen.queryByTestId('card-glance-skeleton')).not.toBeInTheDocument()
-	expect(handleFetch).toHaveBeenCalledTimes(3)
+	expect(handleFetch).toHaveBeenCalledTimes(5)
 	expect(readRecentlyViewed()[0]).toEqual(expect.objectContaining({ id: '83461421' }))
 })

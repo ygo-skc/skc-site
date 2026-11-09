@@ -18,15 +18,18 @@ type SuggestionGroup = { name: string; rule: string; references: YGOCard.Referen
 const sortedReferences = (references: YGOCard.Reference[] | null) =>
 	[...(references ?? [])].sort((a, b) => b.occurrences - a.occurrences || a.card.cardName.localeCompare(b.card.cardName))
 
-// What changed's head - title, count and the one-line rule - shared by the column and its popup, which adds a close button
-const SuggestionHead: FC<{ group: SuggestionGroup; titleId?: string; onClose?: () => void }> = ({ group, titleId, onClose }) => (
+type ColumnHeadProps = { name: string; count: number; rule: string; titleId?: string; onClose?: () => void }
+
+// What changed's head - title, count and the one-line rule - shared by a column and its popup, which adds a close button.
+// the card page's ban lists use it too
+export const ColumnHead: FC<ColumnHeadProps> = ({ name, count, rule, titleId, onClose }) => (
 	<div className='ban-list-changes__head'>
 		<div className='ban-list-changes__title'>
 			<Typography variant='h6' component={onClose ? 'h2' : 'h3'} id={titleId}>
-				{group.name}
+				{name}
 			</Typography>
 			<Typography variant='h4' component='span'>
-				{group.references?.length ?? 0}
+				{count}
 			</Typography>
 			{onClose && (
 				<IconButton className='ban-list-changes__close' aria-label='Close' onClick={onClose}>
@@ -34,9 +37,11 @@ const SuggestionHead: FC<{ group: SuggestionGroup; titleId?: string; onClose?: (
 				</IconButton>
 			)}
 		</div>
-		<Typography variant='body2'>{group.rule}</Typography>
+		<Typography variant='body2'>{rule}</Typography>
 	</div>
 )
+
+const groupHead = (group: SuggestionGroup) => ({ name: group.name, count: group.references?.length ?? 0, rule: group.rule })
 
 // What changed's rows, with how many times the link is made where it's more than one
 const SuggestionRows: FC<{ references: YGOCard.Reference[] }> = ({ references }) => (
@@ -181,7 +186,7 @@ const SuggestionsSheet: FC<SuggestionsSheetProps> = ({ suggestions, support, isL
 
 							return (
 								<section key={group.name} className='ban-list-changes__column suggestions-sheet__column' aria-label={group.name}>
-									<SuggestionHead group={group} />
+									<ColumnHead {...groupHead(group)} />
 									<SuggestionRows references={sorted.slice(0, ROWS_SHOWN)} />
 
 									{sorted.length > ROWS_SHOWN && (
@@ -205,7 +210,7 @@ const SuggestionsSheet: FC<SuggestionsSheetProps> = ({ suggestions, support, isL
 			>
 				{popupGroup && (
 					<>
-						<SuggestionHead group={popupGroup} titleId={dialogTitleId} onClose={closePopup} />
+						<ColumnHead {...groupHead(popupGroup)} titleId={dialogTitleId} onClose={closePopup} />
 						<div className='ban-list-changes-dialog__body'>
 							<SuggestionRows references={sortedReferences(popupGroup.references)} />
 						</div>

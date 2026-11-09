@@ -1,0 +1,13 @@
+/* ban lists: the suggestions' sheet and columns (suggestions-sheet.css, ban-list.css) with a date row per list - rows have no thumb,
+   so their hairlines start at the text rather than past a thumb (by the column class, since the popup is portaled) */
+.card-ban-lists__column .ban-list-changes__rows li + li::before {
+	left: 18px;
+}
+
+.card-ban-lists__column .ban-list-changes__row {
+	min-height: 52px;
+}
+
+.card-ban-lists__column .ban-status-chip.MuiChip-root {
+	margin-left: auto;
+}

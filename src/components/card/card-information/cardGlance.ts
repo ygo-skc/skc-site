@@ -1,4 +1,6 @@
 import { byRarity, setNumber } from '../../product/productFilters'
+import * as Dates from '../../../helper/Dates'
+import { toBanStatus } from '../../../helper/BanStatus'
 
 export type Printing = { date: string; productName: string }
 
@@ -7,7 +9,37 @@ export type RarityPrinting = { productId: string; productName: string; date: str
 
 export type RarityPrintings = { rarity: string; printings: RarityPrinting[] }
 
-export type FormatHistory = { format: 'TCG' | 'MD'; lists: number; latest?: YGOCard.RestrictionStatus }
+// where a card stands in a format - its lists newest first and, when the format's list dates are known, whether it's on the current
+// list (current), the first list it was off again (offSince), and how far back the lists reach (since)
+export type FormatStanding = {
+	lists: YGOCard.RestrictionStatus[]
+	latest?: YGOCard.RestrictionStatus
+	current?: YGOCard.RestrictionStatus
+	offSince?: string
+	since?: string
+}
+
+export type FormatHistory = FormatStanding & { format: 'TCG' | 'MD' }
+
+// "Nov 2015" - how far back a format's lists reach
+export const monthYear = (date: string) => {
+	const day = Dates.fromYYYYMMDDToDate(date)
+	return `${Dates.getMonth(day)} ${Dates.getYear(day)}`
+}
+
+// the status as the ban list page spells it ("Semi Limited" -> "Semi-Limited"), or as the API sent it
+export const statusLabel = ({ banStatus }: YGOCard.RestrictionStatus) => toBanStatus(banStatus) ?? banStatus
+
+// the restrictions only hold the lists the card was on, so standing now comes from the format's own dates (newest first)
+export const formatStanding = (restrictions: YGOCard.RestrictionStatus[], listDates: string[] = []): FormatStanding => {
+	const lists = [...restrictions].sort((a, b) => b.banListDate.localeCompare(a.banListDate))
+	const latest = lists[0]
+	if (listDates.length === 0) return { lists, latest }
+
+	const current = latest?.banListDate === listDates[0] ? latest : undefined
+	const offSince = latest && !current ? listDates.filter((date) => date > latest.banListDate).sort()[0] : undefined
+	return { lists, latest, current, offSince, since: listDates[listDates.length - 1] }
+}
 
 export type CardGlance = {
 	printings: number
@@ -50,7 +82,7 @@ export const relativeDays = (date: string, today: Date = new Date()): string => 
 }
 
 // a product can list the card more than once (MZMU-EN000 and MZMU-EN074), so printings count each set number and products count each product once
-export const cardGlance = (productInfo: YGOProduct.Info[], restrictedIn: YGOCard.Restrictions): CardGlance => {
+export const cardGlance = (productInfo: YGOProduct.Info[], restrictedIn: YGOCard.Restrictions, banListDates: { TCG?: string[]; MD?: string[] } = {}): CardGlance => {
 	const byDate = [...productInfo].sort((a, b) => a.productReleaseDate.localeCompare(b.productReleaseDate))
 	const printing = (product?: YGOProduct.Info): Printing | undefined => product && { date: product.productReleaseDate, productName: product.productName }
 
@@ -73,11 +105,7 @@ export const cardGlance = (productInfo: YGOProduct.Info[], restrictedIn: YGOCard
 		rarities: Array.from(byRarityName.keys())
 			.sort(byRarity)
 			.map((rarity) => ({ rarity, printings: byRarityName.get(rarity) ?? [] })),
-		banLists: (['TCG', 'MD'] as const).map((format) => ({
-			format,
-			lists: restrictedIn[format].length,
-			latest: [...restrictedIn[format]].sort((a, b) => b.banListDate.localeCompare(a.banListDate))[0],
-		})),
+		banLists: (['TCG', 'MD'] as const).map((format) => ({ format, ...formatStanding(restrictedIn[format], banListDates[format]) })),
 	}
 }
 

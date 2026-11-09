@@ -1,115 +1,134 @@
-import { FunctionComponent, Fragment, useCallback, useMemo } from 'react'
-import { Button, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
+import '../../../css/main-pages/ban-list.css'
+import '../../../css/util/suggestions-sheet.css'
+import '../../../css/card/card-ban-lists.css'
+
+import { FC, ReactNode, useId, useState } from 'react'
+import { Button, Chip, Dialog, Typography, useMediaQuery, useTheme } from '@mui/material'
 
 import * as Dates from '../../../helper/Dates'
-
-import { AcceptableBanListFormat } from '../../../helper/BanListUtil'
-import { DatedListItem, Hint } from 'skc-rcl'
-import { useHistoryEntryState } from '../../util/useHistoryEntry'
+import { BanStatus, banStatusClass, toBanStatus } from '../../../helper/BanStatus'
+import { ColumnHead } from '../../util/SuggestionsSheet'
+import { FormatStanding, formatStanding, monthYear, statusLabel } from './cardGlance'
 
 type CardBanListInformationProps = {
 	restrictedIn: YGOCard.Restrictions
+	// each format's list dates, newest first - undefined while loading, empty if they couldn't be fetched
+	banListDates: { TCG?: string[]; MD?: string[] }
+	cardName: string
 }
 
-function determineFormat(restrictedIn: YGOCard.Restrictions): AcceptableBanListFormat {
-	if (restrictedIn['TCG'].length !== 0) {
-		return AcceptableBanListFormat.TCG
-	} else if (restrictedIn['MD'].length !== 0) {
-		return AcceptableBanListFormat.MD
-	} else {
-		return AcceptableBanListFormat.DL
-	}
-}
+type Format = 'TCG' | 'MD'
 
-function transformFormat(format: AcceptableBanListFormat) {
-	switch (format) {
-		case 'TCG':
-			return 'TCG'
-		case 'MD':
-			return 'Master Duel'
-		case 'DL':
-			return 'Duel Links'
-	}
-}
+// Duel Links isn't shown on the card page
+const FORMATS: { format: Format; name: string }[] = [
+	{ format: 'TCG', name: 'TCG' },
+	{ format: 'MD', name: 'Master Duel' },
+]
 
-const FORMATS = [AcceptableBanListFormat.TCG, AcceptableBanListFormat.MD, AcceptableBanListFormat.DL]
+// a column shows this many lists; the rest open in a popup, like the suggestions
+const ROWS_SHOWN = 8
 
-const CardBanListInformation: FunctionComponent<CardBanListInformationProps> = ({ restrictedIn }) => {
-	const initNumItems = 10
-	// kept for coming back from another page, and built during render rather than in an effect, so the list is there on the first paint
-	const [pickedFormat, setFormat] = useHistoryEntryState<AcceptableBanListFormat | undefined>('card-ban-list-format', undefined)
-	const [loadedAll, setLoadAll] = useHistoryEntryState('card-ban-list-load-all', false)
-	const format = pickedFormat ?? determineFormat(restrictedIn)
-	const loadAll = loadedAll || restrictedIn[format].length <= initNumItems
+type FormatColumn = FormatStanding & { format: Format; name: string }
 
-	const loadAllCB = useCallback(() => {
-		setLoadAll(true)
-	}, [setLoadAll])
-
-	const banListContent = useMemo(
-		() =>
-			restrictedIn[format].slice(0, loadAll ? restrictedIn[format].length : initNumItems).map((banList: YGOCard.RestrictionStatus) => {
-				const banListEffectiveDate = Dates.fromYYYYMMDDToDate(banList.banListDate)
-				return (
-					<DatedListItem
-						key={banList.banListDate}
-						link={''}
-						month={Dates.getMonth(banListEffectiveDate)}
-						day={+Dates.getDay(banListEffectiveDate)}
-						year={+Dates.getYear(banListEffectiveDate)}
-						variant='inline'
-						className='aggregate-anchor'
-					>
-						<div className='list-item-text'>
-							<Typography variant='subtitle1'>{banList.banStatus}</Typography>
-						</div>
-					</DatedListItem>
-				)
-			}),
-		[format, restrictedIn, loadAll]
+// a row's label and its status chip, in ban-list.css's tint for that status
+const StatusRow: FC<{ label: ReactNode; status: BanStatus | string }> = ({ label, status }) => {
+	const known = toBanStatus(status)
+	return (
+		<li>
+			<div className='ban-list-changes__row'>
+				<span className='ban-list-changes__name'>
+					<Typography variant='subtitle2' component='span'>
+						{label}
+					</Typography>
+				</span>
+				<Chip className={`ban-status-chip ${known ? banStatusClass(known) : ''}`} label={known ?? status} />
+			</div>
+		</li>
 	)
+}
+
+const dateLabel = (date: string) => <time dateTime={date}>{Dates.fromYYYYMMDDToDateStr(date)}</time>
+
+// where the card stands now, when the format's dates say it's off the list again or was never on one, then its lists newest first
+const ColumnRows: FC<{ column: FormatColumn; lists: YGOCard.RestrictionStatus[] }> = ({ column, lists }) => (
+	<ul className='ban-list-changes__rows'>
+		{column.latest === undefined && <StatusRow label={column.since ? `Not on a list since ${monthYear(column.since)}` : 'Not on a list'} status='Unlimited' />}
+		{column.offSince && <StatusRow label={<>Since {dateLabel(column.offSince)}</>} status='Unlimited' />}
+		{lists.map((list) => (
+			<StatusRow key={list.banListDate} label={dateLabel(list.banListDate)} status={statusLabel(list)} />
+		))}
+	</ul>
+)
+
+/*
+ * a white sheet like the suggestions: a column per format (TCG, Master Duel) - where the card stands now when it's off the list or
+ * was never on one, then each list it was on newest first with its status, 8 then "Show all N" in a popup. a format it was never
+ * listed in keeps its column, so the sheet has the same shape either way
+ */
+const CardBanListInformation: FC<CardBanListInformationProps> = ({ restrictedIn, banListDates, cardName }) => {
+	const headingId = useId()
+	const dialogTitleId = useId()
+	const name = cardName || 'this card'
+
+	const columns: FormatColumn[] = FORMATS.map(({ format, name: formatName }) => ({ format, name: formatName, ...formatStanding(restrictedIn[format], banListDates[format]) }))
+	const isNeverListed = columns.every((column) => column.lists.length === 0)
+	const head = (column: FormatColumn) => ({
+		name: column.name,
+		count: column.lists.length,
+		rule: column.lists.length === 0 ? 'Up to 3 copies a deck' : `Lists ${name} was on, newest first`,
+	})
+
+	// the popup's column stays set while it fades out, so only the open flag changes on close
+	const [popup, setPopup] = useState<{ format?: Format; open: boolean }>({ open: false })
+	const popupColumn = columns.find((column) => column.format === popup.format)
+	const closePopup = () => setPopup((current) => ({ ...current, open: false }))
+	const isPhone = useMediaQuery(useTheme().breakpoints.down('sm'))
 
 	return (
-		<div className='group'>
-			<Typography variant='h4'>Ban Lists ({restrictedIn.TCG.length + restrictedIn.MD.length + restrictedIn.DL.length})</Typography>
+		<section className='suggestions-sheet' aria-labelledby={headingId}>
+			<div className='suggestions-sheet__tools'>
+				<Typography variant='h4' component='h2' id={headingId} className='suggestions-sheet__title'>
+					Ban lists
+				</Typography>
+				<Typography variant='body2' className='suggestions-sheet__intro'>
+					{isNeverListed ? 'Not on a TCG or Master Duel list' : `The TCG and Master Duel lists ${name} was on`}
+				</Typography>
+			</div>
 
-			{restrictedIn[format].length !== 0 && (
-				<Fragment>
-					{/* segmented control - a white lens marks the selected format, a format with no ban lists can't be picked */}
-					<ToggleButtonGroup
-						className='ban-list-format-container'
-						fullWidth
-						exclusive
-						size='small'
-						aria-label='Ban list format'
-						value={format}
-						onChange={(_, value: AcceptableBanListFormat | null) => {
-							if (!value) return
-							setFormat(value)
-							// another format starts from its first few lists again
-							setLoadAll(false)
-						}}
-					>
-						{FORMATS.map((f) => (
-							<ToggleButton key={f} value={f} disabled={restrictedIn[f].length === 0}>
-								{transformFormat(f)} — {restrictedIn[f].length}
-							</ToggleButton>
-						))}
-					</ToggleButtonGroup>
+			<div className='suggestions-sheet__body'>
+				<div className='ban-list-changes'>
+					{columns.map((column) => (
+						<section key={column.format} className='ban-list-changes__column suggestions-sheet__column card-ban-lists__column' aria-label={column.name}>
+							<ColumnHead {...head(column)} />
+							<ColumnRows column={column} lists={column.lists.slice(0, ROWS_SHOWN)} />
 
-					<div>
-						<Typography variant='h5'>Selected Format — {transformFormat(format)}</Typography>
-						{banListContent}
-						{loadAll ? undefined : <Button onClick={loadAllCB}>Load All</Button>}
-					</div>
-				</Fragment>
-			)}
-			{restrictedIn[format].length === 0 && (
-				<Hint backgroundColor='rgba(0, 0, 0, 0.7)' textColor='white' fullWidth={false}>
-					{'Not Found In Any Ban List'}
-				</Hint>
-			)}
-		</div>
+							{column.lists.length > ROWS_SHOWN && (
+								<Button className='ban-list-changes__more' fullWidth aria-haspopup='dialog' onClick={() => setPopup({ format: column.format, open: true })}>
+									Show all {column.lists.length}
+								</Button>
+							)}
+						</section>
+					))}
+				</div>
+			</div>
+
+			<Dialog
+				open={popup.open && popupColumn !== undefined}
+				onClose={closePopup}
+				fullScreen={isPhone}
+				aria-labelledby={dialogTitleId}
+				slotProps={{ paper: { className: 'ban-list-changes-dialog suggestions-sheet__column card-ban-lists__column' } }}
+			>
+				{popupColumn && (
+					<>
+						<ColumnHead {...head(popupColumn)} titleId={dialogTitleId} onClose={closePopup} />
+						<div className='ban-list-changes-dialog__body'>
+							<ColumnRows column={popupColumn} lists={popupColumn.lists} />
+						</div>
+					</>
+				)}
+			</Dialog>
+		</section>
 	)
 }
 

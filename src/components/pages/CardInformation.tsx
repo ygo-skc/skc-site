@@ -1,8 +1,5 @@
-import '../../css/card/card-information.css'
-
-import { useEffect, useEffectEvent, lazy, Suspense } from 'react'
+import { useEffect, useEffectEvent } from 'react'
 import { useParams } from 'react-router-dom'
-import { Skeleton } from '@mui/material'
 
 import FetchHandler from '../../helper/FetchHandler'
 import * as DownstreamServices from '../../helper/DownstreamServices'
@@ -14,12 +11,12 @@ import { useHistoryEntryReducer } from '../util/useHistoryEntry'
 import CardInformationHeader from '../card/card-information/CardInformationHeader'
 import CardReleases from '../card/card-information/CardReleases'
 import CardSuggestions from '../card/suggestion/CardSuggestions'
+import CardBanListInformation from '../card/card-information/CardBanListInformation'
 
-const CardInformationRelatedContent = lazy(() => import('../card/card-information/CardInformationRelatedContent'))
-
-// the card, its suggestions and support have all answered (or failed), so coming back to it can show it without fetching again
-const isSettled = ({ isFetchingCardData, isFetchingSuggestions, isFetchingSupport }: ReturnType<typeof cardInformationReducer>) =>
-	!isFetchingCardData && !isFetchingSuggestions && !isFetchingSupport
+// the card, its suggestions and support, and both formats' list dates have all answered (or failed), so coming back to it can show it
+// without fetching again
+const isSettled = ({ isFetchingCardData, isFetchingSuggestions, isFetchingSupport, banListDates }: ReturnType<typeof cardInformationReducer>) =>
+	!isFetchingCardData && !isFetchingSuggestions && !isFetchingSupport && banListDates.TCG !== undefined && banListDates.MD !== undefined
 
 const CardInformation = () => {
 	// each card gets its own mount (see Routes), so the id from the URL doesn't change while the page is up
@@ -49,6 +46,7 @@ const CardInformation = () => {
 			isFetchingSupport: true,
 			suggestionRequestHasError: false,
 			supportRequestHasError: false,
+			banListDates: {},
 		},
 		isSettled
 	)
@@ -101,6 +99,20 @@ const CardInformation = () => {
 				type: CardInformationType.FETCH_SUPPORT_ERROR,
 			})
 		})
+
+		// each format's list dates, so the ban history can say how far back it reaches and whether the card is on the current list -
+		// without them the page just leaves those out
+		for (const format of ['TCG', 'MD'] as const) {
+			FetchHandler.handleFetch(
+				`${DownstreamServices.SKC_API_ENDPOINTS.banListsUrl}?format=${format}`,
+				({ banListDates }: YGOBanList.Dates) => {
+					cardInformationDispatch({ type: CardInformationType.UPDATE_BAN_LIST_DATES, format, dates: banListDates.map(({ effectiveDate }) => effectiveDate) })
+				},
+				false
+			)?.catch(() => {
+				cardInformationDispatch({ type: CardInformationType.UPDATE_BAN_LIST_DATES, format, dates: [] })
+			})
+		}
 	}, [isRestored, cardId, cardInformationDispatch])
 
 	return (
@@ -123,6 +135,7 @@ const CardInformation = () => {
 				restrictionInfo={state.restrictionInfo}
 				archetypes={state.archetypes}
 				isFetchingArchetypes={state.isFetchingSuggestions}
+				banListDates={state.banListDates}
 			/>
 
 			<CardReleases productInfo={state.productInfo} isFetchingCardData={state.isFetchingCardData} />
@@ -139,13 +152,7 @@ const CardInformation = () => {
 				cardName={state.card.cardName}
 			/>
 
-			<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='40rem' />}>
-				{state.isFetchingCardData ? (
-					<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='40rem' />
-				) : (
-					<CardInformationRelatedContent cardColor={state.card.cardColor?.replace(/Pendulum-/gi, '') as YGOCard.Color} restrictedIn={state.restrictionInfo} />
-				)}
-			</Suspense>
+			{!state.isFetchingCardData && <CardBanListInformation restrictedIn={state.restrictionInfo} banListDates={state.banListDates} cardName={state.card.cardName} />}
 		</div>
 	)
 }

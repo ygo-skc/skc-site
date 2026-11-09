@@ -8,7 +8,7 @@ import { CardImageRounded, YGOCard } from 'skc-rcl'
 import { decodeHTML } from 'entities'
 
 import * as Dates from '../../../helper/Dates'
-import { cardEyebrow, cardGlance, FormatHistory, plural, Printing, relativeDays } from './cardGlance'
+import { cardEyebrow, cardGlance, FormatHistory, monthYear, plural, Printing, relativeDays, statusLabel } from './cardGlance'
 import RarityChip from './RarityChip'
 
 const COPIED_FEEDBACK_MS = 2000
@@ -33,6 +33,30 @@ const GlanceRow: FC<GlanceRowProps> = ({ label, value, aside }) => (
 		)}
 	</li>
 )
+
+// a format's row: where the card stands now when the format's list dates are in, else just its newest list
+const banListRow = ({ lists, latest, current, offSince, since }: FormatHistory): Pick<GlanceRowProps, 'value' | 'aside'> => {
+	const date = (day: string) => <time dateTime={day}>{Dates.fromYYYYMMDDToDateStr(day)}</time>
+	if (latest === undefined) return { value: 'Unlimited', aside: since ? `not on a list since ${monthYear(since)}` : 'not on a list' }
+	if (current) return { value: statusLabel(current), aside: `on the current list · ${plural(lists.length, 'list')}` }
+	if (offSince)
+		return {
+			value: 'Unlimited',
+			aside: (
+				<>
+					off the list since {date(offSince)} · {plural(lists.length, 'list')}
+				</>
+			),
+		}
+	return {
+		value: (
+			<>
+				{statusLabel(latest)} on the {date(latest.banListDate)} list
+			</>
+		),
+		aside: plural(lists.length, 'list'),
+	}
+}
 
 const printingValue = ({ date, productName }: Printing) => (
 	<>
@@ -76,14 +100,15 @@ type CardInformationHeaderProps = {
 	restrictionInfo: YGOCard.Restrictions
 	archetypes: Set<string>
 	isFetchingArchetypes: boolean
+	banListDates: { TCG?: string[]; MD?: string[] }
 }
 
 /*
  * white sheet: the card (rcl's art and YGOCard, unchanged) beside the eyebrow, name and archetypes,
  * then "At a glance" - the printing history and each format's ban lists as white grouped lists on a grey tile
  */
-const CardInformationHeader: FC<CardInformationHeaderProps> = ({ card, isFetchingCardData, productInfo, restrictionInfo, archetypes, isFetchingArchetypes }) => {
-	const glance = useMemo(() => cardGlance(productInfo, restrictionInfo), [productInfo, restrictionInfo])
+const CardInformationHeader: FC<CardInformationHeaderProps> = ({ card, isFetchingCardData, productInfo, restrictionInfo, archetypes, isFetchingArchetypes, banListDates }) => {
+	const glance = useMemo(() => cardGlance(productInfo, restrictionInfo, banListDates), [productInfo, restrictionInfo, banListDates])
 
 	return (
 		<header className='card-info-header'>
@@ -196,22 +221,9 @@ const CardInformationHeader: FC<CardInformationHeaderProps> = ({ card, isFetchin
 						</ul>
 					) : (
 						<ul className='card-info-header__group'>
-							{glance.banLists.map(({ format, lists, latest }) =>
-								latest === undefined ? (
-									<GlanceRow key={format} label={FORMAT_NAMES[format]} value='Unlimited' aside='never listed' />
-								) : (
-									<GlanceRow
-										key={format}
-										label={FORMAT_NAMES[format]}
-										value={
-											<>
-												{latest.banStatus} on the <time dateTime={latest.banListDate}>{Dates.fromYYYYMMDDToDateStr(latest.banListDate)}</time> list
-											</>
-										}
-										aside={plural(lists, 'list')}
-									/>
-								)
-							)}
+							{glance.banLists.map((history) => (
+								<GlanceRow key={history.format} label={FORMAT_NAMES[history.format]} {...banListRow(history)} />
+							))}
 						</ul>
 					)}
 				</div>

@@ -32,6 +32,7 @@ const renderHeader = (props: Partial<Parameters<typeof CardInformationHeader>[0]
 					isFetchingCardData={false}
 					productInfo={[product('MZMU', 'Maze of Muertos', '2026-02-20', ['Starlight Rare']), product('SOI', 'Shadow of Infinity', '2006-02-18', ['Ultra Rare'])]}
 					restrictionInfo={{ TCG: [], MD: [], DL: [] }}
+					banListDates={{}}
 					archetypes={new Set(['Uria, Lord of Searing Flames'])}
 					isFetchingArchetypes={false}
 					{...props}
@@ -51,14 +52,31 @@ test('shows the card beside its name, eyebrow and printing history', () => {
 	expect(screen.getByText('Last printed').parentElement).toHaveTextContent('Feb 20, 2026 · Maze of Muertos')
 })
 
-test('reads a format the card was never listed in as unlimited, and a listed one by its newest list', () => {
-	renderHeader({
-		restrictionInfo: { TCG: [{ banListDate: '2016-08-29', cardID: '06007213', banStatus: 'Forbidden' }], MD: [], DL: [] },
-	})
+test('without the list dates, reads a format by the newest list the card was on', () => {
+	renderHeader({ restrictionInfo: { TCG: [{ banListDate: '2016-08-29', cardID: '06007213', banStatus: 'Forbidden' }], MD: [], DL: [] } })
 
 	expect(screen.getByText('TCG').parentElement).toHaveTextContent('Forbidden on the Aug 29, 2016 list1 list')
-	expect(screen.getByText('Master Duel').parentElement).toHaveTextContent('Unlimitednever listed')
+	expect(screen.getByText('Master Duel').parentElement).toHaveTextContent('Unlimitednot on a list')
 	expect(screen.queryByText('Duel Links')).not.toBeInTheDocument()
+})
+
+test('with the list dates, says where the card stands now', () => {
+	const status = (banListDate: string, banStatus: string) => ({ banListDate, cardID: '06007213', banStatus })
+	renderHeader({
+		restrictionInfo: { TCG: [status('2016-08-29', 'Forbidden')], MD: [status('2026-10-01', 'Semi Limited')], DL: [] },
+		banListDates: { TCG: ['2026-10-19', '2016-11-14', '2016-08-29', '2015-11-09'], MD: ['2026-10-01', '2022-01-19'] },
+	})
+
+	// off the TCG list since the list after its last one, still on Master Duel's current one
+	expect(screen.getByText('TCG').parentElement).toHaveTextContent('Unlimitedoff the list since Nov 14, 2016 · 1 list')
+	expect(screen.getByText('Master Duel').parentElement).toHaveTextContent('Semi-Limitedon the current list · 1 list')
+})
+
+test('with the list dates, a format the card was never on says how far back they reach', () => {
+	renderHeader({ banListDates: { TCG: ['2026-10-19', '2015-11-09'], MD: ['2026-10-01', '2022-01-19'] } })
+
+	expect(screen.getByText('TCG').parentElement).toHaveTextContent('Unlimitednot on a list since Nov 2015')
+	expect(screen.getByText('Master Duel').parentElement).toHaveTextContent('Unlimitednot on a list since Jan 2022')
 })
 
 test('says when a card is in no archetype', () => {

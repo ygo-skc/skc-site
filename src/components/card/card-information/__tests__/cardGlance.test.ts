@@ -1,4 +1,4 @@
-import { cardEyebrow, cardGlance, cardReleases, relativeDays } from '../cardGlance'
+import { cardEyebrow, cardGlance, cardReleases, formatStanding, relativeDays } from '../cardGlance'
 
 const product = (productId: string, productName: string, productReleaseDate: string, rarities: string[][]) =>
 	({
@@ -67,14 +67,31 @@ test('has no first or last printing for a card not printed yet', () => {
 	expect(glance.last).toBeUndefined()
 })
 
-test('gives TCG and Master Duel their list count and the newest list the card was on', () => {
-	const status = (banListDate: string) => ({ banListDate, cardID: '26202165', banStatus: 'Forbidden' })
-	const glance = cardGlance([], { TCG: [status('2015-11-09'), status('2016-08-29'), status('2016-04-11')], MD: [], DL: [] })
+const status = (banListDate: string, banStatus = 'Forbidden') => ({ banListDate, cardID: '26202165', banStatus })
+const sangan = [status('2015-11-09'), status('2016-08-29'), status('2016-04-11')]
+const tcgDates = ['2026-10-19', '2016-11-14', '2016-08-29', '2016-04-11', '2015-11-09']
+
+test('gives TCG and Master Duel the lists the card was on, newest first - without list dates, nothing about now', () => {
+	const glance = cardGlance([], { TCG: sangan, MD: [], DL: [] })
 
 	expect(glance.banLists).toEqual([
-		{ format: 'TCG', lists: 3, latest: status('2016-08-29') },
-		{ format: 'MD', lists: 0, latest: undefined },
+		{ format: 'TCG', lists: [status('2016-08-29'), status('2016-04-11'), status('2015-11-09')], latest: status('2016-08-29') },
+		{ format: 'MD', lists: [], latest: undefined },
 	])
+})
+
+test('a card off the newest list is off since the first list after its last one', () => {
+	expect(formatStanding(sangan, tcgDates)).toEqual(expect.objectContaining({ current: undefined, offSince: '2016-11-14', since: '2015-11-09' }))
+})
+
+test('a card on the newest list is current there', () => {
+	const standing = formatStanding([status('2016-08-29'), status('2026-10-19', 'Limited')], tcgDates)
+	expect(standing.current).toEqual(status('2026-10-19', 'Limited'))
+	expect(standing.offSince).toBeUndefined()
+})
+
+test('a card never on a list only gets how far back the lists reach', () => {
+	expect(formatStanding([], tcgDates)).toEqual({ lists: [], latest: undefined, current: undefined, offSince: undefined, since: '2015-11-09' })
 })
 
 test('counts whole days from today, either way', () => {
