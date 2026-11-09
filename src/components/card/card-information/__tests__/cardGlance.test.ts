@@ -1,4 +1,4 @@
-import { cardEyebrow, cardGlance, relativeDays } from '../cardGlance'
+import { cardEyebrow, cardGlance, cardReleases, relativeDays } from '../cardGlance'
 
 const product = (productId: string, productName: string, productReleaseDate: string, rarities: string[][]) =>
 	({
@@ -85,4 +85,17 @@ test('counts whole days from today, either way', () => {
 	expect(relativeDays('2026-11-09', today)).toBe('today')
 	expect(relativeDays('2026-11-10', today)).toBe('in 1 day')
 	expect(relativeDays('2026-12-09', today)).toBe('in 30 days')
+})
+
+test('makes one release per product, newest first, with its set numbers and rarities rarest first', () => {
+	const releases = cardReleases([
+		product('SOI', 'Shadow of Infinity', '2006-02-18', [['Ultra Rare', 'Ultimate Rare']]),
+		product('MZMU', 'Maze of Muertos', '2026-02-20', [['Rare']]),
+		{ ...product('MZMU', 'Maze of Muertos', '2026-02-20', []), productContent: [{ productPosition: '074', rarities: ['Starlight Rare', 'Rare'] }] } as unknown as YGOProduct.Info,
+	])
+
+	expect(releases.map(({ productId, setNumbers, rarities }) => ({ productId, setNumbers, rarities }))).toEqual([
+		{ productId: 'MZMU', setNumbers: ['MZMU-EN000', 'MZMU-EN074'], rarities: ['Starlight Rare', 'Rare'] },
+		{ productId: 'SOI', setNumbers: ['SOI-EN000'], rarities: ['Ultimate Rare', 'Ultra Rare'] },
+	])
 })

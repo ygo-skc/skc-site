@@ -11,6 +11,7 @@ import { readRecentlyViewed, recordCardView } from '../../../helper/RecentlyView
 jest.mock('skc-rcl', () => ({
 	CardImageRounded: () => null,
 	YGOCard: () => null,
+	ProductImage: () => null,
 }))
 
 // the page's lazy sections aren't what these tests are about

@@ -106,6 +106,18 @@ li {
 	white-space: nowrap;
 }
 
+/* a grey pill button on white sheets - the product page's previous / next, the card page's Copy passcode and Show all */
+.capsule-button.MuiButton-root {
+	padding: 6px 14px;
+	border-radius: 999px;
+	background: var(--capsule-track);
+	color: var(--capsule-text);
+}
+
+.capsule-button.MuiButton-root:hover {
+	background: var(--capsule-hover);
+}
+
 /* CardFrameRing: a 3px frame-colour ring with a white gap around a card row's round art - doubled class so rcl's frame classes only bring their colour */
 .card-frame-ring.card-frame-ring {
 	display: inline-flex;
@@ -176,19 +188,6 @@ li {
 /* chips that only label something - stop iOS Safari flashing its tap highlight on them, which reads as a press */
 .MuiChip-root:not(.MuiChip-clickable, .MuiChip-deletable) {
 	-webkit-tap-highlight-color: transparent;
-}
-
-.tag-chip.MuiChip-root,
-.tag-chip-condensed.MuiChip-root {
-	height: auto;
-}
-
-.tag-chip span.MuiChip-label {
-	padding: 4px 8px 4px 8px;
-}
-
-.tag-chip-condensed span.MuiChip-label {
-	padding: 3px 5px 3px 5px;
 }
 
 .aggregate-anchor img {

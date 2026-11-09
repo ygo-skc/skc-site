@@ -38,6 +38,8 @@ export const cardEyebrow = ({ cardColor, cardAttribute, monsterAssociation }: YG
 
 const DAY_MS = 24 * 60 * 60 * 1000
 
+export const plural = (count: number, word: string) => `${count.toLocaleString()} ${word}${count === 1 ? '' : 's'}`
+
 // whole days between a YYYY-MM-DD date and today, both at local midnight - "today", "262 days ago", "in 30 days" for an upcoming printing
 export const relativeDays = (date: string, today: Date = new Date()): string => {
 	const [year, month, day] = date.split('-').map(Number)
@@ -77,4 +79,40 @@ export const cardGlance = (productInfo: YGOProduct.Info[], restrictedIn: YGOCard
 			latest: [...restrictedIn[format]].sort((a, b) => b.banListDate.localeCompare(a.banListDate))[0],
 		})),
 	}
+}
+
+// one product the card was printed in - its set numbers and rarities across every printing in it
+export type CardRelease = {
+	productId: string
+	productName: string
+	productType: string
+	productSubType: string
+	date: string
+	setNumbers: string[]
+	rarities: string[]
+}
+
+// the products the card is in, newest first - a product listed twice (MZMU-EN000 and MZMU-EN074) is one release
+export const cardReleases = (productInfo: YGOProduct.Info[]): CardRelease[] => {
+	const releases = new Map<string, CardRelease>()
+	for (const product of productInfo) {
+		const release = releases.get(product.productId) ?? {
+			productId: product.productId,
+			productName: product.productName,
+			productType: product.productType,
+			productSubType: product.productSubType,
+			date: product.productReleaseDate,
+			setNumbers: [],
+			rarities: [],
+		}
+		for (const content of product.productContent) {
+			release.setNumbers.push(setNumber(product, content))
+			release.rarities.push(...content.rarities.filter((rarity) => !release.rarities.includes(rarity)))
+		}
+		releases.set(product.productId, release)
+	}
+
+	return Array.from(releases.values())
+		.map((release) => ({ ...release, setNumbers: release.setNumbers.sort(), rarities: release.rarities.sort(byRarity) }))
+		.sort((a, b) => b.date.localeCompare(a.date) || a.productName.localeCompare(b.productName))
 }

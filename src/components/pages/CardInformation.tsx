@@ -12,6 +12,7 @@ import { recordCardView } from '../../helper/RecentlyViewed'
 import Breadcrumb from '../header-footer/Breadcrumb'
 import { useHistoryEntryReducer } from '../util/useHistoryEntry'
 import CardInformationHeader from '../card/card-information/CardInformationHeader'
+import CardReleases from '../card/card-information/CardReleases'
 
 const CardSuggestions = lazy(() => import('../card/suggestion/CardSuggestions'))
 const CardInformationRelatedContent = lazy(() => import('../card/card-information/CardInformationRelatedContent'))
@@ -124,6 +125,8 @@ const CardInformation = () => {
 				isFetchingArchetypes={state.isFetchingSuggestions}
 			/>
 
+			<CardReleases productInfo={state.productInfo} isFetchingCardData={state.isFetchingCardData} />
+
 			<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='22rem' />}>
 				<CardSuggestions
 					namedMaterials={state.suggestions.namedMaterials}
@@ -142,12 +145,7 @@ const CardInformation = () => {
 				{state.isFetchingCardData ? (
 					<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='40rem' />
 				) : (
-					<CardInformationRelatedContent
-						cardColor={state.card.cardColor?.replace(/Pendulum-/gi, '') as YGOCard.Color}
-						cardID={state.card.cardID}
-						productInfo={state.productInfo}
-						restrictedIn={state.restrictionInfo}
-					/>
+					<CardInformationRelatedContent cardColor={state.card.cardColor?.replace(/Pendulum-/gi, '') as YGOCard.Color} restrictedIn={state.restrictionInfo} />
 				)}
 			</Suspense>
 		</div>

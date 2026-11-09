@@ -8,7 +8,7 @@ import { CardImageRounded, YGOCard } from 'skc-rcl'
 import { decodeHTML } from 'entities'
 
 import * as Dates from '../../../helper/Dates'
-import { cardEyebrow, cardGlance, FormatHistory, Printing, relativeDays } from './cardGlance'
+import { cardEyebrow, cardGlance, FormatHistory, plural, Printing, relativeDays } from './cardGlance'
 import RarityChip from './RarityChip'
 
 const COPIED_FEEDBACK_MS = 2000
@@ -40,8 +40,6 @@ const printingValue = ({ date, productName }: Printing) => (
 	</>
 )
 
-const plural = (count: number, word: string) => `${count} ${word}${count === 1 ? '' : 's'}`
-
 const CopyPasscode: FC<{ cardID: string }> = ({ cardID }) => {
 	const [isCopied, setIsCopied] = useState(false)
 
@@ -61,7 +59,7 @@ const CopyPasscode: FC<{ cardID: string }> = ({ cardID }) => {
 
 	return (
 		<>
-			<Button className='card-info-header__copy' startIcon={isCopied ? <CheckIcon /> : <ContentCopyIcon />} onClick={handleCopy}>
+			<Button className='capsule-button' startIcon={isCopied ? <CheckIcon /> : <ContentCopyIcon />} onClick={handleCopy}>
 				Copy passcode
 			</Button>
 			<Typography variant='body2' component='span' role='status' className='visually-hidden'>
@@ -92,7 +90,8 @@ const CardInformationHeader: FC<CardInformationHeaderProps> = ({ card, isFetchin
 			<div className='card-info-header__card'>
 				<CardImageRounded size='lg' cardID={card.cardID} loading='eager' />
 				{isFetchingCardData ? (
-					<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='12rem' />
+					// about a monster's YGOCard with a few lines of effect, so the header grows little when the card arrives
+					<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='20rem' />
 				) : (
 					<YGOCard
 						cardName={card.cardName}

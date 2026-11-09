@@ -41,17 +41,6 @@
 	color: var(--accent-text);
 }
 
-.card-info-header__copy.MuiButton-root {
-	padding: 6px 14px;
-	border-radius: 999px;
-	background: var(--capsule-track);
-	color: var(--capsule-text);
-}
-
-.card-info-header__copy.MuiButton-root:hover {
-	background: var(--capsule-hover);
-}
-
 .card-info-header .card-info-header__name {
 	margin: 0;
 	overflow-wrap: anywhere;

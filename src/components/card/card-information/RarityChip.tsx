@@ -3,9 +3,7 @@ import { Link } from 'react-router-dom'
 import { Chip, ListSubheader, Menu, MenuItem, Typography } from '@mui/material'
 
 import * as Dates from '../../../helper/Dates'
-import { RarityPrintings } from './cardGlance'
-
-const plural = (count: number, word: string) => `${count} ${word}${count === 1 ? '' : 's'}`
+import { plural, RarityPrintings } from './cardGlance'
 
 // a rarity chip that opens a menu of the printings in that rarity, each linking to its product
 const RarityChip: FC<RarityPrintings> = ({ rarity, printings }) => {

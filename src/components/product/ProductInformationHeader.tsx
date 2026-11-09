@@ -112,7 +112,7 @@ const ProductInformationHeader: FC<ProductInformationHeaderProps> = ({ product, 
 								<Skeleton width='14ch' />
 							</Typography>
 							<PillSkeleton>
-								<Button className='product-info-header__neighbour' startIcon={<ChevronLeftRoundedIcon />}>
+								<Button className='capsule-button product-info-header__neighbour' startIcon={<ChevronLeftRoundedIcon />}>
 									RA05
 								</Button>
 							</PillSkeleton>
@@ -197,7 +197,7 @@ const ProductInformationHeader: FC<ProductInformationHeaderProps> = ({ product, 
 									<Button
 										component={Link}
 										to={`/product/${previous.productId}`}
-										className='product-info-header__neighbour'
+										className='capsule-button product-info-header__neighbour'
 										startIcon={<ChevronLeftRoundedIcon />}
 										aria-label={`Previous: ${previous.productName}`}
 									>
@@ -208,7 +208,7 @@ const ProductInformationHeader: FC<ProductInformationHeaderProps> = ({ product, 
 									<Button
 										component={Link}
 										to={`/product/${next.productId}`}
-										className='product-info-header__neighbour'
+										className='capsule-button product-info-header__neighbour'
 										endIcon={<ChevronRightRoundedIcon />}
 										aria-label={`Next: ${next.productName}`}
 									>
