@@ -21,14 +21,15 @@ const labelShift = (at: number) => (at < 8 ? '0%' : at > 92 ? '-100%' : '-50%')
 
 const at = (percent: number, extra: Record<string, string> = {}) => ({ '--at': `${percent}%`, ...extra } as CSSProperties)
 
-// the empty rail and six rows (a typical card's), held while the card loads so the page below moves little when it arrives
+// the empty rail and seven rows - between a card in a few products and one in eight or more (with Show all) - held while the card
+// loads so the page below moves little when it arrives
 const ReleasesSkeleton: FC = () => (
 	<div aria-hidden='true' data-testid='card-releases-skeleton'>
 		<div className='card-releases__rail'>
 			<span className='card-releases__line' />
 		</div>
 		<ul className='card-releases__list'>
-			{Array.from({ length: 6 }, (_, index) => (
+			{Array.from({ length: 7 }, (_, index) => (
 				<li key={index}>
 					<span className='card-releases__row'>
 						<Skeleton variant='rounded' className='card-releases__thumb' />

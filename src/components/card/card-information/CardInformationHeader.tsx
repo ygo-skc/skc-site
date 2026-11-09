@@ -143,7 +143,15 @@ const CardInformationHeader: FC<CardInformationHeaderProps> = ({ card, isFetchin
 				</div>
 
 				<Typography variant='h1' className='card-info-header__name'>
-					{isFetchingCardData ? <Skeleton width='12ch' /> : card.cardName}
+					{isFetchingCardData ? (
+						<>
+							<Skeleton width='12ch' />
+							{/* names wrap to two lines on phones */}
+							<Skeleton width='8ch' className='card-info-header__phone-line' />
+						</>
+					) : (
+						card.cardName
+					)}
 				</Typography>
 
 				<div className='card-info-header__archetypes'>
@@ -176,11 +184,27 @@ const CardInformationHeader: FC<CardInformationHeaderProps> = ({ card, isFetchin
 						At a glance
 					</Typography>
 					{isFetchingCardData ? (
-						// the rows the loaded card shows, so the header keeps its height when the card arrives
+						// the rows the loaded card shows - with the days-ago notes and a couple of rarity chips, which wrap onto their own
+						// lines on phones - so the header keeps its height when the card arrives
 						<ul className='card-info-header__group' aria-hidden='true' data-testid='card-glance-skeleton'>
-							{['Passcode', 'Printings', 'First printed', 'Last printed', 'Rarities'].map((label) => (
+							{['Passcode', 'Printings'].map((label) => (
 								<GlanceRow key={label} label={label} value={<Skeleton width='14ch' />} />
 							))}
+							{['First printed', 'Last printed'].map((label) => (
+								<GlanceRow key={label} label={label} value={<Skeleton width='22ch' />} aside={<Skeleton width='12ch' />} />
+							))}
+							<GlanceRow
+								label='Rarities'
+								value={
+									<span className='card-info-header__rarities'>
+										{['Ultra Rare', 'Secret Rare'].map((rarity) => (
+											<Skeleton key={rarity} variant='rounded' className='card-info-header__chip-skeleton'>
+												<Chip label={rarity} />
+											</Skeleton>
+										))}
+									</span>
+								}
+							/>
 						</ul>
 					) : (
 						<ul className='card-info-header__group'>
@@ -211,7 +235,7 @@ const CardInformationHeader: FC<CardInformationHeaderProps> = ({ card, isFetchin
 					)}
 
 					<Typography variant='subtitle1' component='h2' className='card-info-header__group-heading'>
-						Ban lists
+						Ban status
 					</Typography>
 					{isFetchingCardData ? (
 						<ul className='card-info-header__group' aria-hidden='true'>

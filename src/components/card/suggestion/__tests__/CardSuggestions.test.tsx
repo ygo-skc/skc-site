@@ -36,6 +36,7 @@ test('holds two columns while either request loads', () => {
 	const skeleton = screen.getByTestId('suggestions-sheet-skeleton')
 	expect(skeleton).toHaveAttribute('aria-hidden', 'true')
 	expect(skeleton.querySelectorAll('.ban-list-changes__column')).toHaveLength(2)
+	expect(skeleton.querySelectorAll('.ban-list-changes__rows li')).toHaveLength(8)
 })
 
 test("a column per kind of link, in the card's words, each row linking to its card", () => {

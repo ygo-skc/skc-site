@@ -138,7 +138,15 @@
 	color: var(--capsule-muted);
 }
 
+.card-info-header .card-info-header__phone-line {
+	display: none;
+}
+
 @media (max-width: 599.95px) {
+	.card-info-header .card-info-header__phone-line {
+		display: block;
+	}
+
 	.card-info-header {
 		gap: 20px;
 		padding: 20px;

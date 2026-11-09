@@ -91,15 +91,16 @@ type SuggestionsSheetProps = {
 	isLoading: boolean
 	hasError: boolean
 	wording: SuggestionWording
-	// columns the loading skeleton holds - a set usually fills all four, a card fewer
+	// columns and rows the loading skeleton holds - a set usually fills all four columns, a card fewer and shorter ones
 	skeletonColumns?: number
+	skeletonRows?: number
 }
 
 /*
  * cards that the page's cards name (as material or in their text) or that name them - a white sheet holding What changed's
  * columns (in a purple tint): one per kind of link, sorted by how many times it's made. the product and card pages share it
  */
-const SuggestionsSheet: FC<SuggestionsSheetProps> = ({ suggestions, support, isLoading, hasError, wording, skeletonColumns = 4 }) => {
+const SuggestionsSheet: FC<SuggestionsSheetProps> = ({ suggestions, support, isLoading, hasError, wording, skeletonColumns = 4, skeletonRows = ROWS_SHOWN }) => {
 	const headingId = useId()
 	const dialogTitleId = useId()
 	const groups: SuggestionGroup[] = [
@@ -148,7 +149,7 @@ const SuggestionsSheet: FC<SuggestionsSheetProps> = ({ suggestions, support, isL
 									</Typography>
 								</div>
 								<ul className='ban-list-changes__rows'>
-									{Array.from({ length: ROWS_SHOWN }, (_, row) => (
+									{Array.from({ length: skeletonRows }, (_, row) => (
 										<li key={row}>
 											<div className='ban-list-changes__row'>
 												{/* the thumb in its frame ring */}

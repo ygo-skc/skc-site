@@ -33,6 +33,8 @@ const CardSuggestions: FC<CardSuggestionProps> = ({
 			isLoading={isFetchingSuggestions || isFetchingSupport}
 			hasError={suggestionRequestHasError && supportRequestHasError}
 			skeletonColumns={2}
+			// halfway between a card with a few links and one with full columns, so neither moves the page far when they arrive
+			skeletonRows={4}
 			wording={{
 				intro: `Cards that ${name} names, or that name it`,
 				empty: 'No suggestions for this card.',

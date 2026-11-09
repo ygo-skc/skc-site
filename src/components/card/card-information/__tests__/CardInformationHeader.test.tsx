@@ -46,6 +46,8 @@ test('shows the card beside its name, eyebrow and printing history', () => {
 
 	expect(screen.getByRole('heading', { level: 1, name: 'Uria, Lord of Searing Flames' })).toBeInTheDocument()
 	expect(screen.getByText('Effect Monster · Fire · Level 10')).toBeInTheDocument()
+	// "Ban lists" is the sheet further down the page
+	expect(screen.getByRole('heading', { level: 2, name: 'Ban status' })).toBeInTheDocument()
 	expect(screen.getByTestId('ygo-card')).toHaveTextContent('Uria, Lord of Searing Flames')
 	expect(screen.getByText('2 in 2 products')).toBeInTheDocument()
 	expect(screen.getByText('First printed').parentElement).toHaveTextContent('Feb 18, 2006 · Shadow of Infinity')
