@@ -1,12 +1,13 @@
 import '../../css/main-pages/ban-list.css'
+import '../../css/util/suggestions-sheet.css'
 
-import { FC, useState } from 'react'
+import { FC, useId, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Button, Dialog, IconButton, Skeleton, Typography, useMediaQuery, useTheme } from '@mui/material'
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
 import { CardImageRounded } from 'skc-rcl'
 
-import CardFrameRing from '../util/CardFrameRing'
+import CardFrameRing from './CardFrameRing'
 import { cardTypeLabel } from '../../helper/BanStatus'
 
 // a column shows this many rows; the rest open in a popup, like the ban list's What changed
@@ -37,7 +38,7 @@ const SuggestionHead: FC<{ group: SuggestionGroup; titleId?: string; onClose?: (
 	</div>
 )
 
-// What changed's rows, with how many of the set's cards make the link where it's more than one
+// What changed's rows, with how many times the link is made where it's more than one
 const SuggestionRows: FC<{ references: YGOCard.Reference[] }> = ({ references }) => (
 	<ul className='ban-list-changes__rows'>
 		{references.map(({ card, occurrences }) => (
@@ -69,23 +70,38 @@ const SuggestionRows: FC<{ references: YGOCard.Reference[] }> = ({ references })
 	</ul>
 )
 
-type ProductSuggestionsProps = {
+// each column's one-line rule, and the sheet's intro and empty note - in the words of the page (a set's cards, or one card)
+export type SuggestionWording = {
+	intro: string
+	empty: string
+	namedMaterials: string
+	materialFor: string
+	namedReferences: string
+	referencedBy: string
+}
+
+type SuggestionsSheetProps = {
 	suggestions: Pick<YGOCard.Suggestion, 'namedMaterials' | 'namedReferences'>
 	support: Pick<YGOCard.Support, 'materialFor' | 'referencedBy'>
 	isLoading: boolean
 	hasError: boolean
+	wording: SuggestionWording
+	// columns the loading skeleton holds - a set usually fills all four, a card fewer
+	skeletonColumns?: number
 }
 
 /*
- * cards outside the set that its cards name (as material or in their text) or that name its cards - a white sheet like
- * "In this set", holding What changed's columns (in a purple tint): one per kind of link, sorted by how many of the set's cards make it
+ * cards that the page's cards name (as material or in their text) or that name them - a white sheet holding What changed's
+ * columns (in a purple tint): one per kind of link, sorted by how many times it's made. the product and card pages share it
  */
-const ProductSuggestions: FC<ProductSuggestionsProps> = ({ suggestions, support, isLoading, hasError }) => {
+const SuggestionsSheet: FC<SuggestionsSheetProps> = ({ suggestions, support, isLoading, hasError, wording, skeletonColumns = 4 }) => {
+	const headingId = useId()
+	const dialogTitleId = useId()
 	const groups: SuggestionGroup[] = [
-		{ name: 'Named Materials', rule: "Named as summoning material by this set's cards", references: suggestions.namedMaterials },
-		{ name: 'Material For', rule: "Can use this set's cards as material", references: support.materialFor },
-		{ name: 'References', rule: "Mentioned in this set's card text", references: suggestions.namedReferences },
-		{ name: 'Referenced By', rule: "Mention this set's cards in their text", references: support.referencedBy },
+		{ name: 'Named Materials', rule: wording.namedMaterials, references: suggestions.namedMaterials },
+		{ name: 'Material For', rule: wording.materialFor, references: support.materialFor },
+		{ name: 'References', rule: wording.namedReferences, references: suggestions.namedReferences },
+		{ name: 'Referenced By', rule: wording.referencedBy, references: support.referencedBy },
 	].filter((group) => (group.references?.length ?? 0) > 0)
 
 	// the popup's group stays set while it fades out, so only the open flag changes on close
@@ -95,22 +111,22 @@ const ProductSuggestions: FC<ProductSuggestionsProps> = ({ suggestions, support,
 	const isPhone = useMediaQuery(useTheme().breakpoints.down('sm'))
 
 	return (
-		<section className='product-suggestions' aria-labelledby='product-suggestions-heading' aria-busy={isLoading}>
-			<div className='product-suggestions__tools'>
-				<Typography variant='h4' component='h2' id='product-suggestions-heading' className='product-suggestions__title'>
+		<section className='suggestions-sheet' aria-labelledby={headingId} aria-busy={isLoading}>
+			<div className='suggestions-sheet__tools'>
+				<Typography variant='h4' component='h2' id={headingId} className='suggestions-sheet__title'>
 					Suggestions
 				</Typography>
-				<Typography variant='body2' className='product-suggestions__intro'>
-					Cards outside this set that its cards name, or that name them
+				<Typography variant='body2' className='suggestions-sheet__intro'>
+					{wording.intro}
 				</Typography>
 			</div>
 
-			<div className='product-suggestions__body'>
+			<div className='suggestions-sheet__body'>
 				{isLoading ? (
 					// full columns built from the loaded pieces - head, 8 rows, then where "Show all N" sits
-					<div className='ban-list-changes' data-testid='product-suggestions-skeleton' aria-hidden='true'>
-						{Array.from({ length: 4 }, (_, column) => (
-							<div key={column} className='ban-list-changes__column product-suggestions__column'>
+					<div className='ban-list-changes' data-testid='suggestions-sheet-skeleton' aria-hidden='true'>
+						{Array.from({ length: skeletonColumns }, (_, column) => (
+							<div key={column} className='ban-list-changes__column suggestions-sheet__column'>
 								<div className='ban-list-changes__head'>
 									<div className='ban-list-changes__title'>
 										<Typography variant='h6' component='span'>
@@ -131,12 +147,7 @@ const ProductSuggestions: FC<ProductSuggestionsProps> = ({ suggestions, support,
 										<li key={row}>
 											<div className='ban-list-changes__row'>
 												{/* the thumb in its frame ring */}
-												<Skeleton
-													variant='circular'
-													width='calc(var(--card-thumb) + 10px)'
-													height='calc(var(--card-thumb) + 10px)'
-													className='product-suggestions__thumb-skeleton'
-												/>
+												<Skeleton variant='circular' width='calc(var(--card-thumb) + 10px)' height='calc(var(--card-thumb) + 10px)' className='suggestions-sheet__thumb-skeleton' />
 												<span className='ban-list-changes__name'>
 													<Typography variant='subtitle2' component='span'>
 														<Skeleton width='60%' />
@@ -156,12 +167,12 @@ const ProductSuggestions: FC<ProductSuggestionsProps> = ({ suggestions, support,
 						))}
 					</div>
 				) : hasError ? (
-					<Typography variant='body1' className='product-suggestions__empty'>
+					<Typography variant='body1' className='suggestions-sheet__empty'>
 						Couldn&rsquo;t load suggestions - the suggestion engine may be offline.
 					</Typography>
 				) : groups.length === 0 ? (
-					<Typography variant='body1' className='product-suggestions__empty'>
-						No suggestions for this set.
+					<Typography variant='body1' className='suggestions-sheet__empty'>
+						{wording.empty}
 					</Typography>
 				) : (
 					<div className='ban-list-changes'>
@@ -169,7 +180,7 @@ const ProductSuggestions: FC<ProductSuggestionsProps> = ({ suggestions, support,
 							const sorted = sortedReferences(group.references)
 
 							return (
-								<section key={group.name} className='ban-list-changes__column product-suggestions__column' aria-label={group.name}>
+								<section key={group.name} className='ban-list-changes__column suggestions-sheet__column' aria-label={group.name}>
 									<SuggestionHead group={group} />
 									<SuggestionRows references={sorted.slice(0, ROWS_SHOWN)} />
 
@@ -189,12 +200,12 @@ const ProductSuggestions: FC<ProductSuggestionsProps> = ({ suggestions, support,
 				open={popup.open && popupGroup !== undefined}
 				onClose={closePopup}
 				fullScreen={isPhone}
-				aria-labelledby='product-suggestions-dialog-title'
-				slotProps={{ paper: { className: 'ban-list-changes-dialog product-suggestions__column' } }}
+				aria-labelledby={dialogTitleId}
+				slotProps={{ paper: { className: 'ban-list-changes-dialog suggestions-sheet__column' } }}
 			>
 				{popupGroup && (
 					<>
-						<SuggestionHead group={popupGroup} titleId='product-suggestions-dialog-title' onClose={closePopup} />
+						<SuggestionHead group={popupGroup} titleId={dialogTitleId} onClose={closePopup} />
 						<div className='ban-list-changes-dialog__body'>
 							<SuggestionRows references={sortedReferences(popupGroup.references)} />
 						</div>
@@ -205,4 +216,4 @@ const ProductSuggestions: FC<ProductSuggestionsProps> = ({ suggestions, support,
 	)
 }
 
-export default ProductSuggestions
+export default SuggestionsSheet

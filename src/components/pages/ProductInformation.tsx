@@ -11,12 +11,21 @@ import { productInformationReducer, ProductInformationActionType } from '../../r
 import Breadcrumb from '../header-footer/Breadcrumb'
 import ProductInformationHeader from '../product/ProductInformationHeader'
 import ProductContents from '../product/ProductContents'
-import ProductSuggestions from '../product/ProductSuggestions'
+import SuggestionsSheet, { SuggestionWording } from '../util/SuggestionsSheet'
 import { recordProductView } from '../../helper/RecentlyViewed'
 import { useHistoryEntryReducer } from '../util/useHistoryEntry'
 
 // the product and its suggestions have answered (or failed), so coming back to it can show it without fetching again
 const isProductSettled = (state: ReturnType<typeof productInformationReducer>) => state.productName !== '' && !state.productCardSuggestions.isFetchingData
+
+const SET_WORDING: SuggestionWording = {
+	intro: 'Cards outside this set that its cards name, or that name them',
+	empty: 'No suggestions for this set.',
+	namedMaterials: "Named as summoning material by this set's cards",
+	materialFor: "Can use this set's cards as material",
+	namedReferences: "Mentioned in this set's card text",
+	referencedBy: "Mention this set's cards in their text",
+}
 
 export default function ProductInformation() {
 	// each product gets its own mount (see Routes), so the id from the URL doesn't change while the page is up
@@ -85,11 +94,12 @@ export default function ProductInformation() {
 
 			<ProductContents product={state.product} />
 
-			<ProductSuggestions
+			<SuggestionsSheet
 				suggestions={state.productCardSuggestions.suggestions}
 				support={state.productCardSuggestions.support}
 				isLoading={state.productCardSuggestions.isFetchingData}
 				hasError={state.productCardSuggestions.requestHasError}
+				wording={SET_WORDING}
 			/>
 		</div>
 	)

@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 import { ThemeProvider } from '@mui/material/styles'
 import { MemoryRouter } from 'react-router-dom'
 
@@ -6,13 +6,7 @@ import CardSuggestions from '../CardSuggestions'
 import MuiTheme from '../../../MuiTheme'
 
 // skc-rcl pulls in esm only chart libraries
-jest.mock('skc-rcl', () => ({
-	Section: ({ sectionName, children }: { sectionName: string; children: React.ReactNode }) => <section aria-label={sectionName}>{children}</section>,
-	Hint: ({ children }: { children: React.ReactNode }) => <p>{children}</p>,
-	GenericNonBreakingErr: ({ errExplanation }: { errExplanation: string }) => <p>{errExplanation}</p>,
-	YGOCardWithImage: ({ card }: { card: YGOCard.Deets }) => <span>{card.cardName}</span>,
-	YGOCardWithQuantity: ({ card }: { card: YGOCard.Deets }) => <span>{card.cardName}</span>,
-}))
+jest.mock('skc-rcl', () => ({ CardImageRounded: () => null }))
 
 const renderSuggestions = (props: Partial<React.ComponentProps<typeof CardSuggestions>> = {}) =>
 	render(
@@ -27,7 +21,6 @@ const renderSuggestions = (props: Partial<React.ComponentProps<typeof CardSugges
 					isFetchingSupport={false}
 					suggestionRequestHasError={false}
 					supportRequestHasError={false}
-					cardColor='effect'
 					cardName='Dark Magician'
 					{...props}
 				/>
@@ -35,21 +28,49 @@ const renderSuggestions = (props: Partial<React.ComponentProps<typeof CardSugges
 		</ThemeProvider>
 	)
 
-const reference = (cardID: string, cardName: string): YGOCard.Reference => ({ card: { cardID, cardName, cardColor: 'effect', cardEffect: '' }, occurrences: 1 })
+const reference = (cardID: string, cardName: string, occurrences = 1): YGOCard.Reference => ({ card: { cardID, cardName, cardColor: 'effect', cardEffect: '' }, occurrences })
 
-test('holds two rows of card tiles while the suggestions load', () => {
-	renderSuggestions({ isFetchingSuggestions: true, isFetchingSupport: true })
+test('holds two columns while either request loads', () => {
+	renderSuggestions({ isFetchingSupport: true })
 
-	const skeleton = screen.getByTestId('card-suggestions-skeleton')
+	const skeleton = screen.getByTestId('suggestions-sheet-skeleton')
 	expect(skeleton).toHaveAttribute('aria-hidden', 'true')
-	expect(skeleton.querySelectorAll('.suggestion-section')).toHaveLength(2)
-	expect(skeleton.querySelectorAll('.suggested-ygo-card-wrapper')).toHaveLength(12)
+	expect(skeleton.querySelectorAll('.ban-list-changes__column')).toHaveLength(2)
 })
 
-test('the suggestions replace the skeleton once loaded', () => {
-	renderSuggestions({ referencedBy: [reference('1', 'Dark Magician Girl')] })
+test("a column per kind of link, in the card's words, each row linking to its card", () => {
+	renderSuggestions({ referencedBy: [reference('1', 'Dark Magician Girl')], namedReferences: [reference('2', 'Dark Magic Attack', 2)] })
 
-	expect(screen.queryByTestId('card-suggestions-skeleton')).not.toBeInTheDocument()
-	expect(screen.getByText('Referenced By (1)')).toBeInTheDocument()
-	expect(screen.getByRole('link', { name: 'Dark Magician Girl' })).toHaveAttribute('href', '/card/1')
+	expect(screen.getByText('Cards that Dark Magician names, or that name it')).toBeInTheDocument()
+	const referencedBy = screen.getByRole('region', { name: 'Referenced By' })
+	expect(within(referencedBy).getByText('Mention Dark Magician in their text')).toBeInTheDocument()
+	expect(within(referencedBy).getByRole('link', { name: /Dark Magician Girl/ })).toHaveAttribute('href', '/card/1')
+	expect(within(screen.getByRole('region', { name: 'References' })).getByText('2 links')).toBeInTheDocument()
+	// kinds with no cards have no column
+	expect(screen.queryByRole('region', { name: 'Named Materials' })).not.toBeInTheDocument()
+})
+
+test('past eight rows the rest open in a popup', () => {
+	renderSuggestions({ referencedBy: Array.from({ length: 10 }, (_, index) => reference(`${index}`, `Card ${index}`)) })
+
+	expect(within(screen.getByRole('region', { name: 'Referenced By' })).getAllByRole('link')).toHaveLength(8)
+	fireEvent.click(screen.getByRole('button', { name: 'Show all 10' }))
+	expect(within(screen.getByRole('dialog')).getAllByRole('link')).toHaveLength(10)
+})
+
+test('says so when there are no suggestions, and only errors when both requests fail', () => {
+	const { unmount } = renderSuggestions()
+	expect(screen.getByText('No suggestions for this card.')).toBeInTheDocument()
+	unmount()
+
+	renderSuggestions({ suggestionRequestHasError: true, referencedBy: [reference('1', 'Dark Magician Girl')] })
+	expect(screen.getByRole('link', { name: /Dark Magician Girl/ })).toBeInTheDocument()
+
+	renderSuggestions({ suggestionRequestHasError: true, supportRequestHasError: true })
+	expect(screen.getByText(/Couldn.t load suggestions/)).toBeInTheDocument()
+})
+
+test('reads "this card" until the card itself loads', () => {
+	renderSuggestions({ cardName: '' })
+	expect(screen.getByText('Cards that this card names, or that name it')).toBeInTheDocument()
 })

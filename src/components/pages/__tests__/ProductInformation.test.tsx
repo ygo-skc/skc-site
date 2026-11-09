@@ -138,7 +138,7 @@ test('holds the loaded layout with placeholders while the product and suggestion
 	expect(pills.querySelectorAll('.MuiSkeleton-root')).toHaveLength(6)
 	expect(pills).toHaveAttribute('aria-hidden', 'true')
 	// full suggestion columns: a head and 8 rows each
-	const columns = screen.getByTestId('product-suggestions-skeleton').querySelectorAll('.ban-list-changes__column')
+	const columns = screen.getByTestId('suggestions-sheet-skeleton').querySelectorAll('.ban-list-changes__column')
 	expect(columns).toHaveLength(4)
 	columns.forEach((column) => expect(column.querySelectorAll('.ban-list-changes__row')).toHaveLength(8))
 })

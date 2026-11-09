@@ -13,8 +13,8 @@ import Breadcrumb from '../header-footer/Breadcrumb'
 import { useHistoryEntryReducer } from '../util/useHistoryEntry'
 import CardInformationHeader from '../card/card-information/CardInformationHeader'
 import CardReleases from '../card/card-information/CardReleases'
+import CardSuggestions from '../card/suggestion/CardSuggestions'
 
-const CardSuggestions = lazy(() => import('../card/suggestion/CardSuggestions'))
 const CardInformationRelatedContent = lazy(() => import('../card/card-information/CardInformationRelatedContent'))
 
 // the card, its suggestions and support have all answered (or failed), so coming back to it can show it without fetching again
@@ -127,20 +127,18 @@ const CardInformation = () => {
 
 			<CardReleases productInfo={state.productInfo} isFetchingCardData={state.isFetchingCardData} />
 
-			<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='22rem' />}>
-				<CardSuggestions
-					namedMaterials={state.suggestions.namedMaterials}
-					namedReferences={state.suggestions.namedReferences}
-					materialFor={state.suggestions.materialFor}
-					referencedBy={state.suggestions.referencedBy}
-					isFetchingSuggestions={state.isFetchingSuggestions}
-					isFetchingSupport={state.isFetchingSupport}
-					suggestionRequestHasError={state.suggestionRequestHasError}
-					supportRequestHasError={state.supportRequestHasError}
-					cardColor={state.card.cardColor}
-					cardName={state.card.cardName}
-				/>
-			</Suspense>
+			<CardSuggestions
+				namedMaterials={state.suggestions.namedMaterials}
+				namedReferences={state.suggestions.namedReferences}
+				materialFor={state.suggestions.materialFor}
+				referencedBy={state.suggestions.referencedBy}
+				isFetchingSuggestions={state.isFetchingSuggestions}
+				isFetchingSupport={state.isFetchingSupport}
+				suggestionRequestHasError={state.suggestionRequestHasError}
+				supportRequestHasError={state.supportRequestHasError}
+				cardName={state.card.cardName}
+			/>
+
 			<Suspense fallback={<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='40rem' />}>
 				{state.isFetchingCardData ? (
 					<Skeleton className='rounded-skeleton' variant='rectangular' width='100%' height='40rem' />

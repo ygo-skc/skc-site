@@ -1,51 +1,9 @@
-import '../../../css/card/ygo-card-suggestion.css'
-import { FC, Fragment, lazy, Suspense, useCallback } from 'react'
-import { Link } from 'react-router-dom'
-import { decodeHTML } from 'entities'
-import { Skeleton, Typography } from '@mui/material'
+import { FC } from 'react'
 
-import SuggestionSection from './SuggestionSection'
-
-import { Section, YGOCardWithImage, YGOCardWithQuantity } from 'skc-rcl'
-
-const Hint = lazy(() =>
-	import('skc-rcl').then((module) => {
-		return { default: module.Hint }
-	})
-)
-
-const GenericNonBreakingErr = lazy(() =>
-	import('skc-rcl').then((module) => {
-		return { default: module.GenericNonBreakingErr }
-	})
-)
-
-// two rows shaped like SuggestionSection's - a heading over a strip of card tiles (art, then the card) - since popular cards usually fill two
-const SuggestionsSkeleton: FC = () => (
-	<div className='suggestions-skeleton' aria-hidden='true' data-testid='card-suggestions-skeleton'>
-		{['14ch', '17ch'].map((titleWidth) => (
-			<div key={titleWidth} className='suggestion-section'>
-				<div className='suggestion-section-title'>
-					<Typography variant='h4'>
-						<Skeleton width={titleWidth} />
-					</Typography>
-				</div>
-				<div className='suggestions-wrapper'>
-					{[0, 1, 2, 3, 4, 5].map((tile) => (
-						<div key={tile} className='suggested-ygo-card-wrapper'>
-							<Skeleton className='suggestions-skeleton__art' variant='rounded' />
-							<Skeleton className='suggestions-skeleton__card' variant='rounded' />
-						</div>
-					))}
-				</div>
-			</div>
-		))}
-	</div>
-)
+import SuggestionsSheet from '../../util/SuggestionsSheet'
 
 type CardSuggestionProps = Omit<YGOCard.Suggestion, 'card' | 'relevantArchetypes' | 'materialArchetypes' | 'referencedArchetypes' | 'hasSelfReference'> &
 	Omit<YGOCard.Support, 'card'> & {
-		cardColor: YGOCard.Color
 		cardName: string
 		isFetchingSuggestions: boolean
 		isFetchingSupport: boolean
@@ -53,6 +11,7 @@ type CardSuggestionProps = Omit<YGOCard.Suggestion, 'card' | 'relevantArchetypes
 		supportRequestHasError: boolean
 	}
 
+// the product page's suggestions sheet in one card's words - an error only when both requests fail, otherwise it shows what loaded
 const CardSuggestions: FC<CardSuggestionProps> = ({
 	namedMaterials,
 	namedReferences,
@@ -62,85 +21,27 @@ const CardSuggestions: FC<CardSuggestionProps> = ({
 	isFetchingSupport,
 	suggestionRequestHasError,
 	supportRequestHasError,
-	cardColor,
 	cardName,
 }) => {
-	const isLoading = useCallback((): boolean => {
-		return isFetchingSuggestions || isFetchingSupport
-	}, [isFetchingSuggestions, isFetchingSupport])
-
-	// if both requests fail, then we will consider it an error
-	const hasError = useCallback((): boolean => {
-		return suggestionRequestHasError && supportRequestHasError
-	}, [suggestionRequestHasError, supportRequestHasError])
-
-	const hasNoContent = useCallback(() => {
-		return namedMaterials.length === 0 && namedReferences.length === 0 && materialFor.length === 0 && referencedBy.length === 0
-	}, [namedMaterials, materialFor, namedReferences, referencedBy])
-
-	const transformReferences = useCallback((references: YGOCard.Reference[]): React.JSX.Element[] => {
-		return references !== null
-			? references.map((reference: YGOCard.Reference) => {
-					reference.card.cardEffect = decodeHTML(reference.card.cardEffect)
-					return (
-						<Link key={reference.card.cardID} to={`/card/${reference.card.cardID}`} className='suggested-ygo-card-wrapper aggregate-anchor'>
-							<YGOCardWithQuantity card={reference.card} occurrences={reference.occurrences} />
-						</Link>
-					)
-			  })
-			: []
-	}, [])
-
-	const transformSupport = useCallback((support: YGOCard.Reference[]): React.JSX.Element[] => {
-		return support !== null
-			? support.map((reference: YGOCard.Reference) => {
-					const card = reference.card
-					card.cardEffect = decodeHTML(card.cardEffect)
-					return (
-						<Link key={card.cardID} to={`/card/${card.cardID}`} className='suggested-ygo-card-wrapper aggregate-anchor'>
-							<YGOCardWithImage key={card.cardID} card={card} imgLoadingType='lazy' />
-						</Link>
-					)
-			  })
-			: []
-	}, [])
-
-	const LoadingUI = <SuggestionsSkeleton />
+	// the suggestions can answer before the card does
+	const name = cardName || 'this card'
 
 	return (
-		<Section sectionHeaderBackground={cardColor !== undefined ? (cardColor?.replace(/Pendulum-/gi, '') as YGOCard.Color) : ''} sectionName='Suggestions'>
-			<div className='section-content'>
-				<Suspense fallback={LoadingUI}>
-					{!isLoading() && !hasError() && hasNoContent() && <Hint fullWidth={false}>Nothing here 🤔</Hint>}
-					{isLoading() && LoadingUI}
-					{!isLoading() && hasError() && <GenericNonBreakingErr errExplanation={'🤯 Suggestion Engine Is Offline 🤯'} />}
-				</Suspense>
-				{!isLoading() && !hasError() && (
-					<Fragment>
-						<SuggestionSection
-							suggestions={transformReferences(namedMaterials)}
-							sectionName='Named Materials'
-							sectionExplanation={`Other cards that are directly referenced as summoning material by ${cardName} card. Currently, only extra deck summonsing materials are suggested.`}
-						/>
-						<SuggestionSection
-							suggestions={transformSupport(materialFor)}
-							sectionName='Material For'
-							sectionExplanation={`${cardName} can be used as a material for the cards in this section.`}
-						/>
-						<SuggestionSection
-							suggestions={transformReferences(namedReferences)}
-							sectionName='References'
-							sectionExplanation={`${cardName} is referencing the below cards. If ${cardName} is an extra deck monster, its named summoning materials are omitted here.`}
-						/>
-						<SuggestionSection
-							suggestions={transformSupport(referencedBy)}
-							sectionName='Referenced By'
-							sectionExplanation={`Cards that directly reference ${cardName}. Omits extra deck monsters that reference ${cardName} as a summoning material.`}
-						/>
-					</Fragment>
-				)}
-			</div>
-		</Section>
+		<SuggestionsSheet
+			suggestions={{ namedMaterials, namedReferences }}
+			support={{ materialFor, referencedBy }}
+			isLoading={isFetchingSuggestions || isFetchingSupport}
+			hasError={suggestionRequestHasError && supportRequestHasError}
+			skeletonColumns={2}
+			wording={{
+				intro: `Cards that ${name} names, or that name it`,
+				empty: 'No suggestions for this card.',
+				namedMaterials: `Named as summoning material by ${name}`,
+				materialFor: `Can use ${name} as material`,
+				namedReferences: `Mentioned in ${name}'s text`,
+				referencedBy: `Mention ${name} in their text`,
+			}}
+		/>
 	)
 }
 

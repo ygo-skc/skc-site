@@ -1,0 +1,108 @@
+/* suggestions: a white sheet like the ban list's full list, a toolbar over a hairline - the product and card pages share it */
+.suggestions-sheet {
+	margin-bottom: 32px;
+	border-radius: 28px;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+}
+
+.suggestions-sheet__tools {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 4px 12px;
+	padding: 16px 18px;
+	border-bottom: 1px solid var(--capsule-edge);
+}
+
+.suggestions-sheet .suggestions-sheet__title {
+	margin: 0 8px 0 0;
+	padding-left: 4px;
+}
+
+.suggestions-sheet .suggestions-sheet__intro {
+	margin: 0;
+	color: var(--capsule-muted);
+}
+
+.suggestions-sheet__body {
+	padding: 14px 18px 18px;
+}
+
+.suggestions-sheet .suggestions-sheet__empty {
+	margin: 12px 4px;
+	color: var(--capsule-muted);
+}
+
+.suggestions-sheet__thumb-skeleton.MuiSkeleton-root {
+	flex: none;
+}
+
+/* What changed's columns (ban-list.css) in a purple tint rather than a status's - its ink and the popup's head follow */
+.suggestions-sheet__column {
+	--status-ink: var(--accent-text);
+	--status-tint: color-mix(in srgb, var(--accent) 10%, #fff);
+}
+
+/* the columns share their rows (head, list, Show all) through a subgrid, so a rule that wraps doesn't push one list below the others */
+.suggestions-sheet .ban-list-changes {
+	align-items: stretch;
+}
+
+.suggestions-sheet .suggestions-sheet__column {
+	display: grid;
+	grid-row: span 3;
+	grid-template-rows: subgrid;
+	row-gap: 0;
+}
+
+.suggestions-sheet__column .ban-list-changes__rows {
+	align-self: start;
+}
+
+.suggestions-sheet__column .ban-list-changes__more.MuiButton-root {
+	align-self: end;
+}
+
+/* a column is at most about half the sheet, so a card with one kind of link doesn't get one column the sheet's width - the
+   grid's tracks stay as they are (a cap there would count its repeats from the cap and wrap a set's four columns), and phones
+   keep ban-list.css's swipeable row */
+@media (min-width: 600px) {
+	.suggestions-sheet .suggestions-sheet__column {
+		justify-self: start;
+		width: 100%;
+		max-width: 580px;
+	}
+}
+
+@media (max-width: 599.95px) {
+	.suggestions-sheet {
+		border-radius: 24px;
+	}
+
+	.suggestions-sheet__body {
+		padding: 12px;
+	}
+
+	/* What changed's phone rows drop the "was" chip under the type; a suggestion's "N links" is short, so the row stays one line
+	   (by the column class, since the "Show all" popup is portaled outside .suggestions-sheet) */
+	.suggestions-sheet__column .ban-list-changes__row {
+		display: flex;
+	}
+
+	/* phones swipe one column at a time, so each sizes to its own rows rather than the longest column's */
+	.suggestions-sheet .ban-list-changes {
+		align-items: start;
+	}
+
+	.suggestions-sheet .suggestions-sheet__column {
+		display: flex;
+		grid-row: auto;
+	}
+
+	/* the subgrid's start / end alignments would shrink these sideways in the flex column */
+	.suggestions-sheet__column .ban-list-changes__rows,
+	.suggestions-sheet__column .ban-list-changes__more.MuiButton-root {
+		align-self: stretch;
+	}
+}
