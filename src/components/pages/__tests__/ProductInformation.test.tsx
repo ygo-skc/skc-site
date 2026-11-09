@@ -60,7 +60,13 @@ const references = Array.from({ length: 10 }, (_, index) => ({
 }))
 
 const suggestions = {
-	suggestions: { namedMaterials: [{ occurrences: 2, card: yubel }], namedReferences: references, materialArchetypes: ['Yubel'], referencedArchetypes: ['Mimighoul'] },
+	suggestions: {
+		namedMaterials: [{ occurrences: 2, card: yubel }],
+		namedReferences: references,
+		relevantArchetypes: ['Yubel', 'Centur-Ion'],
+		materialArchetypes: ['Yubel'],
+		referencedArchetypes: ['Mimighoul'],
+	},
 	support: { referencedBy: [], materialFor: [] },
 }
 
@@ -146,10 +152,12 @@ test('heads the page with the totals and the core sets either side', async () =>
 		within(totals)
 			.getAllByRole('listitem')
 			.map((total) => total.textContent)
-	).toEqual(['3cards', '2monsters', '1spells', '0traps', '2archetypes'])
+	).toEqual(['3cards', '2monsters', '1spells', '0traps', '3archetypes'])
 
 	expect(screen.getByRole('link', { name: 'Previous: Age of Overlord' })).toHaveAttribute('href', '/product/AGOV')
 	expect(screen.getByRole('link', { name: 'Next: Legacy of Destruction' })).toHaveAttribute('href', '/product/LEDE')
+	// every archetype in the suggestions' lists, each once
+	expect(screen.getByText('Centur-Ion')).toBeInTheDocument()
 	expect(screen.getByText('Mimighoul')).toBeInTheDocument()
 })
 

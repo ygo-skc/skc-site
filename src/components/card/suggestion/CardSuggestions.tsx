@@ -43,7 +43,7 @@ const SuggestionsSkeleton: FC = () => (
 	</div>
 )
 
-type CardSuggestionProps = Omit<YGOCard.Suggestion, 'card' | 'materialArchetypes' | 'referencedArchetypes' | 'hasSelfReference'> &
+type CardSuggestionProps = Omit<YGOCard.Suggestion, 'card' | 'relevantArchetypes' | 'materialArchetypes' | 'referencedArchetypes' | 'hasSelfReference'> &
 	Omit<YGOCard.Support, 'card'> & {
 		cardColor: YGOCard.Color
 		cardName: string

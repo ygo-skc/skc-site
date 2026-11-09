@@ -1,6 +1,6 @@
 import { Crumbs } from '../components/header-footer/Breadcrumb'
 
-type CardSuggestions = Omit<YGOCard.Suggestion, 'card' | 'materialArchetypes' | 'referencedArchetypes'> & Omit<YGOCard.Support, 'card'>
+type CardSuggestions = Omit<YGOCard.Suggestion, 'card' | 'relevantArchetypes' | 'materialArchetypes' | 'referencedArchetypes'> & Omit<YGOCard.Support, 'card'>
 
 type CardInformationState = {
 	pageBreadcrumbs: Crumbs
@@ -60,7 +60,7 @@ export function cardInformationReducer(state: CardInformationState, action: Card
 			return {
 				...state,
 				suggestions: { ...state.suggestions, namedMaterials: action.suggestions.namedMaterials, namedReferences: action.suggestions.namedReferences },
-				archetypes: new Set([...action.suggestions.materialArchetypes, ...action.suggestions.referencedArchetypes]),
+				archetypes: new Set([...action.suggestions.relevantArchetypes, ...action.suggestions.materialArchetypes, ...action.suggestions.referencedArchetypes]),
 				suggestionRequestHasError: false,
 				isFetchingSuggestions: false,
 			}

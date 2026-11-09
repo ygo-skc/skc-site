@@ -29,7 +29,7 @@ export default function ProductInformation() {
 			productId,
 			productName: '',
 			productCardSuggestions: {
-				suggestions: { namedMaterials: [], namedReferences: [], materialArchetypes: [], referencedArchetypes: [] },
+				suggestions: { namedMaterials: [], namedReferences: [], relevantArchetypes: [], materialArchetypes: [], referencedArchetypes: [] },
 				support: { referencedBy: [], materialFor: [] },
 				associatedArchetypes: new Set<string>(),
 				isFetchingData: true,

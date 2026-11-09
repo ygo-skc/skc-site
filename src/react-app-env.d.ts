@@ -67,6 +67,7 @@ declare namespace YGOCard {
 		namedMaterials: YGOCard.Reference[]
 		namedReferences: YGOCard.Reference[]
 		hasSelfReference: boolean
+		relevantArchetypes: string[]
 		materialArchetypes: string[]
 		referencedArchetypes: string[]
 	}

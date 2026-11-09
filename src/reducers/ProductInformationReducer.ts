@@ -50,7 +50,12 @@ export function productInformationReducer(state: ProductInformationState, action
 					...state.productCardSuggestions,
 					suggestions: { ...action.productCardSuggestion.suggestions },
 					support: { ...action.productCardSuggestion.support },
-					associatedArchetypes: new Set([...action.productCardSuggestion.suggestions.materialArchetypes, ...action.productCardSuggestion.suggestions.referencedArchetypes]),
+					// every archetype in the suggestions, each once
+					associatedArchetypes: new Set([
+						...action.productCardSuggestion.suggestions.relevantArchetypes,
+						...action.productCardSuggestion.suggestions.materialArchetypes,
+						...action.productCardSuggestion.suggestions.referencedArchetypes,
+					]),
 					isFetchingData: false,
 					requestHasError: false,
 				},
