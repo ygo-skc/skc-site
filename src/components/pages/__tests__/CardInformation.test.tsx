@@ -34,6 +34,8 @@ test('holds the at a glance rows with a skeleton instead of a zero count while t
 
 	expect(screen.getByText('At a glance')).toBeInTheDocument()
 	expect(screen.getByTestId('card-glance-skeleton')).toHaveAttribute('aria-hidden', 'true')
+	// the passcode until the card's name arrives
+	expect(document.title).toBe('SKC - Card: 83461421')
 	expect(screen.queryByText('Not printed yet')).not.toBeInTheDocument()
 })
 
@@ -55,6 +57,7 @@ test('remembers the card as recently viewed once it loads', () => {
 	)
 
 	expect(readRecentlyViewed()).toEqual([expect.objectContaining({ kind: 'card', id: '83461421', name: 'Pendulum Storm' })])
+	expect(document.title).toBe('SKC - Card: Pendulum Storm')
 })
 
 test('coming back to the card shows it without fetching again, and moves it back to the top of the recents', async () => {
