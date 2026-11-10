@@ -16,7 +16,7 @@ const RarityChip: FC<RarityPrintings> = ({ rarity, printings }) => {
 
 	return (
 		<>
-			<Chip label={rarity} onClick={open} aria-haspopup='menu' aria-expanded={isOpen} aria-controls={isOpen ? menuId : undefined} />
+			<Chip label={rarity} onClick={open} className='rarity-chip' aria-haspopup='menu' aria-expanded={isOpen} aria-controls={isOpen ? menuId : undefined} />
 			<Menu
 				id={menuId}
 				anchorEl={anchor}
@@ -27,20 +27,32 @@ const RarityChip: FC<RarityPrintings> = ({ rarity, printings }) => {
 				slotProps={{ paper: { className: 'rarity-chip__panel' }, list: { 'aria-label': `${rarity} printings` } }}
 			>
 				<ListSubheader className='rarity-chip__heading'>
-					<Typography variant='subtitle2' component='span'>
-						{rarity}{' '}
-						<Typography variant='inherit' component='span' className='rarity-chip__muted'>
-							· {plural(printings.length, 'printing')}
+					<span className='rarity-chip__title'>
+						<Typography variant='subtitle1' component='span'>
+							{rarity}
 						</Typography>
-					</Typography>
+						<Chip label={printings.length} className='rarity-chip__count' aria-hidden='true' />
+						<Typography variant='body2' component='span' className='visually-hidden'>
+							{plural(printings.length, 'printing')}
+						</Typography>
+					</span>
+					{['Set number', 'Product', 'Released'].map((label) => (
+						<Typography key={label} variant='body2' component='span' className='rarity-chip__muted rarity-chip__label' aria-hidden='true'>
+							{label}
+						</Typography>
+					))}
 				</ListSubheader>
+				{/* no ripple - mounting its span on hover makes Safari lay the row out on its own, off the menu's shared columns */}
 				{printings.map(({ productId, productName, date, setNumber }) => (
-					<MenuItem key={setNumber} component={Link} to={`/product/${productId}`} onClick={close} className='rarity-chip__row'>
+					<MenuItem key={setNumber} component={Link} to={`/product/${productId}`} onClick={close} disableRipple className='rarity-chip__row'>
+						<Typography variant='subtitle2' component='span'>
+							{setNumber}
+						</Typography>
 						<Typography variant='body2' component='span' className='rarity-chip__name'>
 							{productName}
 						</Typography>
-						<Typography variant='body2' component='span' className='rarity-chip__muted'>
-							{setNumber} · <time dateTime={date}>{Dates.fromYYYYMMDDToDateStr(date)}</time>
+						<Typography variant='body2' component='time' dateTime={date} className='rarity-chip__muted rarity-chip__date'>
+							{Dates.fromYYYYMMDDToDateStr(date)}
 						</Typography>
 					</MenuItem>
 				))}

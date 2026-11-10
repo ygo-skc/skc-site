@@ -162,23 +162,66 @@
 	}
 }
 
-/* a rarity chip's menu of printings - the theme's popover (white, hairline, one soft lift) with rows like a grouped list */
+/* the chip whose menu is open, near-black like a picked filter chip */
+.rarity-chip.MuiChip-root[aria-expanded='true'] {
+	background: var(--capsule-text);
+	color: var(--capsule-lens);
+}
+
+/* a rarity chip's menu of printings - the theme's popover (white, hairline, one soft lift) as a table: set number, product, date in
+ * columns that line up across rows (each row and the heading are subgrids of the list) */
 .rarity-chip__panel.MuiPaper-root {
-	width: min(340px, calc(100vw - 32px));
+	width: min(470px, calc(100vw - 32px));
 	max-height: 360px;
-	border-radius: 16px;
+	border-radius: 18px;
 }
 
 .rarity-chip__panel .MuiList-root {
+	display: grid;
+	grid-template-columns: max-content minmax(0, 1fr) max-content;
+	column-gap: 14px;
 	padding: 6px;
 }
 
-/* flex, so the subheader's tall line box doesn't add space above the heading */
+.rarity-chip__heading.MuiListSubheader-root,
+.rarity-chip__row.MuiMenuItem-root {
+	display: grid;
+	grid-column: 1 / -1;
+	grid-template-columns: subgrid;
+	align-items: center;
+}
+
 .rarity-chip__heading.MuiListSubheader-root {
-	display: flex;
-	padding: 8px 10px 6px;
+	row-gap: 8px;
+	margin-bottom: 4px;
+	padding: 10px 14px 6px;
+	border-bottom: 1px solid var(--capsule-edge);
 	background: var(--capsule-lens);
 	color: var(--capsule-text);
+}
+
+.rarity-chip__title {
+	display: flex;
+	grid-column: 1 / -1;
+	align-items: center;
+	gap: 8px;
+}
+
+.rarity-chip__panel .MuiTypography-root {
+	margin: 0;
+}
+
+/* the count as a purple badge by the rarity */
+.rarity-chip__count.MuiChip-root {
+	min-width: 26px;
+	height: auto;
+	margin: 0;
+	background: var(--accent-text);
+	color: var(--on-accent);
+}
+
+.rarity-chip__count .MuiChip-label {
+	padding: 0 8px;
 }
 
 .rarity-chip__panel .rarity-chip__muted {
@@ -186,12 +229,10 @@
 }
 
 .rarity-chip__row.MuiMenuItem-root {
-	flex-direction: column;
-	align-items: flex-start;
-	gap: 2px;
-	padding: 8px 10px;
+	/* the set number's line box is shorter than body2's, so line the text up by baseline */
+	align-items: baseline;
+	padding: 9px 14px;
 	border-radius: 10px;
-	white-space: normal;
 }
 
 .rarity-chip__row.MuiMenuItem-root:hover,
@@ -205,6 +246,31 @@
 	outline-offset: -2px;
 }
 
+/* long names wrap (MenuItem doesn't) rather than cut off, lined up with the set number and date by the first line */
 .rarity-chip__panel .rarity-chip__name {
+	white-space: normal;
 	color: var(--capsule-text);
+}
+
+.rarity-chip__panel .rarity-chip__date {
+	white-space: nowrap;
+}
+
+/* phones: no column labels, and the date drops under the product */
+@media (max-width: 599.95px) {
+	.rarity-chip__panel .MuiList-root {
+		grid-template-columns: max-content minmax(0, 1fr);
+	}
+
+	.rarity-chip__panel .rarity-chip__label {
+		display: none;
+	}
+
+	.rarity-chip__heading.MuiListSubheader-root {
+		padding-bottom: 10px;
+	}
+
+	.rarity-chip__panel .rarity-chip__date {
+		grid-column: 2;
+	}
 }
