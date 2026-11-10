@@ -144,3 +144,30 @@ export const cardReleases = (productInfo: YGOProduct.Info[]): CardRelease[] => {
 		.map((release) => ({ ...release, setNumbers: release.setNumbers.sort(), rarities: release.rarities.sort(byRarity) }))
 		.sort((a, b) => b.date.localeCompare(a.date) || a.productName.localeCompare(b.productName))
 }
+
+// a stretch this long between printings is marked in the releases list
+const QUIET_YEARS = 3
+
+export type ReleaseYear = { year: number; releases: CardRelease[]; printings: number; quietYears?: number }
+
+// whole years from one YYYY-MM-DD date to a later one
+const wholeYears = (from: string, to: string) => Number(to.slice(0, 4)) - Number(from.slice(0, 4)) - (to.slice(5) < from.slice(5) ? 1 : 0)
+
+// releases (newest first) under their year, each year with its printings and, after a long wait, the whole years from its newest
+// release to the next printing
+export const releaseYears = (releases: CardRelease[]): ReleaseYear[] => {
+	const years: ReleaseYear[] = []
+	for (const release of releases) {
+		const year = Number(release.date.slice(0, 4))
+		const newer = years[years.length - 1]
+		if (newer?.year === year) {
+			newer.releases.push(release)
+			newer.printings += release.setNumbers.length
+			continue
+		}
+
+		const quietYears = newer && wholeYears(release.date, newer.releases[newer.releases.length - 1].date)
+		years.push({ year, releases: [release], printings: release.setNumbers.length, ...(quietYears >= QUIET_YEARS && { quietYears }) })
+	}
+	return years
+}

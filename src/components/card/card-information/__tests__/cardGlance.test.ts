@@ -1,4 +1,4 @@
-import { cardEyebrow, cardGlance, cardReleases, formatStanding, relativeDays } from '../cardGlance'
+import { cardEyebrow, cardGlance, cardReleases, formatStanding, relativeDays, releaseYears } from '../cardGlance'
 
 const product = (productId: string, productName: string, productReleaseDate: string, rarities: string[][]) =>
 	({
@@ -114,5 +114,25 @@ test('makes one release per product, newest first, with its set numbers and rari
 	expect(releases.map(({ productId, setNumbers, rarities }) => ({ productId, setNumbers, rarities }))).toEqual([
 		{ productId: 'MZMU', setNumbers: ['MZMU-EN000', 'MZMU-EN074'], rarities: ['Starlight Rare', 'Rare'] },
 		{ productId: 'SOI', setNumbers: ['SOI-EN000'], rarities: ['Ultimate Rare', 'Ultra Rare'] },
+	])
+})
+
+test('groups releases under their year and marks waits of three years or more', () => {
+	const releases = cardReleases([
+		product('MZMU', 'Maze of Muertos', '2026-02-20', [['Secret Rare']]),
+		product('STAS', '2-Player Starter Set', '2024-01-26', [['Common']]),
+		product('LCGX', 'Legendary Collection 2', '2011-10-04', [['Secret Rare'], ['Common']]),
+		product('YSD', 'Starter Deck 2006', '2006-03-23', [['Common']]),
+		product('DP1', 'Duelist Pack', '2006-02-08', [['Common']]),
+		// 2 years 364 days before 2006-02-08 - not yet three
+		product('TLM', 'The Lost Millennium', '2003-02-09', [['Common']]),
+	])
+
+	expect(releaseYears(releases).map(({ year, releases, printings, quietYears }) => ({ year, products: releases.length, printings, quietYears }))).toEqual([
+		{ year: 2026, products: 1, printings: 1, quietYears: undefined },
+		{ year: 2024, products: 1, printings: 1, quietYears: undefined },
+		{ year: 2011, products: 1, printings: 2, quietYears: 12 },
+		{ year: 2006, products: 2, printings: 2, quietYears: 5 },
+		{ year: 2003, products: 1, printings: 1, quietYears: undefined },
 	])
 })

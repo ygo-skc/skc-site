@@ -1,5 +1,6 @@
-/* releases: a white sheet like the header - a to-scale rail of the card's products, then a row each */
+/* releases: a white sheet like the header - the card's products under their year in a gutter, a long wait between printings as a gap */
 .card-releases {
+	container: card-releases / inline-size;
 	overflow: hidden;
 	margin-bottom: 32px;
 	border-radius: 28px;
@@ -31,114 +32,54 @@
 	color: var(--capsule-muted);
 }
 
-/* the rail: set codes in two rows over the line, the years under it - dots placed by --at like the home page's upcoming products */
-.card-releases__rail {
-	--line: 64px;
-	position: relative;
-	height: calc(var(--line) + 44px);
-	margin: 20px 34px 8px;
+.card-releases__years {
+	padding: 8px 0 14px;
 }
 
-.card-releases__line,
-.card-releases__today {
-	position: absolute;
-	top: calc(var(--line) - 2px);
-	height: 4px;
-	border-radius: 2px;
+/* the year (and its printings) in a gutter beside its rows */
+.card-releases__year,
+.card-releases__gap {
+	display: grid;
+	grid-template-columns: 132px minmax(0, 1fr);
 }
 
-.card-releases__line {
-	inset-inline: 0;
-	background: var(--capsule-track);
+.card-releases__gutter {
+	padding: 14px 22px;
+	border-right: 1px solid var(--capsule-edge);
 }
 
-/* today, in black like the home rail's start */
-.card-releases__today {
-	top: calc(var(--line) - 8px);
-	left: var(--at);
-	width: 4px;
-	height: 16px;
-	transform: translateX(-50%);
-	background: var(--capsule-text);
-}
-
-.card-releases .card-releases__year,
-.card-releases .card-releases__label {
-	position: absolute;
-	left: var(--at);
-	white-space: nowrap;
-	color: var(--capsule-muted);
-}
-
-.card-releases .card-releases__year {
-	top: calc(var(--line) + 16px);
-	transform: translateX(-50%);
-}
-
-.card-releases .card-releases__label {
-	top: 0;
-	transform: translateX(var(--shift));
-}
-
-.card-releases .card-releases__label--picked {
-	top: 24px;
-	color: var(--accent-text);
-}
-
-/* a 32px target around the 24px dot */
-.card-releases__dot.MuiButtonBase-root {
-	position: absolute;
-	top: calc(var(--line) - 16px);
-	left: var(--at);
-	width: 32px;
-	height: 32px;
-	transform: translateX(-50%);
-	border-radius: 50%;
-}
-
-/* a white ring with a 10px centre */
-.card-releases__dot::before,
-.card-releases__dot::after {
-	content: '' / '';
-	position: absolute;
-	inset: 0;
-	margin: auto;
-	border-radius: 50%;
-}
-
-.card-releases__dot::before {
-	width: 24px;
-	height: 24px;
-	background: var(--capsule-lens);
-	box-shadow: 0 0 0 2px var(--capsule-edge);
-}
-
-.card-releases__dot::after {
-	width: 10px;
-	height: 10px;
-	background: var(--capsule-muted);
-}
-
-.card-releases__dot[aria-pressed='true'] {
-	z-index: 1;
-}
-
-.card-releases__dot[aria-pressed='true']::before {
-	box-shadow: 0 0 0 2px var(--accent);
-}
-
-.card-releases__dot[aria-pressed='true']::after {
-	background: var(--accent);
-}
-
-.card-releases__dot.Mui-focusVisible {
-	outline: 2px solid var(--accent);
-}
-
-/* rows like product browse's list: cover, name over set numbers, rarities and date at the end */
-.card-releases__list {
+.card-releases__gutter .MuiTypography-root {
 	margin: 0;
-	padding: 6px 0;
+}
+
+.card-releases__gutter .card-releases__muted {
+	margin-top: 4px;
+}
+
+/* a wait of three years or more - taller the longer it was, a dashed line across the rows' side */
+.card-releases__gap {
+	grid-column: 1 / -1;
+	height: calc(24px + 4px * min(var(--quiet-years), 18));
+}
+
+.card-releases .card-releases__gap .card-releases__gutter {
+	display: flex;
+	align-items: center;
+	margin: 0;
+	padding-block: 0;
+}
+
+.card-releases__gap-line {
+	align-self: center;
+	margin: 0 30px;
+	border-top: 1px dashed var(--capsule-edge);
+}
+
+/* rows like product browse's list: cover, name over set numbers · date · type, rarities at the end */
+.card-releases__list {
+	container-type: inline-size;
+	margin: 0;
+	padding: 4px 0;
 	list-style: none;
 }
 
@@ -150,7 +91,7 @@
 	content: '' / '';
 	position: absolute;
 	top: 0;
-	right: 0;
+	right: 22px;
 	left: 80px;
 	height: 1px;
 	background: var(--capsule-edge);
@@ -158,24 +99,27 @@
 
 .card-releases__row {
 	display: grid;
-	grid-template-columns: 44px minmax(0, 1fr) auto 20px;
+	/* the rarities take half the row at most and wrap there, so many of them don't squeeze the name */
+	grid-template-columns: 44px minmax(0, 1fr) fit-content(50%);
 	align-items: center;
 	gap: 14px;
-	padding: 10px 22px;
+	margin: 0 8px;
+	padding: 10px 14px;
+	border-radius: 14px;
 	color: var(--capsule-text);
 	text-decoration: none;
 }
 
+/* a grey pill under the hovered row, the hairlines either side of it hidden */
 @media (hover: hover) {
 	a.card-releases__row:hover {
-		background: var(--capsule);
+		background: var(--page);
 	}
-}
 
-/* the release whose dot is picked */
-.card-releases__row--picked,
-a.card-releases__row--picked:hover {
-	background: color-mix(in srgb, var(--accent) 10%, #fff);
+	.card-releases__list > li:hover::before,
+	.card-releases__list > li:hover + li::before {
+		opacity: 0;
+	}
 }
 
 /* the list scrolls with the page but the sheet clips, so keep the focus ring inside */
@@ -208,21 +152,6 @@ a.card-releases__row--picked:hover {
 	min-width: 0;
 }
 
-.card-releases .card-releases__name,
-.card-releases__text .card-releases__muted {
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-}
-
-.card-releases__end {
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	justify-content: flex-end;
-	gap: 6px 10px;
-}
-
 .card-releases__rarities {
 	display: flex;
 	flex-wrap: wrap;
@@ -240,11 +169,6 @@ a.card-releases__row--picked:hover {
 	margin: 0;
 }
 
-.card-releases__chevron.MuiSvgIcon-root {
-	font-size: 20px;
-	color: var(--capsule-muted);
-}
-
 .card-releases__foot {
 	display: flex;
 	justify-content: center;
@@ -257,36 +181,10 @@ a.card-releases__row--picked:hover {
 	padding: 8px 18px;
 }
 
-@media (max-width: 599.95px) {
-	.card-releases__head {
-		padding: 16px 20px;
-	}
-
-	/* no room for set codes - the dots and years carry the rail, like the home page's */
-	.card-releases__rail {
-		--line: 16px;
-		height: calc(var(--line) + 44px);
-		margin-inline: 24px;
-	}
-
-	.card-releases .card-releases__label {
-		display: none;
-	}
-
-	.card-releases__dot::before {
-		width: 16px;
-		height: 16px;
-	}
-
-	.card-releases__dot::after {
-		width: 6px;
-		height: 6px;
-	}
-
-	/* the rarities and date drop under the name */
+/* too narrow for the name beside the rarities - they drop under it */
+@container (max-width: 40em) {
 	.card-releases__row {
-		grid-template-columns: 40px minmax(0, 1fr);
-		padding-inline: 16px;
+		grid-template-columns: 44px minmax(0, 1fr);
 	}
 
 	.card-releases__thumb {
@@ -294,20 +192,64 @@ a.card-releases__row--picked:hover {
 		align-self: start;
 	}
 
-	.card-releases__end {
+	.card-releases__rarities {
 		grid-column: 2;
 		justify-content: flex-start;
 	}
+}
 
-	.card-releases__rarities {
-		justify-content: flex-start;
+/* too narrow for a gutter - the year heads its rows, and a gap is its label beside the dashed line */
+@container card-releases (max-width: 37.5em) {
+	.card-releases__year,
+	.card-releases__gap {
+		display: block;
 	}
 
-	.card-releases__chevron.MuiSvgIcon-root {
-		display: none;
+	.card-releases__year > .card-releases__gutter {
+		display: flex;
+		align-items: baseline;
+		gap: 8px;
+		padding: 14px 16px 2px;
+		border-right: 0;
+	}
+
+	.card-releases__gutter .card-releases__muted {
+		margin-top: 0;
+	}
+
+	.card-releases__gap {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		height: auto;
+		padding: 10px 16px 0;
+	}
+
+	.card-releases .card-releases__gap .card-releases__gutter {
+		flex: none;
+		padding: 0;
+		border-right: 0;
+	}
+
+	.card-releases__gap-line {
+		flex: 1;
+		margin: 0;
+	}
+}
+
+@media (max-width: 599.95px) {
+	.card-releases__head {
+		padding: 16px 20px;
+	}
+
+	.card-releases__row {
+		grid-template-columns: 40px minmax(0, 1fr);
+		margin-inline: 4px;
+		padding-inline: 12px;
 	}
 
 	.card-releases__list > li + li::before {
+		right: 16px;
 		left: 70px;
 	}
 }

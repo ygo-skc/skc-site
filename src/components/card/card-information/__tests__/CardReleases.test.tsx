@@ -34,11 +34,9 @@ const renderReleases = (productInfo: YGOProduct.Info[], isFetchingCardData = fal
 		</ThemeProvider>
 	)
 
-beforeAll(() => {
-	Element.prototype.scrollIntoView = jest.fn()
-})
+const links = () => screen.getAllByRole('listitem').map((item) => within(item).getByRole('link'))
 
-test('holds three skeleton rows while the card loads', () => {
+test('holds skeleton rows while the card loads', () => {
 	renderReleases([], true)
 	expect(screen.getByTestId('card-releases-skeleton')).toHaveAttribute('aria-hidden', 'true')
 	expect(screen.queryByText('Not in any product yet')).not.toBeInTheDocument()
@@ -47,70 +45,36 @@ test('holds three skeleton rows while the card loads', () => {
 test('says when the card is in no product', () => {
 	renderReleases([])
 	expect(screen.getByText('Not in any product yet')).toBeInTheDocument()
-	expect(screen.queryByRole('group', { name: 'Releases by date' })).not.toBeInTheDocument()
+	expect(screen.queryByRole('heading', { level: 3 })).not.toBeInTheDocument()
 })
 
-test('lists one row per product, newest first, linking to the product', () => {
+test('lists one row per product, newest first, under its year, linking to the product', () => {
 	renderReleases(uria)
 
 	expect(screen.getByText(/3 printings in 2 products/)).toBeInTheDocument()
-	const rows = within(screen.getByRole('list')).getAllByRole('link')
-	expect(rows.map((row) => row.getAttribute('href'))).toEqual(['/product/MZMU', '/product/SOI'])
-	expect(rows[0]).toHaveTextContent('MZMU-EN000, MZMU-EN074 · Pack · Booster')
-	expect(rows[0]).toHaveTextContent('Starlight RareRare')
-	expect(rows[0]).toHaveTextContent('Feb 20, 2026')
+	expect(screen.getAllByRole('heading', { level: 3 }).map((heading) => heading.textContent)).toEqual(['2026', '2006'])
+	expect(links().map((row) => row.getAttribute('href'))).toEqual(['/product/MZMU', '/product/SOI'])
+	expect(links()[0]).toHaveTextContent('MZMU-EN000, MZMU-EN074 · Feb 20 · Pack · Booster')
+	expect(links()[0]).toHaveTextContent('Starlight RareRare')
+	expect(within(links()[0]).getByText('Feb 20')).toHaveAttribute('datetime', '2026-02-20')
 })
 
-test('puts a dot on the rail per product, the newest picked, and picking another marks it', () => {
-	renderReleases(uria)
+test('marks a wait of three years or more between printings', () => {
+	renderReleases([...uria, product('SDSA', 'Sacred Beasts', '2024-07-10', '042', ['Ultra Rare'])])
 
-	const newest = screen.getByRole('button', { name: 'Maze of Muertos, Feb 20, 2026' })
-	const oldest = screen.getByRole('button', { name: 'Shadow of Infinity, Feb 18, 2006' })
-	expect(newest).toHaveAttribute('aria-pressed', 'true')
-	expect(oldest).toHaveAttribute('aria-pressed', 'false')
-
-	fireEvent.click(oldest)
-
-	expect(oldest).toHaveAttribute('aria-pressed', 'true')
-	expect(newest).toHaveAttribute('aria-pressed', 'false')
+	// 2024 to 2026 is too short to mark - 2006 to 2024 isn't
+	const gaps = screen.getAllByText((_, element) => element?.tagName === 'P' && /without a printing$/.test(element.textContent ?? ''))
+	expect(gaps.map((gap) => gap.textContent)).toEqual(['18 years without a printing'])
 })
 
-test('shows eight rows, then all of them - and picking a hidden one shows them all', () => {
+test('shows eight rows, then all of them', () => {
 	const many = Array.from({ length: 10 }, (_, index) => product(`P${index}`, `Product ${index}`, `20${10 + index}-01-01`, '001', ['Common']))
 	renderReleases(many)
 
-	expect(within(screen.getByRole('list')).getAllByRole('link')).toHaveLength(8)
+	expect(links()).toHaveLength(8)
 
-	// the two oldest are hidden - picking one of them brings every row back
-	fireEvent.click(screen.getByRole('button', { name: 'Product 0, Jan 1, 2010' }))
+	fireEvent.click(screen.getByRole('button', { name: 'Show all 10' }))
 
-	expect(within(screen.getByRole('list')).getAllByRole('link')).toHaveLength(10)
+	expect(links()).toHaveLength(10)
 	expect(screen.queryByRole('button', { name: /Show all/ })).not.toBeInTheDocument()
-})
-
-test('the rail is one tab stop, and the arrows and Home / End move the pick along it', () => {
-	const three = [...uria, product('SDSA', 'Sacred Beasts', '2020-07-10', '042', ['Ultra Rare'])]
-	renderReleases(three)
-	const dot = (name: RegExp) => screen.getByRole('button', { name })
-
-	expect(dot(/Maze of Muertos/)).toHaveAttribute('tabindex', '0')
-	expect(dot(/Sacred Beasts/)).toHaveAttribute('tabindex', '-1')
-	expect(dot(/Shadow of Infinity/)).toHaveAttribute('tabindex', '-1')
-
-	// left is older
-	fireEvent.keyDown(dot(/Maze of Muertos/), { key: 'ArrowLeft' })
-	expect(dot(/Sacred Beasts/)).toHaveAttribute('aria-pressed', 'true')
-	expect(dot(/Sacred Beasts/)).toHaveAttribute('tabindex', '0')
-	expect(dot(/Sacred Beasts/)).toHaveFocus()
-
-	fireEvent.keyDown(dot(/Sacred Beasts/), { key: 'Home' })
-	expect(dot(/Shadow of Infinity/)).toHaveAttribute('aria-pressed', 'true')
-
-	// past the oldest stays on it
-	fireEvent.keyDown(dot(/Shadow of Infinity/), { key: 'ArrowLeft' })
-	expect(dot(/Shadow of Infinity/)).toHaveAttribute('aria-pressed', 'true')
-
-	fireEvent.keyDown(dot(/Shadow of Infinity/), { key: 'End' })
-	expect(dot(/Maze of Muertos/)).toHaveAttribute('aria-pressed', 'true')
-	expect(dot(/Maze of Muertos/)).toHaveFocus()
 })
