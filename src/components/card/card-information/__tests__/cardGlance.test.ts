@@ -38,8 +38,8 @@ test('counts each set number as a printing and each product once', () => {
 	expect(glance.products).toBe(2)
 	expect(glance.first).toEqual({ date: '2006-02-18', productName: 'Shadow of Infinity' })
 	expect(glance.last).toEqual({ date: '2026-02-20', productName: 'Maze of Muertos' })
-	// rarest first, each once
-	expect(glance.rarities.map(({ rarity }) => rarity)).toEqual(['Starlight Rare', 'Ultimate Rare', 'Ultra Rare', 'Rare'])
+	// A-Z, each once
+	expect(glance.rarities.map(({ rarity }) => rarity)).toEqual(['Rare', 'Starlight Rare', 'Ultimate Rare', 'Ultra Rare'])
 })
 
 test('lists the printings in each rarity, newest first, under every rarity a printing came in', () => {

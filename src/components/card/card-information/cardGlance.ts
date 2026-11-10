@@ -102,8 +102,9 @@ export const cardGlance = (productInfo: YGOProduct.Info[], restrictedIn: YGOCard
 		products: new Set(productInfo.map((product) => product.productId)).size,
 		first: printing(byDate[0]),
 		last: printing(byDate[byDate.length - 1]),
+		// A-Z, so a rarity is easy to find among many
 		rarities: Array.from(byRarityName.keys())
-			.sort(byRarity)
+			.sort((a, b) => a.localeCompare(b))
 			.map((rarity) => ({ rarity, printings: byRarityName.get(rarity) ?? [] })),
 		banLists: (['TCG', 'MD'] as const).map((format) => ({ format, ...formatStanding(restrictedIn[format], banListDates[format]) })),
 	}
