@@ -3,11 +3,12 @@ import '../../../css/util/suggestions-sheet.css'
 import '../../../css/card/card-ban-lists.css'
 
 import { FC, ReactNode, useId, useState } from 'react'
-import { Button, Chip, Dialog, Typography, useMediaQuery, useTheme } from '@mui/material'
+import { Button, Dialog, Typography, useMediaQuery, useTheme } from '@mui/material'
 
 import * as Dates from '../../../helper/Dates'
-import { BanStatus, banStatusClass, toBanStatus } from '../../../helper/BanStatus'
+import { BanStatus } from '../../../helper/BanStatus'
 import { ColumnHead } from '../../util/SuggestionsSheet'
+import BanStatusChip from './BanStatusChip'
 import { FormatStanding, formatStanding, monthYear, statusLabel } from './cardGlance'
 
 type CardBanListInformationProps = {
@@ -30,22 +31,19 @@ const ROWS_SHOWN = 8
 
 type FormatColumn = FormatStanding & { format: Format; name: string }
 
-// a row's label and its status chip, in ban-list.css's tint for that status
-const StatusRow: FC<{ label: ReactNode; status: BanStatus | string }> = ({ label, status }) => {
-	const known = toBanStatus(status)
-	return (
-		<li>
-			<div className='ban-list-changes__row'>
-				<span className='ban-list-changes__name'>
-					<Typography variant='subtitle2' component='span'>
-						{label}
-					</Typography>
-				</span>
-				<Chip className={`ban-status-chip ${known ? banStatusClass(known) : ''}`} label={known ?? status} />
-			</div>
-		</li>
-	)
-}
+// a row's label and its status chip
+const StatusRow: FC<{ label: ReactNode; status: BanStatus | string }> = ({ label, status }) => (
+	<li>
+		<div className='ban-list-changes__row'>
+			<span className='ban-list-changes__name'>
+				<Typography variant='subtitle2' component='span'>
+					{label}
+				</Typography>
+			</span>
+			<BanStatusChip status={status} />
+		</div>
+	</li>
+)
 
 const dateLabel = (date: string) => <time dateTime={date}>{Dates.fromYYYYMMDDToDateStr(date)}</time>
 

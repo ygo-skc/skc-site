@@ -10,6 +10,7 @@ import { decodeHTML } from 'entities'
 import * as Dates from '../../../helper/Dates'
 import { cardEyebrow, cardGlance, FormatHistory, monthYear, plural, Printing, relativeDays, statusLabel } from './cardGlance'
 import RarityChip from './RarityChip'
+import BanStatusChip from './BanStatusChip'
 
 const COPIED_FEEDBACK_MS = 2000
 
@@ -37,11 +38,11 @@ const GlanceRow: FC<GlanceRowProps> = ({ label, value, aside }) => (
 // a format's row: where the card stands now when the format's list dates are in, else just its newest list
 const banListRow = ({ lists, latest, current, offSince, since }: FormatHistory): Pick<GlanceRowProps, 'value' | 'aside'> => {
 	const date = (day: string) => <time dateTime={day}>{Dates.fromYYYYMMDDToDateStr(day)}</time>
-	if (latest === undefined) return { value: 'Unlimited', aside: since ? `not on a list since ${monthYear(since)}` : 'not on a list' }
-	if (current) return { value: statusLabel(current), aside: `on the current list · ${plural(lists.length, 'list')}` }
+	if (latest === undefined) return { value: <BanStatusChip status='Unlimited' />, aside: since ? `not on a list since ${monthYear(since)}` : 'not on a list' }
+	if (current) return { value: <BanStatusChip status={statusLabel(current)} />, aside: `on the current list · ${plural(lists.length, 'list')}` }
 	if (offSince)
 		return {
-			value: 'Unlimited',
+			value: <BanStatusChip status='Unlimited' />,
 			aside: (
 				<>
 					off the list since {date(offSince)} · {plural(lists.length, 'list')}
@@ -51,7 +52,7 @@ const banListRow = ({ lists, latest, current, offSince, since }: FormatHistory):
 	return {
 		value: (
 			<>
-				{statusLabel(latest)} on the {date(latest.banListDate)} list
+				<BanStatusChip status={statusLabel(latest)} /> on the {date(latest.banListDate)} list
 			</>
 		),
 		aside: plural(lists.length, 'list'),
@@ -240,7 +241,17 @@ const CardInformationHeader: FC<CardInformationHeaderProps> = ({ card, isFetchin
 					{isFetchingCardData ? (
 						<ul className='card-info-header__group' aria-hidden='true'>
 							{Object.values(FORMAT_NAMES).map((name) => (
-								<GlanceRow key={name} label={name} value={<Skeleton width='10ch' />} />
+								// a chip and a note, like the loaded rows - the note takes its own line on phones
+								<GlanceRow
+									key={name}
+									label={name}
+									value={
+										<Skeleton variant='rounded' className='card-info-header__chip-skeleton'>
+											<BanStatusChip status='Unlimited' />
+										</Skeleton>
+									}
+									aside={<Skeleton width='24ch' />}
+								/>
 							))}
 						</ul>
 					) : (

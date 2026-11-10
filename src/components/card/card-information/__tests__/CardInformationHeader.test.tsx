@@ -81,6 +81,13 @@ test('with the list dates, a format the card was never on says how far back they
 	expect(screen.getByText('Master Duel').parentElement).toHaveTextContent('Unlimitednot on a list since Jan 2022')
 })
 
+test("shows each format's status as a tinted chip", () => {
+	renderHeader({ restrictionInfo: { TCG: [{ banListDate: '2016-08-29', cardID: '06007213', banStatus: 'Forbidden' }], MD: [], DL: [] } })
+
+	expect(screen.getByText('Forbidden').closest('.ban-status-chip')).toHaveClass('ban-status--forbidden')
+	expect(screen.getByText('Unlimited').closest('.ban-status-chip')).toHaveClass('ban-status--unlimited')
+})
+
 test('says when a card is in no archetype', () => {
 	renderHeader({ archetypes: new Set() })
 	expect(screen.getByText('Not tied to any archetype')).toBeInTheDocument()

@@ -133,6 +133,11 @@
 	min-width: 0;
 }
 
+/* the ban status chip (32px) pulled in so its row stays the 48px of the others and of the loading rows */
+.card-info-header__value .ban-status-chip.MuiChip-root {
+	margin-block: -2px;
+}
+
 .card-info-header .card-info-header__aside {
 	margin-left: auto;
 	color: var(--capsule-muted);
