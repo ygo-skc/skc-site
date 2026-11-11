@@ -43,8 +43,8 @@ export const ColumnHead: FC<ColumnHeadProps> = ({ name, count, rule, titleId, on
 
 const groupHead = (group: SuggestionGroup) => ({ name: group.name, count: group.references?.length ?? 0, rule: group.rule })
 
-// What changed's rows, with how many times the link is made where it's more than one
-const SuggestionRows: FC<{ references: YGOCard.Reference[] }> = ({ references }) => (
+// What changed's rows, with how many times the link is made where it's more than one. the archetype page's membership columns use them too
+export const SuggestionRows: FC<{ references: YGOCard.Reference[] }> = ({ references }) => (
 	<ul className='ban-list-changes__rows'>
 		{references.map(({ card, occurrences }) => (
 			<li key={card.cardID}>

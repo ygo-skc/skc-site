@@ -1,4 +1,4 @@
-import { byRarity, cardKind, contentFilterOptions, matchesFilters, matchesQuery, setNumber } from '../productFilters'
+import { byRarity, cardKind, cardValues, contentFilterOptions, filterOptions, matchesFilters, matchesQuery, matchesValues, setNumber } from '../productFilters'
 
 const item = (card: Partial<YGOCard.Deets>, rarities: string[], productPosition = '001'): YGOProduct.Content => ({
 	productPosition,
@@ -47,6 +47,28 @@ test('widens within a group and narrows across groups', () => {
 			])
 		)
 	).toEqual([fiend, xyz])
+})
+
+test('filters plain cards (no rarities) the same way - the archetype page uses these', () => {
+	expect(cardValues(fiend.card)).toEqual([
+		{ name: 'cardColors', value: 'effect' },
+		{ name: 'attributes', value: 'Dark' },
+		{ name: 'monsterTypes', value: 'Fiend' },
+		{ name: 'monsterSubTypes', value: 'Tuner' },
+		{ name: 'levels', value: 'Level 10' },
+	])
+	expect(cardValues(spell.card)).toEqual([{ name: 'cardColors', value: 'spell' }])
+
+	// an option two cards share is offered once
+	const values = [fiend, xyz, spell].map((entry) => cardValues(entry.card))
+	expect(filterOptions(values).filter((option) => option.name === 'monsterTypes')).toEqual([{ name: 'monsterTypes', value: 'Fiend' }])
+	expect(filterOptions(values).some((option) => option.name === 'rarities')).toBe(false)
+
+	const dark = { name: 'attributes', value: 'Dark' }
+	const light = { name: 'attributes', value: 'Light' }
+	const xyzColor = { name: 'cardColors', value: 'xyz' }
+	expect(values.filter((entry) => matchesValues(entry, [dark, light]))).toEqual([values[0], values[1]])
+	expect(values.filter((entry) => matchesValues(entry, [dark, xyzColor]))).toEqual([])
 })
 
 test('searches names, set numbers and effects', () => {

@@ -35,14 +35,12 @@ const tiers = (card: YGOCard.Deets): YGOData.CardBrowseValues[] => {
 	return []
 }
 
-// everything an item in the set can be filtered by, in the same name / value shape as the card browse criteria
-const itemValues = (item: YGOProduct.Content): YGOData.CardBrowseValues[] => {
-	const { card } = item
+// everything a card can be filtered by, in the same name / value shape as the card browse criteria
+export const cardValues = (card: YGOCard.Deets): YGOData.CardBrowseValues[] => {
 	const [monsterType, ...rest] = monsterTypeParts(card)
 	const isMonster = monsterType !== undefined
 
 	return [
-		...item.rarities.map((rarity) => ({ name: 'rarities', value: rarity })),
 		{ name: 'cardColors', value: card.cardColor as string },
 		...(isMonster && card.cardAttribute ? [{ name: 'attributes', value: card.cardAttribute }] : []),
 		...(isMonster ? [{ name: 'monsterTypes', value: monsterType }] : []),
@@ -51,12 +49,15 @@ const itemValues = (item: YGOProduct.Content): YGOData.CardBrowseValues[] => {
 	]
 }
 
+// an item in the set is filtered by its rarities too
+const itemValues = (item: YGOProduct.Content): YGOData.CardBrowseValues[] => [...item.rarities.map((rarity) => ({ name: 'rarities', value: rarity })), ...cardValues(item.card)]
+
 const tierNumber = (value: string) => +value.replace(/\D+/g, '')
 
-// the options the set's cards actually have, so no filter can match nothing - rarities rarest first, levels in number order
-export const contentFilterOptions = (content: YGOProduct.Content[]): YGOData.CardBrowseValues[] => {
+// the options the cards actually have, so no filter can match nothing - rarities rarest first, levels in number order
+export const filterOptions = (values: YGOData.CardBrowseValues[][]): YGOData.CardBrowseValues[] => {
 	const seen = new Map<string, YGOData.CardBrowseValues>()
-	content.flatMap(itemValues).forEach((option) => seen.set(`${option.name}:${option.value}`, option))
+	values.flat().forEach((option) => seen.set(`${option.name}:${option.value}`, option))
 
 	return Array.from(seen.values()).sort((a, b) => {
 		if (a.name !== b.name) return a.name.localeCompare(b.name)
@@ -66,19 +67,22 @@ export const contentFilterOptions = (content: YGOProduct.Content[]): YGOData.Car
 	})
 }
 
+export const contentFilterOptions = (content: YGOProduct.Content[]) => filterOptions(content.map(itemValues))
+
 // levels, ranks and link ratings share one pill, so a pick in any of them is one choice
 const filterGroup = (name: string) => (name === 'levels' || name === 'ranks' || name === 'linkRatings' ? 'tier' : name)
 
 // picks in the same group widen the match (Dark or Light), picks in different groups narrow it (Dark and Level 4)
-export const matchesFilters = (item: YGOProduct.Content, picks: YGOData.CardBrowseValues[]) => {
+export const matchesValues = (values: YGOData.CardBrowseValues[], picks: YGOData.CardBrowseValues[]) => {
 	if (picks.length === 0) return true
-	const values = itemValues(item)
 	const groups = new Set(picks.map((pick) => filterGroup(pick.name)))
 
 	return Array.from(groups).every((group) =>
 		picks.some((pick) => filterGroup(pick.name) === group && values.some((value) => value.name === pick.name && value.value === pick.value))
 	)
 }
+
+export const matchesFilters = (item: YGOProduct.Content, picks: YGOData.CardBrowseValues[]) => matchesValues(itemValues(item), picks)
 
 // the number printed on the card, e.g. PHNI-EN001
 export const setNumber = (product: Pick<YGOProduct.Deets, 'productId' | 'productLocale'>, item: Pick<YGOProduct.Content, 'productPosition'>) =>
