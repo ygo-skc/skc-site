@@ -16,6 +16,7 @@ One document per route in [`AppRoutes.ts`](../src/helper/AppRoutes.ts).
 | Card information    | `/card/:cardId`                       | -                                |
 | Product Browse      | `/browse/product`                     | -                                |
 | Product information | `/product/:productId`                 | -                                |
+| Archetype           | `/archetype/:archetypeName`           | -                                |
 | Tier list           | `/tools/tier-list`                    | -                                |
 | Pull cost           | `/tools/pull-cost`                    | -                                |
 | About               | `/about`                              | -                                |

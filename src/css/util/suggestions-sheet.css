@@ -95,6 +95,11 @@
 		align-items: start;
 	}
 
+	/* a column is 86% wide so the next one peeks in - a lone column has nothing to peek, so it takes the full width */
+	.suggestions-sheet .ban-list-changes:has(> :only-child) {
+		grid-auto-columns: 100%;
+	}
+
 	.suggestions-sheet .suggestions-sheet__column {
 		display: flex;
 		grid-row: auto;

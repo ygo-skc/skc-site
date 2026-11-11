@@ -22,6 +22,7 @@ export const SKC_SUGGESTION_ENDPOINTS = {
 	cardSupport: `${SKC_SUGGESTION_HOST_NAME}/api/v1/suggestions/card/support`,
 	productCardSuggestions: `${SKC_SUGGESTION_HOST_NAME}/api/v1/suggestions/product`,
 	trending: `${SKC_SUGGESTION_HOST_NAME}/api/v1/suggestions/trending`,
+	archetype: `${SKC_SUGGESTION_HOST_NAME}/api/v2/suggestions/archetype`,
 }
 
 // Heart API

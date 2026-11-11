@@ -15,6 +15,8 @@ const ProductInformation = lazy(() => import('./ProductInformation'))
 const Browse = lazy(() => import('./CardsBrowse'))
 const CardInformation = lazy(() => import('./CardInformation'))
 
+const ArchetypeInformation = lazy(() => import('./ArchetypeInformation'))
+
 const TierList = lazy(() => import('./TierList'))
 const PullCost = lazy(() => import('./PullCost'))
 
@@ -36,6 +38,12 @@ function KeyedProductInformation() {
 	const { productId } = useParams<{ productId: string }>()
 
 	return <ProductInformation key={productId} />
+}
+
+function KeyedArchetypeInformation() {
+	const { archetypeName } = useParams<{ archetypeName: string }>()
+
+	return <ArchetypeInformation key={archetypeName} />
 }
 
 // route config rather than JSX so the app runs on a data router, which is what ScrollRestoration
@@ -61,6 +69,7 @@ const routes: RouteObject[] = [
 			},
 
 			{ path: AppRoutes.ProductInformation, element: <KeyedProductInformation /> },
+			{ path: AppRoutes.Archetype, element: <KeyedArchetypeInformation /> },
 
 			{ path: AppRoutes.TierList, element: <TierList /> },
 			{ path: AppRoutes.PullCost, element: <PullCost /> },

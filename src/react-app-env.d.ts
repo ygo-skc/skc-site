@@ -139,6 +139,16 @@ declare namespace YGOData {
 	}
 }
 
+declare namespace YGOArchetype {
+	// inherit: named after the archetype. qualified: not named after it but part of it. excluded: named like it but not part of it
+	type Data = {
+		archetype: string
+		inheritMembers: YGOCard.Deets[]
+		qualifiedMembers: YGOCard.Deets[]
+		excludedMembers: YGOCard.Deets[]
+	}
+}
+
 declare namespace YGOProduct {
 	type Deets = {
 		productId: string

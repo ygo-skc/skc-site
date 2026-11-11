@@ -7,6 +7,7 @@ enum AppRoutes {
 	CardBrowse = '/browse/card',
 	ProductBrowse = '/browse/product',
 	ProductInformation = '/product/:productId',
+	Archetype = '/archetype/:archetypeName',
 	TierList = '/tools/tier-list',
 	PullCost = '/tools/pull-cost',
 

@@ -1,0 +1,461 @@
+/* header: a white sheet like the product page's - the eyebrow and name, then the totals split by hairlines */
+.archetype-header {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	margin-bottom: 20px;
+	padding: 32px 36px;
+	border-radius: 28px;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+}
+
+.archetype-header__title {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.archetype-header .archetype-header__eyebrow {
+	margin: 0;
+	color: var(--accent-text);
+}
+
+.archetype-header .archetype-header__name {
+	margin: 0;
+	overflow-wrap: anywhere;
+}
+
+.archetype-header__totals {
+	display: flex;
+	flex-wrap: wrap;
+	row-gap: 12px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.archetype-header__totals > li {
+	display: flex;
+	flex-direction: column;
+	padding: 0 24px;
+}
+
+.archetype-header__totals > li:first-child {
+	padding-left: 0;
+}
+
+.archetype-header__totals > li + li {
+	box-shadow: -1px 0 0 var(--capsule-edge);
+}
+
+.archetype-header .archetype-header__total-value {
+	margin: 0;
+}
+
+.archetype-header .archetype-header__total-label {
+	color: var(--capsule-muted);
+}
+
+/* the stat sheets: white sheets in an auto-fit grid, monsters by ATK across the page between the counts and the top fives */
+.archetype-stats {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	margin-bottom: 32px;
+}
+
+.archetype-stats__grid {
+	display: grid;
+	/* two a row at most, so the deck tiles and legends have room */
+	grid-template-columns: repeat(auto-fit, minmax(min(560px, 100%), 1fr));
+	gap: 20px;
+}
+
+.archetype-sheet {
+	display: flex;
+	flex-direction: column;
+	gap: 18px;
+	min-width: 0;
+	padding: 24px 28px;
+	border-radius: 24px;
+	background: var(--capsule-lens);
+	box-shadow: 0 0 0 1px var(--capsule-edge);
+	container-type: inline-size;
+}
+
+/* the theme gives some variants (subtitle2, the headings) a bottom margin - the sheets space their text with gaps instead */
+.archetype-sheet .MuiTypography-root {
+	margin: 0;
+}
+
+.archetype-sheet__head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 4px 12px;
+}
+
+/* h5 is muted in the theme - a sheet's title reads near-black like the other pages' sheet titles */
+.archetype-sheet .archetype-sheet__title {
+	color: var(--capsule-text);
+}
+
+.archetype-sheet__note-skeleton.MuiSkeleton-root {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.archetype-sheet .archetype-sheet__note {
+	color: var(--capsule-muted);
+}
+
+/* card type: one stacked bar in rcl's frame classes, which bring padding and radii of their own on some cards - a segment is only its colour */
+.archetype-frame-bar {
+	display: flex;
+	gap: 3px;
+	height: 16px;
+	overflow: hidden;
+	border-radius: 999px;
+}
+
+.archetype-frame-bar .archetype-frame-bar__segment {
+	flex-basis: 0;
+	min-width: 4px;
+	padding: 0;
+	border-radius: 0;
+}
+
+.archetype-frame-bar--skeleton.MuiSkeleton-root {
+	height: 16px;
+	border-radius: 999px;
+}
+
+.archetype-frame-legend {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 10px 24px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.archetype-frame-legend > li {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.archetype-frame-legend__dot {
+	display: inline-flex;
+}
+
+/* rcl's frame indicator (its colours, untouched) shrunk to a dot */
+.archetype-frame-legend__dot .indicator.small {
+	width: 10px;
+	height: 10px;
+	box-shadow: 0 0 0 1px color-mix(in srgb, var(--capsule-text) 15%, transparent);
+}
+
+.archetype-frame-legend .archetype-frame-legend__name {
+	flex: 1;
+	min-width: 0;
+}
+
+.archetype-frame-legend .archetype-frame-legend__share {
+	min-width: 3.5ch;
+	color: var(--capsule-muted);
+	text-align: right;
+}
+
+/* where they sit: three grey tiles */
+.archetype-decks {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 8px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.archetype-decks__tile {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	padding: 16px;
+	border-radius: 16px;
+	background: var(--capsule-track);
+}
+
+.archetype-decks .archetype-decks__frames {
+	color: var(--capsule-muted);
+}
+
+/* attribute and monster type: a bar per value on a grey track, the most common one in the accent. the rows share the list's
+   columns (subgrid), so every name column is the longest name's width and the bars start together */
+.archetype-bars {
+	display: grid;
+	grid-template-columns: max-content minmax(0, 1fr) max-content;
+	gap: 12px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.archetype-bars__row {
+	display: grid;
+	grid-column: 1 / -1;
+	grid-template-columns: subgrid;
+	align-items: center;
+}
+
+.archetype-bars__track {
+	display: block;
+	height: 18px;
+	overflow: hidden;
+	border-radius: 6px;
+	background: var(--capsule-track);
+}
+
+.archetype-bars__fill {
+	display: block;
+	width: var(--share);
+	height: 100%;
+	border-radius: 6px;
+	background: var(--capsule-text);
+}
+
+.archetype-bars__row--top .archetype-bars__fill {
+	background: var(--accent);
+}
+
+.archetype-bars .archetype-bars__count {
+	text-align: right;
+}
+
+/* monsters by ATK: a column per range, label under its bar and the count over it */
+.archetype-spread__columns {
+	display: grid;
+	grid-auto-columns: minmax(0, 1fr);
+	grid-auto-flow: column;
+	gap: 10px;
+	height: 240px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.archetype-spread__column {
+	display: grid;
+	grid-template-areas: 'count' 'bar' 'label';
+	grid-template-rows: max-content minmax(0, 1fr) max-content;
+	gap: 6px;
+	text-align: center;
+}
+
+.archetype-spread .archetype-spread__count {
+	grid-area: count;
+	align-self: end;
+}
+
+.archetype-spread .archetype-spread__label {
+	grid-area: label;
+	color: var(--capsule-muted);
+	white-space: nowrap;
+}
+
+.archetype-spread__bar {
+	grid-area: bar;
+	align-self: end;
+	height: var(--share);
+	min-height: 4px;
+	border-radius: 8px 8px 4px 4px;
+	background: var(--capsule-text);
+}
+
+.archetype-spread__bar.archetype-spread__bar--skeleton {
+	background: var(--capsule-track);
+}
+
+.archetype-spread__column--top .archetype-spread__bar {
+	background: var(--accent);
+}
+
+/* too narrow for eight ranges side by side ("1,000–1,499" needs ~90px a column): rows like the attribute bars, label | bar | count */
+@container (max-width: 900px) {
+	.archetype-spread__columns {
+		grid-template-columns: max-content minmax(0, 1fr) max-content;
+		grid-auto-flow: row;
+		gap: 12px;
+		height: auto;
+	}
+
+	.archetype-spread__column {
+		grid-column: 1 / -1;
+		grid-template-areas: 'label bar count';
+		grid-template-columns: subgrid;
+		grid-template-rows: none;
+		align-items: center;
+		gap: 12px;
+		text-align: left;
+	}
+
+	.archetype-spread .archetype-spread__count {
+		align-self: center;
+		text-align: right;
+	}
+
+	.archetype-spread__bar {
+		align-self: center;
+		width: var(--share);
+		height: 18px;
+		min-width: 4px;
+		border-radius: 6px;
+	}
+}
+
+/* highest ATK / DEF: rows with inset hairlines that start at the text, like the messages' grouped rows */
+.archetype-top.archetype-sheet {
+	gap: 8px;
+	padding: 22px 12px 10px;
+}
+
+.archetype-top .archetype-sheet__head {
+	padding: 0 12px;
+}
+
+.archetype-top__rows {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.archetype-top__row {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	padding: 8px 12px;
+	border-radius: 16px;
+	color: var(--capsule-text);
+	text-decoration: none;
+}
+
+.archetype-top__row:hover {
+	background: var(--capsule-hover);
+}
+
+.archetype-top__row:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: -2px;
+}
+
+/* the hairline starts at the text: the row's padding, the ringed thumb (3px ring + 2px gap each side) and the gap after it */
+.archetype-top__rows > li + li {
+	position: relative;
+}
+
+.archetype-top__rows > li + li::before {
+	position: absolute;
+	top: 0;
+	right: 12px;
+	left: calc(12px + var(--card-thumb) + 10px + 14px);
+	border-top: 1px solid var(--capsule-edge);
+	content: '' / '';
+}
+
+.archetype-top__thumb {
+	display: block;
+	width: var(--card-thumb);
+	height: var(--card-thumb);
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+.archetype-top__thumb-skeleton.MuiSkeleton-root {
+	flex: none;
+}
+
+.archetype-top__text {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	justify-content: center;
+	min-width: 0;
+}
+
+.archetype-top .archetype-top__name {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.archetype-top .archetype-top__meta {
+	color: var(--capsule-muted);
+}
+
+/* h6 is muted in the theme - the stat is the row's data, so it reads near-black */
+.archetype-top .archetype-top__value {
+	display: flex;
+	align-items: center;
+	color: var(--capsule-text);
+}
+
+/* the members count's pointer to the qualified cards - in full on desktop, short on phones */
+.archetype-members__more--short {
+	display: none;
+}
+
+@media (max-width: 599.95px) {
+	.archetype-members__more {
+		display: none;
+	}
+
+	.archetype-members__more.archetype-members__more--short {
+		display: inline;
+	}
+
+	.archetype-header {
+		gap: 20px;
+		padding: 22px 20px;
+		border-radius: 24px;
+	}
+
+	/* a wrapped total would start its row with a hairline - phones lay the totals out in even columns instead */
+	.archetype-header__totals {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 12px;
+	}
+
+	.archetype-header__totals > li {
+		padding: 0;
+	}
+
+	.archetype-header__totals > li + li {
+		box-shadow: none;
+	}
+
+	.archetype-sheet {
+		padding: 20px;
+	}
+
+	/* stacked tiles would be ~430px tall - each lies flat as a row instead, the count beside the deck and its frames */
+	.archetype-decks {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.archetype-decks__tile {
+		display: grid;
+		grid-template-columns: max-content minmax(0, 1fr);
+		align-items: center;
+		column-gap: 14px;
+		padding: 12px 16px;
+	}
+
+	/* three digits wide (in the count's own size), so the labels line up across the tiles */
+	.archetype-decks .archetype-decks__count {
+		grid-row: span 2;
+		min-width: 3ch;
+	}
+}
