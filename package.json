@@ -41,7 +41,7 @@
 		"handlebars": "4.7.10",
 		"fast-uri": "4.2.3",
 		"qs": "6.17.1",
-		"minimatch": "11.0.7"
+		"minimatch": "11.0.8"
 	},
 	"scripts": {
 		"fresh-install": "rm -rf node_modules yarn.lock && yarn install && npx browserslist@latest --update-db",
