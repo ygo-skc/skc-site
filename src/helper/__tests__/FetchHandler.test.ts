@@ -76,7 +76,7 @@ test('error pages replace the failing page in history rather than pushing on top
 })
 
 test('requests time out after 6 seconds unless a call asks for longer', () => {
-	const get = jest.spyOn(axios, 'get').mockResolvedValue({ data: {} })
+	const get = jest.spyOn(FetchHandler.client, 'get').mockResolvedValue({ data: {} })
 
 	FetchHandler.handleFetch('/default', () => {})
 	expect(get).toHaveBeenLastCalledWith('/default', expect.objectContaining({ timeout: 6000 }))
@@ -85,4 +85,22 @@ test('requests time out after 6 seconds unless a call asks for longer', () => {
 	expect(get).toHaveBeenLastCalledWith('/slow', expect.objectContaining({ timeout: 10000 }))
 
 	get.mockRestore()
+})
+
+test('requests ask for JSON, send no cookies and name the client with its version, like the iOS app', () => {
+	const env = { ...process.env }
+	process.env.REACT_APP_CLIENT_ID = 'React App - Test'
+	process.env.REACT_APP_VERSION = '1.2.3'
+
+	// the client is built when the module loads, so load a fresh copy that reads the env set above
+	jest.isolateModules(() => {
+		const { headers, responseType, withCredentials } = (jest.requireActual('../FetchHandler').default as typeof FetchHandler).client.defaults
+
+		expect(headers.Accept).toBe('application/json')
+		expect(headers.CLIENT_ID).toBe('React App - Test/1.2.3')
+		expect(responseType).toBe('json')
+		expect(withCredentials).toBe(false)
+	})
+
+	process.env = env
 })

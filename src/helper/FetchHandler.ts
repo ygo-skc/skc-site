@@ -5,6 +5,17 @@ class FetchHandler {
 	static readonly CLIENT_ID = process.env.REACT_APP_CLIENT_ID as string
 	static readonly DEFAULT_TIMEOUT = 6000
 
+	// matches the iOS app's URLSession: JSON only, no cookies, CLIENT_ID as "<client>/<version>" so the API logs tell builds apart.
+	// The rest of that config (TLS, multipath, connections per host, Connection / User-Agent / Accept-Encoding) is the browser's to decide
+	static readonly client = axios.create({
+		headers: {
+			Accept: 'application/json',
+			CLIENT_ID: `${FetchHandler.CLIENT_ID}/${process.env.REACT_APP_VERSION ?? 'Unknown'}`,
+		},
+		responseType: 'json',
+		withCredentials: false,
+	})
+
 	static readonly handleFetch = <T>(
 		endPoint: string,
 		onJsonReceived: (res: T) => void,
@@ -12,11 +23,8 @@ class FetchHandler {
 		fetchToken: CancelTokenSource | undefined = undefined,
 		timeout = FetchHandler.DEFAULT_TIMEOUT
 	): Promise<void> | void => {
-		const request = axios
+		const request = FetchHandler.client
 			.get(endPoint, {
-				headers: {
-					CLIENT_ID: FetchHandler.CLIENT_ID,
-				},
 				timeout,
 				cancelToken: fetchToken?.token,
 			})
