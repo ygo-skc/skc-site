@@ -28,7 +28,7 @@
 		"node-forge": "1.4.3",
 		"nth-check": "3.0.1",
 		"socket.io-parser": "4.2.7",
-		"postcss": "8.5.32",
+		"postcss": "8.5.33",
 		"browserslist": "4.29.5",
 		"react-is": "19.3.1",
 		"ws": "8.23.0",
